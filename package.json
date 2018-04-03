@@ -1,0 +1,25 @@
+{
+  "name": "@parity/api",
+  "description": "A high-level JS library optimized for light clients",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "author": "Parity Team <admin@parity.io>",
+  "maintainers": [
+    "Jaco Greeff",
+    "Amaury Martiny"
+  ],
+  "contributors": [],
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/parity-js/light.js.git"
+  },
+  "keywords": [
+    "Ethereum",
+    "API",
+    "Light",
+    "Light Client",
+    "Parity",
+    "Promise"
+  ]
+}
