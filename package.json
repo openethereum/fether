@@ -12,7 +12,7 @@
   "license": "GPL-3.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/parity-js/light.js.git"
+    "url": "git+https://github.com/parity-js/light.git"
   },
   "keywords": [
     "Ethereum",
@@ -21,5 +21,24 @@
     "Light Client",
     "Parity",
     "Promise"
-  ]
+  ],
+  "scripts": {
+    "start": "react-app-rewired start"
+  },
+  "dependencies": {
+    "@parity/api": "^2.1.20",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "react-scripts": "^1.1.4",
+    "rxjs": "^5.5.9"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta.44",
+    "@babel/preset-env": "^7.0.0-beta.44",
+    "babel-loader": "^8.0.0-beta",
+    "react-app-rewire-mobx": "^1.0.8",
+    "react-app-rewired": "^1.5.0",
+    "webpack": "^4.4.1",
+    "webpack-cli": "^2.0.13"
+  }
 }
