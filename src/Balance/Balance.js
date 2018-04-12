@@ -18,6 +18,7 @@ import React, { Component } from 'react';
 
 import light from '../hoc';
 import { balanceOf$, chainName$, defaultAccount$, height$ } from '../lib'; // from '@parity/light'
+import TxProgress from './TxProgress';
 
 @light({
   balance: ownProps => balanceOf$(ownProps.address),
@@ -26,16 +27,29 @@ import { balanceOf$, chainName$, defaultAccount$, height$ } from '../lib'; // fr
   height: height$
 })
 class Balance extends Component {
+  state = {};
+
+  handleSend = () => {
+    this.setState({
+      tx: {
+        from: this.props.defaultAccount,
+        to: this.props.defaultAccount,
+        value: '0x2386f26fc10000' // 0.01ETH
+      }
+    });
+  };
+
   render() {
     const { balance, chainName, defaultAccount, height } = this.props;
+    const { tx } = this.state;
     return (
       <div>
         <p>Chain: {chainName}.</p>
         <p>Block: {height}.</p>
         <p>My Account: {defaultAccount}.</p>
         <p>My Balance: {balance}.</p>
-        <button>Send 0.01ETH to myself</button>
-        <p>Tx progress: </p>
+        <button onClick={this.handleSend}>Send 0.01ETH to myself</button>
+        {tx && <TxProgress tx={tx} />}
       </div>
     );
   }
