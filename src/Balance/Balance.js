@@ -16,6 +16,7 @@
 
 import React, { Component } from 'react';
 
+import Bal from './Bal';
 import light from '../hoc';
 import { balanceOf$, chainName$, defaultAccount$, height$ } from '../lib'; // from '@parity/light'
 import TxProgress from './TxProgress';
@@ -27,7 +28,11 @@ import TxProgress from './TxProgress';
   height: height$
 })
 class Balance extends Component {
-  state = {};
+  state = { visible: false };
+
+  componentDidMount() {
+    setTimeout(() => this.setState({ visible: true }), 3000);
+  }
 
   handleSend = () => {
     this.setState({
@@ -41,7 +46,7 @@ class Balance extends Component {
 
   render() {
     const { balance, chainName, defaultAccount, height } = this.props;
-    const { tx } = this.state;
+    const { tx, visible } = this.state;
     return (
       <div>
         <p>Chain: {chainName}.</p>
@@ -50,6 +55,7 @@ class Balance extends Component {
         <p>My Balance: {balance}.</p>
         <button onClick={this.handleSend}>Send 0.01ETH to myself</button>
         {tx && <TxProgress tx={tx} />}
+        {visible && <Bal />}
       </div>
     );
   }

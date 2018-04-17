@@ -15,32 +15,37 @@
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
 import { Observable } from 'rxjs/Observable';
-import { fromPromise } from 'rxjs/observable/fromPromise';
-import { interval } from 'rxjs/observable/interval';
+import 'rxjs/add/observable/defer';
+import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 
+import { addSubscribedRpc } from '../../overview';
 import api from '../../api';
+import doOnSubscribe from '../../utils/doOnSubscribe';
+import priotization from '../../priotization';
 
 /**
  * Get the name of the current chain.
  *
- * Calls parity_netChain once.
+ * Calls parity_netChain.
  *
  * @returns {Observable<String>} - An Observable containing the name of the current chain.
  */
-export const chainName$ = fromPromise(api.parity.netChain());
+export const chainName$ = priotization.chainName$
+  .switchMap(() => Observable.fromPromise(api.parity.netChain()))
+  .pipe(doOnSubscribe(() => addSubscribedRpc('chainName$')));
 
 /**
  * Get the status of the current chain.
  *
- * Calls parity_chainStatus every second.
+ * Calls parity_chainStatus.
  *
  * @returns {Observable<String>} - An Observable containing the status.
  */
-export const chainStatus$ = interval(1000)
-  .switchMap(() => fromPromise(api.parity.chainStatus()))
+export const chainStatus$ = priotization.chainStatus$
+  .switchMap(() => Observable.fromPromise(api.parity.chainStatus()))
+  .pipe(doOnSubscribe(() => addSubscribedRpc('chainStatus$')))
   .distinctUntilChanged();
 
 /**
@@ -50,12 +55,14 @@ export const chainStatus$ = interval(1000)
  * eth_getTransactionReceipt to get the status of the transaction.
  *
  * @param {Object} tx - A transaction object
- * @returns {Observable<>}
+ * @returns {Observable<Object>}
  */
 export const post$ = tx =>
   Observable.create(async observer => {
     try {
-      observer.next({ initialising: true });
+      observer.next({ estimating: null });
+      const gas = await api.eth.estimateGas(tx);
+      observer.next({ estimated: gas });
       const signerRequestId = await api.parity.postTransaction(tx);
       observer.next({ requested: signerRequestId });
       const transactionHash = await api.pollMethod(
@@ -74,6 +81,7 @@ export const post$ = tx =>
         );
         observer.next({ confirmed: receipt });
       }
+
       observer.complete();
     } catch (error) {
       observer.error({ failed: error });

@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@parity/api": "^2.1.20",
+    "lodash": "^4.17.5",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
     "react-scripts": "^1.1.4",

@@ -15,38 +15,48 @@
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
 import Api from '@parity/api';
+import memoize from 'lodash/memoize';
 import { Observable } from 'rxjs/Observable';
-import { fromPromise } from 'rxjs/observable/fromPromise';
+import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/shareReplay';
 import 'rxjs/add/operator/switchMap';
 
+import { addSubscribedRpc } from '../../overview';
 import api from '../../api';
+import doOnSubscribe from '../../utils/doOnSubscribe';
+import priotization from '../../priotization';
 
 /**
  * Get all accounts managed by the light client.
  *
  * Calls eth_accounts.
  *
- * @returns {Observable<Array>} - An Observable containing the list of accounts
+ * @returns {Observable<Array<String>>} - An Observable containing the list of accounts
  */
-export const accounts$ = fromPromise(api.eth.accounts()).map(accounts =>
-  accounts.map(Api.util.toChecksumAddress)
-);
+export const accounts$ = priotization.accounts$
+  .switchMap(() => Observable.fromPromise(api.eth.accounts()))
+  .map(accounts => accounts.map(Api.util.toChecksumAddress))
+  .pipe(doOnSubscribe(() => addSubscribedRpc('accounts$')))
+  .shareReplay(1);
 
 /**
  * Get the balance of a given account.
  *
- * Calls eth_getBalance on every new {@link height$} event.
+ * Calls eth_getBalance.
  *
  * @param {String} address - The account address to query the balance.
  * @returns {Observable<Number>} - An Observable containing the balance.
  */
-export const balanceOf$ = address =>
-  height$
-    .switchMap(() => fromPromise(api.eth.getBalance(address)))
+export const balanceOf$ = memoize(address =>
+  priotization.balanceOf$
+    .switchMap(() => Observable.fromPromise(api.eth.getBalance(address)))
     .map(_ => +_) // Return number instead of BigNumber
-    .distinctUntilChanged();
+    .pipe(doOnSubscribe(() => addSubscribedRpc('balanceOf$')))
+    .distinctUntilChanged()
+    .shareReplay(1)
+);
 
 /**
  * Get the default account managed by the light client.
@@ -55,6 +65,7 @@ export const balanceOf$ = address =>
  */
 export const defaultAccount$ = accounts$
   .map(accounts => accounts[0])
+  .pipe(doOnSubscribe(() => addSubscribedRpc('balanceOf$')))
   .distinctUntilChanged();
 
 /**
@@ -64,15 +75,7 @@ export const defaultAccount$ = accounts$
  *
  * @returns {Observable<Number>} - An Observable containing the block height
  */
-export const height$ = Observable.create(observer => {
-  api.pubsub.eth.blockNumber((error, result) => {
-    if (error) {
-      observer.error(error);
-    } else {
-      observer.next(+result);
-    }
-  });
-}).distinctUntilChanged();
+export const height$ = priotization.height$;
 
 /**
  * Alias for {@link height$}
