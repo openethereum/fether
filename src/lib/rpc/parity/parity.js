@@ -14,11 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
+import { distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/observable/defer';
 import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/switchMap';
 
 import { addSubscribedRpc } from '../../overview';
 import api from '../../api';
@@ -32,9 +32,10 @@ import priotization from '../../priotization';
  *
  * @returns {Observable<String>} - An Observable containing the name of the current chain.
  */
-export const chainName$ = priotization.chainName$
-  .switchMap(() => Observable.fromPromise(api.parity.netChain()))
-  .pipe(doOnSubscribe(() => addSubscribedRpc('chainName$')));
+export const chainName$ = priotization.chainName$.pipe(
+  switchMap(() => Observable.fromPromise(api.parity.netChain())),
+  doOnSubscribe(() => addSubscribedRpc('chainName$'))
+);
 
 /**
  * Get the status of the current chain.
@@ -43,10 +44,11 @@ export const chainName$ = priotization.chainName$
  *
  * @returns {Observable<String>} - An Observable containing the status.
  */
-export const chainStatus$ = priotization.chainStatus$
-  .switchMap(() => Observable.fromPromise(api.parity.chainStatus()))
-  .pipe(doOnSubscribe(() => addSubscribedRpc('chainStatus$')))
-  .distinctUntilChanged();
+export const chainStatus$ = priotization.chainStatus$.pipe(
+  switchMap(() => Observable.fromPromise(api.parity.chainStatus())),
+  doOnSubscribe(() => addSubscribedRpc('chainStatus$')),
+  distinctUntilChanged()
+);
 
 /**
  * Post a transaction to the network.
@@ -87,3 +89,5 @@ export const post$ = tx =>
       observer.error({ failed: error });
     }
   });
+
+export const setDefaultAccount = address => Subject.create();

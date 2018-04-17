@@ -14,20 +14,23 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
+import {
+  distinctUntilChanged,
+  filter,
+  shareReplay,
+  startWith
+} from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/shareReplay';
-import 'rxjs/add/operator/startWith';
 
 import api from '../api';
 
 /**
  * Observable that emits each time accounts change.
  */
-export const onAccountsChanged$ = Subject.create().startWith(0);
+export const onAccountsChanged$ = Subject.create().pipe(startWith(0));
 onAccountsChanged$.metadata = { name: 'onAccountsChanged$' };
 
 /**
@@ -41,22 +44,19 @@ export const onEveryBlock$ = Observable.create(observer => {
       observer.next(+result);
     }
   });
-})
-  .startWith(0)
-  .distinctUntilChanged()
-  .shareReplay(1);
+}).pipe(startWith(0), distinctUntilChanged(), shareReplay(1));
 onEveryBlock$.metadata = { name: 'onEveryBlock$' };
 
 /**
  * Observable that emits on every 2nd block.
  */
-export const onEvery2Blocks$ = onEveryBlock$.filter(n => n % 2 === 0); // Around ~30s on mainnet
+export const onEvery2Blocks$ = onEveryBlock$.pipe(filter(n => n % 2 === 0)); // Around ~30s on mainnet
 onEvery2Blocks$.metadata = { name: 'onEvery2Blocks$' };
 
 /**
  * Observable that emits on every 4th block.
  */
-export const onEvery4Blocks$ = onEveryBlock$.filter(n => n % 4 === 0); // Around ~1min on mainnet
+export const onEvery4Blocks$ = onEveryBlock$.pipe(filter(n => n % 4 === 0)); // Around ~1min on mainnet
 onEvery4Blocks$.metadata = { name: 'onEvery4Blocks$' };
 
 /**

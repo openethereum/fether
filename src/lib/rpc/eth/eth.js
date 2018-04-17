@@ -15,13 +15,15 @@
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
 import Api from '@parity/api';
+import {
+  distinctUntilChanged,
+  map,
+  shareReplay,
+  switchMap
+} from 'rxjs/operators';
 import memoize from 'lodash/memoize';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/shareReplay';
-import 'rxjs/add/operator/switchMap';
 
 import { addSubscribedRpc } from '../../overview';
 import api from '../../api';
@@ -35,11 +37,12 @@ import priotization from '../../priotization';
  *
  * @returns {Observable<Array<String>>} - An Observable containing the list of accounts
  */
-export const accounts$ = priotization.accounts$
-  .switchMap(() => Observable.fromPromise(api.eth.accounts()))
-  .map(accounts => accounts.map(Api.util.toChecksumAddress))
-  .pipe(doOnSubscribe(() => addSubscribedRpc('accounts$')))
-  .shareReplay(1);
+export const accounts$ = priotization.accounts$.pipe(
+  switchMap(() => Observable.fromPromise(api.eth.accounts())),
+  map(accounts => accounts.map(Api.util.toChecksumAddress)),
+  doOnSubscribe(() => addSubscribedRpc('accounts$')),
+  shareReplay(1)
+);
 
 /**
  * Get the balance of a given account.
@@ -50,12 +53,13 @@ export const accounts$ = priotization.accounts$
  * @returns {Observable<Number>} - An Observable containing the balance.
  */
 export const balanceOf$ = memoize(address =>
-  priotization.balanceOf$
-    .switchMap(() => Observable.fromPromise(api.eth.getBalance(address)))
-    .map(_ => +_) // Return number instead of BigNumber
-    .pipe(doOnSubscribe(() => addSubscribedRpc('balanceOf$')))
-    .distinctUntilChanged()
-    .shareReplay(1)
+  priotization.balanceOf$.pipe(
+    switchMap(() => Observable.fromPromise(api.eth.getBalance(address))),
+    map(_ => +_), // Return number instead of BigNumber
+    doOnSubscribe(() => addSubscribedRpc('balanceOf$')),
+    distinctUntilChanged(),
+    shareReplay(1)
+  )
 );
 
 /**
@@ -63,10 +67,11 @@ export const balanceOf$ = memoize(address =>
  *
  * Fetches the first account in {@link accounts$}.
  */
-export const defaultAccount$ = accounts$
-  .map(accounts => accounts[0])
-  .pipe(doOnSubscribe(() => addSubscribedRpc('balanceOf$')))
-  .distinctUntilChanged();
+export const defaultAccount$ = accounts$.pipe(
+  map(accounts => accounts[0]),
+  doOnSubscribe(() => addSubscribedRpc('balanceOf$')),
+  distinctUntilChanged()
+);
 
 /**
  * Get the current block height.
