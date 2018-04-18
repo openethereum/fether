@@ -16,17 +16,10 @@
 
 import React, { Component } from 'react';
 
-import light from '../../hoc';
-import { post$ } from '../../lib'; // from '@parity/light'
-
-@light({
-  txProgress: ownProps => post$(ownProps.tx)
-})
-class TxProgress extends Component {
+class Accounts extends Component {
   render() {
-    const { txProgress } = this.props;
-    return <p>Tx progress: {JSON.stringify(txProgress)}</p>;
+    return <div>This is the accounts page.</div>;
   }
 }
 
-export default TxProgress;
+export default Accounts;

@@ -16,22 +16,10 @@
 
 import React, { Component } from 'react';
 
-import light from '../../hoc';
-import { chainStatus$, defaultAccount$ } from '../../lib'; // from '@parity/light'
-
-@light({
-  defaultAccount: defaultAccount$
-})
-class Bal extends Component {
+class Send extends Component {
   render() {
-    const { chainStatus, defaultAccount } = this.props;
-    return (
-      <div>
-        <p>chainStatus: {JSON.stringify(chainStatus)}</p>
-        <p>defaultAccount: {defaultAccount}</p>
-      </div>
-    );
+    return <div>This is the send page.</div>;
   }
 }
 
-export default Bal;
+export default Send;

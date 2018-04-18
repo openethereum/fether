@@ -17,8 +17,8 @@
 import React, { Component } from 'react';
 
 import Bal from './Bal';
-import light from '../hoc';
-import { balanceOf$, chainName$, defaultAccount$, height$ } from '../lib'; // from '@parity/light'
+import light from '../../hoc';
+import { balanceOf$, chainName$, defaultAccount$, height$ } from '../../lib'; // from '@parity/light'
 import TxProgress from './TxProgress';
 
 @light({

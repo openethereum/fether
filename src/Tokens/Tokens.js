@@ -15,39 +15,17 @@
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-import Accounts from '../Accounts';
-import Send from '../Send';
-import Tokens from '../Tokens';
-import './App.css';
+import Balance from './Balance';
 
-class App extends Component {
+class Accounts extends Component {
   render() {
     return (
-      <Router>
-        <div className="App">
-          <ul>
-            <li>
-              <Link to="/">Accounts</Link>
-            </li>
-            <li>
-              <Link to="/tokens">Tokens</Link>
-            </li>
-            <li>
-              <Link to="/send">Send</Link>
-            </li>
-          </ul>
-
-          <hr />
-
-          <Route exact path="/" component={Accounts} />
-          <Route path="/tokens" component={Tokens} />
-          <Route path="/send" component={Send} />
-        </div>
-      </Router>
+      <div>
+        This is the tokens page.<Balance address="0x00Ae02834e91810B223E54ce3f9B7875258a1747" />
+      </div>
     );
   }
 }
 
-export default App;
+export default Accounts;
