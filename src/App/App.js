@@ -27,6 +27,7 @@ class App extends Component {
     return (
       <Router>
         <div className='App'>
+          <h1>Light Wallet</h1>
           <ul>
             <li>
               <Link to='/'>Accounts</Link>
