@@ -1,5 +1,8 @@
 #!/bin/bash
-# ISC, Copyright 2017 Jaco Greeff
+# Copyright 2015-2018 Parity Technologies (UK) Ltd.
+# This file is part of Parity.
+
+# SPDX-License-Identifier: MIT
 
 set -e
 
