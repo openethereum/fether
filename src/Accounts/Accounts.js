@@ -17,7 +17,7 @@
 import React, { Component } from 'react';
 
 class Accounts extends Component {
-  render() {
+  render () {
     return <div>This is the accounts page.</div>;
   }
 }

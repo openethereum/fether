@@ -17,7 +17,7 @@
 import React, { Component } from 'react';
 
 class Send extends Component {
-  render() {
+  render () {
     return <div>This is the send page.</div>;
   }
 }

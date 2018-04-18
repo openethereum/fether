@@ -19,10 +19,10 @@ import React, { Component } from 'react';
 import Balance from './Balance';
 
 class Accounts extends Component {
-  render() {
+  render () {
     return (
       <div>
-        This is the tokens page.<Balance address="0x00Ae02834e91810B223E54ce3f9B7875258a1747" />
+        This is the tokens page.<Balance address='0x00Ae02834e91810B223E54ce3f9B7875258a1747' />
       </div>
     );
   }

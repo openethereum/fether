@@ -21,7 +21,7 @@ const hoc = observables => InnerComponent =>
   class extends Component {
     subscriptions = {}; // All Observable subscriptions
 
-    componentDidMount() {
+    componentDidMount () {
       Object.keys(observables).forEach(key => {
         if (observables[key] instanceof Observable) {
           // Subscribe if it's an Observable
@@ -46,13 +46,13 @@ const hoc = observables => InnerComponent =>
       });
     }
 
-    componentWillUnmount() {
+    componentWillUnmount () {
       Object.values(this.subscriptions).forEach(subscription => {
         subscription.unsubscribe();
       });
     }
 
-    render() {
+    render () {
       return <InnerComponent {...this.state} {...this.props} />;
     }
   };

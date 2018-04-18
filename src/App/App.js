@@ -23,27 +23,27 @@ import Tokens from '../Tokens';
 import './App.css';
 
 class App extends Component {
-  render() {
+  render () {
     return (
       <Router>
-        <div className="App">
+        <div className='App'>
           <ul>
             <li>
-              <Link to="/">Accounts</Link>
+              <Link to='/'>Accounts</Link>
             </li>
             <li>
-              <Link to="/tokens">Tokens</Link>
+              <Link to='/tokens'>Tokens</Link>
             </li>
             <li>
-              <Link to="/send">Send</Link>
+              <Link to='/send'>Send</Link>
             </li>
           </ul>
 
           <hr />
 
-          <Route exact path="/" component={Accounts} />
-          <Route path="/tokens" component={Tokens} />
-          <Route path="/send" component={Send} />
+          <Route exact path='/' component={Accounts} />
+          <Route path='/tokens' component={Tokens} />
+          <Route path='/send' component={Send} />
         </div>
       </Router>
     );
