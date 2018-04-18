@@ -25,7 +25,8 @@
   "scripts": {
     "build": "react-app-rewired build",
     "lint": "semistandard src/**/*.js --parser babel-eslint",
-    "start": "react-app-rewired start"
+    "start": "react-app-rewired start",
+    "test": "echo Skipped."
   },
   "dependencies": {
     "@parity/api": "^2.1.20",
