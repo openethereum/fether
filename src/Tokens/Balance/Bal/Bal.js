@@ -17,7 +17,7 @@
 import React, { Component } from 'react';
 
 import light from '../../../hoc';
-import { chainStatus$, defaultAccount$ } from '../../../lib'; // from '@parity/light'
+import { defaultAccount$ } from '../../../lib'; // from '@parity/light'
 
 @light({
   defaultAccount: defaultAccount$
