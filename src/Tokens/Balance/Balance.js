@@ -16,6 +16,7 @@ import TxProgress from './TxProgress';
   defaultAccount: defaultAccount$,
   height: height$
 })
+
 class Balance extends Component {
   state = { visible: false };
 
