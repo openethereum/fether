@@ -16,20 +16,19 @@ class App extends Component {
     return (
       <Router>
         <div className='App'>
-          <h1>Light Wallet</h1>
-          <ul>
-            <li>
-              <Link to='/'>Accounts</Link>
-            </li>
-            <li>
-              <Link to='/tokens'>Tokens</Link>
-            </li>
-            <li>
-              <Link to='/send'>Send</Link>
-            </li>
-          </ul>
-
-          <hr />
+          <nav className='debug-nav'>
+            <ul className='list'>
+              <li>
+                <Link to='/'>Accounts</Link>
+              </li>
+              <li>
+                <Link to='/tokens'>Tokens</Link>
+              </li>
+              <li>
+                <Link to='/send'>Send</Link>
+              </li>
+            </ul>
+          </nav>
 
           <Route exact path='/' component={Accounts} />
           <Route path='/tokens' component={Tokens} />

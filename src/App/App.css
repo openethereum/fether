@@ -3,6 +3,105 @@
 
 /* SPDX-License-Identifier: MIT */
 
+@viewport {
+  zoom: 1;
+  width: extend-to-zoom;
+}
+@-ms-viewport {
+  width: extend-to-zoom;
+  zoom: 1;
+}
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, font, img, ins, kbd, q, s, samp, small, strike, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-feature-settings: "kern", "liga", "pnum";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+:focus {
+  outline: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  color: #f9f9f9;
+  background: #441155;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
 .App {
-  color: black;
+  min-height: 100vh;
+  margin: 0 auto;
+  max-width: 32rem;
+  box-shadow: 0 0 0.5rem rgba(0,0,0,0.125);
+  color: #222222;
+  background: #f9f9f9;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.debug-nav {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.debug-nav a, .debug-nav a:link, .debug-nav a:visited {
+  color: #f9f9f9;
+  text-decoration: none;
+  padding: 0.5rem;
+  display: block;
+}
+
+.debug-nav a:hover {
+  background-color: rgba(0,0,0,0.25)
+}
+
+.token {
+  overflow: hidden;
+  display: block;
+  padding: 2rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.token_name {
+  float: left;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.token_quantity {
+  float: right;
+  font-weight: 400;
+  font-size: 1.2rem;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
 }
