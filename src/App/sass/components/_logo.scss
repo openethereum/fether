@@ -1,0 +1,20 @@
+.logo {
+  padding: 1.5rem 0;
+
+  figure {
+    display: block;
+    margin: 0 auto;
+    background-color: $black;
+    background-image: url('https://www.parity.io/i/logo-small.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 3rem auto;
+    border-radius: 100%;
+    width: 6rem;
+    height: 6rem;
+    display: flex;
+    flex-direction: column;
+    text-indent: -9999px;
+    overflow: hidden;
+  }
+}

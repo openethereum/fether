@@ -15,24 +15,26 @@ class App extends Component {
   render () {
     return (
       <Router>
-        <div className='App'>
-          <nav className='debug-nav'>
-            <ul className='list'>
-              <li>
-                <Link to='/'>Accounts</Link>
-              </li>
-              <li>
-                <Link to='/tokens'>Tokens</Link>
-              </li>
-              <li>
-                <Link to='/send'>Send</Link>
-              </li>
-            </ul>
-          </nav>
+        <div className="wrapper" role="layout">
+          <div className='content App'>
+            <nav className='debug-nav'>
+              <ul className='list'>
+                <li>
+                  <Link to='/'>Accounts</Link>
+                </li>
+                <li>
+                  <Link to='/tokens'>Tokens</Link>
+                </li>
+                <li>
+                  <Link to='/send'>Send</Link>
+                </li>
+              </ul>
+            </nav>
 
-          <Route exact path='/' component={Accounts} />
-          <Route path='/tokens' component={Tokens} />
-          <Route path='/send' component={Send} />
+            <Route exact path='/' component={Accounts} />
+            <Route path='/tokens' component={Tokens} />
+            <Route path='/send' component={Send} />
+          </div>
         </div>
       </Router>
     );

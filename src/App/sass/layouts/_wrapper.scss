@@ -1,0 +1,16 @@
+.wrapper[role='layout'] {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+
+  .content {
+    max-width: 32rem;
+    min-height: 100vh;
+    margin: 0 auto;
+    background: $white;
+    color: $black;
+  }
+}
