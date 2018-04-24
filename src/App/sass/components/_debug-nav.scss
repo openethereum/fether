@@ -1,5 +1,5 @@
 .debug-nav {
-  background-color: rgba($black,0.325);
+  background-color: red;
   position: fixed;
   right: 1rem;
   bottom: 1rem;
@@ -9,7 +9,8 @@
     display: block;
     padding: 0.5rem 1rem;
     &:hover {
-      background-color: rgba($black,0.325);
+      cursor: pointer;
+      background-color: rgba($black,0.125);
     }
   }
 }

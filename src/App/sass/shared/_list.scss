@@ -1,8 +1,9 @@
 .list {
   &.-tokens {
     & > li {
-      .token {
-
+      margin-bottom: 0.5rem;
+      &:last-child {
+        margin-bottom: 0;
       }
     }
   }

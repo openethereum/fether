@@ -11,12 +11,15 @@ class Accounts extends Component {
   render () {
     return (
       <ul className="list -tokens">
-        <Balance address='0x00Ae02834e91810B223E54ce3f9B7875258a1747' />
-        <Balance address='0x00Ae02834e91810B223E54ce3f9B7875258a1747' />
-        <Balance address='0x00Ae02834e91810B223E54ce3f9B7875258a1747' />
-        <Balance address='0x00Ae02834e91810B223E54ce3f9B7875258a1747' />
-        <Balance address='0x00Ae02834e91810B223E54ce3f9B7875258a1747' />
-        <Balance address='0x00Ae02834e91810B223E54ce3f9B7875258a1747' />
+        <li>
+          <Balance address='0x00Ae02834e91810B223E54ce3f9B7875258a1747' />
+        </li>
+        <li>
+          <Balance address='0x00Ae02834e91810B223E54ce3f9B7875258a1747' />
+        </li>
+        <li>
+          <Balance address='0x00Ae02834e91810B223E54ce3f9B7875258a1747' />
+        </li>
       </ul>
     );
   }

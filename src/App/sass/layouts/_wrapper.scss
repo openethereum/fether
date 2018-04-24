@@ -7,10 +7,9 @@
   overflow: hidden;
 
   .content {
-    max-width: 32rem;
+    max-width: 30rem;
     min-height: 100vh;
+    padding: 2rem;
     margin: 0 auto;
-    background: $white;
-    color: $black;
   }
 }
