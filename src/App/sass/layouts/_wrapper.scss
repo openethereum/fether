@@ -7,9 +7,12 @@
   overflow: hidden;
 
   .content {
-    max-width: 30rem;
-    min-height: 100vh;
-    padding: 2rem;
+    overflow: visible;
+    max-width: 24rem;
+    background: $purple;
+    padding: 0.25rem;
     margin: 0 auto;
+    border-radius: 0 0 0.25rem 0.25rem;
+    box-shadow: 0 0.125rem 0.25rem rgba($black,0.25);
   }
 }

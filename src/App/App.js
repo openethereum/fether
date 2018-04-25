@@ -17,23 +17,13 @@ class App extends Component {
       <Router>
         <div className="wrapper" role="layout">
           <div className='content App'>
-            <nav className='debug-nav'>
-              <ul className='list'>
-                <li>
-                  <Link to='/'>Accounts</Link>
-                </li>
-                <li>
-                  <Link to='/tokens'>Tokens</Link>
-                </li>
-                <li>
-                  <Link to='/send'>Send</Link>
-                </li>
-              </ul>
-            </nav>
-
             <Route exact path='/' component={Accounts} />
             <Route path='/tokens' component={Tokens} />
             <Route path='/send' component={Send} />
+            <nav className='primary-nav'>
+              <a>My address</a>
+              <a>Settings</a>
+            </nav>
           </div>
         </div>
       </Router>

@@ -1,1 +1,18 @@
+.token {
+  display: flex;
 
+  .token_icon {
+    width: auto;
+    height: ms(0) * 1.3;
+  }
+  .token_name {
+    padding-left: 0.5rem;
+    flex-grow: 1;
+    color: $black;
+    font-weight: 500;
+  }
+  .token_balance {
+    font-family: $mono;
+    color: $grey;
+  }
+}

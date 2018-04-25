@@ -749,7 +749,7 @@ html {
       font-size: 1.4vw; } }
 
 body {
-  background-color: #330044;
+  background-color: #0095b6;
   color: #f9f9f9;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-weight: 400;
@@ -771,7 +771,7 @@ a, a:link, a:visited {
   .box.-card {
     background: #f9f9f9;
     color: #888;
-    box-shadow: 0 0.25rem 0.25rem rgba(34, 34, 34, 0.25);
+    box-shadow: 0 0.125rem 0.125rem rgba(34, 34, 34, 0.5);
     border-radius: 2px; }
     .box.-card strong {
       color: #222; }
@@ -783,7 +783,7 @@ a, a:link, a:visited {
       margin-bottom: 0; }
 
 .list.-tokens > li {
-  margin-bottom: 0.5rem; }
+  margin-bottom: 0.25rem; }
   .list.-tokens > li:last-child {
     margin-bottom: 0; }
 
@@ -815,13 +815,16 @@ a, a:link, a:visited {
   bottom: 0;
   overflow: hidden; }
   .wrapper[role='layout'] .content {
-    max-width: 30rem;
-    min-height: 100vh;
-    padding: 2rem;
-    margin: 0 auto; }
+    overflow: visible;
+    max-width: 24rem;
+    background: #330044;
+    padding: 0.25rem;
+    margin: 0 auto;
+    border-radius: 0 0 0.25rem 0.25rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(34, 34, 34, 0.25); }
 
 .debug-nav {
-  background-color: red;
+  background-color: rgba(34, 34, 34, 0.125);
   position: fixed;
   right: 1rem;
   bottom: 1rem; }
@@ -851,13 +854,31 @@ a, a:link, a:visited {
     text-indent: -9999px;
     overflow: hidden; }
 
-.balance .balance_value {
-  display: block; }
+.token {
+  display: flex; }
+  .token .token_icon {
+    width: auto;
+    height: 1.3rem; }
+  .token .token_name {
+    padding-left: 0.5rem;
+    flex-grow: 1;
+    color: #222;
+    font-weight: 500; }
+  .token .token_balance {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    color: #888; }
 
-.balance .balance_label {
-  display: block;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  font-weight: 500;
-  font-size: 0.69444rem;
-  line-height: 1rem;
-  text-transform: uppercase; }
+.primary-nav {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 0.25rem; }
+  .primary-nav a, .primary-nav a:link, .primary-nav a:visited {
+    text-transform: uppercase;
+    font-size: 0.69444rem;
+    color: #f9f9f9;
+    font-weight: 500;
+    padding: 0 0.5rem;
+    display: block; }
+    .primary-nav a:hover, .primary-nav a:link:hover, .primary-nav a:visited:hover {
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 0.25rem; }

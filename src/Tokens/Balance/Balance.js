@@ -39,21 +39,9 @@ class Balance extends Component {
     const { tx, visible } = this.state;
     return (
       <div className='token box -card -padded'>
-        <div className='row'>
-          <div className='col-xs-6'>
-            <div className='text'>
-              <strong>Ethereum</strong>
-            </div>
-          </div>
-          <div className='col-xs-6'>
-            <div className='text -fixed -right'>
-              <div className='balance'>
-                <span className='balance_value'>42.89</span>
-                <span className='balance_label'>eth</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <img className='token_icon' src='/ethereum.png' />
+        <span className='token_name'>Ethereum</span>
+        <span className='token_balance'>42.89</span>
       </div>
     );
   }
