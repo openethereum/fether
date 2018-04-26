@@ -12,6 +12,12 @@
     }
   }
 
+  &.-scroller {
+    max-height: 22rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
   &.-padded {
     padding: 1rem;
   }

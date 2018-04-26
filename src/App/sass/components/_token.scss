@@ -1,6 +1,11 @@
 .token {
   display: flex;
   padding: 1rem;
+  user-select: none;
+
+  &:hover {
+    cursor: default;
+  }
 
   .token_icon {
     margin: -0.5rem 0 -0.5rem -0.425rem;
@@ -26,6 +31,7 @@
     color: $black;
     font-weight: 500;
   }
+
   .token_balance {
     font-family: $mono;
     color: $grey;

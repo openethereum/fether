@@ -27,8 +27,8 @@ class App extends Component {
               <Route path='/send' component={Send} />
 
               <nav className='primary-nav'>
-                <a className='icon -receive'>Receive</a>
-                <a className='icon -settings'>Settings</a>
+                <Link to='/' className='icon -receive'>Receive</Link>
+                <Link to='/' className='icon -settings'>Settings</Link>
               </nav>
             </div>
           </div>

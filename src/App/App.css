@@ -778,6 +778,10 @@ a, a:link, a:visited {
     border-radius: 2px; }
     .box.-card strong {
       color: #222; }
+  .box.-scroller {
+    max-height: 22rem;
+    overflow-x: hidden;
+    overflow-y: auto; }
   .box.-padded {
     padding: 1rem; }
   .box.-stacked {
@@ -869,7 +873,10 @@ a, a:link, a:visited {
 
 .token {
   display: flex;
-  padding: 1rem; }
+  padding: 1rem;
+  user-select: none; }
+  .token:hover {
+    cursor: default; }
   .token .token_icon {
     margin: -0.5rem 0 -0.5rem -0.425rem;
     border-radius: 1.15rem;

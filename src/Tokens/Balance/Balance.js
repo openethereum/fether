@@ -37,6 +37,7 @@ class Balance extends Component {
   render() {
     const { balance, chainName, defaultAccount, height } = this.props;
     const { tx, visible } = this.state;
+
     return (
       <div className='token box -card'>
         <div className='token_icon'>
