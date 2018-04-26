@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="23px" height="23px" viewBox="0 0 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g transform="translate(1.000000, 1.000000)" stroke="#FFFFFF">
+      <path d="M10.5736662,0.309506065 L10.5736662,12.9679533"></path>
+      <polyline points="6.2227719 8.7851691 10.4803017 13.1546824 14.8012607 8.83372338"></polyline>
+      <polyline points="13.782869 2.97552169 20.0741802 2.97552169 20.0741802 20.3721994 0.888446437 20.3721994 0.888446437 2.97552169 7.32897967 2.97552169"></polyline>
+      <polyline points="0.814106188 14.8031492 6.56868151 14.8031492 6.63020495 18.8140283 14.458297 18.8140283 14.458297 14.8031492 19.972182 14.8031492"></polyline>
+    </g>
+  </g>
+</svg>

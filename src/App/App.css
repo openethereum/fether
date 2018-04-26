@@ -749,7 +749,10 @@ html {
       font-size: 1.4vw; } }
 
 body {
-  background-color: #0095b6;
+  background-color: #A5BFDA;
+  background-image: linear-gradient(#A5BFDA, #BFCDDC);
+  background-repeat: no-repeat;
+  background-size: cover;
   color: #f9f9f9;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-weight: 400;
@@ -816,12 +819,22 @@ a, a:link, a:visited {
   overflow: hidden; }
   .wrapper[role='layout'] .content {
     overflow: visible;
-    max-width: 24rem;
-    background: #330044;
-    padding: 0.25rem;
-    margin: 0 auto;
-    border-radius: 0 0 0.25rem 0.25rem;
-    box-shadow: 0 0.125rem 0.25rem rgba(34, 34, 34, 0.25); }
+    max-width: 22rem;
+    margin: 0 auto; }
+    .wrapper[role='layout'] .content .connector {
+      height: 0.5rem;
+      display: flex;
+      justify-content: center; }
+      .wrapper[role='layout'] .content .connector svg {
+        height: 0.5rem;
+        width: auto; }
+        .wrapper[role='layout'] .content .connector svg polygon {
+          fill: #330044; }
+    .wrapper[role='layout'] .content .window {
+      background: #330044;
+      padding: 0.25rem;
+      border-radius: 0.25rem;
+      box-shadow: 0 0.125rem 0.75rem rgba(34, 34, 34, 0.325), 0 0.125rem 0.125rem rgba(34, 34, 34, 0.175); }
 
 .debug-nav {
   background-color: rgba(34, 34, 34, 0.125);
@@ -855,10 +868,23 @@ a, a:link, a:visited {
     overflow: hidden; }
 
 .token {
-  display: flex; }
+  display: flex;
+  padding: 1rem; }
   .token .token_icon {
-    width: auto;
-    height: 1.3rem; }
+    margin: -0.5rem 0 -0.5rem -0.425rem;
+    border-radius: 1.15rem;
+    width: 2.3rem;
+    height: 2.3rem;
+    background-color: #ddd;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center; }
+    .token .token_icon img {
+      height: 1.3rem;
+      width: auto; }
   .token .token_name {
     padding-left: 0.5rem;
     flex-grow: 1;
@@ -875,10 +901,26 @@ a, a:link, a:visited {
   .primary-nav a, .primary-nav a:link, .primary-nav a:visited {
     text-transform: uppercase;
     font-size: 0.69444rem;
-    color: #f9f9f9;
+    color: rgba(249, 249, 249, 0.675);
     font-weight: 500;
     padding: 0 0.5rem;
     display: block; }
     .primary-nav a:hover, .primary-nav a:link:hover, .primary-nav a:visited:hover {
-      background: rgba(0, 0, 0, 0.25);
+      color: #f9f9f9;
       border-radius: 0.25rem; }
+    .primary-nav a.icon, .primary-nav a:link.icon, .primary-nav a:visited.icon {
+      padding: 0;
+      width: 1.3rem;
+      height: 1.3rem;
+      text-indent: -9999rem;
+      background-size: 1rem auto;
+      background-position: center center;
+      background-repeat: no-repeat;
+      opacity: 0.675;
+      margin-left: 0.25rem; }
+      .primary-nav a.icon:hover, .primary-nav a:link.icon:hover, .primary-nav a:visited.icon:hover {
+        opacity: 1; }
+      .primary-nav a.icon.-receive, .primary-nav a:link.icon.-receive, .primary-nav a:visited.icon.-receive {
+        background-image: url("/receive.svg"); }
+      .primary-nav a.icon.-settings, .primary-nav a:link.icon.-settings, .primary-nav a:visited.icon.-settings {
+        background-image: url("/gear.svg"); }

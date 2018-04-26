@@ -17,13 +17,20 @@ class App extends Component {
       <Router>
         <div className="wrapper" role="layout">
           <div className='content App'>
-            <Route exact path='/' component={Accounts} />
-            <Route path='/tokens' component={Tokens} />
-            <Route path='/send' component={Send} />
-            <nav className='primary-nav'>
-              <a>My address</a>
-              <a>Settings</a>
-            </nav>
+            <div className='connector'>
+              <svg width="60px" height="30px" viewBox="0 0 60 30">
+                <polygon fill="#000000" points="0 30 60 30 30 0"></polygon>
+              </svg>
+            </div>
+            <div className='window'>
+              <Route exact path='/' component={Tokens} />
+              <Route path='/send' component={Send} />
+
+              <nav className='primary-nav'>
+                <a className='icon -receive'>Receive</a>
+                <a className='icon -settings'>Settings</a>
+              </nav>
+            </div>
           </div>
         </div>
       </Router>

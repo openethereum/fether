@@ -10,17 +10,22 @@ import Balance from './Balance';
 class Accounts extends Component {
   render () {
     return (
-      <ul className="list -tokens">
-        <li>
-          <Balance address='0x00Ae02834e91810B223E54ce3f9B7875258a1747' />
-        </li>
-        <li>
-          <Balance address='0x00Ae02834e91810B223E54ce3f9B7875258a1747' />
-        </li>
-        <li>
-          <Balance address='0x00Ae02834e91810B223E54ce3f9B7875258a1747' />
-        </li>
-      </ul>
+      <div>
+        <ul className='list -tokens'>
+          <li>
+            <Balance address='0x00Ae02834e91810B223E54ce3f9B7875258a1747' />
+          </li>
+          <li>
+            <Balance address='0x00Ae02834e91810B223E54ce3f9B7875258a1747' />
+          </li>
+          <li>
+            <Balance address='0x00Ae02834e91810B223E54ce3f9B7875258a1747' />
+          </li>
+          <li>
+            <Balance address='0x00Ae02834e91810B223E54ce3f9B7875258a1747' />
+          </li>
+        </ul>
+      </div>
     );
   }
 }

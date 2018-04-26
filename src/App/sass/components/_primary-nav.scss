@@ -6,13 +6,36 @@
   a, a:link, a:visited {
     text-transform: uppercase;
     font-size: ms(-2);
-    color: $white;
+    color: rgba($white,0.675);
     font-weight: 500;
     padding: 0 0.5rem;
     display: block;
     &:hover {
-      background: rgba(0,0,0,0.25);
+      color: $white;
       border-radius: 0.25rem;
+    }
+
+    &.icon {
+      padding: 0;
+      width: ms(0) * 1.3;
+      height: ms(0) * 1.3;
+      text-indent: -9999rem;
+      background-size: ms(0) auto;
+      background-position: center center;
+      background-repeat: no-repeat;
+      opacity: 0.675;
+      margin-left: 0.25rem;
+      &:hover {
+        opacity: 1;
+      }
+
+      &.-receive {
+        background-image: url('/receive.svg');
+      }
+
+      &.-settings {
+        background-image: url('/gear.svg');
+      }
     }
   }
 }

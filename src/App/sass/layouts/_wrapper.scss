@@ -8,11 +8,27 @@
 
   .content {
     overflow: visible;
-    max-width: 24rem;
-    background: $purple;
-    padding: 0.25rem;
+    max-width: 22rem;
     margin: 0 auto;
-    border-radius: 0 0 0.25rem 0.25rem;
-    box-shadow: 0 0.125rem 0.25rem rgba($black,0.25);
+
+    .connector {
+      height: 0.5rem;
+      display: flex;
+    justify-content: center;
+      svg {
+        height: 0.5rem;
+        width: auto;
+        polygon {
+          fill: $purple;
+        }
+      }
+    }
+
+    .window {
+      background: $purple;
+      padding: 0.25rem;
+      border-radius: 0.25rem;
+      box-shadow: 0 0.125rem 0.75rem rgba($black,0.325), 0 0.125rem 0.125rem rgba($black,0.175);
+    }
   }
 }

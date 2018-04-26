@@ -38,10 +38,12 @@ class Balance extends Component {
     const { balance, chainName, defaultAccount, height } = this.props;
     const { tx, visible } = this.state;
     return (
-      <div className='token box -card -padded'>
-        <img className='token_icon' src='/ethereum.png' />
-        <span className='token_name'>Ethereum</span>
-        <span className='token_balance'>42.89</span>
+      <div className='token box -card'>
+        <div className='token_icon'>
+          <img src='/ethereum.png' />
+        </div>
+        <div className='token_name'>Ethereum</div>
+        <div className='token_balance'>42.89</div>
       </div>
     );
   }
