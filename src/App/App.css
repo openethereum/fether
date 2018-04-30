@@ -828,7 +828,8 @@ a, a:link, a:visited {
     .wrapper[role='layout'] .content .connector {
       height: 0.5rem;
       display: flex;
-      justify-content: center; }
+      justify-content: center;
+      margin-bottom: -1px; }
       .wrapper[role='layout'] .content .connector svg {
         height: 0.5rem;
         width: auto; }

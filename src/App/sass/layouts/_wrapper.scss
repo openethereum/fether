@@ -6,7 +6,7 @@
   bottom: 0;
   overflow: hidden;
 
-  .content {
+  .content { // TODO: abstract this out
     overflow: visible;
     max-width: 22rem;
     margin: 0 auto;
@@ -14,7 +14,8 @@
     .connector {
       height: 0.5rem;
       display: flex;
-    justify-content: center;
+      justify-content: center;
+      margin-bottom: -1px;
       svg {
         height: 0.5rem;
         width: auto;
