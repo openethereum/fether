@@ -932,3 +932,33 @@ a, a:link, a:visited {
         background-image: url("/receive.svg"); }
       .primary-nav a.icon.-settings, .primary-nav a:link.icon.-settings, .primary-nav a:visited.icon.-settings {
         background-image: url("/gear.svg"); }
+
+.token-header {
+  text-align: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #ddd; }
+
+.token-header_icon {
+  margin: 0 auto;
+  border-radius: 1.936rem;
+  width: 3.872rem;
+  height: 3.872rem;
+  background-color: #ddd;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center; }
+  .token-header_icon img {
+    height: 1.872rem;
+    width: auto; }
+
+.token-header_name {
+  color: #222;
+  font-weight: 500; }
+
+.token-header_balance {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  color: #888;
+  font-size: 0.83333rem; }
