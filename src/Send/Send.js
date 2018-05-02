@@ -14,7 +14,7 @@ class Send extends Component {
         <div className='box -card'>
           <header className='token-header'>
             <div className='token-header_icon'>
-              <img src={ethereumIcon} />
+              <img src={ethereumIcon} alt='ethereum' />
             </div>
             <div className='token-header_name'>Ethereum</div>
             <div className='token-header_balance'>42.89</div>

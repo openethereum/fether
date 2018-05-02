@@ -26,7 +26,7 @@
     "build": "npm run build-css && npm run build-js",
     "build-css": "node-sass-chokidar src/ -o src/",
     "build-js": "react-app-rewired build",
-    "lint": "semistandard src/**/*.js --parser babel-eslint",
+    "lint": "semistandard 'src/**/*.js' --parser babel-eslint",
     "start": "npm-run-all -p watch-css start-js",
     "start-js": "react-app-rewired start",
     "test": "echo Skipped.",

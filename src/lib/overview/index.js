@@ -22,7 +22,7 @@ export const addSubscribedRpc = rpc => {
  */
 if (typeof window !== 'undefined') {
   window.parity = {
-    rpcOverview() {
+    rpcOverview () {
       return subscribed;
     }
   };

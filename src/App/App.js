@@ -3,6 +3,8 @@
 
 // SPDX-License-Identifier: MIT
 
+/* eslint-disable jsx-a11y/aria-role */
+
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
