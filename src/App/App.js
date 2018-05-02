@@ -17,8 +17,8 @@ class App extends Component {
   render () {
     return (
       <Router>
-        <div className='wrapper' role='layout'>
-          <div className='content App'>
+        <div className='wrapper'>
+          <div className='content'>
             <div className='connector'>
               <svg width='60px' height='30px' viewBox='0 0 60 30'>
                 <polygon points='0 30 60 30 30 0' />

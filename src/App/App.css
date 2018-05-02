@@ -833,28 +833,28 @@ button {
 .text strong {
   font-weight: 500; }
 
-.wrapper[role='layout'] {
+.wrapper {
   position: fixed;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
   overflow: hidden; }
-  .wrapper[role='layout'] .content {
+  .wrapper .content {
     overflow: visible;
     max-width: 22rem;
     margin: 0 auto; }
-    .wrapper[role='layout'] .content .connector {
+    .wrapper .content .connector {
       height: 0.5rem;
       display: flex;
       justify-content: center;
       margin-bottom: -1px; }
-      .wrapper[role='layout'] .content .connector svg {
+      .wrapper .content .connector svg {
         height: 0.5rem;
         width: auto; }
-        .wrapper[role='layout'] .content .connector svg polygon {
+        .wrapper .content .connector svg polygon {
           fill: #330044; }
-    .wrapper[role='layout'] .content .window {
+    .wrapper .content .window {
       background: #330044;
       padding: 0.25rem;
       border-radius: 0.25rem;
