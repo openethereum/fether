@@ -1,0 +1,10 @@
+.list {
+  &.-tokens {
+    & > li {
+      margin-bottom: 0.25rem;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

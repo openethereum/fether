@@ -1,0 +1,35 @@
+.wrapper {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+
+  .content { // TODO: abstract this out
+    overflow: visible;
+    max-width: 22rem;
+    margin: 0 auto;
+
+    .connector {
+      height: 0.5rem;
+      display: flex;
+      justify-content: center;
+      margin-bottom: -1px;
+      svg {
+        height: 0.5rem;
+        width: auto;
+        polygon {
+          fill: $purple;
+        }
+      }
+    }
+
+    .window {
+      background: $purple;
+      padding: 0.25rem;
+      border-radius: 0.25rem;
+      box-shadow: 0 0.125rem 0.75rem rgba($black,0.325), 0 0.125rem 0.125rem rgba($black,0.175);
+    }
+  }
+}

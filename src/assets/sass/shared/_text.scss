@@ -1,0 +1,29 @@
+.text {
+  p, ul, ol, blockquote {
+    margin: 1rem 0;
+    &:first-child {
+      margin-top: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &.-centered {
+    text-align: center;
+  }
+
+  &.-right {
+    text-align: right;
+  }
+
+  &.-fixed {
+    font-family: $mono;
+    font-size: ms(-1);
+  }
+
+  strong {
+    font-weight: 500;
+  }
+}
+

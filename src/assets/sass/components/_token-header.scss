@@ -1,0 +1,34 @@
+.token-header {
+  text-align: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid $faint
+}
+
+.token-header_icon {
+  margin: 0 auto;
+  border-radius: ((ms(2) * 1.3) + 2rem) * 0.5;
+  width: (ms(2) * 1.3) + 2rem;
+  height: (ms(2) * 1.3) + 2rem;
+  background-color: $faint;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  img {
+    height: (ms(2) * 1.3);
+    width: auto;
+  }
+}
+
+.token-header_name {
+  color: $black;
+  font-weight: 500;
+}
+
+.token-header_balance {
+  font-family: $mono;
+  color: $grey;
+  font-size: ms(-1);
+}

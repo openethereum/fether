@@ -11,6 +11,9 @@
 /dist
 /lib
 
+# css files
+.css
+
 # logs
 *.log*
 

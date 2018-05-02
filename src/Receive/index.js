@@ -3,6 +3,6 @@
 
 // SPDX-License-Identifier: MIT
 
-import TxProgress from './TxProgress';
+import Receive from './Receive';
 
-export default TxProgress;
+export default Receive;

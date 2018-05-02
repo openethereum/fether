@@ -1,0 +1,10 @@
+.address {
+  font-size: ms(-1);
+  line-height: ms(0) * 1.3;
+  border-width: 1px 0;
+  border-style: solid;
+  border-color: $faint;
+  background: rgba($faint,0.25);
+  word-wrap: break-word;
+  padding: 0.5rem;
+}

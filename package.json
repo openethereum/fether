@@ -23,10 +23,14 @@
     "Promise"
   ],
   "scripts": {
-    "build": "react-app-rewired build",
-    "lint": "semistandard src/**/*.js --parser babel-eslint",
-    "start": "react-app-rewired start",
-    "test": "echo Skipped."
+    "build": "npm run build-css && npm run build-js",
+    "build-css": "node-sass-chokidar src/ -o src/",
+    "build-js": "react-app-rewired build",
+    "lint": "semistandard 'src/**/*.js' --parser babel-eslint",
+    "start": "npm-run-all -p watch-css start-js",
+    "start-js": "react-app-rewired start",
+    "test": "echo Skipped.",
+    "watch-css": "npm run build-css -- --watch --recursive"
   },
   "dependencies": {
     "@parity/api": "^2.1.20",
@@ -42,6 +46,9 @@
     "@babel/preset-env": "^7.0.0-beta.44",
     "babel-eslint": "^8.2.3",
     "babel-loader": "^8.0.0-beta",
+    "node-sass": "^4.8.3",
+    "node-sass-chokidar": "^1.2.2",
+    "npm-run-all": "^4.1.2",
     "react-app-rewire-mobx": "^1.0.8",
     "react-app-rewired": "^1.5.0",
     "semistandard": "^12.0.1",
