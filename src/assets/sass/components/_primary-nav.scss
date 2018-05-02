@@ -3,10 +3,12 @@
   justify-content: flex-end;
   padding-top: 0.25rem;
 
-  a, a:link, a:visited {
+  a,
+  a:link,
+  a:visited {
     text-transform: uppercase;
     font-size: ms(-2);
-    color: rgba($white,0.675);
+    color: rgba($white, 0.675);
     font-weight: 500;
     padding: 0 0.5rem;
     display: block;
@@ -30,11 +32,11 @@
       }
 
       &.-receive {
-        background-image: url('/receive.svg');
+        background-image: url('../assets/img/icons/receive.svg');
       }
 
       &.-settings {
-        background-image: url('/gear.svg');
+        background-image: url('../assets/img/icons/gear.svg');
       }
     }
   }

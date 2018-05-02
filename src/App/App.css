@@ -925,17 +925,23 @@ button {
   display: flex;
   justify-content: flex-end;
   padding-top: 0.25rem; }
-  .primary-nav a, .primary-nav a:link, .primary-nav a:visited {
+  .primary-nav a,
+  .primary-nav a:link,
+  .primary-nav a:visited {
     text-transform: uppercase;
     font-size: 0.69444rem;
     color: rgba(249, 249, 249, 0.675);
     font-weight: 500;
     padding: 0 0.5rem;
     display: block; }
-    .primary-nav a:hover, .primary-nav a:link:hover, .primary-nav a:visited:hover {
+    .primary-nav a:hover,
+    .primary-nav a:link:hover,
+    .primary-nav a:visited:hover {
       color: #f9f9f9;
       border-radius: 0.25rem; }
-    .primary-nav a.icon, .primary-nav a:link.icon, .primary-nav a:visited.icon {
+    .primary-nav a.icon,
+    .primary-nav a:link.icon,
+    .primary-nav a:visited.icon {
       padding: 0;
       width: 1.3rem;
       height: 1.3rem;
@@ -945,12 +951,18 @@ button {
       background-repeat: no-repeat;
       opacity: 0.675;
       margin-left: 0.25rem; }
-      .primary-nav a.icon:hover, .primary-nav a:link.icon:hover, .primary-nav a:visited.icon:hover {
+      .primary-nav a.icon:hover,
+      .primary-nav a:link.icon:hover,
+      .primary-nav a:visited.icon:hover {
         opacity: 1; }
-      .primary-nav a.icon.-receive, .primary-nav a:link.icon.-receive, .primary-nav a:visited.icon.-receive {
-        background-image: url("/receive.svg"); }
-      .primary-nav a.icon.-settings, .primary-nav a:link.icon.-settings, .primary-nav a:visited.icon.-settings {
-        background-image: url("/gear.svg"); }
+      .primary-nav a.icon.-receive,
+      .primary-nav a:link.icon.-receive,
+      .primary-nav a:visited.icon.-receive {
+        background-image: url("../assets/img/icons/receive.svg"); }
+      .primary-nav a.icon.-settings,
+      .primary-nav a:link.icon.-settings,
+      .primary-nav a:visited.icon.-settings {
+        background-image: url("../assets/img/icons/gear.svg"); }
 
 .token-header {
   text-align: center;

@@ -10,13 +10,14 @@ import light from '../../hoc';
 import { balanceOf$, chainName$, defaultAccount$, height$ } from '../../lib'; // from '@parity/light'
 import TxProgress from './TxProgress';
 
+import ethereumIcon from '../../assets/img/tokens/ethereum.png';
+
 @light({
   balance: ownProps => balanceOf$(ownProps.address),
   chainName: chainName$,
   defaultAccount: defaultAccount$,
   height: height$
 })
-
 class Balance extends Component {
   state = { visible: false };
 
@@ -39,12 +40,12 @@ class Balance extends Component {
     const { tx, visible } = this.state;
 
     return (
-      <div className='token box -card'>
-        <div className='token_icon'>
-          <img src='/ethereum.png' />
+      <div className="token box -card">
+        <div className="token_icon">
+          <img src={ethereumIcon} />
         </div>
-        <div className='token_name'>Ethereum</div>
-        <div className='token_balance'>42.89</div>
+        <div className="token_name">Ethereum</div>
+        <div className="token_balance">42.89</div>
       </div>
     );
   }

@@ -5,6 +5,8 @@
 
 import React, { Component } from 'react';
 
+import ethereumIcon from '../assets/img/tokens/ethereum.png';
+
 class Send extends Component {
   render () {
     return (
@@ -12,7 +14,7 @@ class Send extends Component {
         <div className='box -card'>
           <header className='token-header'>
             <div className='token-header_icon'>
-              <img src='/ethereum.png' />
+              <img src={ethereumIcon} />
             </div>
             <div className='token-header_name'>Ethereum</div>
             <div className='token-header_balance'>42.89</div>
@@ -39,7 +41,6 @@ class Send extends Component {
           </form>
         </div>
       </div>
-
     );
   }
 }

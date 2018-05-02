@@ -6,7 +6,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-import Accounts from '../Accounts';
 import Send from '../Send';
 import Receive from '../Receive';
 import Tokens from '../Tokens';
@@ -16,11 +15,11 @@ class App extends Component {
   render () {
     return (
       <Router>
-        <div className="wrapper" role="layout">
+        <div className='wrapper' role='layout'>
           <div className='content App'>
             <div className='connector'>
-              <svg width="60px" height="30px" viewBox="0 0 60 30">
-                <polygon points="0 30 60 30 30 0"></polygon>
+              <svg width='60px' height='30px' viewBox='0 0 60 30'>
+                <polygon points='0 30 60 30 30 0' />
               </svg>
             </div>
             <div className='window'>
@@ -29,8 +28,12 @@ class App extends Component {
               <Route path='/receive' component={Receive} />
 
               <nav className='primary-nav'>
-                <Link to='/receive' className='icon -receive'>Receive</Link>
-                <Link to='/' className='icon -settings'>Settings</Link>
+                <Link to='/receive' className='icon -receive'>
+                  Receive
+                </Link>
+                <Link to='/' className='icon -settings'>
+                  Settings
+                </Link>
               </nav>
             </div>
           </div>

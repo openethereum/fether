@@ -7,10 +7,12 @@
 /coverage
 
 # production
-/src/**/*.css
 /build
 /dist
 /lib
+
+# css files
+.css
 
 # logs
 *.log*
