@@ -9,9 +9,20 @@ class Receive extends Component {
   render () {
     return (
       <div>
-        <label>Wallet address</label>
-        <div>
-          <code>muchononsense</code>
+        <div className='box -card'>
+          <div className='box -padded'>
+            <label>Wallet address</label>
+          </div>
+          <div className='box -padded address'>
+            <code>
+              muchononsensemuchononsensemuchononsensemuchononsensemuchononsense
+            </code>
+          </div>
+          <div className='box -padded'>
+            <button className='-small'>
+              Copy to clipboard
+            </button>
+          </div>
         </div>
       </div>
     );

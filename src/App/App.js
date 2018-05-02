@@ -29,7 +29,7 @@ class App extends Component {
               <Route path='/receive' component={Receive} />
 
               <nav className='primary-nav'>
-                <Link to='/' className='icon -receive'>Receive</Link>
+                <Link to='/receive' className='icon -receive'>Receive</Link>
                 <Link to='/' className='icon -settings'>Settings</Link>
               </nav>
             </div>

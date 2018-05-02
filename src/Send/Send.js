@@ -18,8 +18,8 @@ class Send extends Component {
             <div className='token-header_balance'>42.89</div>
           </header>
 
-          <form>
-            <ul className='fields'>
+          <form className='send-form'>
+            <ul className='send-form_fields'>
               <li>
                 <label>Address</label>
                 <input type='tel' />
@@ -33,7 +33,9 @@ class Send extends Component {
                 <input type='tel' />
               </li>
             </ul>
-            <button className='button'>Send</button>
+            <div className='send-form_action'>
+              <button className='button'>Send</button>
+            </div>
           </form>
         </div>
       </div>

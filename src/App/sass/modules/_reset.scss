@@ -29,7 +29,7 @@
     quotes: none;
   }
 
-  \:focus {
+  input:focus, select:focus, button:focus {
     outline: 0;
   }
 
