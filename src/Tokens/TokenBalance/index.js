@@ -3,4 +3,6 @@
 
 // SPDX-License-Identifier: MIT
 
-export * from './rpc';
+import TokenBalance from './TokenBalance';
+
+export default TokenBalance;

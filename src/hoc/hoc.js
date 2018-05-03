@@ -12,26 +12,24 @@ const hoc = observables => InnerComponent =>
 
     componentDidMount () {
       Object.keys(observables).forEach(key => {
-        if (observables[key] instanceof Observable) {
-          // Subscribe if it's an Observable
-          this.subscriptions[key] = observables[key].subscribe(value => {
-            this.setState({ [key]: value });
-          });
-        } else if (
-          typeof observables[key] === 'function' &&
-          observables[key](this.props) instanceof Observable
-        ) {
-          // If it's a function returning an Observable, subscribe too
-          this.subscriptions[key] = observables[key](this.props).subscribe(
-            value => {
-              this.setState({ [key]: value });
-            }
-          );
-        } else {
+        const rpc$ = observables[key];
+        if (typeof rpc$ !== 'function') {
           throw new Error(
-            `Object with key '${key}' is not an Observable or a function returning an Observable.`
+            `Object with key '${key}' should be a function returning an Observable.`
           );
         }
+
+        const obs$ = rpc$(this.props);
+        if (!(obs$ instanceof Observable)) {
+          throw new Error(
+            `Object with key '${key}' should be a function returning an Observable.`
+          );
+        }
+
+        // Subscribe to the observable
+        this.subscriptions[key] = obs$.subscribe(value => {
+          this.setState({ [key]: value });
+        });
       });
     }
 

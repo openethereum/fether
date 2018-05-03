@@ -3,4 +3,6 @@
 
 // SPDX-License-Identifier: MIT
 
-export * from './parity';
+import BalanceLayout from './BalanceLayout';
+
+export default BalanceLayout;

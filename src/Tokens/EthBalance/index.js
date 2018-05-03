@@ -3,4 +3,6 @@
 
 // SPDX-License-Identifier: MIT
 
-export * from './eth';
+import EthBalance from './EthBalance';
+
+export default EthBalance;
