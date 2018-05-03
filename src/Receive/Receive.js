@@ -4,12 +4,12 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import { me$ } from '@parity/light.js';
+import { defaultAccount$ } from '@parity/light.js';
 
 import light from '../hoc';
 
 @light({
-  me: me$
+  me: defaultAccount$
 })
 class Receive extends Component {
   render () {

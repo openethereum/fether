@@ -5,7 +5,7 @@
 
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { me$ } from '@parity/light.js';
+import { defaultAccount$ } from '@parity/light.js';
 
 import EthBalance from './EthBalance';
 import light from '../hoc';
@@ -14,7 +14,7 @@ import TokenBalance from './TokenBalance';
 @inject('tokensStore')
 @observer
 @light({
-  me: me$
+  me: defaultAccount$
 })
 class Tokens extends Component {
   render () {

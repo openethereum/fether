@@ -14,7 +14,8 @@ const BalanceLayout = ({ balance, image, name, symbol }) => (
     </div>
     <div className='token_name'>{name}</div>
     <div className='token_balance'>
-      {balance ? (balance / ETHER_IN_WEI).toFixed(2) : '...'} {symbol}
+      {Number.isFinite(balance) ? (balance / ETHER_IN_WEI).toFixed(2) : '...'}{' '}
+      {symbol}
     </div>
   </div>
 );
