@@ -5,17 +5,11 @@
 
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import isElectron from 'is-electron';
 import { defaultAccount$, nodeHealth$ } from '@parity/light.js';
 
 import EthBalance from './EthBalance';
 import light from '../hoc';
 import TokenBalance from './TokenBalance';
-
-let electron;
-if (isElectron()) {
-  electron = window.require('electron');
-}
 
 @inject('tokensStore')
 @observer
@@ -24,34 +18,12 @@ if (isElectron()) {
   nodeHealth: nodeHealth$
 })
 class Tokens extends Component {
-  state = {
-    progress: 0,
-    status: null
-  };
-
-  componentDidMount () {
-    if (!isElectron()) {
-      return;
-    }
-
-    const { ipcRenderer } = electron;
-
-    // Listen to messages from main process
-    ipcRenderer.on('parity-download-progress', (_, progress) => {
-      this.setState({ progress, status: 'Downloading...' });
-    });
-    ipcRenderer.on('parity-running', (_, running) => {
-      this.setState({ status: 'Parity running...' });
-    });
-  }
-
   render () {
     const {
       me,
       nodeHealth,
       tokensStore: { tokens }
     } = this.props;
-    const { progress, status } = this.state;
 
     return (
       <div className='box -scroller'>
@@ -66,16 +38,14 @@ class Tokens extends Component {
                 )}
               </li>
             ))}
+
+          {/* @brian the following 3 <li> are just to show what data I have from the backend, remove them whenever you want */}
           <li>
             <p>1. DL and install parity Status</p>
-            {nodeHealth ? (
-              <pre>OK, parity installed and running</pre>
-            ) : (
-              <pre>
-                progress: {Math.round(progress * 100)}%<br />status: {status}
-              </pre>
-            )}
+
+            <pre>OK, parity installed and running</pre>
           </li>
+
           {nodeHealth && (
             <li>
               <p>2. Overall node health status</p>
@@ -92,6 +62,7 @@ class Tokens extends Component {
               </p>
             </li>
           )}
+
           {nodeHealth && (
             <li>
               <p>

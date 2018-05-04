@@ -4,15 +4,28 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Link
+} from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
 
+import Onboarding from '../Onboarding';
 import Send from '../Send';
 import Receive from '../Receive';
 import Tokens from '../Tokens';
 import './App.css';
 
+@inject('electronStore')
+@observer
 class App extends Component {
   render () {
+    const {
+      electronStore: { isReady }
+    } = this.props;
+
     return (
       <Router>
         <div className='wrapper'>
@@ -23,7 +36,9 @@ class App extends Component {
               </svg>
             </div>
             <div className='window'>
+              {!isReady && <Redirect to='/onboarding' />}
               <Route exact path='/' component={Tokens} />
+              <Route path='/onboarding' component={Onboarding} />
               <Route path='/send' component={Send} />
               <Route path='/receive' component={Receive} />
 

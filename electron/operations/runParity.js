@@ -63,7 +63,11 @@ module.exports = {
           }
         });
       })
-      .then(() => mainWindow.webContents.send('parity-running', true)) // Notify the renderers
+      .then(() => {
+        // Notify the renderers
+        mainWindow.webContents.send('parity-running', true);
+        global.isParityRunning = true; // Send this variable to renderes via IPC
+      })
       .catch(err => {
         handleError(err, 'An error occured while running parity.');
       });
