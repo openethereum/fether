@@ -60,11 +60,21 @@ module.exports = () => {
   // Args to pass to `parity` command
   parityArgv = omit(argv, '_', '$0', 'help', 'version');
 
-  // Delete all keys starting with --ui* from parityArgv.
-  // They will be handled directly by the UI.
-  Object.keys(parityArgv).forEach(
-    key => key.startsWith('ui') && delete parityArgv[key]
-  );
+  // Sanitize args to be easily used by parity
+  Object.keys(parityArgv).forEach(key => {
+    // Delete all keys starting with --ui* from parityArgv.
+    // They will be handled directly by the UI.
+    if (key.startsWith('ui')) {
+      delete parityArgv[key];
+    }
+
+    // yargs create camelCase keys for each arg, e.g. "--ws-origins all" will
+    // create { wsOrigins: 'all' }. For parity, we remove all those that have
+    // a capital letter
+    if (/[A-Z]/.test(key)) {
+      delete parityArgv[key];
+    }
+  });
 
   return [argv, parityArgv];
 };

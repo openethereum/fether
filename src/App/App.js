@@ -12,41 +12,40 @@ import {
 } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 
-import Onboarding from '../Onboarding';
+import Loading from '../Loading';
 import Send from '../Send';
 import Receive from '../Receive';
 import Tokens from '../Tokens';
 import './App.css';
 
-@inject('electronStore')
+@inject('parityStore')
 @observer
 class App extends Component {
-  render () {
+  render() {
     const {
-      electronStore: { isReady }
+      parityStore: { isReady }
     } = this.props;
 
     return (
       <Router>
-        <div className='wrapper'>
-          <div className='content'>
-            <div className='connector'>
-              <svg width='60px' height='30px' viewBox='0 0 60 30'>
-                <polygon points='0 30 60 30 30 0' />
+        <div className="wrapper">
+          <div className="content">
+            <div className="connector">
+              <svg width="60px" height="30px" viewBox="0 0 60 30">
+                <polygon points="0 30 60 30 30 0" />
               </svg>
             </div>
-            <div className='window'>
-              {!isReady && <Redirect to='/onboarding' />}
-              <Route exact path='/' component={Tokens} />
-              <Route path='/onboarding' component={Onboarding} />
-              <Route path='/send' component={Send} />
-              <Route path='/receive' component={Receive} />
+            <div className="window">
+              <Route exact path="/" component={Tokens} />
+              <Route path="/loading" component={Loading} />
+              <Route path="/send" component={Send} />
+              <Route path="/receive" component={Receive} />
 
-              <nav className='primary-nav'>
-                <Link to='/receive' className='icon -receive'>
+              <nav className="primary-nav">
+                <Link to="/receive" className="icon -receive">
                   Receive
                 </Link>
-                <Link to='/' className='icon -settings'>
+                <Link to="/" className="icon -settings">
                   Settings
                 </Link>
               </nav>

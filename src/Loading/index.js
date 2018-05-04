@@ -3,6 +3,6 @@
 //
 // SPDX-License-Identifier: MIT
 
-import Onboarding from './Onboarding';
+import Loading from './Loading';
 
-export default Onboarding;
+export default Loading;

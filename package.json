@@ -32,7 +32,7 @@
     "build-js": "react-app-rewired build",
     "lint": "semistandard 'src/**/*.js' --parser babel-eslint",
     "start": "npm-run-all -p watch-css start-js",
-    "start-electron": "electron electron/ --ui-dev",
+    "start-electron": "electron electron/ --ui-dev --ws-origins all",
     "start-js": "react-app-rewired start",
     "test": "echo Skipped.",
     "watch-css": "npm run build-css -- --watch --recursive"

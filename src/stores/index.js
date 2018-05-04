@@ -3,10 +3,10 @@
 //
 // SPDX-License-Identifier: MIT
 
-import ElectronStore from './ElectronStore';
+import ParityStore from './ParityStore';
 import TokensStore from './TokensStore';
 
 export default {
-  electronStore: new ElectronStore(),
+  parityStore: new ParityStore(),
   tokensStore: new TokensStore()
 };

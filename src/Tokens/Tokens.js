@@ -6,28 +6,34 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { defaultAccount$, nodeHealth$ } from '@parity/light.js';
+import { Redirect } from 'react-router-dom';
 
 import EthBalance from './EthBalance';
 import light from '../hoc';
 import TokenBalance from './TokenBalance';
 
-@inject('tokensStore')
+@inject('parityStore', 'tokensStore')
 @observer
 @light({
   me: defaultAccount$,
   nodeHealth: nodeHealth$
 })
 class Tokens extends Component {
-  render () {
+  render() {
     const {
       me,
       nodeHealth,
+      parityStore: { isApiConnected },
       tokensStore: { tokens }
     } = this.props;
 
+    if (!isApiConnected) {
+      return <Redirect to="/loading" />;
+    }
+
     return (
-      <div className='box -scroller'>
-        <ul className='list -tokens'>
+      <div className="box -scroller">
+        <ul className="list -tokens">
           {me &&
             Array.from(tokens.keys()).map(key => (
               <li key={key}>

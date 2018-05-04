@@ -7,22 +7,22 @@ import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { Redirect } from 'react-router-dom';
 
-@inject('electronStore')
+@inject('parityStore')
 @observer
-class Onboarding extends Component {
+class Loading extends Component {
   render() {
     const {
-      electronStore: { downloadProgress, isReady }
+      parityStore: { downloadProgress, isApiConnected }
     } = this.props;
 
-    if (isReady) {
+    if (isApiConnected) {
       return <Redirect to="/" />;
     }
 
     return (
       <div className="box -scroller">
         <p>
-          This is the Onboarding page.<br />
+          This is the Loading page.<br />
         </p>
         <ul className="list -tokens">
           <li>
@@ -39,15 +39,15 @@ class Onboarding extends Component {
 
   renderStatus = () => {
     const {
-      electronStore: { isParityRunning }
+      parityStore: { isParityRunning }
     } = this.props;
 
     if (isParityRunning) {
-      return 'Running parity...';
+      return 'Connecting to API...';
     } else {
       return 'Downloading...';
     }
   };
 }
 
-export default Onboarding;
+export default Loading;
