@@ -9,6 +9,7 @@ const { download } = require('electron-dl');
 const fs = require('fs');
 const util = require('util');
 
+const handleError = require('./handleError');
 const {
   parity: { channel }
 } = require('../../package.json');

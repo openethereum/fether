@@ -10,21 +10,21 @@ import { Redirect } from 'react-router-dom';
 @inject('parityStore')
 @observer
 class Loading extends Component {
-  render() {
+  render () {
     const {
       parityStore: { downloadProgress, isApiConnected }
     } = this.props;
 
     if (isApiConnected) {
-      return <Redirect to="/" />;
+      return <Redirect to='/' />;
     }
 
     return (
-      <div className="box -scroller">
+      <div className='box -scroller'>
         <p>
           This is the Loading page.<br />
         </p>
-        <ul className="list -tokens">
+        <ul className='list -tokens'>
           <li>
             <p>1. DL and install parity</p>
             <pre>
@@ -39,13 +39,16 @@ class Loading extends Component {
 
   renderStatus = () => {
     const {
-      parityStore: { isParityRunning }
+      parityStore: { downloadProgress, isParityRunning }
     } = this.props;
 
     if (isParityRunning) {
       return 'Connecting to API...';
-    } else {
+    } else if (downloadProgress) {
       return 'Downloading...';
+    } else {
+      // We should be in browser now
+      return 'Please run:\nparity--light --ws-origins all';
     }
   };
 }

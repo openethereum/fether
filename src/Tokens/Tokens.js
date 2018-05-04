@@ -19,7 +19,7 @@ import TokenBalance from './TokenBalance';
   nodeHealth: nodeHealth$
 })
 class Tokens extends Component {
-  render() {
+  render () {
     const {
       me,
       nodeHealth,
@@ -28,12 +28,12 @@ class Tokens extends Component {
     } = this.props;
 
     if (!isApiConnected) {
-      return <Redirect to="/loading" />;
+      return <Redirect to='/loading' />;
     }
 
     return (
-      <div className="box -scroller">
-        <ul className="list -tokens">
+      <div className='box -scroller'>
+        <ul className='list -tokens'>
           {me &&
             Array.from(tokens.keys()).map(key => (
               <li key={key}>

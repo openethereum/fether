@@ -4,48 +4,37 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Link
-} from 'react-router-dom';
-import { inject, observer } from 'mobx-react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import Loading from '../Loading';
+import ProtectedRoute from './ProtectedRoute';
 import Send from '../Send';
 import Receive from '../Receive';
 import Tokens from '../Tokens';
 import './App.css';
 
-@inject('parityStore')
-@observer
 class App extends Component {
-  render() {
-    const {
-      parityStore: { isReady }
-    } = this.props;
-
+  render () {
     return (
       <Router>
-        <div className="wrapper">
-          <div className="content">
-            <div className="connector">
-              <svg width="60px" height="30px" viewBox="0 0 60 30">
-                <polygon points="0 30 60 30 30 0" />
+        <div className='wrapper'>
+          <div className='content'>
+            <div className='connector'>
+              <svg width='60px' height='30px' viewBox='0 0 60 30'>
+                <polygon points='0 30 60 30 30 0' />
               </svg>
             </div>
-            <div className="window">
-              <Route exact path="/" component={Tokens} />
-              <Route path="/loading" component={Loading} />
-              <Route path="/send" component={Send} />
-              <Route path="/receive" component={Receive} />
+            <div className='window'>
+              <ProtectedRoute exact path='/' component={Tokens} />
+              <Route path='/loading' component={Loading} />
+              <ProtectedRoute path='/send' component={Send} />
+              <ProtectedRoute path='/receive' component={Receive} />
 
-              <nav className="primary-nav">
-                <Link to="/receive" className="icon -receive">
+              <nav className='primary-nav'>
+                <Link to='/receive' className='icon -receive'>
                   Receive
                 </Link>
-                <Link to="/" className="icon -settings">
+                <Link to='/' className='icon -settings'>
                   Settings
                 </Link>
               </nav>
