@@ -10,8 +10,4 @@ const parityPath = require('../utils/parityPath');
 
 const fsExists = util.promisify(fs.stat);
 
-module.exports = () =>
-  fsExists(parityPath()).then(() => {
-    // Global variables can be accessed in renderers via IPC
-    global.parityInstalled = true;
-  });
+module.exports = () => fsExists(parityPath());
