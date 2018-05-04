@@ -48,7 +48,7 @@ class Loading extends Component {
       return 'Downloading...';
     } else {
       // We should be in browser now
-      return 'Please run:\nparity--light --ws-origins all';
+      return 'Please run:\nparity --light --ws-origins all';
     }
   };
 }

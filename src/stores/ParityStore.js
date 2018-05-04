@@ -76,14 +76,16 @@ export default class ParityStore {
       )
     );
 
+    // Initialize the light.js lib
     light.setApi(api);
+
     // TODO This is not working
     // api.on('connected', () => console.log('ehdsfa'));
     // api.on('disconnected', () => console.log('ehdsfa'));
     // So instead, we poll every 1s
     setInterval(() => {
       this.setIsApiConnected(api.isConnected);
-    });
+    }, 1000);
   };
 
   requestNewToken = () => {
