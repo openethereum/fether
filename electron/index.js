@@ -46,7 +46,7 @@ function createWindow() {
     // Opens file:///path/to/.build/index.html in prod mode
     mainWindow.loadURL(
       url.format({
-        pathname: path.join(__dirname, '..', '.build', 'index.html'),
+        pathname: path.join(__dirname, '..', 'build', 'index.html'),
         protocol: 'file:',
         slashes: true
       })

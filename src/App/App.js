@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter, Route, Link } from 'react-router-dom';
 
 import Loading from '../Loading';
 import ProtectedRoute from './ProtectedRoute';
@@ -12,6 +12,11 @@ import Send from '../Send';
 import Receive from '../Receive';
 import Tokens from '../Tokens';
 import './App.css';
+
+// Use MemoryRouter for production viewing in file:// protocol
+// https://github.com/facebook/create-react-app/issues/3591
+const Router =
+  process.env.NODE_ENV === 'production' ? MemoryRouter : BrowserRouter;
 
 class App extends Component {
   render () {

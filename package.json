@@ -22,15 +22,18 @@
     "Parity",
     "Promise"
   ],
+  "homepage": "./",
   "parity": {
     "channel": "beta"
   },
   "scripts": {
-    "build": "npm run build-css && npm run build-js && npm run build-electron",
+    "build": "cross-env NODE_ENV=production && npm run build-css && npm run build-js && npm run build-electron",
     "build-css": "node-sass-chokidar src/ -o src/",
     "build-electron": "webpack --config electron/webpack.config.js",
     "build-js": "react-app-rewired build",
+    "electron": "npm run build && electron build/electron.js",
     "lint": "semistandard 'src/**/*.js' --parser babel-eslint",
+    "prebuild": "rimraf build/",
     "start": "npm-run-all -p watch-css start-js",
     "start-electron": "electron electron/ --ui-dev --ws-origins all",
     "start-js": "react-app-rewired start",
@@ -39,7 +42,7 @@
   },
   "dependencies": {
     "@parity/api": "^2.1.22",
-    "@parity/light.js": "github:parity-js/light.js#5a562b07ff3f7216e652c9e3944521d0e853ea56",
+    "@parity/light.js": "https://github.com/parity-js/light.js#4234c236b0b5782fa96aabe27c651eea9d17faaa",
     "axios": "^0.18.0",
     "electron": "^2.0.0",
     "electron-dl": "^1.11.0",
@@ -55,11 +58,15 @@
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",
+    "cross-env": "^5.1.4",
     "node-sass": "^4.9.0",
     "node-sass-chokidar": "^1.2.2",
     "npm-run-all": "^4.1.2",
     "react-app-rewire-mobx": "^1.0.8",
     "react-app-rewired": "^1.5.2",
-    "semistandard": "^12.0.1"
+    "rimraf": "^2.6.2",
+    "semistandard": "^12.0.1",
+    "webpack": "^4.7.0",
+    "webpack-cli": "^2.1.2"
   }
 }
