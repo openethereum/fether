@@ -1,42 +1,48 @@
 // Copyright 2015-2018 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
-
+//
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
+import { me$ } from '@parity/light.js';
 
-import Balance from './Balance';
+import EthBalance from './EthBalance';
+import light from '../hoc';
+import TokenBalance from './TokenBalance';
 
-class Accounts extends Component {
+@inject('tokensStore')
+@observer
+@light({
+  me: me$
+})
+class Tokens extends Component {
   render () {
+    const {
+      me,
+      tokensStore: { tokens }
+    } = this.props;
+
+    if (!me) {
+      return null;
+    }
+
     return (
       <div className='box -scroller'>
         <ul className='list -tokens'>
-          <li>
-            <Balance address='0x00Ae02834e91810B223E54ce3f9B7875258a1747' />
-          </li>
-          <li>
-            <Balance address='0x00Ae02834e91810B223E54ce3f9B7875258a1747' />
-          </li>
-          <li>
-            <Balance address='0x00Ae02834e91810B223E54ce3f9B7875258a1747' />
-          </li>
-          <li>
-            <Balance address='0x00Ae02834e91810B223E54ce3f9B7875258a1747' />
-          </li>
-          <li>
-            <Balance address='0x00Ae02834e91810B223E54ce3f9B7875258a1747' />
-          </li>
-          <li>
-            <Balance address='0x00Ae02834e91810B223E54ce3f9B7875258a1747' />
-          </li>
-          <li>
-            <Balance address='0x00Ae02834e91810B223E54ce3f9B7875258a1747' />
-          </li>
+          {Array.from(tokens.keys()).map(key => (
+            <li key={key}>
+              {key === 'ETH' ? (
+                <EthBalance address={me} token={key} {...tokens.get(key)} />
+              ) : (
+                <TokenBalance address={me} token={key} {...tokens.get(key)} />
+              )}
+            </li>
+          ))}
         </ul>
       </div>
     );
   }
 }
 
-export default Accounts;
+export default Tokens;

@@ -1,8 +1,8 @@
 // Copyright 2015-2018 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
-
+//
 // SPDX-License-Identifier: MIT
 
-import Balance from './Balance';
+import BalanceLayout from './BalanceLayout';
 
-export default Balance;
+export default BalanceLayout;
