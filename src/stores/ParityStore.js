@@ -37,7 +37,12 @@ export default class ParityStore {
     const { ipcRenderer, remote } = electron;
 
     // Set/Update isParityRunning
-    this.setIsParityRunning(!!remote.getGlobal('isParityRunning'));
+    const isParityRunning = !!remote.getGlobal('isParityRunning');
+    this.setIsParityRunning(isParityRunning);
+    // Request new token if there's none
+    if (isParityRunning && !token) {
+      this.requestNewToken();
+    }
     ipcRenderer.on('parity-running', (_, isParityRunning) => {
       this.setIsParityRunning(isParityRunning);
 
