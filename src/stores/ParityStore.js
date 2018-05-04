@@ -36,20 +36,11 @@ export default class ParityStore {
 
     const { ipcRenderer, remote } = electron;
 
-    // Set/Update isParityRunning
-    const isParityRunning = !!remote.getGlobal('isParityRunning');
-    this.setIsParityRunning(isParityRunning);
-    // Request new token if there's none
-    if (isParityRunning && !token) {
-      this.requestNewToken();
-    }
+    // Check if isParityRunning
+    this.setIsParityRunning(!!remote.getGlobal('isParityRunning'));
+    // We also listen to future changes
     ipcRenderer.on('parity-running', (_, isParityRunning) => {
       this.setIsParityRunning(isParityRunning);
-
-      // Request new token if there's none
-      if (!token) {
-        this.requestNewToken();
-      }
     });
 
     // Set download progress
@@ -119,7 +110,16 @@ export default class ParityStore {
 
   @action
   setIsParityRunning = isParityRunning => {
+    if (isParityRunning === this.isParityRunning) {
+      return;
+    }
+
     this.isParityRunning = isParityRunning;
+
+    // Request new token if parity's running but we still don't have a token
+    if (isParityRunning && !this.token) {
+      this.requestNewToken();
+    }
   };
 
   @action
