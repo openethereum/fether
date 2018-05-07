@@ -4,12 +4,19 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter, Route, Link } from 'react-router-dom';
 
+import Loading from '../Loading';
+import ProtectedRoute from './ProtectedRoute';
 import Send from '../Send';
 import Receive from '../Receive';
 import Tokens from '../Tokens';
 import './App.css';
+
+// Use MemoryRouter for production viewing in file:// protocol
+// https://github.com/facebook/create-react-app/issues/3591
+const Router =
+  process.env.NODE_ENV === 'production' ? MemoryRouter : BrowserRouter;
 
 class App extends Component {
   render () {
@@ -23,9 +30,10 @@ class App extends Component {
               </svg>
             </div>
             <div className='window'>
-              <Route exact path='/' component={Tokens} />
-              <Route path='/send' component={Send} />
-              <Route path='/receive' component={Receive} />
+              <ProtectedRoute exact path='/' component={Tokens} />
+              <Route path='/loading' component={Loading} />
+              <ProtectedRoute path='/send' component={Send} />
+              <ProtectedRoute path='/receive' component={Receive} />
 
               <nav className='primary-nav'>
                 <Link to='/receive' className='icon -receive'>

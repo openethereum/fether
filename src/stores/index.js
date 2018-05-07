@@ -3,8 +3,10 @@
 //
 // SPDX-License-Identifier: MIT
 
+import ParityStore from './ParityStore';
 import TokensStore from './TokensStore';
 
 export default {
+  parityStore: new ParityStore(),
   tokensStore: new TokensStore()
 };

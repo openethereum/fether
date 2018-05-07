@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import { Observable } from 'rxjs/Observable';
+import isObservable from '@parity/light.js/lib/utils/isObservable';
 
 const hoc = observables => InnerComponent =>
   class extends Component {
@@ -20,7 +20,7 @@ const hoc = observables => InnerComponent =>
         }
 
         const obs$ = rpc$(this.props);
-        if (!(obs$ instanceof Observable)) {
+        if (!isObservable(obs$)) {
           throw new Error(
             `Object with key '${key}' should be a function returning an Observable.`
           );
