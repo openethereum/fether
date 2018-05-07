@@ -4,7 +4,14 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
+import { accounts$, setDefaultAccount$ } from '@parity/light.js';
+import { Link, Route } from 'react-router-dom';
 
+import light from '../hoc';
+
+@light({
+  accounts: accounts$
+})
 class Accounts extends Component {
   handleChange = ({ target: { value } }) => {
     setDefaultAccount$(value);

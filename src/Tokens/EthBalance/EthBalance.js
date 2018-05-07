@@ -5,6 +5,7 @@
 
 import React, { Component } from 'react';
 import { balanceOf$ } from '@parity/light.js';
+import { Link } from 'react-router-dom';
 
 import BalanceLayout from '../BalanceLayout';
 import light from '../../hoc';
@@ -13,8 +14,12 @@ import light from '../../hoc';
   balance: ({ address }) => balanceOf$(address)
 })
 class EthBalance extends Component {
-  render () {
-    return <BalanceLayout {...this.props} />;
+  render() {
+    return (
+      <Link to="/send">
+        <BalanceLayout {...this.props} />
+      </Link>
+    );
   }
 }
 
