@@ -19,27 +19,29 @@ const Router =
   process.env.NODE_ENV === 'production' ? MemoryRouter : BrowserRouter;
 
 class App extends Component {
-  render () {
+  render() {
     return (
       <Router>
-        <div className='wrapper'>
-          <div className='content'>
-            <div className='connector'>
-              <svg width='60px' height='30px' viewBox='0 0 60 30'>
-                <polygon points='0 30 60 30 30 0' />
+        <div className="wrapper">
+          <div className="content">
+            <div className="connector">
+              <svg width="60px" height="30px" viewBox="0 0 60 30">
+                <polygon points="0 30 60 30 30 0" />
               </svg>
             </div>
-            <div className='window'>
-              <ProtectedRoute exact path='/' component={Tokens} />
-              <Route path='/loading' component={Loading} />
-              <ProtectedRoute path='/send' component={Send} />
-              <ProtectedRoute path='/receive' component={Receive} />
+            <div className="window">
+              <ProtectedRoute exact path="/" component={Tokens} />
+              <Route path="/loading" component={Loading} />
+              <ProtectedRoute path="/send" component={Send} />
+              <ProtectedRoute path="/receive" component={Receive} />
 
-              <nav className='primary-nav'>
-                <Link to='/receive' className='icon -receive'>
+              <nav className="primary-nav">
+                {/* @brian There's no url bar in Electron, so I added a home link for now */}
+                <Link to="/">Home</Link>
+                <Link to="/receive" className="icon -receive">
                   Receive
                 </Link>
-                <Link to='/' className='icon -settings'>
+                <Link to="/" className="icon -settings">
                   Settings
                 </Link>
               </nav>

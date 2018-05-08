@@ -6,8 +6,36 @@
 import React, { Component } from 'react';
 
 class Accounts extends Component {
-  render () {
-    return <div>This is the accounts page.</div>;
+  handleChange = ({ target: { value } }) => {
+    setDefaultAccount$(value);
+  };
+
+  render() {
+    const { accounts } = this.props;
+
+    return (
+      <div>
+        <p>Current account:</p>
+        {accounts ? (
+          <select onChange={this.handleChange} value={accounts[0]}>
+            {accounts.map((account, index) => (
+              <option key={account} value={account}>
+                {account}
+              </option>
+            ))}
+          </select>
+        ) : (
+          <p>Loading Accounts...</p>
+        )}
+
+        <p>
+          {/* @brian TODO Inline style is ugly */}
+          <Link to="/accounts/new" style={{ color: 'white' }}>
+            <button>Create new account</button>
+          </Link>
+        </p>
+      </div>
+    );
   }
 }
 
