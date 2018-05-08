@@ -38,7 +38,7 @@ class CreateAccountStore {
       .then(address => api.parity.setAccountName(this.address, this.name))
       .then(() =>
         api.parity.setAccountMeta(this.address, {
-          createdAt: Date.now(),
+          timestamp: Date.now(),
           passwordHint: this.hint
         })
       );
