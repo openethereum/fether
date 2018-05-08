@@ -13,14 +13,14 @@ import Step4 from './CreateAccountStep4';
 import Step5 from './CreateAccountStep5';
 
 class CreateAccount extends Component {
-  render() {
+  render () {
     return (
       <div>
-        <Route path="/accounts/new" component={Step1} />
-        <Route path="/accounts/new/step2" component={Step2} />
-        <Route path="/accounts/new/step3" component={Step3} />
-        <Route path="/accounts/new/step4" component={Step4} />
-        <Route path="/accounts/new/step5" component={Step5} />
+        <Route path='/accounts/new' component={Step1} />
+        <Route path='/accounts/new/step2' component={Step2} />
+        <Route path='/accounts/new/step3' component={Step3} />
+        <Route path='/accounts/new/step4' component={Step4} />
+        <Route path='/accounts/new/step5' component={Step5} />
       </div>
     );
   }

@@ -16,7 +16,7 @@ class CreateAccountStep3 extends Component {
 
   handleChange = ({ target: { value } }) => this.setState({ value });
 
-  render() {
+  render () {
     const {
       createAccountStore: { phrase }
     } = this.props;
@@ -34,7 +34,7 @@ class CreateAccountStep3 extends Component {
           3,9,11 being random numbers
         </em>
         {value === phrase && (
-          <Link to="/accounts/new/step4">
+          <Link to='/accounts/new/step4'>
             <button>Done</button>
           </Link>
         )}

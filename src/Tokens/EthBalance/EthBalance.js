@@ -14,9 +14,9 @@ import light from '../../hoc';
   balance: ({ address }) => balanceOf$(address)
 })
 class EthBalance extends Component {
-  render() {
+  render () {
     return (
-      <Link to="/send">
+      <Link to='/send'>
         <BalanceLayout {...this.props} />
       </Link>
     );

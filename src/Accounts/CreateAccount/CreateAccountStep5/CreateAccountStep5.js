@@ -17,7 +17,7 @@ class CreateAccountStep5 extends Component {
     saveAccountToParity().then(() => history.push('/settings'));
   };
 
-  render() {
+  render () {
     const {
       createAccountStore: { hint }
     } = this.props;

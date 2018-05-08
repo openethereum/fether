@@ -3,7 +3,6 @@
 //
 // SPDX-License-Identifier: MIT
 
-import Api from '@parity/api';
 import { action, observable } from 'mobx';
 
 import parityStore from './parityStore';
@@ -15,7 +14,7 @@ class CreateAccountStore {
   @observable password = '';
   @observable phrase = null; // The 12-word seed phrase
 
-  constructor() {
+  constructor () {
     this.parityStore = parityStore;
   }
 

@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 @inject('createAccountStore')
 @observer
 class CreateAccountStep2 extends Component {
-  render() {
+  render () {
     const {
       createAccountStore: { phrase }
     } = this.props;
@@ -22,7 +22,7 @@ class CreateAccountStep2 extends Component {
           Please write your secret phrase on a piece of paper:<br />
           <pre>{phrase}</pre>
         </div>
-        <Link to="/accounts/new/step3">
+        <Link to='/accounts/new/step3'>
           <button>Done</button>
         </Link>
       </div>

@@ -20,7 +20,7 @@ class ParityStore {
   @observable isParityRunning = false;
   @observable token = null;
 
-  constructor() {
+  constructor () {
     // Retrieve token from localStorage
     const token = store.get(LS_KEY);
     if (token) {

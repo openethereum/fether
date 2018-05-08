@@ -10,16 +10,16 @@ import { Link } from 'react-router-dom';
 @inject('createAccountStore')
 @observer
 class CreateAccountStep1 extends Component {
-  componentDidMount() {
+  componentDidMount () {
     this.props.createAccountStore.generateNewAccount();
   }
 
   handleChange = ({ target: { value } }) =>
     this.props.createAccountStore.setName(value);
 
-  render() {
+  render () {
     const {
-      createAccountStore: { address, generateNewAccount, name, phrase },
+      createAccountStore: { address, generateNewAccount, name },
       location: { pathname }
     } = this.props;
 
@@ -44,7 +44,7 @@ class CreateAccountStep1 extends Component {
         {pathname === '/accounts/new' &&
           !!name && (
             <div>
-              <Link to="/accounts/new/step2">
+              <Link to='/accounts/new/step2'>
                 <button>Select</button>
               </Link>
             </div>

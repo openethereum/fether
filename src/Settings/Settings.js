@@ -8,7 +8,7 @@ import React, { Component } from 'react';
 import Accounts from '../Accounts';
 
 class Settings extends Component {
-  render() {
+  render () {
     return (
       <div>
         <h3>This is the settings page.</h3>

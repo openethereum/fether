@@ -14,7 +14,7 @@ const LS_KEY = `${LS_PREFIX}tokens`;
 class TokensStore {
   @observable tokens = new Map();
 
-  constructor() {
+  constructor () {
     const value = store.get(LS_KEY);
 
     if (!value) {

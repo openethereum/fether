@@ -21,30 +21,30 @@ const Router =
   process.env.NODE_ENV === 'production' ? MemoryRouter : BrowserRouter;
 
 class App extends Component {
-  render() {
+  render () {
     return (
       <Router>
-        <div className="wrapper">
-          <div className="content">
-            <div className="connector">
-              <svg width="60px" height="30px" viewBox="0 0 60 30">
-                <polygon points="0 30 60 30 30 0" />
+        <div className='wrapper'>
+          <div className='content'>
+            <div className='connector'>
+              <svg width='60px' height='30px' viewBox='0 0 60 30'>
+                <polygon points='0 30 60 30 30 0' />
               </svg>
             </div>
-            <div className="window">
-              <Route path="/loading" component={Loading} />
-              <ProtectedRoute exact path="/" component={Tokens} />
-              <ProtectedRoute path="/settings" component={Settings} />
-              <ProtectedRoute path="/send" component={Send} />
-              <ProtectedRoute path="/receive" component={Receive} />
-              <ProtectedRoute path="/accounts/new" component={CreateAccount} />
+            <div className='window'>
+              <Route path='/loading' component={Loading} />
+              <ProtectedRoute exact path='/' component={Tokens} />
+              <ProtectedRoute path='/settings' component={Settings} />
+              <ProtectedRoute path='/send' component={Send} />
+              <ProtectedRoute path='/receive' component={Receive} />
+              <ProtectedRoute path='/accounts/new' component={CreateAccount} />
 
-              <nav className="primary-nav">
-                <Link to="/">Home</Link>
-                <Link to="/receive" className="icon -receive">
+              <nav className='primary-nav'>
+                <Link to='/'>Home</Link>
+                <Link to='/receive' className='icon -receive'>
                   Receive
                 </Link>
-                <Link to="/settings" className="icon -settings">
+                <Link to='/settings' className='icon -settings'>
                   Settings
                 </Link>
               </nav>

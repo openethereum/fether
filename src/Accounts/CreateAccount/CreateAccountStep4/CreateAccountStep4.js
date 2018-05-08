@@ -5,7 +5,6 @@
 
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { Link } from 'react-router-dom';
 
 @inject('createAccountStore')
 @observer
@@ -36,7 +35,7 @@ class CreateAccountStep3 extends Component {
     history.push('/accounts/new/step5');
   };
 
-  render() {
+  render () {
     const { confirm, hint, password } = this.state;
 
     return (
@@ -48,7 +47,7 @@ class CreateAccountStep3 extends Component {
             <input
               onChange={this.handlePasswordChange}
               required
-              type="password"
+              type='password'
               value={password}
             />
           </label>
@@ -58,7 +57,7 @@ class CreateAccountStep3 extends Component {
             <input
               onChange={this.handleConfirmChange}
               required
-              type="password"
+              type='password'
               value={confirm}
             />
           </label>

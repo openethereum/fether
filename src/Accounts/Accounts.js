@@ -9,7 +9,7 @@ import {
   defaultAccount$,
   setDefaultAccount$
 } from '@parity/light.js';
-import { Link, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import light from '../hoc';
 
@@ -22,7 +22,7 @@ class Accounts extends Component {
     setDefaultAccount$(value);
   };
 
-  render() {
+  render () {
     const { allAccountsInfo, defaultAccount } = this.props;
 
     return (
@@ -42,7 +42,7 @@ class Accounts extends Component {
 
         <p>
           {/* @brian TODO Inline style is ugly */}
-          <Link to="/accounts/new" style={{ color: 'white' }}>
+          <Link to='/accounts/new' style={{ color: 'white' }}>
             <button>Create new account</button>
           </Link>
         </p>
