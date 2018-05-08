@@ -36,16 +36,12 @@ class CreateAccountStore {
     return api.parity
       .newAccountFromPhrase(this.phrase, this.password)
       .then(address => api.parity.setAccountName(this.address, this.name))
-      .then(() => api.parity.setAccountMeta(this.address, {}));
-    // .then(() =>
-    //   api.parity.setAccountMeta(
-    //     this.address,
-    //     JSON.stringify({
-    //       createdAt: Date.now(),
-    //       passwordHint: this.hint
-    //     }).replace('"', '\\"')
-    //   )
-    // );
+      .then(() =>
+        api.parity.setAccountMeta(this.address, {
+          createdAt: Date.now(),
+          passwordHint: this.hint
+        })
+      );
   };
 
   @action

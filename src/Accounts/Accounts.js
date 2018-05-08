@@ -41,8 +41,7 @@ class Accounts extends Component {
         )}
 
         <p>
-          {/* @brian TODO Inline style is ugly */}
-          <Link to='/accounts/new' style={{ color: 'white' }}>
+          <Link to='/accounts/new'>
             <button>Create new account</button>
           </Link>
         </p>
