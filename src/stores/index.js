@@ -5,10 +5,12 @@
 
 import createAccountStore from './createAccountStore';
 import parityStore from './parityStore';
+import signerStore from './signerStore';
 import tokensStore from './tokensStore';
 
 export default {
   createAccountStore,
   parityStore,
+  signerStore,
   tokensStore
 };
