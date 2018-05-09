@@ -22,6 +22,10 @@ class Send extends Component {
     txStatus: null
   };
 
+  componentWillUnmount() {
+    this.subscription.dispose();
+  }
+
   handleChangeAmount = ({ target: { value } }) =>
     this.setState({ amount: value });
 
@@ -34,7 +38,7 @@ class Send extends Component {
     const { me } = this.props;
     const { amount, gas, to } = this.state;
 
-    post$({
+    this.subscription = post$({
       from: me,
       gas,
       to,
@@ -47,7 +51,7 @@ class Send extends Component {
 
     if (status && status.requested) {
       // Redirect to signer when needed
-      return <Redirect to={`/signer/${status.requested}`} />;
+      return <Redirect to={`/signer/${+status.requested}`} />;
     }
 
     return (

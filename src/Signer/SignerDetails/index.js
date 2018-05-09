@@ -3,6 +3,6 @@
 //
 // SPDX-License-Identifier: MIT
 
-import From from './From';
+import SignerDetails from './SignerDetails';
 
-export default From;
+export default SignerDetails;

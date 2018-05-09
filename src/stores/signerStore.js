@@ -27,6 +27,12 @@ class SignerStore {
     }
   }
 
+  acceptRequest = (requestId, password) =>
+    this.api.signer.confirmRequest(requestId, null, password);
+
+  rejectRequest = (requestId, password) =>
+    this.api.signer.rejectRequest(requestId, null, password);
+
   @computed
   get requests() {
     const mapping = {}; // requestId -> request mapping
