@@ -14,7 +14,7 @@ const electron = isElectron() ? window.require('electron') : null;
 const LS_PREFIX = '__paritylight::';
 const LS_KEY = `${LS_PREFIX}secureToken`;
 
-export default class ParityStore {
+class ParityStore {
   @observable downloadProgress = 0;
   @observable isApiConnected = false;
   @observable isParityRunning = false;
@@ -69,6 +69,9 @@ export default class ParityStore {
 
     // Initialize the light.js lib
     light.setApi(api);
+
+    // Also set api as member for React Components to use it if needed
+    this.api = api;
 
     // TODO This is not working
     // api.on('connected', () => console.log('ehdsfa'));
@@ -139,3 +142,5 @@ export default class ParityStore {
 
   updateLS = () => store.set(LS_KEY, this.token);
 }
+
+export default new ParityStore();

@@ -6,10 +6,12 @@
 import React, { Component } from 'react';
 import { BrowserRouter, MemoryRouter, Route, Link } from 'react-router-dom';
 
+import CreateAccount from '../Accounts/CreateAccount';
 import Loading from '../Loading';
 import ProtectedRoute from './ProtectedRoute';
-import Send from '../Send';
 import Receive from '../Receive';
+import Send from '../Send';
+import Settings from '../Settings';
 import Tokens from '../Tokens';
 import './App.css';
 
@@ -30,16 +32,19 @@ class App extends Component {
               </svg>
             </div>
             <div className='window'>
-              <ProtectedRoute exact path='/' component={Tokens} />
               <Route path='/loading' component={Loading} />
+              <ProtectedRoute exact path='/' component={Tokens} />
+              <ProtectedRoute path='/settings' component={Settings} />
               <ProtectedRoute path='/send' component={Send} />
               <ProtectedRoute path='/receive' component={Receive} />
+              <ProtectedRoute path='/accounts/new' component={CreateAccount} />
 
               <nav className='primary-nav'>
+                <Link to='/'>Home</Link>
                 <Link to='/receive' className='icon -receive'>
                   Receive
                 </Link>
-                <Link to='/' className='icon -settings'>
+                <Link to='/settings' className='icon -settings'>
                   Settings
                 </Link>
               </nav>

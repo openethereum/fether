@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "@parity/api": "^2.1.22",
-    "@parity/light.js": "https://github.com/parity-js/light.js#4234c236b0b5782fa96aabe27c651eea9d17faaa",
+    "@parity/light.js": "https://github.com/parity-js/light.js#f62bb37782ed32eb74a8bb0cc428632d3a8c6d45",
     "axios": "^0.18.0",
     "electron": "^2.0.0",
     "electron-dl": "^1.11.0",

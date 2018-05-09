@@ -4,10 +4,49 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
+import {
+  allAccountsInfo$,
+  defaultAccount$,
+  setDefaultAccount$
+} from '@parity/light.js';
+import { Link } from 'react-router-dom';
 
+import light from '../hoc';
+
+@light({
+  allAccountsInfo: allAccountsInfo$,
+  defaultAccount: defaultAccount$
+})
 class Accounts extends Component {
+  handleChange = ({ target: { value } }) => {
+    setDefaultAccount$(value);
+  };
+
   render () {
-    return <div>This is the accounts page.</div>;
+    const { allAccountsInfo, defaultAccount } = this.props;
+
+    return (
+      <div>
+        <p>Current account:</p>
+        {allAccountsInfo ? (
+          <select onChange={this.handleChange} value={defaultAccount}>
+            {Object.keys(allAccountsInfo).map(address => (
+              <option key={address} value={address}>
+                {allAccountsInfo[address].name} ({address})
+              </option>
+            ))}
+          </select>
+        ) : (
+          <p>Loading Accounts...</p>
+        )}
+
+        <p>
+          <Link to='/accounts/new'>
+            <button>Create new account</button>
+          </Link>
+        </p>
+      </div>
+    );
   }
 }
 

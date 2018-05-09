@@ -11,7 +11,7 @@ import ethereumIcon from '../assets/img/tokens/ethereum.png';
 const LS_PREFIX = '__paritylight::';
 const LS_KEY = `${LS_PREFIX}tokens`;
 
-export default class TokensStore {
+class TokensStore {
   @observable tokens = new Map();
 
   constructor () {
@@ -53,3 +53,5 @@ export default class TokensStore {
 
   updateLS = () => store.set(LS_KEY, this.tokens);
 }
+
+export default new TokensStore();
