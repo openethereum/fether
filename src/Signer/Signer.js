@@ -5,13 +5,13 @@
 
 import React, { Component } from 'react';
 
-import From from './From';
+import SignerList from './SignerList';
 
 class Signer extends Component {
   render() {
     return (
       <div>
-        <From />
+        <SignerList />
       </div>
     );
   }
