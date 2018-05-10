@@ -1,8 +1,10 @@
 .debug-nav {
   background-color: rgba($black,0.125);
   position: fixed;
+  left: 1rem;
   right: 1rem;
   bottom: 1rem;
+  padding: 1rem;
 
   a,
   a:link,

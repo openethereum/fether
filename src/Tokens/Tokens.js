@@ -32,19 +32,53 @@ class Tokens extends Component {
     }
 
     return (
-      <div className='box -scroller'>
-        <ul className='list -tokens'>
-          {me &&
-            Array.from(tokens.keys()).map(key => (
-              <li key={key}>
-                {key === 'ETH' ? (
-                  <EthBalance address={me} token={key} {...tokens.get(key)} />
-                ) : (
-                  <TokenBalance address={me} token={key} {...tokens.get(key)} />
-                )}
-              </li>
-            ))}
-        </ul>
+      <div>
+        <div className='box -scroller'>
+          <ul className='list -tokens'>
+            {me &&
+              Array.from(tokens.keys()).map(key => (
+                <li key={key}>
+                  {key === 'ETH' ? (
+                    <EthBalance address={me} token={key} {...tokens.get(key)} />
+                  ) : (
+                    <TokenBalance address={me} token={key} {...tokens.get(key)} />
+                  )}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div className='debug-nav'>
+          {nodeHealth && (
+            <div>
+              <p>Overall node health status</p>
+              <pre>
+                PEERS: {nodeHealth.peers.status} {nodeHealth.peers.details[0]}/{
+                  nodeHealth.peers.details[1]
+                }
+                <br />SYNC: {nodeHealth.sync.status}
+                <br />TIMESYNC: {nodeHealth.time.status}
+              </pre>
+              <p>
+                Note: I can make a small algorithm which outputs the average
+                health with 3 states: OK, ALRIGHT, and BAD
+              </p>
+            </div>
+          )}
+
+          {nodeHealth && (
+            <div>
+              <p>
+                When SYNC above is false, we have the syncing progress to
+                give an idea how much time it'll take
+              </p>
+              <pre>
+                "startingBlock": 900<br />"currentBlock": 902<br />
+                "highestBlock": 1108
+              </pre>
+            </div>
+          )}
+        </div>
       </div>
     );
   }
