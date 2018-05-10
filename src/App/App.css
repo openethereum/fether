@@ -928,6 +928,21 @@ button {
   .token .token_symbol {
     font-size: 0.69444rem; }
 
+.status .status_icon {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-right: 0.25rem; }
+  .status .status_icon svg {
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem; }
+    .status .status_icon svg circle {
+      fill: #3ec28f; }
+
+.status .status_text {
+  display: inline-block; }
+
 .header-nav {
   display: flex;
   padding: 1rem 0.5rem; }
@@ -936,11 +951,14 @@ button {
   .header-nav a:visited {
     color: rgba(34, 34, 34, 0.675);
     font-weight: 500;
-    padding: 0 0.5rem;
-    display: block; }
+    display: block;
+    margin: -0.175rem 0 -0.175rem;
+    padding: 0.25rem 0.5rem 0.175rem;
+    border-radius: 0.25rem; }
     .header-nav a:hover,
     .header-nav a:link:hover,
     .header-nav a:visited:hover {
+      background: rgba(221, 221, 221, 0.5);
       color: #222; }
 
 .footer-nav {

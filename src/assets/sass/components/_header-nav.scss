@@ -7,9 +7,12 @@
   a:visited {
     color: rgba($black, 0.675);
     font-weight: 500;
-    padding: 0 0.5rem;
     display: block;
+    margin: -0.175rem 0 -0.175rem;
+    padding: 0.25rem 0.5rem 0.175rem;
+    border-radius: 0.25rem;
     &:hover {
+      background: rgba($faint,0.5);
       color: $black;
     }
   }

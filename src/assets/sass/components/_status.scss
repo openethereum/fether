@@ -1,0 +1,21 @@
+.status {
+  .status_icon {
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-right: 0.25rem;
+
+    svg {
+      display: inline-block;
+      width: 0.5rem;
+      height: 0.5rem;
+      circle {
+        fill: $green;
+      }
+    }
+  }
+
+  .status_text {
+    display: inline-block;
+  }
+}

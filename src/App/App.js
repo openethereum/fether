@@ -47,7 +47,14 @@ class App extends Component {
 
               <nav className='footer-nav'>
                 <div className='footer-nav_status'>
-                  Status
+                  <div className='status'>
+                    <span className='status_icon '>
+                      <svg viewBox="0 0 20 20">
+                        <circle fill="#000000" cx="10" cy="10" r="10"></circle>
+                      </svg>
+                    </span>
+                    <span className='status_text'>1h6m</span>
+                  </div>
                 </div>
                 <div className='footer-nav_icons'>
                   <Link to='/settings' className='icon -settings'>
