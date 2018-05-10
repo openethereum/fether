@@ -1,17 +1,6 @@
 .box {
   display: block;
 
-  &.-card {
-    background: $white;
-    color: $grey;
-    box-shadow: 0 0.125rem 0.125rem rgba($black,0.5);
-    border-radius: 2px;
-
-    strong {
-      color: $black;
-    }
-  }
-
   &.-scroller {
     max-height: 22rem;
     overflow-x: hidden;

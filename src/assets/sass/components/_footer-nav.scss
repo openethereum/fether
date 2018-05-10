@@ -1,20 +1,23 @@
-.primary-nav {
+.footer-nav {
   display: flex;
-  justify-content: flex-end;
-  padding-top: 0.25rem;
+  justify-content: space-between;
+
+  .footer-nav_status {
+    padding: 1rem;
+    font-size: ms(-2);
+    color: $grey;
+  }
+
+  .footer-nav_icons {
+    padding: 1rem;
+  }
 
   a,
   a:link,
   a:visited {
-    text-transform: uppercase;
-    font-size: ms(-2);
-    color: rgba($white, 0.675);
-    font-weight: 500;
-    padding: 0 0.5rem;
     display: block;
     &:hover {
       color: $white;
-      border-radius: 0.25rem;
     }
 
     &.icon {

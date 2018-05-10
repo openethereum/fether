@@ -753,7 +753,7 @@ body {
   background-image: linear-gradient(#A5BFDA, #BFCDDC);
   background-repeat: no-repeat;
   background-size: cover;
-  color: #f9f9f9;
+  color: #222;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-weight: 400;
   font-size: 1rem;
@@ -771,13 +771,6 @@ a, a:link, a:visited {
 
 .box {
   display: block; }
-  .box.-card {
-    background: #f9f9f9;
-    color: #888;
-    box-shadow: 0 0.125rem 0.125rem rgba(34, 34, 34, 0.5);
-    border-radius: 2px; }
-    .box.-card strong {
-      color: #222; }
   .box.-scroller {
     max-height: 22rem;
     overflow-x: hidden;
@@ -808,10 +801,12 @@ button {
     button.-small:active {
       background-color: #d7d7d7; }
 
-.list.-tokens > li {
-  margin-bottom: 0.25rem; }
-  .list.-tokens > li:last-child {
-    margin-bottom: 0; }
+.list.-tokens {
+  padding: 0.325rem; }
+  .list.-tokens > li {
+    margin-bottom: 0.325rem; }
+    .list.-tokens > li:last-child {
+      margin-bottom: 0; }
 
 .text p, .text ul, .text ol, .text blockquote {
   margin: 1rem 0; }
@@ -853,23 +848,30 @@ button {
         height: 0.5rem;
         width: auto; }
         .wrapper .content .connector svg polygon {
-          fill: #330044; }
+          fill: #F5F6F6; }
     .wrapper .content .window {
-      background: #330044;
-      padding: 0.25rem;
+      background: #F5F6F6;
       border-radius: 0.25rem;
-      box-shadow: 0 0.125rem 0.75rem rgba(34, 34, 34, 0.325), 0 0.125rem 0.125rem rgba(34, 34, 34, 0.175); }
+      box-shadow: 0 0.125rem 0.75rem rgba(34, 34, 34, 0.175), 0 0.125rem 0.125rem rgba(34, 34, 34, 0.1); }
+      .wrapper .content .window .window_content {
+        background: rgba(221, 221, 221, 0.675);
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd; }
 
 .debug-nav {
   background-color: rgba(34, 34, 34, 0.125);
   position: fixed;
   right: 1rem;
   bottom: 1rem; }
-  .debug-nav a, .debug-nav a:link, .debug-nav a:visited {
+  .debug-nav a,
+  .debug-nav a:link,
+  .debug-nav a:visited {
     color: #f9f9f9;
     display: block;
     padding: 0.5rem 1rem; }
-    .debug-nav a:hover, .debug-nav a:link:hover, .debug-nav a:visited:hover {
+    .debug-nav a:hover,
+    .debug-nav a:link:hover,
+    .debug-nav a:visited:hover {
       cursor: pointer;
       background-color: rgba(34, 34, 34, 0.125); }
 
@@ -893,16 +895,17 @@ button {
 
 .token {
   display: flex;
-  padding: 1rem;
-  user-select: none; }
+  padding: 0.75rem;
+  user-select: none;
+  background: #f9f9f9;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(34, 34, 34, 0.125); }
   .token:hover {
     cursor: default; }
   .token .token_icon {
     margin: -0.5rem 0 -0.5rem -0.425rem;
-    border-radius: 1.15rem;
     width: 2.3rem;
     height: 2.3rem;
-    background-color: #ddd;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -920,28 +923,44 @@ button {
   .token .token_balance {
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
     color: #888; }
+  .token .token_symbol {
+    font-size: 0.69444rem; }
 
-.primary-nav {
+.header-nav {
   display: flex;
-  justify-content: flex-end;
-  padding-top: 0.25rem; }
-  .primary-nav a,
-  .primary-nav a:link,
-  .primary-nav a:visited {
-    text-transform: uppercase;
-    font-size: 0.69444rem;
-    color: rgba(249, 249, 249, 0.675);
+  padding: 1rem 0.5rem; }
+  .header-nav a,
+  .header-nav a:link,
+  .header-nav a:visited {
+    color: rgba(34, 34, 34, 0.675);
     font-weight: 500;
     padding: 0 0.5rem;
     display: block; }
-    .primary-nav a:hover,
-    .primary-nav a:link:hover,
-    .primary-nav a:visited:hover {
-      color: #f9f9f9;
-      border-radius: 0.25rem; }
-    .primary-nav a.icon,
-    .primary-nav a:link.icon,
-    .primary-nav a:visited.icon {
+    .header-nav a:hover,
+    .header-nav a:link:hover,
+    .header-nav a:visited:hover {
+      color: #222; }
+
+.footer-nav {
+  display: flex;
+  justify-content: space-between; }
+  .footer-nav .footer-nav_status {
+    padding: 1rem;
+    font-size: 0.69444rem;
+    color: #888; }
+  .footer-nav .footer-nav_icons {
+    padding: 1rem; }
+  .footer-nav a,
+  .footer-nav a:link,
+  .footer-nav a:visited {
+    display: block; }
+    .footer-nav a:hover,
+    .footer-nav a:link:hover,
+    .footer-nav a:visited:hover {
+      color: #f9f9f9; }
+    .footer-nav a.icon,
+    .footer-nav a:link.icon,
+    .footer-nav a:visited.icon {
       padding: 0;
       width: 1.3rem;
       height: 1.3rem;
@@ -951,17 +970,17 @@ button {
       background-repeat: no-repeat;
       opacity: 0.675;
       margin-left: 0.25rem; }
-      .primary-nav a.icon:hover,
-      .primary-nav a:link.icon:hover,
-      .primary-nav a:visited.icon:hover {
+      .footer-nav a.icon:hover,
+      .footer-nav a:link.icon:hover,
+      .footer-nav a:visited.icon:hover {
         opacity: 1; }
-      .primary-nav a.icon.-receive,
-      .primary-nav a:link.icon.-receive,
-      .primary-nav a:visited.icon.-receive {
+      .footer-nav a.icon.-receive,
+      .footer-nav a:link.icon.-receive,
+      .footer-nav a:visited.icon.-receive {
         background-image: url("../assets/img/icons/receive.svg"); }
-      .primary-nav a.icon.-settings,
-      .primary-nav a:link.icon.-settings,
-      .primary-nav a:visited.icon.-settings {
+      .footer-nav a.icon.-settings,
+      .footer-nav a:link.icon.-settings,
+      .footer-nav a:visited.icon.-settings {
         background-image: url("../assets/img/icons/gear.svg"); }
 
 .token-header {
@@ -971,10 +990,8 @@ button {
 
 .token-header_icon {
   margin: 0 auto;
-  border-radius: 1.936rem;
   width: 3.872rem;
   height: 3.872rem;
-  background-color: #ddd;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;

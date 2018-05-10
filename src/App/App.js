@@ -32,21 +32,28 @@ class App extends Component {
               </svg>
             </div>
             <div className='window'>
-              <Route path='/loading' component={Loading} />
-              <ProtectedRoute exact path='/' component={Tokens} />
-              <ProtectedRoute path='/settings' component={Settings} />
-              <ProtectedRoute path='/send' component={Send} />
-              <ProtectedRoute path='/receive' component={Receive} />
-              <ProtectedRoute path='/accounts/new' component={CreateAccount} />
+              <nav className='header-nav'>
+                <Link to='/'>Wallet</Link>
+              </nav>
 
-              <nav className='primary-nav'>
-                <Link to='/'>Home</Link>
-                <Link to='/receive' className='icon -receive'>
-                  Receive
-                </Link>
-                <Link to='/settings' className='icon -settings'>
-                  Settings
-                </Link>
+              <div className='window_content'>
+                <Route path='/loading' component={Loading} />
+                <ProtectedRoute exact path='/' component={Tokens} />
+                <ProtectedRoute path='/settings' component={Settings} />
+                <ProtectedRoute path='/send' component={Send} />
+                <ProtectedRoute path='/receive' component={Receive} />
+                <ProtectedRoute path='/accounts/new' component={CreateAccount} />
+              </div>
+
+              <nav className='footer-nav'>
+                <div className='footer-nav_status'>
+                  Status
+                </div>
+                <div className='footer-nav_icons'>
+                  <Link to='/settings' className='icon -settings'>
+                    Settings
+                  </Link>
+                </div>
               </nav>
             </div>
           </div>

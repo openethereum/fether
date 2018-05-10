@@ -6,10 +6,8 @@
 
 .token-header_icon {
   margin: 0 auto;
-  border-radius: ((ms(2) * 1.3) + 2rem) * 0.5;
   width: (ms(2) * 1.3) + 2rem;
   height: (ms(2) * 1.3) + 2rem;
-  background-color: $faint;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;

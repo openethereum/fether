@@ -20,16 +20,21 @@
         height: 0.5rem;
         width: auto;
         polygon {
-          fill: $purple;
+          fill: $chrome;
         }
       }
     }
 
     .window {
-      background: $purple;
-      padding: 0.25rem;
+      background: $chrome;
       border-radius: 0.25rem;
-      box-shadow: 0 0.125rem 0.75rem rgba($black,0.325), 0 0.125rem 0.125rem rgba($black,0.175);
+      box-shadow: 0 0.125rem 0.75rem rgba($black,0.175), 0 0.125rem 0.125rem rgba($black,0.100);
+
+      .window_content {
+        background: rgba($faint,0.675);
+        border-top: 1px solid $faint;
+        border-bottom: 1px solid $faint;
+      }
     }
   }
 }

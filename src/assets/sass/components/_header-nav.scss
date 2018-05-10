@@ -1,0 +1,16 @@
+.header-nav {
+  display: flex;
+  padding: 1rem 0.5rem;
+
+  a,
+  a:link,
+  a:visited {
+    color: rgba($black, 0.675);
+    font-weight: 500;
+    padding: 0 0.5rem;
+    display: block;
+    &:hover {
+      color: $black;
+    }
+  }
+}
