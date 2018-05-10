@@ -13,13 +13,13 @@
     display: block;
     width: 100%;
     border-radius: 3px;
-    border: 1px solid $grey;
+    border: 1px solid $faint;
     font-family: $mono;
     font-size: ms(0);
     line-height: 1.3;
     padding: 0.25rem 0.25rem 0.325rem;
     &:focus {
-      border-color: $blue;
+      border-color: $grey;
     }
   }
 }

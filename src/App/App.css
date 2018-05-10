@@ -937,8 +937,12 @@ button {
     display: inline-block;
     width: 0.5rem;
     height: 0.5rem; }
-    .status .status_icon svg circle {
-      fill: #3ec28f; }
+  .status .status_icon.-ok svg circle {
+    fill: #3ec28f; }
+  .status .status_icon.-alright svg circle {
+    fill: #DFCA29; }
+  .status .status_icon.-bad svg circle {
+    fill: #C2473E; }
 
 .status .status_text {
   display: inline-block; }
@@ -1043,13 +1047,13 @@ button {
   display: block;
   width: 100%;
   border-radius: 3px;
-  border: 1px solid #888;
+  border: 1px solid #ddd;
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
   font-size: 1rem;
   line-height: 1.3;
   padding: 0.25rem 0.25rem 0.325rem; }
   .send-form_fields input[type="tel"]:focus {
-    border-color: #3ec28f; }
+    border-color: #888; }
 
 .send-form_action {
   padding-top: 1rem; }
