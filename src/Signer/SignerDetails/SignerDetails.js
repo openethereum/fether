@@ -8,8 +8,6 @@ import { fromWei } from '@parity/api/lib/util/wei';
 import { inject, observer } from 'mobx-react';
 import { Redirect } from 'react-router-dom';
 
-import From from './From';
-
 @inject('signerStore')
 @observer
 class SignerDetails extends Component {

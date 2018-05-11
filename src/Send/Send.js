@@ -23,7 +23,9 @@ class Send extends Component {
   };
 
   componentWillUnmount() {
-    this.subscription.dispose();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   handleChangeAmount = ({ target: { value } }) =>
