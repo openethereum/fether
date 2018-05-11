@@ -22,7 +22,7 @@ class Send extends Component {
     txStatus: null
   };
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
@@ -48,7 +48,7 @@ class Send extends Component {
     }).subscribe(status => this.setState({ status }));
   };
 
-  render() {
+  render () {
     const { amount, gas, status, to } = this.state;
 
     if (status && status.requested) {
@@ -58,25 +58,25 @@ class Send extends Component {
 
     return (
       <div>
-        <div className="box -card">
-          <header className="token-header">
-            <div className="token-header_icon">
-              <img src={ethereumIcon} alt="ethereum" />
+        <div className='box -card'>
+          <header className='token-header'>
+            <div className='token-header_icon'>
+              <img src={ethereumIcon} alt='ethereum' />
             </div>
-            <div className="token-header_name">Ethereum</div>
-            <div className="token-header_balance">42.89</div>
+            <div className='token-header_name'>Ethereum</div>
+            <div className='token-header_balance'>42.89</div>
           </header>
 
-          <form className="send-form" onSubmit={this.handleSubmit}>
+          <form className='send-form' onSubmit={this.handleSubmit}>
             {/* @brian can we not use ul/li here? Not really semantic. I could
             change it but I'm scared it'll break the layout */}
-            <ul className="send-form_fields">
+            <ul className='send-form_fields'>
               <li>
                 <label>Address</label>
                 <input
                   onChange={this.handleChangeTo}
                   required
-                  type="tel"
+                  type='tel'
                   value={to}
                 />
               </li>
@@ -85,7 +85,7 @@ class Send extends Component {
                 <input
                   onChange={this.handleChangeAmount}
                   required
-                  type="tel"
+                  type='tel'
                   value={amount}
                 />
               </li>
@@ -94,13 +94,13 @@ class Send extends Component {
                 <input
                   onChange={this.handleChangeGas}
                   required
-                  type="tel"
+                  type='tel'
                   value={gas}
                 />
               </li>
             </ul>
-            <div className="send-form_action">
-              <button className="button">Send</button>
+            <div className='send-form_action'>
+              <button className='button'>Send</button>
             </div>
           </form>
         </div>

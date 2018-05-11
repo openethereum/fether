@@ -10,12 +10,12 @@ import SignerDetails from './SignerDetails';
 import SignerList from './SignerList';
 
 class Signer extends Component {
-  render() {
+  render () {
     return (
       <div>
         <SignerList />
         <hr />
-        <Route path="/signer/:requestId" component={SignerDetails} />
+        <Route path='/signer/:requestId' component={SignerDetails} />
       </div>
     );
   }

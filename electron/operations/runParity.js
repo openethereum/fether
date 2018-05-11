@@ -3,7 +3,6 @@
 //
 // SPDX-License-Identifier: MIT
 
-const { app, dialog, webContents } = require('electron');
 const flatten = require('lodash/flatten');
 const fs = require('fs');
 const { spawn } = require('child_process');
@@ -21,7 +20,7 @@ const fsUnlink = util.promisify(fs.unlink);
 let parity = null; // Will hold the running parity instance
 
 module.exports = {
-  runParity(mainWindow) {
+  runParity (mainWindow) {
     // Create a logStream to save logs
     const logFile = `${parityPath()}.log`;
 
@@ -72,7 +71,7 @@ module.exports = {
         handleError(err, 'An error occured while running parity.');
       });
   },
-  killParity() {
+  killParity () {
     if (parity) {
       console.log('Stopping parity.');
       parity.kill();

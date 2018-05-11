@@ -10,7 +10,7 @@ import parityStore from './parityStore';
 class SignerStore {
   @observable pending = [];
 
-  constructor() {
+  constructor () {
     this.api = parityStore.api;
 
     if (parityStore.isApiConnected) {
@@ -34,9 +34,11 @@ class SignerStore {
     this.api.signer.rejectRequest(requestId, null, password);
 
   @computed
-  get requests() {
+  get requests () {
     const mapping = {}; // requestId -> request mapping
-    this.pending.forEach(request => (mapping[request.id] = request));
+    this.pending.forEach(request => {
+      mapping[request.id] = request;
+    });
     return mapping;
   }
 
@@ -47,7 +49,6 @@ class SignerStore {
 
   subscribePending = () => {
     const callback = (err, pending) => {
-      console.log('OENDING=', pending);
       if (err) {
         throw new Error(err);
       }

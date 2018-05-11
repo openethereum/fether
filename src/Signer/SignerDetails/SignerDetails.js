@@ -6,7 +6,6 @@
 import React, { Component } from 'react';
 import { fromWei } from '@parity/api/lib/util/wei';
 import { inject, observer } from 'mobx-react';
-import { Redirect } from 'react-router-dom';
 
 @inject('signerStore')
 @observer
@@ -44,7 +43,7 @@ class SignerDetails extends Component {
     e.preventDefault();
   };
 
-  render() {
+  render () {
     const {
       match: {
         params: { requestId }
@@ -73,7 +72,7 @@ class SignerDetails extends Component {
           <input
             onChange={this.handleChangePassword}
             required
-            type="password"
+            type='password'
             value={password}
           />
         </label>

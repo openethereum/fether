@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 @inject('signerStore')
 @observer
 class SignerList extends Component {
-  render() {
+  render () {
     const {
       signerStore: { pending }
     } = this.props;

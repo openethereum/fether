@@ -14,7 +14,7 @@ class CreateAccountStore {
   @observable password = '';
   @observable phrase = null; // The 12-word seed phrase
 
-  constructor() {
+  constructor () {
     this.api = parityStore.api;
   }
 
