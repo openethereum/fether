@@ -10,14 +10,17 @@ import ethereumIcon from '../assets/img/tokens/ethereum.png';
 class Send extends Component {
   render () {
     return (
-      <div>
+      <div className='box -well'>
         <div className='box -card'>
-          <header className='token-header'>
-            <div className='token-header_icon'>
+          <header className='token -header'>
+            <div className='token_icon'>
               <img src={ethereumIcon} alt='ethereum' />
             </div>
-            <div className='token-header_name'>Ethereum</div>
-            <div className='token-header_balance'>42.89</div>
+            <div className='token_name'>Ethereum</div>
+            <div className='token_balance'>
+              42.89
+              <span className='token_symbol'>ETH</span>
+            </div>
           </header>
 
           <form className='send-form'>

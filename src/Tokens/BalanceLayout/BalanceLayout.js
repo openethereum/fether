@@ -8,7 +8,7 @@ import React from 'react';
 const ETHER_IN_WEI = 1000000000000000000; // Is there a util function for this?
 
 const BalanceLayout = ({ balance, image, name, symbol }) => (
-  <div className='token'>
+  <div className='token box -card -clickable'>
     <div className='token_icon'>
       <img src={image} alt={name} />
     </div>
