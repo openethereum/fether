@@ -3,11 +3,12 @@
 //
 // SPDX-License-Identifier: MIT
 
-// eslint-disable-next-line
+/* eslint-disable */
 const dynamicRequire =
   typeof __non_webpack_require__ === 'undefined'
     ? require
     : __non_webpack_require__; // Dynamic require https://github.com/yargs/yargs/issues/781
+/* eslint-enable */
 
 const { app } = require('electron');
 const fs = require('fs');

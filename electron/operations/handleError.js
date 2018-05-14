@@ -3,11 +3,12 @@
 //
 // SPDX-License-Identifier: MIT
 
-const { dialog } = require('electron');
+const { app, dialog } = require('electron');
 
 const {
   parity: { channel }
 } = require('../../package.json');
+const parityPath = require('../utils/parityPath');
 
 module.exports = (err, message = 'An error occurred.') => {
   console.error(err);

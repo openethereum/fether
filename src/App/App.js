@@ -12,6 +12,7 @@ import ProtectedRoute from './ProtectedRoute';
 import Receive from '../Receive';
 import Send from '../Send';
 import Settings from '../Settings';
+import Signer from '../Signer';
 import Tokens from '../Tokens';
 import './App.css';
 
@@ -41,6 +42,7 @@ class App extends Component {
                 <ProtectedRoute exact path='/' component={Tokens} />
                 <ProtectedRoute path='/settings' component={Settings} />
                 <ProtectedRoute path='/send' component={Send} />
+                <ProtectedRoute path='/signer' component={Signer} />
                 <ProtectedRoute path='/receive' component={Receive} />
                 <ProtectedRoute path='/accounts/new' component={CreateAccount} />
               </div>

@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-const { app, dialog } = require('electron');
+const { app } = require('electron');
 const axios = require('axios');
 const { download } = require('electron-dl');
 const fs = require('fs');
@@ -15,7 +15,6 @@ const {
 } = require('../../package.json');
 const parityPath = require('../utils/parityPath');
 
-const fsExists = util.promisify(fs.stat);
 const fsChmod = util.promisify(fs.chmod);
 
 const getArch = () => {

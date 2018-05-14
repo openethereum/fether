@@ -44,7 +44,7 @@ module.exports = mainWindow => {
       submenu: [
         {
           label: 'Learn More',
-          click() {
+          click () {
             shell.openExternal('https://parity.io');
           }
         }
