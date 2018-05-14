@@ -23,7 +23,7 @@
   }
 
   .token_name {
-    padding-left: 0.5rem;
+    padding-left: 0.325rem;
     flex-grow: 1;
     color: $black;
     font-weight: 500;
@@ -36,5 +36,8 @@
 
   .token_symbol {
     font-size: ms(-2);
+    &:before {
+      content: ' ';
+    }
   }
 }
