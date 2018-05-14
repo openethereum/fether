@@ -5,7 +5,6 @@
 
 import React, { Component } from 'react';
 import { defaultAccount$, post$ } from '@parity/light.js';
-import { Redirect } from 'react-router-dom';
 import { toWei } from '@parity/api/lib/util/wei';
 
 import ethereumIcon from '../assets/img/tokens/ethereum.png';
@@ -52,11 +51,6 @@ class Send extends Component {
   render () {
     const { amount, gas, status, to } = this.state;
 
-    if (status && status.confirmed) {
-      // Redirect to homepage when confirmed
-      return <Redirect to='/' />;
-    }
-
     return (
       <div className='box -well'>
         <div className='box -card'>
@@ -102,7 +96,9 @@ class Send extends Component {
               </div>
             </fieldset>
             <div className='send-form_action'>
-              <button className='button'>Send</button>
+              <button className='button'>
+                {status && status.signed ? 'Confirming block...' : 'Send'}
+              </button>
             </div>
             Status: {JSON.stringify(status)}
           </form>

@@ -32,7 +32,7 @@ class SignerDetails extends Component {
     e.preventDefault();
   };
 
-  render() {
+  render () {
     const {
       requestId,
       signerStore: { requests }
@@ -52,7 +52,7 @@ class SignerDetails extends Component {
           <input
             onChange={this.handleChangePassword}
             required
-            type="password"
+            type='password'
             value={password}
           />
         </label>
