@@ -48,8 +48,7 @@ class Signer extends Component {
 
   handleReject = () => {
     const { history, signerStore } = this.props;
-    signerStore.rejectRequest(this.requestId);
-    history.goBack();
+    signerStore.rejectRequest(this.requestId).then(() => history.goBack());
   };
 
   handleSubmit = e => {
