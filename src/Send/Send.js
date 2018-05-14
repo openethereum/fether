@@ -10,6 +10,7 @@ import { toWei } from '@parity/api/lib/util/wei';
 
 import ethereumIcon from '../assets/img/tokens/ethereum.png';
 import light from '../hoc';
+import Signer from './Signer';
 
 @light({
   me: defaultAccount$
@@ -51,9 +52,9 @@ class Send extends Component {
   render () {
     const { amount, gas, status, to } = this.state;
 
-    if (status && status.requested) {
-      // Redirect to signer when needed
-      return <Redirect to={`/signer/${+status.requested}`} />;
+    if (status && status.confirmed) {
+      // Redirect to homepage when confirmed
+      return <Redirect to='/' />;
     }
 
     return (
@@ -103,7 +104,10 @@ class Send extends Component {
             <div className='send-form_action'>
               <button className='button'>Send</button>
             </div>
+            Status: {JSON.stringify(status)}
           </form>
+          {status &&
+            status.requested && <Signer requestId={+status.requested} />}
         </div>
       </div>
     );

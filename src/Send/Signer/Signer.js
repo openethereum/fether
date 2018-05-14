@@ -4,7 +4,6 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import { fromWei } from '@parity/api/lib/util/wei';
 import { inject, observer } from 'mobx-react';
 
 @inject('signerStore')
@@ -15,12 +14,7 @@ class SignerDetails extends Component {
   };
 
   handleAccept = () => {
-    const {
-      match: {
-        params: { requestId }
-      },
-      signerStore
-    } = this.props;
+    const { requestId, signerStore } = this.props;
     const { password } = this.state;
     signerStore.acceptRequest(requestId, password);
   };
@@ -30,12 +24,7 @@ class SignerDetails extends Component {
   };
 
   handleReject = () => {
-    const {
-      match: {
-        params: { requestId }
-      },
-      signerStore
-    } = this.props;
+    const { requestId, signerStore } = this.props;
     signerStore.rejectRequest(requestId);
   };
 
@@ -43,11 +32,9 @@ class SignerDetails extends Component {
     e.preventDefault();
   };
 
-  render () {
+  render() {
     const {
-      match: {
-        params: { requestId }
-      },
+      requestId,
       signerStore: { requests }
     } = this.props;
     const { password } = this.state;
@@ -58,21 +45,14 @@ class SignerDetails extends Component {
       return null;
     }
 
-    const transaction = request.payload.sendTransaction;
-
     return (
       <form onSubmit={this.handleSubmit}>
-        <h3>Request number {requestId}</h3>
-        <p>From: {transaction.from}</p>
-        <p>To: {transaction.to}</p>
-        <p>Amount: {+fromWei(transaction.value)}ETH</p>
-        <p>Gas: {+transaction.gas}</p>
         <label>
           Enter your password to confirm:<br />
           <input
             onChange={this.handleChangePassword}
             required
-            type='password'
+            type="password"
             value={password}
           />
         </label>
