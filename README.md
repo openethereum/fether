@@ -1,3 +1,3 @@
-# light.js
+# light
 
-A high-level JS library optimized for light clients.
+The Parity Light Wallet
