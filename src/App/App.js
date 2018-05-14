@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, MemoryRouter, Route, Link } from 'react-router-dom';
 
 import CreateAccount from '../Accounts/CreateAccount';
+import Health from '../Health';
 import Loading from '../Loading';
 import ProtectedRoute from './ProtectedRoute';
 import Receive from '../Receive';
@@ -42,6 +43,7 @@ class App extends Component {
               <ProtectedRoute path='/accounts/new' component={CreateAccount} />
 
               <nav className='primary-nav'>
+                <Health />
                 <Link to='/'>Home</Link>
                 {/* @brian Putting a <Link> here for ease of use for us,
                 but I'll let you decided how/when to show the Signer component */}
