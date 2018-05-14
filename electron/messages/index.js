@@ -3,7 +3,6 @@
 //
 // SPDX-License-Identifier: MIT
 
-const { runParity } = require('../operations/runParity');
 const signerNewToken = require('../operations/signerNewToken');
 
 /**
