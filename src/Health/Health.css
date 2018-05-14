@@ -3,6 +3,7 @@ feel free to remove all this */
 
 /* Tooltip container */
 .tooltip {
+  flex-grow: 1;
   position: relative;
   display: inline-block;
 }

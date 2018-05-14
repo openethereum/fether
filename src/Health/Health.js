@@ -55,16 +55,14 @@ const averageHealth = nodeHealth => {
   syncing: syncing$
 })
 class Health extends Component {
-  render() {
+  render () {
     const { nodeHealth, syncing } = this.props;
     const { message, status } = averageHealth(nodeHealth);
 
-    // TODO No inline style, just putting here for prototyping -Amaury
     return (
-      <p className="tooltip" style={{ flexGrow: 1 }}>
+      <p className='tooltip'>
         {status}
-
-        <span className="tooltiptext">
+        <span className='tooltiptext'>
           {status !== STATUS_OK && <span>{message}</span>}
           {syncing && <span>Syncing: {JSON.stringify(syncing)}</span>}
           {nodeHealth && (
