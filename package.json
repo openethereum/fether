@@ -44,6 +44,7 @@
     "@parity/api": "^2.1.22",
     "@parity/light.js": "https://github.com/parity-js/light.js#c531c68b5268a1bf7aba1f43424f440b2bde7828",
     "axios": "^0.18.0",
+    "commander": "^2.15.1",
     "electron": "^2.0.0",
     "electron-dl": "^1.11.0",
     "is-electron": "^2.1.0",
@@ -55,8 +56,7 @@
     "react-dom": "^16.3.2",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4",
-    "rxjs": "^6.1.0",
-    "yargs": "^11.0.0"
+    "rxjs": "^6.1.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",
