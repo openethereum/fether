@@ -4,12 +4,11 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import { defaultAccount$, post$ } from '@parity/light.js';
+import { defaultAccount$ } from '@parity/light.js';
 import { toWei } from '@parity/api/lib/util/wei';
 
 import ethereumIcon from '../assets/img/tokens/ethereum.png';
 import light from '../hoc';
-import Signer from './Signer';
 
 @light({
   me: defaultAccount$
@@ -19,14 +18,8 @@ class Send extends Component {
     amount: 0.01, // In Ether
     gas: 21000,
     to: '0x00Ae02834e91810B223E54ce3f9B7875258a1747',
-    txStatus: null
+    status: null
   };
-
-  componentWillUnmount () {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
 
   handleChangeAmount = ({ target: { value } }) =>
     this.setState({ amount: value });
@@ -37,19 +30,19 @@ class Send extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { me } = this.props;
+    const { me, history } = this.props;
     const { amount, gas, to } = this.state;
-
-    this.subscription = post$({
+    const tx = {
       from: me,
       gas,
       to,
       value: toWei(amount)
-    }).subscribe(status => this.setState({ status }));
+    };
+    history.push(`/signer`, tx);
   };
 
   render () {
-    const { amount, gas, status, to } = this.state;
+    const { amount, gas, to } = this.state;
 
     return (
       <div className='box -well'>
@@ -96,14 +89,9 @@ class Send extends Component {
               </div>
             </fieldset>
             <div className='send-form_action'>
-              <button className='button'>
-                {status && status.signed ? 'Confirming block...' : 'Send'}
-              </button>
+              <button className='button'>Send</button>
             </div>
-            Status: {JSON.stringify(status)}
           </form>
-          {status &&
-            status.requested && <Signer requestId={+status.requested} />}
         </div>
       </div>
     );

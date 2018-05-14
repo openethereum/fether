@@ -13,6 +13,7 @@ import ProtectedRoute from './ProtectedRoute';
 import Receive from '../Receive';
 import Send from '../Send';
 import Settings from '../Settings';
+import Signer from '../Send/Signer';
 import Tokens from '../Tokens';
 import './App.css';
 
