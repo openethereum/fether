@@ -5,26 +5,38 @@
 
 const cli = require('commander');
 
+const { productName } = require('../config.json');
 const { version } = require('../../package.json');
+
+/**
+ * Process.argv arguments length is different in electron mode and in packaged
+ * mode. This small line is to harmonize the behavior for consistent parsing.
+ *
+ * @see https://github.com/tj/commander.js/issues/512
+ * @see https://github.com/electron/electron/issues/4690#issuecomment-217435222
+ */
+if (process.defaultApp !== true) {
+  process.argv.unshift(null);
+}
 
 cli
   .version(version)
   .allowUnknownOption()
   .option(
     '--no-run-parity',
-    'Parity UI will not attempt to run the locally installed parity.'
+    `${productName} will not attempt to run the locally installed parity.`
   )
   .option(
     '--ui-dev',
-    'The Light Wallet will load http://localhost:3000. WARNING: Only use this is you plan on developing on Parity UI.'
+    `${productName} will load http://localhost:3000. WARNING: Only use this is you plan on developing on ${productName}.`
   )
   .option(
     '--ws-interface',
-    "Specify the hostname portion of the WebSockets server Parity UI will connect to. IP should be an interface's IP address. (default: 127.0.0.1)"
+    `Specify the hostname portion of the WebSockets server ${productName} will connect to. IP should be an interface's IP address. (default: 127.0.0.1)`
   )
   .option(
     '--ws-port',
-    'Specify the port portion of the WebSockets server Parity UI will connect to. (default: 8546)'
+    `Specify the port portion of the WebSockets server ${productName} will connect to. (default: 8546)`
   )
   .parse(process.argv);
 
