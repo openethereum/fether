@@ -56,9 +56,6 @@ const averageHealth = nodeHealth => {
 
 class Health extends Component {
   render () {
-    const { nodeHealth, syncing } = this.props;
-    const { message, status } = averageHealth(nodeHealth);
-
     return (
       <div className='status'>
         <span className='status_icon -syncing'>

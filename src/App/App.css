@@ -1036,7 +1036,7 @@ button {
     font-weight: 600;
     color: #888;
     width: 9rem; }
-  .send-form_field input[type="tel"] {
+  .send-form_field input[type="number"] {
     display: block;
     width: 100%;
     border-radius: 2px;
@@ -1047,7 +1047,7 @@ button {
     background-color: #fff;
     padding: 0.25rem 0.25rem 0.325rem;
     box-shadow: 0 1px 2px rgba(34, 34, 34, 0.0675); }
-    .send-form_field input[type="tel"]:focus {
+    .send-form_field input[type="number"]:focus {
       background-color: #fff;
       border-color: #d7d7d7;
       box-shadow: 0 0 0; }

@@ -77,7 +77,7 @@ class Send extends Component {
                 <input
                   onChange={this.handleChangeTo}
                   required
-                  type='tel'
+                  type='number'
                   value={to}
                 />
               </div>
@@ -86,7 +86,7 @@ class Send extends Component {
                 <input
                   onChange={this.handleChangeAmount}
                   required
-                  type='tel'
+                  type='number'
                   value={amount}
                 />
               </div>
@@ -95,7 +95,7 @@ class Send extends Component {
                 <input
                   onChange={this.handleChangeGas}
                   required
-                  type='tel'
+                  type='number'
                   value={gas}
                 />
               </div>
