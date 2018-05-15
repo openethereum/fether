@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
+import Blockie from 'react-blockies';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 
@@ -27,7 +28,9 @@ class CreateAccountStep1 extends Component {
       <div>
         <h3>Create account</h3>
         <div>
-          Your new address:<br />[BLOCKIE]<pre>{address} </pre>
+          Your new address:<br />
+          <Blockie seed={address} />
+          <pre>{address} </pre>
           {pathname === '/accounts/new' && (
             <button onClick={generateNewAccount}>Change</button>
           )}

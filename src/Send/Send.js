@@ -17,8 +17,7 @@ class Send extends Component {
   state = {
     amount: 0.01, // In Ether
     gas: 21000,
-    to: '0x00Ae02834e91810B223E54ce3f9B7875258a1747',
-    status: null
+    to: '0x00Ae02834e91810B223E54ce3f9B7875258a1747'
   };
 
   handleChangeAmount = ({ target: { value } }) =>
@@ -62,12 +61,7 @@ class Send extends Component {
             <fieldset className='send-form_fields'>
               <div className='send-form_field'>
                 <label>Address</label>
-                <input
-                  onChange={this.handleChangeTo}
-                  required
-                  type='number'
-                  value={to}
-                />
+                <input onChange={this.handleChangeTo} required value={to} />
               </div>
               <div className='send-form_field'>
                 <label>Amount</label>
