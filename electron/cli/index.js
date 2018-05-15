@@ -16,7 +16,7 @@ const { version } = require('../../package.json');
  * @see https://github.com/electron/electron/issues/4690#issuecomment-217435222
  */
 if (process.defaultApp !== true) {
-  process.argv.unshift(null);
+  process.argv.unshift('');
 }
 
 cli
@@ -31,11 +31,11 @@ cli
     `${productName} will load http://localhost:3000. WARNING: Only use this is you plan on developing on ${productName}.`
   )
   .option(
-    '--ws-interface',
+    '--ws-interface <ip>',
     `Specify the hostname portion of the WebSockets server ${productName} will connect to. IP should be an interface's IP address. (default: 127.0.0.1)`
   )
   .option(
-    '--ws-port',
+    '--ws-port <port>',
     `Specify the port portion of the WebSockets server ${productName} will connect to. (default: 8546)`
   )
   .parse(process.argv);
