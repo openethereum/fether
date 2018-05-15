@@ -4,13 +4,19 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import { defaultAccount$ } from '@parity/light.js';
-import { toWei } from '@parity/api/lib/util/wei';
+import { balanceOf$, defaultAccount$ } from '@parity/light.js';
+import { map, switchMap } from 'rxjs/operators';
+import { fromWei, toWei } from '@parity/api/lib/util/wei';
 
 import ethereumIcon from '../assets/img/tokens/ethereum.png';
 import light from '../hoc';
 
 @light({
+  balance: () =>
+    defaultAccount$().pipe(
+      switchMap(address => balanceOf$(address)),
+      map(value => +fromWei(value.toString()))
+    ),
   me: defaultAccount$
 })
 class Send extends Component {
@@ -29,7 +35,7 @@ class Send extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { me, history } = this.props;
+    const { history, me } = this.props;
     const { amount, gas, to } = this.state;
     const tx = {
       from: me,
@@ -41,6 +47,7 @@ class Send extends Component {
   };
 
   render () {
+    const { balance } = this.props;
     const { amount, gas, to } = this.state;
 
     return (
@@ -52,7 +59,7 @@ class Send extends Component {
             </div>
             <div className='token_name'>Ethereum</div>
             <div className='token_balance'>
-              42.89
+              {balance}
               <span className='token_symbol'>ETH</span>
             </div>
           </header>

@@ -4,14 +4,20 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import { balanceOf$ } from '@parity/light.js';
+import { balanceOf$, defaultAccount$ } from '@parity/light.js';
+import { fromWei } from '@parity/api/lib/util/wei';
 import { Link } from 'react-router-dom';
+import { map, switchMap } from 'rxjs/operators';
 
 import BalanceLayout from '../BalanceLayout';
 import light from '../../hoc';
 
 @light({
-  balance: ({ address }) => balanceOf$(address)
+  balance: () =>
+    defaultAccount$().pipe(
+      switchMap(address => balanceOf$(address)),
+      map(value => +fromWei(value.toString()))
+    )
 })
 class EthBalance extends Component {
   render () {

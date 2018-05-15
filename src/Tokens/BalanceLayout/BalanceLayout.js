@@ -5,8 +5,6 @@
 
 import React from 'react';
 
-const ETHER_IN_WEI = 1000000000000000000; // Is there a util function for this?
-
 const BalanceLayout = ({ balance, image, name, symbol }) => (
   <div className='token box -card -clickable'>
     <div className='token_icon'>
@@ -14,7 +12,7 @@ const BalanceLayout = ({ balance, image, name, symbol }) => (
     </div>
     <div className='token_name'>{name}</div>
     <div className='token_balance'>
-      {Number.isFinite(balance) ? (balance / ETHER_IN_WEI).toFixed(2) : '...'}{' '}
+      {Number.isFinite(balance) ? balance.toFixed(2) : '...'}{' '}
       <span className='token_symbol'>{symbol}</span>
     </div>
   </div>
