@@ -43,7 +43,7 @@ const camelcase = flag =>
 // Now we must think which arguments passed to cli must be passed down to
 // parity.
 const parityArgv = cli.rawArgs
-  .splice(cli.rawArgs.findIndex(item => item.startsWith('--'))) // Remove all arguments until one --option
+  .splice(Math.max(cli.rawArgs.findIndex(item => item.startsWith('--'))), 0) // Remove all arguments until one --option
   .filter((item, index, array) => {
     const key = camelcase(item.replace('--', '').replace('no-', '')); // Remove first 2 '--' and then camelCase
 
@@ -58,7 +58,9 @@ const parityArgv = cli.rawArgs
       return true;
     }
 
-    const previousKey = camelcase(array[index - 1].substring(2));
+    const previousKey = camelcase(
+      array[index - 1].replace('--', '').replace('no-', '')
+    );
     if (cli[previousKey] === item) {
       // If it's an argument of an option consumed by commander.js, then we
       // skip it too
