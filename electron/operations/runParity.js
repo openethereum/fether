@@ -13,6 +13,7 @@ const { parityArgv } = require('../cli');
 const handleError = require('./handleError');
 const parityPath = require('../utils/parityPath');
 
+const fsChmod = util.promisify(fs.chmod);
 const fsExists = util.promisify(fs.stat);
 const fsUnlink = util.promisify(fs.unlink);
 
@@ -26,6 +27,7 @@ module.exports = {
     fsExists(logFile)
       .then(() => fsUnlink(logFile)) // Delete logFile and create a fresh one on each launch
       .catch(noop)
+      .then(() => fsChmod(parityPath(), '755')) // Should already be 755 after download, just to be sure
       .then(() => {
         const logStream = fs.createWriteStream(logFile, { flags: 'a' });
         let logLastLine; // Always contains last line of the logFile
