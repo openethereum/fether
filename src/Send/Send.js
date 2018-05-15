@@ -57,48 +57,49 @@ class Send extends Component {
     }
 
     return (
-      <div>
+      <div className='box -well'>
         <div className='box -card'>
-          <header className='token-header'>
-            <div className='token-header_icon'>
+          <header className='token -header'>
+            <div className='token_icon'>
               <img src={ethereumIcon} alt='ethereum' />
             </div>
-            <div className='token-header_name'>Ethereum</div>
-            <div className='token-header_balance'>42.89</div>
+            <div className='token_name'>Ethereum</div>
+            <div className='token_balance'>
+              42.89
+              <span className='token_symbol'>ETH</span>
+            </div>
           </header>
 
           <form className='send-form' onSubmit={this.handleSubmit}>
-            {/* @brian can we not use ul/li here? Not really semantic. I could
-            change it but I'm scared it'll break the layout */}
-            <ul className='send-form_fields'>
-              <li>
+            <fieldset className='send-form_fields'>
+              <div className='send-form_field'>
                 <label>Address</label>
                 <input
                   onChange={this.handleChangeTo}
                   required
-                  type='tel'
+                  type='number'
                   value={to}
                 />
-              </li>
-              <li>
+              </div>
+              <div className='send-form_field'>
                 <label>Amount</label>
                 <input
                   onChange={this.handleChangeAmount}
                   required
-                  type='tel'
+                  type='number'
                   value={amount}
                 />
-              </li>
-              <li>
+              </div>
+              <div className='send-form_field'>
                 <label>Gas</label>
                 <input
                   onChange={this.handleChangeGas}
                   required
-                  type='tel'
+                  type='number'
                   value={gas}
                 />
-              </li>
-            </ul>
+              </div>
+            </fieldset>
             <div className='send-form_action'>
               <button className='button'>Send</button>
             </div>

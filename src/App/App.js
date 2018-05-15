@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, MemoryRouter, Route, Link } from 'react-router-dom';
 
 import CreateAccount from '../Accounts/CreateAccount';
+import Health from '../Health';
 import Loading from '../Loading';
 import ProtectedRoute from './ProtectedRoute';
 import Receive from '../Receive';
@@ -33,25 +34,29 @@ class App extends Component {
               </svg>
             </div>
             <div className='window'>
-              <Route path='/loading' component={Loading} />
-              <ProtectedRoute exact path='/' component={Tokens} />
-              <ProtectedRoute path='/settings' component={Settings} />
-              <ProtectedRoute path='/send' component={Send} />
-              <ProtectedRoute path='/signer' component={Signer} />
-              <ProtectedRoute path='/receive' component={Receive} />
-              <ProtectedRoute path='/accounts/new' component={CreateAccount} />
+              <nav className='header-nav'>
+                <Link to='/'>Wallet</Link>
+              </nav>
 
-              <nav className='primary-nav'>
-                <Link to='/'>Home</Link>
-                {/* @brian Putting a <Link> here for ease of use for us,
-                but I'll let you decided how/when to show the Signer component */}
-                <Link to='/signer'>Signer</Link>
-                <Link to='/receive' className='icon -receive'>
-                  Receive
-                </Link>
-                <Link to='/settings' className='icon -settings'>
-                  Settings
-                </Link>
+              <div className='window_content'>
+                <Route path='/loading' component={Loading} />
+                <ProtectedRoute exact path='/' component={Tokens} />
+                <ProtectedRoute path='/settings' component={Settings} />
+                <ProtectedRoute path='/send' component={Send} />
+                <ProtectedRoute path='/signer' component={Signer} />
+                <ProtectedRoute path='/receive' component={Receive} />
+                <ProtectedRoute path='/accounts/new' component={CreateAccount} />
+              </div>
+
+              <nav className='footer-nav'>
+                <div className='footer-nav_status'>
+                  <Health />
+                </div>
+                <div className='footer-nav_icons'>
+                  <Link to='/settings' className='icon -settings'>
+                    Settings
+                  </Link>
+                </div>
               </nav>
             </div>
           </div>

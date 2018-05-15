@@ -1,0 +1,20 @@
+.header-nav {
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem 0.5rem;
+
+  a,
+  a:link,
+  a:visited {
+    color: rgba($black, 0.675);
+    font-weight: 500;
+    display: block;
+    margin: -0.175rem 0 -0.175rem;
+    padding: 0.25rem 0.5rem 0.175rem;
+    border-radius: 0.25rem;
+    &:hover {
+      background: rgba($faint,0.5);
+      color: $black;
+    }
+  }
+}

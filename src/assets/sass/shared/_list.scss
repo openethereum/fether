@@ -1,7 +1,8 @@
 .list {
   &.-tokens {
+    padding: 0.325rem;
     & > li {
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.325rem;
       &:last-child {
         margin-bottom: 0;
       }

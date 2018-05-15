@@ -1,32 +1,37 @@
-.primary-nav {
+.footer-nav {
   display: flex;
-  justify-content: flex-end;
-  padding-top: 0.25rem;
+  justify-content: space-between;
+
+  .footer-nav_status {
+    padding: 1rem;
+    font-size: ms(-2);
+    color: $grey;
+  }
+
+  .footer-nav_icons {
+    padding: 1rem;
+  }
 
   a,
   a:link,
   a:visited {
-    text-transform: uppercase;
-    font-size: ms(-2);
-    color: rgba($white, 0.675);
-    font-weight: 500;
-    padding: 0 0.5rem;
     display: block;
+    margin: -0.175rem 0 -0.175rem;
+    padding: 0.25rem 0.5rem 0.175rem;
+    border-radius: 0.25rem;
     &:hover {
-      color: $white;
-      border-radius: 0.25rem;
+      background: rgba($faint,0.5);
+      color: $black;
     }
 
     &.icon {
-      padding: 0;
-      width: ms(0) * 1.3;
-      height: ms(0) * 1.3;
+      width: ms(0) * 1.3 + 0.5rem;
+      height: ms(0) * 1.3 + 0.5rem;
       text-indent: -9999rem;
       background-size: ms(0) auto;
       background-position: center center;
       background-repeat: no-repeat;
       opacity: 0.675;
-      margin-left: 0.25rem;
       &:hover {
         opacity: 1;
       }
