@@ -18,7 +18,7 @@ const { runParity, killParity } = require('./operations/runParity');
 const { app, BrowserWindow, ipcMain, session } = electron;
 let mainWindow;
 
-function createWindow() {
+function createWindow () {
   mainWindow = new BrowserWindow({
     height: 800,
     width: 1200

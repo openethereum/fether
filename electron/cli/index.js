@@ -3,13 +3,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-const { app } = require('electron');
 const cli = require('commander');
-const fs = require('fs');
-const omit = require('lodash/omit');
-const { spawn } = require('child_process');
 
-const parityPath = require('../utils/parityPath');
 const { version } = require('../../package.json');
 
 cli
