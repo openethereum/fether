@@ -71,10 +71,8 @@ class Send extends Component {
           </header>
 
           <form className='send-form' onSubmit={this.handleSubmit}>
-            {/* @brian can we not use ul/li here? Not really semantic. I could
-            change it but I'm scared it'll break the layout */}
-            <ul className='send-form_fields'>
-              <li>
+            <fieldset className='send-form_fields'>
+              <div className='send-form_field'>
                 <label>Address</label>
                 <input
                   onChange={this.handleChangeTo}
@@ -82,8 +80,8 @@ class Send extends Component {
                   type='tel'
                   value={to}
                 />
-              </li>
-              <li>
+              </div>
+              <div className='send-form_field'>
                 <label>Amount</label>
                 <input
                   onChange={this.handleChangeAmount}
@@ -91,8 +89,8 @@ class Send extends Component {
                   type='tel'
                   value={amount}
                 />
-              </li>
-              <li>
+              </div>
+              <div className='send-form_field'>
                 <label>Gas</label>
                 <input
                   onChange={this.handleChangeGas}
@@ -100,8 +98,8 @@ class Send extends Component {
                   type='tel'
                   value={gas}
                 />
-              </li>
-            </ul>
+              </div>
+            </fieldset>
             <div className='send-form_action'>
               <button className='button'>Send</button>
             </div>

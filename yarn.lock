@@ -122,9 +122,9 @@
   version "2.1.6"
   resolved "https://registry.yarnpkg.com/@parity/jsonrpc/-/jsonrpc-2.1.6.tgz#260bbe7dfcec18d59f0bf1668dfd6021452d6452"
 
-"@parity/light.js@https://github.com/parity-js/light.js#f62bb37782ed32eb74a8bb0cc428632d3a8c6d45":
+"@parity/light.js@https://github.com/parity-js/light.js#c531c68b5268a1bf7aba1f43424f440b2bde7828":
   version "1.0.0"
-  resolved "https://github.com/parity-js/light.js#f62bb37782ed32eb74a8bb0cc428632d3a8c6d45"
+  resolved "https://github.com/parity-js/light.js#c531c68b5268a1bf7aba1f43424f440b2bde7828"
   dependencies:
     "@babel/runtime" "^7.0.0-beta.46"
     "@parity/api" "^2.1.22"

@@ -3,11 +3,12 @@
 
 .send-form_fields {
   border-top: 1px solid rgba($faint,0.5);
-  & > li {
-    display: flex;
-    border-bottom: 1px solid rgba($faint,0.5);
-    padding: 0.5rem 0;
-  }
+}
+
+.send-form_field {
+  display: flex;
+  border-bottom: 1px solid rgba($faint,0.5);
+  padding: 0.5rem 0;
 
   label {
     display: block;

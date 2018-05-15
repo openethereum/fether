@@ -11,7 +11,7 @@
       height: 0.5rem;
     }
 
-    &.-ok {
+    &.-good {
       svg {
         circle {
           fill: $green;
@@ -19,7 +19,7 @@
       }
     }
 
-    &.-alright {
+    &.-syncing {
       svg {
         circle {
           fill: $yellow;

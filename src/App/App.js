@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, MemoryRouter, Route, Link } from 'react-router-dom';
 
 import CreateAccount from '../Accounts/CreateAccount';
+import Health from '../Health';
 import Loading from '../Loading';
 import ProtectedRoute from './ProtectedRoute';
 import Receive from '../Receive';
@@ -49,14 +50,7 @@ class App extends Component {
 
               <nav className='footer-nav'>
                 <div className='footer-nav_status'>
-                  <div className='status'>
-                    <span className='status_icon -alright'>
-                      <svg viewBox='0 0 20 20'>
-                        <circle fill='#000000' cx='10' cy='10' r='10' />
-                      </svg>
-                    </span>
-                    <span className='status_text'>Syncing (1h6m)</span>
-                  </div>
+                  <Health />
                 </div>
                 <div className='footer-nav_icons'>
                   <Link to='/settings' className='icon -settings'>
