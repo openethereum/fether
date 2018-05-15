@@ -9,7 +9,7 @@ const noop = require('lodash/noop');
 const { spawn } = require('child_process');
 const util = require('util');
 
-const { parityArgv } = require('../cli');
+const { cli, parityArgv } = require('../cli');
 const handleError = require('./handleError');
 const parityPath = require('../utils/parityPath');
 
@@ -19,8 +19,21 @@ const fsUnlink = util.promisify(fs.unlink);
 
 let parity = null; // Will hold the running parity instance
 
+// These are errors output by parity, which Parity UI ignores (i.e. doesn't
+// panic). They happen when an instance of parity is already running, and
+// parity-ui tries to launch another one.
+const catchableErrors = [
+  'is already in use, make sure that another instance of an Ethereum client is not running or change the address using the --ws-port and --ws-interface options.',
+  'Error(Msg("IO error: While lock file:'
+];
+
 module.exports = {
   runParity (mainWindow) {
+    // Do not run parity with --no-run-parity
+    if (cli.runParity === false) {
+      return;
+    }
+
     // Create a logStream to save logs
     const logFile = `${parityPath()}.log`;
 
@@ -39,7 +52,11 @@ module.exports = {
         parity.stdout.pipe(logStream);
         parity.stderr.pipe(logStream);
         // Save in memory the last line of the log file, for handling error
-        const callback = data => (logLastLine = data.toString());
+        const callback = data => {
+          if (data && data.length) {
+            logLastLine = data.toString();
+          }
+        };
         parity.stdout.on('data', callback);
         parity.stderr.on('data', callback);
 
@@ -55,11 +72,7 @@ module.exports = {
           // is logging a particular line, see below. In this case, we just
           // silently ignore our local instance, and let the 1st parity
           // instance be the main one.
-          if (
-            logLastLine.includes(
-              'is already in use, make sure that another instance of an Ethereum client is not running or change the address using the --ws-port and --ws-interface options.'
-            )
-          ) {
+          if (catchableErrors.some(error => logLastLine.includes(error))) {
             console.log(
               'Another instance of parity is running, closing local instance.'
             );

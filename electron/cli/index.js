@@ -11,8 +11,20 @@ cli
   .version(version)
   .allowUnknownOption()
   .option(
+    '--no-run-parity',
+    'Parity UI will not attempt to run the locally installed parity.'
+  )
+  .option(
     '--ui-dev',
     'The Light Wallet will load http://localhost:3000. WARNING: Only use this is you plan on developing on Parity UI.'
+  )
+  .option(
+    '--ws-interface',
+    "Specify the hostname portion of the WebSockets server Parity UI will connect to. IP should be an interface's IP address. (default: 127.0.0.1)"
+  )
+  .option(
+    '--ws-port',
+    'Specify the port portion of the WebSockets server Parity UI will connect to. (default: 8546)'
   )
   .parse(process.argv);
 
@@ -33,7 +45,7 @@ const camelcase = flag =>
 const parityArgv = cli.rawArgs
   .splice(cli.rawArgs.findIndex(item => item.startsWith('--'))) // Remove all arguments until one --option
   .filter((item, index, array) => {
-    const key = camelcase(item.substring(2)); // Remove first 2 '--' and then camelCase
+    const key = camelcase(item.replace('--', '').replace('no-', '')); // Remove first 2 '--' and then camelCase
 
     if (key in cli) {
       // If the option is consumed by commander.js, then we skip it
