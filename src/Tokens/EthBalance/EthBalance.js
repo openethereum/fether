@@ -15,7 +15,7 @@ import light from '../../hoc';
 @light({
   balance: () =>
     defaultAccount$().pipe(
-      switchMap(address => balanceOf$(address)),
+      switchMap(balanceOf$),
       map(value => +fromWei(value.toString()))
     )
 })
