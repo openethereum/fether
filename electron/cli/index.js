@@ -3,79 +3,83 @@
 //
 // SPDX-License-Identifier: MIT
 
-/* eslint-disable */
-const dynamicRequire =
-  typeof __non_webpack_require__ === 'undefined'
-    ? require
-    : __non_webpack_require__; // Dynamic require https://github.com/yargs/yargs/issues/781
-/* eslint-enable */
+const cli = require('commander');
 
-const { app } = require('electron');
-const fs = require('fs');
-const omit = require('lodash/omit');
-const { spawn } = require('child_process');
-
-const argv = dynamicRequire('yargs').argv;
-const parityPath = require('../utils/parityPath');
+const { productName } = require('../config.json');
 const { version } = require('../../package.json');
 
-let parityArgv = null; // Args to pass to `parity` command
+/**
+ * Process.argv arguments length is different in electron mode and in packaged
+ * mode. This small line is to harmonize the behavior for consistent parsing.
+ *
+ * @see https://github.com/tj/commander.js/issues/512
+ * @see https://github.com/electron/electron/issues/4690#issuecomment-217435222
+ */
+if (process.defaultApp !== true) {
+  process.argv.unshift('');
+}
+
+cli
+  .version(version)
+  .allowUnknownOption()
+  .option(
+    '--no-run-parity',
+    `${productName} will not attempt to run the locally installed parity.`
+  )
+  .option(
+    '--ui-dev',
+    `${productName} will load http://localhost:3000. WARNING: Only use this is you plan on developing on ${productName}.`
+  )
+  .option(
+    '--ws-interface <ip>',
+    `Specify the hostname portion of the WebSockets server ${productName} will connect to. IP should be an interface's IP address. (default: 127.0.0.1)`
+  )
+  .option(
+    '--ws-port <port>',
+    `Specify the port portion of the WebSockets server ${productName} will connect to. (default: 8546)`
+  )
+  .parse(process.argv);
 
 /**
- * Show output of `parity` command with args. The args are supposed to make
- * parity stop, so that the output can be immediately shown on the terminal.
+ * Camel-case the given `flag`
  *
- * @param {Array<String>} args - The arguments to pass to `parity`.
+ * @param {String} flag
+ * @return {String}
+ * @see https://github.com/tj/commander.js/blob/dcddf698c5463795401ad3d6382f5ec5ec060478/index.js#L1160-L1172
  */
-const showParityOutput = args => {
-  if (fs.existsSync(parityPath())) {
-    const parityHelp = spawn(parityPath(), args);
+const camelcase = flag =>
+  flag
+    .split('-')
+    .reduce((str, word) => str + word[0].toUpperCase() + word.slice(1));
 
-    parityHelp.stdout.on('data', data => console.log(data.toString()));
-    parityHelp.on('close', () => app.quit());
-  } else {
-    console.log(
-      'Please run Parity Light Wallet once to install Parity Light Client. This help message will then show all available commands.'
+// Now we must think which arguments passed to cli must be passed down to
+// parity.
+const parityArgv = cli.rawArgs
+  .splice(Math.max(cli.rawArgs.findIndex(item => item.startsWith('--')), 0)) // Remove all arguments until one --option
+  .filter((item, index, array) => {
+    const key = camelcase(item.replace('--', '').replace('no-', '')); // Remove first 2 '--' and then camelCase
+
+    if (key in cli) {
+      // If the option is consumed by commander.js, then we skip it
+      return false;
+    }
+
+    // If it's not consumed by commander.js, and starts with '--', then we keep
+    // it. This step is optional, used for optimization only.
+    if (item.startsWith('--')) {
+      return true;
+    }
+
+    const previousKey = camelcase(
+      array[index - 1].replace('--', '').replace('no-', '')
     );
-    app.quit();
-  }
-
-  return false;
-};
-
-module.exports = () => {
-  if (argv.help || argv.h) {
-    return showParityOutput(['--help']);
-  }
-
-  if (argv.version || argv.v) {
-    console.log(`Parity UI version ${version}.`);
-    return showParityOutput(['--version']);
-  }
-
-  // Used cached value if it exists
-  if (parityArgv) {
-    return [argv, parityArgv];
-  }
-
-  // Args to pass to `parity` command
-  parityArgv = omit(argv, '_', '$0', 'help', 'version');
-
-  // Sanitize args to be easily used by parity
-  Object.keys(parityArgv).forEach(key => {
-    // Delete all keys starting with --ui* from parityArgv.
-    // They will be handled directly by the UI.
-    if (key.startsWith('ui')) {
-      delete parityArgv[key];
+    if (cli[previousKey] === item) {
+      // If it's an argument of an option consumed by commander.js, then we
+      // skip it too
+      return false;
     }
 
-    // yargs create camelCase keys for each arg, e.g. "--ws-origins all" will
-    // create { wsOrigins: 'all' }. For parity, we remove all those that have
-    // a capital letter
-    if (/[A-Z]/.test(key)) {
-      delete parityArgv[key];
-    }
+    return true;
   });
 
-  return [argv, parityArgv];
-};
+module.exports = { cli, parityArgv };

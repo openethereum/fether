@@ -18,16 +18,7 @@ const { runParity, killParity } = require('./operations/runParity');
 const { app, BrowserWindow, ipcMain, session } = electron;
 let mainWindow;
 
-// Get arguments from cli
-const [argv] = cli();
-
 function createWindow () {
-  // If cli() returns false, then it means that the arguments are stopping the
-  // app (e.g. --help or --version). We don't do anything more in this case.
-  if (!argv) {
-    return;
-  }
-
   mainWindow = new BrowserWindow({
     height: 800,
     width: 1200
@@ -38,7 +29,7 @@ function createWindow () {
     .then(() => runParity(mainWindow))
     .catch(handleError); // Errors should be handled before, this is really just in case
 
-  if (argv['ui-dev'] === true) {
+  if (cli.uiDev === true) {
     // Opens http://127.0.0.1:3000 in --ui-dev mode
     mainWindow.loadURL('http://127.0.0.1:3000');
     mainWindow.webContents.openDevTools();
