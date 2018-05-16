@@ -31,11 +31,11 @@
     "build-css": "node-sass-chokidar src/ -o src/",
     "build-electron": "webpack --config electron/webpack.config.js",
     "build-js": "react-app-rewired build",
-    "electron": "npm run build && electron build/electron.js",
+    "electron": "npm run build && electron build/electron.js --light",
     "lint": "semistandard 'src/**/*.js' 'electron/**/*.js' --parser babel-eslint",
     "prebuild": "rimraf build/",
     "start": "npm-run-all -p watch-css start-js",
-    "start-electron": "electron electron/ --ui-dev --ws-origins all",
+    "start-electron": "electron electron/ --ui-dev --light --ws-origins all",
     "start-js": "react-app-rewired start",
     "test": "echo Skipped.",
     "watch-css": "npm run build-css -- --watch --recursive"

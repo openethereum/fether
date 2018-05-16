@@ -55,7 +55,7 @@ const camelcase = flag =>
 // Now we must think which arguments passed to cli must be passed down to
 // parity.
 const parityArgv = cli.rawArgs
-  .splice(Math.max(cli.rawArgs.findIndex(item => item.startsWith('--'))), 0) // Remove all arguments until one --option
+  .splice(Math.max(cli.rawArgs.findIndex(item => item.startsWith('--')), 0)) // Remove all arguments until one --option
   .filter((item, index, array) => {
     const key = camelcase(item.replace('--', '').replace('no-', '')); // Remove first 2 '--' and then camelCase
 

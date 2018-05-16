@@ -46,11 +46,12 @@ module.exports = {
         let logLastLine; // Always contains last line of the logFile
 
         // Run an instance of parity with the correct args
-        parity = spawn(parityPath(), parityArgv.concat('--light'));
+        parity = spawn(parityPath(), parityArgv);
 
         // Pipe all parity command output into the logFile
         parity.stdout.pipe(logStream);
         parity.stderr.pipe(logStream);
+
         // Save in memory the last line of the log file, for handling error
         const callback = data => {
           if (data && data.length) {
@@ -80,7 +81,7 @@ module.exports = {
           }
 
           // If the exit code is not 0, then we show some error message
-          if (Object.keys(parityArgv).length > 1) {
+          if (Object.keys(parityArgv).length > 0) {
             // If parity has been launched with some args, then most likely the
             // args are wrong, so we show the output of parity.
             const log = fs.readFileSync(logFile);
