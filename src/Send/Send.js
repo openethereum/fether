@@ -4,29 +4,27 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import { defaultAccount$, post$ } from '@parity/light.js';
-import { Redirect } from 'react-router-dom';
-import { toWei } from '@parity/api/lib/util/wei';
+import { balanceOf$, defaultAccount$ } from '@parity/light.js';
+import { map, switchMap } from 'rxjs/operators';
+import { fromWei, toWei } from '@parity/api/lib/util/wei';
 
 import ethereumIcon from '../assets/img/tokens/ethereum.png';
 import light from '../hoc';
 
 @light({
+  balance: () =>
+    defaultAccount$().pipe(
+      switchMap(balanceOf$),
+      map(value => +fromWei(value.toString()))
+    ),
   me: defaultAccount$
 })
 class Send extends Component {
   state = {
     amount: 0.01, // In Ether
     gas: 21000,
-    to: '0x00Ae02834e91810B223E54ce3f9B7875258a1747',
-    txStatus: null
+    to: '0x00Ae02834e91810B223E54ce3f9B7875258a1747'
   };
-
-  componentWillUnmount () {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
 
   handleChangeAmount = ({ target: { value } }) =>
     this.setState({ amount: value });
@@ -37,24 +35,20 @@ class Send extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { me } = this.props;
+    const { history, me } = this.props;
     const { amount, gas, to } = this.state;
-
-    this.subscription = post$({
+    const tx = {
       from: me,
       gas,
       to,
       value: toWei(amount)
-    }).subscribe(status => this.setState({ status }));
+    };
+    history.push(`/signer`, tx);
   };
 
   render () {
-    const { amount, gas, status, to } = this.state;
-
-    if (status && status.requested) {
-      // Redirect to signer when needed
-      return <Redirect to={`/signer/${+status.requested}`} />;
-    }
+    const { balance } = this.props;
+    const { amount, gas, to } = this.state;
 
     return (
       <div className='box -well'>
@@ -65,7 +59,7 @@ class Send extends Component {
             </div>
             <div className='token_name'>Ethereum</div>
             <div className='token_balance'>
-              42.89
+              {balance}
               <span className='token_symbol'>ETH</span>
             </div>
           </header>
@@ -74,12 +68,7 @@ class Send extends Component {
             <fieldset className='send-form_fields'>
               <div className='send-form_field'>
                 <label>Address</label>
-                <input
-                  onChange={this.handleChangeTo}
-                  required
-                  type='number'
-                  value={to}
-                />
+                <input onChange={this.handleChangeTo} required value={to} />
               </div>
               <div className='send-form_field'>
                 <label>Amount</label>

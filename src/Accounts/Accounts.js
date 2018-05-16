@@ -4,38 +4,51 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import {
-  allAccountsInfo$,
-  defaultAccount$,
-  setDefaultAccount$
-} from '@parity/light.js';
+import { allAccountsInfo$, setDefaultAccount$ } from '@parity/light.js';
+import Blockies from 'react-blockies';
 import { Link } from 'react-router-dom';
 
 import light from '../hoc';
 
 @light({
-  allAccountsInfo: allAccountsInfo$,
-  defaultAccount: defaultAccount$
+  allAccountsInfo: allAccountsInfo$
 })
 class Accounts extends Component {
-  handleChange = ({ target: { value } }) => {
-    setDefaultAccount$(value);
+  componentWillUnmount () {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  handleClick = ({
+    currentTarget: {
+      dataset: { address }
+    }
+  }) => {
+    // Set default account to the clicked one, and go to Tokens on complete
+    this.subscription = setDefaultAccount$(address).subscribe(null, null, () =>
+      this.props.history.push('/tokens')
+    );
   };
 
   render () {
-    const { allAccountsInfo, defaultAccount } = this.props;
+    const { allAccountsInfo } = this.props;
 
     return (
       <div>
-        <p>Current account:</p>
         {allAccountsInfo ? (
-          <select onChange={this.handleChange} value={defaultAccount}>
+          <ul>
             {Object.keys(allAccountsInfo).map(address => (
-              <option key={address} value={address}>
-                {allAccountsInfo[address].name} ({address})
-              </option>
+              <li
+                key={address}
+                data-address={address} // Using data- to avoid creating a new item Component
+                onClick={this.handleClick}
+              >
+                <Blockies seed={address} />
+                <strong>{allAccountsInfo[address].name}</strong> ({address})
+              </li>
             ))}
-          </select>
+          </ul>
         ) : (
           <p>Loading Accounts...</p>
         )}

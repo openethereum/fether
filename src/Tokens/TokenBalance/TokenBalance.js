@@ -14,7 +14,7 @@ class TokenBalance extends Component {
   };
 
   render () {
-    const balance = Math.round(Math.random() * 1000000000000000000000);
+    const balance = Math.round(Math.random() * 100);
     return <BalanceLayout balance={balance} {...this.props} />;
   }
 }

@@ -6,6 +6,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, MemoryRouter, Route, Link } from 'react-router-dom';
 
+import Accounts from '../Accounts';
 import CreateAccount from '../Accounts/CreateAccount';
 import Health from '../Health';
 import Loading from '../Loading';
@@ -13,7 +14,7 @@ import ProtectedRoute from './ProtectedRoute';
 import Receive from '../Receive';
 import Send from '../Send';
 import Settings from '../Settings';
-import Signer from '../Signer';
+import Signer from '../Send/Signer';
 import Tokens from '../Tokens';
 import './App.css';
 
@@ -35,17 +36,21 @@ class App extends Component {
             </div>
             <div className='window'>
               <nav className='header-nav'>
-                <Link to='/'>Wallet</Link>
+                <Link to='/tokens'>Wallet</Link>
               </nav>
 
               <div className='window_content'>
                 <Route path='/loading' component={Loading} />
-                <ProtectedRoute exact path='/' component={Tokens} />
+                <ProtectedRoute exact path='/' component={Accounts} />
+                <ProtectedRoute path='/tokens' component={Tokens} />
+                <ProtectedRoute path='/receive' component={Receive} />
                 <ProtectedRoute path='/settings' component={Settings} />
                 <ProtectedRoute path='/send' component={Send} />
                 <ProtectedRoute path='/signer' component={Signer} />
-                <ProtectedRoute path='/receive' component={Receive} />
-                <ProtectedRoute path='/accounts/new' component={CreateAccount} />
+                <ProtectedRoute
+                  path='/accounts/new'
+                  component={CreateAccount}
+                />
               </div>
 
               <nav className='footer-nav'>
