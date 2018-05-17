@@ -8,7 +8,7 @@ const path = require('path');
 const url = require('url');
 
 const addMenu = require('./menu');
-const cli = require('./cli');
+const { cli } = require('./cli');
 const doesParityExist = require('./operations/doesParityExist');
 const fetchParity = require('./operations/fetchParity');
 const handleError = require('./operations/handleError');
