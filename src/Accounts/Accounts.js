@@ -4,54 +4,46 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import { allAccountsInfo$, setDefaultAccount$ } from '@parity/light.js';
+import { accountsInfo$ } from '@parity/light.js';
 import Blockies from 'react-blockies';
+import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 
 import light from '../hoc';
 
+@inject('parityStore')
+@observer
 @light({
-  allAccountsInfo: allAccountsInfo$
+  accountsInfo: accountsInfo$
 })
 class Accounts extends Component {
-  componentWillUnmount () {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
-
-  handleClick = ({
-    currentTarget: {
-      dataset: { address }
-    }
-  }) => {
+  handleClick = ({ currentTarget: { dataset: { address } } }) => {
+    const { parityStore: { api } } = this.props;
     // Set default account to the clicked one, and go to Tokens on complete
-    this.subscription = setDefaultAccount$(address).subscribe(null, null, () =>
-      this.props.history.push('/tokens')
-    );
+    this.subscription = api.parity
+      .setNewDappsDefaultAddress(address)
+      .then(() => this.props.history.push('/tokens'));
   };
 
   render () {
-    const { allAccountsInfo } = this.props;
+    const { accountsInfo } = this.props;
 
     return (
       <div>
-        {allAccountsInfo ? (
-          <ul>
-            {Object.keys(allAccountsInfo).map(address => (
+        {accountsInfo
+          ? <ul>
+            {Object.keys(accountsInfo).map(address =>
               <li
                 key={address}
                 data-address={address} // Using data- to avoid creating a new item Component
                 onClick={this.handleClick}
               >
                 <Blockies seed={address} />
-                <strong>{allAccountsInfo[address].name}</strong> ({address})
+                <strong>{accountsInfo[address].name}</strong> ({address})
               </li>
-            ))}
+            )}
           </ul>
-        ) : (
-          <p>Loading Accounts...</p>
-        )}
+          : <p>Loading Accounts...</p>}
 
         <p>
           <Link to='/accounts/new'>
