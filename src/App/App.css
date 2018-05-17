@@ -952,8 +952,8 @@ button {
     align-items: center;
     align-content: center; }
     .account .account_avatar canvas {
-      height: 1.3rem;
-      width: auto; }
+      height: 1.3rem !important;
+      width: auto !important; }
   .account .account_information {
     padding-left: 0.325rem;
     flex-grow: 1; }
@@ -987,8 +987,11 @@ button {
 
 .header-nav {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   padding: 1rem 0.5rem; }
+  .header-nav .header_title {
+    color: rgba(34, 34, 34, 0.675);
+    font-weight: 500; }
   .header-nav a,
   .header-nav a:link,
   .header-nav a:visited {
@@ -1003,6 +1006,28 @@ button {
     .header-nav a:visited:hover {
       background: rgba(221, 221, 221, 0.5);
       color: #222; }
+    .header-nav a.icon,
+    .header-nav a:link.icon,
+    .header-nav a:visited.icon {
+      width: 1.8rem;
+      height: 1.8rem;
+      text-indent: -9999rem;
+      background-size: 1rem auto;
+      background-position: center center;
+      background-repeat: no-repeat;
+      opacity: 0.675; }
+      .header-nav a.icon:hover,
+      .header-nav a:link.icon:hover,
+      .header-nav a:visited.icon:hover {
+        opacity: 1; }
+      .header-nav a.icon.-receive,
+      .header-nav a:link.icon.-receive,
+      .header-nav a:visited.icon.-receive {
+        background-image: url("../assets/img/icons/receive.svg"); }
+      .header-nav a.icon.-settings,
+      .header-nav a:link.icon.-settings,
+      .header-nav a:visited.icon.-settings {
+        background-image: url("../assets/img/icons/gear.svg"); }
 
 .footer-nav {
   display: flex;
@@ -1064,7 +1089,7 @@ button {
     font-weight: 600;
     color: #888;
     width: 9rem; }
-  .send-form_field input[type="number"] {
+  .send-form_field input[type='text'], .send-form_field input[type='number'] {
     display: block;
     width: 100%;
     border-radius: 2px;
@@ -1075,7 +1100,7 @@ button {
     background-color: #fff;
     padding: 0.25rem 0.25rem 0.325rem;
     box-shadow: 0 1px 2px rgba(34, 34, 34, 0.0675); }
-    .send-form_field input[type="number"]:focus {
+    .send-form_field input[type='text']:focus, .send-form_field input[type='number']:focus {
       background-color: #fff;
       border-color: #d7d7d7;
       box-shadow: 0 0 0; }

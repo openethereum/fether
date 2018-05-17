@@ -27,7 +27,16 @@ class Tokens extends Component {
     return (
       <div>
         <nav className='header-nav'>
-          <Link to='/tokens'>test</Link>
+          <Link to='/'>
+            &larr;
+          </Link>
+          <Link to='/tokens'>
+            {/* TODO: account name */}
+            test
+          </Link>
+          <Link to='/receive' className='icon -receive'>
+            Receive
+          </Link>
         </nav>
 
         <div className='window_content'>
