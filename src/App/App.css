@@ -813,11 +813,11 @@ button {
     button.-small:active {
       background-color: #d7d7d7; }
 
-.list.-tokens {
+.list.-padded {
   padding: 0.325rem; }
-  .list.-tokens > li {
+  .list.-padded > li {
     margin-bottom: 0.325rem; }
-    .list.-tokens > li:last-child {
+    .list.-padded > li:last-child {
       margin-bottom: 0; }
 
 .text p, .text ul, .text ol, .text blockquote {
@@ -937,6 +937,34 @@ button {
     font-size: 0.69444rem; }
     .token .token_symbol:before {
       content: ' '; }
+
+.account {
+  user-select: none;
+  display: flex; }
+  .account .account_avatar {
+    margin: -0.5rem 0 -0.5rem -0.425rem;
+    width: 3.3rem;
+    height: 3.3rem;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center; }
+    .account .account_avatar canvas {
+      height: 1.3rem;
+      width: auto; }
+  .account .account_information {
+    padding-left: 0.325rem;
+    flex-grow: 1; }
+  .account .account_name {
+    color: #222;
+    font-weight: 500; }
+  .account .account_address {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    color: #888;
+    font-size: 0.69444rem;
+    line-height: 0.90278rem; }
 
 .status .status_icon {
   display: inline-block;

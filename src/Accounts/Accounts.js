@@ -35,22 +35,33 @@ class Accounts extends Component {
     const { allAccountsInfo } = this.props;
 
     return (
-      <div>
+      <div className='box -scroller'>
         {allAccountsInfo ? (
-          <ul>
+          <ul className='list -padded'>
             {Object.keys(allAccountsInfo).map(address => (
               <li
                 key={address}
                 data-address={address} // Using data- to avoid creating a new item Component
                 onClick={this.handleClick}
               >
-                <Blockies seed={address} />
-                <strong>{allAccountsInfo[address].name}</strong> ({address})
+                <div className='account box -card -clickable'>
+                  <div className='account_avatar'>
+                    <Blockies seed={address} />
+                  </div>
+                  <div className='account_information'>
+                    <div className='account_name'>{allAccountsInfo[address].name}</div>
+                    <div className='account_address'>
+                      {address}
+                    </div>
+                  </div>
+                </div>
               </li>
             ))}
           </ul>
         ) : (
-          <p>Loading Accounts...</p>
+          <div className='loader'>
+            <p>Loading&hellip;</p>
+          </div>
         )}
 
         <p>
