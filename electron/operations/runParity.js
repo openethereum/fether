@@ -24,7 +24,7 @@ let parity = null; // Will hold the running parity instance
 // parity-ui tries to launch another one.
 const catchableErrors = [
   'is already in use, make sure that another instance of an Ethereum client is not running or change the address using the --ws-port and --ws-interface options.',
-  'Error(Msg("IO error: While lock file:'
+  'IO error: While lock file:'
 ];
 
 module.exports = {
