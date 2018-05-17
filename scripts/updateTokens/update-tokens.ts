@@ -53,7 +53,7 @@ async function run() {
   // Get the IPFS url for the eth tokens json. Regexxing HTML hurts, but w/e
   console.log('Fetching IPFS ETH Tokens JSON...');
   const tokenUrlMatch = ipfsHtml.match(
-    /<a href='([^']+)'>output\/minified\/eth\.json<\/a>/
+    /<a href='([^']+)'>output\/full\/eth\.json<\/a>/
   );
   if (!tokenUrlMatch) {
     throw Error('No match found for token url');
@@ -65,7 +65,7 @@ async function run() {
   const tokens = processTokenJson(tokensJson);
 
   // Write to the file
-  console.log('Writing Tokens JSON to common/config/tokens/eth.json...');
+  console.log('Writing Tokens JSON to src/assets/tokens/eth.json...');
   const filePath = path.resolve(__dirname, '../../src/assets/tokens/eth.json');
   fs.writeFile(
     filePath,

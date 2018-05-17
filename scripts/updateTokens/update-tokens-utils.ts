@@ -13,9 +13,7 @@ function processTokenJson(tokensJson: RawTokenJSON[]): Token[] {
     .map(validateTokenJSON)
     .map(normalizeTokenJSON);
   checkForDuplicateAddresses(normalizedTokens);
-  return handleDuplicateSymbols(normalizedTokens).map(
-    ({ name: _, ...rest }) => rest
-  );
+  return handleDuplicateSymbols(normalizedTokens);
 }
 
 function validateTokenJSON(token: RawTokenJSON): ValidatedTokenJSON {
@@ -33,8 +31,17 @@ function validateTokenJSON(token: RawTokenJSON): ValidatedTokenJSON {
 }
 
 function normalizeTokenJSON(token: ValidatedTokenJSON): NormalizedTokenJSON {
-  const { address, decimals, symbol, name } = token;
-  const t: NormalizedTokenJSON = { address, symbol, decimal: +decimals, name };
+  const { address, decimals, symbol, name, logo: { src } } = token;
+  const t: NormalizedTokenJSON = {
+    address,
+    symbol,
+    decimal: +decimals,
+    name
+  };
+  if (src) {
+    t.logo = src;
+  }
+
   return t;
 }
 
