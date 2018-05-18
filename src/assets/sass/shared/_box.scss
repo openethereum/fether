@@ -29,6 +29,10 @@
     padding: 1rem;
   }
 
+  &.-modal {
+    background: $white;
+  }
+
   &.-stacked {
     margin-bottom: 0.5rem;
     &:last-child {

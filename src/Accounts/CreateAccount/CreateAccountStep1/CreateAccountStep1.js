@@ -26,32 +26,35 @@ class CreateAccountStep1 extends Component {
 
     return (
       <div>
-        <h3>Create account</h3>
-        <div>
-          Your new address:<br />
-          <Blockie seed={address} />
-          <pre>{address} </pre>
-          {pathname === '/accounts/new' && (
-            <button onClick={generateNewAccount}>Change</button>
-          )}
-        </div>
-        <label>
-          Set a name for this account:<br />
-          <input
-            disabled={pathname !== '/accounts/new'}
-            onChange={this.handleChange}
-            required
-            value={name}
-          />
-        </label>
-        {pathname === '/accounts/new' &&
-          !!name && (
+        <div className='window_content -modal'>
+          <div className='box -modal -padded'>
             <div>
-              <Link to='/accounts/new/step2'>
-                <button>Select</button>
-              </Link>
+              Your new address:<br />
+              <Blockie seed={address} />
+              <pre>{address} </pre>
+              {pathname === '/accounts/new' && (
+                <button onClick={generateNewAccount}>Change</button>
+              )}
             </div>
-          )}
+            <label>
+              Set a name for this account:<br />
+              <input
+                disabled={pathname !== '/accounts/new'}
+                onChange={this.handleChange}
+                required
+                value={name}
+              />
+            </label>
+            <div className='box'>
+              {pathname === '/accounts/new' &&
+                !!name && (
+                  <Link to='/accounts/new/step2'>
+                    <button>Select</button>
+                  </Link>
+                )}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

@@ -5,8 +5,9 @@
 
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
+import Health from '../Health';
 import EthBalance from './EthBalance';
 import TokenBalance from './TokenBalance';
 
@@ -24,18 +25,47 @@ class Tokens extends Component {
     }
 
     return (
-      <div className='box -scroller'>
-        <ul className='list -tokens'>
-          {Array.from(tokens.keys()).map(key => (
-            <li key={key}>
-              {key === 'ETH' ? (
-                <EthBalance token={key} {...tokens.get(key)} />
-              ) : (
-                <TokenBalance token={key} {...tokens.get(key)} />
-              )}
-            </li>
-          ))}
-        </ul>
+      <div>
+        <nav className='header-nav'>
+          <Link to='/' className='icon -back'>
+            Back
+          </Link>
+          <Link to='/tokens'>
+            {/* TODO: account name */}
+            test
+          </Link>
+          <Link to='/receive' className='icon -receive'>
+            {/* TODO: Don't worry -- this isn't good UX and won't stick around. */}
+            Receive
+          </Link>
+        </nav>
+
+        <div className='window_content'>
+          <div className='box -scroller'>
+            <ul className='list -padded'>
+              {Array.from(tokens.keys()).map(key => (
+                <li key={key}>
+                  {key === 'ETH' ? (
+                    <EthBalance token={key} {...tokens.get(key)} />
+                  ) : (
+                    <TokenBalance token={key} {...tokens.get(key)} />
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <nav className='footer-nav'>
+          <div className='footer-nav_status'>
+            <Health />
+          </div>
+          <div className='footer-nav_icons'>
+            <Link to='/settings' className='icon -settings'>
+              Settings
+            </Link>
+          </div>
+        </nav>
       </div>
     );
   }

@@ -1,7 +1,17 @@
 .header-nav {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   padding: 1rem 0.5rem;
+
+  .header_title {
+    text-align: center;
+    color: rgba($black, 0.675);
+    font-weight: 500;
+  }
+
+  &.-modal {
+    background: $white;
+  }
 
   a,
   a:link,
@@ -15,6 +25,39 @@
     &:hover {
       background: rgba($faint,0.5);
       color: $black;
+    }
+
+    &.icon {
+      width: ms(0) * 1.3 + 0.5rem;
+      height: ms(0) * 1.3 + 0.5rem;
+      text-indent: -9999rem;
+      background-size: ms(0) auto;
+      background-position: center center;
+      background-repeat: no-repeat;
+      opacity: 0.675;
+      &:hover {
+        opacity: 1;
+      }
+
+      &.-receive {
+        background-image: url('../assets/img/icons/receive.svg');
+      }
+
+      &.-settings {
+        background-image: url('../assets/img/icons/gear.svg');
+      }
+
+      &.-back {
+        background-image: url('../assets/img/icons/back.svg');
+      }
+
+      &.-close {
+        background-image: url('../assets/img/icons/close.svg');
+      }
+
+      &.-new {
+        background-image: url('../assets/img/icons/plus.svg');
+      }
     }
   }
 }

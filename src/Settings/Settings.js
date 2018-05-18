@@ -4,12 +4,32 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
+import Health from '../Health';
 
 class Settings extends Component {
   render () {
     return (
       <div>
-        <h3>This is the settings page.</h3>
+        <nav className='header-nav'>
+          <Link to='/tokens'>test</Link>
+        </nav>
+
+        <div className='window_content'>
+          <p>Settings page</p>
+        </div>
+
+        <nav className='footer-nav'>
+          <div className='footer-nav_status'>
+            <Health />
+          </div>
+          <div className='footer-nav_icons'>
+            <Link to='/settings' className='icon -settings'>
+              Settings
+            </Link>
+          </div>
+        </nav>
       </div>
     );
   }
