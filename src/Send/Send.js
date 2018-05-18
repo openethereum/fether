@@ -9,7 +9,6 @@ import { map, switchMap } from 'rxjs/operators';
 import { fromWei, toWei } from '@parity/api/lib/util/wei';
 import { Link } from 'react-router-dom';
 
-import Health from '../Health';
 import ethereumIcon from '../assets/img/tokens/ethereum.png';
 import light from '../hoc';
 

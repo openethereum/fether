@@ -48,10 +48,10 @@ class CreateAccountStep1 extends Component {
             <div className='box'>
               {pathname === '/accounts/new' &&
                 !!name && (
-                <Link to='/accounts/new/step2'>
-                  <button>Select</button>
-                </Link>
-              )}
+                  <Link to='/accounts/new/step2'>
+                    <button>Select</button>
+                  </Link>
+                )}
             </div>
           </div>
         </div>
