@@ -35,6 +35,7 @@ class Tokens extends Component {
             test
           </Link>
           <Link to='/receive' className='icon -receive'>
+            {/* TODO: Don't worry -- this isn't good UX and won't stick around. */}
             Receive
           </Link>
         </nav>

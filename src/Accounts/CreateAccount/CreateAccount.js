@@ -17,10 +17,10 @@ class CreateAccount extends Component {
     return (
       <div>
         <nav className='header-nav -modal'>
-          <Link to='/accounts' className='icon -close'>
+          <Link to='/' className='icon -close'>
             Close
           </Link>
-          <p className='header_title'>Create new account</p>
+          <p className='header_title'>Create a new account</p>
           <p>&nbsp;</p>
         </nav>
 
