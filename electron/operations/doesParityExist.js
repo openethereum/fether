@@ -6,10 +6,10 @@
 const { app } = require('electron');
 const commandExists = require('command-exists');
 const fs = require('fs');
+const promiseAny = require('promise-any');
 const { promisify } = require('util');
 
 const pino = require('../utils/pino')({ name: 'electron' });
-const promiseAny = require('../utils/promiseAny');
 
 const fsExists = promisify(fs.stat);
 
