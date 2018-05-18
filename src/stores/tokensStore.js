@@ -19,20 +19,9 @@ class TokensStore {
 
     if (!value) {
       this.addToken('ETH', {
-        image: ethereumIcon,
+        logo: ethereumIcon,
         name: 'Ethereum',
         symbol: 'ETH'
-      });
-      // TODO Remove this testing values
-      this.addToken('ABC', {
-        image: 'https://s2.coinmarketcap.com/static/img/coins/64x64/1.png',
-        name: 'Abc Token',
-        symbol: 'ABC'
-      });
-      this.addToken('DEF', {
-        image: 'https://s2.coinmarketcap.com/static/img/coins/64x64/1.png',
-        name: 'Def Token',
-        symbol: 'DEF'
       });
     } else {
       this.tokens.replace(value);
@@ -40,14 +29,14 @@ class TokensStore {
   }
 
   @action
-  addToken = (key, token) => {
-    this.tokens.set(key, token);
+  addToken = (address, token) => {
+    this.tokens.set(address, token);
     this.updateLS();
   };
 
   @action
-  removeToken = key => {
-    this.tokens.delete(key);
+  removeToken = address => {
+    this.tokens.delete(address);
     this.updateLS();
   };
 

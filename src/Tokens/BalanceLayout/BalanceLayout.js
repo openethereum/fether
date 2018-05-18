@@ -5,17 +5,18 @@
 
 import React from 'react';
 
-const BalanceLayout = ({ balance, image, name, symbol }) => (
+const BalanceLayout = ({ balance, logo, name, symbol }) =>
   <div className='token box -card -clickable'>
     <div className='token_icon'>
-      <img src={image} alt={name} />
+      <img alt={symbol} src={logo} />
     </div>
-    <div className='token_name'>{name}</div>
+    <div className='token_name'>
+      {name}
+    </div>
     <div className='token_balance'>
       {Number.isFinite(balance) ? balance.toFixed(2) : '...'}{' '}
       <span className='token_symbol'>{symbol}</span>
     </div>
-  </div>
-);
+  </div>;
 
 export default BalanceLayout;
