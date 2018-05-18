@@ -29,7 +29,7 @@
     "channel": "beta"
   },
   "scripts": {
-    "build": "cross-env NODE_ENV=production && npm run build-css && npm run build-js && npm run build-electron",
+    "build": "cross-env NODE_ENV=production npm run build-css && npm run build-js && npm run build-electron",
     "build-css": "node-sass-chokidar src/ -o src/",
     "build-electron": "webpack --config electron/webpack.config.js",
     "build-js": "react-app-rewired build",
@@ -37,7 +37,7 @@
     "lint": "semistandard 'src/**/*.js' 'electron/**/*.js' --parser babel-eslint",
     "prebuild": "rimraf build/",
     "start": "npm-run-all -p watch-css start-js",
-    "start-electron": "electron electron/ --ui-dev --light --ws-origins all",
+    "start-electron": "cross-env DEBUG=parity,electron electron electron/ --ui-dev --light --ws-origins all",
     "start-js": "react-app-rewired start",
     "test": "echo Skipped.",
     "watch-css": "npm run build-css -- --watch --recursive"
@@ -45,6 +45,7 @@
   "dependencies": {
     "@parity/api": "^2.1.22",
     "@parity/light.js": "https://github.com/parity-js/light.js#0c57c29de42122b0f07ff82dfaf38b48863d8d2e",
+    "async-retry": "^1.2.1",
     "axios": "^0.18.0",
     "command-exists": "^1.2.6",
     "commander": "^2.15.1",

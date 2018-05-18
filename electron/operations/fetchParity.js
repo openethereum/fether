@@ -6,14 +6,18 @@
 const { app } = require('electron');
 const axios = require('axios');
 const { download } = require('electron-dl');
+const debug = require('debug')('electron');
 const fs = require('fs');
 const { promisify } = require('util');
+const retry = require('async-retry');
 
 const { doesParityExist } = require('./doesParityExist');
 const handleError = require('./handleError');
 const { parity: { channel } } = require('../../package.json');
 
 const fsChmod = promisify(fs.chmod);
+
+const VANITY_URL = 'https://vanity-service.parity.io/parity-binaries';
 
 const getArch = () => {
   switch (process.platform) {
@@ -47,26 +51,46 @@ const getOs = () => {
 };
 
 // Fetch parity from https://vanity-service.parity.io/parity-binaries
-module.exports = mainWindow =>
-  axios
-    .get(
-      `https://vanity-service.parity.io/parity-binaries?version=${channel}&os=${getOs()}&architecture=${getArch()}`
-    )
-    .then(response =>
-      response.data[0].files.find(
-        ({ name }) => name === 'parity' || name === 'parity.exe'
-      )
-    )
-    .then(({ downloadUrl }) =>
-      // This will install parity into defaultParityPath()
-      download(mainWindow, downloadUrl, {
-        directory: app.getPath('userData'),
-        onProgress: progress =>
-          mainWindow.webContents.send('parity-download-progress', progress) // Notify the renderers
-      })
-    )
-    .then(downloadItem => fsChmod(downloadItem.getSavePath(), '755'))
-    .then(doesParityExist) // Make sure parity exists now
-    .catch(err => {
-      handleError(err, 'An error occured while fetching parity.');
-    });
+module.exports = mainWindow => {
+  try {
+    return retry(
+      async (_, attempt) => {
+        if (attempt > 1) {
+          debug(`Retrying.`);
+        }
+
+        // Fetch the metadata of the correct version of parity
+        debug(
+          `Downloading from ${VANITY_URL}?version=${channel}&os=${getOs()}&architecture=${getArch()}`
+        );
+        const { data } = await axios.get(
+          `${VANITY_URL}?version=${channel}&os=${getOs()}&architecture=${getArch()}`
+        );
+
+        // Get the binary's url
+        const { downloadUrl } = data[0].files.find(
+          ({ name }) => name === 'parity' || name === 'parity.exe'
+        );
+
+        // Start downloading. This will install parity into defaultParityPath().
+        const downloadItem = await download(mainWindow, downloadUrl, {
+          directory: app.getPath('userData'),
+          onProgress: progress =>
+            // Notify the renderers
+            mainWindow.webContents.send('parity-download-progress', progress)
+        });
+
+        // Set a+x permissions on the downloaded binary
+        await fsChmod(downloadItem.getSavePath(), '755');
+
+        // Double-check that Parity exists now.
+        return doesParityExist();
+      },
+      {
+        retries: 3
+      }
+    );
+  } catch (err) {
+    handleError(err, 'An error occured while fetching parity.');
+  }
+};

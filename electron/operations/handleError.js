@@ -4,11 +4,12 @@
 // SPDX-License-Identifier: MIT
 
 const { app, dialog } = require('electron');
+const debug = require('debug')('electron');
 
 const { bugs: { url }, parity: { channel } } = require('../../package.json');
 
 module.exports = (err, message = 'An error occurred.') => {
-  console.error(err);
+  debug(err);
   dialog.showMessageBox(
     {
       buttons: ['OK'],
