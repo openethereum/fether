@@ -5,50 +5,44 @@
 
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { Link, Redirect, Route, Switch } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 
 import Health from '../Health';
 import EthBalance from './EthBalance';
 import NewToken from './NewToken';
 import TokenBalance from './TokenBalance';
 
-@inject('parityStore', 'tokensStore')
+@inject('tokensStore')
 @observer
 class Tokens extends Component {
-  render() {
-    const { parityStore: { isApiConnected } } = this.props;
-
-    if (!isApiConnected) {
-      return <Redirect to="/loading" />;
-    }
-
+  render () {
     return (
       <div>
-        <nav className="header-nav">
-          <Link to="/" className="icon -back">
+        <nav className='header-nav'>
+          <Link to='/accounts' className='icon -back'>
             Back
           </Link>
-          <Link to="/tokens">
+          <Link to='/tokens'>
             {/* TODO: account name */}
             test
           </Link>
-          <Link to="/receive" className="icon -receive">
+          <Link to='/receive' className='icon -receive'>
             {/* TODO: Don't worry -- this isn't good UX and won't stick around. */}
             Receive
           </Link>
         </nav>
 
         <Switch>
-          <Route exact path="/tokens" render={this.renderTokensList} />
-          <Route path="/tokens/new" component={NewToken} />
+          <Route exact path='/tokens' render={this.renderTokensList} />
+          <Route path='/tokens/new' component={NewToken} />
         </Switch>
 
-        <nav className="footer-nav">
-          <div className="footer-nav_status">
+        <nav className='footer-nav'>
+          <div className='footer-nav_status'>
             <Health />
           </div>
-          <div className="footer-nav_icons">
-            <Link to="/settings" className="icon -settings">
+          <div className='footer-nav_icons'>
+            <Link to='/settings' className='icon -settings'>
               Settings
             </Link>
           </div>
@@ -61,9 +55,9 @@ class Tokens extends Component {
     const { tokensStore: { tokensArray } } = this.props;
 
     return (
-      <div className="window_content">
-        <div className="box -scroller">
-          <ul className="list -padded">
+      <div className='window_content'>
+        <div className='box -scroller'>
+          <ul className='list -padded'>
             {tokensArray.map(token =>
               <li key={token.address}>
                 {token.address === 'ETH'
@@ -72,7 +66,7 @@ class Tokens extends Component {
               </li>
             )}
             <li>
-              <Link to="/tokens/new">Add/Remove Token</Link>
+              <Link to='/tokens/new'>Add/Remove Token</Link>
             </li>
           </ul>
         </div>

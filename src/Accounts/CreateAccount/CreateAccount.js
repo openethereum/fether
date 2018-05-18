@@ -17,7 +17,7 @@ class CreateAccount extends Component {
     return (
       <div>
         <nav className='header-nav -modal'>
-          <Link to='/' className='icon -close'>
+          <Link to='/accounts' className='icon -close'>
             Close
           </Link>
           <p className='header_title'>Create a new account</p>
