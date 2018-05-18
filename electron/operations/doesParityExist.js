@@ -18,7 +18,7 @@ const defaultParityPath = `${app.getPath(
   'userData'
 )}/parity${process.platform === 'win32' ? '.exe' : ''}`;
 
-let parityPath; // The real parity path, will be populatef after doesParityExist Promise resolves
+let parityPath; // The real parity path, will be populated after doesParityExist Promise resolves
 
 // OS locations to test if parity binary exists
 const locations = {
@@ -28,9 +28,6 @@ const locations = {
 };
 
 module.exports = {
-  defaultParityPath () {
-    return defaultParityPath;
-  },
   /**
    * This function checks if parity has been installed on the local machine:
    * - first check if the program is in $PATH, using `command-exists`
@@ -53,14 +50,13 @@ module.exports = {
       )
       .catch(() =>
         // Finally test userData folder
-        fsExists(defaultParityPath()).then(() => defaultParityPath())
+        fsExists(defaultParityPath).then(() => defaultParityPath)
       )
       .then(path => {
         parityPath = path; // Save the final result in module variable
         console.log(`Parity found on machine, can be run with "${path}".`);
         return path;
-      })
-      .catch(() => null); // Return null if no parity is found
+      });
   },
   parityPath () {
     return parityPath;

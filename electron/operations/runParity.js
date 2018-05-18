@@ -13,6 +13,7 @@ const isParityRunning = require('./isParityRunning');
 const handleError = require('./handleError');
 const { parityPath } = require('./doesParityExist');
 
+const fsChmod = promisify(fs.chmod);
 const fsExists = promisify(fs.stat);
 const fsUnlink = promisify(fs.unlink);
 
@@ -49,6 +50,13 @@ module.exports = {
         throw new Error('Attempting to run Parity before parityPath is set.');
       }
 
+      // Some users somehow had no +x on the parity binary after downloading
+      // it. We try to set it here (no guarantee it will work, we might not
+      // have rights to do it).
+      try {
+        await fsChmod(parityPath(), '755');
+      } catch (e) {}
+
       // Create a logStream to save logs
       const logFile = `${app.getPath('userData')}/parity.log`;
 
@@ -68,7 +76,7 @@ module.exports = {
       console.log(
         `Running command "${parityPath().replace(' ', '\\ ')} ${parityArgv.join(
           ' '
-        )}"...`
+        )}".`
       );
       console.log(`See "${logFile}" for logs.`);
 

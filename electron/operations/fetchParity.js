@@ -9,7 +9,7 @@ const { download } = require('electron-dl');
 const fs = require('fs');
 const { promisify } = require('util');
 
-const { defaultParityPath } = require('./doesParityExist');
+const { doesParityExist } = require('./doesParityExist');
 const handleError = require('./handleError');
 const { parity: { channel } } = require('../../package.json');
 
@@ -65,8 +65,8 @@ module.exports = mainWindow =>
           mainWindow.webContents.send('parity-download-progress', progress) // Notify the renderers
       })
     )
-    .then(() => fsChmod(defaultParityPath(), '755'))
-    .then(() => defaultParityPath()) // Return the install path
+    .then(downloadItem => fsChmod(downloadItem.getSavePath(), '755'))
+    .then(doesParityExist) // Make sure parity exists now
     .catch(err => {
       handleError(err, 'An error occured while fetching parity.');
     });
