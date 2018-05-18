@@ -43,7 +43,7 @@ class Accounts extends Component {
       <div>
         <nav className='header-nav'>
           <p>&nbsp;</p>
-          <Link to='/' className='header_title'>
+          <Link to='/accounts' className='header_title'>
             Accounts
           </Link>
           <Link to='/accounts/new' className='icon -new'>
