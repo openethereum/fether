@@ -4,8 +4,13 @@
   padding: 1rem 0.5rem;
 
   .header_title {
+    text-align: center;
     color: rgba($black, 0.675);
     font-weight: 500;
+  }
+
+  &.-modal {
+    background: $white;
   }
 
   a,
@@ -40,6 +45,18 @@
 
       &.-settings {
         background-image: url('../assets/img/icons/gear.svg');
+      }
+
+      &.-back {
+        background-image: url('../assets/img/icons/back.svg');
+      }
+
+      &.-close {
+        background-image: url('../assets/img/icons/close.svg');
+      }
+
+      &.-new {
+        background-image: url('../assets/img/icons/plus.svg');
       }
     }
   }

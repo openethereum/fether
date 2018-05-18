@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 
 import Step1 from './CreateAccountStep1';
 import Step2 from './CreateAccountStep2';
@@ -16,11 +16,21 @@ class CreateAccount extends Component {
   render () {
     return (
       <div>
-        <Route path='/accounts/new' component={Step1} />
-        <Route path='/accounts/new/step2' component={Step2} />
-        <Route path='/accounts/new/step3' component={Step3} />
-        <Route path='/accounts/new/step4' component={Step4} />
-        <Route path='/accounts/new/step5' component={Step5} />
+        <nav className='header-nav -modal'>
+          <Link to='/accounts' className='icon -close'>
+            Close
+          </Link>
+          <p className='header_title'>Create new account</p>
+          <p>&nbsp;</p>
+        </nav>
+
+        <div className='window_content -modal'>
+          <Route path='/accounts/new' component={Step1} />
+          <Route path='/accounts/new/step2' component={Step2} />
+          <Route path='/accounts/new/step3' component={Step3} />
+          <Route path='/accounts/new/step4' component={Step4} />
+          <Route path='/accounts/new/step5' component={Step5} />
+        </div>
       </div>
     );
   }

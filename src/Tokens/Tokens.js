@@ -27,8 +27,8 @@ class Tokens extends Component {
     return (
       <div>
         <nav className='header-nav'>
-          <Link to='/'>
-            &larr;
+          <Link to='/' className='icon -back'>
+            Back
           </Link>
           <Link to='/tokens'>
             {/* TODO: account name */}

@@ -37,11 +37,12 @@ class Accounts extends Component {
     return (
       <div>
         <nav className='header-nav'>
-          <Link to='/'>
+          <p>&nbsp;</p>
+          <Link to='/' className='header_title'>
             Accounts
           </Link>
           <Link to='/accounts/new' className='icon -new'>
-            +
+            New account
           </Link>
         </nav>
 
