@@ -5,6 +5,7 @@
 
 import React, { Component } from 'react';
 import { defaultAccount$ } from '@parity/light.js';
+import { Link } from 'react-router-dom';
 
 import light from '../hoc';
 
@@ -16,15 +17,27 @@ class Receive extends Component {
     const { me } = this.props;
     return (
       <div>
-        <div className='box -card'>
-          <div className='box -padded'>
-            <label>Wallet address</label>
-          </div>
-          <div className='box -padded address'>
-            <code>{me}</code>
-          </div>
-          <div className='box -padded'>
-            <button className='-small'>Copy to clipboard</button>
+        <nav className='header-nav'>
+          <Link to='/tokens' className='icon -close'>
+            x
+          </Link>
+          <Link to='/'>
+            Accounts
+          </Link>
+        </nav>
+        <div className='window_content'>
+          <div className='box -scroller -well'>
+            <div className='box -card'>
+              <div className='box -padded'>
+                <label>Wallet address</label>
+              </div>
+              <div className='box -padded address'>
+                <code>{me}</code>
+              </div>
+              <div className='box -padded'>
+                <button className='-small'>Copy to clipboard</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

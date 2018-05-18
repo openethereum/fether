@@ -11,24 +11,23 @@ import { Link } from 'react-router-dom';
 @inject('createAccountStore')
 @observer
 class CreateAccountStep1 extends Component {
-  componentDidMount () {
+  componentDidMount() {
     this.props.createAccountStore.generateNewAccount();
   }
 
   handleChange = ({ target: { value } }) =>
     this.props.createAccountStore.setName(value);
 
-  render () {
+  render() {
     const {
       createAccountStore: { address, generateNewAccount, name },
       location: { pathname }
     } = this.props;
 
     return (
-      <div>
-        <h3>Create account</h3>
+      <div className="window_content -modal">
         {address &&
-          <div>
+          <div className="box -modal -padded">
             <div>
               Your new address:<br />
               <Blockie seed={address} />
@@ -45,13 +44,13 @@ class CreateAccountStep1 extends Component {
                 value={name}
               />
             </label>
-            {pathname === '/accounts/new' &&
-              !!name &&
-              <div>
-                <Link to='/accounts/new/step2'>
+            <div className="box">
+              {pathname === '/accounts/new' &&
+                !!name &&
+                <Link to="/accounts/new/step2">
                   <button>Select</button>
-                </Link>
-              </div>}
+                </Link>}
+            </div>
           </div>}
       </div>
     );
