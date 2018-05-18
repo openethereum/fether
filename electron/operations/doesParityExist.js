@@ -57,7 +57,7 @@ module.exports = {
       )
       .then(path => {
         parityPath = path; // Save the final result in module variable
-        console.log(`Parity found on machine, can be run with "${path}"`);
+        console.log(`Parity found on machine, can be run with "${path}".`);
         return path;
       })
       .catch(() => null); // Return null if no parity is found

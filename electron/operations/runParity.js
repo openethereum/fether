@@ -9,6 +9,7 @@ const { spawn } = require('child_process');
 const { promisify } = require('util');
 
 const { cli, parityArgv } = require('../cli');
+const isParityRunning = require('./isParityRunning');
 const handleError = require('./handleError');
 const { parityPath } = require('./doesParityExist');
 
@@ -30,6 +31,15 @@ module.exports = {
     try {
       // Do not run parity with --no-run-parity
       if (cli.runParity === false) {
+        return;
+      }
+
+      // Do not run parity if there is already another instance running
+      const isRunning = await isParityRunning();
+      if (isRunning) {
+        console.log(
+          `Another instance of parity is already running with pid ${isRunning.pid}, skip running local instance.`
+        );
         return;
       }
 
