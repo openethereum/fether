@@ -6,7 +6,6 @@
 const { app } = require('electron');
 const axios = require('axios');
 const { download } = require('electron-dl');
-const debug = require('debug')('electron');
 const fs = require('fs');
 const { promisify } = require('util');
 const retry = require('async-retry');
@@ -14,6 +13,7 @@ const retry = require('async-retry');
 const { doesParityExist } = require('./doesParityExist');
 const handleError = require('./handleError');
 const { parity: { channel } } = require('../../package.json');
+const pino = require('../utils/pino')({ name: 'electron' });
 
 const fsChmod = promisify(fs.chmod);
 
@@ -56,11 +56,11 @@ module.exports = mainWindow => {
     return retry(
       async (_, attempt) => {
         if (attempt > 1) {
-          debug(`Retrying.`);
+          pino.warn(`Retrying.`);
         }
 
         // Fetch the metadata of the correct version of parity
-        debug(
+        pino.info(
           `Downloading from ${VANITY_URL}?version=${channel}&os=${getOs()}&architecture=${getArch()}`
         );
         const { data } = await axios.get(

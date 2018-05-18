@@ -4,8 +4,6 @@
 // SPDX-License-Identifier: MIT
 
 const { app } = require('electron');
-const debug = require('debug')('electron');
-const debugParity = require('debug')('parity');
 const fs = require('fs');
 const { spawn } = require('child_process');
 const { promisify } = require('util');
@@ -14,10 +12,10 @@ const { cli, parityArgv } = require('../cli');
 const isParityRunning = require('./isParityRunning');
 const handleError = require('./handleError');
 const { parityPath } = require('./doesParityExist');
+const pino = require('../utils/pino')({ name: 'electron' });
+const pinoParity = require('../utils/pino')({ level: 'info', name: 'parity' });
 
 const fsChmod = promisify(fs.chmod);
-const fsExists = promisify(fs.stat);
-const fsUnlink = promisify(fs.unlink);
 
 let parity = null; // Will hold the running parity instance
 
@@ -40,9 +38,6 @@ module.exports = {
       // Do not run parity if there is already another instance running
       const isRunning = await isParityRunning();
       if (isRunning) {
-        debug(
-          `Another instance of parity is already running with pid ${isRunning.pid}, skip running local instance.`
-        );
         return;
       }
 
@@ -59,38 +54,22 @@ module.exports = {
         await fsChmod(parityPath(), '755');
       } catch (e) {}
 
-      // Create a logStream to save logs
-      const logFile = `${app.getPath('userData')}/parity.log`;
-
-      const logFileExists = await fsExists(logFile);
-      if (logFileExists) {
-        try {
-          await fsUnlink(logFile);
-        } catch (e) {} // Do nothing if fsUnlink returns error, just in case
-      }
-
-      // Create variables to hold logs
-      const logStream = fs.createWriteStream(logFile, { flags: 'a' });
-      let logLastLine; // Always contains last line of the logFile
+      let logLastLine; // Always contains last line of the Parity logs
 
       // Run an instance of parity with the correct args
       parity = spawn(parityPath(), parityArgv);
-      debug(
+      pino.info(
         `Running command "${parityPath().replace(' ', '\\ ')} ${parityArgv.join(
           ' '
         )}".`
       );
-
-      // Pipe all parity command output into the logFile
-      parity.stdout.pipe(logStream);
-      parity.stderr.pipe(logStream);
 
       // Save in memory the last line of the log file, for handling error
       const callback = data => {
         if (data && data.length) {
           logLastLine = data.toString();
         }
-        debugParity(data.toString());
+        pinoParity.info(data.toString());
       };
       parity.stdout.on('data', callback);
       parity.stderr.on('data', callback);
@@ -107,8 +86,11 @@ module.exports = {
         // is logging a particular line, see below. In this case, we just
         // silently ignore our local instance, and let the 1st parity
         // instance be the main one.
-        if (catchableErrors.some(error => logLastLine.includes(error))) {
-          debug(
+        if (
+          logLastLine &&
+          catchableErrors.some(error => logLastLine.includes(error))
+        ) {
+          pino.warn(
             'Another instance of parity is running, closing local instance.'
           );
           return;
@@ -136,7 +118,7 @@ module.exports = {
   },
   killParity () {
     if (parity) {
-      debug('Stopping parity.');
+      pino.info('Stopping parity.');
       parity.kill();
       parity = null;
     }

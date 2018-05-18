@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 const { promisify } = require('util');
+const pino = require('../utils/pino')({ name: 'electron' });
 const ps = require('ps-node');
 
 const lookup = promisify(ps.lookup);
@@ -30,7 +31,14 @@ const lookup = promisify(ps.lookup);
 
 const isParityRunning = async () => {
   const results = await lookup({ command: 'parity' });
-  return results && results.length ? results[0] : false;
+  if (results && results.length) {
+    pino.info(
+      `Another instance of parity is already running with pid ${results[0]
+        .pid}, skip running local instance.`
+    );
+    return results[0];
+  }
+  return false;
 };
 
 module.exports = isParityRunning;
