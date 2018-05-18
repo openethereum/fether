@@ -30,20 +30,20 @@ class Tokens extends Component {
   }
 
   renderTokensList = () => {
-    const { tokensStore: { tokens } } = this.props;
+    const { tokensStore: { tokensArray } } = this.props;
 
     return (
       <div className='box -scroller'>
         <ul className='list -tokens'>
-          {Array.from(tokens.keys()).map(key =>
-            <li key={key}>
-              {key === 'ETH'
-                ? <EthBalance token={key} {...tokens.get(key)} />
-                : <TokenBalance token={key} {...tokens.get(key)} />}
+          {tokensArray.map(token =>
+            <li key={token.address}>
+              {token.address === 'ETH'
+                ? <EthBalance token={token} />
+                : <TokenBalance token={token} />}
             </li>
           )}
           <li>
-            <Link to='/tokens/new'>Add Token</Link>
+            <Link to='/tokens/new'>Add/Remove Token</Link>
           </li>
         </ul>
       </div>

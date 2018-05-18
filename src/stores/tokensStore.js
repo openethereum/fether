@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import { action, observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 import store from 'store';
 
 import ethereumIcon from '../assets/img/tokens/ethereum.png';
@@ -18,7 +18,9 @@ class TokensStore {
     const value = store.get(LS_KEY);
 
     if (!value) {
+      // We consider Ethereum as a token, with address 'ETH'
       this.addToken('ETH', {
+        address: 'ETH',
         logo: ethereumIcon,
         name: 'Ethereum',
         symbol: 'ETH'
@@ -39,6 +41,18 @@ class TokensStore {
     this.tokens.delete(address);
     this.updateLS();
   };
+
+  @computed
+  get tokensArray () {
+    return Array.from(this.tokens.values());
+  }
+
+  @computed
+  get tokensArrayWithoutEth () {
+    return Array.from(this.tokens.values()).filter(
+      ({ address }) => address !== 'ETH' // Ethereum is the only token without address, has 'ETH' instead
+    );
+  }
 
   updateLS = () => store.set(LS_KEY, this.tokens);
 }

@@ -4,19 +4,15 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import { balanceOf$, defaultAccount$ } from '@parity/light.js';
-import { map, switchMap } from 'rxjs/operators';
+import { defaultAccount$, myBalance$ } from '@parity/light.js';
+import { map } from 'rxjs/operators';
 import { fromWei, toWei } from '@parity/api/lib/util/wei';
 
 import ethereumIcon from '../assets/img/tokens/ethereum.png';
 import light from '../hoc';
 
 @light({
-  balance: () =>
-    defaultAccount$().pipe(
-      switchMap(balanceOf$),
-      map(value => +fromWei(value.toString()))
-    ),
+  balance: () => myBalance$().pipe(map(value => +fromWei(value.toString()))),
   me: defaultAccount$
 })
 class Send extends Component {

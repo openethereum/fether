@@ -10,7 +10,7 @@ import BalanceLayout from '../BalanceLayout';
 
 class TokenBalance extends Component {
   static propTypes = {
-    token: PropTypes.string.isRequired
+    token: PropTypes.object.isRequired
   };
 
   render () {

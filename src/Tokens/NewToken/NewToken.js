@@ -17,18 +17,29 @@ import NewTokenItem from './NewTokenItem';
   chainName: chainName$
 })
 class NewToken extends Component {
-  state = { db: null, dbMap: null, matches: [], search: '' };
+  state = {
+    db: null,
+    dbMap: null,
+    matches: this.props.tokensStore.tokensArrayWithoutEth,
+    search: ''
+  };
 
   calculateMatches = debounce(() => {
+    const { tokensStore: { tokensArrayWithoutEth } } = this.props;
     const { db, search } = this.state;
-    const matches =
-      db && search
-        ? db.filter(
-          ({ name, symbol }) =>
-            name.toLowerCase().includes(search.toLowerCase()) ||
-              symbol.toLowerCase().includes(search.toLowerCase())
-        )
-        : [];
+
+    if (search.length <= 1) {
+      this.setState({ matches: tokensArrayWithoutEth });
+      return;
+    }
+
+    const matches = db
+      ? db.filter(
+        ({ name, symbol }) =>
+          name.toLowerCase().includes(search.toLowerCase()) ||
+            symbol.toLowerCase().includes(search.toLowerCase())
+      )
+      : [];
     this.setState({ matches });
   }, 500);
 
@@ -74,24 +85,22 @@ class NewToken extends Component {
   };
 
   render () {
-    const { db, matches, search } = this.state;
+    const { matches, search } = this.state;
 
     return (
       <div>
         <input
           onChange={this.handleSearch}
-          placeholder='Search for token...'
+          placeholder='Type 2 or more letters to search...'
           value={search}
         />
-        {db &&
-          search &&
-          <div className='box -scroller'>
-            <ul className='list -tokens'>
-              {matches.map(token =>
-                <NewTokenItem key={token.address} token={token} />
-              )}
-            </ul>
-          </div>}
+        <div className='box -scroller'>
+          <ul className='list -tokens'>
+            {matches.map(token =>
+              <NewTokenItem key={token.address} token={token} />
+            )}
+          </ul>
+        </div>
       </div>
     );
   }
