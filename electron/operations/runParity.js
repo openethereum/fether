@@ -4,6 +4,8 @@
 // SPDX-License-Identifier: MIT
 
 const { app } = require('electron');
+const debug = require('debug')('electron');
+const debugParity = require('debug')('parity');
 const fs = require('fs');
 const { spawn } = require('child_process');
 const { promisify } = require('util');
@@ -38,7 +40,7 @@ module.exports = {
       // Do not run parity if there is already another instance running
       const isRunning = await isParityRunning();
       if (isRunning) {
-        console.log(
+        debug(
           `Another instance of parity is already running with pid ${isRunning.pid}, skip running local instance.`
         );
         return;
@@ -73,12 +75,11 @@ module.exports = {
 
       // Run an instance of parity with the correct args
       parity = spawn(parityPath(), parityArgv);
-      console.log(
+      debug(
         `Running command "${parityPath().replace(' ', '\\ ')} ${parityArgv.join(
           ' '
         )}".`
       );
-      console.log(`See "${logFile}" for logs.`);
 
       // Pipe all parity command output into the logFile
       parity.stdout.pipe(logStream);
@@ -89,6 +90,7 @@ module.exports = {
         if (data && data.length) {
           logLastLine = data.toString();
         }
+        debugParity(data.toString());
       };
       parity.stdout.on('data', callback);
       parity.stderr.on('data', callback);
@@ -106,7 +108,7 @@ module.exports = {
         // silently ignore our local instance, and let the 1st parity
         // instance be the main one.
         if (catchableErrors.some(error => logLastLine.includes(error))) {
-          console.log(
+          debug(
             'Another instance of parity is running, closing local instance.'
           );
           return;
@@ -114,10 +116,6 @@ module.exports = {
 
         // If the exit code is not 0, then we show some error message
         if (Object.keys(parityArgv).length > 0) {
-          // If parity has been launched with some args, then most likely the
-          // args are wrong, so we show the output of parity.
-          const log = fs.readFileSync(logFile);
-          console.log(log.toString());
           app.exit(1);
         } else {
           handleError(
@@ -138,7 +136,7 @@ module.exports = {
   },
   killParity () {
     if (parity) {
-      console.log('Stopping parity.');
+      debug('Stopping parity.');
       parity.kill();
       parity = null;
     }

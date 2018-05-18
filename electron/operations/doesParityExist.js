@@ -5,6 +5,7 @@
 
 const { app } = require('electron');
 const commandExists = require('command-exists');
+const debug = require('debug')('electron');
 const fs = require('fs');
 const { promisify } = require('util');
 
@@ -54,7 +55,7 @@ module.exports = {
       )
       .then(path => {
         parityPath = path; // Save the final result in module variable
-        console.log(`Parity found on machine, can be run with "${path}".`);
+        debug(`Parity found on machine, can be run with "${path}".`);
         return path;
       });
   },
