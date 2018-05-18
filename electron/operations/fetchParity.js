@@ -9,11 +9,9 @@ const { download } = require('electron-dl');
 const fs = require('fs');
 const util = require('util');
 
+const { defaultParityPath } = require('./doesParityExist');
 const handleError = require('./handleError');
-const {
-  parity: { channel }
-} = require('../../package.json');
-const parityPath = require('../utils/parityPath');
+const { parity: { channel } } = require('../../package.json');
 
 const fsChmod = util.promisify(fs.chmod);
 
@@ -60,13 +58,15 @@ module.exports = mainWindow =>
       )
     )
     .then(({ downloadUrl }) =>
+      // This will install parity into defaultParityPath()
       download(mainWindow, downloadUrl, {
         directory: app.getPath('userData'),
         onProgress: progress =>
           mainWindow.webContents.send('parity-download-progress', progress) // Notify the renderers
       })
     )
-    .then(() => fsChmod(parityPath(), '755'))
+    .then(() => fsChmod(defaultParityPath(), '755'))
+    .then(() => defaultParityPath()) // Return the install path
     .catch(err => {
       handleError(err, 'An error occured while fetching parity.');
     });

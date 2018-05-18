@@ -11,9 +11,8 @@ const util = require('util');
 
 const { cli, parityArgv } = require('../cli');
 const handleError = require('./handleError');
-const parityPath = require('../utils/parityPath');
+const { parityPath } = require('./doesParityExist');
 
-const fsChmod = util.promisify(fs.chmod);
 const fsExists = util.promisify(fs.stat);
 const fsUnlink = util.promisify(fs.unlink);
 
@@ -28,19 +27,18 @@ const catchableErrors = [
 ];
 
 module.exports = {
-  runParity (mainWindow) {
+  async runParity (mainWindow) {
     // Do not run parity with --no-run-parity
     if (cli.runParity === false) {
       return;
     }
 
     // Create a logStream to save logs
-    const logFile = `${parityPath()}.log`;
+    const logFile = `${app.getPath('userData')}/parity.log`;
 
     fsExists(logFile)
       .then(() => fsUnlink(logFile)) // Delete logFile and create a fresh one on each launch
       .catch(noop)
-      .then(() => fsChmod(parityPath(), '755')) // Should already be 755 after download, just to be sure
       .then(() => {
         const logStream = fs.createWriteStream(logFile, { flags: 'a' });
         let logLastLine; // Always contains last line of the logFile

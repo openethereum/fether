@@ -43,6 +43,7 @@
     "@parity/api": "^2.1.22",
     "@parity/light.js": "https://github.com/parity-js/light.js#0c57c29de42122b0f07ff82dfaf38b48863d8d2e",
     "axios": "^0.18.0",
+    "command-exists": "^1.2.6",
     "commander": "^2.15.1",
     "electron": "^2.0.0",
     "electron-dl": "^1.11.0",
