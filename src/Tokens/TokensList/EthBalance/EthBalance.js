@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 import PropTypes from 'prop-types';
 
 import BalanceLayout from '../BalanceLayout';
-import light from '../../hoc';
+import light from '../../../hoc';
 
 @light({
   balance: () => myBalance$().pipe(map(value => +fromWei(value.toString())))

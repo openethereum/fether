@@ -37,6 +37,7 @@ class TokensStore {
     this.updateLS();
   };
 
+  @action
   init = async () => {
     // Set the localStorage key, we have one key per chain, in this format:
     // __paritylight::tokens::kovan

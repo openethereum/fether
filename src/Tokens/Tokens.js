@@ -4,16 +4,12 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react';
 import { Link, Route, Switch } from 'react-router-dom';
 
 import Health from '../Health';
-import EthBalance from './EthBalance';
 import NewToken from './NewToken';
-import TokenBalance from './TokenBalance';
+import TokensList from './TokensList';
 
-@inject('tokensStore')
-@observer
 class Tokens extends Component {
   render () {
     return (
@@ -33,7 +29,7 @@ class Tokens extends Component {
         </nav>
 
         <Switch>
-          <Route exact path='/tokens' render={this.renderTokensList} />
+          <Route exact path='/tokens' component={TokensList} />
           <Route path='/tokens/new' component={NewToken} />
         </Switch>
 
@@ -50,29 +46,6 @@ class Tokens extends Component {
       </div>
     );
   }
-
-  renderTokensList = () => {
-    const { tokensStore: { tokensArray } } = this.props;
-
-    return (
-      <div className='window_content'>
-        <div className='box -scroller'>
-          <ul className='list -padded'>
-            {tokensArray.map(token =>
-              <li key={token.address}>
-                {token.address === 'ETH'
-                  ? <EthBalance token={token} />
-                  : <TokenBalance token={token} />}
-              </li>
-            )}
-            <li>
-              <Link to='/tokens/new'>Add/Remove Token</Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-    );
-  };
 }
 
 export default Tokens;
