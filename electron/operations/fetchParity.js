@@ -7,13 +7,13 @@ const { app } = require('electron');
 const axios = require('axios');
 const { download } = require('electron-dl');
 const fs = require('fs');
-const util = require('util');
+const { promisify } = require('util');
 
 const { defaultParityPath } = require('./doesParityExist');
 const handleError = require('./handleError');
 const { parity: { channel } } = require('../../package.json');
 
-const fsChmod = util.promisify(fs.chmod);
+const fsChmod = promisify(fs.chmod);
 
 const getArch = () => {
   switch (process.platform) {
