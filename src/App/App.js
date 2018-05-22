@@ -49,7 +49,6 @@ class App extends Component {
                 <ProtectedRoute path='/settings' component={Settings} />
                 <ProtectedRoute path='/send' component={Send} />
                 <ProtectedRoute path='/signer' component={Signer} />
-                <ProtectedRoute path='/signer' component={Signer} />
               </Switch>
             </div>
           </div>
