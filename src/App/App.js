@@ -43,7 +43,7 @@ class App extends Component {
                 {/* Change homepage on the next line */}
                 <Redirect exact from='/' to='/tokens' />
                 <Route path='/loading' component={Loading} />
-                <ProtectedRoute exact path='/accounts' component={Accounts} />
+                <ProtectedRoute path='/accounts' component={Accounts} />
                 <ProtectedRoute path='/tokens' component={Tokens} />
                 <ProtectedRoute path='/receive' component={Receive} />
                 <ProtectedRoute path='/settings' component={Settings} />
