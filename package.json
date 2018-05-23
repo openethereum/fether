@@ -31,7 +31,7 @@
     "build-electron": "webpack --config electron/webpack.config.js",
     "build-js": "react-app-rewired build",
     "electron": "npm run build && electron build/electron.js --light",
-    "lint": "semistandard 'src/**/*.js' 'electron/**/*.js' 'scripts/*.js' --parser babel-eslint",
+    "lint": "semistandard 'src/**/*.js' 'electron/**/*.js' --parser babel-eslint",
     "prebuild": "rimraf build/",
     "start": "npm-run-all -p watch-css start-js",
     "start-electron": "electron electron/ --ui-dev --light --ws-origins all",
