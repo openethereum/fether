@@ -3,13 +3,13 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { inject, observer } from 'mobx-react';
 import { Redirect } from 'react-router-dom';
 
 @inject('parityStore')
 @observer
-class Loading extends Component {
+class Loading extends PureComponent {
   render () {
     const { parityStore: { downloadProgress, isApiConnected } } = this.props;
 

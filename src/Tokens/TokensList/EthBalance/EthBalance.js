@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { myBalance$ } from '@parity/light.js';
 import { fromWei } from '@parity/api/lib/util/wei';
 import { Link } from 'react-router-dom';
@@ -16,7 +16,7 @@ import light from '../../../hoc';
 @light({
   balance: () => myBalance$().pipe(map(value => +fromWei(value.toString())))
 })
-class EthBalance extends Component {
+class EthBalance extends PureComponent {
   static propTypes = {
     token: PropTypes.object.isRequired
   };

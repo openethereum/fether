@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { defaultAccount$ } from '@parity/light.js';
 import { Link } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ import light from '../hoc';
 @light({
   me: defaultAccount$
 })
-class Receive extends Component {
+class Receive extends PureComponent {
   render () {
     const { me } = this.props;
     return (

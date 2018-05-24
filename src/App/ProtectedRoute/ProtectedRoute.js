@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { inject, observer } from 'mobx-react';
 import { Redirect, Route, withRouter } from 'react-router-dom';
 
@@ -15,7 +15,7 @@ import { Redirect, Route, withRouter } from 'react-router-dom';
 @withRouter
 @inject('parityStore')
 @observer
-class ProtectedRoute extends Component {
+class ProtectedRoute extends PureComponent {
   render () {
     const { component, parityStore, ...rest } = this.props;
 

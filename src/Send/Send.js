@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { defaultAccount$, myBalance$ } from '@parity/light.js';
 import { map } from 'rxjs/operators';
 import { fromWei, toWei } from '@parity/api/lib/util/wei';
@@ -16,7 +16,7 @@ import light from '../hoc';
   balance: () => myBalance$().pipe(map(value => +fromWei(value.toString()))),
   me: defaultAccount$
 })
-class Send extends Component {
+class Send extends PureComponent {
   state = {
     amount: 0.01, // In Ether
     gas: 21000,

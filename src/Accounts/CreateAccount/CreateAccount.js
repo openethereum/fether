@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Route, Link } from 'react-router-dom';
 
 import Step1 from './CreateAccountStep1';
@@ -12,7 +12,7 @@ import Step3 from './CreateAccountStep3';
 import Step4 from './CreateAccountStep4';
 import Step5 from './CreateAccountStep5';
 
-class CreateAccount extends Component {
+class CreateAccount extends PureComponent {
   render () {
     return (
       <div>

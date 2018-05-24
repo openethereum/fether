@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {
   BrowserRouter,
   MemoryRouter,
@@ -27,7 +27,7 @@ import './App.css';
 const Router =
   process.env.NODE_ENV === 'production' ? MemoryRouter : BrowserRouter;
 
-class App extends Component {
+class App extends PureComponent {
   render () {
     return (
       <Router>

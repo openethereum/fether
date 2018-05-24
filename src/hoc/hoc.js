@@ -3,13 +3,13 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import isObservable from '@parity/light.js/lib/utils/isObservable';
 
 import propsProxy from './propsProxy';
 
 const hoc = observables => InnerComponent =>
-  class extends Component {
+  class extends PureComponent {
     propsProxy = propsProxy(this.props);
 
     state = {};

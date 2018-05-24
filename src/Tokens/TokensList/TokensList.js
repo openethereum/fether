@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ import TokenBalance from './TokenBalance';
 
 @inject('tokensStore')
 @observer
-class Tokens extends Component {
+class Tokens extends PureComponent {
   render () {
     const { tokensStore: { tokensArray } } = this.props;
 
