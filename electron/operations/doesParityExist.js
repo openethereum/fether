@@ -29,6 +29,7 @@ const locations = {
 };
 
 module.exports = {
+  defaultParityPath,
   /**
    * This function checks if parity has been installed on the local machine:
    * - first check if the program is in $PATH, using `command-exists`
