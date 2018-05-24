@@ -58,6 +58,10 @@ module.exports = {
         parityPath = path; // Save the final result in module variable
         pino.info(`Parity found on machine, can be run with "${path}".`);
         return path;
+      })
+      .catch(err => {
+        pino.info(`Parity not found on machine.`);
+        throw err;
       });
   },
   parityPath () {

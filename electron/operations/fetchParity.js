@@ -72,7 +72,7 @@ module.exports = mainWindow => {
 
         // Fetch the metadata of the correct version of parity
         pino.info(
-          `Parity not found on machine, downloading from ${VANITY_URL}?version=${channel}&os=${getOs()}&architecture=${getArch()}.`
+          `Downloading from ${VANITY_URL}?version=${channel}&os=${getOs()}&architecture=${getArch()}.`
         );
         const { data } = await axios.get(
           `${VANITY_URL}?version=${channel}&os=${getOs()}&architecture=${getArch()}`
