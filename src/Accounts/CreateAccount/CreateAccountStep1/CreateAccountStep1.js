@@ -3,14 +3,14 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Blockie from 'react-blockies';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 
 @inject('createAccountStore')
 @observer
-class CreateAccountStep1 extends Component {
+class CreateAccountStep1 extends PureComponent {
   componentDidMount () {
     this.props.createAccountStore.generateNewAccount();
   }
@@ -25,16 +25,15 @@ class CreateAccountStep1 extends Component {
     } = this.props;
 
     return (
-      <div>
-        <div className='window_content -modal'>
+      <div className='window_content -modal'>
+        {address &&
           <div className='box -modal -padded'>
             <div>
               Your new address:<br />
               <Blockie seed={address} />
               <pre>{address} </pre>
-              {pathname === '/accounts/new' && (
-                <button onClick={generateNewAccount}>Change</button>
-              )}
+              {pathname === '/accounts/new' &&
+                <button onClick={generateNewAccount}>Change</button>}
             </div>
             <label>
               Set a name for this account:<br />
@@ -47,14 +46,12 @@ class CreateAccountStep1 extends Component {
             </label>
             <div className='box'>
               {pathname === '/accounts/new' &&
-                !!name && (
-                  <Link to='/accounts/new/step2'>
-                    <button>Select</button>
-                  </Link>
-                )}
+                !!name &&
+                <Link to='/accounts/new/step2'>
+                  <button>Select</button>
+                </Link>}
             </div>
-          </div>
-        </div>
+          </div>}
       </div>
     );
   }

@@ -3,17 +3,15 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { inject, observer } from 'mobx-react';
 import { Redirect } from 'react-router-dom';
 
 @inject('parityStore')
 @observer
-class Loading extends Component {
+class Loading extends PureComponent {
   render () {
-    const {
-      parityStore: { downloadProgress, isApiConnected }
-    } = this.props;
+    const { parityStore: { downloadProgress, isApiConnected } } = this.props;
 
     if (isApiConnected) {
       return <Redirect to='/' />;
@@ -38,9 +36,7 @@ class Loading extends Component {
   }
 
   renderStatus = () => {
-    const {
-      parityStore: { downloadProgress, isParityRunning }
-    } = this.props;
+    const { parityStore: { downloadProgress, isParityRunning } } = this.props;
 
     if (isParityRunning) {
       return 'Connecting to API...';

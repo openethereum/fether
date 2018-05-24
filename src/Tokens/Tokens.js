@@ -3,31 +3,19 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react';
-import { Redirect, Link } from 'react-router-dom';
+import React, { PureComponent } from 'react';
+import { Link, Route, Switch } from 'react-router-dom';
 
 import Health from '../Health';
-import EthBalance from './EthBalance';
-import TokenBalance from './TokenBalance';
+import NewToken from './NewToken';
+import TokensList from './TokensList';
 
-@inject('parityStore', 'tokensStore')
-@observer
-class Tokens extends Component {
+class Tokens extends PureComponent {
   render () {
-    const {
-      parityStore: { isApiConnected },
-      tokensStore: { tokens }
-    } = this.props;
-
-    if (!isApiConnected) {
-      return <Redirect to='/loading' />;
-    }
-
     return (
       <div>
         <nav className='header-nav'>
-          <Link to='/' className='icon -back'>
+          <Link to='/accounts' className='icon -back'>
             Back
           </Link>
           <Link to='/tokens'>
@@ -40,21 +28,10 @@ class Tokens extends Component {
           </Link>
         </nav>
 
-        <div className='window_content'>
-          <div className='box -scroller'>
-            <ul className='list -padded'>
-              {Array.from(tokens.keys()).map(key => (
-                <li key={key}>
-                  {key === 'ETH' ? (
-                    <EthBalance token={key} {...tokens.get(key)} />
-                  ) : (
-                    <TokenBalance token={key} {...tokens.get(key)} />
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        <Switch>
+          <Route exact path='/tokens' component={TokensList} />
+          <Route path='/tokens/new' component={NewToken} />
+        </Switch>
 
         <nav className='footer-nav'>
           <div className='footer-nav_status'>

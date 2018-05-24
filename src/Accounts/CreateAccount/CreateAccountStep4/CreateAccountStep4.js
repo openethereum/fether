@@ -3,12 +3,12 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { inject, observer } from 'mobx-react';
 
 @inject('createAccountStore')
 @observer
-class CreateAccountStep3 extends Component {
+class CreateAccountStep3 extends PureComponent {
   state = {
     confirm: '',
     hint: '',

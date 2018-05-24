@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { defaultAccount$ } from '@parity/light.js';
 import { Link } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ import light from '../hoc';
 @light({
   me: defaultAccount$
 })
-class Receive extends Component {
+class Receive extends PureComponent {
   render () {
     const { me } = this.props;
     return (
@@ -21,9 +21,7 @@ class Receive extends Component {
           <Link to='/tokens' className='icon -close'>
             x
           </Link>
-          <Link to='/'>
-            Accounts
-          </Link>
+          <Link to='/accounts'>Accounts</Link>
         </nav>
         <div className='window_content'>
           <div className='box -scroller -well'>
@@ -32,7 +30,9 @@ class Receive extends Component {
                 <label>Wallet address</label>
               </div>
               <div className='box -padded address'>
-                <code>{me}</code>
+                <code>
+                  {me}
+                </code>
               </div>
               <div className='box -padded'>
                 <button className='-small'>Copy to clipboard</button>

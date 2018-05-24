@@ -3,13 +3,13 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 
 @inject('createAccountStore')
 @observer
-class CreateAccountStep3 extends Component {
+class CreateAccountStep3 extends PureComponent {
   state = {
     value: ''
   };
@@ -17,9 +17,7 @@ class CreateAccountStep3 extends Component {
   handleChange = ({ target: { value } }) => this.setState({ value });
 
   render () {
-    const {
-      createAccountStore: { phrase }
-    } = this.props;
+    const { createAccountStore: { phrase } } = this.props;
     const { value } = this.state;
 
     return (
@@ -33,11 +31,10 @@ class CreateAccountStep3 extends Component {
           @brian maybe tell the user to write the 3rd, 9th and 11th word only?
           3,9,11 being random numbers
         </em>
-        {value === phrase && (
+        {value === phrase &&
           <Link to='/accounts/new/step4'>
             <button>Done</button>
-          </Link>
-        )}
+          </Link>}
       </div>
     );
   }

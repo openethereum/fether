@@ -3,14 +3,14 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import BalanceLayout from '../BalanceLayout';
 
-class TokenBalance extends Component {
+class TokenBalance extends PureComponent {
   static propTypes = {
-    token: PropTypes.string.isRequired
+    token: PropTypes.object.isRequired
   };
 
   render () {

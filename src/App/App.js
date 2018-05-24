@@ -3,11 +3,16 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { Component } from 'react';
-import { BrowserRouter, MemoryRouter, Route } from 'react-router-dom';
+import React, { PureComponent } from 'react';
+import {
+  BrowserRouter,
+  MemoryRouter,
+  Redirect,
+  Route,
+  Switch
+} from 'react-router-dom';
 
 import Accounts from '../Accounts';
-import CreateAccount from '../Accounts/CreateAccount';
 import Loading from '../Loading';
 import ProtectedRoute from './ProtectedRoute';
 import Receive from '../Receive';
@@ -22,7 +27,7 @@ import './App.css';
 const Router =
   process.env.NODE_ENV === 'production' ? MemoryRouter : BrowserRouter;
 
-class App extends Component {
+class App extends PureComponent {
   render () {
     return (
       <Router>
@@ -34,17 +39,17 @@ class App extends Component {
               </svg>
             </div>
             <div className='window'>
-              <Route path='/loading' component={Loading} />
-              <ProtectedRoute exact path='/' component={Accounts} />
-              <ProtectedRoute path='/tokens' component={Tokens} />
-              <ProtectedRoute path='/receive' component={Receive} />
-              <ProtectedRoute path='/settings' component={Settings} />
-              <ProtectedRoute path='/send' component={Send} />
-              <ProtectedRoute path='/signer' component={Signer} />
-              <ProtectedRoute
-                path='/accounts/new'
-                component={CreateAccount}
-              />
+              <Switch>
+                {/* Change homepage on the next line */}
+                <Redirect exact from='/' to='/tokens' />
+                <Route path='/loading' component={Loading} />
+                <ProtectedRoute path='/accounts' component={Accounts} />
+                <ProtectedRoute path='/tokens' component={Tokens} />
+                <ProtectedRoute path='/receive' component={Receive} />
+                <ProtectedRoute path='/settings' component={Settings} />
+                <ProtectedRoute path='/send' component={Send} />
+                <ProtectedRoute path='/signer' component={Signer} />
+              </Switch>
             </div>
           </div>
         </div>

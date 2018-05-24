@@ -3,24 +3,19 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { inject, observer } from 'mobx-react';
 
 @inject('createAccountStore')
 @observer
-class CreateAccountStep5 extends Component {
+class CreateAccountStep5 extends PureComponent {
   handleSubmit = () => {
-    const {
-      createAccountStore: { saveAccountToParity },
-      history
-    } = this.props;
-    saveAccountToParity().then(() => history.push('/'));
+    const { createAccountStore: { saveAccountToParity }, history } = this.props;
+    saveAccountToParity().then(() => history.push('/accounts'));
   };
 
   render () {
-    const {
-      createAccountStore: { hint }
-    } = this.props;
+    const { createAccountStore: { hint } } = this.props;
 
     return (
       <div>

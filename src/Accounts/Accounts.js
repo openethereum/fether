@@ -3,42 +3,47 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { Component } from 'react';
-import { allAccountsInfo$, setDefaultAccount$ } from '@parity/light.js';
+import React, { PureComponent } from 'react';
+import { accountsInfo$ } from '@parity/light.js';
 import Blockies from 'react-blockies';
-import { Link } from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
+import { Link, Route, Switch } from 'react-router-dom';
 
+import CreateAccount from './CreateAccount/CreateAccount';
 import light from '../hoc';
 
+@inject('parityStore')
+@observer
 @light({
-  allAccountsInfo: allAccountsInfo$
+  accountsInfo: accountsInfo$
 })
-class Accounts extends Component {
-  componentWillUnmount () {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
-
-  handleClick = ({
-    currentTarget: {
-      dataset: { address }
-    }
-  }) => {
+class Accounts extends PureComponent {
+  handleClick = ({ currentTarget: { dataset: { address } } }) => {
+    const { parityStore: { api } } = this.props;
     // Set default account to the clicked one, and go to Tokens on complete
-    this.subscription = setDefaultAccount$(address).subscribe(null, null, () =>
-      this.props.history.push('/tokens')
-    );
+    this.subscription = api.parity
+      .setNewDappsDefaultAddress(address)
+      .then(() => this.props.history.push('/tokens'));
   };
 
   render () {
-    const { allAccountsInfo } = this.props;
+    return (
+      <Switch>
+        <Route exact path='/accounts' render={this.renderAccounts} />
+        <Route path='/accounts/new' component={CreateAccount} />
+      </Switch>
+    );
+  }
+
+  // TODO We can put this into a separate Component
+  renderAccounts = () => {
+    const { accountsInfo } = this.props;
 
     return (
       <div>
         <nav className='header-nav'>
           <p>&nbsp;</p>
-          <Link to='/' className='header_title'>
+          <Link to='/accounts' className='header_title'>
             Accounts
           </Link>
           <Link to='/accounts/new' className='icon -new'>
@@ -48,9 +53,9 @@ class Accounts extends Component {
 
         <div className='window_content'>
           <div className='box -scroller'>
-            {allAccountsInfo ? (
-              <ul className='list -padded'>
-                {Object.keys(allAccountsInfo).map(address => (
+            {accountsInfo
+              ? <ul className='list -padded'>
+                {Object.keys(accountsInfo).map(address =>
                   <li
                     key={address}
                     data-address={address} // Using data- to avoid creating a new item Component
@@ -61,27 +66,25 @@ class Accounts extends Component {
                         <Blockies seed={address} />
                       </div>
                       <div className='account_information'>
-                        <div className='account_name'>{allAccountsInfo[address].name}</div>
+                        <div className='account_name'>
+                          {accountsInfo[address].name}
+                        </div>
                         <div className='account_address'>
                           {address}
                         </div>
                       </div>
                     </div>
                   </li>
-                ))}
+                )}
               </ul>
-
-            ) : (
-              <div className='loader'>
+              : <div className='loader'>
                 <p>Loading&hellip;</p>
-              </div>
-            )}
-
+              </div>}
           </div>
         </div>
       </div>
     );
-  }
+  };
 }
 
 export default Accounts;

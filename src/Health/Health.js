@@ -3,9 +3,9 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
-class Health extends Component {
+class Health extends PureComponent {
   render () {
     return (
       <div className='status'>
