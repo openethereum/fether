@@ -1,2116 +1,333 @@
 [
-  {
-    "address": "0x4733659a5cB7896A65c918Add6f59C5148FB5ffa",
-    "decimals": 1000000,
-    "name": "GavCoin",
-    "symbol": "GAV",
-    "logo": "https://raw.githubusercontent.com/ethcore/dapp-assets/9e135f76fe9ba61e2d8ccbd72ed144c26c450780/tokens/gavcoin-64x64.png"
-  },
-  {
-    "address": "0x7A1767DF4Bad56bA284aC2a07b55D0825aBAb91C",
-    "decimals": 1000000000,
-    "name": "TESTNET DGX",
-    "symbol": "DX1"
-  },
-  {
-    "address": "0xD18E0764167a3288C16eb35723819c15C6352111",
-    "decimals": 1,
-    "name": "MyToken",
-    "symbol": "MTY"
-  },
-  {
-    "address": "0x126e563451F658D53c60781b954C367175545611",
-    "decimals": 1,
-    "name": "HSBC",
-    "symbol": "HSB",
-    "logo": ""
-  },
-  {
-    "address": "0xc85FfC4b71427f561695bB5EC864FB55504f3c69",
-    "decimals": 1,
-    "name": "HSBC",
-    "symbol": "HBC"
-  },
-  {
-    "address": "0x9a2E4C220ed8a30f88B87e1f1a35550607Eb7dEA",
-    "decimals": 1,
-    "name": "Apple",
-    "symbol": "APL"
-  },
-  {
-    "address": "0x0000000000000000000000000000000000000000",
-    "decimals": 0,
-    "name": "",
-    "symbol": ""
-  },
-  {
-    "address": "0x43B92C6c58A5C96A686459322841E45E04Ef7AeF",
-    "decimals": 1000000,
-    "name": "GotchaCoin",
-    "symbol": "GOT",
-    "logo": "http://iconbug.com/data/d5/255/0132fc08a3be4345a3a71cbbf34612e1.png"
-  },
-  {
-    "address": "0x6cafc92bEB9b6F02F8531cd049FFE1fEeAD554ff",
-    "decimals": 1,
-    "name": "Energypack",
-    "symbol": "EPK",
-    "logo": "https://docs.google.com/uc?authuser=0&id=0B__JdfXlvXlxVmp4NUNuM09CVWM&export=download"
-  },
-  {
-    "address": "0x981e0442B08DA5fBE2Ee6c538a2Def400530939F",
-    "decimals": 1000000,
-    "name": "Ether",
-    "symbol": "ETH",
-    "logo": "https://blog.ethereum.org/wp-content/uploads/2015/01/128x128-ETHEREUM-FLAVICON.png"
-  },
-  {
-    "address": "0x465aF409B821Ba69955e5a066228E3561340e9c2",
-    "decimals": 1,
-    "name": "Google",
-    "symbol": "GGL"
-  },
-  {
-    "address": "0x4aD2Cb7E15B8323210A3bAC8d142EdB35BCDCe3b",
-    "decimals": 1,
-    "name": "Test Token",
-    "symbol": "TST",
-    "logo": "https://upload.wikimedia.org/wikipedia/en/d/d2/Toonie_-_front.png"
-  },
-  {
-    "address": "0x6E571b27a7aD36afcedf46f251b30f3739d7dF87",
-    "decimals": 10000,
-    "name": "ETHDEMO",
-    "symbol": "EDM"
-  },
-  {
-    "address": "0xcB3439a665D493819BEE7B84602E57B63739Cee0",
-    "decimals": 1,
-    "name": "bitcoin",
-    "symbol": "BTC",
-    "logo": "https://raw.githubusercontent.com/bitpay/bitcoin-brand/d31d162bd93bbcaab52b80a6b02e8f188bc65f0f/bitcoin.png"
-  },
-  {
-    "address": "0x148D3436a6A024d432bD5277EcF6B98407D46a2F",
-    "decimals": 1000000000000000000,
-    "name": "JetCoin 2",
-    "symbol": "JET",
-    "logo": "https://raw.githubusercontent.com/DaveAppleton/Images/master/JET%20LOGO.png"
-  },
-  {
-    "address": "0x92D81E36583966e6DB7540a92f6C85053a9AD1E2",
-    "decimals": 1000,
-    "name": "Lip",
-    "symbol": "LIP"
-  },
-  {
-    "address": "0x398632a233C1942aA9D3145e10b55d66F3AfEfb3",
-    "decimals": 1,
-    "name": "BumbleBeeKoin",
-    "symbol": "BEE"
-  },
-  {
-    "address": "0x9090C02e86402E4D5A6a302a08673A0EE5567C91",
-    "decimals": 1000000000000000000,
-    "name": "DaveCoin",
-    "symbol": "DAV",
-    "logo": "https://raw.githubusercontent.com/DaveAppleton/Images/18cb9003cbf51af0557de49aba7a449aea5a9f6a/davecoin.png"
-  },
-  {
-    "address": "0x9Cb34852a61cAb3df863B9C58d0f5e8E022d0E3a",
-    "decimals": 1000,
-    "name": "Lip 01",
-    "symbol": "LP1"
-  },
-  {
-    "address": "0xDd8335b811fF3F408Ce192e756FeCDD0B735A059",
-    "decimals": 1000,
-    "name": "Lip",
-    "symbol": "LP2",
-    "logo": "http://79.137.39.203/wp-content/uploads/2017/03/ic_launcher-3.png"
-  },
-  {
-    "address": "0x6C88a9e8096226AB14C4f2F0DF65Ee18F815a584",
-    "decimals": 1,
-    "name": "KI Token",
-    "symbol": "KIT",
-    "logo": "https://raw.githubusercontent.com/chevdor/kitoken/master/kid.png"
-  },
-  {
-    "address": "0x153351B591D008342098f146F84A4cD0e3051495",
-    "decimals": 10000000,
-    "name": "DevKoin",
-    "symbol": "XDK",
-    "logo": "https://raw.githubusercontent.com/RealmKoin/branding/4ac4ee988ec4561edc7beb15979cc66eb83cfb4b/RK.svg.png"
-  },
-  {
-    "address": "0x17e806dbA5B6a739ECccB22d8a13a912aC9ea5db",
-    "decimals": 100,
-    "name": "PLP",
-    "symbol": "PLP",
-    "logo": "https://raw.githubusercontent.com/chevdor/kitoken/master/philip.png"
-  },
-  {
-    "address": "0x7ab59D6dF718c3C5EF2B92777B519782Cc283F60",
-    "decimals": 100,
-    "name": "Ruby Tuesday",
-    "symbol": "RBY",
-    "logo": "https://raw.githubusercontent.com/DaveAppleton/Images/327ef28621a4d722a23d6e05d8ae207ef339abcd/ruby.png"
-  },
-  {
-    "address": "0x9C65584B984E5be62e22F053798DFF2058cA1eD9",
-    "decimals": 1000000,
-    "name": "ESC Token",
-    "symbol": "ESC"
-  },
-  {
-    "address": "0xec1beF7EA1D78023E016Bb865ab9a3b25C5FBa49",
-    "decimals": 1000000000000000000,
-    "name": "Romchik",
-    "symbol": "DFG"
-  },
-  {
-    "address": "0x81154d24f4de069d1f0c16E3a52e1Ef68714daD9",
-    "decimals": 100,
-    "name": "Ruby Tuesday",
-    "symbol": "RBT",
-    "logo": "https://raw.githubusercontent.com/DaveAppleton/Images/327ef28621a4d722a23d6e05d8ae207ef339abcd/ruby.png"
-  },
-  {
-    "address": "0x6EE77e0196a4Ee7581632633063D5f15DCa6DC23",
-    "decimals": 1,
-    "name": "XP-gamma",
-    "symbol": "XPG",
-    "logo": "https://raw.githubusercontent.com/GuildWorx/images/e2c802875bc9afbb9297560adc4b0d4566ecb000/17436729.png"
-  },
-  {
-    "address": "0x952737579B86E2a6d972fEf785d9AE9d0B330331",
-    "decimals": 10000000000,
-    "name": "Mojo",
-    "symbol": "MOJ"
-  },
-  {
-    "address": "0xAddD58D35F69FdB37A9481718A8c3554971A86a0",
-    "decimals": 100000000,
-    "name": "Fame",
-    "symbol": "FAM"
-  },
-  {
-    "address": "0x164CA36c25B0bC2DA723A44877d7f2B5AB01065C",
-    "decimals": 1000000,
-    "name": "Snek",
-    "symbol": "SNK"
-  },
-  {
-    "address": "0xB0c331952B543894a93a2eb4d41859C371e6f587",
-    "decimals": 100,
-    "name": "Ksendel",
-    "symbol": "KST"
-  },
-  {
-    "address": "0x57bCA1D6622288E14C90ec05E0636D6919bd6d1e",
-    "decimals": 1000000000000000000,
-    "name": "Wrapped ETH",
-    "symbol": "WTH"
-  },
-  {
-    "address": "0x4C494DAa9F40A813b4915553657db649e026096a",
-    "decimals": 1,
-    "name": "Test TaipeiEth logo vote",
-    "symbol": "TTL"
-  },
-  {
-    "address": "0x1837C042D6edb5938526737bE90A71983329ACBA",
-    "decimals": 1000000000000000000,
-    "name": "Noku Gold",
-    "symbol": "NKG"
-  },
-  {
-    "address": "0x4896698b19b2eA866f69042e16f8Be4Cf29b2624",
-    "decimals": 100,
-    "name": "KP",
-    "symbol": "111"
-  },
-  {
-    "address": "0xf9C092E345973faa5b5400F7277Ace6dE1630590",
-    "decimals": 1,
-    "name": "Weapon1",
-    "symbol": "W01"
-  },
-  {
-    "address": "0xEbe2B44e72682CAcD5A53B2869cf52f0eA451220",
-    "decimals": 1,
-    "name": "Test Taipei Logo Vote 2",
-    "symbol": "TLV",
-    "logo": "https://scontent.ftpe3-1.fna.fbcdn.net/v/t1.0-9/17361510_190416308121793_6870917162423839684_n.jpg?oh=1d0533a1b28d70164ec6b4bc6d69bc92&oe=59E0FE4E"
-  },
-  {
-    "address": "0x82B90c8256809b46a506015523A6178dEFa906eb",
-    "decimals": 100,
-    "name": "Test Token1",
-    "symbol": "TT1"
-  },
-  {
-    "address": "0x8A4f0CFA4cE21Ff6C57184Bd5B05cC5A2a73A1Ce",
-    "decimals": 1000000000000000000,
-    "name": "testgd",
-    "symbol": "TGD"
-  },
-  {
-    "address": "0x961FCDD04592b4E4e0C69e761d10936929124372",
-    "decimals": 1000000000000000000,
-    "name": "taco token",
-    "symbol": "TCO"
-  },
-  {
-    "address": "0x0b04c6Dd8C0cB71B9ce54d49B44a187EE69AeF97",
-    "decimals": 1000000000000000000,
-    "name": "Baja Blast",
-    "symbol": "BJB",
-    "logo": "https://i.imgur.com/AAZnSwR.jpg"
-  },
-  {
-    "address": "0x81208C99D5b11a895C1F09e55AEf6B2139b94Cb6",
-    "decimals": 1000000000000000000,
-    "name": "UnikrnGold",
-    "symbol": "UKG",
-    "logo": "https://i.imgur.com/hVZblfX.png"
-  },
-  {
-    "address": "0x56E19cDbcb327100736D78E5a6E6061FE968Da7f",
-    "decimals": 1000000000000,
-    "name": "BananaCoin",
-    "symbol": "BNC"
-  },
-  {
-    "address": "0xad9c5378D43FDF2c133a5E68CE9cD16E1047B859",
-    "decimals": 1000000000000,
-    "name": "BananaCoin2",
-    "symbol": "BC2"
-  },
-  {
-    "address": "0x83B93930A5cdC5f6E47Ed80b52655F1c49a683B1",
-    "decimals": 10000000000,
-    "name": "BananToken3",
-    "symbol": "BC3"
-  },
-  {
-    "address": "0x199DA14B0A92F797Ae176a4be1c00C36C7783B25",
-    "decimals": 1000000000000000000,
-    "name": "Digital Development Fund",
-    "symbol": "DDF"
-  },
-  {
-    "address": "0xaC718aF3Ff52417241CD27028a44f4390cBc8349",
-    "decimals": 1000000000000000000,
-    "name": "Another bloody token",
-    "symbol": "DDT"
-  },
-  {
-    "address": "0x7F381f3CB66329F4ED208B9E5bBD8B9549C014C7",
-    "decimals": 1000000000000000000,
-    "name": "DDF(with splitter)",
-    "symbol": "DDX",
-    "logo": "https://raw.githubusercontent.com/DaveAppleton/Images/master/ddf.png"
-  },
-  {
-    "address": "0x184c987697cd8c5092Dd8bdDE8b7Ac8D3929a26B",
-    "decimals": 100000000,
-    "name": "Macro",
-    "symbol": "MCO"
-  },
-  {
-    "address": "0xFcC7a6ab13E8221FfBa5C23CAaFbCFEe736B1bff",
-    "decimals": 1000000000000000000,
-    "name": "DDX/Splix",
-    "symbol": "DSX",
-    "logo": "https://raw.githubusercontent.com/DaveAppleton/Images/master/ddf2.png"
-  },
-  {
-    "address": "0x209b88859D0E7be9E9fE84e41F58b08f20D86a7a",
-    "decimals": 1000000000000000000,
-    "name": "DDF/spz",
-    "symbol": "DDZ",
-    "logo": "https://raw.githubusercontent.com/DaveAppleton/Images/master/ddf3.png"
-  },
-  {
-    "address": "0x58299cD4dFD84CaC103386ec5E87300b01fa8351",
-    "decimals": 1000000000000000000,
-    "name": "GaltCoin",
-    "symbol": "GTK"
-  },
-  {
-    "address": "0x085C0CFb12a1ed22cB911AC0F8d837e9c662a1a4",
-    "decimals": 1000000,
-    "name": "test",
-    "symbol": "JLA"
-  },
-  {
-    "address": "0x9A5e25536698FACDbab45767c30d5AFa7250597d",
-    "decimals": 1000000000000,
-    "name": "Fame",
-    "symbol": "FME"
-  },
-  {
-    "address": "0xF92aAC044F55231fdF144Ac47eBbeA42d0943Fb5",
-    "decimals": 1,
-    "name": "Test Token T1A",
-    "symbol": "T1A",
-    "logo": "http://itrust.ece.ucsb.edu/images/ucsb_logo.jpg"
-  },
-  {
-    "address": "0x086Fd25497467537A3633037390E060DF6613D09",
-    "decimals": 1000000,
-    "name": "Test Coin 2",
-    "symbol": "TC2"
-  },
-  {
-    "address": "0x6981dD17223A49364Cb0210b0962c1FfE334cC01",
-    "decimals": 1000000000000,
-    "name": "FameTest2",
-    "symbol": "FM2"
-  },
-  {
-    "address": "0x2510028413a42E5c8AEd7ab26AAF3d0bE2f68756",
-    "decimals": 1000000,
-    "name": "ESMT Token",
-    "symbol": "EST"
-  },
-  {
-    "address": "0x437fd2bd8036E3Fd710431fc6EC6521DAf6Fe9DA",
-    "decimals": 1000000000000,
-    "name": "TestFame3",
-    "symbol": "FM3"
-  },
-  {
-    "address": "0xb49c9ec3A321aaFA9450bF4BABD71d66DE7Be9FF",
-    "decimals": 1000000000000,
-    "name": "TestFame4",
-    "symbol": "FM4"
-  },
-  {
-    "address": "0x0900fB62677015Dc5E8073Bc5863003F02663298",
-    "decimals": 1000000000000,
-    "name": "TestFAME9",
-    "symbol": "FM9"
-  },
-  {
-    "address": "0x53981A8154252d0F8250bE9d2c84ABE42eFe18b4",
-    "decimals": 1000000000000,
-    "name": "TestFameFinal",
-    "symbol": "FMF",
-    "logo": "http://www.battledrome.io/img/favicon.png"
-  },
-  {
-    "address": "0x518aA8D74145Fb2bc8d55365dCA6f57453A239bC",
-    "decimals": 100,
-    "name": "CameronCoin",
-    "symbol": "CAM"
-  },
-  {
-    "address": "0xB5ee4F87732f0D9E34632e970fcEd72039A7b9a6",
-    "decimals": 1000000,
-    "name": "Spice Coin",
-    "symbol": "SPI",
-    "logo": "http://i.imgur.com/wfuDm6v.png"
-  },
-  {
-    "address": "0xbA6157E3A77cBD1F861D2694F7A26d0Dbbe8F4Fd",
-    "decimals": 1000000000000000000,
-    "name": "SunContract",
-    "symbol": "SNC"
-  },
-  {
-    "address": "0xD870d5d7A8098F9235724394176bb33735766720",
-    "decimals": 1000000000000000000,
-    "name": "ABCDEF",
-    "symbol": "ABC"
-  },
-  {
-    "address": "0x81431eD09b426A6288E83c1487C090b7782B8fF3",
-    "decimals": 1000000000000000000,
-    "name": "abcdef",
-    "symbol": "DEF"
-  },
-  {
-    "address": "0x0a9d574BFc8CB71A3f1441465716e1FE4189Dae5",
-    "decimals": 1000000000000000000,
-    "name": "SDFCoin",
-    "symbol": "SDF"
-  },
-  {
-    "address": "0xf936EA7E38E81Edcb08B686680B84c583c7EA1EC",
-    "decimals": 1000000000000000000,
-    "name": "UKTest0",
-    "symbol": "UKT"
-  },
-  {
-    "address": "0xEB2273Ac939608cb65127C74F8FB44Feb14d8C2E",
-    "decimals": 1000000000000000000,
-    "name": "UKT1",
-    "symbol": "UKU"
-  },
-  {
-    "address": "0x3068393b7933FA31025a5257492e9DFE83f2907E",
-    "decimals": 1000000000000000000,
-    "name": "UKDemo",
-    "symbol": "UKD"
-  },
-  {
-    "address": "0xfE138cC613D4f4d7D3F672c1812AB8d2F478D739",
-    "decimals": 1000000000000000000,
-    "name": "suncontract",
-    "symbol": "SCN"
-  },
-  {
-    "address": "0x73e8fA3459E5aaF8E103E0f8d66EbEe531320dF0",
-    "decimals": 1000000000000000000,
-    "name": "test",
-    "symbol": "XXX"
-  },
-  {
-    "address": "0x1a87ce0662fa972683A579282aAcEfE54c8c5914",
-    "decimals": 1000000000000000000,
-    "name": "AAA",
-    "symbol": "AAA"
-  },
-  {
-    "address": "0xD9694A383f299E8F91b9a02C87661FcCDD609a96",
-    "decimals": 1,
-    "name": "LucAnne",
-    "symbol": "LAN"
-  },
-  {
-    "address": "0x6EE4D3337EEfF0D888B5eC7CB8FF10852432D189",
-    "decimals": 1000000000000000000,
-    "name": "CRS",
-    "symbol": "CRS"
-  },
-  {
-    "address": "0x5fB002d42bDd6baB937C57348249659C80C306D4",
-    "decimals": 1000000000000000000,
-    "name": "TrCoin",
-    "symbol": "TCN"
-  },
-  {
-    "address": "0xA9FDd6b3b978428AfeA30839B7BbBa31d822c86E",
-    "decimals": 1000000000000000000,
-    "name": "RickCoin",
-    "symbol": "RIK",
-    "logo": "https://raw.githubusercontent.com/Nexus7/misc/9f19f36aec78cf965d9e353b78685c67dfdb063c/anon.jpg"
-  },
-  {
-    "address": "0x624597cEb90966a761bCD0Ec63fF1f430D50f15A",
-    "decimals": 1000000000,
-    "name": "PoolCoin",
-    "symbol": "POL",
-    "logo": "https://raw.githubusercontent.com/Nexus7/misc/4114d333cef535804e3c7acf63f88ffe70d3ceb7/8ball.gif"
-  },
-  {
-    "address": "0x895b1f94aaf8CAD2A0500b295477780deC5D6032",
-    "decimals": 1,
-    "name": "Token BNP",
-    "symbol": "BNP",
-    "logo": ""
-  },
-  {
-    "address": "0x8f53B28e25bE34F1E0eeaa2246DA79c927A53A8d",
-    "decimals": 1,
-    "name": "Ma société",
-    "symbol": "BPS"
-  },
-  {
-    "address": "0xa93c7AD2Ce1d0015EAc9296c1675bf5FD79Aa755",
-    "decimals": 1,
-    "name": "Mather",
-    "symbol": "MTH"
-  },
-  {
-    "address": "0x8b13C8e08bEEcBEEe47374227FEdEA091b26460D",
-    "decimals": 100,
-    "name": "MichCoins",
-    "symbol": "MI4",
-    "logo": "http://ykt.ru/avatar/small/zhc"
-  },
-  {
-    "address": "0x1E4915FA060Bb67Bed129D6518866920c8002Fe6",
-    "decimals": 1000000000000000000,
-    "name": "Persian",
-    "symbol": "PRS",
-    "logo": "https://raw.githubusercontent.com/Neurone/persians/master/resources/persianToken.png"
-  },
-  {
-    "address": "0x4DffEA52b0B4b48c71385ae25de41CE6AD0Dd5a7",
-    "decimals": 1000000000000000000,
-    "name": "MLN-T",
-    "symbol": "MLN"
-  },
-  {
-    "address": "0xF61b8003637E5D5dbB9ca8d799AB54E5082CbdBc",
-    "decimals": 1000000000000000000,
-    "name": "REP-T",
-    "symbol": "REP"
-  },
-  {
-    "address": "0xe43C4aFd9a3108Bb0d22a2FA4F3C7313c2F34b09",
-    "decimals": 1,
-    "name": "MyTokenTest",
-    "symbol": "MYT"
-  },
-  {
-    "address": "0x0bB93cCE9caba6F228B6E7d95a29c6cACE2D70DE",
-    "decimals": 100000000,
-    "name": "SolarShare01",
-    "symbol": "SLS"
-  },
-  {
-    "address": "0x65A6d2874f969709B0A6818dc3714DA0A52d5445",
-    "decimals": 100000000,
-    "name": "SolarShare03",
-    "symbol": "SL3"
-  },
-  {
-    "address": "0x4561bBbb982b131F3996f94389EBD2691e8ba943",
-    "decimals": 1,
-    "name": "NTK",
-    "symbol": "NTK"
-  },
-  {
-    "address": "0x30027a92930bF3cAEd983faF544342513831E247",
-    "decimals": 1,
-    "name": "ZST",
-    "symbol": "ZST"
-  },
-  {
-    "address": "0x1Ef3C2b6Db0Ef603D99d28C0ca40b89619F613be",
-    "decimals": 100000000,
-    "name": "Dork dork test",
-    "symbol": "OIK"
-  },
-  {
-    "address": "0x269a83cb6bF4635881443580c17139848D25Cc03",
-    "decimals": 1,
-    "name": "MSS",
-    "symbol": "MSS"
-  },
-  {
-    "address": "0x18587A635F748e5Bb13a5D21c05186D63458859e",
-    "decimals": 100,
-    "name": "Rockets",
-    "symbol": "RKK"
-  },
-  {
-    "address": "0x1A5B0cF6bBde17EAD32f53883aF2ac71535A11ef",
-    "decimals": 1000000000000000000,
-    "name": "Rocket Pool",
-    "symbol": "RPL"
-  },
-  {
-    "address": "0xFD7722f453A7f0ff0F214e74b0883E383f2A5F02",
-    "decimals": 1,
-    "name": "MA STARTUP (SHARES)",
-    "symbol": "ACT"
-  },
-  {
-    "address": "0xC807c602f5bB5A926d23dc5d8a20e193cA6Fc5d4",
-    "decimals": 1000000000000000000,
-    "name": "0x Protocol Token",
-    "symbol": "ZRX"
-  },
-  {
-    "address": "0x8067B4b40e22006c0d5898ad63F1aAf57eA34610",
-    "decimals": 1,
-    "name": "MarcoDroid",
-    "symbol": "MDS"
-  },
-  {
-    "address": "0xd468427Fe8Ab8c7b51FeF9602EE6dE3C241557b1",
-    "decimals": 1,
-    "name": "MJC",
-    "symbol": "MJC"
-  },
-  {
-    "address": "0xB7676c4544aa1702281CE75275ef9Afc1Df477ba",
-    "decimals": 1,
-    "name": "Tomorrowshares",
-    "symbol": "STR"
-  },
-  {
-    "address": "0x9a310C3341bbEF0d84f29e822ea7891C7dE7A421",
-    "decimals": 100,
-    "name": "JellyCoin",
-    "symbol": "JLY"
-  },
-  {
-    "address": "0x9d733dDe6Eb9FeCa6E9B7b108506E1B6b1A57BFF",
-    "decimals": 1,
-    "name": "Sandrine Shares",
-    "symbol": "SAN"
-  },
-  {
-    "address": "0xd7b6c6Bc6a908fbBf68ff2C4EfC4e729642B5b3f",
-    "decimals": 1000000000000000000,
-    "name": "Opus Demo Token",
-    "symbol": "OPU"
-  },
-  {
-    "address": "0x6e483e8A809E5066Ff1C4Ff240A41b3f43C40C04",
-    "decimals": 1,
-    "name": "BTT-Token",
-    "symbol": "BTT"
-  },
-  {
-    "address": "0x4EFeE2201CDD086579EB837888f33E6a1a9E5BF2",
-    "decimals": 1000000000000000000,
-    "name": "Piece of Ass(et)",
-    "symbol": "POA",
-    "logo": ""
-  },
-  {
-    "address": "0x7Eca03e98099315b8207Df60FEFC7c80dceA8398",
-    "decimals": 1,
-    "name": "Piece of Ass(et)",
-    "symbol": "PAS"
-  },
-  {
-    "address": "0xB781e7bF9AfCc67e053a97CF6C781C2289b66EbC",
-    "decimals": 10,
-    "name": "TovarCoin",
-    "symbol": "TVR"
-  },
-  {
-    "address": "0x9b286Df77a9443B49820Dbda4DCFeb486839d3D3",
-    "decimals": 10000000000000,
-    "name": "Sit and Go Token",
-    "symbol": "SNG"
-  },
-  {
-    "address": "0x1253f1419EE8495794EF19796B36c1B3F8d307E1",
-    "decimals": 1000000000000000000,
-    "name": "WQToken",
-    "symbol": "WQT"
-  },
-  {
-    "address": "0x8A9E40766e2B94e66d89287cC124603593EbFd9F",
-    "decimals": 1000000000000000000,
-    "name": "WQToken 2",
-    "symbol": "WQ2"
-  },
-  {
-    "address": "0x65b7524A73171cEE7F46594973053492533e02f3",
-    "decimals": 1,
-    "name": "ZSP",
-    "symbol": "ZSP"
-  },
-  {
-    "address": "0x5EA4FCEF969dBDa2029b60842DFFD0B3fAC94423",
-    "decimals": 1000000000000000000,
-    "name": "Webqlo Token 3",
-    "symbol": "WQ3"
-  },
-  {
-    "address": "0x889b7c1c0fe4c39026d4ada4EA7703ca3a2aE6C9",
-    "decimals": 1000000000000000000,
-    "name": "Webqlo Token 4",
-    "symbol": "WQ4"
-  },
-  {
-    "address": "0x1721aa0603aB3A4FE083F16aE502E66F11551156",
-    "decimals": 1,
-    "name": "VEM",
-    "symbol": "VEM"
-  },
-  {
-    "address": "0x6Ff6C0Ff1d68b964901F986d4C9FA3ac68346570",
-    "decimals": 1000000000000000000,
-    "name": "ZRX Kovan",
-    "symbol": "ZRK",
-    "logo": "https://www.0xproject.com/images/token_icons/zero_ex.png"
-  },
-  {
-    "address": "0x186B14180Cd0C085B0675A93E56A6EfD93b87C33",
-    "decimals": 1000000000000000000,
-    "name": "Atmatrix Token",
-    "symbol": "ATT",
-    "logo": "https://raw.githubusercontent.com/ATMatrix/token-sale-contracts/8a6e98989e3e8179571e5d94c151a84ed205d868/assets/att-icon%40128x128.png"
-  },
-  {
-    "address": "0xe0C22B8cbfe67e723C525Dc9b00De8D1bEAfF636",
-    "decimals": 1,
-    "name": "TUT",
-    "symbol": "TUT"
-  },
-  {
-    "address": "0x5D82cD72Bdf41B7dbB2b397acdFCCa04ea610c72",
-    "decimals": 10,
-    "name": "BelugaDB",
-    "symbol": "BLG"
-  },
-  {
-    "address": "0x6ccD3E3c7fF94c1e54a67217B4C731C87c0a7c08",
-    "decimals": 1000000000000000000,
-    "name": "Q",
-    "symbol": "QTQ",
-    "logo": "http://verifier.tiiqu.com/images/q_white.png"
-  },
-  {
-    "address": "0xfe3A78B86d55B7D5921fac4Ff3b5e764FCfaA9d8",
-    "decimals": 1000000000000000000,
-    "name": "FML",
-    "symbol": "FML"
-  },
-  {
-    "address": "0x2E9165A84a9bb1828e1453fD5B726c8034d03aA4",
-    "decimals": 1000000000000000000,
-    "name": "LMF",
-    "symbol": "LMF"
-  },
-  {
-    "address": "0xa6d9a523A8db2bF49e9A9D2d648159C64832b31C",
-    "decimals": 1,
-    "name": "who123",
-    "symbol": "WHO"
-  },
-  {
-    "address": "0x8Ff84c1A606BF3607B45326d8E2Fcc3cA6621872",
-    "decimals": 1,
-    "name": "Ivan's Test Token",
-    "symbol": "ITT",
-    "logo": "http://zderadicka.eu/wp-content/uploads/logo.png"
-  },
-  {
-    "address": "0xce3bb3B81566e5569b4CE82409C57Fe165839c4B",
-    "decimals": 1000000000000000000,
-    "name": "MooToken",
-    "symbol": "MOO"
-  },
-  {
-    "address": "0xEAEA6c85Bf60C70500A7cA2efbeF9ed6129e6C0d",
-    "decimals": 1000000000000000000,
-    "name": "FooToken",
-    "symbol": "FOO"
-  },
-  {
-    "address": "0x3A035e74eeCb8DcA5DB38e94362cc045E9Cf854C",
-    "decimals": 1000000000000000000,
-    "name": "Indorse Testnet Token",
-    "symbol": "IND",
-    "logo": "https://s3.amazonaws.com/alt.indorse/images/logoonly400.png"
-  },
-  {
-    "address": "0x10DBffF0C6Bf561B79f643f4F36c7Bd25C291d71",
-    "decimals": 1000000000000,
-    "name": "aboo",
-    "symbol": "ABU"
-  },
-  {
-    "address": "0xcDa775a6dc6997845817ceB822FCb4540a37E554",
-    "decimals": 1000000000000000000,
-    "name": "moo",
-    "symbol": "MUU"
-  },
-  {
-    "address": "0xe93d75D56d9D4aE9af82BBe182B6bAC6f1B88875",
-    "decimals": 1000000,
-    "name": "NITRO",
-    "symbol": "NIT"
-  },
-  {
-    "address": "0xcd54511D42d94d003c069cD8D50299dde3218BAE",
-    "decimals": 1000000000,
-    "name": "ARTIST",
-    "symbol": "ART"
-  },
-  {
-    "address": "0x3dc562720A4629C8b2Ca9CCbE7A0243b105D6d24",
-    "decimals": 1,
-    "name": "Ikura",
-    "symbol": "IKR"
-  },
-  {
-    "address": "0xb95f2708DcC449962d7eD1DDcee581bE525c9830",
-    "decimals": 10000000000,
-    "name": "Genesix",
-    "symbol": "GEN"
-  },
-  {
-    "address": "0xA907Eb2a3ace9eB0eABb8f0cf28b65B9A1F913E0",
-    "decimals": 1,
-    "name": "WIN",
-    "symbol": "WIN"
-  },
-  {
-    "address": "0x31b84De2349d6F482Aa633EB93eB1F58b53a3784",
-    "decimals": 1000000,
-    "name": "EdChainTest",
-    "symbol": "EDC",
-    "logo": "https://blog.ethereum.org/wp-content/uploads/2015/01/128x128-ETHEREUM-FLAVICON.png"
-  },
-  {
-    "address": "0x5FDeC49De0B424227644CCc6CB246A4C543AC213",
-    "decimals": 1000000000000000000,
-    "name": "CFX Markets",
-    "symbol": "CFX",
-    "logo": "https://avatars2.githubusercontent.com/u/29207339?v=4&s=200"
-  },
-  {
-    "address": "0x518F9CA4EC37A101099AC3431BC99116F709b73E",
-    "decimals": 100,
-    "name": "Michael Coin",
-    "symbol": "MCH"
-  },
-  {
-    "address": "0x3224b01a356A16AE164f13F381367a3C36E149d7",
-    "decimals": 1000000000000000000,
-    "name": "mytoken",
-    "symbol": "CAP"
-  },
-  {
-    "address": "0x4d5CD3f35985C008863AfA4C45698Bd3cdC04aD0",
-    "decimals": 1000000000000000000,
-    "name": "zetzet",
-    "symbol": "ZET"
-  },
-  {
-    "address": "0x2E58f906c03aee2AE6bd60512e5A1470aC2C75ed",
-    "decimals": 10000,
-    "name": "NT000",
-    "symbol": "NT0",
-    "logo": "https://cdn1.iconfinder.com/data/icons/business-and-finance-20/200/vector_65_10-256.png"
-  },
-  {
-    "address": "0x5CE77BDc0a10ACEe01EE93dd7826bD7A3D79F74d",
-    "decimals": 1000000000000000000,
-    "name": "ttt",
-    "symbol": "TTT"
-  },
-  {
-    "address": "0x6D9984627c207ed06F52C0aD8D607F3D8df6163B",
-    "decimals": 10000,
-    "name": "NT001",
-    "symbol": "NT1"
-  },
-  {
-    "address": "0x30a72C6cbA5B81393f19cdA9a9841d0753fCb242",
-    "decimals": 1000000000000000000,
-    "name": "mmm",
-    "symbol": "MMM",
-    "logo": "http://etherworld.co/uploads/files/1495824617493-bat2.png"
-  },
-  {
-    "address": "0x43828Fd9bFDac2eE2F6a1aacE956735a2433757b",
-    "decimals": 100000000,
-    "name": "Cerberus",
-    "symbol": "CBR"
-  },
-  {
-    "address": "0x4EfCD954f82a449315e6C71FFB220A8948206b4D",
-    "decimals": 100000000,
-    "name": "ttt",
-    "symbol": "ZZZ"
-  },
-  {
-    "address": "0x84a40a19F45344Ac458cCeb4fa0F51C7BfEc1e7A",
-    "decimals": 100000000,
-    "name": "abc",
-    "symbol": "AB1"
-  },
-  {
-    "address": "0x998b2DE55FB9CD4f6e5b2f71Eb482CD908096Be2",
-    "decimals": 1000000000000000000,
-    "name": "NOSINO",
-    "symbol": "NOS"
-  },
-  {
-    "address": "0xc1287CF0146dfC135bd4Fd4e174b1A5f9FFE8BE7",
-    "decimals": 1000000000000000000,
-    "name": "NOSETH",
-    "symbol": "NET"
-  },
-  {
-    "address": "0x7CC8601a6E79B9996E245b389b7656A0AA5F8dAD",
-    "decimals": 1000000000000000000,
-    "name": "topkeyn",
-    "symbol": "TKY"
-  },
-  {
-    "address": "0x50b4f1D2f38F325dC5656E0e2Cb3549Ff775d040",
-    "decimals": 1000000000000000000,
-    "name": "989",
-    "symbol": "989"
-  },
-  {
-    "address": "0x3040b1DD86D507C7e414E69350029ae3ecAC6afc",
-    "decimals": 1000000000000000000,
-    "name": "tii",
-    "symbol": "TII"
-  },
-  {
-    "address": "0x61F58c15a85D62feeFb1633568fb5E4A2a48d4C5",
-    "decimals": 1000000000000000000,
-    "name": "tjj",
-    "symbol": "TJJ",
-    "logo": "https://raw.githubusercontent.com/ethino/logo/master/ethino-logo.png"
-  },
-  {
-    "address": "0x6AEEE23Cd04fB8325df31bA0630FA8114A6A8b0F",
-    "decimals": 1000000000000000000,
-    "name": "oko",
-    "symbol": "OKO"
-  },
-  {
-    "address": "0xb8C969daC29A8404B4eA193939C40763c7bDa4a9",
-    "decimals": 1000000000000000000,
-    "name": "Schiecoin",
-    "symbol": "SDM",
-    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Coat_of_arms_of_Schiedam_2.svg/220px-Coat_of_arms_of_Schiedam_2.svg.png"
-  },
-  {
-    "address": "0x946e4f782fb0A5f896c398569c1eEaf7A3A48dC5",
-    "decimals": 100,
-    "name": "Gulden",
-    "symbol": "NLG"
-  },
-  {
-    "address": "0xC73C77338059fd756a614727F367ec7645B2E3ff",
-    "decimals": 1000000000000000000,
-    "name": "MTestToken",
-    "symbol": "ARI"
-  },
-  {
-    "address": "0x7CE0b10D4319Ffd0EA8004e7E584EE7582BfF804",
-    "decimals": 1000000000000000000,
-    "name": "Macences Test",
-    "symbol": "MAC"
-  },
-  {
-    "address": "0x1A1043bB30454De0b0D483278f081b4833D2f066",
-    "decimals": 10000,
-    "name": "VRcoin",
-    "symbol": "VRC"
-  },
-  {
-    "address": "0x32a1787af3540f7698D6448a2304a6eEF69a8813",
-    "decimals": 100,
-    "name": "Cashbox test Token",
-    "symbol": "CTT",
-    "logo": "https://localallcoins.com/cashbox_cash.png"
-  },
-  {
-    "address": "0x7C3C3351AF2598293Ee08dff81e8e8aae22582f8",
-    "decimals": 1000000000000000000,
-    "name": "CND",
-    "symbol": "CND"
-  },
-  {
-    "address": "0xaBcDca8C83798652984FBE0497A39580Be81Dba9",
-    "decimals": 100,
-    "name": "Zocken",
-    "symbol": "ZCK",
-    "logo": "https://i.imgur.com/rMC7TwL.png"
-  },
-  {
-    "address": "0xEEea5D61b78B28f533cC7f5ec29Fe9785ED852fB",
-    "decimals": 1000000000000000000,
-    "name": "Cindicator",
-    "symbol": "CN1",
-    "logo": "https://raw.githubusercontent.com/cnd-image/cnd-image/master/cnd.png"
-  },
-  {
-    "address": "0x365b34e98ac094A2352C26e0f75b58f028b94823",
-    "decimals": 1,
-    "name": "EmmeGi",
-    "symbol": "MGX",
-    "logo": "https://image.flaticon.com/icons/svg/40/40157.svg"
-  },
-  {
-    "address": "0xEdd5575C635CF90151eeD0b865A50f4FB5e6c3CB",
-    "decimals": 1000000000000000000,
-    "name": "TBC",
-    "symbol": "TBC",
-    "logo": "https://cdn.sstatic.net/Sites/crypto/img/apple-touch-icon@2.png?v=fff48bebc5fd"
-  },
-  {
-    "address": "0x47AdE5e6600EABBaCD9A1dE05FE41bD54b62344C",
-    "decimals": 10000,
-    "name": "nana",
-    "symbol": "NAN",
-    "logo": "https://1.bp.blogspot.com/-qBtOPdXpF5Q/Wa4mmx9lszI/AAAAAAAAAH0/DI5nS1-04c40xbrzMPzqezuFyWEO6S-fQCK4BGAYYCw/s752/metlogomini.png"
-  },
-  {
-    "address": "0x2849CbB3b33650B883FDbf7Ec8689591A6D26aFD",
-    "decimals": 100000000,
-    "name": "Love Token",
-    "symbol": "LUV",
-    "logo": "https://3.bp.blogspot.com/-2nU9wG9PNRI/WbNvx9XpgnI/AAAAAAAAAII/TI37458fsrMYkmjNriumugDo4BeI6GWYwCLcBGAs/s1600/luv.png"
-  },
-  {
-    "address": "0x749e941cce4E8De0d4261Eb0D08a4D9699320e48",
-    "decimals": 10000,
-    "name": "VRCoint test",
-    "symbol": "VR1"
-  },
-  {
-    "address": "0x105b8DfA4Ed7973A18B502B3e956BC1c10B1a99d",
-    "decimals": 1000000000000000000,
-    "name": "CRITICALTWO",
-    "symbol": "WCX"
-  },
-  {
-    "address": "0x4C797753d3c88927d51FcfDF042885510De3d448",
-    "decimals": 1000000000000000000,
-    "name": "criticalthree",
-    "symbol": "WCV"
-  },
-  {
-    "address": "0x2f3b0886df3A77428a6D83567Fdd3E2E21e2b61a",
-    "decimals": 10000,
-    "name": "VRCoin V2",
-    "symbol": "VRG"
-  },
-  {
-    "address": "0x930aB93e758c254cB938dB8407A33caa37A2CBB5",
-    "decimals": 1000000,
-    "name": "MosiMosiCoin",
-    "symbol": "MMC"
-  },
-  {
-    "address": "0x9A164F4284D4712E07Bb97086A49f8C005be7777",
-    "decimals": 10000,
-    "name": "VRCoin",
-    "symbol": "VR2"
-  },
-  {
-    "address": "0x91aa4d2f885060d249271c4Ab660442e2aB076e4",
-    "decimals": 1,
-    "name": "KTT",
-    "symbol": "KTT",
-    "logo": "https://funfair.io/wp-content/uploads/2017/06/Fun-token.png"
-  },
-  {
-    "address": "0x3503A664b6e813CB215d9D51fE088CBBE28d2d30",
-    "decimals": 1,
-    "name": "KTT2",
-    "symbol": "KT2",
-    "logo": "https://raw.githubusercontent.com/chevdor/kitoken/master/ktt_kovan.png"
-  },
-  {
-    "address": "0xE2b03A2ddB34b1119A100461D553Af4b25ef34AD",
-    "decimals": 1000000,
-    "name": "Will Coin",
-    "symbol": "WIL",
-    "logo": "https://raw.githubusercontent.com/chevdor/kitoken/master/KI-badge.png"
-  },
-  {
-    "address": "0x1d5053dfe2A5B087180d161045A41B8bf291fbE8",
-    "decimals": 1000000,
-    "name": "EricOin",
-    "symbol": "ECO",
-    "logo": "https://railsgirlssummerofcode.org/img/blog/2016/l1ghtsab3r-partyparrot.gif"
-  },
-  {
-    "address": "0x3C30946062Ac1962b45fC29a5Ff44D4544cC0C69",
-    "decimals": 100,
-    "name": "FS Coin",
-    "symbol": "FSC",
-    "logo": "http://farm7.staticflickr.com/6057/6233529135_84914afb62.jpg"
-  },
-  {
-    "address": "0xff2A1Ba86644E68201B145ADe3F8edE2aa106730",
-    "decimals": 1000000,
-    "name": "BoromirCoin",
-    "symbol": "BOR",
-    "logo": "https://vignette.wikia.nocookie.net/factpile/images/6/66/Lotr-boromir-1280jpg-b6a4d5_1280w.jpg/revision/latest/scale-to-width-down/400?cb=20160331232305"
-  },
-  {
-    "address": "0x63f55A2f2ed5747d2C117f9A2a2F00A61a099F2D",
-    "decimals": 1000000,
-    "name": "Necdet_Marc",
-    "symbol": "NEM",
-    "logo": "http://www.iconarchive.com/download/i11629/fixicon/crown/king.ico"
-  },
-  {
-    "address": "0x43BEC099A17674aa761462BCd8c1ffF18580Fccc",
-    "decimals": 100000000,
-    "name": "DFCOIN",
-    "symbol": "GR6",
-    "logo": "http://touchcoins.moneymuseum.com/coins_media/Republic-of-Ethiopia-50-Santim-1969-EE/2050/obverse.png"
-  },
-  {
-    "address": "0x8e9c0B5Ff05465cb2E5f07213F0B725d2254287E",
-    "decimals": 1000000,
-    "name": "UFUK Coin",
-    "symbol": "UFK",
-    "logo": "https://i.pinimg.com/originals/98/4d/ac/984dac039c9fa22efa0cd312a3ef1754.gif"
-  },
-  {
-    "address": "0xb9d76cDcFcbcfFD0F52eB72b0e59ecE17c69156C",
-    "decimals": 1000000000000000000,
-    "name": "Lasagne Coins",
-    "symbol": "LCO",
-    "logo": "https://scm-assets.constant.co/scm/unilever/e9dc924f238fa6cc29465942875fe8f0/28f996d1-0821-44ec-97de-2de86efa897c.jpg"
-  },
-  {
-    "address": "0x253713a3F21F15F3Bb6454571E6BAaC60a90c9B7",
-    "decimals": 1000000,
-    "name": "Moon Token",
-    "symbol": "MON",
-    "logo": "https://m.popkey.co/3bc9e9/Jm5Ol_f-maxage-0.gif?c=popkey-web&p=popkey&i=emoji--reactions&l=direct&f=.gif"
-  },
-  {
-    "address": "0x9747e0Ea92aAb296a7B1E8E9Bc7c517C61a2DFf9",
-    "decimals": 1000000,
-    "name": "Tesla Model S",
-    "symbol": "TMS",
-    "logo": "https://lh6.googleusercontent.com/-CQwEuBRwF08/AAAAAAAAAAI/AAAAAAAAYOY/bGh3lkijgRM/photo.jpg"
-  },
-  {
-    "address": "0x4B6E35275F0D1CF46f946360aBb109b04e420dC3",
-    "decimals": 1000000000000000000,
-    "name": "AIX",
-    "symbol": "AIX",
-    "logo": "https://avatars3.githubusercontent.com/u/9360827?v=4&s=460"
-  },
-  {
-    "address": "0xb7BEa4376E57A834Ee6c6170dA7Ca8849ff02077",
-    "decimals": 100,
-    "name": "Super Token",
-    "symbol": "STK",
-    "logo": "http://vignette3.wikia.nocookie.net/nintendo/images/d/d9/Mario_%28New_Super_Mario_Bros._2%29.png/revision/latest?cb=20120709145048&path-prefix=en"
-  },
-  {
-    "address": "0xBa8CF0500C72c1fa0f1d7F0ED01F8067DBBdbCFC",
-    "decimals": 1,
-    "name": "PK5",
-    "symbol": "PK5",
-    "logo": "https://funfair.io/wp-content/uploads/2017/06/Fun-token.png"
-  },
-  {
-    "address": "0xb50d651A3Ee21D3C1BE4619196a4904cF7cBf49D",
-    "decimals": 1000000000000000000,
-    "name": "P22",
-    "symbol": "P22",
-    "logo": "http://213.32.72.208/p22.png"
-  },
-  {
-    "address": "0x44470e83d52Dc0a53635226892776f9aA5AcEF14",
-    "decimals": 1000,
-    "name": "Kotek",
-    "symbol": "GKT"
-  },
-  {
-    "address": "0x1b4d7A3A8200c5720Be8c15228f96f96e66F972B",
-    "decimals": 1000000000000000000,
-    "name": "Experimental Token",
-    "symbol": "E11"
-  },
-  {
-    "address": "0xc195f6F1C21B11b4BeaaBDbF9bD09Bbf2057bAc4",
-    "decimals": 100000,
-    "name": "ttts",
-    "symbol": "SST",
-    "logo": "https://imgur.com/a/1dQ5O"
-  },
-  {
-    "address": "0x48Eaecb612324927D70DC8be397A3F97e3e33026",
-    "decimals": 100000,
-    "name": "tester99",
-    "symbol": "TZZ",
-    "logo": "https://raw.githubusercontent.com/ethdevrook/logo/master/small%20ethino-logo.png"
-  },
-  {
-    "address": "0x24aC748AE6be8F5E154EeaD9b6F2892158314dF7",
-    "decimals": 1000000000000000000,
-    "name": "OZER",
-    "symbol": "OZR"
-  },
-  {
-    "address": "0x784AEc86609BeC066d4081E8ff21D816BBbAEd98",
-    "decimals": 100,
-    "name": "NoManches",
-    "symbol": "NMC",
-    "logo": "https://i.pinimg.com/736x/0b/ee/01/0bee01f602f0237f2e826970c4fcb950--mexican-humor-spanish.jpg"
-  },
-  {
-    "address": "0x04886d741D9C20e594d1343F8f6eD4eFE01F18C0",
-    "decimals": 10000000000,
-    "name": "ERC20 Test",
-    "symbol": "E20"
-  },
-  {
-    "address": "0xeC8A3faD61ce843e0D5c3BC43b7e917E75a409E5",
-    "decimals": 1000,
-    "name": "A$AP",
-    "symbol": "A$A",
-    "logo": ""
-  },
-  {
-    "address": "0xEC742846B42E2D7eC8768fe6518E58e34e02b597",
-    "decimals": 1000000000000000000,
-    "name": "VIEWLY TOKEN",
-    "symbol": "VLY",
-    "logo": "https://i.imgur.com/7cYVy9B.png"
-  },
-  {
-    "address": "0x18F1E9b22d451a8087fACACc0181BFa579ea452c",
-    "decimals": 1000,
-    "name": "GOLDW",
-    "symbol": "GLW"
-  },
-  {
-    "address": "0xfb1f923094d0E0081C303B935f7aC3ac55bAbdB2",
-    "decimals": 1000000000000000000,
-    "name": "Zawa",
-    "symbol": "AWA"
-  },
-  {
-    "address": "0x16dB94a9d8AFdFDd44Aa1B87DA6956ae25eF5eA0",
-    "decimals": 1000000000000000000,
-    "name": "TOKEN02",
-    "symbol": "T02"
-  },
-  {
-    "address": "0x76f536445E25296090bAA92154c7a69E28637b74",
-    "decimals": 100000000,
-    "name": "Test Roma Token",
-    "symbol": "TRT"
-  },
-  {
-    "address": "0x76f3A61345a7cB9bd69A99791BE402d564F5213b",
-    "decimals": 100,
-    "name": "KTT",
-    "symbol": "KT3",
-    "logo": "https://raw.githubusercontent.com/chevdor/kitoken/master/ktt_kovan.png"
-  },
-  {
-    "address": "0x4A638Cc67e283cBc3eb30935bd5fcDcEe5119A92",
-    "decimals": 10,
-    "name": "KTT",
-    "symbol": "KT4",
-    "logo": "https://raw.githubusercontent.com/chevdor/kitoken/master/ktt_kovan.png"
-  },
-  {
-    "address": "0x7625C8eB7Aa80A5722097E0010BBD8EA30b36a75",
-    "decimals": 10,
-    "name": "KTT",
-    "symbol": "KT5",
-    "logo": "https://raw.githubusercontent.com/chevdor/kitoken/master/ktt_kovan2.png"
-  },
-  {
-    "address": "0x9ABbf1F0e1e8f48CdBF70BceAB9161DafBCc95f3",
-    "decimals": 100,
-    "name": "ruble",
-    "symbol": "RUB"
-  },
-  {
-    "address": "0x4A2D74becb0CaedF7F17BDB6fA96D892a5dd4e88",
-    "decimals": 1,
-    "name": "Golden warrant",
-    "symbol": "GDW"
-  },
-  {
-    "address": "0xdD9652c9d2272f23ECdd1eAA35126ad78239243a",
-    "decimals": 1,
-    "name": "Silver warrant",
-    "symbol": "SLW"
-  },
-  {
-    "address": "0x8e3E4d22c1041946263EE35F5F01919FB99fFC86",
-    "decimals": 1,
-    "name": "Gadget X",
-    "symbol": "GDX"
-  },
-  {
-    "address": "0xEc479fFF2B78CC824ef6eCa07539905dcEFe1689",
-    "decimals": 1,
-    "name": "FrozenToken",
-    "symbol": "BRR",
-    "logo": "https://raw.githubusercontent.com/chevdor/kitoken/master/snow.jpg"
-  },
-  {
-    "address": "0x0355091a90F74f0d0233e3A581fD82834893AF38",
-    "decimals": 1000000000000000000,
-    "name": "Thorium",
-    "symbol": "THR",
-    "logo": "https://pre00.deviantart.net/3b3f/th/pre/i/2011/327/d/5/thor__s_hammer_by_bang_a_rang-d4h2ork.png"
-  },
-  {
-    "address": "0xCDE4B60Ef9A75F67a12dD72481a7b43664b0F4b4",
-    "decimals": 1000000000000000000,
-    "name": "JS Token",
-    "symbol": "JST"
-  },
-  {
-    "address": "0xBFaAaeF0999cBB7bE4a535DAc622D65164579618",
-    "decimals": 100,
-    "name": "Avestix AU",
-    "symbol": "AAU"
-  },
-  {
-    "address": "0x7ABfFC385802AaDdCC2E092fC876F13f29461899",
-    "decimals": 1000,
-    "name": "Super Token",
-    "symbol": "SPR"
-  },
-  {
-    "address": "0xBD349191341401995601af245837b04645087833",
-    "decimals": 1000,
-    "name": "Super Token 2",
-    "symbol": "SR2"
-  },
-  {
-    "address": "0xcE426D7b8d765dFd14b9484Fa0197Eb6D102babd",
-    "decimals": 1000000,
-    "name": "MBM",
-    "symbol": "MBM",
-    "logo": "https://raw.githubusercontent.com/chevdor/kitoken/master/mb.png"
-  },
-  {
-    "address": "0x2F2f80b4d11ea75286C90841cB7db91dEA5c7a3F",
-    "decimals": 1000000000000000000,
-    "name": "Test RRD Coin",
-    "symbol": "RRD"
-  },
-  {
-    "address": "0x5F65FB42e585b0d990C489389b13Cf29A9a2f009",
-    "decimals": 10000000000,
-    "name": "onitest1",
-    "symbol": "ON1"
-  },
-  {
-    "address": "0xE4e0338B3E8D81249eEfDC306c3b66Fd8845c104",
-    "decimals": 1000000,
-    "name": "Test Ethereum Token",
-    "symbol": "TET"
-  },
-  {
-    "address": "0xAB38bf83Bc5f8eA4247b360c6C48b8D8D567ac12",
-    "decimals": 1000,
-    "name": "Ethereum Test Token 20171015",
-    "symbol": "ETT",
-    "logo": "https://videos.cdn.redhat.com/NEXT/open-organization/img/ending-sketch.png"
-  },
-  {
-    "address": "0xdeE1eF4A16C36f0943f9FB95303Afce0b8A4898A",
-    "decimals": 1000000000000000000,
-    "name": "OMG",
-    "symbol": "OMG"
-  },
-  {
-    "address": "0x2C3c994a862dC263033Ba0A165A605c19dB9debb",
-    "decimals": 1000000000000000000,
-    "name": "Coink",
-    "symbol": "CNK"
-  },
-  {
-    "address": "0x1C9e9f0eCa8b25271BA03879fff473fC58bf73bC",
-    "decimals": 100,
-    "name": "Hood Token",
-    "symbol": "HOT"
-  },
-  {
-    "address": "0xC239815481cE5aAE80072Df12797AcFAfB12C12d",
-    "decimals": 1000000,
-    "name": "PTT",
-    "symbol": "PTT",
-    "logo": "http://www.coinnews.net/wp-content/uploads/2015/05/2015-5-Bald-Eagle-Silver-Proof-Coin-Reverse.jpg"
-  },
-  {
-    "address": "0xbDe8840F3a8BC8ef206cfa3FeC68457AFA613a55",
-    "decimals": 1000000000000000000,
-    "name": "VMiner",
-    "symbol": "VMR"
-  },
-  {
-    "address": "0x195C8e0F8225439A7e40C887b732f09657Dac1fc",
-    "decimals": 1000000000000000000,
-    "name": "Rotterdam Social Coin",
-    "symbol": "RSC"
-  },
-  {
-    "address": "0x667278C5e28E40076b6F9206FEd2504d5F143B8c",
-    "decimals": 100000000,
-    "name": "Calio",
-    "symbol": "CAL",
-    "logo": "https://github.com/calioengine/c/blob/c329b27cba29782778b65271d484f18fa35308ba/logo/logo-circle-64x64.png"
-  },
-  {
-    "address": "0x0fff93a556a91a907165BfB6a6C6cAC695FC33F5",
-    "decimals": 1000000000000000000,
-    "name": "test",
-    "symbol": "TES"
-  },
-  {
-    "address": "0x25605EfCAec3842c54138A51e63450F6bbF7E417",
-    "decimals": 1000000000000000000,
-    "name": "FidentiaX",
-    "symbol": "FDX"
-  },
-  {
-    "address": "0xFAFf69641Ff4715327df8B1de1F9CFE103BB5Bee",
-    "decimals": 1000000000000000000,
-    "name": "VictoriaCoin",
-    "symbol": "VIC",
-    "logo": "https://raw.githubusercontent.com/saricsacsi/Pictures/master/76070_166790430018368_4654538_n.jpg"
-  },
-  {
-    "address": "0x571Ae5AF70D4720D2Ae62c0B9A4c4E950772Bf13",
-    "decimals": 1,
-    "name": "Fundacja Na Ratunek",
-    "symbol": "FNR"
-  },
-  {
-    "address": "0xbE97c56E0cc9F16C051443aF9aD01B4b82195410",
-    "decimals": 1,
-    "name": "MagiKovanCoin",
-    "symbol": "MKC",
-    "logo": "http://www.magistrali.eu/public/15x15.png"
-  },
-  {
-    "address": "0x7DE92710E97e15cF7E84ee21356DEa0120D72D36",
-    "decimals": 1000000000000000000,
-    "name": "BBT-TEST",
-    "symbol": "BBT"
-  },
-  {
-    "address": "0x3491ac0AE98cd7FD68608F11f551429ffBB1fE94",
-    "decimals": 1000000000000000000,
-    "name": "NNTTest",
-    "symbol": "NNN"
-  },
-  {
-    "address": "0xd5Eb09c9A82f5454C2117963803eEda80019d414",
-    "decimals": 1000000000000000000,
-    "name": "MagiKovanCoin3",
-    "symbol": "MK3",
-    "logo": "http://www.magistrali.eu/public/mk3.png"
-  },
-  {
-    "address": "0x6233C8987aB7ED4cCbB5Dd5bE8f8d0c2e6303A4a",
-    "decimals": 100000000,
-    "name": "Test Token",
-    "symbol": "TSX",
-    "logo": "https://pbs.twimg.com/profile_images/872929649726115840/EKUcujr6.jpg"
-  },
-  {
-    "address": "0x7C4fE9bF30d324d47B6a55AFcF5cA558Db8BB5D0",
-    "decimals": 100000000,
-    "name": "Trial Contract",
-    "symbol": "CXY",
-    "logo": "https://kitchn.de/images/espresso-freigestellt.png"
-  },
-  {
-    "address": "0x43c252E4B13B10eE85fe7CFc36B714FB3C37Aa14",
-    "decimals": 1000000000000000000,
-    "name": "BBT-TEST-2",
-    "symbol": "BB2"
-  },
-  {
-    "address": "0x0Ef8D9a6b36B49f1B5E0C743078dEc72919Ed3dF",
-    "decimals": 1000000000000000000,
-    "name": "BBT-TEST-3",
-    "symbol": "BB3"
-  },
-  {
-    "address": "0xf6fA215956eE062F8b1Ef90102418f831DaE6D70",
-    "decimals": 100000000,
-    "name": "Foruno",
-    "symbol": "FOX"
-  },
-  {
-    "address": "0x05d090b51C40B020eAB3BFcb6a2Dff130df22E9C",
-    "decimals": 1000000000000000000,
-    "name": "Kovan Wrapped Ether",
-    "symbol": "WTK",
-    "logo": "https://brandoncurtis.github.io/permalink/images/ether_erc20.png"
-  },
-  {
-    "address": "0xe70CE3F84eCc8138127cD8eb1D9Ac6cbF69c7189",
-    "decimals": 1000000000000000000,
-    "name": "BlockchainLabsToken",
-    "symbol": "BLS"
-  },
-  {
-    "address": "0xF65469294119eF47FaD191aa3A061C52C68805f8",
-    "decimals": 1000000,
-    "name": "Friendz Token",
-    "symbol": "FTK"
-  },
-  {
-    "address": "0xFEB805837d3734a9047A64EDF31C0CD04875e033",
-    "decimals": 1,
-    "name": "VasilisCOIN",
-    "symbol": "VAS",
-    "logo": "https://raw.githubusercontent.com/tweetious/counterparty2/master/VASILIS.JPG"
-  },
-  {
-    "address": "0x4bfeBB215D6F3a5Cae5A3046478989e724ab6fad",
-    "decimals": 1000000000000000000,
-    "name": "BrickBlockToken",
-    "symbol": "BRK"
-  },
-  {
-    "address": "0xa59b06915f73Ec84E37B9EA87bF097FEE73c3EEe",
-    "decimals": 1000000000000000000,
-    "name": "BrickBlockToken Test",
-    "symbol": "BRT"
-  },
-  {
-    "address": "0x202751824119e55FFF1968E02Ce2e898D890E694",
-    "decimals": 1000000,
-    "name": "Friendz Token",
-    "symbol": "FTC"
-  },
-  {
-    "address": "0x6C57cab509Dc2A6124eFde8985f0889Db35191c8",
-    "decimals": 1,
-    "name": "NGOCoin",
-    "symbol": "NGO"
-  },
-  {
-    "address": "0x0C9bD728D061EAE42c0717EAdc1f222d1b12571b",
-    "decimals": 1000000000000000000,
-    "name": "yanivshechtertoken",
-    "symbol": "YSC"
-  },
-  {
-    "address": "0x276AB6c280bCA7E1DbF5750B309EaB692dd8c7F4",
-    "decimals": 1000000000000000000,
-    "name": "GulCoin",
-    "symbol": "GUL"
-  },
-  {
-    "address": "0xCedB322C40fADe6e0784fDb5acFd8A2eAfA3c898",
-    "decimals": 1000000000000000000,
-    "name": "Test",
-    "symbol": "UNI",
-    "logo": "https://westernacher-consulting.com/wp-content/uploads/2017/08/Icon-Internet-of-Things-IoT.png"
-  },
-  {
-    "address": "0x48cf11C776100b2287a7845BE8f56D8c6282Fe68",
-    "decimals": 1000000000000000000,
-    "name": "ShaneCoin",
-    "symbol": "SHC",
-    "logo": "https://i.imgur.com/JZX0Apv.png"
-  },
-  {
-    "address": "0x3406954E89bB166F7aF1f3cd198527Af6D3b10D2",
-    "decimals": 1000000000000000000,
-    "name": "HelloGold's amazing new shiny Gold Backed Token",
-    "symbol": "GBT",
-    "logo": "https://raw.githubusercontent.com/DaveAppleton/Images/master/hg_gbt_optionC.png"
-  },
-  {
-    "address": "0x8A4e2000A063F0cE8C0d48c2Af8d2261870EF3e6",
-    "decimals": 1000000000000000000,
-    "name": "Forum des Technologies",
-    "symbol": "IFT",
-    "logo": "https://image.ibb.co/djfOAG/ziiv1_EJt_400x400.jpg"
-  },
-  {
-    "address": "0xBbbdFe1e4E05cA9be40d88b9C5D84b9dBa62AbA4",
-    "decimals": 1000000,
-    "name": "Forum Tech",
-    "symbol": "FTI",
-    "logo": "https://image.ibb.co/djfOAG/ziiv1_EJt_400x400.jpg"
-  },
-  {
-    "address": "0xe8F48b5E3122C8E6E1d27c855c37bC7770300D74",
-    "decimals": 1000000000000000000,
-    "name": "Bit4G",
-    "symbol": "B4G",
-    "logo": "https://pbs.twimg.com/profile_images/927464224661671936/ZM7gC1MS.jpg"
-  },
-  {
-    "address": "0x1e2bc850753A1668176Fd16E1F036A5d4d7Ea86D",
-    "decimals": 1000000000000000000,
-    "name": "Testing Token",
-    "symbol": "TT2",
-    "logo": "https://s3-us-west-2.amazonaws.com/purpleheart/purple_heart_token_icon_v4.png"
-  },
-  {
-    "address": "0xb46C423E1216307F7C6eB42423AB40bc86778172",
-    "decimals": 1000000000000000000,
-    "name": "Kovan ICO One",
-    "symbol": "KIO",
-    "logo": "http://www.iconarchive.com/download/i2245/aha-soft/financial/Green-Dollar.ico"
-  },
-  {
-    "address": "0x5A05cFA340664576cC61D552D65C5459A6a6581F",
-    "decimals": 1,
-    "name": "Something",
-    "symbol": "K01"
-  },
-  {
-    "address": "0x9520909E70d6b176a2d78010Bf64869D1e978f66",
-    "decimals": 1,
-    "name": "Something Else",
-    "symbol": "K02"
-  },
-  {
-    "address": "0x2f95D2ecd707279abF2fd7A4B46EeC3e2423238F",
-    "decimals": 1,
-    "name": "Something Yet Different",
-    "symbol": "K03"
-  },
-  {
-    "address": "0x9B84f7cb855FecdFE464e03648b6c2D9235B9Fe0",
-    "decimals": 1,
-    "name": "bugs fixed",
-    "symbol": "K04"
-  },
-  {
-    "address": "0x1BEC8F8A965722eda4D86c87006C509878adA655",
-    "decimals": 1000000000000000000,
-    "name": "Test Token 3",
-    "symbol": "TT3",
-    "logo": "https://s3-us-west-2.amazonaws.com/purpleheart/test_token_3_icon.png"
-  },
-  {
-    "address": "0x235d6bd9cc6954CD78dec7d9364a8ECfA35B3Ac6",
-    "decimals": 100,
-    "name": "Willie Decentralized",
-    "symbol": "WID",
-    "logo": "https://raw.githubusercontent.com/chevdor/kitoken/master/philip.png"
-  },
-  {
-    "address": "0x0D7c0226B5261F672B8168F7a9E671346281deD5",
-    "decimals": 1000000000000000000,
-    "name": "💩👈狗屁",
-    "symbol": "UNC"
-  },
-  {
-    "address": "0x067c26cb437583DA7a8aFD23f9056cB4252658a1",
-    "decimals": 1000000000000000000,
-    "name": "UniprIotToken",
-    "symbol": "UTI"
-  },
-  {
-    "address": "0x5B742a7AC3871D8DF560Be753B3C87dAf68e7C18",
-    "decimals": 10000000000,
-    "name": "iCarus",
-    "symbol": "ICR"
-  },
-  {
-    "address": "0x29db7fdC7d87658708766b68CdBBcad6261d7667",
-    "decimals": 1000000000000000000,
-    "name": "Rigo",
-    "symbol": "GRG",
-    "logo": "https://raw.githubusercontent.com/RigoBlock/PR/master/RigoBlock%20Logo%2011.17.png"
-  },
-  {
-    "address": "0x7f026C6E42C808bA02A551BDdD753F9927dA06b1",
-    "decimals": 1000000000000000000,
-    "name": "RigoToken",
-    "symbol": "GGG",
-    "logo": "https://raw.githubusercontent.com/RigoBlock/PR/master/RigoBlock%20Logo%2011.17.png"
-  },
-  {
-    "address": "0x48774a3500c8228aE0931C9b38C9ab4064a7503c",
-    "decimals": 1000,
-    "name": "Creator Front",
-    "symbol": "CFT"
-  },
-  {
-    "address": "0x2c0A854914630f0E278696b3f6Aa99DE40AE2d45",
-    "decimals": 1,
-    "name": "EntCoin",
-    "symbol": "ENT",
-    "logo": "http://www.dezard.net/images/DexM.png"
-  },
-  {
-    "address": "0x2C4589d4cB7Ec1Aa4d14DF2Ca2693FcDCFc5EA0C",
-    "decimals": 1000000000000000000,
-    "name": "TAM",
-    "symbol": "TAM"
-  },
-  {
-    "address": "0x9A41340952972e00cbd05f9EA6207dE48Ac6DB49",
-    "decimals": 1000000000000000000,
-    "name": "KINE_test1",
-    "symbol": "KNE"
-  },
-  {
-    "address": "0x29c24eDAf3006E59a079B69642188e1DCDbBf065",
-    "decimals": 100000000,
-    "name": "LuckyCoin",
-    "symbol": "LKC",
-    "logo": "https://gouhuoapp.com/system/media_attachments/files/000/007/196/original/15d7c1071fde3fc9.png"
-  },
-  {
-    "address": "0xe57EDE569016A0e1F63E768d36dFaC434D78D151",
-    "decimals": 100000000,
-    "name": "BetCoin",
-    "symbol": "BEC",
-    "logo": "https://gouhuoapp.com/system/media_attachments/files/000/008/717/original/712a77a066481604.png"
-  },
-  {
-    "address": "0xdD6C56B0687AcBBf2473C45292C3a3798c378e71",
-    "decimals": 1000000000000000000,
-    "name": "TakigawaCoin",
-    "symbol": "TKG"
-  },
-  {
-    "address": "0x63b1d867c7D9bA597BE3FD2a88084a853160E79d",
-    "decimals": 1,
-    "name": "zjw-test-token",
-    "symbol": "ZJW",
-    "logo": "http://www.longwan.co/wp-content/uploads/2017/10/geometric-logo-design-the-25-best-geometric-logo-ideas-on-pinterest-modern-logo-ideas.jpg"
-  },
-  {
-    "address": "0x62297771e2a4Cb35c022fCBcaD9C8125364EFC03",
-    "decimals": 1,
-    "name": "TIMECOIN",
-    "symbol": "TMC",
-    "logo": "https://www.onlinelogomaker.com/applet_userdata/version2/7/0/58842441/projects/58842441.png"
-  },
-  {
-    "address": "0xe5C28b690F590ea1A9725199Dfa9875838132A9D",
-    "decimals": 1000000,
-    "name": "My test credits",
-    "symbol": "TSC"
-  },
-  {
-    "address": "0x6691cA7063B36FC7c49d27E63e8aB8272Dc9373b",
-    "decimals": 1000000000000000000,
-    "name": "WWW COIN",
-    "symbol": "WWW"
-  },
-  {
-    "address": "0x3432556b24c1bee0c3E68eFA5dAC02cDf1F7631c",
-    "decimals": 1,
-    "name": "ETC",
-    "symbol": "ETC",
-    "logo": "https://www.bjetc.cn/images/logo.gif"
-  },
-  {
-    "address": "0x07Ae7FE2a782BE9166634784eDDE5a70e3669a67",
-    "decimals": 1000,
-    "name": "aboveboard",
-    "symbol": "ABV"
-  },
-  {
-    "address": "0x68f2b68F30e1b6379661514d0eD6eFB66A19cEdC",
-    "decimals": 1000000000000000000,
-    "name": "SRN",
-    "symbol": "SRN"
-  },
-  {
-    "address": "0x5f828aA8f82754E19f8af519E735e582bf609B2b",
-    "decimals": 1000000000000000000,
-    "name": "STX",
-    "symbol": "STX"
-  },
-  {
-    "address": "0x4Ed76Cd302CdadE19383f1a612780f3d4DcE89F9",
-    "decimals": 1000000000000000000,
-    "name": "Purple Testing v2",
-    "symbol": "TT4",
-    "logo": "https://s3-us-west-2.amazonaws.com/purpleheart/purple_heart_reverse_light_v2.png"
-  },
-  {
-    "address": "0xbBDb5de326e4D18F8879B7EcE3F8bF325B4dEe7D",
-    "decimals": 1000000000000000000,
-    "name": "TDAI",
-    "symbol": "TDA"
-  },
-  {
-    "address": "0xE9eea8EE59B193e358780ADAa1c4be1c664D80CC",
-    "decimals": 0,
-    "name": "CoolToken",
-    "symbol": "CLK",
-    "logo": "http://vignette2.wikia.nocookie.net/fantendo/images/e/e7/3D_1-Up_Mushroom_Artwork.png"
-  },
-  {
-    "address": "0xD44C491a6885e89fe1c5A3Ce69Df3cdeBC6b4e8D",
-    "decimals": 1,
-    "name": "CoolToken2",
-    "symbol": "CTK",
-    "logo": "http://vignette2.wikia.nocookie.net/fantendo/images/e/e7/3D_1-Up_Mushroom_Artwork.png"
-  },
-  {
-    "address": "0x95E82Fe0D2dB892Ac2d5fBEabfb074427A07Ca5b",
-    "decimals": 100000000,
-    "name": "SID Token",
-    "symbol": "SID",
-    "logo": "https://www.coinpayments.net/images/coins/XEM.png"
-  },
-  {
-    "address": "0x69ac0Bf2BD725AD489DC0c145EE0a38f2cA475c3",
-    "decimals": 1000000000000000000,
-    "name": "AEB_ANGA",
-    "symbol": "TGA",
-    "logo": "https://n.nordstrommedia.com/ImageGallery/store/product/Zoom/13/_100456013.jpg?crop=pad&pad_color=FFF&format=jpeg&trim=color&trimcolor=FFF&w=860&h=924&quality=70"
-  },
-  {
-    "address": "0xF9BC214210020Af4dCE865d7daE91500e4DD0601",
-    "decimals": 1000000000000000000,
-    "name": "Roger Token",
-    "symbol": "RRT",
-    "logo": "https://static1.seekingalpha.com/images/users_profile/047/439/673/extra_large_pic.png"
-  },
-  {
-    "address": "0x5e5506E92C09642dd1239f9f0Ea0Ed0eBB9088D9",
-    "decimals": 1000000,
-    "name": "WTT",
-    "symbol": "WTT",
-    "logo": "https://www.shareicon.net/download/2016/10/18/846206_light-bulb.svg"
-  },
-  {
-    "address": "0xc57538846Ec405Ea25Deb00e0f9B29a432D53507",
-    "decimals": 1000000000,
-    "name": "iExec Testnet",
-    "symbol": "RLC"
-  },
-  {
-    "address": "0x8d2253aD31a923b6992d5eB269E86E8DEa69dbF9",
-    "decimals": 1000000000000000000,
-    "name": "Sharique's Token",
-    "symbol": "SRQ"
-  },
-  {
-    "address": "0x8779F9BC6D11187C928D8b4dA2C5fefc76cE7430",
-    "decimals": 1000000000000000000,
-    "name": "Duck Token",
-    "symbol": "DKT",
-    "logo": "https://vignette.wikia.nocookie.net/russmarrs2-rise-of-sqeegee/images/d/d1/Random_duck.png/revision/latest?cb=20160724005145"
-  },
-  {
-    "address": "0xB99D0FFF3f0847835490ECe0Eb7B126A4fFbDCC9",
-    "decimals": 1000000000000000000,
-    "name": "MillCoin",
-    "symbol": "MCN"
-  },
-  {
-    "address": "0xbFEa297CAD970b59364b5A0f9d78bfA42D705756",
-    "decimals": 1000000000000000000,
-    "name": "AX_TestVal ",
-    "symbol": "AX_"
-  },
-  {
-    "address": "0x8CF04ce3419b6f807a473796e873502F30327E11",
-    "decimals": 10000,
-    "name": "MillCoinTest2",
-    "symbol": "MT2"
-  },
-  {
-    "address": "0x90286919814aa9Ab74eb5fD0e3a56787eF1Ac02D",
-    "decimals": 10000,
-    "name": "DataToken",
-    "symbol": "CUR",
-    "logo": "http://www.coinstreetnews.com/wp-content/uploads/2016/08/dogecoin.png"
-  },
-  {
-    "address": "0xF9a5310878234C1a068576abFE20304AFdd96778",
-    "decimals": 1000000000000000000,
-    "name": "XMOO token",
-    "symbol": "XMO"
-  },
-  {
-    "address": "0x256e5dB390A43d99d0A25C79F57cf655AC2bD770",
-    "decimals": 10000,
-    "name": "MillCoinTest6",
-    "symbol": "MT6"
-  },
-  {
-    "address": "0x8E43a63012a2Ec04f5664cE9074b53dDe3ea3F4b",
-    "decimals": 100,
-    "name": "Expert Coin",
-    "symbol": "EXP",
-    "logo": "http://blog.omadijaya.id/wp-content/uploads/2018/02/aJ0u3WLAfN2ATMWv5a8a6e52529c1-e1519021886306.png"
-  },
-  {
-    "address": "0x8c191A52B8d03Accea1a92c27Cd66C316349B5b8",
-    "decimals": 10000000000,
-    "name": "Foturist1",
-    "symbol": "FT1"
-  },
-  {
-    "address": "0x61F06518A9659aFDf6439E974E3b537BB14cF7C2",
-    "decimals": 1000000000000000000,
-    "name": "SocramCoins3",
-    "symbol": "SCC"
-  },
-  {
-    "address": "0x68Fe1F5c04DeA3ef7f86E3f8EE9A69f15a559CdE",
-    "decimals": 10000,
-    "name": "GOV COIN",
-    "symbol": "GOV"
-  },
-  {
-    "address": "0x16eE22d22Ff5B2123Ef9eb75b238f1d3548702a0",
-    "decimals": 1000000000000000000,
-    "name": "Duty of Care Token",
-    "symbol": "DOC",
-    "logo": "https://www.dutyof.care/assets/img/dutyof.care-logo_RGB-03.png"
-  },
-  {
-    "address": "0xaF06c58C62E50cb78C549830e7f3E64AA0782C60",
-    "decimals": 1000000000000000000,
-    "name": "MediShares",
-    "symbol": "MDK",
-    "logo": "http://doc.medishares.org/logo/mds-parity.png"
-  },
-  {
-    "address": "0x298C116572A58cD10980F090A17755b5D098E1A9",
-    "decimals": 1000000000000000000,
-    "name": "GiuloToken",
-    "symbol": "QQQ"
-  },
-  {
-    "address": "0xc62BC10aBD17DD94f94E931e815DE7aFEa48ec54",
-    "decimals": 1000000000000000000,
-    "name": "Foreign Bridge Ether",
-    "symbol": "FBE"
-  },
-  {
-    "address": "0xd45c358E5182A84166925F66A51905797834018e",
-    "decimals": 1000,
-    "name": "Todcoin",
-    "symbol": "TOD",
-    "logo": "http://rss.hm/todco.jpg"
-  },
-  {
-    "address": "0x208d1AE37Eac42771d7A40553D55783661bF1D7b",
-    "decimals": 1,
-    "name": "UU SH T",
-    "symbol": "UUU"
-  },
-  {
-    "address": "0x0bae2AFfE62880817Ab2Bb313fE7151Deb8dde11",
-    "decimals": 1000000000000000000,
-    "name": "Wmnizer2",
-    "symbol": "WM2"
-  },
-  {
-    "address": "0x6526CAFC9e8d10b88491542eE3071975728302a0",
-    "decimals": 1000000,
-    "name": "ZingiT",
-    "symbol": "ZIT"
-  },
-  {
-    "address": "0xfB85F84805510035DbEfE3582cA48c90583E551F",
-    "decimals": 1,
-    "name": "FunToken",
-    "symbol": "FTN",
-    "logo": "https://raw.githubusercontent.com/chevdor/kitoken/c40c3d62747b008363001fb721ed1ff263d422ca/funtoken.png"
-  },
-  {
-    "address": "0xd287C0D288c5466fe4734bc6AC977d5200cCb1DF",
-    "decimals": 1000000000000000000,
-    "name": "KNC",
-    "symbol": "KNC"
-  },
-  {
-    "address": "0xbE2aeA7e0C174aEa3027Ae88cC33990A960ad512",
-    "decimals": 1000000000000000000,
-    "name": "OMG",
-    "symbol": "OMK"
-  },
-  {
-    "address": "0xD408a11345fFfCB3C422BE1d0d1Aa3a933FC2b17",
-    "decimals": 1000000000000000000,
-    "name": "SNT",
-    "symbol": "SNT"
-  },
-  {
-    "address": "0x7Bb60f4d4C124B3ABF0BC12A07CEf7CE6Ca7DeC0",
-    "decimals": 1000000000000000000,
-    "name": "sex",
-    "symbol": "SEX"
-  },
-  {
-    "address": "0x6fC948281F9ECc057B60214cF679dc379f0fAA7c",
-    "decimals": 1000000000000000000,
-    "name": "QDT Token",
-    "symbol": "QDT"
-  },
-  {
-    "address": "0x07e7768aF86281F9BAf1FB85A85369560e975031",
-    "decimals": 1000000000000000000,
-    "name": "VANFIXEDTOKEN",
-    "symbol": "VFT",
-    "logo": "https://cb-public.oss-cn-shenzhen.aliyuncs.com/images/efe5961f-24b5-49c6-ab79-8da12a7f26cc.png"
-  },
-  {
-    "address": "0x25c249A2aeda45d128e063c46DE363636bD95B23",
-    "decimals": 100000000,
-    "name": "NEWTON TOKEN",
-    "symbol": "NEW"
-  },
-  {
-    "address": "0x3515472ab191E10E5e8020b5E9745e727b338120",
-    "decimals": 10000000000,
-    "name": "GiulioToken",
-    "symbol": "GIO"
-  },
-  {
-    "address": "0xda731B166aFbc73aE75a702C5C753B35EA84912D",
-    "decimals": 1000000000000000000,
-    "name": "Snail Game Token",
-    "symbol": "SGT"
-  },
-  {
-    "address": "0x2321Fa5C45608d777C2621485694CF99f6260faA",
-    "decimals": 1000000000000000000,
-    "name": "Snail Game Token01",
-    "symbol": "TSG"
-  },
-  {
-    "address": "0x559Da05a6Ae4e2185C49773f7A678867749c7cfF",
-    "decimals": 1,
-    "name": "Great New Company",
-    "symbol": "GNC"
-  },
-  {
-    "address": "0x51c5fA97e77E34b493CeA62f8D1Fe818F5CB5e1F",
-    "decimals": 1000000000000000000,
-    "name": "Sirin Labs Token",
-    "symbol": "SIR"
-  },
-  {
-    "address": "0x5D3CEFcCca84006873911d3fe3c176EECB8431c1",
-    "decimals": 100,
-    "name": "Test Token",
-    "symbol": "TKO"
-  },
-  {
-    "address": "0x6Ca85317f0487f855D0dB08c69597Ba0EA88813a",
-    "decimals": 1000000,
-    "name": "Koplok Coin",
-    "symbol": "KCN",
-    "logo": "https://blockchain.wtf/wp-content/uploads/2017/07/erc20-token.png"
-  },
-  {
-    "address": "0x4488d1827D4675cf0a4e8ccF85cabC22E1465307",
-    "decimals": 1,
-    "name": "Tikus Coin",
-    "symbol": "TKP",
-    "logo": "https://icon-icons.com/icons2/539/PNG/512/testing-mouse_icon-icons.com_53002.png"
-  },
-  {
-    "address": "0xA6666386617070BBe6b76550D9d8072451583c3c",
-    "decimals": 1,
-    "name": "Bottle Cap",
-    "symbol": "BCP"
-  },
-  {
-    "address": "0x63BE8AF3033BC5780D54EC2ddBe03780293D3851",
-    "decimals": 1000000,
-    "name": "My test par credits",
-    "symbol": "TS2"
-  },
-  {
-    "address": "0xE18e580c8B479415A76D50A799d747ACAe4f463c",
-    "decimals": 1000000000000000000,
-    "name": "SMOL Token",
-    "symbol": "SML"
-  },
-  {
-    "address": "0x4A6e6C3868A279e1D9047B42C3fB356FF4680003",
-    "decimals": 1000000000000000000,
-    "name": "THIBCoin",
-    "symbol": "TIB",
-    "logo": "http://pix.toile-libre.org/upload/original/1525765045.jpg"
-  }
+{"address":"0x4733659a5cB7896A65c918Add6f59C5148FB5ffa","decimals":6,"name":"GavCoin","symbol":"GAV","logo":"https://raw.githubusercontent.com/ethcore/dapp-assets/9e135f76fe9ba61e2d8ccbd72ed144c26c450780/tokens/gavcoin-64x64.png"},
+{"address":"0x7A1767DF4Bad56bA284aC2a07b55D0825aBAb91C","decimals":9,"name":"TESTNET DGX","symbol":"DX1"},
+{"address":"0xD18E0764167a3288C16eb35723819c15C6352111","decimals":0,"name":"MyToken","symbol":"MTY"},
+{"address":"0x126e563451F658D53c60781b954C367175545611","decimals":0,"name":"HSBC","symbol":"HSB","logo":""},
+{"address":"0xc85FfC4b71427f561695bB5EC864FB55504f3c69","decimals":0,"name":"HSBC","symbol":"HBC"},
+{"address":"0x9a2E4C220ed8a30f88B87e1f1a35550607Eb7dEA","decimals":0,"name":"Apple","symbol":"APL"},
+{"address":"0x43B92C6c58A5C96A686459322841E45E04Ef7AeF","decimals":6,"name":"GotchaCoin","symbol":"GOT","logo":"http://iconbug.com/data/d5/255/0132fc08a3be4345a3a71cbbf34612e1.png"},
+{"address":"0x6cafc92bEB9b6F02F8531cd049FFE1fEeAD554ff","decimals":0,"name":"Energypack","symbol":"EPK","logo":"https://docs.google.com/uc?authuser=0&id=0B__JdfXlvXlxVmp4NUNuM09CVWM&export=download"},
+{"address":"0x981e0442B08DA5fBE2Ee6c538a2Def400530939F","decimals":6,"name":"Ether","symbol":"ETH","logo":"https://blog.ethereum.org/wp-content/uploads/2015/01/128x128-ETHEREUM-FLAVICON.png"},
+{"address":"0x465aF409B821Ba69955e5a066228E3561340e9c2","decimals":0,"name":"Google","symbol":"GGL"},
+{"address":"0x4aD2Cb7E15B8323210A3bAC8d142EdB35BCDCe3b","decimals":0,"name":"Test Token","symbol":"TST","logo":"https://upload.wikimedia.org/wikipedia/en/d/d2/Toonie_-_front.png"},
+{"address":"0x6E571b27a7aD36afcedf46f251b30f3739d7dF87","decimals":4,"name":"ETHDEMO","symbol":"EDM"},
+{"address":"0xcB3439a665D493819BEE7B84602E57B63739Cee0","decimals":0,"name":"bitcoin","symbol":"BTC","logo":"https://raw.githubusercontent.com/bitpay/bitcoin-brand/d31d162bd93bbcaab52b80a6b02e8f188bc65f0f/bitcoin.png"},
+{"address":"0x148D3436a6A024d432bD5277EcF6B98407D46a2F","decimals":18,"name":"JetCoin 2","symbol":"JET","logo":"https://raw.githubusercontent.com/DaveAppleton/Images/master/JET%20LOGO.png"},
+{"address":"0x92D81E36583966e6DB7540a92f6C85053a9AD1E2","decimals":3,"name":"Lip","symbol":"LIP"},
+{"address":"0x398632a233C1942aA9D3145e10b55d66F3AfEfb3","decimals":0,"name":"BumbleBeeKoin","symbol":"BEE"},
+{"address":"0x9090C02e86402E4D5A6a302a08673A0EE5567C91","decimals":18,"name":"DaveCoin","symbol":"DAV","logo":"https://raw.githubusercontent.com/DaveAppleton/Images/18cb9003cbf51af0557de49aba7a449aea5a9f6a/davecoin.png"},
+{"address":"0x9Cb34852a61cAb3df863B9C58d0f5e8E022d0E3a","decimals":3,"name":"Lip 01","symbol":"LP1"},
+{"address":"0xDd8335b811fF3F408Ce192e756FeCDD0B735A059","decimals":3,"name":"Lip","symbol":"LP2","logo":"http://79.137.39.203/wp-content/uploads/2017/03/ic_launcher-3.png"},
+{"address":"0x6C88a9e8096226AB14C4f2F0DF65Ee18F815a584","decimals":0,"name":"KI Token","symbol":"KIT","logo":"https://raw.githubusercontent.com/chevdor/kitoken/master/kid.png"},
+{"address":"0x153351B591D008342098f146F84A4cD0e3051495","decimals":7,"name":"DevKoin","symbol":"XDK","logo":"https://raw.githubusercontent.com/RealmKoin/branding/4ac4ee988ec4561edc7beb15979cc66eb83cfb4b/RK.svg.png"},
+{"address":"0x17e806dbA5B6a739ECccB22d8a13a912aC9ea5db","decimals":2,"name":"PLP","symbol":"PLP","logo":"https://raw.githubusercontent.com/chevdor/kitoken/master/philip.png"},
+{"address":"0x7ab59D6dF718c3C5EF2B92777B519782Cc283F60","decimals":2,"name":"Ruby Tuesday","symbol":"RBY","logo":"https://raw.githubusercontent.com/DaveAppleton/Images/327ef28621a4d722a23d6e05d8ae207ef339abcd/ruby.png"},
+{"address":"0x9C65584B984E5be62e22F053798DFF2058cA1eD9","decimals":6,"name":"ESC Token","symbol":"ESC"},
+{"address":"0xec1beF7EA1D78023E016Bb865ab9a3b25C5FBa49","decimals":18,"name":"Romchik","symbol":"DFG"},
+{"address":"0x81154d24f4de069d1f0c16E3a52e1Ef68714daD9","decimals":2,"name":"Ruby Tuesday","symbol":"RBT","logo":"https://raw.githubusercontent.com/DaveAppleton/Images/327ef28621a4d722a23d6e05d8ae207ef339abcd/ruby.png"},
+{"address":"0x6EE77e0196a4Ee7581632633063D5f15DCa6DC23","decimals":0,"name":"XP-gamma","symbol":"XPG","logo":"https://raw.githubusercontent.com/GuildWorx/images/e2c802875bc9afbb9297560adc4b0d4566ecb000/17436729.png"},
+{"address":"0x952737579B86E2a6d972fEf785d9AE9d0B330331","decimals":10,"name":"Mojo","symbol":"MOJ"},
+{"address":"0xAddD58D35F69FdB37A9481718A8c3554971A86a0","decimals":8,"name":"Fame","symbol":"FAM"},
+{"address":"0x164CA36c25B0bC2DA723A44877d7f2B5AB01065C","decimals":6,"name":"Snek","symbol":"SNK"},
+{"address":"0xB0c331952B543894a93a2eb4d41859C371e6f587","decimals":2,"name":"Ksendel","symbol":"KST"},
+{"address":"0x57bCA1D6622288E14C90ec05E0636D6919bd6d1e","decimals":18,"name":"Wrapped ETH","symbol":"WTH"},
+{"address":"0x4C494DAa9F40A813b4915553657db649e026096a","decimals":0,"name":"Test TaipeiEth logo vote","symbol":"TTL"},
+{"address":"0x1837C042D6edb5938526737bE90A71983329ACBA","decimals":18,"name":"Noku Gold","symbol":"NKG"},
+{"address":"0x4896698b19b2eA866f69042e16f8Be4Cf29b2624","decimals":2,"name":"KP","symbol":"111"},
+{"address":"0xf9C092E345973faa5b5400F7277Ace6dE1630590","decimals":0,"name":"Weapon1","symbol":"W01"},
+{"address":"0xEbe2B44e72682CAcD5A53B2869cf52f0eA451220","decimals":0,"name":"Test Taipei Logo Vote 2","symbol":"TLV","logo":"https://scontent.ftpe3-1.fna.fbcdn.net/v/t1.0-9/17361510_190416308121793_6870917162423839684_n.jpg?oh=1d0533a1b28d70164ec6b4bc6d69bc92&oe=59E0FE4E"},
+{"address":"0x82B90c8256809b46a506015523A6178dEFa906eb","decimals":2,"name":"Test Token1","symbol":"TT1"},
+{"address":"0x8A4f0CFA4cE21Ff6C57184Bd5B05cC5A2a73A1Ce","decimals":18,"name":"testgd","symbol":"TGD"},
+{"address":"0x961FCDD04592b4E4e0C69e761d10936929124372","decimals":18,"name":"taco token","symbol":"TCO"},
+{"address":"0x0b04c6Dd8C0cB71B9ce54d49B44a187EE69AeF97","decimals":18,"name":"Baja Blast","symbol":"BJB","logo":"https://i.imgur.com/AAZnSwR.jpg"},
+{"address":"0x81208C99D5b11a895C1F09e55AEf6B2139b94Cb6","decimals":18,"name":"UnikrnGold","symbol":"UKG","logo":"https://i.imgur.com/hVZblfX.png"},
+{"address":"0x56E19cDbcb327100736D78E5a6E6061FE968Da7f","decimals":12,"name":"BananaCoin","symbol":"BNC"},
+{"address":"0xad9c5378D43FDF2c133a5E68CE9cD16E1047B859","decimals":12,"name":"BananaCoin2","symbol":"BC2"},
+{"address":"0x83B93930A5cdC5f6E47Ed80b52655F1c49a683B1","decimals":10,"name":"BananToken3","symbol":"BC3"},
+{"address":"0x199DA14B0A92F797Ae176a4be1c00C36C7783B25","decimals":18,"name":"Digital Development Fund","symbol":"DDF"},
+{"address":"0xaC718aF3Ff52417241CD27028a44f4390cBc8349","decimals":18,"name":"Another bloody token","symbol":"DDT"},
+{"address":"0x7F381f3CB66329F4ED208B9E5bBD8B9549C014C7","decimals":18,"name":"DDF(with splitter)","symbol":"DDX","logo":"https://raw.githubusercontent.com/DaveAppleton/Images/master/ddf.png"},
+{"address":"0x184c987697cd8c5092Dd8bdDE8b7Ac8D3929a26B","decimals":8,"name":"Macro","symbol":"MCO"},
+{"address":"0xFcC7a6ab13E8221FfBa5C23CAaFbCFEe736B1bff","decimals":18,"name":"DDX/Splix","symbol":"DSX","logo":"https://raw.githubusercontent.com/DaveAppleton/Images/master/ddf2.png"},
+{"address":"0x209b88859D0E7be9E9fE84e41F58b08f20D86a7a","decimals":18,"name":"DDF/spz","symbol":"DDZ","logo":"https://raw.githubusercontent.com/DaveAppleton/Images/master/ddf3.png"},
+{"address":"0x58299cD4dFD84CaC103386ec5E87300b01fa8351","decimals":18,"name":"GaltCoin","symbol":"GTK"},
+{"address":"0x085C0CFb12a1ed22cB911AC0F8d837e9c662a1a4","decimals":6,"name":"test","symbol":"JLA"},
+{"address":"0x9A5e25536698FACDbab45767c30d5AFa7250597d","decimals":12,"name":"Fame","symbol":"FME"},
+{"address":"0xF92aAC044F55231fdF144Ac47eBbeA42d0943Fb5","decimals":0,"name":"Test Token T1A","symbol":"T1A","logo":"http://itrust.ece.ucsb.edu/images/ucsb_logo.jpg"},
+{"address":"0x086Fd25497467537A3633037390E060DF6613D09","decimals":6,"name":"Test Coin 2","symbol":"TC2"},
+{"address":"0x6981dD17223A49364Cb0210b0962c1FfE334cC01","decimals":12,"name":"FameTest2","symbol":"FM2"},
+{"address":"0x2510028413a42E5c8AEd7ab26AAF3d0bE2f68756","decimals":6,"name":"ESMT Token","symbol":"EST"},
+{"address":"0x437fd2bd8036E3Fd710431fc6EC6521DAf6Fe9DA","decimals":12,"name":"TestFame3","symbol":"FM3"},
+{"address":"0xb49c9ec3A321aaFA9450bF4BABD71d66DE7Be9FF","decimals":12,"name":"TestFame4","symbol":"FM4"},
+{"address":"0x0900fB62677015Dc5E8073Bc5863003F02663298","decimals":12,"name":"TestFAME9","symbol":"FM9"},
+{"address":"0x53981A8154252d0F8250bE9d2c84ABE42eFe18b4","decimals":12,"name":"TestFameFinal","symbol":"FMF","logo":"http://www.battledrome.io/img/favicon.png"},
+{"address":"0x518aA8D74145Fb2bc8d55365dCA6f57453A239bC","decimals":2,"name":"CameronCoin","symbol":"CAM"},
+{"address":"0xB5ee4F87732f0D9E34632e970fcEd72039A7b9a6","decimals":6,"name":"Spice Coin","symbol":"SPI","logo":"http://i.imgur.com/wfuDm6v.png"},
+{"address":"0xbA6157E3A77cBD1F861D2694F7A26d0Dbbe8F4Fd","decimals":18,"name":"SunContract","symbol":"SNC"},
+{"address":"0xD870d5d7A8098F9235724394176bb33735766720","decimals":18,"name":"ABCDEF","symbol":"ABC"},
+{"address":"0x81431eD09b426A6288E83c1487C090b7782B8fF3","decimals":18,"name":"abcdef","symbol":"DEF"},
+{"address":"0x0a9d574BFc8CB71A3f1441465716e1FE4189Dae5","decimals":18,"name":"SDFCoin","symbol":"SDF"},
+{"address":"0xf936EA7E38E81Edcb08B686680B84c583c7EA1EC","decimals":18,"name":"UKTest0","symbol":"UKT"},
+{"address":"0xEB2273Ac939608cb65127C74F8FB44Feb14d8C2E","decimals":18,"name":"UKT1","symbol":"UKU"},
+{"address":"0x3068393b7933FA31025a5257492e9DFE83f2907E","decimals":18,"name":"UKDemo","symbol":"UKD"},
+{"address":"0xfE138cC613D4f4d7D3F672c1812AB8d2F478D739","decimals":18,"name":"suncontract","symbol":"SCN"},
+{"address":"0x73e8fA3459E5aaF8E103E0f8d66EbEe531320dF0","decimals":18,"name":"test","symbol":"XXX"},
+{"address":"0x1a87ce0662fa972683A579282aAcEfE54c8c5914","decimals":18,"name":"AAA","symbol":"AAA"},
+{"address":"0xD9694A383f299E8F91b9a02C87661FcCDD609a96","decimals":0,"name":"LucAnne","symbol":"LAN"},
+{"address":"0x6EE4D3337EEfF0D888B5eC7CB8FF10852432D189","decimals":18,"name":"CRS","symbol":"CRS"},
+{"address":"0x5fB002d42bDd6baB937C57348249659C80C306D4","decimals":18,"name":"TrCoin","symbol":"TCN"},
+{"address":"0xA9FDd6b3b978428AfeA30839B7BbBa31d822c86E","decimals":18,"name":"RickCoin","symbol":"RIK","logo":"https://raw.githubusercontent.com/Nexus7/misc/9f19f36aec78cf965d9e353b78685c67dfdb063c/anon.jpg"},
+{"address":"0x624597cEb90966a761bCD0Ec63fF1f430D50f15A","decimals":9,"name":"PoolCoin","symbol":"POL","logo":"https://raw.githubusercontent.com/Nexus7/misc/4114d333cef535804e3c7acf63f88ffe70d3ceb7/8ball.gif"},
+{"address":"0x895b1f94aaf8CAD2A0500b295477780deC5D6032","decimals":0,"name":"Token BNP","symbol":"BNP","logo":""},
+{"address":"0x8f53B28e25bE34F1E0eeaa2246DA79c927A53A8d","decimals":0,"name":"Ma société","symbol":"BPS"},
+{"address":"0xa93c7AD2Ce1d0015EAc9296c1675bf5FD79Aa755","decimals":0,"name":"Mather","symbol":"MTH"},
+{"address":"0x8b13C8e08bEEcBEEe47374227FEdEA091b26460D","decimals":2,"name":"MichCoins","symbol":"MI4","logo":"http://ykt.ru/avatar/small/zhc"},
+{"address":"0x1E4915FA060Bb67Bed129D6518866920c8002Fe6","decimals":18,"name":"Persian","symbol":"PRS","logo":"https://raw.githubusercontent.com/Neurone/persians/master/resources/persianToken.png"},
+{"address":"0x4DffEA52b0B4b48c71385ae25de41CE6AD0Dd5a7","decimals":18,"name":"MLN-T","symbol":"MLN"},
+{"address":"0xF61b8003637E5D5dbB9ca8d799AB54E5082CbdBc","decimals":18,"name":"REP-T","symbol":"REP"},
+{"address":"0xe43C4aFd9a3108Bb0d22a2FA4F3C7313c2F34b09","decimals":0,"name":"MyTokenTest","symbol":"MYT"},
+{"address":"0x0bB93cCE9caba6F228B6E7d95a29c6cACE2D70DE","decimals":8,"name":"SolarShare01","symbol":"SLS"},
+{"address":"0x65A6d2874f969709B0A6818dc3714DA0A52d5445","decimals":8,"name":"SolarShare03","symbol":"SL3"},
+{"address":"0x4561bBbb982b131F3996f94389EBD2691e8ba943","decimals":0,"name":"NTK","symbol":"NTK"},
+{"address":"0x30027a92930bF3cAEd983faF544342513831E247","decimals":0,"name":"ZST","symbol":"ZST"},
+{"address":"0x1Ef3C2b6Db0Ef603D99d28C0ca40b89619F613be","decimals":8,"name":"Dork dork test","symbol":"OIK"},
+{"address":"0x269a83cb6bF4635881443580c17139848D25Cc03","decimals":0,"name":"MSS","symbol":"MSS"},
+{"address":"0x18587A635F748e5Bb13a5D21c05186D63458859e","decimals":2,"name":"Rockets","symbol":"RKK"},
+{"address":"0x1A5B0cF6bBde17EAD32f53883aF2ac71535A11ef","decimals":18,"name":"Rocket Pool","symbol":"RPL"},
+{"address":"0xFD7722f453A7f0ff0F214e74b0883E383f2A5F02","decimals":0,"name":"MA STARTUP (SHARES)","symbol":"ACT"},
+{"address":"0xC807c602f5bB5A926d23dc5d8a20e193cA6Fc5d4","decimals":18,"name":"0x Protocol Token","symbol":"ZRX"},
+{"address":"0x8067B4b40e22006c0d5898ad63F1aAf57eA34610","decimals":0,"name":"MarcoDroid","symbol":"MDS"},
+{"address":"0xd468427Fe8Ab8c7b51FeF9602EE6dE3C241557b1","decimals":0,"name":"MJC","symbol":"MJC"},
+{"address":"0xB7676c4544aa1702281CE75275ef9Afc1Df477ba","decimals":0,"name":"Tomorrowshares","symbol":"STR"},
+{"address":"0x9a310C3341bbEF0d84f29e822ea7891C7dE7A421","decimals":2,"name":"JellyCoin","symbol":"JLY"},
+{"address":"0x9d733dDe6Eb9FeCa6E9B7b108506E1B6b1A57BFF","decimals":0,"name":"Sandrine Shares","symbol":"SAN"},
+{"address":"0xd7b6c6Bc6a908fbBf68ff2C4EfC4e729642B5b3f","decimals":18,"name":"Opus Demo Token","symbol":"OPU"},
+{"address":"0x6e483e8A809E5066Ff1C4Ff240A41b3f43C40C04","decimals":0,"name":"BTT-Token","symbol":"BTT"},
+{"address":"0x4EFeE2201CDD086579EB837888f33E6a1a9E5BF2","decimals":18,"name":"Piece of Ass(et)","symbol":"POA","logo":""},
+{"address":"0x7Eca03e98099315b8207Df60FEFC7c80dceA8398","decimals":0,"name":"Piece of Ass(et)","symbol":"PAS"},
+{"address":"0xB781e7bF9AfCc67e053a97CF6C781C2289b66EbC","decimals":1,"name":"TovarCoin","symbol":"TVR"},
+{"address":"0x9b286Df77a9443B49820Dbda4DCFeb486839d3D3","decimals":13,"name":"Sit and Go Token","symbol":"SNG"},
+{"address":"0x1253f1419EE8495794EF19796B36c1B3F8d307E1","decimals":18,"name":"WQToken","symbol":"WQT"},
+{"address":"0x8A9E40766e2B94e66d89287cC124603593EbFd9F","decimals":18,"name":"WQToken 2","symbol":"WQ2"},
+{"address":"0x65b7524A73171cEE7F46594973053492533e02f3","decimals":0,"name":"ZSP","symbol":"ZSP"},
+{"address":"0x5EA4FCEF969dBDa2029b60842DFFD0B3fAC94423","decimals":18,"name":"Webqlo Token 3","symbol":"WQ3"},
+{"address":"0x889b7c1c0fe4c39026d4ada4EA7703ca3a2aE6C9","decimals":18,"name":"Webqlo Token 4","symbol":"WQ4"},
+{"address":"0x1721aa0603aB3A4FE083F16aE502E66F11551156","decimals":0,"name":"VEM","symbol":"VEM"},
+{"address":"0x6Ff6C0Ff1d68b964901F986d4C9FA3ac68346570","decimals":18,"name":"ZRX Kovan","symbol":"ZRK","logo":"https://www.0xproject.com/images/token_icons/zero_ex.png"},
+{"address":"0x186B14180Cd0C085B0675A93E56A6EfD93b87C33","decimals":18,"name":"Atmatrix Token","symbol":"ATT","logo":"https://raw.githubusercontent.com/ATMatrix/token-sale-contracts/8a6e98989e3e8179571e5d94c151a84ed205d868/assets/att-icon%40128x128.png"},
+{"address":"0xe0C22B8cbfe67e723C525Dc9b00De8D1bEAfF636","decimals":0,"name":"TUT","symbol":"TUT"},
+{"address":"0x5D82cD72Bdf41B7dbB2b397acdFCCa04ea610c72","decimals":1,"name":"BelugaDB","symbol":"BLG"},
+{"address":"0x6ccD3E3c7fF94c1e54a67217B4C731C87c0a7c08","decimals":18,"name":"Q","symbol":"QTQ","logo":"http://verifier.tiiqu.com/images/q_white.png"},
+{"address":"0xfe3A78B86d55B7D5921fac4Ff3b5e764FCfaA9d8","decimals":18,"name":"FML","symbol":"FML"},
+{"address":"0x2E9165A84a9bb1828e1453fD5B726c8034d03aA4","decimals":18,"name":"LMF","symbol":"LMF"},
+{"address":"0xa6d9a523A8db2bF49e9A9D2d648159C64832b31C","decimals":0,"name":"who123","symbol":"WHO"},
+{"address":"0x8Ff84c1A606BF3607B45326d8E2Fcc3cA6621872","decimals":0,"name":"Ivan's Test Token","symbol":"ITT","logo":"http://zderadicka.eu/wp-content/uploads/logo.png"},
+{"address":"0xce3bb3B81566e5569b4CE82409C57Fe165839c4B","decimals":18,"name":"MooToken","symbol":"MOO"},
+{"address":"0xEAEA6c85Bf60C70500A7cA2efbeF9ed6129e6C0d","decimals":18,"name":"FooToken","symbol":"FOO"},
+{"address":"0x3A035e74eeCb8DcA5DB38e94362cc045E9Cf854C","decimals":18,"name":"Indorse Testnet Token","symbol":"IND","logo":"https://s3.amazonaws.com/alt.indorse/images/logoonly400.png"},
+{"address":"0x10DBffF0C6Bf561B79f643f4F36c7Bd25C291d71","decimals":12,"name":"aboo","symbol":"ABU"},
+{"address":"0xcDa775a6dc6997845817ceB822FCb4540a37E554","decimals":18,"name":"moo","symbol":"MUU"},
+{"address":"0xe93d75D56d9D4aE9af82BBe182B6bAC6f1B88875","decimals":6,"name":"NITRO","symbol":"NIT"},
+{"address":"0xcd54511D42d94d003c069cD8D50299dde3218BAE","decimals":9,"name":"ARTIST","symbol":"ART"},
+{"address":"0x3dc562720A4629C8b2Ca9CCbE7A0243b105D6d24","decimals":0,"name":"Ikura","symbol":"IKR"},
+{"address":"0xb95f2708DcC449962d7eD1DDcee581bE525c9830","decimals":10,"name":"Genesix","symbol":"GEN"},
+{"address":"0xA907Eb2a3ace9eB0eABb8f0cf28b65B9A1F913E0","decimals":0,"name":"WIN","symbol":"WIN"},
+{"address":"0x31b84De2349d6F482Aa633EB93eB1F58b53a3784","decimals":6,"name":"EdChainTest","symbol":"EDC","logo":"https://blog.ethereum.org/wp-content/uploads/2015/01/128x128-ETHEREUM-FLAVICON.png"},
+{"address":"0x5FDeC49De0B424227644CCc6CB246A4C543AC213","decimals":18,"name":"CFX Markets","symbol":"CFX","logo":"https://avatars2.githubusercontent.com/u/29207339?v=4&s=200"},
+{"address":"0x518F9CA4EC37A101099AC3431BC99116F709b73E","decimals":2,"name":"Michael Coin","symbol":"MCH"},
+{"address":"0x3224b01a356A16AE164f13F381367a3C36E149d7","decimals":18,"name":"mytoken","symbol":"CAP"},
+{"address":"0x4d5CD3f35985C008863AfA4C45698Bd3cdC04aD0","decimals":18,"name":"zetzet","symbol":"ZET"},
+{"address":"0x2E58f906c03aee2AE6bd60512e5A1470aC2C75ed","decimals":4,"name":"NT000","symbol":"NT0","logo":"https://cdn1.iconfinder.com/data/icons/business-and-finance-20/200/vector_65_10-256.png"},
+{"address":"0x5CE77BDc0a10ACEe01EE93dd7826bD7A3D79F74d","decimals":18,"name":"ttt","symbol":"TTT"},
+{"address":"0x6D9984627c207ed06F52C0aD8D607F3D8df6163B","decimals":4,"name":"NT001","symbol":"NT1"},
+{"address":"0x30a72C6cbA5B81393f19cdA9a9841d0753fCb242","decimals":18,"name":"mmm","symbol":"MMM","logo":"http://etherworld.co/uploads/files/1495824617493-bat2.png"},
+{"address":"0x43828Fd9bFDac2eE2F6a1aacE956735a2433757b","decimals":8,"name":"Cerberus","symbol":"CBR"},
+{"address":"0x4EfCD954f82a449315e6C71FFB220A8948206b4D","decimals":8,"name":"ttt","symbol":"ZZZ"},
+{"address":"0x84a40a19F45344Ac458cCeb4fa0F51C7BfEc1e7A","decimals":8,"name":"abc","symbol":"AB1"},
+{"address":"0x998b2DE55FB9CD4f6e5b2f71Eb482CD908096Be2","decimals":18,"name":"NOSINO","symbol":"NOS"},
+{"address":"0xc1287CF0146dfC135bd4Fd4e174b1A5f9FFE8BE7","decimals":18,"name":"NOSETH","symbol":"NET"},
+{"address":"0x7CC8601a6E79B9996E245b389b7656A0AA5F8dAD","decimals":18,"name":"topkeyn","symbol":"TKY"},
+{"address":"0x50b4f1D2f38F325dC5656E0e2Cb3549Ff775d040","decimals":18,"name":"989","symbol":"989"},
+{"address":"0x3040b1DD86D507C7e414E69350029ae3ecAC6afc","decimals":18,"name":"tii","symbol":"TII"},
+{"address":"0x61F58c15a85D62feeFb1633568fb5E4A2a48d4C5","decimals":18,"name":"tjj","symbol":"TJJ","logo":"https://raw.githubusercontent.com/ethino/logo/master/ethino-logo.png"},
+{"address":"0x6AEEE23Cd04fB8325df31bA0630FA8114A6A8b0F","decimals":18,"name":"oko","symbol":"OKO"},
+{"address":"0xb8C969daC29A8404B4eA193939C40763c7bDa4a9","decimals":18,"name":"Schiecoin","symbol":"SDM","logo":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Coat_of_arms_of_Schiedam_2.svg/220px-Coat_of_arms_of_Schiedam_2.svg.png"},
+{"address":"0x946e4f782fb0A5f896c398569c1eEaf7A3A48dC5","decimals":2,"name":"Gulden","symbol":"NLG"},
+{"address":"0xC73C77338059fd756a614727F367ec7645B2E3ff","decimals":18,"name":"MTestToken","symbol":"ARI"},
+{"address":"0x7CE0b10D4319Ffd0EA8004e7E584EE7582BfF804","decimals":18,"name":"Macences Test","symbol":"MAC"},
+{"address":"0x1A1043bB30454De0b0D483278f081b4833D2f066","decimals":4,"name":"VRcoin","symbol":"VRC"},
+{"address":"0x32a1787af3540f7698D6448a2304a6eEF69a8813","decimals":2,"name":"Cashbox test Token","symbol":"CTT","logo":"https://localallcoins.com/cashbox_cash.png"},
+{"address":"0x7C3C3351AF2598293Ee08dff81e8e8aae22582f8","decimals":18,"name":"CND","symbol":"CND"},
+{"address":"0xaBcDca8C83798652984FBE0497A39580Be81Dba9","decimals":2,"name":"Zocken","symbol":"ZCK","logo":"https://i.imgur.com/rMC7TwL.png"},
+{"address":"0xEEea5D61b78B28f533cC7f5ec29Fe9785ED852fB","decimals":18,"name":"Cindicator","symbol":"CN1","logo":"https://raw.githubusercontent.com/cnd-image/cnd-image/master/cnd.png"},
+{"address":"0x365b34e98ac094A2352C26e0f75b58f028b94823","decimals":0,"name":"EmmeGi","symbol":"MGX","logo":"https://image.flaticon.com/icons/svg/40/40157.svg"},
+{"address":"0xEdd5575C635CF90151eeD0b865A50f4FB5e6c3CB","decimals":18,"name":"TBC","symbol":"TBC","logo":"https://cdn.sstatic.net/Sites/crypto/img/apple-touch-icon@2.png?v=fff48bebc5fd"},
+{"address":"0x47AdE5e6600EABBaCD9A1dE05FE41bD54b62344C","decimals":4,"name":"nana","symbol":"NAN","logo":"https://1.bp.blogspot.com/-qBtOPdXpF5Q/Wa4mmx9lszI/AAAAAAAAAH0/DI5nS1-04c40xbrzMPzqezuFyWEO6S-fQCK4BGAYYCw/s752/metlogomini.png"},
+{"address":"0x2849CbB3b33650B883FDbf7Ec8689591A6D26aFD","decimals":8,"name":"Love Token","symbol":"LUV","logo":"https://3.bp.blogspot.com/-2nU9wG9PNRI/WbNvx9XpgnI/AAAAAAAAAII/TI37458fsrMYkmjNriumugDo4BeI6GWYwCLcBGAs/s1600/luv.png"},
+{"address":"0x749e941cce4E8De0d4261Eb0D08a4D9699320e48","decimals":4,"name":"VRCoint test","symbol":"VR1"},
+{"address":"0x105b8DfA4Ed7973A18B502B3e956BC1c10B1a99d","decimals":18,"name":"CRITICALTWO","symbol":"WCX"},
+{"address":"0x4C797753d3c88927d51FcfDF042885510De3d448","decimals":18,"name":"criticalthree","symbol":"WCV"},
+{"address":"0x2f3b0886df3A77428a6D83567Fdd3E2E21e2b61a","decimals":4,"name":"VRCoin V2","symbol":"VRG"},
+{"address":"0x930aB93e758c254cB938dB8407A33caa37A2CBB5","decimals":6,"name":"MosiMosiCoin","symbol":"MMC"},
+{"address":"0x9A164F4284D4712E07Bb97086A49f8C005be7777","decimals":4,"name":"VRCoin","symbol":"VR2"},
+{"address":"0x91aa4d2f885060d249271c4Ab660442e2aB076e4","decimals":0,"name":"KTT","symbol":"KTT","logo":"https://funfair.io/wp-content/uploads/2017/06/Fun-token.png"},
+{"address":"0x3503A664b6e813CB215d9D51fE088CBBE28d2d30","decimals":0,"name":"KTT2","symbol":"KT2","logo":"https://raw.githubusercontent.com/chevdor/kitoken/master/ktt_kovan.png"},
+{"address":"0xE2b03A2ddB34b1119A100461D553Af4b25ef34AD","decimals":6,"name":"Will Coin","symbol":"WIL","logo":"https://raw.githubusercontent.com/chevdor/kitoken/master/KI-badge.png"},
+{"address":"0x1d5053dfe2A5B087180d161045A41B8bf291fbE8","decimals":6,"name":"EricOin","symbol":"ECO","logo":"https://railsgirlssummerofcode.org/img/blog/2016/l1ghtsab3r-partyparrot.gif"},
+{"address":"0x3C30946062Ac1962b45fC29a5Ff44D4544cC0C69","decimals":2,"name":"FS Coin","symbol":"FSC","logo":"http://farm7.staticflickr.com/6057/6233529135_84914afb62.jpg"},
+{"address":"0xff2A1Ba86644E68201B145ADe3F8edE2aa106730","decimals":6,"name":"BoromirCoin","symbol":"BOR","logo":"https://vignette.wikia.nocookie.net/factpile/images/6/66/Lotr-boromir-1280jpg-b6a4d5_1280w.jpg/revision/latest/scale-to-width-down/400?cb=20160331232305"},
+{"address":"0x63f55A2f2ed5747d2C117f9A2a2F00A61a099F2D","decimals":6,"name":"Necdet_Marc","symbol":"NEM","logo":"http://www.iconarchive.com/download/i11629/fixicon/crown/king.ico"},
+{"address":"0x43BEC099A17674aa761462BCd8c1ffF18580Fccc","decimals":8,"name":"DFCOIN","symbol":"GR6","logo":"http://touchcoins.moneymuseum.com/coins_media/Republic-of-Ethiopia-50-Santim-1969-EE/2050/obverse.png"},
+{"address":"0x8e9c0B5Ff05465cb2E5f07213F0B725d2254287E","decimals":6,"name":"UFUK Coin","symbol":"UFK","logo":"https://i.pinimg.com/originals/98/4d/ac/984dac039c9fa22efa0cd312a3ef1754.gif"},
+{"address":"0xb9d76cDcFcbcfFD0F52eB72b0e59ecE17c69156C","decimals":18,"name":"Lasagne Coins","symbol":"LCO","logo":"https://scm-assets.constant.co/scm/unilever/e9dc924f238fa6cc29465942875fe8f0/28f996d1-0821-44ec-97de-2de86efa897c.jpg"},
+{"address":"0x253713a3F21F15F3Bb6454571E6BAaC60a90c9B7","decimals":6,"name":"Moon Token","symbol":"MON","logo":"https://m.popkey.co/3bc9e9/Jm5Ol_f-maxage-0.gif?c=popkey-web&p=popkey&i=emoji--reactions&l=direct&f=.gif"},
+{"address":"0x9747e0Ea92aAb296a7B1E8E9Bc7c517C61a2DFf9","decimals":6,"name":"Tesla Model S","symbol":"TMS","logo":"https://lh6.googleusercontent.com/-CQwEuBRwF08/AAAAAAAAAAI/AAAAAAAAYOY/bGh3lkijgRM/photo.jpg"},
+{"address":"0x4B6E35275F0D1CF46f946360aBb109b04e420dC3","decimals":18,"name":"AIX","symbol":"AIX","logo":"https://avatars3.githubusercontent.com/u/9360827?v=4&s=460"},
+{"address":"0xb7BEa4376E57A834Ee6c6170dA7Ca8849ff02077","decimals":2,"name":"Super Token","symbol":"STK","logo":"http://vignette3.wikia.nocookie.net/nintendo/images/d/d9/Mario_%28New_Super_Mario_Bros._2%29.png/revision/latest?cb=20120709145048&path-prefix=en"},
+{"address":"0xBa8CF0500C72c1fa0f1d7F0ED01F8067DBBdbCFC","decimals":0,"name":"PK5","symbol":"PK5","logo":"https://funfair.io/wp-content/uploads/2017/06/Fun-token.png"},
+{"address":"0xb50d651A3Ee21D3C1BE4619196a4904cF7cBf49D","decimals":18,"name":"P22","symbol":"P22","logo":"http://213.32.72.208/p22.png"},
+{"address":"0x44470e83d52Dc0a53635226892776f9aA5AcEF14","decimals":3,"name":"Kotek","symbol":"GKT"},
+{"address":"0x1b4d7A3A8200c5720Be8c15228f96f96e66F972B","decimals":18,"name":"Experimental Token","symbol":"E11"},
+{"address":"0xc195f6F1C21B11b4BeaaBDbF9bD09Bbf2057bAc4","decimals":5,"name":"ttts","symbol":"SST","logo":"https://imgur.com/a/1dQ5O"},
+{"address":"0x48Eaecb612324927D70DC8be397A3F97e3e33026","decimals":5,"name":"tester99","symbol":"TZZ","logo":"https://raw.githubusercontent.com/ethdevrook/logo/master/small%20ethino-logo.png"},
+{"address":"0x24aC748AE6be8F5E154EeaD9b6F2892158314dF7","decimals":18,"name":"OZER","symbol":"OZR"},
+{"address":"0x784AEc86609BeC066d4081E8ff21D816BBbAEd98","decimals":2,"name":"NoManches","symbol":"NMC","logo":"https://i.pinimg.com/736x/0b/ee/01/0bee01f602f0237f2e826970c4fcb950--mexican-humor-spanish.jpg"},
+{"address":"0x04886d741D9C20e594d1343F8f6eD4eFE01F18C0","decimals":10,"name":"ERC20 Test","symbol":"E20"},
+{"address":"0xeC8A3faD61ce843e0D5c3BC43b7e917E75a409E5","decimals":3,"name":"A$AP","symbol":"A$A","logo":""},
+{"address":"0xEC742846B42E2D7eC8768fe6518E58e34e02b597","decimals":18,"name":"VIEWLY TOKEN","symbol":"VLY","logo":"https://i.imgur.com/7cYVy9B.png"},
+{"address":"0x18F1E9b22d451a8087fACACc0181BFa579ea452c","decimals":3,"name":"GOLDW","symbol":"GLW"},
+{"address":"0xfb1f923094d0E0081C303B935f7aC3ac55bAbdB2","decimals":18,"name":"Zawa","symbol":"AWA"},
+{"address":"0x16dB94a9d8AFdFDd44Aa1B87DA6956ae25eF5eA0","decimals":18,"name":"TOKEN02","symbol":"T02"},
+{"address":"0x76f536445E25296090bAA92154c7a69E28637b74","decimals":8,"name":"Test Roma Token","symbol":"TRT"},
+{"address":"0x76f3A61345a7cB9bd69A99791BE402d564F5213b","decimals":2,"name":"KTT","symbol":"KT3","logo":"https://raw.githubusercontent.com/chevdor/kitoken/master/ktt_kovan.png"},
+{"address":"0x4A638Cc67e283cBc3eb30935bd5fcDcEe5119A92","decimals":1,"name":"KTT","symbol":"KT4","logo":"https://raw.githubusercontent.com/chevdor/kitoken/master/ktt_kovan.png"},
+{"address":"0x7625C8eB7Aa80A5722097E0010BBD8EA30b36a75","decimals":1,"name":"KTT","symbol":"KT5","logo":"https://raw.githubusercontent.com/chevdor/kitoken/master/ktt_kovan2.png"},
+{"address":"0x9ABbf1F0e1e8f48CdBF70BceAB9161DafBCc95f3","decimals":2,"name":"ruble","symbol":"RUB"},
+{"address":"0x4A2D74becb0CaedF7F17BDB6fA96D892a5dd4e88","decimals":0,"name":"Golden warrant","symbol":"GDW"},
+{"address":"0xdD9652c9d2272f23ECdd1eAA35126ad78239243a","decimals":0,"name":"Silver warrant","symbol":"SLW"},
+{"address":"0x8e3E4d22c1041946263EE35F5F01919FB99fFC86","decimals":0,"name":"Gadget X","symbol":"GDX"},
+{"address":"0xEc479fFF2B78CC824ef6eCa07539905dcEFe1689","decimals":0,"name":"FrozenToken","symbol":"BRR","logo":"https://raw.githubusercontent.com/chevdor/kitoken/master/snow.jpg"},
+{"address":"0x0355091a90F74f0d0233e3A581fD82834893AF38","decimals":18,"name":"Thorium","symbol":"THR","logo":"https://pre00.deviantart.net/3b3f/th/pre/i/2011/327/d/5/thor__s_hammer_by_bang_a_rang-d4h2ork.png"},
+{"address":"0xCDE4B60Ef9A75F67a12dD72481a7b43664b0F4b4","decimals":18,"name":"JS Token","symbol":"JST"},
+{"address":"0xBFaAaeF0999cBB7bE4a535DAc622D65164579618","decimals":2,"name":"Avestix AU","symbol":"AAU"},
+{"address":"0x7ABfFC385802AaDdCC2E092fC876F13f29461899","decimals":3,"name":"Super Token","symbol":"SPR"},
+{"address":"0xBD349191341401995601af245837b04645087833","decimals":3,"name":"Super Token 2","symbol":"SR2"},
+{"address":"0xcE426D7b8d765dFd14b9484Fa0197Eb6D102babd","decimals":6,"name":"MBM","symbol":"MBM","logo":"https://raw.githubusercontent.com/chevdor/kitoken/master/mb.png"},
+{"address":"0x2F2f80b4d11ea75286C90841cB7db91dEA5c7a3F","decimals":18,"name":"Test RRD Coin","symbol":"RRD"},
+{"address":"0x5F65FB42e585b0d990C489389b13Cf29A9a2f009","decimals":10,"name":"onitest1","symbol":"ON1"},
+{"address":"0xE4e0338B3E8D81249eEfDC306c3b66Fd8845c104","decimals":6,"name":"Test Ethereum Token","symbol":"TET"},
+{"address":"0xAB38bf83Bc5f8eA4247b360c6C48b8D8D567ac12","decimals":3,"name":"Ethereum Test Token 20171015","symbol":"ETT","logo":"https://videos.cdn.redhat.com/NEXT/open-organization/img/ending-sketch.png"},
+{"address":"0xdeE1eF4A16C36f0943f9FB95303Afce0b8A4898A","decimals":18,"name":"OMG","symbol":"OMG"},
+{"address":"0x2C3c994a862dC263033Ba0A165A605c19dB9debb","decimals":18,"name":"Coink","symbol":"CNK"},
+{"address":"0x1C9e9f0eCa8b25271BA03879fff473fC58bf73bC","decimals":2,"name":"Hood Token","symbol":"HOT"},
+{"address":"0xC239815481cE5aAE80072Df12797AcFAfB12C12d","decimals":6,"name":"PTT","symbol":"PTT","logo":"http://www.coinnews.net/wp-content/uploads/2015/05/2015-5-Bald-Eagle-Silver-Proof-Coin-Reverse.jpg"},
+{"address":"0xbDe8840F3a8BC8ef206cfa3FeC68457AFA613a55","decimals":18,"name":"VMiner","symbol":"VMR"},
+{"address":"0x195C8e0F8225439A7e40C887b732f09657Dac1fc","decimals":18,"name":"Rotterdam Social Coin","symbol":"RSC"},
+{"address":"0x667278C5e28E40076b6F9206FEd2504d5F143B8c","decimals":8,"name":"Calio","symbol":"CAL","logo":"https://github.com/calioengine/c/blob/c329b27cba29782778b65271d484f18fa35308ba/logo/logo-circle-64x64.png"},
+{"address":"0x0fff93a556a91a907165BfB6a6C6cAC695FC33F5","decimals":18,"name":"test","symbol":"TES"},
+{"address":"0x25605EfCAec3842c54138A51e63450F6bbF7E417","decimals":18,"name":"FidentiaX","symbol":"FDX"},
+{"address":"0xFAFf69641Ff4715327df8B1de1F9CFE103BB5Bee","decimals":18,"name":"VictoriaCoin","symbol":"VIC","logo":"https://raw.githubusercontent.com/saricsacsi/Pictures/master/76070_166790430018368_4654538_n.jpg"},
+{"address":"0x571Ae5AF70D4720D2Ae62c0B9A4c4E950772Bf13","decimals":0,"name":"Fundacja Na Ratunek","symbol":"FNR"},
+{"address":"0xbE97c56E0cc9F16C051443aF9aD01B4b82195410","decimals":0,"name":"MagiKovanCoin","symbol":"MKC","logo":"http://www.magistrali.eu/public/15x15.png"},
+{"address":"0x7DE92710E97e15cF7E84ee21356DEa0120D72D36","decimals":18,"name":"BBT-TEST","symbol":"BBT"},
+{"address":"0x3491ac0AE98cd7FD68608F11f551429ffBB1fE94","decimals":18,"name":"NNTTest","symbol":"NNN"},
+{"address":"0xd5Eb09c9A82f5454C2117963803eEda80019d414","decimals":18,"name":"MagiKovanCoin3","symbol":"MK3","logo":"http://www.magistrali.eu/public/mk3.png"},
+{"address":"0x6233C8987aB7ED4cCbB5Dd5bE8f8d0c2e6303A4a","decimals":8,"name":"Test Token","symbol":"TSX","logo":"https://pbs.twimg.com/profile_images/872929649726115840/EKUcujr6.jpg"},
+{"address":"0x7C4fE9bF30d324d47B6a55AFcF5cA558Db8BB5D0","decimals":8,"name":"Trial Contract","symbol":"CXY","logo":"https://kitchn.de/images/espresso-freigestellt.png"},
+{"address":"0x43c252E4B13B10eE85fe7CFc36B714FB3C37Aa14","decimals":18,"name":"BBT-TEST-2","symbol":"BB2"},
+{"address":"0x0Ef8D9a6b36B49f1B5E0C743078dEc72919Ed3dF","decimals":18,"name":"BBT-TEST-3","symbol":"BB3"},
+{"address":"0xf6fA215956eE062F8b1Ef90102418f831DaE6D70","decimals":8,"name":"Foruno","symbol":"FOX"},
+{"address":"0x05d090b51C40B020eAB3BFcb6a2Dff130df22E9C","decimals":18,"name":"Kovan Wrapped Ether","symbol":"WTK","logo":"https://brandoncurtis.github.io/permalink/images/ether_erc20.png"},
+{"address":"0xe70CE3F84eCc8138127cD8eb1D9Ac6cbF69c7189","decimals":18,"name":"BlockchainLabsToken","symbol":"BLS"},
+{"address":"0xF65469294119eF47FaD191aa3A061C52C68805f8","decimals":6,"name":"Friendz Token","symbol":"FTK"},
+{"address":"0xFEB805837d3734a9047A64EDF31C0CD04875e033","decimals":0,"name":"VasilisCOIN","symbol":"VAS","logo":"https://raw.githubusercontent.com/tweetious/counterparty2/master/VASILIS.JPG"},
+{"address":"0x4bfeBB215D6F3a5Cae5A3046478989e724ab6fad","decimals":18,"name":"BrickBlockToken","symbol":"BRK"},
+{"address":"0xa59b06915f73Ec84E37B9EA87bF097FEE73c3EEe","decimals":18,"name":"BrickBlockToken Test","symbol":"BRT"},
+{"address":"0x202751824119e55FFF1968E02Ce2e898D890E694","decimals":6,"name":"Friendz Token","symbol":"FTC"},
+{"address":"0x6C57cab509Dc2A6124eFde8985f0889Db35191c8","decimals":0,"name":"NGOCoin","symbol":"NGO"},
+{"address":"0x0C9bD728D061EAE42c0717EAdc1f222d1b12571b","decimals":18,"name":"yanivshechtertoken","symbol":"YSC"},
+{"address":"0x276AB6c280bCA7E1DbF5750B309EaB692dd8c7F4","decimals":18,"name":"GulCoin","symbol":"GUL"},
+{"address":"0xCedB322C40fADe6e0784fDb5acFd8A2eAfA3c898","decimals":18,"name":"Test","symbol":"UNI","logo":"https://westernacher-consulting.com/wp-content/uploads/2017/08/Icon-Internet-of-Things-IoT.png"},
+{"address":"0x48cf11C776100b2287a7845BE8f56D8c6282Fe68","decimals":18,"name":"ShaneCoin","symbol":"SHC","logo":"https://i.imgur.com/JZX0Apv.png"},
+{"address":"0x3406954E89bB166F7aF1f3cd198527Af6D3b10D2","decimals":18,"name":"HelloGold's amazing new shiny Gold Backed Token","symbol":"GBT","logo":"https://raw.githubusercontent.com/DaveAppleton/Images/master/hg_gbt_optionC.png"},
+{"address":"0x8A4e2000A063F0cE8C0d48c2Af8d2261870EF3e6","decimals":18,"name":"Forum des Technologies","symbol":"IFT","logo":"https://image.ibb.co/djfOAG/ziiv1_EJt_400x400.jpg"},
+{"address":"0xBbbdFe1e4E05cA9be40d88b9C5D84b9dBa62AbA4","decimals":6,"name":"Forum Tech","symbol":"FTI","logo":"https://image.ibb.co/djfOAG/ziiv1_EJt_400x400.jpg"},
+{"address":"0xe8F48b5E3122C8E6E1d27c855c37bC7770300D74","decimals":18,"name":"Bit4G","symbol":"B4G","logo":"https://pbs.twimg.com/profile_images/927464224661671936/ZM7gC1MS.jpg"},
+{"address":"0x1e2bc850753A1668176Fd16E1F036A5d4d7Ea86D","decimals":18,"name":"Testing Token","symbol":"TT2","logo":"https://s3-us-west-2.amazonaws.com/purpleheart/purple_heart_token_icon_v4.png"},
+{"address":"0xb46C423E1216307F7C6eB42423AB40bc86778172","decimals":18,"name":"Kovan ICO One","symbol":"KIO","logo":"http://www.iconarchive.com/download/i2245/aha-soft/financial/Green-Dollar.ico"},
+{"address":"0x5A05cFA340664576cC61D552D65C5459A6a6581F","decimals":0,"name":"Something","symbol":"K01"},
+{"address":"0x9520909E70d6b176a2d78010Bf64869D1e978f66","decimals":0,"name":"Something Else","symbol":"K02"},
+{"address":"0x2f95D2ecd707279abF2fd7A4B46EeC3e2423238F","decimals":0,"name":"Something Yet Different","symbol":"K03"},
+{"address":"0x9B84f7cb855FecdFE464e03648b6c2D9235B9Fe0","decimals":0,"name":"bugs fixed","symbol":"K04"},
+{"address":"0x1BEC8F8A965722eda4D86c87006C509878adA655","decimals":18,"name":"Test Token 3","symbol":"TT3","logo":"https://s3-us-west-2.amazonaws.com/purpleheart/test_token_3_icon.png"},
+{"address":"0x235d6bd9cc6954CD78dec7d9364a8ECfA35B3Ac6","decimals":2,"name":"Willie Decentralized","symbol":"WID","logo":"https://raw.githubusercontent.com/chevdor/kitoken/master/philip.png"},
+{"address":"0x0D7c0226B5261F672B8168F7a9E671346281deD5","decimals":18,"name":"💩👈狗屁","symbol":"UNC"},
+{"address":"0x067c26cb437583DA7a8aFD23f9056cB4252658a1","decimals":18,"name":"UniprIotToken","symbol":"UTI"},
+{"address":"0x5B742a7AC3871D8DF560Be753B3C87dAf68e7C18","decimals":10,"name":"iCarus","symbol":"ICR"},
+{"address":"0x29db7fdC7d87658708766b68CdBBcad6261d7667","decimals":18,"name":"Rigo","symbol":"GRG","logo":"https://raw.githubusercontent.com/RigoBlock/PR/master/RigoBlock%20Logo%2011.17.png"},
+{"address":"0x7f026C6E42C808bA02A551BDdD753F9927dA06b1","decimals":18,"name":"RigoToken","symbol":"GGG","logo":"https://raw.githubusercontent.com/RigoBlock/PR/master/RigoBlock%20Logo%2011.17.png"},
+{"address":"0x48774a3500c8228aE0931C9b38C9ab4064a7503c","decimals":3,"name":"Creator Front","symbol":"CFT"},
+{"address":"0x2c0A854914630f0E278696b3f6Aa99DE40AE2d45","decimals":0,"name":"EntCoin","symbol":"ENT","logo":"http://www.dezard.net/images/DexM.png"},
+{"address":"0x2C4589d4cB7Ec1Aa4d14DF2Ca2693FcDCFc5EA0C","decimals":18,"name":"TAM","symbol":"TAM"},
+{"address":"0x9A41340952972e00cbd05f9EA6207dE48Ac6DB49","decimals":18,"name":"KINE_test1","symbol":"KNE"},
+{"address":"0x29c24eDAf3006E59a079B69642188e1DCDbBf065","decimals":8,"name":"LuckyCoin","symbol":"LKC","logo":"https://gouhuoapp.com/system/media_attachments/files/000/007/196/original/15d7c1071fde3fc9.png"},
+{"address":"0xe57EDE569016A0e1F63E768d36dFaC434D78D151","decimals":8,"name":"BetCoin","symbol":"BEC","logo":"https://gouhuoapp.com/system/media_attachments/files/000/008/717/original/712a77a066481604.png"},
+{"address":"0xdD6C56B0687AcBBf2473C45292C3a3798c378e71","decimals":18,"name":"TakigawaCoin","symbol":"TKG"},
+{"address":"0x63b1d867c7D9bA597BE3FD2a88084a853160E79d","decimals":0,"name":"zjw-test-token","symbol":"ZJW","logo":"http://www.longwan.co/wp-content/uploads/2017/10/geometric-logo-design-the-25-best-geometric-logo-ideas-on-pinterest-modern-logo-ideas.jpg"},
+{"address":"0x62297771e2a4Cb35c022fCBcaD9C8125364EFC03","decimals":0,"name":"TIMECOIN","symbol":"TMC","logo":"https://www.onlinelogomaker.com/applet_userdata/version2/7/0/58842441/projects/58842441.png"},
+{"address":"0xe5C28b690F590ea1A9725199Dfa9875838132A9D","decimals":6,"name":"My test credits","symbol":"TSC"},
+{"address":"0x6691cA7063B36FC7c49d27E63e8aB8272Dc9373b","decimals":18,"name":"WWW COIN","symbol":"WWW"},
+{"address":"0x3432556b24c1bee0c3E68eFA5dAC02cDf1F7631c","decimals":0,"name":"ETC","symbol":"ETC","logo":"https://www.bjetc.cn/images/logo.gif"},
+{"address":"0x07Ae7FE2a782BE9166634784eDDE5a70e3669a67","decimals":3,"name":"aboveboard","symbol":"ABV"},
+{"address":"0x68f2b68F30e1b6379661514d0eD6eFB66A19cEdC","decimals":18,"name":"SRN","symbol":"SRN"},
+{"address":"0x5f828aA8f82754E19f8af519E735e582bf609B2b","decimals":18,"name":"STX","symbol":"STX"},
+{"address":"0x4Ed76Cd302CdadE19383f1a612780f3d4DcE89F9","decimals":18,"name":"Purple Testing v2","symbol":"TT4","logo":"https://s3-us-west-2.amazonaws.com/purpleheart/purple_heart_reverse_light_v2.png"},
+{"address":"0xbBDb5de326e4D18F8879B7EcE3F8bF325B4dEe7D","decimals":18,"name":"TDAI","symbol":"TDA"},
+{"address":"0xE9eea8EE59B193e358780ADAa1c4be1c664D80CC","decimals":0,"name":"CoolToken","symbol":"CLK","logo":"http://vignette2.wikia.nocookie.net/fantendo/images/e/e7/3D_1-Up_Mushroom_Artwork.png"},
+{"address":"0xD44C491a6885e89fe1c5A3Ce69Df3cdeBC6b4e8D","decimals":0,"name":"CoolToken2","symbol":"CTK","logo":"http://vignette2.wikia.nocookie.net/fantendo/images/e/e7/3D_1-Up_Mushroom_Artwork.png"},
+{"address":"0x95E82Fe0D2dB892Ac2d5fBEabfb074427A07Ca5b","decimals":8,"name":"SID Token","symbol":"SID","logo":"https://www.coinpayments.net/images/coins/XEM.png"},
+{"address":"0x69ac0Bf2BD725AD489DC0c145EE0a38f2cA475c3","decimals":18,"name":"AEB_ANGA","symbol":"TGA","logo":"https://n.nordstrommedia.com/ImageGallery/store/product/Zoom/13/_100456013.jpg?crop=pad&pad_color=FFF&format=jpeg&trim=color&trimcolor=FFF&w=860&h=924&quality=70"},
+{"address":"0xF9BC214210020Af4dCE865d7daE91500e4DD0601","decimals":18,"name":"Roger Token","symbol":"RRT","logo":"https://static1.seekingalpha.com/images/users_profile/047/439/673/extra_large_pic.png"},
+{"address":"0x5e5506E92C09642dd1239f9f0Ea0Ed0eBB9088D9","decimals":6,"name":"WTT","symbol":"WTT","logo":"https://www.shareicon.net/download/2016/10/18/846206_light-bulb.svg"},
+{"address":"0xc57538846Ec405Ea25Deb00e0f9B29a432D53507","decimals":9,"name":"iExec Testnet","symbol":"RLC"},
+{"address":"0x8d2253aD31a923b6992d5eB269E86E8DEa69dbF9","decimals":18,"name":"Sharique's Token","symbol":"SRQ"},
+{"address":"0x8779F9BC6D11187C928D8b4dA2C5fefc76cE7430","decimals":18,"name":"Duck Token","symbol":"DKT","logo":"https://vignette.wikia.nocookie.net/russmarrs2-rise-of-sqeegee/images/d/d1/Random_duck.png/revision/latest?cb=20160724005145"},
+{"address":"0xB99D0FFF3f0847835490ECe0Eb7B126A4fFbDCC9","decimals":18,"name":"MillCoin","symbol":"MCN"},
+{"address":"0xbFEa297CAD970b59364b5A0f9d78bfA42D705756","decimals":18,"name":"AX_TestVal ","symbol":"AX_"},
+{"address":"0x8CF04ce3419b6f807a473796e873502F30327E11","decimals":4,"name":"MillCoinTest2","symbol":"MT2"},
+{"address":"0x90286919814aa9Ab74eb5fD0e3a56787eF1Ac02D","decimals":4,"name":"DataToken","symbol":"CUR","logo":"http://www.coinstreetnews.com/wp-content/uploads/2016/08/dogecoin.png"},
+{"address":"0xF9a5310878234C1a068576abFE20304AFdd96778","decimals":18,"name":"XMOO token","symbol":"XMO"},
+{"address":"0x256e5dB390A43d99d0A25C79F57cf655AC2bD770","decimals":4,"name":"MillCoinTest6","symbol":"MT6"},
+{"address":"0x8E43a63012a2Ec04f5664cE9074b53dDe3ea3F4b","decimals":2,"name":"Expert Coin","symbol":"EXP","logo":"http://blog.omadijaya.id/wp-content/uploads/2018/02/aJ0u3WLAfN2ATMWv5a8a6e52529c1-e1519021886306.png"},
+{"address":"0x8c191A52B8d03Accea1a92c27Cd66C316349B5b8","decimals":10,"name":"Foturist1","symbol":"FT1"},
+{"address":"0x61F06518A9659aFDf6439E974E3b537BB14cF7C2","decimals":18,"name":"SocramCoins3","symbol":"SCC"},
+{"address":"0x68Fe1F5c04DeA3ef7f86E3f8EE9A69f15a559CdE","decimals":4,"name":"GOV COIN","symbol":"GOV"},
+{"address":"0x16eE22d22Ff5B2123Ef9eb75b238f1d3548702a0","decimals":18,"name":"Duty of Care Token","symbol":"DOC","logo":"https://www.dutyof.care/assets/img/dutyof.care-logo_RGB-03.png"},
+{"address":"0xaF06c58C62E50cb78C549830e7f3E64AA0782C60","decimals":18,"name":"MediShares","symbol":"MDK","logo":"http://doc.medishares.org/logo/mds-parity.png"},
+{"address":"0x298C116572A58cD10980F090A17755b5D098E1A9","decimals":18,"name":"GiuloToken","symbol":"QQQ"},
+{"address":"0xc62BC10aBD17DD94f94E931e815DE7aFEa48ec54","decimals":18,"name":"Foreign Bridge Ether","symbol":"FBE"},
+{"address":"0xd45c358E5182A84166925F66A51905797834018e","decimals":3,"name":"Todcoin","symbol":"TOD","logo":"http://rss.hm/todco.jpg"},
+{"address":"0x208d1AE37Eac42771d7A40553D55783661bF1D7b","decimals":0,"name":"UU SH T","symbol":"UUU"},
+{"address":"0x0bae2AFfE62880817Ab2Bb313fE7151Deb8dde11","decimals":18,"name":"Wmnizer2","symbol":"WM2"},
+{"address":"0x6526CAFC9e8d10b88491542eE3071975728302a0","decimals":6,"name":"ZingiT","symbol":"ZIT"},
+{"address":"0xfB85F84805510035DbEfE3582cA48c90583E551F","decimals":0,"name":"FunToken","symbol":"FTN","logo":"https://raw.githubusercontent.com/chevdor/kitoken/c40c3d62747b008363001fb721ed1ff263d422ca/funtoken.png"},
+{"address":"0xd287C0D288c5466fe4734bc6AC977d5200cCb1DF","decimals":18,"name":"KNC","symbol":"KNC"},
+{"address":"0xbE2aeA7e0C174aEa3027Ae88cC33990A960ad512","decimals":18,"name":"OMG","symbol":"OMK"},
+{"address":"0xD408a11345fFfCB3C422BE1d0d1Aa3a933FC2b17","decimals":18,"name":"SNT","symbol":"SNT"},
+{"address":"0x7Bb60f4d4C124B3ABF0BC12A07CEf7CE6Ca7DeC0","decimals":18,"name":"sex","symbol":"SEX"},
+{"address":"0x6fC948281F9ECc057B60214cF679dc379f0fAA7c","decimals":18,"name":"QDT Token","symbol":"QDT"},
+{"address":"0x07e7768aF86281F9BAf1FB85A85369560e975031","decimals":18,"name":"VANFIXEDTOKEN","symbol":"VFT","logo":"https://cb-public.oss-cn-shenzhen.aliyuncs.com/images/efe5961f-24b5-49c6-ab79-8da12a7f26cc.png"},
+{"address":"0x25c249A2aeda45d128e063c46DE363636bD95B23","decimals":8,"name":"NEWTON TOKEN","symbol":"NEW"},
+{"address":"0x3515472ab191E10E5e8020b5E9745e727b338120","decimals":10,"name":"GiulioToken","symbol":"GIO"},
+{"address":"0xda731B166aFbc73aE75a702C5C753B35EA84912D","decimals":18,"name":"Snail Game Token","symbol":"SGT"},
+{"address":"0x2321Fa5C45608d777C2621485694CF99f6260faA","decimals":18,"name":"Snail Game Token01","symbol":"TSG"},
+{"address":"0x559Da05a6Ae4e2185C49773f7A678867749c7cfF","decimals":0,"name":"Great New Company","symbol":"GNC"},
+{"address":"0x51c5fA97e77E34b493CeA62f8D1Fe818F5CB5e1F","decimals":18,"name":"Sirin Labs Token","symbol":"SIR"},
+{"address":"0x5D3CEFcCca84006873911d3fe3c176EECB8431c1","decimals":2,"name":"Test Token","symbol":"TKO"},
+{"address":"0x6Ca85317f0487f855D0dB08c69597Ba0EA88813a","decimals":6,"name":"Koplok Coin","symbol":"KCN","logo":"https://blockchain.wtf/wp-content/uploads/2017/07/erc20-token.png"},
+{"address":"0x4488d1827D4675cf0a4e8ccF85cabC22E1465307","decimals":0,"name":"Tikus Coin","symbol":"TKP","logo":"https://icon-icons.com/icons2/539/PNG/512/testing-mouse_icon-icons.com_53002.png"},
+{"address":"0xA6666386617070BBe6b76550D9d8072451583c3c","decimals":0,"name":"Bottle Cap","symbol":"BCP"},
+{"address":"0x63BE8AF3033BC5780D54EC2ddBe03780293D3851","decimals":6,"name":"My test par credits","symbol":"TS2"},
+{"address":"0xE18e580c8B479415A76D50A799d747ACAe4f463c","decimals":18,"name":"SMOL Token","symbol":"SML"},
+{"address":"0x4A6e6C3868A279e1D9047B42C3fB356FF4680003","decimals":18,"name":"THIBCoin","symbol":"TIB","logo":"http://pix.toile-libre.org/upload/original/1525765045.jpg"}
 ]

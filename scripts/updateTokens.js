@@ -14,16 +14,17 @@ const fs = require('fs');
 const api = new Api(new Api.Provider.Http('http://127.0.0.1:8545'));
 
 const run = async () => {
-  console.log('Fetching all tokens, please wait...');
-
   const { tokenReg, githubHint } = new Contracts(api);
 
   const chainName = await api.parity.netChain();
+  console.log(`Fetching all tokens on ${chainName}, please wait...`);
+
+  // Create file to write tokens to
   const filePath = `src/assets/tokens/${chainName}.json`;
   const wstream = fs.createWriteStream(filePath);
 
   // The JSON file will be an array, so we start by opening a bracket
-  wstream.write('[');
+  wstream.write('[\n');
 
   const tokenRegContract = await tokenReg.getContract();
   const githubHintContract = await githubHint.getContract();
@@ -33,6 +34,13 @@ const run = async () => {
   for (let i = 0; i < tokenCount; i++) {
     // Get token information
     const token = await tokenRegContract.instance.token.call({}, [i]);
+
+    // Some tokens are empty (unregistered), we skip them
+    // token[0] is the token address
+    if (+token[0] === 0) {
+      continue;
+    }
+
     // Get image hash of this token (stored inside the metadata)
     const imageHash = bytesToHex(
       await tokenRegContract.instance.meta.call({}, [i, 'IMG'])
@@ -40,7 +48,7 @@ const run = async () => {
     // Variable result will contain the line to be added to our final JSON file
     const result = {
       address: token[0],
-      decimals: +token[2],
+      decimals: token[2].e, // token[2] gives a BigNumber(100000000), the number of decimals is the exponent
       name: token[3],
       symbol: token[1]
     };
@@ -56,7 +64,7 @@ const run = async () => {
 
     // Add this line to the buffer
     wstream.write(
-      `${JSON.stringify(result)}${i === tokenCount - 1 ? '' : ','}`
+      `${JSON.stringify(result)}${i === tokenCount - 1 ? '' : ','}\n`
     );
   }
 
