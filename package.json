@@ -58,6 +58,7 @@
     "rxjs": "^6.1.0"
   },
   "devDependencies": {
+    "@parity/shared": "^2.2.28",
     "babel-eslint": "^8.2.3",
     "cross-env": "^5.1.4",
     "node-sass": "^4.9.0",
