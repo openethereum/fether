@@ -3,14 +3,14 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import Blockie from 'react-blockies';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 
 @inject('createAccountStore')
 @observer
-class CreateAccountStep1 extends PureComponent {
+class CreateAccountStep1 extends Component {
   componentDidMount () {
     this.props.createAccountStore.generateNewAccount();
   }

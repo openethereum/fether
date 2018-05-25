@@ -1,11 +1,16 @@
-import React, { PureComponent } from 'react';
+// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// This file is part of Parity.
+//
+// SPDX-License-Identifier: MIT
+
+import React, { Component } from 'react';
 import { fromWei } from '@parity/api/lib/util/wei';
 import { inject, observer } from 'mobx-react';
 import { post$ } from '@parity/light.js';
 
 @inject('signerStore')
 @observer
-class Signer extends PureComponent {
+class Signer extends Component {
   state = {
     password: '',
     status: null
