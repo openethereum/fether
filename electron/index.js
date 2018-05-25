@@ -9,16 +9,19 @@ const url = require('url');
 
 const addMenu = require('./menu');
 const { cli } = require('./cli');
-const doesParityExist = require('./operations/doesParityExist');
+const { doesParityExist } = require('./operations/doesParityExist');
 const fetchParity = require('./operations/fetchParity');
 const handleError = require('./operations/handleError');
 const messages = require('./messages');
+const { productName } = require('./config.json');
+const pino = require('./utils/pino')({ name: 'electron' });
 const { runParity, killParity } = require('./operations/runParity');
 
 const { app, BrowserWindow, ipcMain, session } = electron;
 let mainWindow;
 
 function createWindow () {
+  pino.info(`Starting ${productName}...`);
   mainWindow = new BrowserWindow({
     height: 800,
     width: 1200

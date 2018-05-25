@@ -5,13 +5,11 @@
 
 const { app, dialog } = require('electron');
 
-const {
-  parity: { channel }
-} = require('../../package.json');
-const parityPath = require('../utils/parityPath');
+const { bugs: { url }, parity: { channel } } = require('../../package.json');
+const pino = require('../utils/pino')();
 
 module.exports = (err, message = 'An error occurred.') => {
-  console.error(err);
+  pino.error(err);
   dialog.showMessageBox(
     {
       buttons: ['OK'],
@@ -22,8 +20,8 @@ Channel: ${channel}
 Error: ${err.message}
 
 Please also attach the contents of the following file:
-${parityPath()}.log`,
-      message: `${message} Please file an issue at https://github.com/parity-js/shell/issues.`,
+${app.getPath('userData')}/parity.log`,
+      message: `${message} Please file an issue at ${url}.`,
       title: 'Parity Error',
       type: 'error'
     },
