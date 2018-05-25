@@ -19,11 +19,11 @@ import light from '../hoc';
 @observer
 class Accounts extends Component {
   handleClick = ({ currentTarget: { dataset: { address } } }) => {
-    const { parityStore: { api } } = this.props;
+    const { history, parityStore: { api } } = this.props;
     // Set default account to the clicked one, and go to Tokens on complete
     this.subscription = api.parity
       .setNewDappsDefaultAddress(address)
-      .then(() => this.props.history.push('/tokens'));
+      .then(() => history.push('/tokens'));
   };
 
   render () {

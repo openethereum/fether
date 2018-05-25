@@ -4,10 +4,11 @@
 // SPDX-License-Identifier: MIT
 
 import { action, computed, observable } from 'mobx';
+import { chainName$, defaultAccount$ } from '@parity/light.js';
+import { combineLatest } from 'rxjs';
 import store from 'store';
 
 import ethereumIcon from '../assets/img/tokens/ethereum.png';
-import parityStore from './parityStore';
 
 const LS_PREFIX = '__paritylight::tokens';
 
@@ -15,20 +16,12 @@ class TokensStore {
   @observable tokens = new Map();
 
   constructor () {
-    this.api = parityStore.api;
-
-    if (parityStore.isApiConnected) {
-      this.init();
-    } else {
-      // TODO This .on() is not working, so we poll every second
-      // this.api.on('connected', this.init);
-      this.interval = setInterval(() => {
-        if (parityStore.isApiConnected) {
-          this.init();
-          clearInterval(this.interval);
-        }
-      }, 1000);
-    }
+    combineLatest(
+      chainName$(),
+      defaultAccount$()
+    ).subscribe(([chainName, defaultAccount]) =>
+      this.fetchTokensFromDb(chainName, defaultAccount)
+    );
   }
 
   @action
@@ -38,17 +31,10 @@ class TokensStore {
   };
 
   @action
-  init = async () => {
-    // Set the localStorage key, we have one key per chain, in this format:
-    // __paritylight::tokens::kovan
-    try {
-      const chainName = await this.api.parity.chain();
-      this.lsKey = `${LS_PREFIX}::${chainName}`;
-    } catch (e) {
-      console.error(e);
-      // Fallback to main net
-      this.lsKey = `${LS_PREFIX}::foundation`;
-    }
+  fetchTokensFromDb = async (chainName, defaultAccount) => {
+    // Set the localStorage key, we have one key per chain per account, in this
+    // format: __paritylight::tokens::0x123::kovan
+    this.lsKey = `${LS_PREFIX}::${defaultAccount}::${chainName}`;
 
     // Now we fetch the tokens from the localStorage
     const tokens = store.get(this.lsKey);
