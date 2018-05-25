@@ -20,6 +20,8 @@ class TokensStore {
       chainName$(),
       defaultAccount$()
     ).subscribe(([chainName, defaultAccount]) =>
+      // Refetch token from localStorage everytime we have a new chainName
+      // (shouldn't happen) or the user selects a new account
       this.fetchTokensFromDb(chainName, defaultAccount)
     );
   }
