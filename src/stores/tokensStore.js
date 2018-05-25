@@ -38,14 +38,17 @@ class TokensStore {
 
     // Now we fetch the tokens from the localStorage
     const tokens = store.get(this.lsKey);
+
     if (!tokens) {
       // If there's nothing in the localStorage, we add be default only
       // Ethereum. We consider Ethereum as a token, with address 'ETH'
-      this.addToken('ETH', {
-        address: 'ETH',
-        logo: ethereumIcon,
-        name: 'Ethereum',
-        symbol: 'ETH'
+      this.tokens.replace({
+        ETH: {
+          address: 'ETH',
+          logo: ethereumIcon,
+          name: 'Ethereum',
+          symbol: 'ETH'
+        }
       });
     } else {
       this.tokens.replace(tokens);
