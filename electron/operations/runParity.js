@@ -13,7 +13,7 @@ const isParityRunning = require('./isParityRunning');
 const handleError = require('./handleError');
 const { parityPath } = require('./doesParityExist');
 const pino = require('../utils/pino')({ name: 'electron' });
-const pinoParity = require('../utils/pino')({ level: 'info', name: 'parity' });
+const pinoParity = require('../utils/pino')({ name: 'parity' });
 
 const fsChmod = promisify(fs.chmod);
 
