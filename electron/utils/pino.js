@@ -24,8 +24,9 @@ const streams = [
 ];
 
 /**
- * Usage: const pino = require('../path/to/pino')({ name: 'electron' });
+ * Usage: const pino = require('../path/to/pino')({ name: 'something' });
  *
- * @param {Object} opts - Options to pass to pino.
+ * @param {Object} opts - Options to pass to pino. Defaults to { name: 'electron' }.
  */
-module.exports = opts => pino(opts, multistream(streams));
+module.exports = opts =>
+  pino({ name: 'electron', ...opts }, multistream(streams));

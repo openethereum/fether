@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 const { promisify } = require('util');
-const pino = require('../utils/pino')({ name: 'electron' });
+const pino = require('../utils/pino')();
 const ps = require('ps-node');
 
 const lookup = promisify(ps.lookup);

@@ -6,7 +6,7 @@
 const { app, dialog } = require('electron');
 
 const { bugs: { url }, parity: { channel } } = require('../../package.json');
-const pino = require('../utils/pino')({ name: 'electron' });
+const pino = require('../utils/pino')();
 
 module.exports = (err, message = 'An error occurred.') => {
   pino.error(err);

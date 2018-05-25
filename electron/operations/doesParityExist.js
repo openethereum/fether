@@ -9,7 +9,7 @@ const fs = require('fs');
 const promiseAny = require('promise-any');
 const { promisify } = require('util');
 
-const pino = require('../utils/pino')({ name: 'electron' });
+const pino = require('../utils/pino')();
 
 const fsExists = promisify(fs.stat);
 
