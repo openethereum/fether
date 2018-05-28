@@ -6,7 +6,7 @@
 const axios = require('axios');
 const retry = require('async-retry');
 
-const cli = require('../cli');
+const { cli } = require('../cli');
 const pino = require('../utils/pino')();
 
 // Try to ping these hosts
@@ -29,11 +29,10 @@ const isParityRunning = async () => {
     // Retry to ping as many times as there are hosts in `hostsToPing`
     await retry(
       async (_, attempt) => {
-        await axios.get(hostsToPing[attempt - 1]);
+        const host = hostsToPing[attempt - 1]; // Attempt starts with 1
+        await axios.get(host);
         pino.info(
-          `Another instance of parity is already running on ${hostsToPing[
-            attempt - 1
-          ]}, skip running local instance.`
+          `Another instance of parity is already running on ${host}, skip running local instance.`
         );
       },
       { retries: hostsToPing.length }
