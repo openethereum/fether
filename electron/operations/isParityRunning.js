@@ -3,42 +3,46 @@
 //
 // SPDX-License-Identifier: MIT
 
-const { promisify } = require('util');
-const pino = require('../utils/pino')();
-const ps = require('ps-node');
+const axios = require('axios');
+const retry = require('async-retry');
 
-const lookup = promisify(ps.lookup);
+const cli = require('../cli');
+const pino = require('../utils/pino')();
+
+// Try to ping these hosts
+const hostsToPing = ['http://127.0.0.1:8545', 'http://127.0.0.1:8546'];
+if (cli.wsInterface || cli.wsPort) {
+  // Also try custom host/port if a --ws-interface or --ws-port flag is passed
+  hostsToPing.push(
+    `http://${cli.wsInterface || '127.0.0.1'}:${cli.wsPort || '8545'}`
+  );
+}
 
 /**
- * Detect if another instance of parity is already running or not.
+ * Detect if another instance of parity is already running or not. To achieve
+ * that, we just ping on the common hosts, see hostsToPing array.
  *
- * @return [Object | Boolean] - If there is another instance, return the
- * instance object. If not return false.
- * @example Here is what's returned when there is an instance running
- * {
- *   pid: '14885',
- *   command: '/Users/amaurymartiny/Workspace/parity/target/release/parity',
- *   arguments: [
- *     '--testnet',
- *     '--no-periodic-snapshot',
- *     '--ws-origins',
- *     'all',
- *     '--light'
- *   ],
- * ppid: '14879'
- * }
+ * @return [Promise<Boolean>] - Promise that resolves to true or false.
  */
-
 const isParityRunning = async () => {
-  const results = await lookup({ command: 'parity' });
-  if (results && results.length) {
-    pino.info(
-      `Another instance of parity is already running with pid ${results[0]
-        .pid}, skip running local instance.`
+  try {
+    // Retry to ping as many times as there are hosts in `hostsToPing`
+    await retry(
+      async (_, attempt) => {
+        await axios.get(hostsToPing[attempt - 1]);
+        pino.info(
+          `Another instance of parity is already running on ${hostsToPing[
+            attempt - 1
+          ]}, skip running local instance.`
+        );
+      },
+      { retries: hostsToPing.length }
     );
-    return results[0];
+
+    return true;
+  } catch (e) {
+    return false;
   }
-  return false;
 };
 
 module.exports = isParityRunning;
