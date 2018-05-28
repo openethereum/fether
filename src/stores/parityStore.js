@@ -50,14 +50,15 @@ class ParityStore {
   }
 
   connectToApi = () => {
-    let provider = 'ws://127.0.0.1:8546'; // Default provider to be used in localhost:3000
+    // Get the provider, optionally from --ws-interface and --ws-port flags
+    const [defaultInterface, defaultPort] = ['127.0.0.1', '8546'];
+    let provider = `ws://${defaultInterface}:${defaultPort}`;
     if (electron) {
       const { remote } = electron;
       const wsInterface = remote.getGlobal('wsInterface');
       const wsPort = remote.getGlobal('wsPort');
-      if (wsInterface && wsPort) {
-        provider = `ws://${wsInterface}:${wsPort}`;
-      }
+      provider = `ws://${wsInterface || defaultInterface}:${wsPort ||
+        defaultPort}`;
     }
 
     const api = new Api(

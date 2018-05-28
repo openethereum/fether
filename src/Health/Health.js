@@ -3,21 +3,42 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
 
-class Health extends PureComponent {
+import { STATUS_BAD, STATUS_OK, STATUS_WARN } from '../stores/healthStore';
+
+@inject('healthStore')
+@observer
+class Health extends Component {
   render () {
+    const { healthStore: { averageHealth: { message } } } = this.props;
     return (
       <div className='status'>
-        <span className='status_icon -syncing'>
+        <span className={['status_icon', this.statusToClassName()].join(' ')}>
           <svg viewBox='0 0 20 20'>
             <circle fill='#DDD' cx='10' cy='10' r='10' />
           </svg>
         </span>
-        <span className='status_text'>Syncing... (4m)</span>
+        <span className='status_text'>
+          {message && message.join('. ')}
+        </span>
       </div>
     );
   }
+
+  statusToClassName = () => {
+    const { healthStore: { averageHealth: { status } } } = this.props;
+    switch (status) {
+      case STATUS_OK:
+        return '-good';
+      case STATUS_WARN:
+        return '-syncing';
+      case STATUS_BAD:
+      default:
+        return '-bad';
+    }
+  };
 }
 
 export default Health;
