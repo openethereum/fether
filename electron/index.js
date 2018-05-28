@@ -60,6 +60,11 @@ function createWindow () {
       urls: ['ws://*/*', 'wss://*/*']
     },
     (details, callback) => {
+      if (!mainWindow) {
+        // There might be a split second where the user closes the app, so
+        // mainWindow is null, but there is still a network request done.
+        return;
+      }
       details.requestHeaders.Origin = `parity://${mainWindow.id}.ui.parity`;
       callback({ requestHeaders: details.requestHeaders }); // eslint-disable-line
     }
