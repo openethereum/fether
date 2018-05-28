@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { chainName$ } from '@parity/light.js';
 import debounce from 'lodash/debounce';
 import { inject, observer } from 'mobx-react';
@@ -11,12 +11,12 @@ import { inject, observer } from 'mobx-react';
 import light from '../../hoc';
 import NewTokenItem from './NewTokenItem';
 
-@inject('tokensStore')
-@observer
 @light({
   chainName: chainName$
 })
-class NewToken extends PureComponent {
+@inject('tokensStore')
+@observer
+class NewToken extends Component {
   state = {
     db: null,
     dbMap: null,

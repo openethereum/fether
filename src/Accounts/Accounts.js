@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { accountsInfo$ } from '@parity/light.js';
 import Blockies from 'react-blockies';
 import { inject, observer } from 'mobx-react';
@@ -12,18 +12,18 @@ import { Link, Route, Switch } from 'react-router-dom';
 import CreateAccount from './CreateAccount/CreateAccount';
 import light from '../hoc';
 
-@inject('parityStore')
-@observer
 @light({
   accountsInfo: accountsInfo$
 })
-class Accounts extends PureComponent {
+@inject('parityStore')
+@observer
+class Accounts extends Component {
   handleClick = ({ currentTarget: { dataset: { address } } }) => {
-    const { parityStore: { api } } = this.props;
+    const { history, parityStore: { api } } = this.props;
     // Set default account to the clicked one, and go to Tokens on complete
     this.subscription = api.parity
       .setNewDappsDefaultAddress(address)
-      .then(() => this.props.history.push('/tokens'));
+      .then(() => history.push('/tokens'));
   };
 
   render () {

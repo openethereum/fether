@@ -3,14 +3,14 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 
 @inject('tokensStore')
 @observer
 @withRouter
-class NewTokenItem extends PureComponent {
+class NewTokenItem extends Component {
   handleAddToken = () => {
     const { history, token, tokensStore } = this.props;
     tokensStore.addToken(token.address, token);

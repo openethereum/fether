@@ -3,13 +3,13 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 
 @inject('createAccountStore')
 @observer
-class CreateAccountStep2 extends PureComponent {
+class CreateAccountStep2 extends Component {
   render () {
     const { createAccountStore: { phrase } } = this.props;
 
