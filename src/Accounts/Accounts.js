@@ -37,13 +37,17 @@ class Accounts extends Component {
     return (
       <div>
         <nav className='header-nav'>
-          <p>&nbsp;</p>
-          <Link to='/' className='header_title'>
-            Accounts
-          </Link>
-          <Link to='/accounts/new' className='icon -new'>
-            New account
-          </Link>
+          <div className='header-nav_left'>&nbsp;</div>
+          <div className='header-nav_title'>
+            <h1>
+              Accounts
+            </h1>
+          </div>
+          <div className='header-nav_right'>
+            <Link to='/accounts/new' className='icon -new'>
+              New account
+            </Link>
+          </div>
         </nav>
 
         <div className='window_content'>

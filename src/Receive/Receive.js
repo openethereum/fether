@@ -18,12 +18,16 @@ class Receive extends Component {
     return (
       <div>
         <nav className='header-nav'>
-          <Link to='/tokens' className='icon -close'>
-            x
-          </Link>
-          <Link to='/'>
-            Accounts
-          </Link>
+          <div className='header-nav_left'>
+            <Link to='/tokens' className='icon -close'>
+              x
+            </Link>
+          </div>
+          <div className='header-nav_title'>
+            <h1>Address</h1>
+          </div>
+          <div className='header-nav_right'>
+          </div>
         </nav>
         <div className='window_content'>
           <div className='box -scroller -well'>
