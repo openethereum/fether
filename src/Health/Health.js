@@ -6,13 +6,12 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 
-import { STATUS_BAD, STATUS_OK, STATUS_WARN } from '../stores/healthStore';
+import { STATUS } from '../stores/healthStore';
 
 @inject('healthStore')
 @observer
 class Health extends Component {
   render () {
-    const { healthStore: { averageHealth: { message } } } = this.props;
     return (
       <div className='status'>
         <span className={['status_icon', this.statusToClassName()].join(' ')}>
@@ -21,22 +20,48 @@ class Health extends Component {
           </svg>
         </span>
         <span className='status_text'>
-          {message && message.join('. ')}
+          {this.statusToFriendlyMessage()}
         </span>
       </div>
     );
   }
 
+  /**
+   * Get className from the status icon from the status enum
+   */
   statusToClassName = () => {
-    const { healthStore: { averageHealth: { status } } } = this.props;
+    const { healthStore: { health: { status } } } = this.props;
     switch (status) {
-      case STATUS_OK:
+      case STATUS.GOOD:
         return '-good';
-      case STATUS_WARN:
+      case STATUS.DOWNLOADING:
+      case STATUS.RUNNING:
+      case STATUS.SYNCING:
         return '-syncing';
-      case STATUS_BAD:
       default:
         return '-bad';
+    }
+  };
+
+  statusToFriendlyMessage = () => {
+    const { healthStore: { health: { status, payload } } } = this.props;
+    switch (status) {
+      case STATUS.CANTCONNECT:
+        return "Can't connect to Parity";
+      case STATUS.CLOCKNOTSYNC:
+        return 'Clock not sync';
+      case STATUS.DOWNLOADING:
+        return `Downloading... (${payload.percentage}%)`;
+      case STATUS.NOINTERNET:
+        return 'No internet';
+      case STATUS.RUNNING:
+        return 'Running...';
+      case STATUS.SYNCING:
+        return `Syncing...${payload.percentage
+          ? ` (${payload.percentage}%)`
+          : ''}`;
+      default:
+        return JSON.stringify(payload); // Just in case payload is an object
     }
   };
 }

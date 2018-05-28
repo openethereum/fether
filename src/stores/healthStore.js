@@ -4,46 +4,52 @@
 // SPDX-License-Identifier: MIT
 
 import { action, computed, observable } from 'mobx';
-import { nodeHealth$ } from '@parity/light.js';
+import { nodeHealth$, syncing$ } from '@parity/light.js';
 
 import parityStore from './parityStore';
 
-export const STATUS_OK = 'ok';
-export const STATUS_WARN = 'needsAttention';
-export const STATUS_BAD = 'bad';
+// List here all possible states of our health store. Each state can have a
+// payload.
+export const STATUS = {
+  CANTCONNECT: 'CANTCONNECT', // Can't connect to Parity's api
+  CLOCKNOTSYNC: 'CLOCKNOTSYNC', // Local clock is not sync
+  DOWNLOADING: 'DOWNLOADING', // Currently downloading Parity
+  GOOD: 'GOOD', // Everything's fine
+  NOINTERNET: 'NOINTERNET', // No network connection
+  OTHER: 'OTHER', // Unknown state, might have a payload
+  RUNNING: 'RUNNING', // Currently try to launch Parity
+  SYNCING: 'SYNCING' // Obvious
+};
 
 class HealthStore {
   @observable nodeHealth;
+  @observable syncing;
 
   constructor () {
     nodeHealth$().subscribe(this.setNodeHealth);
+    syncing$().subscribe(this.setSyncing);
   }
 
   /**
-   * Calculate the average health.
+   * Calculate the current status.
    *
-   * @return [Object{ status: String, messages: Array<String>}] - An object
-   * which represents the average health. Status has 3 states, and message
-   * contains details.
+   * @return [Object{ status: StatusEnum, payload: Any}] - An object which
+   * represents the current status, with a custom payload.
    */
   @computed
-  get averageHealth () {
+  get health () {
     // Check download progress
     if (parityStore.downloadProgress > 0 && !parityStore.isParityRunning) {
       return {
-        status: STATUS_WARN,
-        message: [
-          `Downloading... (${Math.round(parityStore.downloadProgress * 10000) /
-            100}%)`
-        ]
+        status: STATUS.DOWNLOADING,
+        payload: { percentage: Math.round(parityStore.downloadProgress * 100) }
       };
     }
 
     // Check if we are currently launching
     if (parityStore.isParityRunning && !parityStore.isApiConnected) {
       return {
-        status: STATUS_WARN,
-        message: [`Running...`]
+        status: STATUS.RUNNING
       };
     }
 
@@ -54,42 +60,92 @@ class HealthStore {
       !Object.keys(this.nodeHealth).length
     ) {
       return {
-        status: STATUS_BAD,
-        message: ["Can't connect to parity."]
+        status: STATUS.CANTCONNECT
       };
     }
 
     // At this point we have a successful connection to parity
 
     // Check if we're syncing
-    // TODO
+    if (this.syncing) {
+      const { currentBlock, highestBlock, startingBlock } = this.syncing;
+      const percentage = Math.round(
+        (currentBlock - startingBlock) * 100 / (highestBlock - startingBlock)
+      );
+      return {
+        status: STATUS.SYNCING,
+        payload: { currentBlock, highestBlock, percentage, startingBlock }
+      };
+    }
 
     // Find out if there are bad statuses
     const bad = Object.values(this.nodeHealth)
       .filter(x => x)
       .map(({ status }) => status)
-      .find(s => s === STATUS_BAD);
+      .find(s => s === 'bad');
     // Find out if there are needsAttention statuses
     const needsAttention = Object.keys(this.nodeHealth)
       .filter(key => key !== 'time')
       .map(key => this.nodeHealth[key])
       .filter(x => x)
       .map(({ status }) => status)
-      .find(s => s === STATUS_WARN);
+      .find(s => s === 'needsattention');
+
+    if (!bad && !needsAttention) {
+      return {
+        status: STATUS.GOOD
+      };
+    }
+
+    // Now we have a bad or a needsattention message
+
     // Get all non-empty messages from all statuses
-    const message = Object.values(this.nodeHealth)
+    const details = Object.values(this.nodeHealth)
       .map(({ message }) => message)
       .filter(x => x);
 
-    return {
-      status: bad || needsAttention || STATUS_OK,
-      message
-    };
+    // If status is bad or needsattention, there should be an associated
+    // message. Just in case, we do an additional test.
+    if (!details || !details.length) {
+      return { status: STATUS.OTHER };
+    }
+
+    const message = details[0];
+    console.log(message); // TODO WIP, to catch potential other messages
+
+    if (
+      message ===
+      "Your node is still syncing, the values you see might be outdated. Wait until it's fully synced."
+    ) {
+      return { status: STATUS.SYNCING };
+    }
+
+    if (
+      message ===
+      'You are not connected to any peers. There is most likely some network issue. Fix connectivity.'
+    ) {
+      return { status: STATUS.NOINTERNET, payload: message };
+    }
+
+    if (
+      message.includes(
+        'Your clock is not in sync. Detected difference is too big for the protocol to work.'
+      )
+    ) {
+      return { status: STATUS.CLOCKNOTSYNC, payload: message };
+    }
+
+    return { status: STATUS.OTHER, payload: message };
   }
 
   @action
   setNodeHealth = nodeHealth => {
     this.nodeHealth = nodeHealth;
+  };
+
+  @action
+  setSyncing = syncing => {
+    this.syncing = syncing;
   };
 }
 
