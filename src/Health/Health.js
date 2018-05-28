@@ -52,6 +52,8 @@ class Health extends Component {
         return 'Clock not sync';
       case STATUS.DOWNLOADING:
         return `Downloading... (${payload.percentage}%)`;
+      case STATUS.GOOD:
+        return 'Synced';
       case STATUS.NOINTERNET:
         return 'No internet';
       case STATUS.RUNNING:
