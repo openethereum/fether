@@ -23,7 +23,7 @@ let parity = null; // Will hold the running parity instance
 // panic). They happen when an instance of parity is already running, and
 // parity-ui tries to launch another one.
 const catchableErrors = [
-  'is already in use, make sure that another instance of an Ethereum client is not running or change the address using the --ws-port and --ws-interface options.',
+  'is already in use, make sure that another instance of an Ethereum client is not running',
   'IO error: While lock file:'
 ];
 
