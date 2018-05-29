@@ -4,12 +4,14 @@
 // SPDX-License-Identifier: MIT
 
 import createAccountStore from './createAccountStore';
+import healthStore from './healthStore';
 import parityStore from './parityStore';
 import signerStore from './signerStore';
 import tokensStore from './tokensStore';
 
 export default {
   createAccountStore,
+  healthStore,
   parityStore,
   signerStore,
   tokensStore

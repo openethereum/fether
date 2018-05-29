@@ -5,48 +5,39 @@
 
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+
+import Health from '../Health';
 
 @inject('parityStore')
 @observer
 class Loading extends Component {
   render () {
-    const { parityStore: { downloadProgress, isApiConnected } } = this.props;
+    const { parityStore: { isApiConnected } } = this.props;
 
     if (isApiConnected) {
       return <Redirect to='/' />;
     }
 
     return (
-      <div className='box -scroller'>
+      <div>
         <p>
           This is the Loading page.<br />
         </p>
-        <ul className='list -tokens'>
-          <li>
-            <p>1. DL and install parity</p>
-            <pre>
-              progress: {Math.round(downloadProgress * 100)}%<br />status:{' '}
-              {this.renderStatus()}
-            </pre>
-          </li>
-        </ul>
+
+        <nav className='footer-nav'>
+          <div className='footer-nav_status'>
+            <Health />
+          </div>
+          <div className='footer-nav_icons'>
+            <Link to='/settings' className='icon -settings'>
+              Settings
+            </Link>
+          </div>
+        </nav>
       </div>
     );
   }
-
-  renderStatus = () => {
-    const { parityStore: { downloadProgress, isParityRunning } } = this.props;
-
-    if (isParityRunning) {
-      return 'Connecting to API...';
-    } else if (downloadProgress) {
-      return 'Downloading...';
-    } else {
-      // We should be in browser now
-      return 'Please run:\nparity --light --ws-origins all';
-    }
-  };
 }
 
 export default Loading;
