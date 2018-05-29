@@ -11,9 +11,7 @@ import { Link } from 'react-router-dom';
 @observer
 class CreateAccountStep2 extends Component {
   render () {
-    const {
-      createAccountStore: { phrase }
-    } = this.props;
+    const { createAccountStore: { phrase } } = this.props;
 
     return (
       <div>

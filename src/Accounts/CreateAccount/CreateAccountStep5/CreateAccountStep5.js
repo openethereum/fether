@@ -10,17 +10,12 @@ import { inject, observer } from 'mobx-react';
 @observer
 class CreateAccountStep5 extends Component {
   handleSubmit = () => {
-    const {
-      createAccountStore: { saveAccountToParity },
-      history
-    } = this.props;
-    saveAccountToParity().then(() => history.push('/'));
+    const { createAccountStore: { saveAccountToParity }, history } = this.props;
+    saveAccountToParity().then(() => history.push('/accounts'));
   };
 
   render () {
-    const {
-      createAccountStore: { hint }
-    } = this.props;
+    const { createAccountStore: { hint } } = this.props;
 
     return (
       <div>

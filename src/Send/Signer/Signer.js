@@ -1,3 +1,8 @@
+// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// This file is part of Parity.
+//
+// SPDX-License-Identifier: MIT
+
 import React, { Component } from 'react';
 import { fromWei } from '@parity/api/lib/util/wei';
 import { inject, observer } from 'mobx-react';
@@ -57,22 +62,30 @@ class Signer extends Component {
   };
 
   render () {
-    const {
-      location: { state: tx }
-    } = this.props;
+    const { location: { state: tx } } = this.props;
     const { password, status } = this.state;
 
     return (
       <form onSubmit={this.handleSubmit}>
-        <h3>Request number {this.requestId}</h3>
-        <p>From: {tx.from}</p>
-        <p>To: {tx.to}</p>
-        <p>Amount: {+fromWei(tx.value)}ETH</p>
-        <p>Gas: {+tx.gas}</p>
-        {status && status.requested ? (
-          <div>
+        <h3>
+          Request number {this.requestId}
+        </h3>
+        <p>
+          From: {tx.from}
+        </p>
+        <p>
+          To: {tx.to}
+        </p>
+        <p>
+          Amount: {+fromWei(tx.value)}ETH
+        </p>
+        <p>
+          Gas: {+tx.gas}
+        </p>
+        {status && status.requested
+          ? <div>
             <label>
-              Enter your password to confirm:<br />
+                Enter your password to confirm:<br />
               <input
                 onChange={this.handleChangePassword}
                 required
@@ -83,20 +96,20 @@ class Signer extends Component {
             <br />
             <button>Accept</button>{' '}
             <button onClick={this.handleReject} type='button'>
-              Reject (no pw needed)
+                Reject (no pw needed)
             </button>
             <br />
             <em style={{ fontSize: 10 }}>
-              @brian, for now for errors look in console, e.g. when nothing
-              happens when you click on Accept
+                @brian, for now for errors look in console, e.g. when nothing
+                happens when you click on Accept
             </em>
           </div>
-        ) : (
-          <p>Loading...</p>
-        )}
+          : <p>Loading...</p>}
         <br />
         <br />
-        <p>Status: {JSON.stringify(status)}</p>
+        <p>
+          Status: {JSON.stringify(status)}
+        </p>
       </form>
     );
   }

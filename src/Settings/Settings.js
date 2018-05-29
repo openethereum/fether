@@ -3,12 +3,12 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 
 import Health from '../Health';
 
-class Settings extends Component {
+class Settings extends PureComponent {
   render () {
     return (
       <div>

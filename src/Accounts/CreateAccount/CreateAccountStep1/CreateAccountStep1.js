@@ -25,16 +25,15 @@ class CreateAccountStep1 extends Component {
     } = this.props;
 
     return (
-      <div>
-        <div className='window_content -modal'>
+      <div className='window_content -modal'>
+        {address &&
           <div className='box -modal -padded'>
             <div>
               Your new address:<br />
               <Blockie seed={address} />
               <pre>{address} </pre>
-              {pathname === '/accounts/new' && (
-                <button onClick={generateNewAccount}>Change</button>
-              )}
+              {pathname === '/accounts/new' &&
+                <button onClick={generateNewAccount}>Change</button>}
             </div>
             <label>
               Set a name for this account:<br />
@@ -47,14 +46,12 @@ class CreateAccountStep1 extends Component {
             </label>
             <div className='box'>
               {pathname === '/accounts/new' &&
-                !!name && (
-                  <Link to='/accounts/new/step2'>
-                    <button>Select</button>
-                  </Link>
-                )}
+                !!name &&
+                <Link to='/accounts/new/step2'>
+                  <button>Select</button>
+                </Link>}
             </div>
-          </div>
-        </div>
+          </div>}
       </div>
     );
   }

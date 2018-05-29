@@ -17,9 +17,7 @@ class CreateAccountStep3 extends Component {
   handleChange = ({ target: { value } }) => this.setState({ value });
 
   render () {
-    const {
-      createAccountStore: { phrase }
-    } = this.props;
+    const { createAccountStore: { phrase } } = this.props;
     const { value } = this.state;
 
     return (
@@ -33,11 +31,10 @@ class CreateAccountStep3 extends Component {
           @brian maybe tell the user to write the 3rd, 9th and 11th word only?
           3,9,11 being random numbers
         </em>
-        {value === phrase && (
+        {value === phrase &&
           <Link to='/accounts/new/step4'>
             <button>Done</button>
-          </Link>
-        )}
+          </Link>}
       </div>
     );
   }

@@ -11,9 +11,7 @@ import { Redirect } from 'react-router-dom';
 @observer
 class Loading extends Component {
   render () {
-    const {
-      parityStore: { downloadProgress, isApiConnected }
-    } = this.props;
+    const { parityStore: { downloadProgress, isApiConnected } } = this.props;
 
     if (isApiConnected) {
       return <Redirect to='/' />;
@@ -38,9 +36,7 @@ class Loading extends Component {
   }
 
   renderStatus = () => {
-    const {
-      parityStore: { downloadProgress, isParityRunning }
-    } = this.props;
+    const { parityStore: { downloadProgress, isParityRunning } } = this.props;
 
     if (isParityRunning) {
       return 'Connecting to API...';
