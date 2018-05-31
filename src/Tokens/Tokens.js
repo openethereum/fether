@@ -23,18 +23,21 @@ class Tokens extends PureComponent {
     return (
       <div>
         <nav className='header-nav'>
-          <Link to='/accounts' className='icon -back'>
-            Back
-          </Link>
-          <Link to='/tokens'>
-            {accountsInfo && defaultAccount && accountsInfo[defaultAccount]
-              ? accountsInfo[defaultAccount].name
-              : 'Loading...'}
-          </Link>
-          <Link to='/receive' className='icon -receive'>
-            {/* TODO: Don't worry -- this isn't good UX and won't stick around. */}
-            Receive
-          </Link>
+          <div className='header-nav_left'>
+            <Link to='/accounts' className='icon -back'>
+              Back
+            </Link>
+          </div>
+          <div className='header-nav_title'>
+            <Link to='/receive'>
+              {accountsInfo && defaultAccount && accountsInfo[defaultAccount]
+                ? accountsInfo[defaultAccount].name
+                : 'Loading...'}
+            </Link>
+          </div>
+          <div className='header-nav_right'>
+            &nbsp;
+          </div>
         </nav>
 
         <Switch>
@@ -47,7 +50,7 @@ class Tokens extends PureComponent {
             <Health />
           </div>
           <div className='footer-nav_icons'>
-            <Link to='/settings' className='icon -settings'>
+            <Link to='/tokens/new' className='icon -settings'>
               Settings
             </Link>
           </div>

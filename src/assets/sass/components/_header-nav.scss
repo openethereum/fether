@@ -6,20 +6,13 @@
 
   .header-nav_left, .header-nav_right {
     display: flex;
-    flex-grow: 1;
-    z-index: 1;
-  }
-
-  .header-nav_left {
-    justify-content: flex-start;
-  }
-
-  .header-nav_right {
-    justify-content: flex-end;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   .header-nav_title {
-    z-index: 0;
+    z-index: 2;
     position: absolute;
     left: 0;
     right: 0;
@@ -35,13 +28,10 @@
     }
   }
 
-  &.-modal {
-    background: $white;
-  }
-
   a,
   a:link,
   a:visited {
+    z-index: 9;
     color: rgba($black, 0.675);
     font-weight: 500;
     display: block;

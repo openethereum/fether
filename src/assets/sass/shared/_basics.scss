@@ -1,12 +1,10 @@
 html {
-  font-size: 17px;
+  font-size: 16px;
   height: 100%;
-  @media screen and (min-width: $large) {
-    font-size: 1.4vw;
-  }
 }
 
 body {
+  user-select: none;
   background-color: #A5BFDA;
   background-image: linear-gradient(#A5BFDA, #BFCDDC);
   background-repeat: no-repeat;

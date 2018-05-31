@@ -15,13 +15,12 @@ class CreateAccountStep2 extends Component {
 
     return (
       <div>
-        <h3>Create account step 2</h3>
         <div>
           Please write your secret phrase on a piece of paper:<br />
           <pre>{phrase}</pre>
         </div>
         <Link to='/accounts/new/step3'>
-          <button>Done</button>
+          <button>Next</button>
         </Link>
       </div>
     );

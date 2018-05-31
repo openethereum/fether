@@ -40,7 +40,6 @@ class CreateAccountStep3 extends Component {
 
     return (
       <div>
-        <h3>Create account step 4</h3>
         <form onSubmit={this.handleSubmit}>
           <label>
             Password:{' '}
@@ -66,7 +65,7 @@ class CreateAccountStep3 extends Component {
             Password Hint (optional):{' '}
             <input onChange={this.handleHintChange} value={hint} />
           </label>
-          {password && confirm === password && <button>Submit</button>}
+          {password && confirm === password && <button>Next</button>}
         </form>
       </div>
     );

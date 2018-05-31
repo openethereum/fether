@@ -5,7 +5,6 @@
 
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { Link } from 'react-router-dom';
 
 import EthBalance from './EthBalance';
 import TokenBalance from './TokenBalance';
@@ -27,9 +26,6 @@ class Tokens extends Component {
                   : <TokenBalance token={token} />}
               </li>
             )}
-            <li>
-              <Link to='/tokens/new'>Add/Remove Token</Link>
-            </li>
           </ul>
         </div>
       </div>

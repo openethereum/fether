@@ -17,10 +17,10 @@ class Receive extends PureComponent {
     const { me } = this.props;
     return (
       <div>
-        <nav className='header-nav'>
+        <nav className='header-nav -modal'>
           <div className='header-nav_left'>
             <Link to='/tokens' className='icon -close'>
-              x
+              Close
             </Link>
           </div>
           <div className='header-nav_title'>
@@ -31,20 +31,13 @@ class Receive extends PureComponent {
           </div>
         </nav>
         <div className='window_content'>
-          <div className='box -scroller -well'>
-            <div className='box -card'>
-              <div className='box -padded'>
-                <label>Wallet address</label>
-              </div>
-              <div className='box -padded address'>
-                <code>
-                  {me}
-                </code>
-              </div>
-              <div className='box -padded'>
-                <button className='-small'>Copy to clipboard</button>
-              </div>
-            </div>
+          <div className='box -padded address'>
+            <code>
+              {me}
+            </code>
+          </div>
+          <div className='box -padded'>
+            <button className='-small'>Copy to clipboard</button>
           </div>
         </div>
       </div>

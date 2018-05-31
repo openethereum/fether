@@ -1,11 +1,9 @@
 .list {
-  &.-padded {
-    padding: 0.325rem;
-    & > li {
-      margin-bottom: 0.325rem;
-      &:last-child {
-        margin-bottom: 0;
-      }
+  padding: 0.5rem;
+  & > li {
+    margin-bottom: 0.5rem;
+    &:last-child {
+      margin-bottom: 0;
     }
   }
 }

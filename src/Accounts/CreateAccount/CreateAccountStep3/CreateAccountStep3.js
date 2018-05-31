@@ -22,18 +22,13 @@ class CreateAccountStep3 extends Component {
 
     return (
       <div>
-        <h3>Create account step 3</h3>
         <div>
           Please rewrite your whole phrase here<br />
           <input onChange={this.handleChange} required value={value} />
         </div>
-        <em style={{ fontSize: 12 }}>
-          @brian maybe tell the user to write the 3rd, 9th and 11th word only?
-          3,9,11 being random numbers
-        </em>
         {value === phrase &&
           <Link to='/accounts/new/step4'>
-            <button>Done</button>
+            <button>Next</button>
           </Link>}
       </div>
     );

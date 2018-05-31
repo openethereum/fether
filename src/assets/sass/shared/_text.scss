@@ -27,3 +27,8 @@
   }
 }
 
+.span {
+  &.-placeholder {
+    color: $faint;
+  }
+}

@@ -27,30 +27,40 @@ class CreateAccountStep1 extends Component {
     return (
       <div className='window_content -modal'>
         {address &&
-          <div className='box -modal -padded'>
-            <div>
-              Your new address:<br />
-              <Blockie seed={address} />
-              <pre>{address} </pre>
-              {pathname === '/accounts/new' &&
-                <button onClick={generateNewAccount}>Change</button>}
+          <div className='box -padded'>
+            <div className='account box -card'>
+              <div className='account_avatar'>
+                <Blockie seed={address} />
+              </div>
+              <div className='account_information'>
+                <div className='account_name'>
+                  {name
+                  ? name
+                  : <span className='span -placeholder'>Account name</span>}
+                </div>
+                <div className='account_address'>
+                  {address}
+                </div>
+              </div>
             </div>
-            <label>
-              Set a name for this account:<br />
-              <input
-                disabled={pathname !== '/accounts/new'}
-                onChange={this.handleChange}
-                required
-                value={name}
-              />
-            </label>
             <div className='box'>
+              {pathname === '/accounts/new' &&
+                <button onClick={generateNewAccount} className='button -tiny -reload'>Regenerate address</button>}
+            </div>
+            <label>Name</label>
+            <input
+              disabled={pathname !== '/accounts/new'}
+              onChange={this.handleChange}
+              required
+              value={name}
+            />
+            <nav className='box'>
               {pathname === '/accounts/new' &&
                 !!name &&
                 <Link to='/accounts/new/step2'>
-                  <button>Select</button>
+                  <button>Next</button>
                 </Link>}
-            </div>
+            </nav>
           </div>}
       </div>
     );

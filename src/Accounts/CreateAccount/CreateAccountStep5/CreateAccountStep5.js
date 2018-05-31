@@ -19,7 +19,6 @@ class CreateAccountStep5 extends Component {
 
     return (
       <div>
-        <h3>Create account step 5</h3>
         <p>Confirm account creation?</p>
         <p>
           Password Hint: <em>{hint}</em>

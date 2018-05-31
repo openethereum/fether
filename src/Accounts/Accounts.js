@@ -58,7 +58,7 @@ class Accounts extends Component {
         <div className='window_content'>
           <div className='box -scroller'>
             {accountsInfo
-              ? <ul className='list -padded'>
+              ? <ul className='list'>
                 {Object.keys(accountsInfo).map(address =>
                   <li
                     key={address}
