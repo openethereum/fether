@@ -50,9 +50,7 @@ class CreateAccountStep4 extends Component {
               </div>
               <div className='account_information'>
                 <div className='account_name'>
-                  {name
-                  ? name
-                  : <span className='span -placeholder'>Account</span>}
+                  {name || <span className='span -placeholder'>Account</span>}
                 </div>
                 <div className='account_address'>
                   {address}

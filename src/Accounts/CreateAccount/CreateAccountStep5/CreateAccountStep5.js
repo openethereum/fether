@@ -16,7 +16,7 @@ class CreateAccountStep5 extends Component {
   };
 
   render () {
-    const { createAccountStore: {  address, name, hint } } = this.props;
+    const { createAccountStore: { address, name, hint } } = this.props;
 
     return (
       <div className='window_content'>
@@ -28,9 +28,7 @@ class CreateAccountStep5 extends Component {
               </div>
               <div className='account_information'>
                 <div className='account_name'>
-                  {name
-                  ? name
-                  : <span className='span -placeholder'>Account</span>}
+                  {name || <span className='span -placeholder'>Account</span>}
                 </div>
                 <div className='account_address'>
                   {address}

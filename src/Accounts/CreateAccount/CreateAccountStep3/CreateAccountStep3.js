@@ -31,9 +31,7 @@ class CreateAccountStep3 extends Component {
               </div>
               <div className='account_information'>
                 <div className='account_name'>
-                  {name
-                  ? name
-                  : <span className='span -placeholder'>Account</span>}
+                  {name || <span className='span -placeholder'>Account</span>}
                 </div>
                 <div className='account_address'>
                   {address}
@@ -56,8 +54,8 @@ class CreateAccountStep3 extends Component {
               <nav className='form-nav'>
                 {value === phrase
                   ? <Link to='/accounts/new/step4'>
-                      <button className='button'>Next</button>
-                    </Link>
+                    <button className='button'>Next</button>
+                  </Link>
                   : <button className='button' disabled='true'>Next</button>}
               </nav>
             </div>
