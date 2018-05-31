@@ -39,7 +39,7 @@ class CreateAccount extends PureComponent {
         </nav>
 
         <div className='window_content -modal'>
-          <Route path='/accounts/new' component={Step1} />
+          <Route path='/accounts/new/step1' component={Step1} />
           <Route path='/accounts/new/step2' component={Step2} />
           <Route path='/accounts/new/step3' component={Step3} />
           <Route path='/accounts/new/step4' component={Step4} />

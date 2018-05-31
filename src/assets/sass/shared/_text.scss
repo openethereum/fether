@@ -25,6 +25,17 @@
   strong {
     font-weight: 500;
   }
+
+  &.-code {
+    user-select: text;
+    font-family: $mono;
+    padding: 0.5rem;
+    background: rgba($faint,0.25);
+    color: $black;
+    margin: 0.5rem 0;
+    font-size: ms(-1);
+    border-radius: 0.25rem;
+  }
 }
 
 .span {

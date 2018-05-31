@@ -4,11 +4,12 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
+import Blockie from 'react-blockies';
 import { inject, observer } from 'mobx-react';
 
 @inject('createAccountStore')
 @observer
-class CreateAccountStep3 extends Component {
+class CreateAccountStep4 extends Component {
   state = {
     confirm: '',
     hint: '',
@@ -36,40 +37,75 @@ class CreateAccountStep3 extends Component {
   };
 
   render () {
+    const { createAccountStore: { address, name } } = this.props;
     const { confirm, hint, password } = this.state;
 
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Password:{' '}
-            <input
-              onChange={this.handlePasswordChange}
-              required
-              type='password'
-              value={password}
-            />
-          </label>
-          <br />
-          <label>
-            Confirm:{' '}
-            <input
-              onChange={this.handleConfirmChange}
-              required
-              type='password'
-              value={confirm}
-            />
-          </label>
-          <br />
-          <label>
-            Password Hint (optional):{' '}
-            <input onChange={this.handleHintChange} value={hint} />
-          </label>
-          {password && confirm === password && <button>Next</button>}
-        </form>
+      <div className='window_content'>
+        <div className='box -padded'>
+          <div className='box -card'>
+            <div className='account'>
+              <div className='account_avatar'>
+                <Blockie seed={address} />
+              </div>
+              <div className='account_information'>
+                <div className='account_name'>
+                  {name
+                  ? name
+                  : <span className='span -placeholder'>Account</span>}
+                </div>
+                <div className='account_address'>
+                  {address}
+                </div>
+              </div>
+            </div>
+            <div className='box -card-drawer'>
+              <form onSubmit={this.handleSubmit}>
+                <div className='text'>
+                  <p>Secure your account with a password:</p>
+                </div>
+
+                <div className='form_field'>
+                  <label>Password{' '}</label>
+                  <input
+                    onChange={this.handlePasswordChange}
+                    required
+                    type='password'
+                    value={password}
+                  />
+                </div>
+
+                <div className='form_field'>
+                  <label>Confirm{' '}</label>
+                  <input
+                    onChange={this.handleConfirmChange}
+                    required
+                    type='password'
+                    value={confirm}
+                  />
+                </div>
+
+                <div className='form_field'>
+                  <label>Password Hint (optional) {' '}</label>
+                  <input
+                    onChange={this.handleHintChange}
+                    type='text'
+                    value={hint}
+                  />
+                </div>
+
+                <nav className='form-nav'>
+                  {password && confirm === password
+                    ? <button className='button'>Next</button>
+                    : <button className='button' disabled='true'>Next</button>}
+                </nav>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 }
 
-export default CreateAccountStep3;
+export default CreateAccountStep4;

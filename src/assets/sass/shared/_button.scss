@@ -8,8 +8,14 @@
   line-height: 1.3;
   padding: 0.325rem 0.675rem 0.325rem;
   text-transform: uppercase;
-  &:active {
+
+  &:hover {
     background-color: $blue;
+    color: $white;
+  }
+
+  &:active {
+    background-color: darken($blue,2.5%);
     color: $white;
   }
 
@@ -24,7 +30,7 @@
     background-repeat: no-repeat;
     background-color: transparent;
     padding: 0 0 0 0.925rem;
-    opacity: 0.5;
+    opacity: 0.425;
 
     &:hover {
       opacity: 0.625;

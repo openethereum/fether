@@ -1,10 +1,13 @@
 .box {
   display: block;
+  position: relative;
 
   &.-card {
+    z-index: 1;
     padding: 1rem;
     border-radius: 0.25rem;
     background-color: $eggshell;
+    overflow: hidden;
     box-shadow: 0 0.125rem 0.5rem rgba($black,0.125);
     &.-clickable {
       transition: box-shadow ease 0.125s;
@@ -17,6 +20,14 @@
         cursor: default;
       }
     }
+  }
+
+  &.-card-drawer {
+    margin: 1rem -2rem -2rem;
+    padding: 1rem 2rem 2rem;
+    border-top: 1px solid lighten($faint,1.25%);
+    box-shadow: 0 0.125rem 0.325rem rgba($black,0.075) inset;
+    background-color: darken($eggshell,0.75%);
   }
 
   &.-well {
@@ -32,7 +43,20 @@
     padding: 0.5rem;
   }
 
-  &.-modal {
+  &.-apart {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    &:first-child {
+      margin-top: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &.-pull-up {
+    margin-top: -1rem;
+    margin-bottom: 1rem;
   }
 
   &.-stacked {
