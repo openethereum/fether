@@ -2,20 +2,36 @@
   display: flex;
   justify-content: space-between;
   padding: 1rem 0.5rem;
+  position: relative;
 
-  .header_title {
-    text-align: center;
-    color: rgba($black, 0.675);
-    font-weight: 500;
+  .header-nav_left, .header-nav_right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
-  &.-modal {
-    background: $white;
+  .header-nav_title {
+    z-index: 2;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    padding: 1rem 0.5rem;
+    text-align: center;
+
+    a, a:link, a:visited, h1 {
+      color: rgba($black, 0.675);
+      font-weight: 500;
+      display: inline-block;
+    }
   }
 
   a,
   a:link,
   a:visited {
+    z-index: 9;
     color: rgba($black, 0.675);
     font-weight: 500;
     display: block;

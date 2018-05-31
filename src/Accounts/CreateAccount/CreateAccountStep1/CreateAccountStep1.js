@@ -25,31 +25,45 @@ class CreateAccountStep1 extends Component {
     } = this.props;
 
     return (
-      <div className='window_content -modal'>
+      <div className='window_content'>
         {address &&
-          <div className='box -modal -padded'>
-            <div>
-              Your new address:<br />
-              <Blockie seed={address} />
-              <pre>{address} </pre>
-              {pathname === '/accounts/new' &&
-                <button onClick={generateNewAccount}>Change</button>}
-            </div>
-            <label>
-              Set a name for this account:<br />
-              <input
-                disabled={pathname !== '/accounts/new'}
-                onChange={this.handleChange}
-                required
-                value={name}
-              />
-            </label>
-            <div className='box'>
-              {pathname === '/accounts/new' &&
-                !!name &&
-                <Link to='/accounts/new/step2'>
-                  <button>Select</button>
-                </Link>}
+          <div className='box -padded'>
+            <div className='box -card'>
+              <div className='account'>
+                <div className='account_avatar'>
+                  <Blockie seed={address} />
+                </div>
+                <div className='account_information'>
+                  <div className='account_name'>
+                    {name || <span className='span -placeholder'>Account</span>}
+                  </div>
+                  <div className='account_address'>
+                    {address}
+                  </div>
+                </div>
+              </div>
+              <div className='box -card-drawer'>
+                <div className='box -pull-up text -right'>
+                  {pathname === '/accounts/new/step1' &&
+                    <button onClick={generateNewAccount} className='button -tiny -reload'>Regenerate address</button>}
+                </div>
+                <div className='form_field'>
+                  <label>Name</label>
+                  <input
+                    onChange={this.handleChange}
+                    required
+                    placeholder='Enter a name for this account'
+                    value={name}
+                  />
+                </div>
+                <nav className='form-nav'>
+                  {name
+                    ? <Link to='/accounts/new/step2'>
+                      <button className='button'>Next</button>
+                    </Link>
+                    : <button className='button' disabled='true'>Next</button>}
+                </nav>
+              </div>
             </div>
           </div>}
       </div>

@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
+import Blockie from 'react-blockies';
 import { inject, observer } from 'mobx-react';
 
 @inject('createAccountStore')
@@ -15,16 +16,38 @@ class CreateAccountStep5 extends Component {
   };
 
   render () {
-    const { createAccountStore: { hint } } = this.props;
+    const { createAccountStore: { address, name, hint } } = this.props;
 
     return (
-      <div>
-        <h3>Create account step 5</h3>
-        <p>Confirm account creation?</p>
-        <p>
-          Password Hint: <em>{hint}</em>
-        </p>
-        <button onClick={this.handleSubmit}>Confirm</button>
+      <div className='window_content'>
+        <div className='box -padded'>
+          <div className='box -card'>
+            <div className='account'>
+              <div className='account_avatar'>
+                <Blockie seed={address} />
+              </div>
+              <div className='account_information'>
+                <div className='account_name'>
+                  {name || <span className='span -placeholder'>Account</span>}
+                </div>
+                <div className='account_address'>
+                  {address}
+                </div>
+              </div>
+            </div>
+            <div className='box -card-drawer'>
+              <div className='text'>
+                <p>Ready to create account?</p>
+              </div>
+              <div className='text -code'>
+                {hint}
+              </div>
+              <nav className='form-nav'>
+                <button onClick={this.handleSubmit} className='button'>Next</button>
+              </nav>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

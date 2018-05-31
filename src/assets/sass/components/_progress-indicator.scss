@@ -1,0 +1,17 @@
+.progress-indicator {
+  display: flex;
+  width: 2.5rem;
+  height: 0.25rem;
+  overflow: hidden;
+  border-radius: 0.25rem;
+}
+
+.progress-indicator_step {
+  flex: 1;
+  background: $faint;
+  height: 0.25rem;
+
+  &.-complete {
+    background: $green;
+  }
+}

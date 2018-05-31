@@ -17,15 +17,29 @@ class CreateAccount extends PureComponent {
     return (
       <div>
         <nav className='header-nav -modal'>
-          <Link to='/accounts' className='icon -close'>
-            Close
-          </Link>
-          <p className='header_title'>Create a new account</p>
-          <p>&nbsp;</p>
+          <div className='header-nav_left'>
+            <Link to='/accounts' className='icon -close'>
+              Close
+            </Link>
+          </div>
+          <div className='header-nav_title'>
+            <h1>
+              Create a new account
+            </h1>
+          </div>
+          <div className='header-nav_right'>
+            <div className='progress-indicator'>
+              <div className='progress-indicator_step -complete' />
+              <div className='progress-indicator_step -complete' />
+              <div className='progress-indicator_step' />
+              <div className='progress-indicator_step' />
+              <div className='progress-indicator_step' />
+            </div>
+          </div>
         </nav>
 
         <div className='window_content -modal'>
-          <Route path='/accounts/new' component={Step1} />
+          <Route path='/accounts/new/step1' component={Step1} />
           <Route path='/accounts/new/step2' component={Step2} />
           <Route path='/accounts/new/step3' component={Step3} />
           <Route path='/accounts/new/step4' component={Step4} />

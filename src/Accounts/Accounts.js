@@ -42,19 +42,23 @@ class Accounts extends Component {
     return (
       <div>
         <nav className='header-nav'>
-          <p>&nbsp;</p>
-          <Link to='/accounts' className='header_title'>
-            Accounts
-          </Link>
-          <Link to='/accounts/new' className='icon -new'>
-            New account
-          </Link>
+          <div className='header-nav_left'>&nbsp;</div>
+          <div className='header-nav_title'>
+            <h1>
+              Accounts
+            </h1>
+          </div>
+          <div className='header-nav_right'>
+            <Link to='/accounts/new/step1' className='icon -new'>
+              New account
+            </Link>
+          </div>
         </nav>
 
         <div className='window_content'>
           <div className='box -scroller'>
             {accountsInfo
-              ? <ul className='list -padded'>
+              ? <ul className='list'>
                 {Object.keys(accountsInfo).map(address =>
                   <li
                     key={address}
