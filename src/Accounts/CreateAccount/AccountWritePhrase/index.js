@@ -3,6 +3,6 @@
 //
 // SPDX-License-Identifier: MIT
 
-import CreateAccountStep3 from './CreateAccountStep3';
+import AccountWritePhrase from './AccountWritePhrase';
 
-export default CreateAccountStep3;
+export default AccountWritePhrase;

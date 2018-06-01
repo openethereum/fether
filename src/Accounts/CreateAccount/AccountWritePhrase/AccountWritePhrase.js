@@ -5,33 +5,39 @@
 
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { Link } from 'react-router-dom';
 
 import CreateAccountHeader from '../CreateAccountHeader';
 
 @inject('createAccountStore')
 @observer
-class CreateAccountStep3 extends Component {
+class AccountWritePhrase extends Component {
   state = {
     value: ''
   };
 
   handleChange = ({ target: { value } }) => this.setState({ value });
 
+  handleNextStep = () => {
+    const { history, location: { pathname } } = this.props;
+    const currentStep = pathname.slice(-1);
+    history.push(`/accounts/new/${+currentStep + 1}`);
+  };
+
   handleSavePhrase = () => {
-    const { createAccountStore: { setPhrase }, history } = this.props;
+    const { createAccountStore: { setPhrase } } = this.props;
     const { value } = this.state;
-    setPhrase(value).then(() => history.push('/accounts/new/4'));
+    setPhrase(value).then(this.handleNextStep);
   };
 
   render () {
+    const { createAccountStore: { isImport } } = this.props;
     const { value } = this.state;
 
     return (
       <div className='window_content'>
         <div className='box -padded'>
           <div className='box -card'>
-            <CreateAccountHeader />
+            {isImport ? <div>blank space</div> : <CreateAccountHeader />}
             <div className='box -card-drawer'>
               <div className='text'>
                 <p>Please write your recovery phrase here:</p>
@@ -52,19 +58,21 @@ class CreateAccountStep3 extends Component {
   }
 
   renderButton = () => {
-    const { createAccountStore: { isImporting, phrase } } = this.props;
+    const { createAccountStore: { isImport, phrase } } = this.props;
     const { value } = this.state;
 
     // If we are creating a new account, the button just checks the phrase has
     // been correctly written by the user.
-    if (!isImporting) {
-      return value === phrase
-        ? <Link to='/accounts/new/4'>
-          <button className='button'>Next</button>
-        </Link>
-        : <button className='button' disabled>
-            Next
-        </button>;
+    if (!isImport) {
+      return (
+        <button
+          className='button'
+          disabled={value !== phrase}
+          onClick={this.handleNextStep}
+        >
+          Next
+        </button>
+      );
     }
 
     // If we are importing an existing account, the button sets the phrase
@@ -76,4 +84,4 @@ class CreateAccountStep3 extends Component {
   };
 }
 
-export default CreateAccountStep3;
+export default AccountWritePhrase;

@@ -10,7 +10,7 @@ import parityStore from './parityStore';
 class CreateAccountStore {
   @observable address = null;
   @observable hint = ''; // Password hint (optional)
-  @observable isImporting = false; // Are we creating a new account, or importing via phrase?
+  @observable isImport = false; // Are we creating a new account, or importing via phrase?
   @observable name = ''; // Account name
   @observable password = '';
   @observable phrase = null; // The 12-word seed phrase
@@ -41,8 +41,8 @@ class CreateAccountStore {
   };
 
   @action
-  setIsImporting = isImporting => {
-    this.isImporting = isImporting;
+  setIsImporting = isImport => {
+    this.isImport = isImport;
   };
 
   @action

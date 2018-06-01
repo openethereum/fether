@@ -5,20 +5,19 @@
 
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { Link, Redirect } from 'react-router-dom';
 
 import CreateAccountHeader from '../CreateAccountHeader';
 
 @inject('createAccountStore')
 @observer
-class CreateAccountStep2 extends Component {
-  render () {
-    const { createAccountStore: { isImporting, phrase } } = this.props;
+class AccountConfirm extends Component {
+  handleSubmit = () => {
+    const { createAccountStore: { saveAccountToParity }, history } = this.props;
+    saveAccountToParity().then(() => history.push('/accounts'));
+  };
 
-    // There's not Step2 if we are importing an existing account
-    if (isImporting) {
-      return <Redirect to='/accounts/new/3' />;
-    }
+  render () {
+    const { createAccountStore: { hint } } = this.props;
 
     return (
       <div className='window_content'>
@@ -27,15 +26,15 @@ class CreateAccountStep2 extends Component {
             <CreateAccountHeader />
             <div className='box -card-drawer'>
               <div className='text'>
-                <p>Please write your secret phrase on a piece of paper:</p>
+                <p>Ready to create account?</p>
               </div>
               <div className='text -code'>
-                {phrase}
+                {hint}
               </div>
               <nav className='form-nav'>
-                <Link to='/accounts/new/3'>
-                  <button className='button'>Next</button>
-                </Link>
+                <button onClick={this.handleSubmit} className='button'>
+                  Next
+                </button>
               </nav>
             </div>
           </div>
@@ -45,4 +44,4 @@ class CreateAccountStep2 extends Component {
   }
 }
 
-export default CreateAccountStep2;
+export default AccountConfirm;

@@ -11,21 +11,20 @@ import CreateAccountHeader from '../CreateAccountHeader';
 
 @inject('createAccountStore')
 @observer
-class CreateAccountStep1 extends Component {
+class AccountName extends Component {
   componentDidMount () {
     this.props.createAccountStore.generateNewAccount();
   }
-
-  handleChangeIsImporting = ({ target: { checked } }) =>
-    this.props.createAccountStore.setIsImporting(checked);
 
   handleChangeName = ({ target: { value } }) =>
     this.props.createAccountStore.setName(value);
 
   render () {
     const {
-      createAccountStore: { address, generateNewAccount, isImporting, name }
+      createAccountStore: { address, generateNewAccount, isImport, name },
+      location: { pathname }
     } = this.props;
+    const currentStep = pathname.slice(-1);
 
     return (
       <div className='window_content'>
@@ -34,7 +33,7 @@ class CreateAccountStep1 extends Component {
             <div className='box -card'>
               <CreateAccountHeader />
               <div className='box -card-drawer'>
-                {!isImporting &&
+                {!isImport &&
                   <div className='box -pull-up text -right'>
                     <button
                       onClick={generateNewAccount}
@@ -52,16 +51,9 @@ class CreateAccountStep1 extends Component {
                     value={name}
                   />
                 </div>
-                <label>
-                  Import existing account<input
-                    checked={isImporting}
-                    onChange={this.handleChangeIsImporting}
-                    type='checkbox'
-                  />
-                </label>
                 <nav className='form-nav'>
                   {name
-                    ? <Link to='/accounts/new/2'>
+                    ? <Link to={`/accounts/new/${+currentStep + 1}`}>
                       <button className='button'>Next</button>
                     </Link>
                     : <button className='button' disabled>
@@ -76,4 +68,4 @@ class CreateAccountStep1 extends Component {
   }
 }
 
-export default CreateAccountStep1;
+export default AccountName;

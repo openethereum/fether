@@ -10,7 +10,7 @@ import CreateAccountHeader from '../CreateAccountHeader';
 
 @inject('createAccountStore')
 @observer
-class CreateAccountStep4 extends Component {
+class AccountPassword extends Component {
   state = {
     confirm: '',
     hint: '',
@@ -30,11 +30,13 @@ class CreateAccountStep4 extends Component {
   };
 
   handleSubmit = () => {
-    const { createAccountStore, history } = this.props;
+    const { createAccountStore, history, location: { pathname } } = this.props;
     const { hint, password } = this.state;
     createAccountStore.setPassword(password);
     createAccountStore.setHint(hint);
-    history.push('/accounts/new/5');
+
+    const currentStep = pathname.slice(-1);
+    history.push(`/accounts/new/${+currentStep + 1}`);
   };
 
   render () {
@@ -96,4 +98,4 @@ class CreateAccountStep4 extends Component {
   }
 }
 
-export default CreateAccountStep4;
+export default AccountPassword;

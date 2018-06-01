@@ -5,19 +5,19 @@
 
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
+import { Link } from 'react-router-dom';
 
 import CreateAccountHeader from '../CreateAccountHeader';
 
 @inject('createAccountStore')
 @observer
-class CreateAccountStep5 extends Component {
-  handleSubmit = () => {
-    const { createAccountStore: { saveAccountToParity }, history } = this.props;
-    saveAccountToParity().then(() => history.push('/accounts'));
-  };
-
+class AccountCopyPhrase extends Component {
   render () {
-    const { createAccountStore: { hint } } = this.props;
+    const {
+      createAccountStore: { phrase },
+      location: { pathname }
+    } = this.props;
+    const currentStep = pathname.slice(-1);
 
     return (
       <div className='window_content'>
@@ -26,15 +26,15 @@ class CreateAccountStep5 extends Component {
             <CreateAccountHeader />
             <div className='box -card-drawer'>
               <div className='text'>
-                <p>Ready to create account?</p>
+                <p>Please write your secret phrase on a piece of paper:</p>
               </div>
               <div className='text -code'>
-                {hint}
+                {phrase}
               </div>
               <nav className='form-nav'>
-                <button onClick={this.handleSubmit} className='button'>
-                  Next
-                </button>
+                <Link to={`/accounts/new/${+currentStep + 1}`}>
+                  <button className='button'>Next</button>
+                </Link>
               </nav>
             </div>
           </div>
@@ -44,4 +44,4 @@ class CreateAccountStep5 extends Component {
   }
 }
 
-export default CreateAccountStep5;
+export default AccountCopyPhrase;

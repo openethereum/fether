@@ -3,21 +3,45 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Link, Route } from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
+import memoize from 'lodash/memoize';
 
-import Step1 from './CreateAccountStep1';
-import Step2 from './CreateAccountStep2';
-import Step3 from './CreateAccountStep3';
-import Step4 from './CreateAccountStep4';
-import Step5 from './CreateAccountStep5';
+import AccountConfirm from './AccountConfirm';
+import AccountCopyPhrase from './AccountCopyPhrase';
+import AccountName from './AccountName';
+import AccountPassword from './AccountPassword';
+import AccountWritePhrase from './AccountWritePhrase';
 
-// Put in in array for programmatic indexing
-const Steps = [Step1, Step2, Step3, Step4, Step5];
+@inject('createAccountStore')
+@observer
+class CreateAccount extends Component {
+  /**
+   * Creating account and importing accounts have different processes: 4 steps
+   * for importing, and 5 steps for creating
+   */
+  getSteps = memoize(isImport => {
+    return isImport
+      ? [AccountWritePhrase, AccountName, AccountPassword, AccountConfirm]
+      : [
+        AccountName,
+        AccountCopyPhrase,
+        AccountWritePhrase,
+        AccountPassword,
+        AccountConfirm
+      ];
+  });
 
-class CreateAccount extends PureComponent {
   render () {
-    const { match: { params: { step } } } = this.props;
+    const {
+      createAccountStore: { isImport },
+      match: { params: { step } } // Current step
+    } = this.props;
+
+    // Get all the steps of our account process
+    const Steps = this.getSteps(isImport);
+
     return (
       <div>
         <nav className='header-nav -modal'>
@@ -27,7 +51,9 @@ class CreateAccount extends PureComponent {
             </Link>
           </div>
           <div className='header-nav_title'>
-            <h1>Create a new account</h1>
+            <h1>
+              {isImport ? 'Import account' : 'Create a new account'}
+            </h1>
           </div>
           <div className='header-nav_right'>
             <div className='progress-indicator'>
@@ -50,6 +76,7 @@ class CreateAccount extends PureComponent {
               component={StepComponent}
               key={`Step${index + 1}`}
               path={`/accounts/new/${index + 1}`}
+              step={index + 1}
             />
           )}
         </div>

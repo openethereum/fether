@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import { accountsInfo$ } from '@parity/light.js';
 import Blockies from 'react-blockies';
 import { inject, observer } from 'mobx-react';
-import { Link, Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import CreateAccount from './CreateAccount/CreateAccount';
 import light from '../hoc';
@@ -15,7 +15,7 @@ import light from '../hoc';
 @light({
   accountsInfo: accountsInfo$
 })
-@inject('parityStore')
+@inject('createAccountStore', 'parityStore')
 @observer
 class Accounts extends Component {
   handleClick = ({ currentTarget: { dataset: { address } } }) => {
@@ -24,6 +24,16 @@ class Accounts extends Component {
     this.subscription = api.parity
       .setNewDappsDefaultAddress(address)
       .then(() => history.push('/tokens'));
+  };
+
+  handleCreateAccount = () => {
+    this.props.createAccountStore.setIsImporting(false);
+    this.props.history.push('/accounts/new');
+  };
+
+  handleImportAccount = () => {
+    this.props.createAccountStore.setIsImporting(true);
+    this.props.history.push('/accounts/new');
   };
 
   render () {
@@ -48,9 +58,14 @@ class Accounts extends Component {
             <h1>Accounts</h1>
           </div>
           <div className='header-nav_right'>
-            <Link to='/accounts/new' className='icon -new'>
+            {/* @brian a onClick is not semantically correct, I just put it like this
+          because with <button> the buttons were not clickable */}
+            <a className='icon -new' onClick={this.handleCreateAccount}>
               New account
-            </Link>
+            </a>
+            <a className='icon -new' onClick={this.handleImportAccount}>
+              Import account
+            </a>
           </div>
         </nav>
 
