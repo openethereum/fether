@@ -39,7 +39,7 @@ class CreateAccountStep2 extends Component {
                 {phrase}
               </div>
               <nav className='form-nav'>
-                <Link to='/accounts/new/step3'>
+                <Link to='/accounts/new/3'>
                   <button className='button'>Next</button>
                 </Link>
               </nav>

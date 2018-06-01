@@ -21,7 +21,7 @@ class CreateAccountStep1 extends Component {
   render () {
     const {
       createAccountStore: { address, generateNewAccount, name },
-      location: { pathname }
+      match: { pathname }
     } = this.props;
 
     return (
@@ -44,8 +44,13 @@ class CreateAccountStep1 extends Component {
               </div>
               <div className='box -card-drawer'>
                 <div className='box -pull-up text -right'>
-                  {pathname === '/accounts/new/step1' &&
-                    <button onClick={generateNewAccount} className='button -tiny -reload'>Regenerate address</button>}
+                  {pathname === '/accounts/new/1' &&
+                    <button
+                      onClick={generateNewAccount}
+                      className='button -tiny -reload'
+                    >
+                      Regenerate address
+                    </button>}
                 </div>
                 <div className='form_field'>
                   <label>Name</label>
@@ -58,10 +63,12 @@ class CreateAccountStep1 extends Component {
                 </div>
                 <nav className='form-nav'>
                   {name
-                    ? <Link to='/accounts/new/step2'>
+                    ? <Link to='/accounts/new/2'>
                       <button className='button'>Next</button>
                     </Link>
-                    : <button className='button' disabled='true'>Next</button>}
+                    : <button className='button' disabled>
+                        Next
+                    </button>}
                 </nav>
               </div>
             </div>

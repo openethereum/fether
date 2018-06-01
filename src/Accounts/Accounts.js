@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import { accountsInfo$ } from '@parity/light.js';
 import Blockies from 'react-blockies';
 import { inject, observer } from 'mobx-react';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Link, Redirect, Route, Switch } from 'react-router-dom';
 
 import CreateAccount from './CreateAccount/CreateAccount';
 import light from '../hoc';
@@ -30,7 +30,8 @@ class Accounts extends Component {
     return (
       <Switch>
         <Route exact path='/accounts' render={this.renderAccounts} />
-        <Route path='/accounts/new' component={CreateAccount} />
+        <Route path='/accounts/new/:step' component={CreateAccount} />
+        <Redirect from='/accounts/new' to='/accounts/new/1' />
       </Switch>
     );
   }
@@ -44,12 +45,10 @@ class Accounts extends Component {
         <nav className='header-nav'>
           <div className='header-nav_left'>&nbsp;</div>
           <div className='header-nav_title'>
-            <h1>
-              Accounts
-            </h1>
+            <h1>Accounts</h1>
           </div>
           <div className='header-nav_right'>
-            <Link to='/accounts/new/step1' className='icon -new'>
+            <Link to='/accounts/new' className='icon -new'>
               New account
             </Link>
           </div>

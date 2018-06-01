@@ -33,7 +33,7 @@ class CreateAccountStep4 extends Component {
     const { hint, password } = this.state;
     createAccountStore.setPassword(password);
     createAccountStore.setHint(hint);
-    history.push('/accounts/new/step5');
+    history.push('/accounts/new/5');
   };
 
   render () {
@@ -64,7 +64,7 @@ class CreateAccountStep4 extends Component {
                 </div>
 
                 <div className='form_field'>
-                  <label>Password{' '}</label>
+                  <label>Password </label>
                   <input
                     onChange={this.handlePasswordChange}
                     required
@@ -74,7 +74,7 @@ class CreateAccountStep4 extends Component {
                 </div>
 
                 <div className='form_field'>
-                  <label>Confirm{' '}</label>
+                  <label>Confirm </label>
                   <input
                     onChange={this.handleConfirmChange}
                     required
@@ -84,7 +84,7 @@ class CreateAccountStep4 extends Component {
                 </div>
 
                 <div className='form_field'>
-                  <label>Password Hint (optional) {' '}</label>
+                  <label>Password Hint (optional) </label>
                   <input
                     onChange={this.handleHintChange}
                     type='text'
@@ -95,7 +95,9 @@ class CreateAccountStep4 extends Component {
                 <nav className='form-nav'>
                   {password && confirm === password
                     ? <button className='button'>Next</button>
-                    : <button className='button' disabled='true'>Next</button>}
+                    : <button className='button' disabled>
+                        Next
+                    </button>}
                 </nav>
               </form>
             </div>

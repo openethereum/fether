@@ -44,19 +44,17 @@ class CreateAccountStep3 extends Component {
               </div>
               <div className='form_field'>
                 <label>Recovery phrase</label>
-                <input
-                  onChange={this.handleChange}
-                  required
-                  value={value}
-                />
+                <input onChange={this.handleChange} required value={value} />
               </div>
 
               <nav className='form-nav'>
                 {value === phrase
-                  ? <Link to='/accounts/new/step4'>
+                  ? <Link to='/accounts/new/4'>
                     <button className='button'>Next</button>
                   </Link>
-                  : <button className='button' disabled='true'>Next</button>}
+                  : <button className='button' disabled>
+                      Next
+                  </button>}
               </nav>
             </div>
           </div>
