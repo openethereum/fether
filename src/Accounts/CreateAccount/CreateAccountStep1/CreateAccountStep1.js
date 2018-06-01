@@ -16,12 +16,15 @@ class CreateAccountStep1 extends Component {
     this.props.createAccountStore.generateNewAccount();
   }
 
-  handleChange = ({ target: { value } }) =>
+  handleChangeIsImporting = ({ target: { checked } }) =>
+    this.props.createAccountStore.setIsImporting(checked);
+
+  handleChangeName = ({ target: { value } }) =>
     this.props.createAccountStore.setName(value);
 
   render () {
     const {
-      createAccountStore: { address, generateNewAccount, name }
+      createAccountStore: { address, generateNewAccount, isImporting, name }
     } = this.props;
 
     return (
@@ -31,23 +34,31 @@ class CreateAccountStep1 extends Component {
             <div className='box -card'>
               <CreateAccountHeader />
               <div className='box -card-drawer'>
-                <div className='box -pull-up text -right'>
-                  <button
-                    onClick={generateNewAccount}
-                    className='button -tiny -reload'
-                  >
-                    Regenerate address
-                  </button>
-                </div>
+                {!isImporting &&
+                  <div className='box -pull-up text -right'>
+                    <button
+                      onClick={generateNewAccount}
+                      className='button -tiny -reload'
+                    >
+                      Regenerate address
+                    </button>
+                  </div>}
                 <div className='form_field'>
                   <label>Name</label>
                   <input
-                    onChange={this.handleChange}
+                    onChange={this.handleChangeName}
                     required
                     placeholder='Enter a name for this account'
                     value={name}
                   />
                 </div>
+                <label>
+                  Import existing account<input
+                    checked={isImporting}
+                    onChange={this.handleChangeIsImporting}
+                    type='checkbox'
+                  />
+                </label>
                 <nav className='form-nav'>
                   {name
                     ? <Link to='/accounts/new/2'>

@@ -5,7 +5,7 @@
 
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import CreateAccountHeader from '../CreateAccountHeader';
 
@@ -13,7 +13,12 @@ import CreateAccountHeader from '../CreateAccountHeader';
 @observer
 class CreateAccountStep2 extends Component {
   render () {
-    const { createAccountStore: { phrase } } = this.props;
+    const { createAccountStore: { isImporting, phrase } } = this.props;
+
+    // There's not Step2 if we are importing an existing account
+    if (isImporting) {
+      return <Redirect to='/accounts/new/3' />;
+    }
 
     return (
       <div className='window_content'>

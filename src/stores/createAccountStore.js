@@ -10,6 +10,7 @@ import parityStore from './parityStore';
 class CreateAccountStore {
   @observable address = null;
   @observable hint = ''; // Password hint (optional)
+  @observable isImporting = false; // Are we creating a new account, or importing via phrase?
   @observable name = ''; // Account name
   @observable password = '';
   @observable phrase = null; // The 12-word seed phrase
@@ -19,13 +20,7 @@ class CreateAccountStore {
   }
 
   generateNewAccount = () => {
-    return this.api.parity
-      .generateSecretPhrase()
-      .then(phrase => {
-        this.setPhrase(phrase);
-        return this.api.parity.phraseToAddress(phrase);
-      })
-      .then(address => this.setAddress(address));
+    return this.api.parity.generateSecretPhrase().then(this.setPhrase);
   };
 
   saveAccountToParity = () => {
@@ -46,6 +41,11 @@ class CreateAccountStore {
   };
 
   @action
+  setIsImporting = isImporting => {
+    this.isImporting = isImporting;
+  };
+
+  @action
   setHint = hint => {
     this.hint = hint;
   };
@@ -63,6 +63,9 @@ class CreateAccountStore {
   @action
   setPhrase = phrase => {
     this.phrase = phrase;
+    return this.api.parity
+      .phraseToAddress(phrase)
+      .then(address => this.setAddress(address));
   };
 }
 

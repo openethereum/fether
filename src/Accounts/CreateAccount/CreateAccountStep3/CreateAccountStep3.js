@@ -18,8 +18,13 @@ class CreateAccountStep3 extends Component {
 
   handleChange = ({ target: { value } }) => this.setState({ value });
 
+  handleSavePhrase = () => {
+    const { createAccountStore: { setPhrase }, history } = this.props;
+    const { value } = this.state;
+    setPhrase(value).then(() => history.push('/accounts/new/4'));
+  };
+
   render () {
-    const { createAccountStore: { phrase } } = this.props;
     const { value } = this.state;
 
     return (
@@ -37,13 +42,7 @@ class CreateAccountStep3 extends Component {
               </div>
 
               <nav className='form-nav'>
-                {value === phrase
-                  ? <Link to='/accounts/new/4'>
-                    <button className='button'>Next</button>
-                  </Link>
-                  : <button className='button' disabled>
-                      Next
-                  </button>}
+                {this.renderButton()}
               </nav>
             </div>
           </div>
@@ -51,6 +50,30 @@ class CreateAccountStep3 extends Component {
       </div>
     );
   }
+
+  renderButton = () => {
+    const { createAccountStore: { isImporting, phrase } } = this.props;
+    const { value } = this.state;
+
+    // If we are creating a new account, the button just checks the phrase has
+    // been correctly written by the user.
+    if (!isImporting) {
+      return value === phrase
+        ? <Link to='/accounts/new/4'>
+          <button className='button'>Next</button>
+        </Link>
+        : <button className='button' disabled>
+            Next
+        </button>;
+    }
+
+    // If we are importing an existing account, the button sets the phrase
+    return (
+      <button className='button' onClick={this.handleSavePhrase}>
+        Next
+      </button>
+    );
+  };
 }
 
 export default CreateAccountStep3;
