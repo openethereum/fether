@@ -76,7 +76,6 @@ class CreateAccount extends Component {
               component={StepComponent}
               key={`Step${index + 1}`}
               path={`/accounts/new/${index + 1}`}
-              step={index + 1}
             />
           )}
         </div>
