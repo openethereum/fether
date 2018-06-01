@@ -16,7 +16,7 @@ class CreateAccount extends PureComponent {
   render () {
     return (
       <div>
-        <nav className='header-nav -modal'>
+        <nav className='header-nav'>
           <div className='header-nav_left'>
             <Link to='/accounts' className='icon -close'>
               Close
