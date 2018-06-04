@@ -60,7 +60,7 @@ class Receive extends PureComponent {
                   {defaultAccount}
                 </div>
                 <div className='box text -right'>
-                  <button className='button -tiny -copy'>Copy address to clipboard</button>
+                  <button className='button -utility'>Copy address to clipboard</button>
                 </div>
               </div>
             </div>

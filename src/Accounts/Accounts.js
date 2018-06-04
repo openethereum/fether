@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import { accountsInfo$ } from '@parity/light.js';
 import Blockies from 'react-blockies';
 import { inject, observer } from 'mobx-react';
-import { Redirect, Route, Switch, Link } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import Health from '../Health';
 import CreateAccount from './CreateAccount/CreateAccount';

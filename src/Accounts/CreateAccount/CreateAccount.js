@@ -92,15 +92,14 @@ class CreateAccount extends Component {
 
         <nav className='footer-nav'>
           <div className='footer-nav_option'>
-            { isImport ?
-              <p>
+            { isImport
+              ? <p>
                 Need to create an account?
                 <button className='button -footer' onClick={this.handleCreateAccount}>
                   New account
                 </button>
               </p>
-            :
-              <p>
+              : <p>
                 Already have an account?
                 <button className='button -footer' onClick={this.handleImportAccount}>
                   Import account

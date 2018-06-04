@@ -17,8 +17,6 @@ class AccountConfirm extends Component {
   };
 
   render () {
-    const { createAccountStore: { hint } } = this.props;
-
     return (
       <div className='box -padded'>
         <div className='box -card'>
