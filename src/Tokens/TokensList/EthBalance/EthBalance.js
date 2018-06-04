@@ -14,7 +14,7 @@ import BalanceLayout from '../BalanceLayout';
 import light from '../../../hoc';
 
 @light({
-  balance: () => myBalance$().pipe(map(value => +fromWei(value.toString())))
+  balance: () => myBalance$().pipe(map(value => +fromWei(value)))
 })
 class EthBalance extends PureComponent {
   static propTypes = {
