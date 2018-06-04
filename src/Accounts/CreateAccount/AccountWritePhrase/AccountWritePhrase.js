@@ -6,6 +6,7 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 
+import AccountPlaceholder from '../AccountPlaceholder';
 import CreateAccountHeader from '../CreateAccountHeader';
 
 @inject('createAccountStore')
@@ -37,7 +38,7 @@ class AccountWritePhrase extends Component {
       <div className='window_content'>
         <div className='box -padded'>
           <div className='box -card'>
-            {isImport ? <div>blank space</div> : <CreateAccountHeader />}
+            {isImport ? <AccountPlaceholder /> : <CreateAccountHeader />}
             <div className='box -card-drawer'>
               <div className='text'>
                 <p>Please write your recovery phrase here:</p>

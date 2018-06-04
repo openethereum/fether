@@ -53,20 +53,11 @@ class Accounts extends Component {
     return (
       <div>
         <nav className='header-nav'>
-          <div className='header-nav_left'>&nbsp;</div>
+          <div className='header-nav_left' />
           <div className='header-nav_title'>
             <h1>Accounts</h1>
           </div>
-          <div className='header-nav_right'>
-            {/* @brian a onClick is not semantically correct, I just put it like this
-          because with <button> the buttons were not clickable */}
-            <a className='icon -new' onClick={this.handleCreateAccount}>
-              New account
-            </a>
-            <a className='icon -new' onClick={this.handleImportAccount}>
-              Import account
-            </a>
-          </div>
+          <div className='header-nav_right' />
         </nav>
 
         <div className='window_content'>
@@ -100,6 +91,17 @@ class Accounts extends Component {
               </div>}
           </div>
         </div>
+
+        <nav className='footer-nav'>
+          <div className='footer-nav_buttons'>
+            <button className='button -footer' onClick={this.handleCreateAccount}>
+              New account
+            </button>
+            <button className='button -footer' onClick={this.handleImportAccount}>
+              Import account
+            </button>
+          </div>
+        </nav>
       </div>
     );
   };

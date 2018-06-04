@@ -12,6 +12,17 @@
     padding: 1rem;
   }
 
+  .footer-nav_buttons {
+    width: 100%;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+
+    button {
+      margin-left: 0.5rem;
+    }
+  }
+
   a,
   a:link,
   a:visited {
