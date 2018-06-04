@@ -20,23 +20,21 @@ class AccountCopyPhrase extends Component {
     const currentStep = pathname.slice(-1);
 
     return (
-      <div className='window_content'>
-        <div className='box -padded'>
-          <div className='box -card'>
-            <CreateAccountHeader />
-            <div className='box -card-drawer'>
-              <div className='text'>
-                <p>Please write your secret phrase on a piece of paper:</p>
-              </div>
-              <div className='text -code'>
-                {phrase}
-              </div>
-              <nav className='form-nav'>
-                <Link to={`/accounts/new/${+currentStep + 1}`}>
-                  <button className='button'>Next</button>
-                </Link>
-              </nav>
+      <div className='box -padded'>
+        <div className='box -card'>
+          <CreateAccountHeader />
+          <div className='box -card-drawer'>
+            <div className='text'>
+              <p>Please write your secret phrase on a piece of paper:</p>
             </div>
+            <div className='text -code'>
+              {phrase}
+            </div>
+            <nav className='form-nav'>
+              <Link to={`/accounts/new/${+currentStep + 1}`}>
+                <button className='button'>Next</button>
+              </Link>
+            </nav>
           </div>
         </div>
       </div>

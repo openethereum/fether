@@ -1005,7 +1005,8 @@ nav.range-nav {
   color: #222;
   margin: 0.5rem 0;
   font-size: 0.83333rem;
-  border-radius: 0.25rem; }
+  border-radius: 0.25rem;
+  word-wrap: break-word; }
 
 .span.-placeholder {
   color: #ddd; }
@@ -1187,9 +1188,13 @@ nav.range-nav {
     padding: 1rem 0.5rem;
     text-align: center; }
     .header-nav .header-nav_title a, .header-nav .header-nav_title a:link, .header-nav .header-nav_title a:visited, .header-nav .header-nav_title h1 {
+      margin: -0.175rem 0 -0.175rem;
+      padding: 0.25rem 0.5rem 0.175rem;
+      display: inline-block;
+      font-size: 1rem;
+      line-height: 1.3rem;
       color: rgba(34, 34, 34, 0.675);
-      font-weight: 500;
-      display: inline-block; }
+      font-weight: 500; }
   .header-nav a,
   .header-nav a:link,
   .header-nav a:visited {
@@ -1249,13 +1254,16 @@ nav.range-nav {
     color: #888; }
   .footer-nav .footer-nav_icons {
     padding: 1rem; }
-  .footer-nav .footer-nav_buttons {
+  .footer-nav .footer-nav_option {
+    padding: 1rem;
     width: 100%;
-    padding: 0.5rem;
-    display: flex;
-    justify-content: center; }
-    .footer-nav .footer-nav_buttons button {
-      margin-left: 0.5rem; }
+    text-align: center;
+    font-size: 0.83333rem;
+    color: #888; }
+    .footer-nav .footer-nav_option button {
+      margin-left: 0.5rem;
+      display: inline-block;
+      padding: 0.125rem 0.5rem; }
   .footer-nav a,
   .footer-nav a:link,
   .footer-nav a:visited {
@@ -1290,16 +1298,6 @@ nav.range-nav {
       .footer-nav a:link.icon.-settings,
       .footer-nav a:visited.icon.-settings {
         background-image: url("../assets/img/icons/gear.svg"); }
-
-.address {
-  font-size: 0.83333rem;
-  line-height: 1.3rem;
-  border-width: 1px 0;
-  border-style: solid;
-  border-color: #ddd;
-  background: rgba(221, 221, 221, 0.25);
-  word-wrap: break-word;
-  padding: 0.5rem; }
 
 .progress-indicator {
   display: flex;

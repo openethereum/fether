@@ -43,54 +43,52 @@ class AccountPassword extends Component {
     const { confirm, hint, password } = this.state;
 
     return (
-      <div className='window_content'>
-        <div className='box -padded'>
-          <div className='box -card'>
-            <CreateAccountHeader />
-            <div className='box -card-drawer'>
-              <form onSubmit={this.handleSubmit}>
-                <div className='text'>
-                  <p>Secure your account with a password:</p>
-                </div>
+      <div className='box -padded'>
+        <div className='box -card'>
+          <CreateAccountHeader />
+          <div className='box -card-drawer'>
+            <form onSubmit={this.handleSubmit}>
+              <div className='text'>
+                <p>Secure your account with a password:</p>
+              </div>
 
-                <div className='form_field'>
-                  <label>Password </label>
-                  <input
-                    onChange={this.handlePasswordChange}
-                    required
-                    type='password'
-                    value={password}
-                  />
-                </div>
+              <div className='form_field'>
+                <label>Password </label>
+                <input
+                  onChange={this.handlePasswordChange}
+                  required
+                  type='password'
+                  value={password}
+                />
+              </div>
 
-                <div className='form_field'>
-                  <label>Confirm </label>
-                  <input
-                    onChange={this.handleConfirmChange}
-                    required
-                    type='password'
-                    value={confirm}
-                  />
-                </div>
+              <div className='form_field'>
+                <label>Confirm </label>
+                <input
+                  onChange={this.handleConfirmChange}
+                  required
+                  type='password'
+                  value={confirm}
+                />
+              </div>
 
-                <div className='form_field'>
-                  <label>Password Hint (optional) </label>
-                  <input
-                    onChange={this.handleHintChange}
-                    type='text'
-                    value={hint}
-                  />
-                </div>
+              <div className='form_field'>
+                <label>Password Hint (optional) </label>
+                <input
+                  onChange={this.handleHintChange}
+                  type='text'
+                  value={hint}
+                />
+              </div>
 
-                <nav className='form-nav'>
-                  {password && confirm === password
-                    ? <button className='button'>Next</button>
-                    : <button className='button' disabled>
-                        Next
-                    </button>}
-                </nav>
-              </form>
-            </div>
+              <nav className='form-nav'>
+                {password && confirm === password
+                  ? <button className='button'>Next</button>
+                  : <button className='button' disabled>
+                      Next
+                  </button>}
+              </nav>
+            </form>
           </div>
         </div>
       </div>

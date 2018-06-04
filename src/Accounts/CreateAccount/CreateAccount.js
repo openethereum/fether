@@ -33,6 +33,16 @@ class CreateAccount extends Component {
       ];
   });
 
+  handleImportAccount = () => {
+    this.props.createAccountStore.setIsImporting(true);
+    this.props.history.push('/accounts/new');
+  };
+
+  handleCreateAccount = () => {
+    this.props.createAccountStore.setIsImporting(false);
+    this.props.history.push('/accounts/new');
+  };
+
   render () {
     const {
       createAccountStore: { isImport },
@@ -70,7 +80,7 @@ class CreateAccount extends Component {
           </div>
         </nav>
 
-        <div className='window_content -modal'>
+        <div className='window_content'>
           {Steps.map((StepComponent, index) =>
             <Route
               component={StepComponent}
@@ -79,6 +89,26 @@ class CreateAccount extends Component {
             />
           )}
         </div>
+
+        <nav className='footer-nav'>
+          <div className='footer-nav_option'>
+            { isImport ?
+              <p>
+                Need to create an account?
+                <button className='button -footer' onClick={this.handleCreateAccount}>
+                  New account
+                </button>
+              </p>
+            :
+              <p>
+                Already have an account?
+                <button className='button -footer' onClick={this.handleImportAccount}>
+                  Import account
+                </button>
+              </p>
+            }
+          </div>
+        </nav>
       </div>
     );
   }

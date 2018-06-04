@@ -27,7 +27,7 @@ class AccountName extends Component {
     const currentStep = pathname.slice(-1);
 
     return (
-      <div className='window_content'>
+      <div>
         {address &&
           <div className='box -padded'>
             <div className='box -card'>
@@ -42,13 +42,15 @@ class AccountName extends Component {
                       Regenerate address
                     </button>
                   </div>}
+                <div className='text'>
+                  <p>Please give this account a name:</p>
+                </div>
                 <div className='form_field'>
                   <label>Name</label>
                   <input
                     type='text'
                     onChange={this.handleChangeName}
                     required
-                    placeholder='Enter a name for this account'
                     value={name}
                   />
                 </div>
