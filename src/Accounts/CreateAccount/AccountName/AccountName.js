@@ -45,6 +45,7 @@ class AccountName extends Component {
                 <div className='form_field'>
                   <label>Name</label>
                   <input
+                    type='text'
                     onChange={this.handleChangeName}
                     required
                     placeholder='Enter a name for this account'

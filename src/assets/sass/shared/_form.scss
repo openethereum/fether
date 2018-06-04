@@ -10,6 +10,7 @@
     color: $black;
     opacity: 0.75;
     padding: 0.5rem 0.5rem 0;
+    display: block
   }
 
   input[type="text"], input[type="number"], input[type="tel"], input[type="email"], input[type="password"], textarea {
@@ -25,6 +26,35 @@
     margin-top: -0.25rem;
     &:focus {
       opacity: 1;
+    }
+  }
+
+  input[type="range"] {
+    -webkit-appearance: none;
+    width: calc(100% - 1rem);
+    height: 0.5rem;
+    border-radius: 0.5rem;
+    background: rgba($faint,0.5);
+    outline: none;
+    padding: 0;
+    margin: 0.5rem;
+
+    &::-webkit-slider-thumb {
+      appearance: none;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
+      background: $grey;
+      cursor: pointer;
+      transition: background .15s ease;
+
+      &:hover {
+        background: $black;
+      }
+    }
+
+    &:active::-webkit-slider-thumb {
+      background-color: $blue;
     }
   }
 
@@ -60,15 +90,36 @@ input.form_field_amount[type='number'] {
   }
 }
 
-span.form_field_symbol {
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: block;
-  color: $grey;
-  padding: 0.5rem;
-  text-align: right;
-  font-family: $mono;
-  font-size: ms(-1);
+nav.form-field_nav {
+  padding: 0 0.5rem 0.5rem;
+  display: flex;
+  justify-content: flex-end;
+  button {
+    margin-left: 0.5rem;
+  }
+}
+
+nav.range-nav {
+  width: 100%;
+  padding: 0 0.5rem 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: ms(-2);
+  font-weight: 600;
   text-transform: uppercase;
+
+  .range-nav_label {
+    width: 4rem;
+    color: $grey;
+    &:last-child {
+      text-align: right;
+    }
+  }
+
+  .range-nav_value {
+    display: block;
+    width: 8rem;
+    text-align: center;
+    color: $black
+  }
 }

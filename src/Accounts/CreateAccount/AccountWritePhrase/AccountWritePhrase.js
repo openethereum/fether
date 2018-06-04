@@ -45,7 +45,7 @@ class AccountWritePhrase extends Component {
               </div>
               <div className='form_field'>
                 <label>Recovery phrase</label>
-                <input onChange={this.handleChange} required value={value} />
+                <textarea onChange={this.handleChange} required value={value} />
               </div>
 
               <nav className='form-nav'>

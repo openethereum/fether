@@ -86,7 +86,9 @@ class Send extends PureComponent {
                         type='number'
                         value={amount}
                       />
-                      <span className='form_field_symbol'>ETH</span>
+                      <nav className='form-field_nav'>
+                        <button className='button -utility'>Max</button>
+                      </nav>
                     </div>
                     <div className='form_field'>
                       <label>To</label>
@@ -99,7 +101,7 @@ class Send extends PureComponent {
                         value={to}
                       />
                     </div>
-                    <div className='form_field'>
+                    <div className='form_field -range'>
                       <label>Gas</label>
                       <input
                         onChange={this.handleChangeGas}
@@ -109,7 +111,11 @@ class Send extends PureComponent {
                         type='range'
                         value={gas}
                       />
-                      <span className='form_field_gas'>{gas}</span>
+                      <nav className='range-nav'>
+                        <span className='range-nav_label'>Cheap</span>
+                        <span className='range-nav_value'>{gas}</span>
+                        <span className='range-nav_label'>Fast</span>
+                      </nav>
                     </div>
                   </fieldset>
                   <nav className='form-nav'>

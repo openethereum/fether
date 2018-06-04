@@ -28,9 +28,6 @@ class AccountConfirm extends Component {
               <div className='text'>
                 <p>Ready to create account?</p>
               </div>
-              <div className='text -code'>
-                {hint}
-              </div>
               <nav className='form-nav'>
                 <button onClick={this.handleSubmit} className='button'>
                   Next
