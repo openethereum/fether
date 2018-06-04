@@ -44,7 +44,8 @@ class CreateAccountStep3 extends Component {
               </div>
               <div className='form_field'>
                 <label>Recovery phrase</label>
-                <input
+                <textarea
+                  className='-md'
                   onChange={this.handleChange}
                   required
                   value={value}

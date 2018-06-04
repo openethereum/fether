@@ -2,16 +2,17 @@
   margin: 0.5rem 0;
   border-radius: 0.25rem;
   background: rgba($faint,0.25);
+  position: relative;
 
   label {
-    font-size: ms(-3);
+    font-size: ms(-2);
     font-weight: 600;
     color: $black;
     opacity: 0.75;
     padding: 0.5rem 0.5rem 0;
   }
 
-  input {
+  input[type="text"], input[type="number"], input[type="tel"], input[type="email"], input[type="password"], textarea {
     border: 0;
     background: transparent;
     font-size: ms(0);
@@ -26,4 +27,48 @@
       opacity: 1;
     }
   }
+
+  textarea {
+    resize: none;
+    font-family: $mono;
+    font-size: ms(-1);
+
+    &.-sm {
+      height: 3.5rem;
+    }
+
+    &.-md {
+      height: 4.75rem;
+    }
+
+    &.-lg {
+      height: 8rem;
+    }
+  }
+}
+
+input.form_field_amount[type='number'] {
+  font-size: ms(8);
+  line-height: ms(8) * 1.1;
+  font-weight: 200;
+  text-align: center;
+  -webkit-appearance: none;
+
+  &::-webkit-inner-spin-button, &::-webkit-outer-spin-button {
+    opacity: 1;
+    -webkit-appearance: none;
+  }
+}
+
+span.form_field_symbol {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  color: $grey;
+  padding: 0.5rem;
+  text-align: right;
+  font-family: $mono;
+  font-size: ms(-1);
+  text-transform: uppercase;
 }

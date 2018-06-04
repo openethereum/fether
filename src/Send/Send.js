@@ -78,21 +78,25 @@ class Send extends PureComponent {
                 <form className='send-form' onSubmit={this.handleSubmit}>
                   <fieldset className='form_fields'>
                     <div className='form_field'>
-                      <label>Address</label>
-                      <input
-                        onChange={this.handleChangeTo}
-                        required
-                        type='text'
-                        value={to}
-                      />
-                    </div>
-                    <div className='form_field'>
                       <label>Amount</label>
                       <input
+                        className='form_field_amount'
                         onChange={this.handleChangeAmount}
                         required
                         type='number'
                         value={amount}
+                      />
+                      <span className='form_field_symbol'>ETH</span>
+                    </div>
+                    <div className='form_field'>
+                      <label>To</label>
+                      <textarea
+                        className='-sm'
+                        onChange={this.handleChangeTo}
+                        required
+                        type='text'
+                        placeholder='Recipient address'
+                        value={to}
                       />
                     </div>
                     <div className='form_field'>
@@ -100,9 +104,12 @@ class Send extends PureComponent {
                       <input
                         onChange={this.handleChangeGas}
                         required
-                        type='number'
+                        min='1'
+                        max='44000'
+                        type='range'
                         value={gas}
                       />
+                      <span className='form_field_gas'>{gas}</span>
                     </div>
                   </fieldset>
                   <nav className='form-nav'>
