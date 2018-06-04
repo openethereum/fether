@@ -3,19 +3,36 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
+import abi from '@parity/shared/lib/contracts/abi/eip20';
+import { defaultAccount$, makeContract$ } from '@parity/light.js';
+import { Link } from 'react-router-dom';
+import { map, switchMap } from 'rxjs/operators';
 import PropTypes from 'prop-types';
 
 import BalanceLayout from '../BalanceLayout';
+import light from '../../../hoc';
 
-class TokenBalance extends PureComponent {
+@light({
+  balance: ({ token: { address, decimals } }) =>
+    defaultAccount$().pipe(
+      switchMap(defaultAccount =>
+        makeContract$(address, abi).balanceOf(defaultAccount)
+      ),
+      map(value => +value.div(10 ** decimals))
+    )
+})
+class TokenBalance extends Component {
   static propTypes = {
     token: PropTypes.object.isRequired
   };
 
   render () {
-    const balance = Math.round(Math.random() * 100);
-    return <BalanceLayout balance={balance} {...this.props} />;
+    return (
+      <Link to='/send'>
+        <BalanceLayout {...this.props} />
+      </Link>
+    );
   }
 }
 

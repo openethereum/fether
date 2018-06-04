@@ -44,7 +44,8 @@
   },
   "dependencies": {
     "@parity/api": "^2.1.22",
-    "@parity/light.js": "https://github.com/parity-js/light.js#898e90f43327fd50d0560b8e4db6d5c670bc1b20",
+    "@parity/light.js": "https://github.com/parity-js/light.js#bd5838dea1fdf2260d4df92e02d5028459824917",
+    "@parity/shared": "^3.0.1",
     "async-retry": "^1.2.1",
     "axios": "^0.18.0",
     "checksum": "^0.1.1",
@@ -67,7 +68,6 @@
     "rxjs": "^6.1.0"
   },
   "devDependencies": {
-    "@parity/shared": "^2.2.28",
     "babel-eslint": "^8.2.3",
     "cross-env": "^5.1.4",
     "node-sass": "^4.9.0",
