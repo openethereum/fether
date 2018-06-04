@@ -4,37 +4,26 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import Blockie from 'react-blockies';
 import { inject, observer } from 'mobx-react';
+
+import CreateAccountHeader from '../CreateAccountHeader';
 
 @inject('createAccountStore')
 @observer
-class CreateAccountStep5 extends Component {
+class AccountConfirm extends Component {
   handleSubmit = () => {
     const { createAccountStore: { saveAccountToParity }, history } = this.props;
     saveAccountToParity().then(() => history.push('/accounts'));
   };
 
   render () {
-    const { createAccountStore: { address, name, hint } } = this.props;
+    const { createAccountStore: { hint } } = this.props;
 
     return (
       <div className='window_content'>
         <div className='box -padded'>
           <div className='box -card'>
-            <div className='account'>
-              <div className='account_avatar'>
-                <Blockie seed={address} />
-              </div>
-              <div className='account_information'>
-                <div className='account_name'>
-                  {name || <span className='span -placeholder'>Account</span>}
-                </div>
-                <div className='account_address'>
-                  {address}
-                </div>
-              </div>
-            </div>
+            <CreateAccountHeader />
             <div className='box -card-drawer'>
               <div className='text'>
                 <p>Ready to create account?</p>
@@ -43,7 +32,9 @@ class CreateAccountStep5 extends Component {
                 {hint}
               </div>
               <nav className='form-nav'>
-                <button onClick={this.handleSubmit} className='button'>Next</button>
+                <button onClick={this.handleSubmit} className='button'>
+                  Next
+                </button>
               </nav>
             </div>
           </div>
@@ -53,4 +44,4 @@ class CreateAccountStep5 extends Component {
   }
 }
 
-export default CreateAccountStep5;
+export default AccountConfirm;

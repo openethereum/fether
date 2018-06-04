@@ -3,6 +3,8 @@
   justify-content: space-between;
   padding: 1rem 0.5rem;
   position: relative;
+  overflow: hidden;
+  height: 3.5rem;
 
   .header-nav_left, .header-nav_right {
     display: flex;

@@ -4,12 +4,13 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import Blockie from 'react-blockies';
 import { inject, observer } from 'mobx-react';
+
+import CreateAccountHeader from '../CreateAccountHeader';
 
 @inject('createAccountStore')
 @observer
-class CreateAccountStep4 extends Component {
+class AccountPassword extends Component {
   state = {
     confirm: '',
     hint: '',
@@ -29,34 +30,23 @@ class CreateAccountStep4 extends Component {
   };
 
   handleSubmit = () => {
-    const { createAccountStore, history } = this.props;
+    const { createAccountStore, history, location: { pathname } } = this.props;
     const { hint, password } = this.state;
     createAccountStore.setPassword(password);
     createAccountStore.setHint(hint);
-    history.push('/accounts/new/step5');
+
+    const currentStep = pathname.slice(-1);
+    history.push(`/accounts/new/${+currentStep + 1}`);
   };
 
   render () {
-    const { createAccountStore: { address, name } } = this.props;
     const { confirm, hint, password } = this.state;
 
     return (
       <div className='window_content'>
         <div className='box -padded'>
           <div className='box -card'>
-            <div className='account'>
-              <div className='account_avatar'>
-                <Blockie seed={address} />
-              </div>
-              <div className='account_information'>
-                <div className='account_name'>
-                  {name || <span className='span -placeholder'>Account</span>}
-                </div>
-                <div className='account_address'>
-                  {address}
-                </div>
-              </div>
-            </div>
+            <CreateAccountHeader />
             <div className='box -card-drawer'>
               <form onSubmit={this.handleSubmit}>
                 <div className='text'>
@@ -64,7 +54,7 @@ class CreateAccountStep4 extends Component {
                 </div>
 
                 <div className='form_field'>
-                  <label>Password{' '}</label>
+                  <label>Password </label>
                   <input
                     onChange={this.handlePasswordChange}
                     required
@@ -74,7 +64,7 @@ class CreateAccountStep4 extends Component {
                 </div>
 
                 <div className='form_field'>
-                  <label>Confirm{' '}</label>
+                  <label>Confirm </label>
                   <input
                     onChange={this.handleConfirmChange}
                     required
@@ -84,7 +74,7 @@ class CreateAccountStep4 extends Component {
                 </div>
 
                 <div className='form_field'>
-                  <label>Password Hint (optional) {' '}</label>
+                  <label>Password Hint (optional) </label>
                   <input
                     onChange={this.handleHintChange}
                     type='text'
@@ -95,7 +85,9 @@ class CreateAccountStep4 extends Component {
                 <nav className='form-nav'>
                   {password && confirm === password
                     ? <button className='button'>Next</button>
-                    : <button className='button' disabled='true'>Next</button>}
+                    : <button className='button' disabled>
+                        Next
+                    </button>}
                 </nav>
               </form>
             </div>
@@ -106,4 +98,4 @@ class CreateAccountStep4 extends Component {
   }
 }
 
-export default CreateAccountStep4;
+export default AccountPassword;
