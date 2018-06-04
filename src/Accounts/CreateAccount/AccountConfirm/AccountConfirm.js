@@ -17,26 +17,19 @@ class AccountConfirm extends Component {
   };
 
   render () {
-    const { createAccountStore: { hint } } = this.props;
-
     return (
-      <div className='window_content'>
-        <div className='box -padded'>
-          <div className='box -card'>
-            <CreateAccountHeader />
-            <div className='box -card-drawer'>
-              <div className='text'>
-                <p>Ready to create account?</p>
-              </div>
-              <div className='text -code'>
-                {hint}
-              </div>
-              <nav className='form-nav'>
-                <button onClick={this.handleSubmit} className='button'>
-                  Next
-                </button>
-              </nav>
+      <div className='box -padded'>
+        <div className='box -card'>
+          <CreateAccountHeader />
+          <div className='box -card-drawer'>
+            <div className='text'>
+              <p>Ready to create account?</p>
             </div>
+            <nav className='form-nav'>
+              <button onClick={this.handleSubmit} className='button'>
+                Next
+              </button>
+            </nav>
           </div>
         </div>
       </div>

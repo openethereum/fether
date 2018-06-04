@@ -13,13 +13,15 @@
 
     canvas {
       display: block;
-      height: (ms(0) * 1.3) !important;
+      width: (ms(0) * 1.3) + 1rem  !important;
+      height: (ms(0) * 1.3) + 1rem  !important;
       width: auto !important;
     }
   }
 
   .account_information {
     padding-left: 0.325rem;
+    overflow: hidden;
     flex-grow: 1;
   }
 

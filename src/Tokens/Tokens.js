@@ -35,9 +35,7 @@ class Tokens extends PureComponent {
                 : 'Loading...'}
             </Link>
           </div>
-          <div className='header-nav_right'>
-            &nbsp;
-          </div>
+          <div className='header-nav_right' />
         </nav>
 
         <Switch>

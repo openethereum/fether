@@ -35,23 +35,21 @@ class AccountWritePhrase extends Component {
     const { value } = this.state;
 
     return (
-      <div className='window_content'>
-        <div className='box -padded'>
-          <div className='box -card'>
-            {isImport ? <AccountPlaceholder /> : <CreateAccountHeader />}
-            <div className='box -card-drawer'>
-              <div className='text'>
-                <p>Please write your recovery phrase here:</p>
-              </div>
-              <div className='form_field'>
-                <label>Recovery phrase</label>
-                <input onChange={this.handleChange} required value={value} />
-              </div>
-
-              <nav className='form-nav'>
-                {this.renderButton()}
-              </nav>
+      <div className='box -padded'>
+        <div className='box -card'>
+          {isImport ? <AccountPlaceholder /> : <CreateAccountHeader />}
+          <div className='box -card-drawer'>
+            <div className='text'>
+              <p>Please write your recovery phrase:</p>
             </div>
+            <div className='form_field'>
+              <label>Recovery phrase</label>
+              <textarea onChange={this.handleChange} required value={value} />
+            </div>
+
+            <nav className='form-nav'>
+              {this.renderButton()}
+            </nav>
           </div>
         </div>
       </div>

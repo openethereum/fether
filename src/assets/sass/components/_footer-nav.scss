@@ -12,14 +12,17 @@
     padding: 1rem;
   }
 
-  .footer-nav_buttons {
+  .footer-nav_option {
+    padding: 1rem;
     width: 100%;
-    padding: 0.5rem;
-    display: flex;
-    justify-content: center;
+    text-align: center;
+    font-size: ms(-1);
+    color: $grey;
 
     button {
       margin-left: 0.5rem;
+      display: inline-block;
+      padding: 0.125rem 0.5rem;
     }
   }
 

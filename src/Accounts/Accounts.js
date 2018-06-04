@@ -9,6 +9,7 @@ import Blockies from 'react-blockies';
 import { inject, observer } from 'mobx-react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
+import Health from '../Health';
 import CreateAccount from './CreateAccount/CreateAccount';
 import light from '../hoc';
 
@@ -28,11 +29,6 @@ class Accounts extends Component {
 
   handleCreateAccount = () => {
     this.props.createAccountStore.setIsImporting(false);
-    this.props.history.push('/accounts/new');
-  };
-
-  handleImportAccount = () => {
-    this.props.createAccountStore.setIsImporting(true);
     this.props.history.push('/accounts/new');
   };
 
@@ -57,7 +53,11 @@ class Accounts extends Component {
           <div className='header-nav_title'>
             <h1>Accounts</h1>
           </div>
-          <div className='header-nav_right' />
+          <div className='header-nav_right'>
+            <a className='icon -new' onClick={this.handleCreateAccount}>
+              New account
+            </a>
+          </div>
         </nav>
 
         <div className='window_content'>
@@ -93,13 +93,8 @@ class Accounts extends Component {
         </div>
 
         <nav className='footer-nav'>
-          <div className='footer-nav_buttons'>
-            <button className='button -footer' onClick={this.handleCreateAccount}>
-              New account
-            </button>
-            <button className='button -footer' onClick={this.handleImportAccount}>
-              Import account
-            </button>
+          <div className='footer-nav_status'>
+            <Health />
           </div>
         </nav>
       </div>

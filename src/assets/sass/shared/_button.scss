@@ -47,6 +47,24 @@
     }
   }
 
+  &.-utility {
+    font-size: ms(-3);
+    border-width: 0;
+    background-color: $faint;
+    color: rgba($black,0.75);
+    padding: 0.175rem 0.325rem 0.125rem;
+    opacity: 0.8;
+    border-radius: 1rem;
+
+    &:hover {
+      opacity: 0.9;
+    }
+
+    &:active {
+      opacity: 1.0;
+    }
+  }
+
   &.-footer {
     font-size: ms(-2);
     border-width: 0;
