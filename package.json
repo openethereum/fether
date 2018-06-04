@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "@parity/api": "^2.1.22",
-    "@parity/light.js": "https://github.com/parity-js/light.js#bd5838dea1fdf2260d4df92e02d5028459824917",
+    "@parity/light.js": "https://github.com/parity-js/light.js#2052c910d1ff4f4e38d4cba7fb5578ac4500f0ae",
     "@parity/shared": "^3.0.1",
     "async-retry": "^1.2.1",
     "axios": "^0.18.0",
