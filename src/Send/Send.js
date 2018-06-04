@@ -13,7 +13,7 @@ import ethereumIcon from '../assets/img/tokens/ethereum.png';
 import light from '../hoc';
 
 @light({
-  balance: () => myBalance$().pipe(map(value => +fromWei(value.toString()))),
+  balance: () => myBalance$().pipe(map(value => +fromWei(value))),
   me: defaultAccount$
 })
 class Send extends PureComponent {
