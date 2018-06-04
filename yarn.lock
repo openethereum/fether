@@ -131,9 +131,9 @@
     u2f-api "0.0.9"
     u2f-api-polyfill "0.4.3"
 
-"@parity/light.js@https://github.com/parity-js/light.js#aa03e7f2956718bf91f6f82771eee3b81d260a18":
+"@parity/light.js@https://github.com/parity-js/light.js#898e90f43327fd50d0560b8e4db6d5c670bc1b20":
   version "1.0.0"
-  resolved "https://github.com/parity-js/light.js#aa03e7f2956718bf91f6f82771eee3b81d260a18"
+  resolved "https://github.com/parity-js/light.js#898e90f43327fd50d0560b8e4db6d5c670bc1b20"
   dependencies:
     "@babel/runtime" "^7.0.0-beta.46"
     "@parity/api" "^2.1.22"
@@ -2930,9 +2930,17 @@ es-to-primitive@^1.1.1:
     is-date-object "^1.0.1"
     is-symbol "^1.0.1"
 
-es5-ext@^0.10.14, es5-ext@^0.10.30, es5-ext@^0.10.35, es5-ext@^0.10.9, es5-ext@~0.10.14, es5-ext@~0.10.2:
+es5-ext@^0.10.14, es5-ext@^0.10.35, es5-ext@^0.10.9, es5-ext@~0.10.14:
   version "0.10.42"
   resolved "https://registry.yarnpkg.com/es5-ext/-/es5-ext-0.10.42.tgz#8c07dd33af04d5dcd1310b5cef13bea63a89ba8d"
+  dependencies:
+    es6-iterator "~2.0.3"
+    es6-symbol "~3.1.1"
+    next-tick "1"
+
+es5-ext@^0.10.30, es5-ext@~0.10.2:
+  version "0.10.44"
+  resolved "https://registry.yarnpkg.com/es5-ext/-/es5-ext-0.10.44.tgz#7a877e994bb190aebd4718aa2d62784a12e2ca20"
   dependencies:
     es6-iterator "~2.0.3"
     es6-symbol "~3.1.1"

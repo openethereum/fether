@@ -4,33 +4,26 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import Blockie from 'react-blockies';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 
+import CreateAccountHeader from '../CreateAccountHeader';
+
 @inject('createAccountStore')
 @observer
-class CreateAccountStep2 extends Component {
+class AccountCopyPhrase extends Component {
   render () {
-    const { createAccountStore: { address, name, phrase } } = this.props;
+    const {
+      createAccountStore: { phrase },
+      location: { pathname }
+    } = this.props;
+    const currentStep = pathname.slice(-1);
 
     return (
       <div className='window_content'>
         <div className='box -padded'>
           <div className='box -card'>
-            <div className='account'>
-              <div className='account_avatar'>
-                <Blockie seed={address} />
-              </div>
-              <div className='account_information'>
-                <div className='account_name'>
-                  {name || <span className='span -placeholder'>Account</span>}
-                </div>
-                <div className='account_address'>
-                  {address}
-                </div>
-              </div>
-            </div>
+            <CreateAccountHeader />
             <div className='box -card-drawer'>
               <div className='text'>
                 <p>Please write your secret phrase on a piece of paper:</p>
@@ -39,7 +32,7 @@ class CreateAccountStep2 extends Component {
                 {phrase}
               </div>
               <nav className='form-nav'>
-                <Link to='/accounts/new/step3'>
+                <Link to={`/accounts/new/${+currentStep + 1}`}>
                   <button className='button'>Next</button>
                 </Link>
               </nav>
@@ -51,4 +44,4 @@ class CreateAccountStep2 extends Component {
   }
 }
 
-export default CreateAccountStep2;
+export default AccountCopyPhrase;

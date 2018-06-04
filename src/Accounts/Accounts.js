@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import { accountsInfo$ } from '@parity/light.js';
 import Blockies from 'react-blockies';
 import { inject, observer } from 'mobx-react';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import CreateAccount from './CreateAccount/CreateAccount';
 import light from '../hoc';
@@ -15,7 +15,7 @@ import light from '../hoc';
 @light({
   accountsInfo: accountsInfo$
 })
-@inject('parityStore')
+@inject('createAccountStore', 'parityStore')
 @observer
 class Accounts extends Component {
   handleClick = ({ currentTarget: { dataset: { address } } }) => {
@@ -26,11 +26,22 @@ class Accounts extends Component {
       .then(() => history.push('/tokens'));
   };
 
+  handleCreateAccount = () => {
+    this.props.createAccountStore.setIsImporting(false);
+    this.props.history.push('/accounts/new');
+  };
+
+  handleImportAccount = () => {
+    this.props.createAccountStore.setIsImporting(true);
+    this.props.history.push('/accounts/new');
+  };
+
   render () {
     return (
       <Switch>
         <Route exact path='/accounts' render={this.renderAccounts} />
-        <Route path='/accounts/new' component={CreateAccount} />
+        <Route path='/accounts/new/:step' component={CreateAccount} />
+        <Redirect from='/accounts/new' to='/accounts/new/1' />
       </Switch>
     );
   }
@@ -42,17 +53,11 @@ class Accounts extends Component {
     return (
       <div>
         <nav className='header-nav'>
-          <div className='header-nav_left'>&nbsp;</div>
+          <div className='header-nav_left' />
           <div className='header-nav_title'>
-            <h1>
-              Accounts
-            </h1>
+            <h1>Accounts</h1>
           </div>
-          <div className='header-nav_right'>
-            <Link to='/accounts/new/step1' className='icon -new'>
-              New account
-            </Link>
-          </div>
+          <div className='header-nav_right' />
         </nav>
 
         <div className='window_content'>
@@ -86,6 +91,17 @@ class Accounts extends Component {
               </div>}
           </div>
         </div>
+
+        <nav className='footer-nav'>
+          <div className='footer-nav_buttons'>
+            <button className='button -footer' onClick={this.handleCreateAccount}>
+              New account
+            </button>
+            <button className='button -footer' onClick={this.handleImportAccount}>
+              Import account
+            </button>
+          </div>
+        </nav>
       </div>
     );
   };

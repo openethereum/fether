@@ -4,53 +4,48 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import Blockie from 'react-blockies';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 
+import CreateAccountHeader from '../CreateAccountHeader';
+
 @inject('createAccountStore')
 @observer
-class CreateAccountStep1 extends Component {
+class AccountName extends Component {
   componentDidMount () {
     this.props.createAccountStore.generateNewAccount();
   }
 
-  handleChange = ({ target: { value } }) =>
+  handleChangeName = ({ target: { value } }) =>
     this.props.createAccountStore.setName(value);
 
   render () {
     const {
-      createAccountStore: { address, generateNewAccount, name },
+      createAccountStore: { address, generateNewAccount, isImport, name },
       location: { pathname }
     } = this.props;
+    const currentStep = pathname.slice(-1);
 
     return (
       <div className='window_content'>
         {address &&
           <div className='box -padded'>
             <div className='box -card'>
-              <div className='account'>
-                <div className='account_avatar'>
-                  <Blockie seed={address} />
-                </div>
-                <div className='account_information'>
-                  <div className='account_name'>
-                    {name || <span className='span -placeholder'>Account</span>}
-                  </div>
-                  <div className='account_address'>
-                    {address}
-                  </div>
-                </div>
-              </div>
+              <CreateAccountHeader />
               <div className='box -card-drawer'>
-                <div className='box -pull-up text -right'>
-                  {pathname === '/accounts/new/step1' &&
-                    <button onClick={generateNewAccount} className='button -tiny -reload'>Regenerate address</button>}
-                </div>
+                {!isImport &&
+                  <div className='box -pull-up text -right'>
+                    <button
+                      onClick={generateNewAccount}
+                      className='button -tiny -reload'
+                    >
+                      Regenerate address
+                    </button>
+                  </div>}
                 <div className='form_field'>
                   <label>Name</label>
                   <input
-                    onChange={this.handleChange}
+                    onChange={this.handleChangeName}
                     required
                     placeholder='Enter a name for this account'
                     value={name}
@@ -58,10 +53,12 @@ class CreateAccountStep1 extends Component {
                 </div>
                 <nav className='form-nav'>
                   {name
-                    ? <Link to='/accounts/new/step2'>
+                    ? <Link to={`/accounts/new/${+currentStep + 1}`}>
                       <button className='button'>Next</button>
                     </Link>
-                    : <button className='button' disabled='true'>Next</button>}
+                    : <button className='button' disabled>
+                        Next
+                    </button>}
                 </nav>
               </div>
             </div>
@@ -71,4 +68,4 @@ class CreateAccountStep1 extends Component {
   }
 }
 
-export default CreateAccountStep1;
+export default AccountName;

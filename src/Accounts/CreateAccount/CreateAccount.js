@@ -3,17 +3,45 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { PureComponent } from 'react';
-import { Route, Link } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link, Route } from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
+import memoize from 'lodash/memoize';
 
-import Step1 from './CreateAccountStep1';
-import Step2 from './CreateAccountStep2';
-import Step3 from './CreateAccountStep3';
-import Step4 from './CreateAccountStep4';
-import Step5 from './CreateAccountStep5';
+import AccountConfirm from './AccountConfirm';
+import AccountCopyPhrase from './AccountCopyPhrase';
+import AccountName from './AccountName';
+import AccountPassword from './AccountPassword';
+import AccountWritePhrase from './AccountWritePhrase';
 
-class CreateAccount extends PureComponent {
+@inject('createAccountStore')
+@observer
+class CreateAccount extends Component {
+  /**
+   * Creating account and importing accounts have different processes: 4 steps
+   * for importing, and 5 steps for creating
+   */
+  getSteps = memoize(isImport => {
+    return isImport
+      ? [AccountWritePhrase, AccountName, AccountPassword, AccountConfirm]
+      : [
+        AccountName,
+        AccountCopyPhrase,
+        AccountWritePhrase,
+        AccountPassword,
+        AccountConfirm
+      ];
+  });
+
   render () {
+    const {
+      createAccountStore: { isImport },
+      match: { params: { step } } // Current step
+    } = this.props;
+
+    // Get all the steps of our account process
+    const Steps = this.getSteps(isImport);
+
     return (
       <div>
         <nav className='header-nav'>
@@ -24,26 +52,32 @@ class CreateAccount extends PureComponent {
           </div>
           <div className='header-nav_title'>
             <h1>
-              Create a new account
+              {isImport ? 'Import account' : 'Create a new account'}
             </h1>
           </div>
           <div className='header-nav_right'>
             <div className='progress-indicator'>
-              <div className='progress-indicator_step -complete' />
-              <div className='progress-indicator_step -complete' />
-              <div className='progress-indicator_step' />
-              <div className='progress-indicator_step' />
-              <div className='progress-indicator_step' />
+              {Steps.map((_, index) =>
+                <div
+                  className={[
+                    'progress-indicator_step',
+                    step > index ? '-complete' : ''
+                  ].join(' ')}
+                  key={`progress-indicator_step${index + 1}`}
+                />
+              )}
             </div>
           </div>
         </nav>
 
         <div className='window_content -modal'>
-          <Route path='/accounts/new/step1' component={Step1} />
-          <Route path='/accounts/new/step2' component={Step2} />
-          <Route path='/accounts/new/step3' component={Step3} />
-          <Route path='/accounts/new/step4' component={Step4} />
-          <Route path='/accounts/new/step5' component={Step5} />
+          {Steps.map((StepComponent, index) =>
+            <Route
+              component={StepComponent}
+              key={`Step${index + 1}`}
+              path={`/accounts/new/${index + 1}`}
+            />
+          )}
         </div>
       </div>
     );

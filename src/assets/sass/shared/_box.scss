@@ -7,15 +7,18 @@
     padding: 1rem;
     border-radius: 0.25rem;
     background-color: $eggshell;
+    border: 0px solid $eggshell;
     overflow: hidden;
     box-shadow: 0 0.125rem 0.5rem rgba($black,0.125);
     &.-clickable {
       transition: box-shadow ease 0.125s;
       &:hover {
+        border-color: $blue;
         box-shadow: 0 0.125rem 0.675rem rgba($black,0.175);
         cursor: default;
       }
       &:active {
+        border-color: $blue;
         box-shadow: 0 0.125rem 0.325rem rgba($black,0.175);
         cursor: default;
       }
