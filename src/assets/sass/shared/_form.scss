@@ -111,6 +111,7 @@ nav.range-nav {
   .range-nav_label {
     width: 4rem;
     color: $grey;
+    font-size: ms(-3);
     &:last-child {
       text-align: right;
     }

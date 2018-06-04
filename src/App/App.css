@@ -960,7 +960,8 @@ nav.range-nav {
   text-transform: uppercase; }
   nav.range-nav .range-nav_label {
     width: 4rem;
-    color: #888; }
+    color: #888;
+    font-size: 0.5787rem; }
     nav.range-nav .range-nav_label:last-child {
       text-align: right; }
   nav.range-nav .range-nav_value {
