@@ -893,10 +893,10 @@ a, a:link, a:visited {
     background-repeat: no-repeat;
     border-radius: 0;
     border: 0;
-    opacity: 0.5; }
+    opacity: 0.25; }
     .button.-icon:hover {
       background-color: transparent;
-      opacity: 0.675; }
+      opacity: 0.5; }
     .button.-icon:active {
       background-color: transparent;
       opacity: 1; }
