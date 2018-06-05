@@ -13,13 +13,12 @@ import { defaultAccount$, myBalance$, post$ } from '@parity/light.js';
 import ethereumIcon from '../../assets/img/tokens/ethereum.png';
 import light from '../../hoc';
 
-@inject('signerStore')
-@observer
-
 @light({
   balance: () => myBalance$().pipe(map(value => +fromWei(value))),
   me: defaultAccount$
 })
+@inject('signerStore')
+@observer
 class Signer extends Component {
   state = {
     password: '',
@@ -72,11 +71,13 @@ class Signer extends Component {
   };
 
   render () {
-    const { balance, location: { state: tx } } = this.props;
+    const {
+      balance,
+      location: { state: tx }
+    } = this.props;
     const { password } = this.state;
 
     return (
-
       <div>
         <nav className='header-nav'>
           <div className='header-nav_left'>
@@ -112,9 +113,7 @@ class Signer extends Component {
                 </div>
                 <div className='form_field'>
                   <label>To</label>
-                  <div className='form_field_value'>
-                    {tx.to}
-                  </div>
+                  <div className='form_field_value'>{tx.to}</div>
                 </div>
               </div>
               <div className='box -card-drawer'>
@@ -138,11 +137,9 @@ class Signer extends Component {
                   >
                     Cancel
                   </button>
-                  <button
-                    className='button -submit'
-                  >
+                  <button className='button -submit'>
                     Confirm transaction
-                  </button>{' '}
+                  </button>
                 </nav>
               </div>
             </div>
