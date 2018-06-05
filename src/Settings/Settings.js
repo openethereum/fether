@@ -121,6 +121,7 @@ class Settings extends Component {
               <button
                 onClick={this.handleClear}
                 className='button -icon -clear'
+                disabled={!search.length}
               >
                 Clear
               </button>

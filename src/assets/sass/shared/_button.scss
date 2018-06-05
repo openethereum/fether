@@ -120,5 +120,9 @@
     &.-clear {
       background-image: url('../assets/img/icons/close.svg');
     }
+
+    &:disabled {
+      opacity: 0;
+    }
   }
 }
