@@ -52,11 +52,11 @@ class Send extends PureComponent {
         <nav className='header-nav'>
           <div className='header-nav_left'>
             <Link to='/tokens' className='icon -close'>
-              x
+              Close
             </Link>
           </div>
           <div className='header-nav_title'>
-            <h1>Sending Ethereum</h1>
+            <h1>Send Ethereum</h1>
           </div>
           <div className='header-nav_right' />
         </nav>

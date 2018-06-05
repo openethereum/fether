@@ -1,8 +1,10 @@
 .token {
   display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
 
   .token_icon {
-    margin: -0.5rem 0 -0.5rem -0.425rem;
     width: (ms(0) * 1.3) + 1rem;
     height: (ms(0) * 1.3) + 1rem;
     display: flex;
@@ -13,6 +15,8 @@
     align-content: center;
 
     img {
+      display: block;
+      margin: 0;
       height: (ms(0) * 1.3);
       width: auto;
     }
@@ -20,6 +24,7 @@
 
   .token_name {
     padding-left: 0.325rem;
+    height: ms(0) * 1.3;
     flex-grow: 1;
     color: $black;
     font-weight: 500;
@@ -28,12 +33,18 @@
   .token_balance {
     font-family: $mono;
     color: $grey;
+    height: ms(0) * 1.3;
   }
 
   .token_symbol {
+    height: ms(0) * 1.3;
     font-size: ms(-2);
     &:before {
       content: ' ';
     }
+  }
+
+  .token_buttons {
+    padding-left: 0.5rem;
   }
 }

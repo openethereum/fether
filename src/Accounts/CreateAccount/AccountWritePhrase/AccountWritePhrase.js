@@ -76,7 +76,11 @@ class AccountWritePhrase extends Component {
 
     // If we are importing an existing account, the button sets the phrase
     return (
-      <button className='button' onClick={this.handleSavePhrase}>
+      <button
+        className='button'
+        onClick={this.handleSavePhrase}
+        disabled={!value.length}
+      >
         Next
       </button>
     );

@@ -27,7 +27,7 @@ class AccountConfirm extends Component {
             </div>
             <nav className='form-nav'>
               <button onClick={this.handleSubmit} className='button'>
-                Next
+                Confirm
               </button>
             </nav>
           </div>

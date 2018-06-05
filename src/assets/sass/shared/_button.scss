@@ -19,6 +19,13 @@
     color: $white;
   }
 
+  &:disabled {
+    opacity: 0.5;
+    border-color: $faint;
+    background-color: $faint;
+    color: $grey;
+  }
+
   &.-tiny {
     font-size: ms(-2);
     text-transform: none;
@@ -63,9 +70,19 @@
     &:active {
       opacity: 1.0;
     }
+
+    &.-good {
+      background-color: $green;
+      color: $white;
+    }
+
+    &.-bad {
+      background-color: $red;
+      color: $white;
+    }
   }
 
-  &.-footer {
+  &.-cancel {
     font-size: ms(-2);
     border-width: 0;
     background-color: $faint;
@@ -80,6 +97,32 @@
 
     &:active {
       opacity: 1.0;
+    }
+  }
+
+  &.-icon {
+    text-indent: -9999rem;
+    background-size: ms(-1) auto;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-radius: 0;
+    border: 0;
+    opacity: 0.25;
+    &:hover {
+      background-color: transparent;
+      opacity: 0.5;
+    }
+    &:active {
+      background-color: transparent;
+      opacity: 1;
+    }
+
+    &.-clear {
+      background-image: url('../assets/img/icons/close.svg');
+    }
+
+    &:disabled {
+      opacity: 0;
     }
   }
 }

@@ -12,15 +12,15 @@ import { withRouter } from 'react-router-dom';
 @withRouter
 class NewTokenItem extends Component {
   handleAddToken = () => {
-    const { history, token, tokensStore } = this.props;
+    const { token, tokensStore } = this.props;
     tokensStore.addToken(token.address, token);
-    history.goBack();
+    this.forceUpdate(); // TODO: I assume this is not the preferred way to do this!
   };
 
   handleRemoveToken = () => {
-    const { history, token, tokensStore } = this.props;
+    const { token, tokensStore } = this.props;
     tokensStore.removeToken(token.address);
-    history.goBack();
+    this.forceUpdate();
   };
 
   render () {
@@ -40,9 +40,11 @@ class NewTokenItem extends Component {
               {token.symbol}
             </span>
           </div>
-          {tokens.has(token.address)
-            ? <button onClick={this.handleRemoveToken}>Remove</button>
-            : <button onClick={this.handleAddToken}>Add</button>}
+          <div className='token_buttons'>
+            {tokens.has(token.address)
+              ? <button className='button -utility -bad' onClick={this.handleRemoveToken}>Remove</button>
+              : <button className='button -utility -good' onClick={this.handleAddToken}>Add</button>}
+          </div>
         </div>
       </li>
     );
