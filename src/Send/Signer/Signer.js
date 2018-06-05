@@ -73,7 +73,7 @@ class Signer extends Component {
 
   render () {
     const { balance, location: { state: tx } } = this.props;
-    const { password, status } = this.state;
+    const { password } = this.state;
 
     return (
 

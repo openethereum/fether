@@ -12,13 +12,13 @@ import { withRouter } from 'react-router-dom';
 @withRouter
 class NewTokenItem extends Component {
   handleAddToken = () => {
-    const { history, token, tokensStore } = this.props;
+    const { token, tokensStore } = this.props;
     tokensStore.addToken(token.address, token);
     this.forceUpdate(); // TODO: I assume this is not the preferred way to do this!
   };
 
   handleRemoveToken = () => {
-    const { history, token, tokensStore } = this.props;
+    const { token, tokensStore } = this.props;
     tokensStore.removeToken(token.address);
     this.forceUpdate();
   };
