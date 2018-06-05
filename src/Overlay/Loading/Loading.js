@@ -3,28 +3,19 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { Component } from 'react';
-import loading from '../assets/img/icons/loading.svg';
-import { inject, observer } from 'mobx-react';
-import { Redirect } from 'react-router-dom';
+import React, { PureComponent } from 'react';
 
-@inject('parityStore')
-@observer
-class Loading extends Component {
+import loading from '../../assets/img/icons/loading.svg';
+
+class Loading extends PureComponent {
   render () {
-    const { parityStore: { isApiConnected } } = this.props;
-
-    if (isApiConnected) {
-      return <Redirect to='/' />;
-    }
-
     return (
       <div className='windowContent'>
         <div className='box -padded'>
           <div className='alert-screen'>
             <div className='alert-screen_content'>
               <div className='alert-screen_image'>
-                <img src={loading} />
+                <img alt='loading' src={loading} />
               </div>
             </div>
           </div>

@@ -25,7 +25,7 @@ class HealthStore {
   @observable nodeHealth;
   @observable syncing;
 
-  constructor() {
+  constructor () {
     nodeHealth$().subscribe(this.setNodeHealth);
     syncing$().subscribe(this.setSyncing);
   }
@@ -37,7 +37,7 @@ class HealthStore {
    * represents the current status, with a custom payload.
    */
   @computed
-  get health() {
+  get health () {
     // Check download progress
     if (parityStore.downloadProgress > 0 && !parityStore.isParityRunning) {
       return {

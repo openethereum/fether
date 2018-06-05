@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { accountsInfo$, defaultAccount$ } from '@parity/light.js';
 import Blockie from 'react-blockies';
 import { Link } from 'react-router-dom';
@@ -14,7 +14,7 @@ import light from '../hoc';
   accountsInfo: accountsInfo$,
   defaultAccount: defaultAccount$
 })
-class Receive extends PureComponent {
+class Receive extends Component {
   render () {
     const { accountsInfo, defaultAccount } = this.props;
     return (
@@ -43,24 +43,24 @@ class Receive extends PureComponent {
                 </div>
                 <div className='account_information'>
                   <div className='account_name'>
-                    {accountsInfo && defaultAccount && accountsInfo[defaultAccount]
+                    {accountsInfo &&
+                    defaultAccount &&
+                    accountsInfo[defaultAccount]
                       ? accountsInfo[defaultAccount].name
                       : 'Loading...'}
                   </div>
-                  <div className='account_address'>
-                    {defaultAccount}
-                  </div>
+                  <div className='account_address'>{defaultAccount}</div>
                 </div>
               </div>
               <div className='box -card-drawer'>
                 <div className='text'>
                   <p>Your address is:</p>
                 </div>
-                <div className='text -code'>
-                  {defaultAccount}
-                </div>
+                <div className='text -code'>{defaultAccount}</div>
                 <div className='box text -right'>
-                  <button className='button -utility'>Copy address to clipboard</button>
+                  <button className='button -utility'>
+                    Copy address to clipboard
+                  </button>
                 </div>
               </div>
             </div>
