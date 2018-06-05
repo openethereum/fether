@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { accountsInfo$, defaultAccount$ } from '@parity/light.js';
 import Blockie from 'react-blockies';
 import { Link } from 'react-router-dom';
@@ -14,9 +14,12 @@ import light from '../hoc';
   accountsInfo: accountsInfo$,
   defaultAccount: defaultAccount$
 })
-class Receive extends Component {
+class Receive extends PureComponent {
   render () {
     const { accountsInfo, defaultAccount } = this.props;
+
+    if (!defaultAccount) return <div>Loading...</div>;
+
     return (
       <div>
         <nav className='header-nav'>
