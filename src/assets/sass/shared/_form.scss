@@ -13,6 +13,18 @@
     display: block
   }
 
+  .form_field_value {
+    font-size: ms(0);
+    font-weight: 400;
+    font-family: $sans;
+    line-height: ms(0) * 1.3;
+    opacity: 0.75;
+    margin: 0.25rem 0.5rem 0;
+    padding-bottom: 0.5rem;
+    overflow: hidden;
+    word-wrap: break-word;
+  }
+
   input[type="text"], input[type="number"], input[type="tel"], input[type="email"], input[type="password"], textarea {
     border: 0;
     background: transparent;
@@ -20,7 +32,7 @@
     font-weight: 400;
     font-family: $sans;
     line-height: ms(0) * 1.3;
-    width: 100%;
+    width: calc(100% - 1rem;);
     opacity: 0.75;
     padding: 0.5rem;
     margin-top: -0.25rem;

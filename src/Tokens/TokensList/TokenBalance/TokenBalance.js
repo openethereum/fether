@@ -17,7 +17,7 @@ import light from '../../../hoc';
   balance: ({ token: { address, decimals } }) =>
     defaultAccount$().pipe(
       switchMap(defaultAccount =>
-        makeContract$(address, abi).balanceOf$(defaultAccount)
+        makeContract$(address, abi).balanceOf(defaultAccount)
       ),
       map(value => +value.div(10 ** decimals))
     )

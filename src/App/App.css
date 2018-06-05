@@ -868,7 +868,7 @@ a, a:link, a:visited {
       opacity: 0.9; }
     .button.-utility:active {
       opacity: 1.0; }
-  .button.-footer {
+  .button.-cancel {
     font-size: 0.69444rem;
     border-width: 0;
     background-color: #ddd;
@@ -876,9 +876,9 @@ a, a:link, a:visited {
     padding: 0.25rem 0.75rem;
     opacity: 0.8;
     border-radius: 1rem; }
-    .button.-footer:hover {
+    .button.-cancel:hover {
       opacity: 0.9; }
-    .button.-footer:active {
+    .button.-cancel:active {
       opacity: 1.0; }
 
 .form_field {
@@ -893,6 +893,16 @@ a, a:link, a:visited {
     opacity: 0.75;
     padding: 0.5rem 0.5rem 0;
     display: block; }
+  .form_field .form_field_value {
+    font-size: 1rem;
+    font-weight: 400;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    line-height: 1.3rem;
+    opacity: 0.75;
+    margin: 0.25rem 0.5rem 0;
+    padding-bottom: 0.5rem;
+    overflow: hidden;
+    word-wrap: break-word; }
   .form_field input[type="text"], .form_field input[type="number"], .form_field input[type="tel"], .form_field input[type="email"], .form_field input[type="password"], .form_field textarea {
     border: 0;
     background: transparent;
@@ -900,7 +910,7 @@ a, a:link, a:visited {
     font-weight: 400;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     line-height: 1.3rem;
-    width: 100%;
+    width: calc(100% - 1rem);
     opacity: 0.75;
     padding: 0.5rem;
     margin-top: -0.25rem; }
@@ -1042,6 +1052,8 @@ nav.range-nav {
       border-radius: 0.25rem;
       overflow: hidden;
       box-shadow: 0 0.125rem 0.75rem rgba(34, 34, 34, 0.175), 0 0.125rem 0.125rem rgba(34, 34, 34, 0.1); }
+      .wrapper .content .window .window_content {
+        min-height: 7.5rem; }
 
 .debug-nav {
   background-color: rgba(34, 34, 34, 0.125);
@@ -1081,9 +1093,11 @@ nav.range-nav {
     overflow: hidden; }
 
 .token {
-  display: flex; }
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center; }
   .token .token_icon {
-    margin: -0.5rem 0 -0.5rem -0.425rem;
     width: 2.3rem;
     height: 2.3rem;
     display: flex;
@@ -1093,17 +1107,22 @@ nav.range-nav {
     align-items: center;
     align-content: center; }
     .token .token_icon img {
+      display: block;
+      margin: 0;
       height: 1.3rem;
       width: auto; }
   .token .token_name {
     padding-left: 0.325rem;
+    height: 1.3rem;
     flex-grow: 1;
     color: #222;
     font-weight: 500; }
   .token .token_balance {
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-    color: #888; }
+    color: #888;
+    height: 1.3rem; }
   .token .token_symbol {
+    height: 1.3rem;
     font-size: 0.69444rem; }
     .token .token_symbol:before {
       content: ' '; }
@@ -1121,7 +1140,6 @@ nav.range-nav {
     align-content: center; }
     .account .account_avatar canvas {
       display: block;
-      width: 2.3rem !important;
       height: 2.3rem !important;
       width: auto !important; }
   .account .account_information {
@@ -1249,6 +1267,8 @@ nav.range-nav {
 
 .footer-nav {
   display: flex;
+  height: 3.5rem;
+  overflow: hidden;
   justify-content: space-between; }
   .footer-nav .footer-nav_status {
     padding: 1rem;
@@ -1319,6 +1339,8 @@ nav.range-nav {
   padding-top: 0.5rem;
   display: flex;
   justify-content: center; }
+  .form-nav.-binary {
+    justify-content: space-between; }
 
 .alert-screen {
   height: 22rem;
