@@ -32,11 +32,6 @@
       box-shadow: 0 0.125rem 0.75rem rgba($black,0.175), 0 0.125rem 0.125rem rgba($black,0.100);
 
       .window_content {
-
-        &.-modal {
-          border-top: 0;
-          border-bottom: 0;
-        }
       }
     }
   }

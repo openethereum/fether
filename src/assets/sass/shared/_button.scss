@@ -19,6 +19,13 @@
     color: $white;
   }
 
+  &:disabled {
+    opacity: 0.5;
+    border-color: $faint;
+    background-color: $faint;
+    color: $grey;
+  }
+
   &.-tiny {
     font-size: ms(-2);
     text-transform: none;

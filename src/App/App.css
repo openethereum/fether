@@ -831,6 +831,11 @@ a, a:link, a:visited {
   .button:active {
     background-color: #1209ed;
     color: #f9f9f9; }
+  .button:disabled {
+    opacity: 0.5;
+    border-color: #ddd;
+    background-color: #ddd;
+    color: #888; }
   .button.-tiny {
     font-size: 0.69444rem;
     text-transform: none;
@@ -1037,9 +1042,6 @@ nav.range-nav {
       border-radius: 0.25rem;
       overflow: hidden;
       box-shadow: 0 0.125rem 0.75rem rgba(34, 34, 34, 0.175), 0 0.125rem 0.125rem rgba(34, 34, 34, 0.1); }
-      .wrapper .content .window .window_content.-modal {
-        border-top: 0;
-        border-bottom: 0; }
 
 .debug-nav {
   background-color: rgba(34, 34, 34, 0.125);
@@ -1317,3 +1319,22 @@ nav.range-nav {
   padding-top: 0.5rem;
   display: flex;
   justify-content: center; }
+
+.alert-screen {
+  height: 22rem;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .alert-screen .alert-screen_image {
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+    .alert-screen .alert-screen_image img {
+      display: block;
+      width: 4rem;
+      height: auto; }
+  .alert-screen .alert-screen_text {
+    margin-top: 1rem;
+    text-align: center; }
+    .alert-screen .alert-screen_text h1, .alert-screen .alert-screen_text h2, .alert-screen .alert-screen_text big, .alert-screen .alert-screen_text strong {
+      font-weight: 600; }

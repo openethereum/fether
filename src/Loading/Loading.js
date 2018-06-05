@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
+import loading from '../assets/img/icons/loading.svg'
 import { inject, observer } from 'mobx-react';
 import { Link, Redirect } from 'react-router-dom';
 
@@ -20,21 +21,16 @@ class Loading extends Component {
     }
 
     return (
-      <div>
-        <p>
-          This is the Loading page.<br />
-        </p>
-
-        <nav className='footer-nav'>
-          <div className='footer-nav_status'>
-            <Health />
+      <div className='windowContent'>
+        <div className='box -padded'>
+          <div className='alert-screen'>
+            <div className='alert-screen_content'>
+              <div className='alert-screen_image'>
+                <img src={loading} />
+              </div>
+            </div>
           </div>
-          <div className='footer-nav_icons'>
-            <Link to='/settings' className='icon -settings'>
-              Settings
-            </Link>
-          </div>
-        </nav>
+        </div>
       </div>
     );
   }
