@@ -105,15 +105,15 @@ class Signer extends Component {
               </div>
               <div className='box -card-drawer'>
                 <div className='form_field'>
-                  <label>To</label>
-                  <div className='form_field_value'>
-                    {tx.to}
-                  </div>
-                </div>
-                <div className='form_field'>
                   <label>Amount</label>
                   <div className='form_field_value'>
                     {+fromWei(tx.value)} ETH
+                  </div>
+                </div>
+                <div className='form_field'>
+                  <label>To</label>
+                  <div className='form_field_value'>
+                    {tx.to}
                   </div>
                 </div>
               </div>

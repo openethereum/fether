@@ -1,0 +1,31 @@
+.search-form {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+  border-radius: 0.25rem;
+  background-color: $eggshell;
+  border: 0px solid $eggshell;
+  overflow: hidden;
+  box-shadow: 0 0.125rem 0.5rem rgba($black,0.125);
+  margin-bottom: -0.5rem;
+
+  input[type='text'] {
+    border: 0;
+    background: transparent;
+    font-size: ms(-1);
+    font-weight: 400;
+    font-family: $mono;
+    line-height: ms(0) * 1.3;
+    width: calc(100% - 2rem;);
+    opacity: 0.75;
+    padding: 0.6rem 0.5rem 0.5rem;
+    &:focus {
+      opacity: 1;
+    }
+  }
+
+  button {
+    width: 2.349375rem;
+    height: 2.349375rem;
+  }
+}

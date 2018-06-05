@@ -868,6 +868,12 @@ a, a:link, a:visited {
       opacity: 0.9; }
     .button.-utility:active {
       opacity: 1.0; }
+    .button.-utility.-good {
+      background-color: #3ec28f;
+      color: #f9f9f9; }
+    .button.-utility.-bad {
+      background-color: #C2473E;
+      color: #f9f9f9; }
   .button.-cancel {
     font-size: 0.69444rem;
     border-width: 0;
@@ -880,6 +886,22 @@ a, a:link, a:visited {
       opacity: 0.9; }
     .button.-cancel:active {
       opacity: 1.0; }
+  .button.-icon {
+    text-indent: -9999rem;
+    background-size: 0.83333rem auto;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-radius: 0;
+    border: 0;
+    opacity: 0.5; }
+    .button.-icon:hover {
+      background-color: transparent;
+      opacity: 0.675; }
+    .button.-icon:active {
+      background-color: transparent;
+      opacity: 1; }
+    .button.-icon.-clear {
+      background-image: url("../assets/img/icons/close.svg"); }
 
 .form_field {
   margin: 0.5rem 0;
@@ -894,9 +916,9 @@ a, a:link, a:visited {
     padding: 0.5rem 0.5rem 0;
     display: block; }
   .form_field .form_field_value {
-    font-size: 1rem;
+    font-size: 0.83333rem;
     font-weight: 400;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
     line-height: 1.3rem;
     opacity: 0.75;
     margin: 0.25rem 0.5rem 0;
@@ -908,7 +930,7 @@ a, a:link, a:visited {
     background: transparent;
     font-size: 1rem;
     font-weight: 400;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
     line-height: 1.3rem;
     width: calc(100% - 1rem);
     opacity: 0.75;
@@ -949,8 +971,8 @@ a, a:link, a:visited {
       height: 8rem; }
 
 input.form_field_amount[type='number'] {
-  font-size: 4.29982rem;
-  line-height: 4.7298rem;
+  font-size: 2.98598rem;
+  line-height: 3.28458rem;
   font-weight: 200;
   text-align: center;
   -webkit-appearance: none; }
@@ -1126,6 +1148,8 @@ nav.range-nav {
     font-size: 0.69444rem; }
     .token .token_symbol:before {
       content: ' '; }
+  .token .token_buttons {
+    padding-left: 0.5rem; }
 
 .account {
   display: flex; }
@@ -1360,3 +1384,29 @@ nav.range-nav {
     text-align: center; }
     .alert-screen .alert-screen_text h1, .alert-screen .alert-screen_text h2, .alert-screen .alert-screen_text big, .alert-screen .alert-screen_text strong {
       font-weight: 600; }
+
+.search-form {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+  border-radius: 0.25rem;
+  background-color: #fff;
+  border: 0px solid #fff;
+  overflow: hidden;
+  box-shadow: 0 0.125rem 0.5rem rgba(34, 34, 34, 0.125);
+  margin-bottom: -0.5rem; }
+  .search-form input[type='text'] {
+    border: 0;
+    background: transparent;
+    font-size: 0.83333rem;
+    font-weight: 400;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    line-height: 1.3rem;
+    width: calc(100% - 2rem);
+    opacity: 0.75;
+    padding: 0.6rem 0.5rem 0.5rem; }
+    .search-form input[type='text']:focus {
+      opacity: 1; }
+  .search-form button {
+    width: 2.349375rem;
+    height: 2.349375rem; }

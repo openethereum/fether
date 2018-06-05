@@ -4,11 +4,9 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import loading from '../assets/img/icons/loading.svg'
+import loading from '../assets/img/icons/loading.svg';
 import { inject, observer } from 'mobx-react';
-import { Link, Redirect } from 'react-router-dom';
-
-import Health from '../Health';
+import { Redirect } from 'react-router-dom';
 
 @inject('parityStore')
 @observer

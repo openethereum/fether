@@ -5,11 +5,10 @@
 
 import React, { PureComponent } from 'react';
 import { accountsInfo$, defaultAccount$ } from '@parity/light.js';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import Health from '../Health';
 import light from '../hoc';
-import NewToken from './NewToken';
 import TokensList from './TokensList';
 
 @light({
@@ -38,17 +37,14 @@ class Tokens extends PureComponent {
           <div className='header-nav_right' />
         </nav>
 
-        <Switch>
-          <Route exact path='/tokens' component={TokensList} />
-          <Route path='/tokens/new' component={NewToken} />
-        </Switch>
+        <TokensList />
 
         <nav className='footer-nav'>
           <div className='footer-nav_status'>
             <Health />
           </div>
           <div className='footer-nav_icons'>
-            <Link to='/tokens/new' className='icon -settings'>
+            <Link to='/settings' className='icon -settings'>
               Settings
             </Link>
           </div>
