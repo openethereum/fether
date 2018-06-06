@@ -46,7 +46,7 @@
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
-"@babel/runtime@^7.0.0-beta.46":
+"@babel/runtime@^7.0.0-beta.49":
   version "7.0.0-beta.49"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-beta.49.tgz#03b3bf07eb982072c8e851dd2ddd5110282e61bf"
   dependencies:
@@ -118,6 +118,24 @@
     store "^2.0.12"
     websocket "^1.0.25"
 
+"@parity/api@^2.1.23":
+  version "2.1.23"
+  resolved "https://registry.yarnpkg.com/@parity/api/-/api-2.1.23.tgz#c9cba0d64085cd03fafc69d1bd5b53cbabd0c280"
+  dependencies:
+    "@parity/abi" "~2.1.4"
+    "@parity/jsonrpc" "2.1.x"
+    "@parity/wordlist" "1.1.x"
+    bignumber.js "4.1.0"
+    blockies "0.0.2"
+    es6-error "4.0.2"
+    es6-promise "^4.1.1"
+    eventemitter3 "^2.0.2"
+    isomorphic-fetch "^2.2.1"
+    js-sha3 "0.5.5"
+    lodash "^4.17.4"
+    store "^2.0.12"
+    websocket "^1.0.25"
+
 "@parity/jsonrpc@2.1.x":
   version "2.1.6"
   resolved "https://registry.yarnpkg.com/@parity/jsonrpc/-/jsonrpc-2.1.6.tgz#260bbe7dfcec18d59f0bf1668dfd6021452d6452"
@@ -131,14 +149,13 @@
     u2f-api "0.0.9"
     u2f-api-polyfill "0.4.3"
 
-"@parity/light.js@https://github.com/parity-js/light.js#2052c910d1ff4f4e38d4cba7fb5578ac4500f0ae":
+"@parity/light.js@https://github.com/parity-js/light.js#24ed8bed60917207a84d85cd5622636f8489fd7a":
   version "1.0.0"
-  resolved "https://github.com/parity-js/light.js#2052c910d1ff4f4e38d4cba7fb5578ac4500f0ae"
+  resolved "https://github.com/parity-js/light.js#24ed8bed60917207a84d85cd5622636f8489fd7a"
   dependencies:
-    "@babel/runtime" "^7.0.0-beta.46"
-    "@parity/api" "^2.1.22"
+    "@babel/runtime" "^7.0.0-beta.49"
+    "@parity/api" "^2.1.23"
     memoizee "^0.4.12"
-    rxjs "^6.1.0"
 
 "@parity/shared@^3.0.1":
   version "3.0.1"
