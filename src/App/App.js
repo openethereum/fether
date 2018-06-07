@@ -14,6 +14,7 @@ import {
 import { inject, observer } from 'mobx-react';
 
 import Accounts from '../Accounts';
+import Onboarding from '../Onboarding';
 import Overlay from '../Overlay';
 import Receive from '../Receive';
 import Send from '../Send';
@@ -28,16 +29,10 @@ import './App.css';
 const Router =
   process.env.NODE_ENV === 'production' ? MemoryRouter : BrowserRouter;
 
-@inject('healthStore')
+@inject('healthStore', 'onboardingStore')
 @observer
 class App extends Component {
   render () {
-    const {
-      healthStore: {
-        health: { status }
-      }
-    } = this.props;
-
     return (
       <Router>
         <div className='wrapper'>
@@ -47,26 +42,48 @@ class App extends Component {
                 <polygon points='0 30 60 30 30 0' />
               </svg>
             </div>
-            <div className='window'>
-              {status === STATUS.GOOD ? (
-                <Switch>
-                  {/* Change homepage on the next line */}
-                  <Redirect exact from='/' to='/tokens' />
-                  <Route path='/accounts' component={Accounts} />
-                  <Route path='/tokens' component={Tokens} />
-                  <Route path='/receive' component={Receive} />
-                  <Route path='/settings' component={Settings} />
-                  <Route path='/send' component={Send} />
-                  <Route path='/signer' component={Signer} />
-                  <Redirect from='*' to='/' />
-                </Switch>
-              ) : (
-                <Overlay />
-              )}
-            </div>
+            <div className='window'>{this.renderScreen()}</div>
           </div>
         </div>
       </Router>
+    );
+  }
+
+  /**
+   * Decide which screen to render.
+   */
+  renderScreen () {
+    const {
+      onboardingStore: { isOnboarding },
+      healthStore: {
+        health: { status }
+      }
+    } = this.props;
+
+    // If we are onboarding, then never show the Overlay. On the other hand, if
+    // we're not onboarding, show the Overlay whenever we have an issue.
+    if (!isOnboarding && status !== STATUS.GOOD) {
+      return <Overlay />;
+    }
+
+    return (
+      <Switch>
+        {/* We redirect to Onboarding if necessary, or by default to our
+        homepage which is Tokens */}
+        <Redirect
+          exact
+          from='/'
+          to={isOnboarding ? '/onboarding' : '/tokens'}
+        />
+        <Route path='/accounts' component={Accounts} />
+        <Route path='/onboarding' component={Onboarding} />
+        <Route path='/receive' component={Receive} />
+        <Route path='/send' component={Send} />
+        <Route path='/settings' component={Settings} />
+        <Route path='/signer' component={Signer} />
+        <Route path='/tokens' component={Tokens} />
+        <Redirect from='*' to='/' />
+      </Switch>
     );
   }
 }

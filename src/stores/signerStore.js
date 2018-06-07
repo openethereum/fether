@@ -19,7 +19,7 @@ class SignerStore {
       // TODO This .on() is not working, so we poll every second
       // this.api.on('connected', this.subscribePending);
       this.interval = setInterval(() => {
-        if (parityStore.isApiConnected) {
+        if (parityStore.isApiConnected && this.api) {
           this.subscribePending();
           clearInterval(this.interval);
         }

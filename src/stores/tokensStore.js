@@ -9,20 +9,19 @@ import { combineLatest } from 'rxjs';
 import store from 'store';
 
 import ethereumIcon from '../assets/img/tokens/ethereum.png';
+import LS_PREFIX from './utils/lsPrefix';
 
-const LS_PREFIX = '__paritylight::tokens';
+const LS_KEY = `${LS_PREFIX}::tokens`;
 
 class TokensStore {
   @observable tokens = new Map();
 
   constructor () {
-    combineLatest(
-      chainName$(),
-      defaultAccount$()
-    ).subscribe(([chainName, defaultAccount]) =>
-      // Refetch token from localStorage everytime we have a new chainName
-      // (shouldn't happen) or the user selects a new account
-      this.fetchTokensFromDb(chainName, defaultAccount)
+    combineLatest(chainName$(), defaultAccount$()).subscribe(
+      ([chainName, defaultAccount]) =>
+        // Refetch token from localStorage everytime we have a new chainName
+        // (shouldn't happen) or the user selects a new account
+        this.fetchTokensFromDb(chainName, defaultAccount)
     );
   }
 
@@ -36,7 +35,7 @@ class TokensStore {
   fetchTokensFromDb = async (chainName, defaultAccount) => {
     // Set the localStorage key, we have one key per chain per account, in this
     // format: __paritylight::tokens::0x123::kovan
-    this.lsKey = `${LS_PREFIX}::${defaultAccount}::${chainName}`;
+    this.lsKey = `${LS_KEY}::${defaultAccount}::${chainName}`;
 
     // Now we fetch the tokens from the localStorage
     const tokens = store.get(this.lsKey);

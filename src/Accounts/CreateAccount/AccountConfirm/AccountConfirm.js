@@ -8,11 +8,22 @@ import { inject, observer } from 'mobx-react';
 
 import CreateAccountHeader from '../CreateAccountHeader';
 
-@inject('createAccountStore')
+@inject('createAccountStore', 'onboardingStore')
 @observer
 class AccountConfirm extends Component {
   handleSubmit = () => {
-    const { createAccountStore: { saveAccountToParity }, history } = this.props;
+    const {
+      createAccountStore: { saveAccountToParity },
+      history,
+      onboardingStore
+    } = this.props;
+
+    // If we were onboarding, set isFirstRun to false, so that we quit
+    // onboarding.
+    if (onboardingStore.isFirstRun) {
+      onboardingStore.setIsFirstRun(false);
+    }
+
     saveAccountToParity().then(() => history.push('/accounts'));
   };
 

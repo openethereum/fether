@@ -13,7 +13,11 @@ import CreateAccountHeader from '../CreateAccountHeader';
 @observer
 class AccountName extends Component {
   componentDidMount () {
-    this.props.createAccountStore.generateNewAccount();
+    const { createAccountStore } = this.props;
+    // Generate a new public address if there's none yet
+    if (!createAccountStore.address) {
+      createAccountStore.generateNewAccount();
+    }
   }
 
   handleChangeName = ({ target: { value } }) =>
@@ -28,12 +32,12 @@ class AccountName extends Component {
 
     return (
       <div>
-        {address &&
+        {address && (
           <div className='box -padded'>
             <div className='box -card'>
               <CreateAccountHeader />
               <div className='box -card-drawer'>
-                {!isImport &&
+                {!isImport && (
                   <div className='box -pull-up text -right'>
                     <button
                       onClick={generateNewAccount}
@@ -41,7 +45,8 @@ class AccountName extends Component {
                     >
                       Regenerate address
                     </button>
-                  </div>}
+                  </div>
+                )}
                 <div className='text'>
                   <p>Please give this account a name:</p>
                 </div>
@@ -55,17 +60,20 @@ class AccountName extends Component {
                   />
                 </div>
                 <nav className='form-nav'>
-                  {name
-                    ? <Link to={`/accounts/new/${+currentStep + 1}`}>
+                  {name ? (
+                    <Link to={`/accounts/new/${+currentStep + 1}`}>
                       <button className='button'>Next</button>
                     </Link>
-                    : <button className='button' disabled>
-                        Next
-                    </button>}
+                  ) : (
+                    <button className='button' disabled>
+                      Next
+                    </button>
+                  )}
                 </nav>
               </div>
             </div>
-          </div>}
+          </div>
+        )}
       </div>
     );
   }
