@@ -3,6 +3,8 @@
 //
 // SPDX-License-Identifier: MIT
 
+/* global __static */
+
 const electron = require('electron');
 const path = require('path');
 const url = require('url');
@@ -40,7 +42,7 @@ function createWindow () {
     // Opens file:///path/to/.build/index.html in prod mode
     mainWindow.loadURL(
       url.format({
-        pathname: path.join(__dirname, '..', 'build', 'index.html'),
+        pathname: path.join(__static, 'build', 'index.html'),
         protocol: 'file:',
         slashes: true
       })

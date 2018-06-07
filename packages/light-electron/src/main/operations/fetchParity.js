@@ -13,7 +13,9 @@ const retry = require('async-retry');
 
 const { defaultParityPath, doesParityExist } = require('./doesParityExist');
 const handleError = require('./handleError');
-const { parity: { channel } } = require('../../package.json');
+const {
+  parity: { channel }
+} = require('../../../package.json');
 const pino = require('../utils/pino')();
 
 const checksum = promisify(cs.file);

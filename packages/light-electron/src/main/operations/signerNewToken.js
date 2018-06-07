@@ -3,6 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
+const pino = require('../utils/pino')();
 const { spawn } = require('child_process');
 
 const { parityPath } = require('./doesParityExist');
@@ -10,6 +11,8 @@ const { parityPath } = require('./doesParityExist');
 module.exports = event => {
   // Generate a new token
   const paritySigner = spawn(parityPath(), ['signer', 'new-token']);
+
+  pino.info('Requesting new token.');
 
   // Listen to the output of the previous command
   paritySigner.stdout.on('data', data => {

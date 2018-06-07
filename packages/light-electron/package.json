@@ -1,0 +1,64 @@
+{
+  "name": "parity-light",
+  "description": "The Parity Light Wallet",
+  "version": "0.1.0",
+  "private": true,
+  "author": "Parity Team <admin@parity.io>",
+  "maintainers": [
+    "Jaco Greeff",
+    "Amaury Martiny"
+  ],
+  "contributors": [],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/parity-js/light.git"
+  },
+  "bugs": {
+    "url": "https://github.com/parity-js/light/issues"
+  },
+  "keywords": [
+    "Ethereum",
+    "API",
+    "Light",
+    "Light Client",
+    "Parity"
+  ],
+  "homepage": "https://github.com/parity-js/light",
+  "parity": {
+    "channel": "beta"
+  },
+  "scripts": {
+    "prebuild": "cp -r ../light-react/build static/build",
+    "build": "electron-webpack",
+    "electron": "electron dist/main/main.js --light",
+    "lint": "semistandard 'src/**/*.js' --parser babel-eslint",
+    "package": "electron-builder",
+    "start": "electron-webpack dev --ui-dev --light --ws-origins all",
+    "start-electron": "electron electron/ --ui-dev --light --ws-origins all",
+    "start-js": "react-app-rewired start",
+    "test": "echo Skipped.",
+    "watch-css": "npm run build-css -- --watch --recursive"
+  },
+  "dependencies": {
+    "async-retry": "^1.2.1",
+    "axios": "^0.18.0",
+    "checksum": "^0.1.1",
+    "command-exists": "^1.2.6",
+    "commander": "^2.15.1",
+    "electron-dl": "^1.11.0",
+    "pino": "^4.16.1",
+    "pino-multi-stream": "^3.1.2",
+    "promise-any": "^0.2.0",
+    "source-map-support": "^0.5.6"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.3",
+    "cross-env": "^5.1.4",
+    "electron": "^2.0.2",
+    "electron-builder": "^20.15.1",
+    "electron-webpack": "^2.1.2",
+    "semistandard": "^12.0.1",
+    "webpack": "^4.7.0"
+  }
+}
