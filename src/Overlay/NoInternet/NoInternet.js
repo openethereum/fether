@@ -14,7 +14,7 @@ class NoInternet extends PureComponent {
           <div className='alert-screen'>
             <div className='alert-screen_content'>
               <div className='alert-screen_image'>
-                <img src={alert} />
+                <img alt='no-internet' src={alert} />
               </div>
               <div className='alert-screen_text'>
                 <h1>Poor connection</h1>

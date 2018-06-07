@@ -24,11 +24,15 @@ class Syncing extends Component {
           <div className='alert-screen'>
             <div className='alert-screen_content'>
               <div className='alert-screen_image'>
-                <img src={syncing} />
+                <img alt='syncing' src={syncing} />
               </div>
               <div className='alert-screen_text'>
                 <h1>Syncing&hellip;</h1>
-                <p>{ payload && payload.percentage ? ` (${payload.percentage}%)` : '' }</p>
+                <p>
+                  {payload && payload.percentage
+                    ? ` (${payload.percentage}%)`
+                    : ''}
+                </p>
               </div>
             </div>
           </div>
