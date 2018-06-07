@@ -36,7 +36,7 @@ module.exports = {
       }
 
       // Do not run parity if there is already another instance running
-      const isRunning = await isParityRunning();
+      const isRunning = await isParityRunning(mainWindow);
       if (isRunning) {
         return;
       }
