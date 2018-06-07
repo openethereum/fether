@@ -6,6 +6,8 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 
+import syncing from '../../assets/img/icons/loading.svg';
+
 @inject('healthStore')
 @observer
 class Syncing extends Component {
@@ -21,9 +23,17 @@ class Syncing extends Component {
         <div className='box -padded'>
           <div className='alert-screen'>
             <div className='alert-screen_content'>
-              {`Syncing...${
-                payload && payload.percentage ? ` (${payload.percentage}%)` : ''
-              }`}
+              <div className='alert-screen_image'>
+                <img alt='syncing' src={syncing} />
+              </div>
+              <div className='alert-screen_text'>
+                <h1>Syncing&hellip;</h1>
+                <p>
+                  {payload && payload.percentage
+                    ? ` (${payload.percentage}%)`
+                    : ''}
+                </p>
+              </div>
             </div>
           </div>
         </div>
