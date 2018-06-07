@@ -6,4 +6,9 @@ script:
   - yarn lint
   - yarn test
   - yarn build
-  
+deploy:
+  provider: script
+  script:
+    - yarn package --release
+  on:
+    branch: master
