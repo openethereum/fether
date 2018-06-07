@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import memoize from 'lodash/memoize';
 
@@ -33,20 +33,24 @@ class CreateAccount extends Component {
       ];
   });
 
-  handleImportAccount = () => {
-    this.props.createAccountStore.setIsImporting(true);
+  handleCreateAccount = () => {
+    this.props.createAccountStore.setIsImporting(false);
     this.props.history.push('/accounts/new');
   };
 
-  handleCreateAccount = () => {
-    this.props.createAccountStore.setIsImporting(false);
+  handleGoBack = () => this.props.history.goBack();
+
+  handleImportAccount = () => {
+    this.props.createAccountStore.setIsImporting(true);
     this.props.history.push('/accounts/new');
   };
 
   render () {
     const {
       createAccountStore: { isImport },
-      match: { params: { step } } // Current step
+      match: {
+        params: { step }
+      } // Current step
     } = this.props;
 
     // Get all the steps of our account process
@@ -56,18 +60,16 @@ class CreateAccount extends Component {
       <div>
         <nav className='header-nav'>
           <div className='header-nav_left'>
-            <Link to='/accounts' className='icon -close'>
+            <a className='icon -close' onClick={this.handleGoBack}>
               Close
-            </Link>
+            </a>
           </div>
           <div className='header-nav_title'>
-            <h1>
-              {isImport ? 'Import account' : 'Create a new account'}
-            </h1>
+            <h1>{isImport ? 'Import account' : 'Create a new account'}</h1>
           </div>
           <div className='header-nav_right'>
             <div className='progress-indicator'>
-              {Steps.map((_, index) =>
+              {Steps.map((_, index) => (
                 <div
                   className={[
                     'progress-indicator_step',
@@ -75,37 +77,44 @@ class CreateAccount extends Component {
                   ].join(' ')}
                   key={`progress-indicator_step${index + 1}`}
                 />
-              )}
+              ))}
             </div>
           </div>
         </nav>
 
         <div className='window_content'>
-          {Steps.map((StepComponent, index) =>
+          {Steps.map((StepComponent, index) => (
             <Route
               component={StepComponent}
               key={`Step${index + 1}`}
               path={`/accounts/new/${index + 1}`}
             />
-          )}
+          ))}
         </div>
 
         <nav className='footer-nav'>
           <div className='footer-nav_option'>
-            { isImport
-              ? <p>
+            {isImport ? (
+              <p>
                 Need to create an account?
-                <button className='button -footer' onClick={this.handleCreateAccount}>
+                <button
+                  className='button -footer'
+                  onClick={this.handleCreateAccount}
+                >
                   New account
                 </button>
               </p>
-              : <p>
+            ) : (
+              <p>
                 Already have an account?
-                <button className='button -footer' onClick={this.handleImportAccount}>
+                <button
+                  className='button -footer'
+                  onClick={this.handleImportAccount}
+                >
                   Import account
                 </button>
               </p>
-            }
+            )}
           </div>
         </nav>
       </div>

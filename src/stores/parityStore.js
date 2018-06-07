@@ -9,10 +9,11 @@ import isElectron from 'is-electron';
 import light from '@parity/light.js';
 import store from 'store';
 
+import LS_PREFIX from './utils/lsPrefix';
+
 const electron = isElectron() ? window.require('electron') : null;
 
-const LS_PREFIX = '__paritylight::';
-const LS_KEY = `${LS_PREFIX}secureToken`;
+const LS_KEY = `${LS_PREFIX}::secureToken`;
 
 class ParityStore {
   @observable downloadProgress = 0;
