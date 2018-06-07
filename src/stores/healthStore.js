@@ -70,7 +70,7 @@ class HealthStore {
     if (this.syncing) {
       const { currentBlock, highestBlock, startingBlock } = this.syncing;
       const percentage = Math.round(
-        (currentBlock - startingBlock) * 100 / (highestBlock - startingBlock)
+        ((currentBlock - startingBlock) * 100) / (highestBlock - startingBlock)
       );
       return {
         status: STATUS.SYNCING,
@@ -129,7 +129,7 @@ class HealthStore {
 
     if (
       message.includes(
-        'Your clock is not in sync. Detected difference is too big for the protocol to work.'
+        'Your clock is not in sync. Detected difference is too big for the protocol to work'
       )
     ) {
       return { status: STATUS.CLOCKNOTSYNC, payload: message };

@@ -17,6 +17,9 @@ import light from '../hoc';
 class Receive extends PureComponent {
   render () {
     const { accountsInfo, defaultAccount } = this.props;
+
+    if (!defaultAccount) return <div>Loading...</div>;
+
     return (
       <div>
         <nav className='header-nav'>
@@ -43,24 +46,24 @@ class Receive extends PureComponent {
                 </div>
                 <div className='account_information'>
                   <div className='account_name'>
-                    {accountsInfo && defaultAccount && accountsInfo[defaultAccount]
+                    {accountsInfo &&
+                    defaultAccount &&
+                    accountsInfo[defaultAccount]
                       ? accountsInfo[defaultAccount].name
                       : 'Loading...'}
                   </div>
-                  <div className='account_address'>
-                    {defaultAccount}
-                  </div>
+                  <div className='account_address'>{defaultAccount}</div>
                 </div>
               </div>
               <div className='box -card-drawer'>
                 <div className='text'>
                   <p>Your address is:</p>
                 </div>
-                <div className='text -code'>
-                  {defaultAccount}
-                </div>
+                <div className='text -code'>{defaultAccount}</div>
                 <div className='box text -right'>
-                  <button className='button -utility'>Copy address to clipboard</button>
+                  <button className='button -utility'>
+                    Copy address to clipboard
+                  </button>
                 </div>
               </div>
             </div>

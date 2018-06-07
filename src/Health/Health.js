@@ -19,9 +19,7 @@ class Health extends Component {
             <circle fill='#DDD' cx='10' cy='10' r='10' />
           </svg>
         </span>
-        <span className='status_text'>
-          {this.statusToFriendlyMessage()}
-        </span>
+        <span className='status_text'>{this.statusToFriendlyMessage()}</span>
       </div>
     );
   }
@@ -30,7 +28,11 @@ class Health extends Component {
    * Get className from the status icon from the status enum
    */
   statusToClassName = () => {
-    const { healthStore: { health: { status } } } = this.props;
+    const {
+      healthStore: {
+        health: { status }
+      }
+    } = this.props;
     switch (status) {
       case STATUS.GOOD:
         return '-good';
@@ -44,7 +46,11 @@ class Health extends Component {
   };
 
   statusToFriendlyMessage = () => {
-    const { healthStore: { health: { status, payload } } } = this.props;
+    const {
+      healthStore: {
+        health: { status, payload }
+      }
+    } = this.props;
     switch (status) {
       case STATUS.CANTCONNECT:
         return "Can't connect to Parity";
@@ -59,9 +65,9 @@ class Health extends Component {
       case STATUS.RUNNING:
         return 'Running...';
       case STATUS.SYNCING:
-        return `Syncing...${payload.percentage
-          ? ` (${payload.percentage}%)`
-          : ''}`;
+        return `Syncing...${
+          payload && payload.percentage ? ` (${payload.percentage}%)` : ''
+        }`;
       default:
         return JSON.stringify(payload); // Just in case payload is an object
     }

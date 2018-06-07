@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import {
   BrowserRouter,
   MemoryRouter,
@@ -11,14 +11,15 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
 
 import Accounts from '../Accounts';
-import Loading from '../Loading';
-import ProtectedRoute from './ProtectedRoute';
+import Overlay from '../Overlay';
 import Receive from '../Receive';
 import Send from '../Send';
 import Settings from '../Settings';
 import Signer from '../Send/Signer';
+import { STATUS } from '../stores/healthStore';
 import Tokens from '../Tokens';
 import './App.css';
 
@@ -27,8 +28,16 @@ import './App.css';
 const Router =
   process.env.NODE_ENV === 'production' ? MemoryRouter : BrowserRouter;
 
-class App extends PureComponent {
+@inject('healthStore')
+@observer
+class App extends Component {
   render () {
+    const {
+      healthStore: {
+        health: { status }
+      }
+    } = this.props;
+
     return (
       <Router>
         <div className='wrapper'>
@@ -39,17 +48,21 @@ class App extends PureComponent {
               </svg>
             </div>
             <div className='window'>
-              <Switch>
-                {/* Change homepage on the next line */}
-                <Redirect exact from='/' to='/tokens' />
-                <Route path='/loading' component={Loading} />
-                <ProtectedRoute path='/accounts' component={Accounts} />
-                <ProtectedRoute path='/tokens' component={Tokens} />
-                <ProtectedRoute path='/receive' component={Receive} />
-                <ProtectedRoute path='/settings' component={Settings} />
-                <ProtectedRoute path='/send' component={Send} />
-                <ProtectedRoute path='/signer' component={Signer} />
-              </Switch>
+              {status === STATUS.GOOD ? (
+                <Switch>
+                  {/* Change homepage on the next line */}
+                  <Redirect exact from='/' to='/tokens' />
+                  <Route path='/accounts' component={Accounts} />
+                  <Route path='/tokens' component={Tokens} />
+                  <Route path='/receive' component={Receive} />
+                  <Route path='/settings' component={Settings} />
+                  <Route path='/send' component={Send} />
+                  <Route path='/signer' component={Signer} />
+                  <Redirect from='*' to='/' />
+                </Switch>
+              ) : (
+                <Overlay />
+              )}
             </div>
           </div>
         </div>

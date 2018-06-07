@@ -3,6 +3,6 @@
 //
 // SPDX-License-Identifier: MIT
 
-import ProtectedRoute from './ProtectedRoute';
+import NoInternet from './NoInternet';
 
-export default ProtectedRoute;
+export default NoInternet;
