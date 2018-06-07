@@ -4,7 +4,6 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import { accounts$ } from '@parity/light.js';
 import {
   BrowserRouter,
   MemoryRouter,
@@ -15,7 +14,6 @@ import {
 import { inject, observer } from 'mobx-react';
 
 import Accounts from '../Accounts';
-import light from '../hoc';
 import Onboarding from '../Onboarding';
 import Overlay from '../Overlay';
 import Receive from '../Receive';
@@ -31,10 +29,7 @@ import './App.css';
 const Router =
   process.env.NODE_ENV === 'production' ? MemoryRouter : BrowserRouter;
 
-@light({
-  accounts: accounts$
-})
-@inject('healthStore', 'firstRunStore')
+@inject('healthStore', 'onboardingStore')
 @observer
 class App extends Component {
   render () {
@@ -59,23 +54,11 @@ class App extends Component {
    */
   renderScreen () {
     const {
-      accounts,
-      firstRunStore,
+      onboardingStore: { isOnboarding },
       healthStore: {
         health: { status }
       }
     } = this.props;
-    const { isFirstRun } = firstRunStore;
-
-    // We show the onboarding process if:
-    // - either it's the 1st time the user runs this app
-    // - or the user has 0 account
-    const isOnboarding =
-      // If either of the two is undefined, then it means we're still fetching.
-      // This doesn't count as onboarding.
-      accounts === undefined || isFirstRun === undefined
-        ? false
-        : isFirstRun || !accounts.length;
 
     // If we are onboarding, then never show the Overlay. On the other hand, if
     // we're not onboarding, show the Overlay whenever we have an issue.

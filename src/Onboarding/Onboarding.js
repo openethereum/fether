@@ -3,30 +3,28 @@
 //
 // SPDX-License-Identifier: MIT
 
-import React, { PureComponent } from 'react';
-import { accounts$ } from '@parity/light.js';
-import { inject } from 'mobx-react';
+import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 
 import Health from '../Health';
-import light from '../hoc';
 
-@light({
-  accounts: accounts$
-})
-@inject('firstRunStore')
-class Onboarding extends PureComponent {
+@inject('onboardingStore')
+@observer
+class Onboarding extends Component {
   handleFirstRun = () => {
     // Not first run anymore after clicking Start
-    this.props.firstRunStore.setIsFirstRun(false);
+    this.props.onboardingStore.setIsFirstRun(false);
   };
 
   render () {
-    const { accounts } = this.props;
+    const {
+      onboardingStore: { hasAccounts }
+    } = this.props;
     return (
       <div>
         This is the onboarding page.<br />
-        {accounts && accounts.length ? (
+        {hasAccounts ? (
           <Link onClick={this.handleFirstRun} to='/'>
             Start
           </Link>
