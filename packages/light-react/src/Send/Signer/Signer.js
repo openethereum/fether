@@ -30,7 +30,10 @@ class Signer extends Component {
 
   handleReject = () => {
     const { history, sendStore } = this.props;
-    sendStore.rejectRequest().then(() => history.goBack());
+    sendStore
+      .rejectRequest()
+      .then(() => history.goBack())
+      .catch(() => history.goBack());
   };
 
   render () {
