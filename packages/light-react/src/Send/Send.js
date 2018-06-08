@@ -7,10 +7,10 @@ import React, { PureComponent } from 'react';
 import { defaultAccount$, myBalance$ } from '@parity/light.js';
 import { map } from 'rxjs/operators';
 import { fromWei, toWei } from '@parity/api/lib/util/wei';
+import light from 'light-hoc';
 import { Link } from 'react-router-dom';
 
 import ethereumIcon from '../assets/img/tokens/ethereum.png';
-import light from '../hoc';
 
 @light({
   balance: () => myBalance$().pipe(map(value => +fromWei(value))),

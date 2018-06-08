@@ -4,14 +4,14 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { map } from 'rxjs/operators';
+import { defaultAccount$, myBalance$, post$ } from '@parity/light.js';
 import { fromWei } from '@parity/api/lib/util/wei';
 import { inject, observer } from 'mobx-react';
-import { defaultAccount$, myBalance$, post$ } from '@parity/light.js';
+import light from 'light-hoc';
+import { Link } from 'react-router-dom';
+import { map } from 'rxjs/operators';
 
 import ethereumIcon from '../../assets/img/tokens/ethereum.png';
-import light from '../../hoc';
 
 @light({
   balance: () => myBalance$().pipe(map(value => +fromWei(value))),

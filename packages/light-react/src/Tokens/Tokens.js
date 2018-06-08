@@ -5,10 +5,10 @@
 
 import React, { PureComponent } from 'react';
 import { accountsInfo$, defaultAccount$ } from '@parity/light.js';
+import light from 'light-hoc';
 import { Link } from 'react-router-dom';
 
 import Health from '../Health';
-import light from '../hoc';
 import TokensList from './TokensList';
 
 @light({

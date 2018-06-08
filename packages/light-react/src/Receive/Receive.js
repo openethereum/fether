@@ -6,9 +6,8 @@
 import React, { PureComponent } from 'react';
 import { accountsInfo$, defaultAccount$ } from '@parity/light.js';
 import Blockie from 'react-blockies';
+import light from 'light-hoc';
 import { Link } from 'react-router-dom';
-
-import light from '../hoc';
 
 @light({
   accountsInfo: accountsInfo$,

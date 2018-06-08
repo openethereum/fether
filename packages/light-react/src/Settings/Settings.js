@@ -7,9 +7,9 @@ import React, { Component } from 'react';
 import { chainName$ } from '@parity/light.js';
 import debounce from 'lodash/debounce';
 import { inject, observer } from 'mobx-react';
+import light from 'light-hoc';
 import { Link } from 'react-router-dom';
 
-import light from '../hoc';
 import NewTokenItem from './NewTokenItem';
 
 @light({
@@ -26,7 +26,9 @@ class Settings extends Component {
   };
 
   calculateMatches = debounce(() => {
-    const { tokensStore: { tokensArrayWithoutEth } } = this.props;
+    const {
+      tokensStore: { tokensArrayWithoutEth }
+    } = this.props;
     const { db, search } = this.state;
 
     if (search.length <= 1) {
@@ -102,9 +104,7 @@ class Settings extends Component {
             </Link>
           </div>
           <div className='header-nav_title'>
-            <h1>
-              Edit token whitelist
-            </h1>
+            <h1>Edit token whitelist</h1>
           </div>
           <div className='header-nav_right' />
         </nav>
@@ -129,9 +129,9 @@ class Settings extends Component {
           </div>
           <div className='box -scroller'>
             <ul className='list -tokens'>
-              {matches.map(token =>
+              {matches.map(token => (
                 <NewTokenItem key={token.address} token={token} />
-              )}
+              ))}
             </ul>
           </div>
         </div>

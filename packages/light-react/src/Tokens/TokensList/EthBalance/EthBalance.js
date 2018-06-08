@@ -4,14 +4,14 @@
 // SPDX-License-Identifier: MIT
 
 import React, { PureComponent } from 'react';
-import { myBalance$ } from '@parity/light.js';
 import { fromWei } from '@parity/api/lib/util/wei';
+import light from 'light-hoc';
 import { Link } from 'react-router-dom';
 import { map } from 'rxjs/operators';
+import { myBalance$ } from '@parity/light.js';
 import PropTypes from 'prop-types';
 
 import BalanceLayout from '../BalanceLayout';
-import light from '../../../hoc';
 
 @light({
   balance: () => myBalance$().pipe(map(value => +fromWei(value)))

@@ -6,12 +6,12 @@
 import React, { Component } from 'react';
 import abi from '@parity/shared/lib/contracts/abi/eip20';
 import { defaultAccount$, makeContract$ } from '@parity/light.js';
+import light from 'light-hoc';
 import { Link } from 'react-router-dom';
 import { map, switchMap } from 'rxjs/operators';
 import PropTypes from 'prop-types';
 
 import BalanceLayout from '../BalanceLayout';
-import light from '../../../hoc';
 
 @light({
   balance: ({ token: { address, decimals } }) =>

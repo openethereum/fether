@@ -39,6 +39,7 @@
     "@parity/light.js": "https://github.com/parity-js/light.js#24ed8bed60917207a84d85cd5622636f8489fd7a",
     "@parity/shared": "^3.0.1",
     "is-electron": "^2.1.0",
+    "light-hoc": "^0.1.0",
     "lodash": "^4.17.10",
     "mobx": "^4.2.0",
     "mobx-react": "^5.1.2",

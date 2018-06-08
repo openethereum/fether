@@ -7,9 +7,9 @@ import React, { Component } from 'react';
 import { accountsInfo$ } from '@parity/light.js';
 import Blockies from 'react-blockies';
 import { inject, observer } from 'mobx-react';
+import light from 'light-hoc';
 
 import Health from '../../Health';
-import light from '../../hoc';
 
 @light({
   accountsInfo: accountsInfo$
