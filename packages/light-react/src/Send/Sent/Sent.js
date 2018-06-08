@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import { blockNumber$ } from '@parity/light.js';
+import { chainName$ } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
 import light from 'light-hoc';
 
@@ -12,7 +12,7 @@ import check from '../../assets/img/icons/check.svg';
 import loading from '../../assets/img/icons/loading.svg';
 
 @light({
-  blockNumber: blockNumber$
+  chainName: chainName$
 })
 @inject('sendStore')
 @observer
@@ -35,11 +35,17 @@ class Sent extends Component {
 
   renderDescription = () => {
     const {
-      sendStore: { txStatus }
+      sendStore: { confirmations, txStatus }
     } = this.props;
 
+    if (confirmations > 0) {
+      return `It has been confirmed ${
+        confirmations === 1 ? 'once' : `${confirmations} times`
+      }`;
+    }
+
     if (txStatus.confirmed) {
-      return 'Successfully sent';
+      return 'Waiting for confirmations...';
     }
 
     if (txStatus.failed) {
@@ -51,9 +57,9 @@ class Sent extends Component {
 
   renderIcon = () => {
     const {
-      sendStore: { txStatus }
+      sendStore: { confirmations }
     } = this.props;
-    if (txStatus.confirmed) {
+    if (confirmations >= 6) {
       return check;
     }
     return loading;
@@ -61,12 +67,25 @@ class Sent extends Component {
 
   renderTitle = () => {
     const {
+      chainName,
       sendStore: { txStatus }
     } = this.props;
-    console.log(txStatus);
 
     if (txStatus.confirmed) {
-      return 'Successfully sent';
+      return (
+        <span>
+          Your transaction is{' '}
+          <a
+            className='button -tiny'
+            href={`https://${
+              chainName === 'foundation' ? '' : `${chainName}.`
+            }etherscan.io/tx/${txStatus.confirmed.transactionHash}`}
+            target='_blank'
+          >
+            on the blockchain
+          </a>
+        </span>
+      );
     }
 
     if (txStatus.failed) {

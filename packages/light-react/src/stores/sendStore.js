@@ -3,13 +3,14 @@
 //
 // SPDX-License-Identifier: MIT
 
-import { action, observable } from 'mobx';
-import { post$ } from '@parity/light.js';
+import { action, computed, observable } from 'mobx';
+import { blockNumber$, post$ } from '@parity/light.js';
 
 import parityStore from './parityStore';
 import tokensStore from './tokensStore';
 
 class SendStore {
+  @observable blockNumber; // Current block number, used to calculate
   @observable txStatus; // Status of the tx, see wiki for details
 
   constructor () {
@@ -22,8 +23,21 @@ class SendStore {
         new Error('The requestId has not been generated yet.')
       );
     }
+
+    // Since we accepted this request, we also start to listen to blockNumber,
+    // to calculate the number of confirmations
+    blockNumber$().subscribe(this.setBlockNumber);
+
     return this.api.signer.confirmRequest(this.requestId, null, password);
   };
+
+  @computed
+  get confirmations () {
+    if (!this.txStatus.confirmed) {
+      return -1;
+    }
+    return this.blockNumber - +this.txStatus.confirmed.blockNumber;
+  }
 
   postTx = tx => {
     if (!tx) {
@@ -55,6 +69,11 @@ class SendStore {
 
   setTx = tx => {
     this.tx = tx;
+  };
+
+  @action
+  setBlockNumber = blockNumber => {
+    this.blockNumber = blockNumber;
   };
 
   @action

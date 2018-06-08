@@ -35,7 +35,7 @@ class Signer extends Component {
 
   render () {
     const {
-      sendStore: { token, tx }
+      sendStore: { token, tx, txStatus }
     } = this.props;
     const { password } = this.state;
 
@@ -75,7 +75,9 @@ class Signer extends Component {
             >
               Cancel
             </button>
-            <button className='button -submit'>Confirm transaction</button>
+            <button className='button -submit' disabled={!txStatus.requested}>
+              Confirm transaction
+            </button>
           </nav>
         </form>
       </div>
