@@ -15,7 +15,7 @@ const { doesParityExist } = require('./operations/doesParityExist');
 const fetchParity = require('./operations/fetchParity');
 const handleError = require('./operations/handleError');
 const messages = require('./messages');
-const { productName } = require('./config.json');
+const { productName } = require('../../electron-builder.json');
 const pino = require('./utils/pino')({ name: 'electron' });
 const { runParity, killParity } = require('./operations/runParity');
 
