@@ -4,56 +4,24 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import { defaultAccount$, myBalance$, post$ } from '@parity/light.js';
-import { fromWei } from '@parity/api/lib/util/wei';
 import { inject, observer } from 'mobx-react';
-import light from 'light-hoc';
-import { Link } from 'react-router-dom';
-import { map } from 'rxjs/operators';
 
-import ethereumIcon from '../../assets/img/tokens/ethereum.png';
+import TokenBalance from '../TokenBalance';
 
-@light({
-  balance: () => myBalance$().pipe(map(value => +fromWei(value))),
-  me: defaultAccount$
-})
-@inject('signerStore')
+@inject('sendStore')
 @observer
 class Signer extends Component {
   state = {
-    password: '',
-    status: null
+    password: ''
   };
 
-  componentWillMount () {
-    // If we accessed this URL via URL change, then something's not right, so
-    // we go back. If we accessed after the Send page, then location.state is
-    // set as the tx.
-    if (!this.props.location.state) {
-      this.props.history.goBack();
-    }
-  }
-
-  componentDidMount () {
-    const tx = this.props.location.state;
-    this.subscription = post$(tx).subscribe(status => {
-      if (status.requested) {
-        this.requestId = status.requested;
-      }
-      this.setState({ status });
-    });
-  }
-
-  componentWillUnmount () {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
-
-  handleAccept = () => {
-    const { signerStore } = this.props;
+  handleAccept = e => {
+    const { history, sendStore } = this.props;
     const { password } = this.state;
-    signerStore.acceptRequest(this.requestId, password);
+
+    e.preventDefault();
+
+    sendStore.acceptRequest(password).then(() => history.push('/send/sent'));
   };
 
   handleChangePassword = ({ target: { value } }) => {
@@ -61,90 +29,55 @@ class Signer extends Component {
   };
 
   handleReject = () => {
-    const { history, signerStore } = this.props;
-    signerStore.rejectRequest(this.requestId).then(() => history.goBack());
-  };
-
-  handleSubmit = e => {
-    e.preventDefault();
-    this.handleAccept();
+    const { history, sendStore } = this.props;
+    sendStore.rejectRequest().then(() => history.goBack());
   };
 
   render () {
     const {
-      balance,
-      location: { state: tx }
+      sendStore: { token, tx }
     } = this.props;
     const { password } = this.state;
 
     return (
-      <div>
-        <nav className='header-nav'>
-          <div className='header-nav_left'>
-            <Link to='/send' className='icon -close'>
-              Close
-            </Link>
-          </div>
-          <div className='header-nav_title'>
-            <h1>Sending Ethereum</h1>
-          </div>
-          <div className='header-nav_right' />
-        </nav>
-
-        <div className='window_content'>
-          <div className='box -padded'>
-            <div className='box -card'>
-              <div className='token'>
-                <div className='token_icon'>
-                  <img src={ethereumIcon} alt='ethereum' />
-                </div>
-                <div className='token_name'>Ethereum</div>
-                <div className='token_balance'>
-                  {balance}
-                  <span className='token_symbol'>ETH</span>
-                </div>
-              </div>
-              <div className='box -card-drawer'>
-                <div className='form_field'>
-                  <label>Amount</label>
-                  <div className='form_field_value'>
-                    {+fromWei(tx.value)} ETH
-                  </div>
-                </div>
-                <div className='form_field'>
-                  <label>To</label>
-                  <div className='form_field_value'>{tx.to}</div>
-                </div>
-              </div>
-              <div className='box -card-drawer'>
-                <div className='text'>
-                  <p>Enter your password to confirm this transaction.</p>
-                </div>
-                <div className='form_field'>
-                  <label>Password</label>
-                  <input
-                    onChange={this.handleChangePassword}
-                    required
-                    type='password'
-                    value={password}
-                  />
-                </div>
-                <nav className='form-nav -binary'>
-                  <button
-                    className='button -cancel'
-                    onClick={this.handleReject}
-                    type='button'
-                  >
-                    Cancel
-                  </button>
-                  <button className='button -submit'>
-                    Confirm transaction
-                  </button>
-                </nav>
-              </div>
+      <div className='box -card'>
+        <TokenBalance token={token} />
+        <div className='box -card-drawer'>
+          <div className='form_field'>
+            <label>Amount</label>
+            <div className='form_field_value'>
+              {token.amount} {token.symbol}
             </div>
           </div>
+          <div className='form_field'>
+            <label>To</label>
+            <div className='form_field_value'>{tx.to}</div>
+          </div>
         </div>
+        <form className='box -card-drawer' onSubmit={this.handleAccept}>
+          <div className='text'>
+            <p>Enter your password to confirm this transaction.</p>
+          </div>
+          <div className='form_field'>
+            <label>Password</label>
+            <input
+              onChange={this.handleChangePassword}
+              required
+              type='password'
+              value={password}
+            />
+          </div>
+          <nav className='form-nav -binary'>
+            <button
+              className='button -cancel'
+              onClick={this.handleReject}
+              type='button'
+            >
+              Cancel
+            </button>
+            <button className='button -submit'>Confirm transaction</button>
+          </nav>
+        </form>
       </div>
     );
   }

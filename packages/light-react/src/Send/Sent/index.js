@@ -3,6 +3,6 @@
 //
 // SPDX-License-Identifier: MIT
 
-import BalanceLayout from './BalanceLayout';
+import Sent from './Sent';
 
-export default BalanceLayout;
+export default Sent;

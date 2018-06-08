@@ -7,7 +7,7 @@ import createAccountStore from './createAccountStore';
 import healthStore from './healthStore';
 import onboardingStore from './onboardingStore';
 import parityStore from './parityStore';
-import signerStore from './signerStore';
+import sendStore from './sendStore';
 import tokensStore from './tokensStore';
 
 export default {
@@ -15,6 +15,6 @@ export default {
   healthStore,
   onboardingStore,
   parityStore,
-  signerStore,
+  sendStore,
   tokensStore
 };
