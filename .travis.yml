@@ -1,4 +1,17 @@
+cache: yarn
+install:
+  - yarn install
+  - lerna bootstrap
 language: node_js
 node_js:
-  - "8"
-script: ./scripts/travis.sh
+  - "10"
+script:
+  - yarn lint
+  - yarn test
+  - yarn build
+deploy:
+  provider: script
+  script:
+    - yarn package --release
+  on:
+    branch: master
