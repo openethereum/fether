@@ -15,7 +15,7 @@
   }
 
   &:active {
-    background-color: darken($blue,2.5%);
+    background-color: darken($blue, 2.5%);
     color: $white;
   }
 
@@ -58,7 +58,7 @@
     font-size: ms(-3);
     border-width: 0;
     background-color: $faint;
-    color: rgba($black,0.75);
+    color: rgba($black, 0.75);
     padding: 0.175rem 0.325rem 0.125rem;
     opacity: 0.8;
     border-radius: 1rem;
@@ -68,7 +68,7 @@
     }
 
     &:active {
-      opacity: 1.0;
+      opacity: 1;
     }
 
     &.-good {
@@ -86,7 +86,7 @@
     font-size: ms(-2);
     border-width: 0;
     background-color: $faint;
-    color: rgba($black,0.75);
+    color: rgba($black, 0.75);
     padding: 0.25rem 0.75rem;
     opacity: 0.8;
     border-radius: 1rem;
@@ -96,7 +96,7 @@
     }
 
     &:active {
-      opacity: 1.0;
+      opacity: 1;
     }
   }
 

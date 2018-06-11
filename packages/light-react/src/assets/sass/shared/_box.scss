@@ -9,17 +9,17 @@
     background-color: $eggshell;
     border: 0px solid $eggshell;
     overflow: hidden;
-    box-shadow: 0 0.125rem 0.5rem rgba($black,0.125);
+    box-shadow: 0 0.125rem 0.5rem rgba($black, 0.125);
     &.-clickable {
       transition: box-shadow ease 0.125s;
       &:hover {
         border-color: $blue;
-        box-shadow: 0 0.125rem 0.675rem rgba($black,0.175);
+        box-shadow: 0 0.125rem 0.675rem rgba($black, 0.175);
         cursor: default;
       }
       &:active {
         border-color: $blue;
-        box-shadow: 0 0.125rem 0.325rem rgba($black,0.175);
+        box-shadow: 0 0.125rem 0.325rem rgba($black, 0.175);
         cursor: default;
       }
     }
@@ -28,9 +28,9 @@
   &.-card-drawer {
     margin: 1rem -2rem -2rem;
     padding: 1rem 2rem 2rem;
-    border-top: 1px solid lighten($faint,1.25%);
-    box-shadow: 0 0.125rem 0.325rem rgba($black,0.075) inset;
-    background-color: darken($eggshell,0.75%);
+    border-top: 1px solid lighten($faint, 1.25%);
+    box-shadow: 0 0.125rem 0.325rem rgba($black, 0.075) inset;
+    background-color: darken($eggshell, 0.75%);
   }
 
   &.-scroller {

@@ -5,9 +5,10 @@
 
 import React, { Component } from 'react';
 import { defaultAccount$ } from '@parity/light.js';
-import { toWei } from '@parity/api/lib/util/wei';
-import light from 'light-hoc';
 import { inject, observer } from 'mobx-react';
+import light from 'light-hoc';
+import { Link } from 'react-router-dom';
+import { toWei } from '@parity/api/lib/util/wei';
 
 import TokenBalance from '../TokenBalance';
 
@@ -54,58 +55,75 @@ class Send extends Component {
     const { amount, gas, to } = this.state;
 
     return (
-      <div className='box -card'>
-        <TokenBalance token={token} />
-        <div className='box -card-drawer'>
-          <form className='send-form' onSubmit={this.handleSubmit}>
-            <fieldset className='form_fields'>
-              <div className='form_field'>
-                <label>Amount</label>
-                <input
-                  className='form_field_amount'
-                  onChange={this.handleChangeAmount}
-                  required
-                  type='number'
-                  value={amount}
-                />
-                <nav className='form-field_nav'>
-                  <button className='button -utility' type='button'>
-                    Max
-                  </button>
-                </nav>
+      <div>
+        <nav className='header-nav'>
+          <div className='header-nav_left'>
+            <Link to='/tokens' className='icon -close'>
+              Close
+            </Link>
+          </div>
+          <div className='header-nav_title'>
+            <h1>Send {token.name}</h1>
+          </div>
+          <div className='header-nav_right' />
+        </nav>
+        <div className='window_content'>
+          <div className='box -padded'>
+            <div className='box -card'>
+              <TokenBalance token={token} />
+              <div className='box -card-drawer'>
+                <form className='send-form' onSubmit={this.handleSubmit}>
+                  <fieldset className='form_fields'>
+                    <div className='form_field'>
+                      <label>Amount</label>
+                      <input
+                        className='form_field_amount'
+                        onChange={this.handleChangeAmount}
+                        required
+                        type='number'
+                        value={amount}
+                      />
+                      <nav className='form-field_nav'>
+                        <button className='button -utility' type='button'>
+                          Max
+                        </button>
+                      </nav>
+                    </div>
+                    <div className='form_field'>
+                      <label>To</label>
+                      <textarea
+                        className='-sm'
+                        onChange={this.handleChangeTo}
+                        required
+                        type='text'
+                        placeholder='Recipient address'
+                        value={to}
+                      />
+                    </div>
+                    <div className='form_field -range'>
+                      <label>Gas</label>
+                      <input
+                        onChange={this.handleChangeGas}
+                        required
+                        min='1'
+                        max='44000'
+                        type='range'
+                        value={gas}
+                      />
+                      <nav className='range-nav'>
+                        <span className='range-nav_label'>Cheap</span>
+                        <span className='range-nav_value'>{gas}</span>
+                        <span className='range-nav_label'>Fast</span>
+                      </nav>
+                    </div>
+                  </fieldset>
+                  <nav className='form-nav'>
+                    <button className='button'>Send</button>
+                  </nav>
+                </form>
               </div>
-              <div className='form_field'>
-                <label>To</label>
-                <textarea
-                  className='-sm'
-                  onChange={this.handleChangeTo}
-                  required
-                  type='text'
-                  placeholder='Recipient address'
-                  value={to}
-                />
-              </div>
-              <div className='form_field -range'>
-                <label>Gas</label>
-                <input
-                  onChange={this.handleChangeGas}
-                  required
-                  min='1'
-                  max='44000'
-                  type='range'
-                  value={gas}
-                />
-                <nav className='range-nav'>
-                  <span className='range-nav_label'>Cheap</span>
-                  <span className='range-nav_value'>{gas}</span>
-                  <span className='range-nav_label'>Fast</span>
-                </nav>
-              </div>
-            </fieldset>
-            <nav className='form-nav'>
-              <button className='button'>Send</button>
-            </nav>
-          </form>
+            </div>
+          </div>
         </div>
       </div>
     );

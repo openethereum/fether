@@ -1,5 +1,8 @@
 .text {
-  p, ul, ol, blockquote {
+  p,
+  ul,
+  ol,
+  blockquote {
     margin: 1rem 0;
     &:first-child {
       margin-top: 0;
@@ -22,6 +25,10 @@
     font-size: ms(-1);
   }
 
+  &.-underline {
+    text-decoration: underline;
+  }
+
   strong {
     font-weight: 500;
   }
@@ -30,7 +37,7 @@
     user-select: text;
     font-family: $mono;
     padding: 0.5rem;
-    background: rgba($faint,0.25);
+    background: rgba($faint, 0.25);
     color: $black;
     margin: 0.5rem 0;
     font-size: ms(-1);

@@ -5,7 +5,7 @@
 
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { Link, Route, Redirect, Switch } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router-dom';
 
 import Sent from './Sent';
 import Signer from './Signer';
@@ -19,33 +19,18 @@ class Send extends Component {
       sendStore: { token }
     } = this.props;
 
+    // We only show then Send components if we have already selected a token to
+    // send.
     if (!token) {
       return <Redirect to='/' />;
     }
 
     return (
-      <div>
-        <nav className='header-nav'>
-          <div className='header-nav_left'>
-            <Link to='/tokens' className='icon -close'>
-              Close
-            </Link>
-          </div>
-          <div className='header-nav_title'>
-            <h1>Send {token.name}</h1>
-          </div>
-          <div className='header-nav_right' />
-        </nav>
-        <div className='window_content'>
-          <div className='box -padded'>
-            <Switch>
-              <Route exact path='/send' component={TxForm} />
-              <Route path='/send/signer' component={Signer} />
-              <Route path='/send/sent' component={Sent} />
-            </Switch>
-          </div>
-        </div>
-      </div>
+      <Switch>
+        <Route exact path='/send' component={TxForm} />
+        <Route path='/send/signer' component={Signer} />
+        <Route path='/send/sent' component={Sent} />
+      </Switch>
     );
   }
 }

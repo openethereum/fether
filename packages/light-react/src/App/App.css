@@ -747,8 +747,8 @@ html {
 
 body {
   user-select: none;
-  background-color: #A5BFDA;
-  background-image: linear-gradient(#A5BFDA, #BFCDDC);
+  background-color: #a5bfda;
+  background-image: linear-gradient(#a5bfda, #bfcddc);
   background-repeat: no-repeat;
   background-size: cover;
   color: #222;
@@ -761,10 +761,14 @@ body {
 .hidden {
   display: none; }
 
-a, a:link, a:visited {
+a,
+a:link,
+a:visited {
   color: #222;
   text-decoration: none; }
-  a:hover, a:link:hover, a:visited:hover {
+  a:hover,
+  a:link:hover,
+  a:visited:hover {
     cursor: default; }
 
 .box {
@@ -867,7 +871,7 @@ a, a:link, a:visited {
     .button.-utility:hover {
       opacity: 0.9; }
     .button.-utility:active {
-      opacity: 1.0; }
+      opacity: 1; }
     .button.-utility.-good {
       background-color: #3ec28f;
       color: #f9f9f9; }
@@ -885,7 +889,7 @@ a, a:link, a:visited {
     .button.-cancel:hover {
       opacity: 0.9; }
     .button.-cancel:active {
-      opacity: 1.0; }
+      opacity: 1; }
   .button.-icon {
     text-indent: -9999rem;
     background-size: 0.83333rem auto;
@@ -927,7 +931,12 @@ a, a:link, a:visited {
     padding-bottom: 0.5rem;
     overflow: hidden;
     word-wrap: break-word; }
-  .form_field input[type="text"], .form_field input[type="number"], .form_field input[type="tel"], .form_field input[type="email"], .form_field input[type="password"], .form_field textarea {
+  .form_field input[type='text'],
+  .form_field input[type='number'],
+  .form_field input[type='tel'],
+  .form_field input[type='email'],
+  .form_field input[type='password'],
+  .form_field textarea {
     border: 0;
     background: transparent;
     font-size: 1rem;
@@ -938,9 +947,14 @@ a, a:link, a:visited {
     opacity: 0.75;
     padding: 0.5rem;
     margin-top: -0.25rem; }
-    .form_field input[type="text"]:focus, .form_field input[type="number"]:focus, .form_field input[type="tel"]:focus, .form_field input[type="email"]:focus, .form_field input[type="password"]:focus, .form_field textarea:focus {
+    .form_field input[type='text']:focus,
+    .form_field input[type='number']:focus,
+    .form_field input[type='tel']:focus,
+    .form_field input[type='email']:focus,
+    .form_field input[type='password']:focus,
+    .form_field textarea:focus {
       opacity: 1; }
-  .form_field input[type="range"] {
+  .form_field input[type='range'] {
     -webkit-appearance: none;
     width: calc(100% - 1rem);
     height: 0.5rem;
@@ -949,17 +963,17 @@ a, a:link, a:visited {
     outline: none;
     padding: 0;
     margin: 0.5rem; }
-    .form_field input[type="range"]::-webkit-slider-thumb {
+    .form_field input[type='range']::-webkit-slider-thumb {
       appearance: none;
       width: 1rem;
       height: 1rem;
       border-radius: 50%;
       background: #888;
       cursor: pointer;
-      transition: background .15s ease; }
-      .form_field input[type="range"]::-webkit-slider-thumb:hover {
+      transition: background 0.15s ease; }
+      .form_field input[type='range']::-webkit-slider-thumb:hover {
         background: #222; }
-    .form_field input[type="range"]:active::-webkit-slider-thumb {
+    .form_field input[type='range']:active::-webkit-slider-thumb {
       background-color: #160DF6; }
   .form_field textarea {
     resize: none;
@@ -1016,11 +1030,20 @@ nav.range-nav {
     .list > li:last-child {
       margin-bottom: 0; }
 
-.text p, .text ul, .text ol, .text blockquote {
+.text p,
+.text ul,
+.text ol,
+.text blockquote {
   margin: 1rem 0; }
-  .text p:first-child, .text ul:first-child, .text ol:first-child, .text blockquote:first-child {
+  .text p:first-child,
+  .text ul:first-child,
+  .text ol:first-child,
+  .text blockquote:first-child {
     margin-top: 0; }
-  .text p:last-child, .text ul:last-child, .text ol:last-child, .text blockquote:last-child {
+  .text p:last-child,
+  .text ul:last-child,
+  .text ol:last-child,
+  .text blockquote:last-child {
     margin-bottom: 0; }
 
 .text.-centered {
@@ -1032,6 +1055,9 @@ nav.range-nav {
 .text.-fixed {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
   font-size: 0.83333rem; }
+
+.text.-underline {
+  text-decoration: underline; }
 
 .text strong {
   font-weight: 500; }
