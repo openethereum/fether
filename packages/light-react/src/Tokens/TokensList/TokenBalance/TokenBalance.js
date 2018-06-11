@@ -37,7 +37,7 @@ class TokenBalance extends Component {
       sendStore,
       token: { address }
     } = this.props;
-    sendStore.setTokenFromAddress(address);
+    sendStore.setTokenAddress(address);
     history.push('/send');
   };
 

@@ -10,7 +10,7 @@ import parityStore from './parityStore';
 import tokensStore from './tokensStore';
 
 class SendStore {
-  @observable blockNumber; // Current block number, used to calculate
+  @observable blockNumber; // Current block number, used to calculate confirmations
   @observable txStatus; // Status of the tx, see wiki for details
 
   constructor () {
@@ -18,6 +18,7 @@ class SendStore {
   }
 
   acceptRequest = password => {
+    // Avoid calling this method from a random place
     if (!this.requestId) {
       return Promise.reject(
         new Error('The requestId has not been generated yet.')
@@ -31,6 +32,9 @@ class SendStore {
     return this.api.signer.confirmRequest(this.requestId, null, password);
   };
 
+  /**
+   * Get the number of confirmations our transaction has.
+   */
   @computed
   get confirmations () {
     if (!this.txStatus.confirmed) {
@@ -39,6 +43,9 @@ class SendStore {
     return this.blockNumber - +this.txStatus.confirmed.blockNumber;
   }
 
+  /**
+   * Create a transaction.
+   */
   postTx = tx => {
     if (!tx) {
       return;
@@ -55,6 +62,7 @@ class SendStore {
   };
 
   rejectRequest = (requestId, password) => {
+    // Avoid calling this method from a random place
     if (!this.requestId) {
       return Promise.reject(
         new Error('The requestId has not been generated yet.')
@@ -63,8 +71,13 @@ class SendStore {
     return this.api.signer.rejectRequest(this.requestId);
   };
 
-  setTokenFromAddress = tokenAddress => {
-    this.token = tokensStore.tokens.get(tokenAddress);
+  @computed
+  get token () {
+    return tokensStore.tokens.get(this.tokenAddress);
+  }
+
+  setTokenAddress = tokenAddress => {
+    this.tokenAddress = tokenAddress;
   };
 
   setTx = tx => {
