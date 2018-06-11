@@ -5,12 +5,15 @@
 
 import React, { Component } from 'react';
 import { defaultAccount$ } from '@parity/light.js';
+import { fromWei, toWei } from '@parity/api/lib/util/wei'; // TODO @parity/api's wei util should have Gwei as an unit
 import { inject, observer } from 'mobx-react';
 import light from 'light-hoc';
 import { Link } from 'react-router-dom';
-import { toWei } from '@parity/api/lib/util/wei';
 
 import TokenBalance from '../TokenBalance';
+
+const MAX_GAS_PRICE = 40; // In Gwei
+const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 
 @light({
   defaultAccount: defaultAccount$
@@ -18,29 +21,33 @@ import TokenBalance from '../TokenBalance';
 @inject('sendStore')
 @observer
 class Send extends Component {
+  // Class properties that will not change
+  gasLimit = this.props.sendStore.token.address === 'ETH' ? 21000 : 150000; // Use common values for gasLimit instead of eth_estimateGas
+
   state = {
     amount: 0.01, // In Ether or in token
-    gas: 21000,
+    gasPrice: 4, // in Gwei
     to: '0x00Ae02834e91810B223E54ce3f9B7875258a1747'
   };
 
   handleChangeAmount = ({ target: { value } }) =>
     this.setState({ amount: value });
 
-  handleChangeGas = ({ target: { value } }) => this.setState({ gas: value });
+  handleChangeGasPrice = ({ target: { value } }) =>
+    this.setState({ gasPrice: value });
 
   handleChangeTo = ({ target: { value } }) => this.setState({ to: value });
 
   handleSubmit = e => {
     e.preventDefault();
     const { defaultAccount, history, sendStore } = this.props;
-    const { amount, gas, to } = this.state;
+    const { amount, gasPrice, to } = this.state;
 
     // Post a request to the transaction. There is a next step to sign this
     // request.
     sendStore.postTx({
       from: defaultAccount,
-      gas,
+      gasPrice: toWei(gasPrice, 'shannon'), // shannon == gwei
       to,
       value: toWei(amount)
     });
@@ -52,7 +59,7 @@ class Send extends Component {
     const {
       sendStore: { token }
     } = this.props;
-    const { amount, gas, to } = this.state;
+    const { amount, gasPrice, to } = this.state;
 
     return (
       <div>
@@ -103,16 +110,22 @@ class Send extends Component {
                     <div className='form_field -range'>
                       <label>Gas</label>
                       <input
-                        onChange={this.handleChangeGas}
+                        max={MAX_GAS_PRICE}
+                        min={MIN_GAS_PRICE}
+                        onChange={this.handleChangeGasPrice}
                         required
-                        min='1'
-                        max='44000'
+                        step={0.1}
                         type='range'
-                        value={gas}
+                        value={gasPrice}
                       />
                       <nav className='range-nav'>
                         <span className='range-nav_label'>Cheap</span>
-                        <span className='range-nav_value'>{gas}</span>
+                        <span className='range-nav_value'>
+                          {fromWei(
+                            toWei(gasPrice, 'shannon').mul(this.gasLimit)
+                          ).toFixed(6)}{' '}
+                          ETH
+                        </span>
                         <span className='range-nav_label'>Fast</span>
                       </nav>
                     </div>
