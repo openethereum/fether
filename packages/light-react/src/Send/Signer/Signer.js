@@ -95,7 +95,7 @@ class Signer extends Component {
                   </button>
                   <button
                     className='button -submit'
-                    disabled={!txStatus.requested}
+                    disabled={!txStatus || !txStatus.requested}
                   >
                     Confirm transaction
                   </button>
