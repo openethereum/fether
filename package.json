@@ -37,6 +37,7 @@
     "lint-react": "cd packages/light-react && npm run lint",
     "prepackage": "npm run build",
     "package": "cd packages/light-electron && npm run package",
+    "release": "cd packages/light-electron && npm run release --",
     "prestart": "npm run build-hoc",
     "start": "npm-run-all -pl start-*",
     "start-electron": "cd packages/light-electron && npm start",

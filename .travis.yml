@@ -1,17 +1,29 @@
-cache: yarn
+cache:
+  yarn: true
+  directories:
+    - node_modules
 install:
   - yarn install
   - lerna bootstrap
 language: node_js
 node_js:
   - "10"
+os:
+  - linux
+  - osx
 script:
   - yarn lint
   - yarn test
   - yarn build
 deploy:
   provider: script
+  skip_cleanup: true
   script:
-    - yarn package --release
+    - |
+      case "$TRAVIS_OS_NAME" in
+        "linux") yarn release --win --linux;;
+        "osx") yarn release --macos;;
+        * ) echo "Wrong OS: $TRAVIS_OS_NAME" && exit 1;;
+      esac
   on:
     branch: master
