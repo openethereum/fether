@@ -21,9 +21,6 @@ const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 @inject('sendStore')
 @observer
 class Send extends Component {
-  // Class properties that will not change
-  gasLimit = this.props.sendStore.token.address === 'ETH' ? 21000 : 150000; // Use common values for gasLimit instead of eth_estimateGas
-
   state = {
     amount: 0.01, // In Ether or in token
     gasPrice: 4, // in Gwei
@@ -36,7 +33,12 @@ class Send extends Component {
   handleChangeGasPrice = ({ target: { value } }) =>
     this.setState({ gasPrice: value });
 
-  handleChangeTo = ({ target: { value } }) => this.setState({ to: value });
+  handleChangeTo = ({ target: { value } }) => {
+    this.setState({ to: value }, () => {
+      // Estimate the gas to this address.
+      this.props.sendStore.estimateGas(this.state);
+    });
+  };
 
   handleSubmit = e => {
     e.preventDefault();
@@ -57,7 +59,7 @@ class Send extends Component {
 
   render () {
     const {
-      sendStore: { token }
+      sendStore: { estimated, token }
     } = this.props;
     const { amount, gasPrice, to } = this.state;
 
@@ -122,7 +124,7 @@ class Send extends Component {
                         <span className='range-nav_label'>Cheap</span>
                         <span className='range-nav_value'>
                           {fromWei(
-                            toWei(gasPrice, 'shannon').mul(this.gasLimit)
+                            toWei(gasPrice, 'shannon').mul(estimated)
                           ).toFixed(6)}{' '}
                           ETH
                         </span>

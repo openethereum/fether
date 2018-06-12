@@ -27,7 +27,9 @@ class AccountsList extends Component {
       parityStore: { api }
     } = this.props;
     // Set default account to the clicked one, and go to Tokens on complete
-    this.subscription = api.parity
+    // TODO Not 100% clean, I don't want any api.abc.method() in any React
+    // component.
+    api.parity
       .setNewDappsDefaultAddress(address)
       .then(() => history.push('/tokens'));
   };
