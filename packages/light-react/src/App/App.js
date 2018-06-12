@@ -19,7 +19,6 @@ import Overlay from '../Overlay';
 import Receive from '../Receive';
 import Send from '../Send';
 import Settings from '../Settings';
-import Signer from '../Send/Signer';
 import { STATUS } from '../stores/healthStore';
 import Tokens from '../Tokens';
 import './App.css';
@@ -80,7 +79,6 @@ class App extends Component {
         <Route path='/receive' component={Receive} />
         <Route path='/send' component={Send} />
         <Route path='/settings' component={Settings} />
-        <Route path='/signer' component={Signer} />
         <Route path='/tokens' component={Tokens} />
         <Redirect from='*' to='/' />
       </Switch>

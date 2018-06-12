@@ -12,7 +12,7 @@ dist
 lib
 
 # css files
-.css
+*.css
 
 # logs
 *.log*

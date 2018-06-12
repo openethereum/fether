@@ -30,7 +30,11 @@ class AccountPassword extends Component {
   };
 
   handleSubmit = () => {
-    const { createAccountStore, history, location: { pathname } } = this.props;
+    const {
+      createAccountStore,
+      history,
+      location: { pathname }
+    } = this.props;
     const { hint, password } = this.state;
     createAccountStore.setPassword(password);
     createAccountStore.setHint(hint);
@@ -82,11 +86,12 @@ class AccountPassword extends Component {
               </div>
 
               <nav className='form-nav'>
-                {password && confirm === password
-                  ? <button className='button'>Next</button>
-                  : <button className='button' disabled>
-                      Next
-                  </button>}
+                <button
+                  className='button'
+                  disabled={!password || confirm !== password}
+                >
+                  Next
+                </button>
               </nav>
             </form>
           </div>

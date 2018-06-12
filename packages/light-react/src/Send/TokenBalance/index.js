@@ -3,6 +3,6 @@
 //
 // SPDX-License-Identifier: MIT
 
-import EthBalance from './EthBalance';
+import TokenBalance from './TokenBalance';
 
-export default EthBalance;
+export default TokenBalance;

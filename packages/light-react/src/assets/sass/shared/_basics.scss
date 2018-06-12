@@ -5,8 +5,8 @@ html {
 
 body {
   user-select: none;
-  background-color: #A5BFDA;
-  background-image: linear-gradient(#A5BFDA, #BFCDDC);
+  background-color: #a5bfda;
+  background-image: linear-gradient(#a5bfda, #bfcddc);
   background-repeat: no-repeat;
   background-size: cover;
   color: $black;
@@ -21,7 +21,9 @@ body {
   display: none;
 }
 
-a, a:link, a:visited {
+a,
+a:link,
+a:visited {
   color: $black;
   text-decoration: none;
   &:hover {

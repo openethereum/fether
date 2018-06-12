@@ -1,7 +1,7 @@
 .form_field {
   margin: 0.5rem 0;
   border-radius: 0.25rem;
-  background: rgba($faint,0.25);
+  background: rgba($faint, 0.25);
   position: relative;
 
   label {
@@ -10,7 +10,7 @@
     color: $black;
     opacity: 0.75;
     padding: 0.5rem 0.5rem 0;
-    display: block
+    display: block;
   }
 
   .form_field_value {
@@ -25,14 +25,19 @@
     word-wrap: break-word;
   }
 
-  input[type="text"], input[type="number"], input[type="tel"], input[type="email"], input[type="password"], textarea {
+  input[type='text'],
+  input[type='number'],
+  input[type='tel'],
+  input[type='email'],
+  input[type='password'],
+  textarea {
     border: 0;
     background: transparent;
     font-size: ms(0);
     font-weight: 400;
     font-family: $mono;
     line-height: ms(0) * 1.3;
-    width: calc(100% - 1rem;);
+    width: calc(100% - 1rem);
     opacity: 0.75;
     padding: 0.5rem;
     margin-top: -0.25rem;
@@ -41,12 +46,12 @@
     }
   }
 
-  input[type="range"] {
+  input[type='range'] {
     -webkit-appearance: none;
     width: calc(100% - 1rem);
     height: 0.5rem;
     border-radius: 0.5rem;
-    background: rgba($faint,0.5);
+    background: rgba($faint, 0.5);
     outline: none;
     padding: 0;
     margin: 0.5rem;
@@ -58,7 +63,7 @@
       border-radius: 50%;
       background: $grey;
       cursor: pointer;
-      transition: background .15s ease;
+      transition: background 0.15s ease;
 
       &:hover {
         background: $black;
@@ -96,7 +101,8 @@ input.form_field_amount[type='number'] {
   text-align: center;
   -webkit-appearance: none;
 
-  &::-webkit-inner-spin-button, &::-webkit-outer-spin-button {
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
     opacity: 1;
     -webkit-appearance: none;
   }
@@ -133,6 +139,6 @@ nav.range-nav {
     display: block;
     width: 8rem;
     text-align: center;
-    color: $black
+    color: $black;
   }
 }

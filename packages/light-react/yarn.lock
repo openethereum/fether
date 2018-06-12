@@ -124,9 +124,9 @@
     u2f-api "0.0.9"
     u2f-api-polyfill "0.4.3"
 
-"@parity/light.js@https://github.com/parity-js/light.js#24ed8bed60917207a84d85cd5622636f8489fd7a":
+"@parity/light.js@https://github.com/parity-js/light.js#99ee612acd7ee69554839a09d6c094251043bc3b":
   version "1.0.0"
-  resolved "https://github.com/parity-js/light.js#24ed8bed60917207a84d85cd5622636f8489fd7a"
+  resolved "https://github.com/parity-js/light.js#99ee612acd7ee69554839a09d6c094251043bc3b"
   dependencies:
     "@babel/runtime" "^7.0.0-beta.49"
     "@parity/api" "^2.1.23"
@@ -7176,7 +7176,7 @@ sockjs@0.3.18:
     faye-websocket "^0.10.0"
     uuid "^2.0.2"
 
-"solc@github:ngotchac/solc-js":
+solc@ngotchac/solc-js:
   version "0.4.4"
   resolved "https://codeload.github.com/ngotchac/solc-js/tar.gz/04eb38cc3003fba8cb3656653a7941ed36408818"
   dependencies:

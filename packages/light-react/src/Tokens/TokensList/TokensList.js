@@ -6,26 +6,23 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 
-import EthBalance from './EthBalance';
 import TokenBalance from './TokenBalance';
 
 @inject('tokensStore')
 @observer
 class Tokens extends Component {
   render () {
-    const { tokensStore: { tokensArray } } = this.props;
+    const {
+      tokensStore: { tokensArray }
+    } = this.props;
 
     return (
       <div className='window_content'>
         <div className='box -scroller'>
           <ul className='list -padded'>
-            {tokensArray.map(token =>
-              <li key={token.address}>
-                {token.address === 'ETH'
-                  ? <EthBalance token={token} />
-                  : <TokenBalance token={token} />}
-              </li>
-            )}
+            {tokensArray.map(token => (
+              <li key={token.address}>{<TokenBalance token={token} />}</li>
+            ))}
           </ul>
         </div>
       </div>
