@@ -33,6 +33,9 @@
       "**/electron-webpack/**"
     ]
   },
+  "engines": {
+    "yarn": ">=1.4.2"
+  },
   "scripts": {
     "build": "npm-run-all -l build-hoc build-react build-electron",
     "build-electron": "cd packages/light-electron && npm run build",
