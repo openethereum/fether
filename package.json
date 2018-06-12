@@ -24,21 +24,33 @@
     "Parity"
   ],
   "homepage": "https://github.com/parity-js/light",
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/electron-webpack",
+      "**/electron-webpack/**"
+    ]
+  },
+  "engines": {
+    "yarn": "^1.4.2"
+  },
   "scripts": {
     "build": "npm-run-all -l build-hoc build-react build-electron",
     "build-electron": "cd packages/light-electron && npm run build",
     "build-hoc": "cd packages/light-hoc && npm run build",
     "build-react": "cd packages/light-react && npm run build",
     "preelectron": "npm run build",
-    "electron": "cd packages/light-electron && npm run electron",
+    "electron": "cd packages/light-electron && npm run electron --",
     "lint": "npm-run-all -l lint-*",
     "lint-electron": "cd packages/light-electron && npm run lint",
     "lint-hoc": "cd packages/light-hoc && npm run lint",
     "lint-react": "cd packages/light-react && npm run lint",
     "prepackage": "npm run build",
     "package": "cd packages/light-electron && npm run package",
-    "prestart": "npm run build-hoc",
-    "start": "npm-run-all -pl start-*",
+    "release": "cd packages/light-electron && npm run release --",
+    "start": "npm-run-all -l -s build-hoc -p start-*",
     "start-electron": "cd packages/light-electron && npm start",
     "start-react": "cd packages/light-react && npm start",
     "test": "npm-run-all -l test-*",

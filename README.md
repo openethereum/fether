@@ -6,7 +6,6 @@ The Parity Light Wallet
 
 ```
 git clone https://github.com/parity-js/light
-lerna bootstrap
 yarn install
 ```
 

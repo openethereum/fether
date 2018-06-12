@@ -1,17 +1,31 @@
-cache: yarn
+cache:
+  yarn: true
+  directories:
+    - node_modules
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash # Travis's default version is 1.3.2, we need 1.4.2 for nohoist
+  - export PATH=$HOME/.yarn/bin:$PATH
 install:
   - yarn install
-  - lerna bootstrap
 language: node_js
 node_js:
   - "10"
+os:
+  - linux
+  - osx
 script:
   - yarn lint
   - yarn test
   - yarn build
 deploy:
   provider: script
+  skip_cleanup: true
   script:
-    - yarn package --release
+    - |
+      case "$TRAVIS_OS_NAME" in
+        "linux") yarn release --win --linux;;
+        "osx") yarn release --macos;;
+        * ) echo "Wrong OS: $TRAVIS_OS_NAME" && exit 1;;
+      esac
   on:
     branch: master

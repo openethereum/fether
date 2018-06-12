@@ -33,6 +33,7 @@
     "electron": "electron dist/main/main.js --light",
     "lint": "semistandard 'src/**/*.js' --parser babel-eslint",
     "package": "electron-builder",
+    "release": "electron-builder",
     "start": "electron-webpack dev --ui-dev --light --ws-origins all",
     "test": "echo Skipped."
   },
