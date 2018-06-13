@@ -22,35 +22,16 @@ const MIN_CONFIRMATIONS = 6;
 @observer
 class Sent extends Component {
   render () {
-    const {
-      sendStore: { confirmations, token }
-    } = this.props;
-
     return (
-      <div>
-        <nav className='header-nav'>
-          <div className='header-nav_left'>
-            {confirmations >= MIN_CONFIRMATIONS && (
-              <Link to='/tokens' className='icon -close'>
-                Close
-              </Link>
-            )}
-          </div>
-          <div className='header-nav_title'>
-            <h1>Send {token.name}</h1>
-          </div>
-          <div className='header-nav_right' />
-        </nav>
-        <div className='window_content'>
-          <div className='alert-screen'>
-            <div className='alert-screen_content'>
-              <div className='alert-screen_image'>
-                <img alt='loading' src={this.renderIcon()} />
-              </div>
-              <div className='alert-screen_text'>
-                <h1>{this.renderTitle()}</h1>
-                <p>{this.renderDescription()}</p>
-              </div>
+      <div className='window_content'>
+        <div className='alert-screen'>
+          <div className='alert-screen_content'>
+            <div className='alert-screen_image'>
+              <img alt='loading' src={this.renderIcon()} />
+            </div>
+            <div className='alert-screen_text'>
+              <h1>{this.renderTitle()}</h1>
+              <p>{this.renderDescription()}</p>
             </div>
           </div>
         </div>

@@ -6,6 +6,7 @@
 import React, { Component } from 'react';
 import { accountsInfo$ } from '@parity/light.js';
 import Blockies from 'react-blockies';
+import { Header } from 'light-ui';
 import { inject, observer } from 'mobx-react';
 import light from 'light-hoc';
 
@@ -44,17 +45,14 @@ class AccountsList extends Component {
 
     return (
       <div>
-        <nav className='header-nav'>
-          <div className='header-nav_left' />
-          <div className='header-nav_title'>
-            <h1>Accounts</h1>
-          </div>
-          <div className='header-nav_right'>
+        <Header
+          title={<h1>Accounts</h1>}
+          right={
             <a className='icon -new' onClick={this.handleCreateAccount}>
               New account
             </a>
-          </div>
-        </nav>
+          }
+        />
 
         <div className='window_content'>
           <div className='box -scroller'>

@@ -4,9 +4,10 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Header } from 'light-ui';
 import { inject, observer } from 'mobx-react';
 import memoize from 'lodash/memoize';
+import { Route } from 'react-router-dom';
 
 import AccountConfirm from './AccountConfirm';
 import AccountCopyPhrase from './AccountCopyPhrase';
@@ -35,14 +36,12 @@ class CreateAccount extends Component {
 
   handleCreateAccount = () => {
     this.props.createAccountStore.setIsImporting(false);
-    this.props.history.push('/accounts/new');
   };
 
   handleGoBack = () => this.props.history.goBack();
 
   handleImportAccount = () => {
     this.props.createAccountStore.setIsImporting(true);
-    this.props.history.push('/accounts/new');
   };
 
   render () {
@@ -58,16 +57,16 @@ class CreateAccount extends Component {
 
     return (
       <div>
-        <nav className='header-nav'>
-          <div className='header-nav_left'>
-            <a className='icon -close' onClick={this.handleGoBack}>
-              Close
+        <Header
+          left={
+            <a className='icon -back' onClick={this.handleGoBack}>
+              Back
             </a>
-          </div>
-          <div className='header-nav_title'>
+          }
+          title={
             <h1>{isImport ? 'Import account' : 'Create a new account'}</h1>
-          </div>
-          <div className='header-nav_right'>
+          }
+          right={
             <div className='progress-indicator'>
               {Steps.map((_, index) => (
                 <div
@@ -79,8 +78,8 @@ class CreateAccount extends Component {
                 />
               ))}
             </div>
-          </div>
-        </nav>
+          }
+        />
 
         <div className='window_content'>
           {Steps.map((StepComponent, index) => (

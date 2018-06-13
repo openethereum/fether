@@ -6,6 +6,7 @@
 import React, { PureComponent } from 'react';
 import { accountsInfo$, defaultAccount$ } from '@parity/light.js';
 import Blockie from 'react-blockies';
+import { Header } from 'light-ui';
 import light from 'light-hoc';
 import { Link } from 'react-router-dom';
 
@@ -21,21 +22,20 @@ class Receive extends PureComponent {
 
     return (
       <div>
-        <nav className='header-nav'>
-          <div className='header-nav_left'>
+        <Header
+          left={
             <Link to='/tokens' className='icon -close'>
               Close
             </Link>
-          </div>
-          <div className='header-nav_title'>
+          }
+          title={
             <h1>
               {accountsInfo && defaultAccount && accountsInfo[defaultAccount]
                 ? accountsInfo[defaultAccount].name
                 : 'Loading...'}
             </h1>
-          </div>
-          <div className='header-nav_right' />
-        </nav>
+          }
+        />
         <div className='window_content'>
           <div className='box -padded'>
             <div className='box -card'>

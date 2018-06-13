@@ -5,7 +5,8 @@
 
 import React, { Component } from 'react';
 import { defaultAccount$ } from '@parity/light.js';
-import { fromWei, toWei } from '@parity/api/lib/util/wei'; // TODO @parity/api's wei util should have Gwei as an unit
+import { fromWei, toWei } from '@parity/api/lib/util/wei';
+import { Header } from 'light-ui';
 import { inject, observer } from 'mobx-react';
 import light from 'light-hoc';
 import { Link } from 'react-router-dom';
@@ -65,17 +66,15 @@ class Send extends Component {
 
     return (
       <div>
-        <nav className='header-nav'>
-          <div className='header-nav_left'>
+        <Header
+          left={
             <Link to='/tokens' className='icon -close'>
               Close
             </Link>
-          </div>
-          <div className='header-nav_title'>
-            <h1>Send {token.name}</h1>
-          </div>
-          <div className='header-nav_right' />
-        </nav>
+          }
+          title={<h1>Send {token.name}</h1>}
+        />
+
         <div className='window_content'>
           <div className='box -padded'>
             <div className='box -card'>

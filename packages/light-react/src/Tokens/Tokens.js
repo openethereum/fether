@@ -6,6 +6,7 @@
 import React, { PureComponent } from 'react';
 import { accountsInfo$, defaultAccount$ } from '@parity/light.js';
 import light from 'light-hoc';
+import { Header } from 'light-ui';
 import { Link } from 'react-router-dom';
 
 import Health from '../Health';
@@ -21,21 +22,20 @@ class Tokens extends PureComponent {
 
     return (
       <div>
-        <nav className='header-nav'>
-          <div className='header-nav_left'>
+        <Header
+          left={
             <Link to='/accounts' className='icon -back'>
               Back
             </Link>
-          </div>
-          <div className='header-nav_title'>
+          }
+          title={
             <Link to='/receive'>
               {accountsInfo && defaultAccount && accountsInfo[defaultAccount]
                 ? accountsInfo[defaultAccount].name
                 : 'Loading...'}
             </Link>
-          </div>
-          <div className='header-nav_right' />
-        </nav>
+          }
+        />
 
         <TokensList />
 

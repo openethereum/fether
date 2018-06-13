@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
+import { Header } from 'light-ui';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 
@@ -45,17 +46,15 @@ class Signer extends Component {
 
     return (
       <div>
-        <nav className='header-nav'>
-          <div className='header-nav_left'>
-            <Link to='/tokens' className='icon -close'>
-              Close
+        <Header
+          left={
+            <Link to='/tokens' className='icon -back'>
+              Back
             </Link>
-          </div>
-          <div className='header-nav_title'>
-            <h1>Send {token.name}</h1>
-          </div>
-          <div className='header-nav_right' />
-        </nav>
+          }
+          title={<h1>Send {token.name}</h1>}
+        />
+
         <div className='window_content'>
           <div className='box -padded'>
             <div className='box -card'>
