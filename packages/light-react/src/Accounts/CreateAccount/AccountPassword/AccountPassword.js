@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
+import { FormField } from 'light-ui';
 import { inject, observer } from 'mobx-react';
 
 import CreateAccountHeader from '../CreateAccountHeader';
@@ -56,34 +57,28 @@ class AccountPassword extends Component {
                 <p>Secure your account with a password:</p>
               </div>
 
-              <div className='form_field'>
-                <label>Password </label>
-                <input
-                  onChange={this.handlePasswordChange}
-                  required
-                  type='password'
-                  value={password}
-                />
-              </div>
+              <FormField
+                label='Password'
+                onChange={this.handlePasswordChange}
+                required
+                type='password'
+                value={password}
+              />
 
-              <div className='form_field'>
-                <label>Confirm </label>
-                <input
-                  onChange={this.handleConfirmChange}
-                  required
-                  type='password'
-                  value={confirm}
-                />
-              </div>
+              <FormField
+                label='Conform'
+                onChange={this.handleConfirmChange}
+                required
+                type='password'
+                value={confirm}
+              />
 
-              <div className='form_field'>
-                <label>Password Hint (optional) </label>
-                <input
-                  onChange={this.handleHintChange}
-                  type='text'
-                  value={hint}
-                />
-              </div>
+              <FormField
+                label='Password Hint (optional)'
+                onChange={this.handleHintChange}
+                type='text'
+                value={hint}
+              />
 
               <nav className='form-nav'>
                 <button

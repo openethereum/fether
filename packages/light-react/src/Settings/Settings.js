@@ -6,6 +6,7 @@
 import React, { Component } from 'react';
 import { chainName$ } from '@parity/light.js';
 import debounce from 'lodash/debounce';
+import { Header } from 'light-ui';
 import { inject, observer } from 'mobx-react';
 import light from 'light-hoc';
 import { Link } from 'react-router-dom';
@@ -97,17 +98,14 @@ class Settings extends Component {
 
     return (
       <div>
-        <nav className='header-nav'>
-          <div className='header-nav_left'>
+        <Header
+          left={
             <Link to='/tokens' className='icon -close'>
               Close
             </Link>
-          </div>
-          <div className='header-nav_title'>
-            <h1>Edit token whitelist</h1>
-          </div>
-          <div className='header-nav_right' />
-        </nav>
+          }
+          title={<h1>Edit token whitelist</h1>}
+        />
 
         <div className='window_content'>
           <div className='box -padded'>

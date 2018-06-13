@@ -21,7 +21,6 @@ import Send from '../Send';
 import Settings from '../Settings';
 import { STATUS } from '../stores/healthStore';
 import Tokens from '../Tokens';
-import './App.css';
 
 // Use MemoryRouter for production viewing in file:// protocol
 // https://github.com/facebook/create-react-app/issues/3591

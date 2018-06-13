@@ -50,7 +50,7 @@
     }
 
     &.-reload {
-      background-image: url('../assets/img/icons/reload.svg');
+      background-image: url('./assets/img/icons/reload.svg');
     }
   }
 
@@ -118,7 +118,7 @@
     }
 
     &.-clear {
-      background-image: url('../assets/img/icons/close.svg');
+      background-image: url('./assets/img/icons/close.svg');
     }
 
     &:disabled {

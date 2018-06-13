@@ -15,7 +15,7 @@ import loading from '../assets/img/icons/loading.svg';
 class Overlays extends Component {
   render () {
     return (
-      <div className='windowContent'>
+      <div className='window_content'>
         <div className='box -padded'>
           <div className='alert-screen'>
             <div className='alert-screen_content'>

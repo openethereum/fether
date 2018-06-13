@@ -6,6 +6,7 @@
 import React, { Component } from 'react';
 import { accountsInfo$ } from '@parity/light.js';
 import Blockies from 'react-blockies';
+import { Header } from 'light-ui';
 import { inject, observer } from 'mobx-react';
 import light from 'light-hoc';
 
@@ -31,7 +32,8 @@ class AccountsList extends Component {
     // component.
     api.parity
       .setNewDappsDefaultAddress(address)
-      .then(() => history.push('/tokens'));
+      .then(() => history.push('/tokens'))
+      .catch(() => {}); // TODO do what?
   };
 
   handleCreateAccount = () => {
@@ -44,17 +46,14 @@ class AccountsList extends Component {
 
     return (
       <div>
-        <nav className='header-nav'>
-          <div className='header-nav_left' />
-          <div className='header-nav_title'>
-            <h1>Accounts</h1>
-          </div>
-          <div className='header-nav_right'>
+        <Header
+          title={<h1>Accounts</h1>}
+          right={
             <a className='icon -new' onClick={this.handleCreateAccount}>
               New account
             </a>
-          </div>
-        </nav>
+          }
+        />
 
         <div className='window_content'>
           <div className='box -scroller'>
@@ -68,7 +67,7 @@ class AccountsList extends Component {
                   >
                     <div className='account box -card -clickable'>
                       <div className='account_avatar'>
-                        <Blockies seed={address} />
+                        <Blockies seed={address.toLowerCase()} />
                       </div>
                       <div className='account_information'>
                         <div className='account_name'>

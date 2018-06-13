@@ -5,6 +5,8 @@
 
 import React, { PureComponent } from 'react';
 import { accountsInfo$, defaultAccount$ } from '@parity/light.js';
+import Blockies from 'react-blockies';
+import { Header } from 'light-ui';
 import light from 'light-hoc';
 import { Link } from 'react-router-dom';
 
@@ -21,21 +23,27 @@ class Tokens extends PureComponent {
 
     return (
       <div>
-        <nav className='header-nav'>
-          <div className='header-nav_left'>
+        <Header
+          left={
             <Link to='/accounts' className='icon -back'>
               Back
             </Link>
-          </div>
-          <div className='header-nav_title'>
-            <Link to='/receive'>
-              {accountsInfo && defaultAccount && accountsInfo[defaultAccount]
-                ? accountsInfo[defaultAccount].name
-                : 'Loading...'}
-            </Link>
-          </div>
-          <div className='header-nav_right' />
-        </nav>
+          }
+          title={
+            accountsInfo && defaultAccount && accountsInfo[defaultAccount] ? (
+              <Link to='/receive'>
+                <Blockies
+                  seed={defaultAccount.toLowerCase()}
+                  scale={3}
+                  size={8}
+                />{' '}
+                {accountsInfo[defaultAccount].name}
+              </Link>
+            ) : (
+              'Loading...'
+            )
+          }
+        />
 
         <TokensList />
 

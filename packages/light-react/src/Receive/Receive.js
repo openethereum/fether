@@ -5,7 +5,9 @@
 
 import React, { PureComponent } from 'react';
 import { accountsInfo$, defaultAccount$ } from '@parity/light.js';
-import Blockie from 'react-blockies';
+import Blockies from 'react-blockies';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { Header } from 'light-ui';
 import light from 'light-hoc';
 import { Link } from 'react-router-dom';
 
@@ -17,53 +19,45 @@ class Receive extends PureComponent {
   render () {
     const { accountsInfo, defaultAccount } = this.props;
 
-    if (!defaultAccount) return <div>Loading...</div>;
-
     return (
       <div>
-        <nav className='header-nav'>
-          <div className='header-nav_left'>
+        <Header
+          left={
             <Link to='/tokens' className='icon -close'>
               Close
             </Link>
-          </div>
-          <div className='header-nav_title'>
-            <h1>
-              {accountsInfo && defaultAccount && accountsInfo[defaultAccount]
-                ? accountsInfo[defaultAccount].name
-                : 'Loading...'}
-            </h1>
-          </div>
-          <div className='header-nav_right' />
-        </nav>
+          }
+          title={
+            accountsInfo && defaultAccount && accountsInfo[defaultAccount] ? (
+              <h1>
+                <Blockies
+                  seed={defaultAccount.toLowerCase()}
+                  scale={3}
+                  size={8}
+                />{' '}
+                {accountsInfo[defaultAccount].name}
+              </h1>
+            ) : (
+              <h1>Loading...</h1>
+            )
+          }
+        />
         <div className='window_content'>
           <div className='box -padded'>
             <div className='box -card'>
-              <div className='account'>
-                <div className='account_avatar'>
-                  <Blockie seed={defaultAccount} />
-                </div>
-                <div className='account_information'>
-                  <div className='account_name'>
-                    {accountsInfo &&
-                    defaultAccount &&
-                    accountsInfo[defaultAccount]
-                      ? accountsInfo[defaultAccount].name
-                      : 'Loading...'}
-                  </div>
-                  <div className='account_address'>{defaultAccount}</div>
-                </div>
+              <div className='text'>
+                <p>Your address is:</p>
               </div>
-              <div className='box -card-drawer'>
-                <div className='text'>
-                  <p>Your address is:</p>
-                </div>
-                <div className='text -code'>{defaultAccount}</div>
-                <div className='box text -right'>
-                  <button className='button -utility'>
+              <div className='text -code'>{defaultAccount}</div>
+              <div className='box text -right'>
+                <CopyToClipboard text={defaultAccount}>
+                  <button
+                    className='button -utility'
+                    onClick={this.handleCopyPublicAddress}
+                  >
                     Copy address to clipboard
                   </button>
-                </div>
+                </CopyToClipboard>
               </div>
             </div>
           </div>

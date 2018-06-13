@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
+import { FormField } from 'light-ui';
 import { inject, observer } from 'mobx-react';
 
 import AccountPlaceholder from '../AccountPlaceholder';
@@ -19,19 +20,26 @@ class AccountWritePhrase extends Component {
   handleChange = ({ target: { value } }) => this.setState({ value });
 
   handleNextStep = () => {
-    const { history, location: { pathname } } = this.props;
+    const {
+      history,
+      location: { pathname }
+    } = this.props;
     const currentStep = pathname.slice(-1);
     history.push(`/accounts/new/${+currentStep + 1}`);
   };
 
   handleSavePhrase = () => {
-    const { createAccountStore: { setPhrase } } = this.props;
+    const {
+      createAccountStore: { setPhrase }
+    } = this.props;
     const { value } = this.state;
     setPhrase(value).then(this.handleNextStep);
   };
 
   render () {
-    const { createAccountStore: { isImport } } = this.props;
+    const {
+      createAccountStore: { isImport }
+    } = this.props;
     const { value } = this.state;
 
     return (
@@ -42,14 +50,14 @@ class AccountWritePhrase extends Component {
             <div className='text'>
               <p>Please write your recovery phrase:</p>
             </div>
-            <div className='form_field'>
-              <label>Recovery phrase</label>
-              <textarea onChange={this.handleChange} required value={value} />
-            </div>
+            <FormField
+              input={
+                <textarea onChange={this.handleChange} required value={value} />
+              }
+              label='Recovery phrase'
+            />
 
-            <nav className='form-nav'>
-              {this.renderButton()}
-            </nav>
+            <nav className='form-nav'>{this.renderButton()}</nav>
           </div>
         </div>
       </div>
@@ -57,7 +65,9 @@ class AccountWritePhrase extends Component {
   }
 
   renderButton = () => {
-    const { createAccountStore: { isImport, phrase } } = this.props;
+    const {
+      createAccountStore: { isImport, phrase }
+    } = this.props;
     const { value } = this.state;
 
     // If we are creating a new account, the button just checks the phrase has

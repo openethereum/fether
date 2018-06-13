@@ -9,6 +9,7 @@ import ReactDOM from 'react-dom';
 
 import App from './App';
 import rootStore from './stores';
+import './index.css';
 
 ReactDOM.render(
   <Provider {...rootStore}>

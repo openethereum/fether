@@ -28,7 +28,7 @@
     "channel": "beta"
   },
   "scripts": {
-    "prebuild": "cp -r ../light-react/build static/build && ./scripts/fixElectronBug.sh",
+    "prebuild": "copyfiles ../light-react/build static/build && ./scripts/fixElectronBug.sh",
     "build": "electron-webpack",
     "electron": "electron dist/main/main.js --light",
     "lint": "semistandard 'src/**/*.js' --parser babel-eslint",
@@ -44,7 +44,7 @@
     "command-exists": "^1.2.6",
     "commander": "^2.15.1",
     "electron-dl": "^1.11.0",
-    "light-hoc": "^0.1.0",
+    "light-react": "^0.1.0",
     "pino": "^4.16.1",
     "pino-multi-stream": "^3.1.2",
     "promise-any": "^0.2.0",
@@ -52,6 +52,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",
+    "copyfiles": "^2.0.0",
     "cross-env": "^5.1.4",
     "electron": "^2.0.2",
     "electron-builder": "^20.15.1",
