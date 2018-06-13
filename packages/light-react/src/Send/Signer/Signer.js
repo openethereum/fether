@@ -4,7 +4,8 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import { Header } from 'light-ui';
+import { FormField, Header } from 'light-ui';
+import { fromWei } from '@parity/api/lib/util/wei';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 
@@ -48,8 +49,8 @@ class Signer extends Component {
       <div>
         <Header
           left={
-            <Link to='/tokens' className='icon -back'>
-              Back
+            <Link to='/tokens' className='icon -close'>
+              Close
             </Link>
           }
           title={<h1>Send {token.name}</h1>}
@@ -63,7 +64,7 @@ class Signer extends Component {
                 <div className='form_field'>
                   <label>Amount</label>
                   <div className='form_field_value'>
-                    {token.amount} {token.symbol}
+                    {+fromWei(tx.value)} {token.symbol}
                   </div>
                 </div>
                 <div className='form_field'>
@@ -75,15 +76,15 @@ class Signer extends Component {
                 <div className='text'>
                   <p>Enter your password to confirm this transaction.</p>
                 </div>
-                <div className='form_field'>
-                  <label>Password</label>
-                  <input
-                    onChange={this.handleChangePassword}
-                    required
-                    type='password'
-                    value={password}
-                  />
-                </div>
+
+                <FormField
+                  label='Password'
+                  onChange={this.handleChangePassword}
+                  required
+                  type='password'
+                  value={password}
+                />
+
                 <nav className='form-nav -binary'>
                   <button
                     className='button -cancel'

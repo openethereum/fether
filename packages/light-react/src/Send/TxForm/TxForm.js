@@ -6,7 +6,7 @@
 import React, { Component } from 'react';
 import { defaultAccount$ } from '@parity/light.js';
 import { fromWei, toWei } from '@parity/api/lib/util/wei';
-import { Header } from 'light-ui';
+import { FormField, Header } from 'light-ui';
 import { inject, observer } from 'mobx-react';
 import light from 'light-hoc';
 import { Link } from 'react-router-dom';
@@ -82,54 +82,67 @@ class Send extends Component {
               <div className='box -card-drawer'>
                 <form className='send-form' onSubmit={this.handleSubmit}>
                   <fieldset className='form_fields'>
-                    <div className='form_field'>
-                      <label>Amount</label>
-                      <input
-                        className='form_field_amount'
-                        onChange={this.handleChangeAmount}
-                        required
-                        type='number'
-                        value={amount}
-                      />
-                      <nav className='form-field_nav'>
-                        <button className='button -utility' type='button'>
-                          Max
-                        </button>
-                      </nav>
-                    </div>
-                    <div className='form_field'>
-                      <label>To</label>
-                      <textarea
-                        className='-sm'
-                        onChange={this.handleChangeTo}
-                        required
-                        type='text'
-                        placeholder='Recipient address'
-                        value={to}
-                      />
-                    </div>
-                    <div className='form_field -range'>
-                      <label>Gas</label>
-                      <input
-                        max={MAX_GAS_PRICE}
-                        min={MIN_GAS_PRICE}
-                        onChange={this.handleChangeGasPrice}
-                        required
-                        step={0.1}
-                        type='range'
-                        value={gasPrice}
-                      />
-                      <nav className='range-nav'>
-                        <span className='range-nav_label'>Cheap</span>
-                        <span className='range-nav_value'>
-                          {fromWei(
-                            toWei(gasPrice, 'shannon').mul(estimated)
-                          ).toFixed(6)}{' '}
-                          ETH
-                        </span>
-                        <span className='range-nav_label'>Fast</span>
-                      </nav>
-                    </div>
+                    <FormField
+                      input={
+                        <div>
+                          <input
+                            className='form_field_amount'
+                            onChange={this.handleChangeAmount}
+                            required
+                            type='number'
+                            value={amount}
+                          />
+                          <nav className='form-field_nav'>
+                            <button className='button -utility' type='button'>
+                              Max
+                            </button>
+                          </nav>
+                        </div>
+                      }
+                      label='Amount'
+                    />
+
+                    <FormField
+                      input={
+                        <textarea
+                          className='-sm'
+                          onChange={this.handleChangeTo}
+                          required
+                          type='text'
+                          placeholder='Recipient address'
+                          value={to}
+                        />
+                      }
+                      label='To'
+                    />
+
+                    <FormField
+                      className='-range'
+                      input={
+                        <div>
+                          <input
+                            max={MAX_GAS_PRICE}
+                            min={MIN_GAS_PRICE}
+                            onChange={this.handleChangeGasPrice}
+                            required
+                            step={0.1}
+                            type='range'
+                            value={gasPrice}
+                          />
+                          <nav className='range-nav'>
+                            <span className='range-nav_label'>Cheap</span>
+                            <span className='range-nav_value'>
+                              {fromWei(
+                                toWei(gasPrice, 'shannon').mul(estimated)
+                              ).toFixed(6)}{' '}
+                              ETH
+                            </span>
+                            <span className='range-nav_label'>Fast</span>
+                          </nav>
+                        </div>
+                      }
+                      label='Gas'
+                    />
                   </fieldset>
                   <nav className='form-nav'>
                     <button className='button'>Send</button>

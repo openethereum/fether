@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
+import { FormField } from 'light-ui';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 
@@ -50,15 +51,14 @@ class AccountName extends Component {
                 <div className='text'>
                   <p>Please give this account a name:</p>
                 </div>
-                <div className='form_field'>
-                  <label>Name</label>
-                  <input
-                    type='text'
-                    onChange={this.handleChangeName}
-                    required
-                    value={name}
-                  />
-                </div>
+                <FormField
+                  label='Name'
+                  onChange={this.handleChangeName}
+                  required
+                  type='text'
+                  value={name}
+                />
+
                 <nav className='form-nav'>
                   {name ? (
                     <Link to={`/accounts/new/${+currentStep + 1}`}>

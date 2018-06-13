@@ -32,7 +32,8 @@ class AccountsList extends Component {
     // component.
     api.parity
       .setNewDappsDefaultAddress(address)
-      .then(() => history.push('/tokens'));
+      .then(() => history.push('/tokens'))
+      .catch(() => {}); // TODO do what?
   };
 
   handleCreateAccount = () => {

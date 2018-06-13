@@ -4,6 +4,5 @@
 // SPDX-License-Identifier: MIT
 
 import FormField from './FormField';
-import Header from './Header';
 
-export { FormField, Header };
+export default FormField;
