@@ -6,10 +6,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Placeholder from '../Placeholder';
+
 const Header = ({ left, right, title }) => (
   <div className='header-nav'>
     <div className='header-nav_left'>{left}</div>
-    <div className='header-nav_title'>{title}</div>
+    <div className='header-nav_title'>
+      {title || <Placeholder height={24} width={150} />}
+    </div>
     <div className='header-nav_right'>{right}</div>
   </div>
 );

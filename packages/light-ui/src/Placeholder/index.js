@@ -3,8 +3,6 @@
 //
 // SPDX-License-Identifier: MIT
 
-import FormField from './FormField';
-import Header from './Header';
 import Placeholder from './Placeholder';
 
-export { FormField, Header, Placeholder };
+export default Placeholder;
