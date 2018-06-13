@@ -9,7 +9,7 @@ import { fromWei } from '@parity/api/lib/util/wei';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 
-import TokenBalance from '../TokenBalance';
+import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 
 @inject('sendStore')
 @observer
@@ -58,50 +58,53 @@ class Signer extends Component {
 
         <div className='window_content'>
           <div className='box -padded'>
-            <div className='box -card'>
-              <TokenBalance token={token} />
-              <div className='box -card-drawer'>
-                <div className='form_field'>
-                  <label>Amount</label>
-                  <div className='form_field_value'>
-                    {+fromWei(tx.value)} {token.symbol}
+            <TokenBalance
+              drawers={[
+                <div key='txForm'>
+                  <div className='form_field'>
+                    <label>Amount</label>
+                    <div className='form_field_value'>
+                      {+fromWei(tx.value)} {token.symbol}
+                    </div>
                   </div>
-                </div>
-                <div className='form_field'>
-                  <label>To</label>
-                  <div className='form_field_value'>{tx.to}</div>
-                </div>
-              </div>
-              <form className='box -card-drawer' onSubmit={this.handleAccept}>
-                <div className='text'>
-                  <p>Enter your password to confirm this transaction.</p>
-                </div>
+                  <div className='form_field'>
+                    <label>To</label>
+                    <div className='form_field_value'>{tx.to}</div>
+                  </div>
+                </div>,
+                <form key='signerForm' onSubmit={this.handleAccept}>
+                  <div className='text'>
+                    <p>Enter your password to confirm this transaction.</p>
+                  </div>
 
-                <FormField
-                  label='Password'
-                  onChange={this.handleChangePassword}
-                  required
-                  type='password'
-                  value={password}
-                />
+                  <FormField
+                    label='Password'
+                    onChange={this.handleChangePassword}
+                    required
+                    type='password'
+                    value={password}
+                  />
 
-                <nav className='form-nav -binary'>
-                  <button
-                    className='button -cancel'
-                    onClick={this.handleReject}
-                    type='button'
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    className='button -submit'
-                    disabled={!txStatus || !txStatus.requested}
-                  >
-                    Confirm transaction
-                  </button>
-                </nav>
-              </form>
-            </div>
+                  <nav className='form-nav -binary'>
+                    <button
+                      className='button -cancel'
+                      onClick={this.handleReject}
+                      type='button'
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      className='button -submit'
+                      disabled={!txStatus || !txStatus.requested}
+                    >
+                      Confirm transaction
+                    </button>
+                  </nav>
+                </form>
+              ]}
+              onClick={null}
+              token={token}
+            />
           </div>
         </div>
       </div>

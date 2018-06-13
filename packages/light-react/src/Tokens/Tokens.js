@@ -30,17 +30,17 @@ class Tokens extends PureComponent {
             </Link>
           }
           title={
-            accountsInfo && defaultAccount && accountsInfo[defaultAccount] ? (
+            accountsInfo &&
+            defaultAccount &&
+            accountsInfo[defaultAccount] && (
               <Link to='/receive'>
                 <Blockies
                   seed={defaultAccount.toLowerCase()}
-                  scale={3}
+                  scale={2}
                   size={8}
                 />{' '}
                 {accountsInfo[defaultAccount].name}
               </Link>
-            ) : (
-              'Loading...'
             )
           }
         />
