@@ -28,7 +28,7 @@
     "channel": "beta"
   },
   "scripts": {
-    "prebuild": "copyfiles ../light-react/build static/build && ./scripts/fixElectronBug.sh",
+    "prebuild": "copyfiles -u 2 \"../light-react/build/**/*\" static/ && ./scripts/fixElectronBug.sh",
     "build": "electron-webpack",
     "electron": "electron dist/main/main.js --light",
     "lint": "semistandard 'src/**/*.js' --parser babel-eslint",
