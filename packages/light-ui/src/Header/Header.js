@@ -7,10 +7,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Header = ({ left, right, title }) => (
-  <div className="header-nav">
-    <div className="header-nav_left">{left}</div>
-    <div className="header-nav_title">{title}</div>
-    <div className="header-nav_right">{right}</div>
+  <div className='header-nav'>
+    <div className='header-nav_left'>{left}</div>
+    <div className='header-nav_title'>{title}</div>
+    <div className='header-nav_right'>{right}</div>
   </div>
 );
 

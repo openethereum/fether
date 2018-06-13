@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 const FormField = ({ className, input, label, ...otherProps }) => (
   <div className={['form_field', className].join(' ')}>
     <label>{label}</label>
-    {input ? input : <input {...otherProps} />}
+    {input || <input {...otherProps} />}
   </div>
 );
 
