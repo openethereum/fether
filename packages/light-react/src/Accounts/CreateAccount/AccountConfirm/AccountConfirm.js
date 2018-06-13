@@ -6,17 +6,13 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 
-import CreateAccountHeader from '../CreateAccountHeader';
+import CreateAccountContainer from '../CreateAccountContainer';
 
 @inject('createAccountStore', 'onboardingStore')
 @observer
 class AccountConfirm extends Component {
   handleSubmit = () => {
-    const {
-      createAccountStore: { saveAccountToParity },
-      history,
-      onboardingStore
-    } = this.props;
+    const { createAccountStore, history, onboardingStore } = this.props;
 
     // If we were onboarding, set isFirstRun to false, so that we quit
     // onboarding.
@@ -24,26 +20,24 @@ class AccountConfirm extends Component {
       onboardingStore.setIsFirstRun(false);
     }
 
-    saveAccountToParity().then(() => history.push('/accounts'));
+    createAccountStore.saveAccountToParity().then(() => {
+      createAccountStore.clear();
+      history.push('/accounts');
+    });
   };
 
   render () {
     return (
-      <div className='box -padded'>
-        <div className='box -card'>
-          <CreateAccountHeader />
-          <div className='box -card-drawer'>
-            <div className='text'>
-              <p>Ready to create account?</p>
-            </div>
-            <nav className='form-nav'>
-              <button onClick={this.handleSubmit} className='button'>
-                Confirm
-              </button>
-            </nav>
-          </div>
+      <CreateAccountContainer>
+        <div className='text'>
+          <p>Ready to create account?</p>
         </div>
-      </div>
+        <nav className='form-nav'>
+          <button onClick={this.handleSubmit} className='button'>
+            Confirm
+          </button>
+        </nav>
+      </CreateAccountContainer>
     );
   }
 }

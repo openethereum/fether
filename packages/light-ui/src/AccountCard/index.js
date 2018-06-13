@@ -3,6 +3,6 @@
 //
 // SPDX-License-Identifier: MIT
 
-import CreateAccountHeader from './CreateAccountHeader';
+import AccountCard from './AccountCard';
 
-export default CreateAccountHeader;
+export default AccountCard;

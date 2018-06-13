@@ -34,22 +34,30 @@ class CreateAccount extends Component {
       ];
   });
 
-  handleCreateAccount = () => {
-    this.props.createAccountStore.setIsImporting(false);
+  handleToggleCreateImport = () => {
+    const {
+      createAccountStore,
+      history,
+      match: {
+        params: { step }
+      }
+    } = this.props;
+    createAccountStore.setIsImport(!createAccountStore.isImport);
+
+    // If we were further in the account creation, go back to step 1
+    if (step > 1) {
+      history.push('/accounts/new/1');
+    }
   };
 
   handleGoBack = () => this.props.history.goBack();
-
-  handleImportAccount = () => {
-    this.props.createAccountStore.setIsImporting(true);
-  };
 
   render () {
     const {
       createAccountStore: { isImport },
       match: {
-        params: { step }
-      } // Current step
+        params: { step } // Current step in account creation process
+      }
     } = this.props;
 
     // Get all the steps of our account process
@@ -82,13 +90,15 @@ class CreateAccount extends Component {
         />
 
         <div className='window_content'>
-          {Steps.map((StepComponent, index) => (
-            <Route
-              component={StepComponent}
-              key={`Step${index + 1}`}
-              path={`/accounts/new/${index + 1}`}
-            />
-          ))}
+          <div className='box -padded'>
+            {Steps.map((StepComponent, index) => (
+              <Route
+                component={StepComponent}
+                key={`Step${index + 1}`}
+                path={`/accounts/new/${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
 
         <nav className='footer-nav'>
@@ -98,7 +108,7 @@ class CreateAccount extends Component {
                 Need to create an account?
                 <button
                   className='button -footer'
-                  onClick={this.handleCreateAccount}
+                  onClick={this.handleToggleCreateImport}
                 >
                   New account
                 </button>
@@ -108,7 +118,7 @@ class CreateAccount extends Component {
                 Already have an account?
                 <button
                   className='button -footer'
-                  onClick={this.handleImportAccount}
+                  onClick={this.handleToggleCreateImport}
                 >
                   Import account
                 </button>

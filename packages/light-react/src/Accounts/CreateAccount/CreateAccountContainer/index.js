@@ -3,6 +3,6 @@
 //
 // SPDX-License-Identifier: MIT
 
-import AccountPlaceholder from './AccountPlaceholder';
+import CreateAccountContainer from './CreateAccountContainer';
 
-export default AccountPlaceholder;
+export default CreateAccountContainer;
