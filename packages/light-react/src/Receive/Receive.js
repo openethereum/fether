@@ -5,6 +5,7 @@
 
 import React, { PureComponent } from 'react';
 import { accountsInfo$, defaultAccount$ } from '@parity/light.js';
+import Blockies from 'react-blockies';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Header } from 'light-ui';
 import light from 'light-hoc';
@@ -27,11 +28,18 @@ class Receive extends PureComponent {
             </Link>
           }
           title={
-            <h1>
-              {accountsInfo && defaultAccount && accountsInfo[defaultAccount]
-                ? accountsInfo[defaultAccount].name
-                : 'Loading...'}
-            </h1>
+            accountsInfo && defaultAccount && accountsInfo[defaultAccount] ? (
+              <h1>
+                <Blockies
+                  seed={defaultAccount.toLowerCase()}
+                  scale={3}
+                  size={8}
+                />{' '}
+                {accountsInfo[defaultAccount].name}
+              </h1>
+            ) : (
+              <h1>Loading...</h1>
+            )
           }
         />
         <div className='window_content'>

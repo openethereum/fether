@@ -67,7 +67,7 @@ class AccountsList extends Component {
                   >
                     <div className='account box -card -clickable'>
                       <div className='account_avatar'>
-                        <Blockies seed={address} />
+                        <Blockies seed={address.toLowerCase()} />
                       </div>
                       <div className='account_information'>
                         <div className='account_name'>

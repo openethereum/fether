@@ -22,6 +22,10 @@ const MIN_CONFIRMATIONS = 6;
 @observer
 class Sent extends Component {
   render () {
+    const {
+      sendStore: { confirmations }
+    } = this.props;
+
     return (
       <div className='window_content'>
         <div className='alert-screen'>
@@ -33,6 +37,13 @@ class Sent extends Component {
               <h1>{this.renderTitle()}</h1>
               <p>{this.renderDescription()}</p>
             </div>
+            {confirmations >= MIN_CONFIRMATIONS && (
+              <nav className='form-nav'>
+                <Link to='/'>
+                  <button className='button'>Go back</button>
+                </Link>
+              </nav>
+            )}
           </div>
         </div>
       </div>
@@ -45,11 +56,7 @@ class Sent extends Component {
     } = this.props;
 
     if (confirmations >= MIN_CONFIRMATIONS) {
-      return (
-        <Link to='/'>
-          <button className='button'>Go back</button>
-        </Link>
-      );
+      return null;
     }
 
     if (confirmations > 0) {

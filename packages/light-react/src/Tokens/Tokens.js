@@ -5,8 +5,9 @@
 
 import React, { PureComponent } from 'react';
 import { accountsInfo$, defaultAccount$ } from '@parity/light.js';
-import light from 'light-hoc';
+import Blockies from 'react-blockies';
 import { Header } from 'light-ui';
+import light from 'light-hoc';
 import { Link } from 'react-router-dom';
 
 import Health from '../Health';
@@ -29,11 +30,18 @@ class Tokens extends PureComponent {
             </Link>
           }
           title={
-            <Link to='/receive'>
-              {accountsInfo && defaultAccount && accountsInfo[defaultAccount]
-                ? accountsInfo[defaultAccount].name
-                : 'Loading...'}
-            </Link>
+            accountsInfo && defaultAccount && accountsInfo[defaultAccount] ? (
+              <Link to='/receive'>
+                <Blockies
+                  seed={defaultAccount.toLowerCase()}
+                  scale={3}
+                  size={8}
+                />{' '}
+                {accountsInfo[defaultAccount].name}
+              </Link>
+            ) : (
+              'Loading...'
+            )
           }
         />
 
