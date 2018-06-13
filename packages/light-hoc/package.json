@@ -26,8 +26,10 @@
   "homepage": "https://github.com/parity-js/light",
   "main": "lib/index.js",
   "scripts": {
-    "build": "rimraf lib && babel src --out-dir lib",
-    "lint": "semistandard 'src/**/*.js' --parser babel-eslint"
+    "prebuild": "rimraf lib",
+    "build": "babel src --out-dir lib",
+    "lint": "semistandard 'src/**/*.js' --parser babel-eslint",
+    "start": "yarn build --watch"
   },
   "peerDependencies": {
     "@parity/light.js": "https://github.com/parity-js/light.js#6f6c93920bb41486a8b22fe8a40151704fd8f83a",
