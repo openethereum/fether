@@ -39,16 +39,18 @@
   "scripts": {
     "build": "lerna run build",
     "build-hoc": "cd packages/light-hoc && npm run build",
+    "build-ui": "cd packages/light-hoc && npm run build --",
     "preelectron": "npm run build",
     "electron": "cd packages/light-electron && npm run electron --",
-    "lint": "lerna run lint",
+    "lint": "lerna run lint --parallel",
     "prepackage": "npm run build",
     "package": "cd packages/light-electron && npm run package",
     "release": "cd packages/light-electron && npm run release --",
     "start": "npm-run-all -l -s build-hoc -p start-*",
     "start-electron": "cd packages/light-electron && npm start",
     "start-react": "cd packages/light-react && npm start",
-    "test": "lerna run test"
+    "start-ui": "cd packages/light-ui && npm start",
+    "test": "lerna run test --parallel"
   },
   "devDependencies": {
     "lerna": "^2.11.0",
