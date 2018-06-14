@@ -7,8 +7,7 @@ import React, { Component } from 'react';
 import { FormField } from 'light-ui';
 import { inject, observer } from 'mobx-react';
 
-import AccountPlaceholder from '../AccountPlaceholder';
-import CreateAccountHeader from '../CreateAccountHeader';
+import CreateAccountContainer from '../CreateAccountContainer';
 
 @inject('createAccountStore')
 @observer
@@ -37,30 +36,22 @@ class AccountWritePhrase extends Component {
   };
 
   render () {
-    const {
-      createAccountStore: { isImport }
-    } = this.props;
     const { value } = this.state;
 
     return (
-      <div className='box -padded'>
-        <div className='box -card'>
-          {isImport ? <AccountPlaceholder /> : <CreateAccountHeader />}
-          <div className='box -card-drawer'>
-            <div className='text'>
-              <p>Please write your recovery phrase:</p>
-            </div>
-            <FormField
-              input={
-                <textarea onChange={this.handleChange} required value={value} />
-              }
-              label='Recovery phrase'
-            />
-
-            <nav className='form-nav'>{this.renderButton()}</nav>
-          </div>
+      <CreateAccountContainer>
+        <div className='text'>
+          <p>Please write your recovery phrase:</p>
         </div>
-      </div>
+        <FormField
+          input={
+            <textarea onChange={this.handleChange} required value={value} />
+          }
+          label='Recovery phrase'
+        />
+
+        <nav className='form-nav'>{this.renderButton()}</nav>
+      </CreateAccountContainer>
     );
   }
 

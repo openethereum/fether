@@ -19,6 +19,17 @@ class CreateAccountStore {
     this.api = parityStore.api;
   }
 
+  /**
+   * Reinitialize everything
+   */
+  clear () {
+    this.setAddress(null);
+    this.setHint('');
+    this.setName('');
+    this.setPassword('');
+    this.setPhrase(null);
+  }
+
   generateNewAccount = () => {
     return this.api.parity.generateSecretPhrase().then(this.setPhrase);
   };
@@ -41,7 +52,11 @@ class CreateAccountStore {
   };
 
   @action
-  setIsImporting = isImport => {
+  setIsImport = isImport => {
+    // First set address and phrase back to null
+    this.address = null;
+    this.phrase = null;
+
     this.isImport = isImport;
   };
 

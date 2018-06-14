@@ -16,12 +16,20 @@ class Tokens extends Component {
       tokensStore: { tokensArray }
     } = this.props;
 
+    // Show empty 3 tokens placeholders if tokens have not been loaded yet
+    const shownArray = tokensArray.length ? tokensArray : Array(3).fill({});
+
     return (
       <div className='window_content'>
         <div className='box -scroller'>
           <ul className='list -padded'>
-            {tokensArray.map(token => (
-              <li key={token.address}>{<TokenBalance token={token} />}</li>
+            {shownArray.map((
+              token,
+              index // With empty tokens, the token.address is not defined, so we prefix with index
+            ) => (
+              <li key={`${index}-${token.address}`}>
+                <TokenBalance token={token} />
+              </li>
             ))}
           </ul>
         </div>

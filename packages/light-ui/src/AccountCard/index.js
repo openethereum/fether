@@ -3,6 +3,6 @@
 //
 // SPDX-License-Identifier: MIT
 
-import TokenBalance from './TokenBalance';
+import AccountCard from './AccountCard';
 
-export default TokenBalance;
+export default AccountCard;

@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import { FormField } from 'light-ui';
 import { inject, observer } from 'mobx-react';
 
-import CreateAccountHeader from '../CreateAccountHeader';
+import CreateAccountContainer from '../CreateAccountContainer';
 
 @inject('createAccountStore')
 @observer
@@ -48,50 +48,45 @@ class AccountPassword extends Component {
     const { confirm, hint, password } = this.state;
 
     return (
-      <div className='box -padded'>
-        <div className='box -card'>
-          <CreateAccountHeader />
-          <div className='box -card-drawer'>
-            <form onSubmit={this.handleSubmit}>
-              <div className='text'>
-                <p>Secure your account with a password:</p>
-              </div>
-
-              <FormField
-                label='Password'
-                onChange={this.handlePasswordChange}
-                required
-                type='password'
-                value={password}
-              />
-
-              <FormField
-                label='Conform'
-                onChange={this.handleConfirmChange}
-                required
-                type='password'
-                value={confirm}
-              />
-
-              <FormField
-                label='Password Hint (optional)'
-                onChange={this.handleHintChange}
-                type='text'
-                value={hint}
-              />
-
-              <nav className='form-nav'>
-                <button
-                  className='button'
-                  disabled={!password || confirm !== password}
-                >
-                  Next
-                </button>
-              </nav>
-            </form>
+      <CreateAccountContainer>
+        <form onSubmit={this.handleSubmit}>
+          <div className='text'>
+            <p>Secure your account with a password:</p>
           </div>
-        </div>
-      </div>
+
+          <FormField
+            label='Password'
+            onChange={this.handlePasswordChange}
+            required
+            type='password'
+            value={password}
+          />
+
+          <FormField
+            label='Conform'
+            onChange={this.handleConfirmChange}
+            required
+            type='password'
+            value={confirm}
+          />
+
+          <FormField
+            label='Password Hint (optional)'
+            onChange={this.handleHintChange}
+            type='text'
+            value={hint}
+          />
+
+          <nav className='form-nav'>
+            <button
+              className='button'
+              disabled={!password || confirm !== password}
+            >
+              Next
+            </button>
+          </nav>
+        </form>
+      </CreateAccountContainer>
     );
   }
 }

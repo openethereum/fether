@@ -4,9 +4,8 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
+import { AccountCard, Header } from 'light-ui';
 import { accountsInfo$ } from '@parity/light.js';
-import Blockies from 'react-blockies';
-import { Header } from 'light-ui';
 import { inject, observer } from 'mobx-react';
 import light from 'light-hoc';
 
@@ -37,7 +36,7 @@ class AccountsList extends Component {
   };
 
   handleCreateAccount = () => {
-    this.props.createAccountStore.setIsImporting(false);
+    this.props.createAccountStore.setIsImport(false);
     this.props.history.push('/accounts/new');
   };
 
@@ -65,17 +64,15 @@ class AccountsList extends Component {
                     data-address={address} // Using data- to avoid creating a new item Component
                     onClick={this.handleClick}
                   >
-                    <div className='account box -card -clickable'>
-                      <div className='account_avatar'>
-                        <Blockies seed={address.toLowerCase()} />
-                      </div>
-                      <div className='account_information'>
-                        <div className='account_name'>
-                          {accountsInfo[address].name}
-                        </div>
-                        <div className='account_address'>{address}</div>
-                      </div>
-                    </div>
+                    <AccountCard
+                      address={address}
+                      className='-clickable'
+                      name={
+                        accountsInfo &&
+                        accountsInfo[address] &&
+                        accountsInfo[address].name
+                      }
+                    />
                   </li>
                 ))}
               </ul>

@@ -11,7 +11,7 @@ import { inject, observer } from 'mobx-react';
 import light from 'light-hoc';
 import { Link } from 'react-router-dom';
 
-import TokenBalance from '../TokenBalance';
+import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
@@ -77,10 +77,13 @@ class Send extends Component {
 
         <div className='window_content'>
           <div className='box -padded'>
-            <div className='box -card'>
-              <TokenBalance token={token} />
-              <div className='box -card-drawer'>
-                <form className='send-form' onSubmit={this.handleSubmit}>
+            <TokenBalance
+              drawers={[
+                <form
+                  className='send-form'
+                  key='txForm'
+                  onSubmit={this.handleSubmit}
+                >
                   <fieldset className='form_fields'>
                     <FormField
                       input={
@@ -148,8 +151,10 @@ class Send extends Component {
                     <button className='button'>Send</button>
                   </nav>
                 </form>
-              </div>
-            </div>
+              ]}
+              onClick={null}
+              token={token}
+            />
           </div>
         </div>
       </div>

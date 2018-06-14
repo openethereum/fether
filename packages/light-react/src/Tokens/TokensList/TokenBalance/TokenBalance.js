@@ -9,9 +9,10 @@ import { defaultAccount$, makeContract$, myBalance$ } from '@parity/light.js';
 import { fromWei } from '@parity/api/lib/util/wei';
 import { inject } from 'mobx-react';
 import light from 'light-hoc';
-import { withRouter } from 'react-router-dom';
 import { map, switchMap } from 'rxjs/operators';
 import PropTypes from 'prop-types';
+import { TokenCard } from 'light-ui';
+import { withRouter } from 'react-router-dom';
 
 @light({
   balance: ({ token: { address, decimals } }) =>
@@ -32,31 +33,16 @@ class TokenBalance extends Component {
   };
 
   handleClick = () => {
-    const {
-      history,
-      sendStore,
-      token: { address }
-    } = this.props;
-    sendStore.setTokenAddress(address);
+    const { history, sendStore, token } = this.props;
+    if (!token.address) {
+      return;
+    }
+    sendStore.setTokenAddress(token.address);
     history.push('/send');
   };
 
   render () {
-    const { balance, token } = this.props;
-    return (
-      <a onClick={this.handleClick}>
-        <div className='token box -card -clickable'>
-          <div className='token_icon'>
-            <img alt={token.symbol} src={token.logo} />
-          </div>
-          <div className='token_name'>{token.name}</div>
-          <div className='token_balance'>
-            {Number.isFinite(balance) ? balance.toFixed(2) : '...'}{' '}
-            <span className='token_symbol'>{token.symbol}</span>
-          </div>
-        </div>
-      </a>
-    );
+    return <TokenCard onClick={this.handleClick} {...this.props} />;
   }
 }
 

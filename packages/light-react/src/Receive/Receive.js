@@ -28,17 +28,17 @@ class Receive extends PureComponent {
             </Link>
           }
           title={
-            accountsInfo && defaultAccount && accountsInfo[defaultAccount] ? (
+            accountsInfo &&
+            defaultAccount &&
+            accountsInfo[defaultAccount] && (
               <h1>
                 <Blockies
                   seed={defaultAccount.toLowerCase()}
-                  scale={3}
+                  scale={2}
                   size={8}
                 />{' '}
                 {accountsInfo[defaultAccount].name}
               </h1>
-            ) : (
-              <h1>Loading...</h1>
             )
           }
         />
