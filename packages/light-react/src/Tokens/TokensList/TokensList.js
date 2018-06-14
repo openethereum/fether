@@ -23,8 +23,11 @@ class Tokens extends Component {
       <div className='window_content'>
         <div className='box -scroller'>
           <ul className='list -padded'>
-            {shownArray.map(token => (
-              <li key={token.address}>
+            {shownArray.map((
+              token,
+              index // With empty tokens, the token.address is not defined, so we prefix with index
+            ) => (
+              <li key={`${index}-${token.address}`}>
                 <TokenBalance token={token} />
               </li>
             ))}
