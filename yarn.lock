@@ -855,10 +855,10 @@
     "@babel/plugin-syntax-import-meta" "7.0.0-beta.49"
 
 "@babel/runtime@^7.0.0-beta.49":
-  version "7.0.0-beta.49"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-beta.49.tgz#03b3bf07eb982072c8e851dd2ddd5110282e61bf"
+  version "7.0.0-beta.51"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-beta.51.tgz#48b8ed18307034c6620f643514650ca2ccc0165a"
   dependencies:
-    core-js "^2.5.6"
+    core-js "^2.5.7"
     regenerator-runtime "^0.11.1"
 
 "@babel/template@7.0.0-beta.44":
@@ -1007,9 +1007,9 @@
     u2f-api "0.0.9"
     u2f-api-polyfill "0.4.3"
 
-"@parity/light.js@https://github.com/parity-js/light.js#99ee612acd7ee69554839a09d6c094251043bc3b":
+"@parity/light.js@https://github.com/parity-js/light.js#165a97deb86d7b77a96b324b7d42d04a27a43b0b":
   version "1.0.0"
-  resolved "https://github.com/parity-js/light.js#99ee612acd7ee69554839a09d6c094251043bc3b"
+  resolved "https://github.com/parity-js/light.js#165a97deb86d7b77a96b324b7d42d04a27a43b0b"
   dependencies:
     "@babel/runtime" "^7.0.0-beta.49"
     "@parity/api" "^2.1.23"
@@ -3604,7 +3604,7 @@ core-js@^1.0.0:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
 
-core-js@^2.4.0, core-js@^2.4.1, core-js@^2.5.0, core-js@^2.5.6:
+core-js@^2.4.0, core-js@^2.4.1, core-js@^2.5.0, core-js@^2.5.7:
   version "2.5.7"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.7.tgz#f972608ff0cead68b841a16a932d0b183791814e"
 

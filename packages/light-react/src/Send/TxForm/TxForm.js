@@ -4,11 +4,9 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import { defaultAccount$ } from '@parity/light.js';
 import { fromWei, toWei } from '@parity/api/lib/util/wei';
 import { FormField, Header } from 'light-ui';
 import { inject, observer } from 'mobx-react';
-import light from 'light-hoc';
 import { Link } from 'react-router-dom';
 
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
@@ -16,53 +14,43 @@ import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 
-@light({
-  defaultAccount: defaultAccount$
-})
 @inject('sendStore')
 @observer
 class Send extends Component {
-  state = {
-    amount: 0.01, // In Ether or in token
-    gasPrice: 4, // in Gwei
-    to: '0x00Ae02834e91810B223E54ce3f9B7875258a1747'
-  };
+  componentDidMount () {
+    this.props.sendStore.estimateGas();
+  }
 
   handleChangeAmount = ({ target: { value } }) =>
-    this.setState({ amount: value });
+    this.props.sendStore.setTxAmount(value);
 
   handleChangeGasPrice = ({ target: { value } }) =>
-    this.setState({ gasPrice: value });
+    this.props.sendStore.setTxGasPrice(value);
 
   handleChangeTo = ({ target: { value } }) => {
-    this.setState({ to: value }, () => {
-      // Estimate the gas to this address.
-      this.props.sendStore.estimateGas(this.state);
-    });
+    const { sendStore } = this.props;
+    sendStore.setTxTo(value);
+    // Estimate the gas to this address, if we're sending ETH.
+    if (sendStore.tokenAddress === 'ETH') {
+      sendStore.estimateGas();
+    }
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    const { defaultAccount, history, sendStore } = this.props;
-    const { amount, gasPrice, to } = this.state;
+    const { history, sendStore } = this.props;
 
     // Post a request to the transaction. There is a next step to sign this
     // request.
-    sendStore.postTx({
-      from: defaultAccount,
-      gasPrice: toWei(gasPrice, 'shannon'), // shannon == gwei
-      to,
-      value: toWei(amount)
-    });
+    sendStore.send();
 
     history.push('/send/signer');
   };
 
   render () {
     const {
-      sendStore: { estimated, token }
+      sendStore: { estimated, token, tx }
     } = this.props;
-    const { amount, gasPrice, to } = this.state;
 
     return (
       <div>
@@ -93,7 +81,7 @@ class Send extends Component {
                             onChange={this.handleChangeAmount}
                             required
                             type='number'
-                            value={amount}
+                            value={tx.amount}
                           />
                           <nav className='form-field_nav'>
                             <button className='button -utility' type='button'>
@@ -113,7 +101,7 @@ class Send extends Component {
                           required
                           type='text'
                           placeholder='Recipient address'
-                          value={to}
+                          value={tx.to}
                         />
                       }
                       label='To'
@@ -130,13 +118,15 @@ class Send extends Component {
                             required
                             step={0.1}
                             type='range'
-                            value={gasPrice}
+                            value={tx.gasPrice}
                           />
                           <nav className='range-nav'>
                             <span className='range-nav_label'>Cheap</span>
                             <span className='range-nav_value'>
                               {fromWei(
-                                toWei(gasPrice, 'shannon').mul(estimated)
+                                toWei(tx.gasPrice, 'shannon').mul(
+                                  estimated.toString()
+                                )
                               ).toFixed(6)}{' '}
                               ETH
                             </span>

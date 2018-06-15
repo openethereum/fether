@@ -5,7 +5,6 @@
 
 import React, { Component } from 'react';
 import { FormField, Header } from 'light-ui';
-import { fromWei } from '@parity/api/lib/util/wei';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 
@@ -64,7 +63,7 @@ class Signer extends Component {
                   <div className='form_field'>
                     <label>Amount</label>
                     <div className='form_field_value'>
-                      {+fromWei(tx.value)} {token.symbol}
+                      {tx.amount} {token.symbol}
                     </div>
                   </div>
                   <div className='form_field'>
