@@ -14,6 +14,7 @@ import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 @observer
 class Signer extends Component {
   state = {
+    isSending: false,
     password: ''
   };
 
@@ -23,7 +24,12 @@ class Signer extends Component {
 
     e.preventDefault();
 
-    sendStore.acceptRequest(password).then(() => history.push('/send/sent'));
+    this.setState({ isSending: true }, () => {
+      sendStore
+        .acceptRequest(password)
+        .then(() => history.push('/send/sent'))
+        .catch(() => this.setState({ isSending: false }));
+    });
   };
 
   handleChangePassword = ({ target: { value } }) => {
@@ -32,17 +38,20 @@ class Signer extends Component {
 
   handleReject = () => {
     const { history, sendStore } = this.props;
-    sendStore
-      .rejectRequest()
-      .then(() => history.goBack())
-      .catch(() => history.goBack());
+
+    this.setState({ isSending: true }, () => {
+      sendStore
+        .rejectRequest()
+        .then(() => history.goBack())
+        .catch(() => history.goBack());
+    });
   };
 
   render () {
     const {
       sendStore: { token, tx, txStatus }
     } = this.props;
-    const { password } = this.state;
+    const { isSending, password } = this.state;
 
     return (
       <div>
@@ -94,7 +103,7 @@ class Signer extends Component {
                     </button>
                     <button
                       className='button -submit'
-                      disabled={!txStatus || !txStatus.requested}
+                      disabled={!txStatus || !txStatus.requested || isSending}
                     >
                       Confirm transaction
                     </button>
