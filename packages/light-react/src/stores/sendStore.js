@@ -112,12 +112,10 @@ class SendStore {
       return false;
     }
 
-    // The amount should be a number
+    // The gasPrice should be a number
     if (!Number.isFinite(this.tx.gasPrice)) {
       return false;
     }
-
-    console.log(true);
 
     return true;
   }
