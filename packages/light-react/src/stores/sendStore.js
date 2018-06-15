@@ -149,7 +149,7 @@ class SendStore {
     return {
       gasPrice: toWei(this.tx.gasPrice, 'shannon'), // shannon == gwei
       to: this.tx.to,
-      value: toWei(this.tx.amount)
+      value: toWei(this.tx.amount.toString())
     };
   }
 
@@ -160,7 +160,10 @@ class SendStore {
   @computed
   get txForErc20 () {
     return {
-      args: [this.tx.to, this.tx.amount * 10 ** this.token.decimals],
+      args: [
+        this.tx.to,
+        (this.tx.amount * 10 ** this.token.decimals).toString()
+      ],
       options: {
         gasPrice: toWei(this.tx.gasPrice, 'shannon') // shannon == gwei
       }
