@@ -14,7 +14,7 @@ import LS_PREFIX from './utils/lsPrefix';
 const LS_KEY = `${LS_PREFIX}::tokens`;
 
 class TokensStore {
-  @observable tokens = new Map();
+  @observable tokens = {};
 
   constructor () {
     combineLatest(chainName$(), defaultAccount$()).subscribe(
@@ -27,7 +27,7 @@ class TokensStore {
 
   @action
   addToken = (address, token) => {
-    this.tokens.set(address, token);
+    this.tokens[address] = token;
     this.updateLS();
   };
 
@@ -43,33 +43,34 @@ class TokensStore {
     if (!tokens) {
       // If there's nothing in the localStorage, we add be default only
       // Ethereum. We consider Ethereum as a token, with address 'ETH'
-      this.tokens.replace({
+
+      this.tokens = {
         ETH: {
           address: 'ETH',
           logo: ethereumIcon,
           name: 'Ethereum',
           symbol: 'ETH'
         }
-      });
+      };
     } else {
-      this.tokens.replace(tokens);
+      this.tokens = tokens;
     }
   };
 
   @action
   removeToken = address => {
-    this.tokens.delete(address);
+    delete this.tokens[address];
     this.updateLS();
   };
 
   @computed
   get tokensArray () {
-    return Array.from(this.tokens.values());
+    return Object.values(this.tokens);
   }
 
   @computed
   get tokensArrayWithoutEth () {
-    return Array.from(this.tokens.values()).filter(
+    return this.tokensArray.filter(
       ({ address }) => address !== 'ETH' // Ethereum is the only token without address, has 'ETH' instead
     );
   }

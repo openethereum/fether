@@ -138,7 +138,7 @@ class SendStore {
 
   @computed
   get token () {
-    return tokensStore.tokens.get(this.tokenAddress);
+    return tokensStore.tokens[this.tokenAddress];
   }
 
   /**
