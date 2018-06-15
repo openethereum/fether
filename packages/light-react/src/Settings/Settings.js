@@ -11,6 +11,7 @@ import { inject, observer } from 'mobx-react';
 import light from 'light-hoc';
 import { Link } from 'react-router-dom';
 
+import Health from '../Health';
 import NewTokenItem from './NewTokenItem';
 
 @light({
@@ -133,6 +134,12 @@ class Settings extends Component {
             </ul>
           </div>
         </div>
+
+        <nav className='footer-nav'>
+          <div className='footer-nav_status'>
+            <Health />
+          </div>
+        </nav>
       </div>
     );
   }
