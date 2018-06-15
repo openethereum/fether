@@ -6,7 +6,6 @@
 import React, { PureComponent } from 'react';
 import { AccountHeader } from 'light-ui';
 import { accountsInfo$, defaultAccount$ } from '@parity/light.js';
-import Blockies from 'react-blockies';
 import light from 'light-hoc';
 import { Link } from 'react-router-dom';
 

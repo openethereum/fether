@@ -16,7 +16,6 @@ import { inject, observer } from 'mobx-react';
 import Accounts from '../Accounts';
 import Onboarding from '../Onboarding';
 import Overlay from '../Overlay';
-import Receive from '../Receive';
 import Send from '../Send';
 import Settings from '../Settings';
 import { STATUS } from '../stores/healthStore';
@@ -75,7 +74,6 @@ class App extends Component {
         />
         <Route path='/accounts' component={Accounts} />
         <Route path='/onboarding' component={Onboarding} />
-        <Route path='/receive' component={Receive} />
         <Route path='/send' component={Send} />
         <Route path='/settings' component={Settings} />
         <Route path='/tokens' component={Tokens} />
