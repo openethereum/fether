@@ -109,7 +109,6 @@ class SendStore {
       return;
     }
 
-    this.contract.transfer$('0x00Ae02834e91810B223E54ce3f9B7875258a1747', 12);
     const send$ =
       this.tokenAddress === 'ETH'
         ? post$(this.txForEth)
