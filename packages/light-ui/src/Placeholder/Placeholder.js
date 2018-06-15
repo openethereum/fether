@@ -8,7 +8,12 @@ import ContentLoader from 'react-content-loader';
 import PropTypes from 'prop-types';
 
 const Placeholder = ({ height, width }) => (
-  <ContentLoader height={height} style={{ height, width }} width={width}>
+  <ContentLoader
+    className='placeholder'
+    height={height}
+    style={{ height, width }}
+    width={width}
+  >
     <rect x='0' y='0' rx='0' ry='0' height={height} width={width} />
   </ContentLoader>
 );

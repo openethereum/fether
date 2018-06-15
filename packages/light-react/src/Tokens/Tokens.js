@@ -4,9 +4,8 @@
 // SPDX-License-Identifier: MIT
 
 import React, { PureComponent } from 'react';
+import { AccountHeader } from 'light-ui';
 import { accountsInfo$, defaultAccount$ } from '@parity/light.js';
-import Blockies from 'react-blockies';
-import { Header } from 'light-ui';
 import light from 'light-hoc';
 import { Link } from 'react-router-dom';
 
@@ -23,25 +22,19 @@ class Tokens extends PureComponent {
 
     return (
       <div>
-        <Header
+        <AccountHeader
+          address={defaultAccount}
+          copyAddress
+          name={
+            accountsInfo &&
+            defaultAccount &&
+            accountsInfo[defaultAccount] &&
+            accountsInfo[defaultAccount].name
+          }
           left={
             <Link to='/accounts' className='icon -back'>
               Back
             </Link>
-          }
-          title={
-            accountsInfo &&
-            defaultAccount &&
-            accountsInfo[defaultAccount] && (
-              <Link to='/receive'>
-                <Blockies
-                  seed={defaultAccount.toLowerCase()}
-                  scale={2}
-                  size={8}
-                />{' '}
-                {accountsInfo[defaultAccount].name}
-              </Link>
-            )
           }
         />
 

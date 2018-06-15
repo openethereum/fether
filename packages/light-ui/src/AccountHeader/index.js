@@ -3,6 +3,6 @@
 //
 // SPDX-License-Identifier: MIT
 
-import Receive from './Receive';
+import AccountHeader from './AccountHeader';
 
-export default Receive;
+export default AccountHeader;

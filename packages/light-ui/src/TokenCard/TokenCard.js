@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import Card from '../Card';
 import Placeholder from '../Placeholder';
 
-const TokenCard = ({ balance, decimals, token, ...otherProps }) => (
+const TokenCard = ({ balance, children, decimals, token, ...otherProps }) => (
   <Card {...otherProps}>
     <div className='token'>
       <div className='token_icon'>
@@ -24,14 +24,13 @@ const TokenCard = ({ balance, decimals, token, ...otherProps }) => (
       </div>
       <div className='token_balance'>
         {Number.isFinite(balance) ? (
-          <span>
-            {balance.toFixed(decimals)}{' '}
-            <span className='token_symbol'>{token.symbol}</span>
-          </span>
-        ) : (
-          <Placeholder height={20} width={80} />
+          <span>{balance.toFixed(decimals)} </span>
+        ) : balance === null ? null : (
+          <Placeholder height={20} width={50} />
         )}
+        <span className='token_symbol'>{token.symbol}</span>
       </div>
+      {children}
     </div>
   </Card>
 );

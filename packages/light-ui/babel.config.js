@@ -1,8 +1,5 @@
 module.exports = {
-  plugins: [
-    '@babel/plugin-proposal-class-properties',
-    ['emotion', { sourceMap: true, autoLabel: true }]
-  ],
+  plugins: ['@babel/plugin-proposal-class-properties'],
   presets: [
     '@babel/preset-env',
     '@babel/preset-react',

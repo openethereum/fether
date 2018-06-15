@@ -5,6 +5,7 @@
 
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
+import { TokenCard } from 'light-ui';
 import { withRouter } from 'react-router-dom';
 
 @inject('tokensStore')
@@ -24,28 +25,32 @@ class NewTokenItem extends Component {
   };
 
   render () {
-    const { token, tokensStore: { tokens } } = this.props;
+    const {
+      token,
+      tokensStore: { tokens }
+    } = this.props;
 
     return (
       <li key={token.address}>
-        <div className='token box -card -clickable'>
-          <div className='token_icon'>
-            <img alt={token.symbol} src={token.logo} />
-          </div>
-          <div className='token_name'>
-            {token.name}
-          </div>
-          <div className='token_balance'>
-            <span className='token_symbol'>
-              {token.symbol}
-            </span>
-          </div>
+        <TokenCard balance={null} token={token}>
           <div className='token_buttons'>
-            {tokens.has(token.address)
-              ? <button className='button -utility -bad' onClick={this.handleRemoveToken}>Remove</button>
-              : <button className='button -utility -good' onClick={this.handleAddToken}>Add</button>}
+            {tokens[token.address] ? (
+              <button
+                className='button -utility -bad'
+                onClick={this.handleRemoveToken}
+              >
+                Remove
+              </button>
+            ) : (
+              <button
+                className='button -utility -good'
+                onClick={this.handleAddToken}
+              >
+                Add
+              </button>
+            )}
           </div>
-        </div>
+        </TokenCard>
       </li>
     );
   }
