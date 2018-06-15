@@ -32,8 +32,11 @@
     "start": "yarn build --watch"
   },
   "dependencies": {
+    "rc-tooltip": "^3.7.2",
     "react-blockies": "^1.3.0",
-    "react-content-loader": "^3.1.2"
+    "react-content-loader": "^3.1.2",
+    "react-copy-to-clipboard": "^5.0.1",
+    "react-tooltip": "^3.6.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.49",

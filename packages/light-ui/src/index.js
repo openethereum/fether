@@ -4,10 +4,19 @@
 // SPDX-License-Identifier: MIT
 
 import AccountCard from './AccountCard';
+import AccountHeader from './AccountHeader';
 import Card from './Card';
 import FormField from './FormField';
 import Header from './Header';
 import Placeholder from './Placeholder';
 import TokenCard from './TokenCard';
 
-export { AccountCard, Card, FormField, Header, Placeholder, TokenCard };
+export {
+  AccountCard,
+  AccountHeader,
+  Card,
+  FormField,
+  Header,
+  Placeholder,
+  TokenCard
+};
