@@ -47,7 +47,7 @@ class AccountsList extends Component {
     api.parity
       .setNewDappsDefaultAddress(address)
       .then(() => {
-        history.push('/tokens');
+        history.push('/tokens', { address });
       })
       .catch(err =>
         console.error(`Error while selecting account, ${err.message}.`)

@@ -18,18 +18,27 @@ import TokensList from './TokensList';
 })
 class Tokens extends PureComponent {
   render () {
-    const { accountsInfo, defaultAccount } = this.props;
+    const {
+      accountsInfo,
+      defaultAccount,
+      location: { state }
+    } = this.props;
+
+    // The address is defaultAccount, but if we are coming from the accounts
+    // page, then the address is also put inside the route state, for faster
+    // access.
+    const myAddress = (state && state.address) || defaultAccount;
 
     return (
       <div>
         <AccountHeader
-          address={defaultAccount}
+          address={myAddress}
           copyAddress
           name={
             accountsInfo &&
-            defaultAccount &&
-            accountsInfo[defaultAccount] &&
-            accountsInfo[defaultAccount].name
+            myAddress &&
+            accountsInfo[myAddress] &&
+            accountsInfo[myAddress].name
           }
           left={
             <Link to='/accounts' className='icon -back'>
