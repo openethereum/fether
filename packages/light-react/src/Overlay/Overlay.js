@@ -13,7 +13,38 @@ import loading from '../assets/img/icons/loading.svg';
 @inject('healthStore')
 @observer
 class Overlays extends Component {
+  state = {
+    isVisible: false // Only make Overlay visible if the overlay error persists for 2s or more
+  };
+
+  componentDidUpdate () {
+    this.timeout = setTimeout(() => {
+      this.setState({ isVisible: true });
+    }, 2000);
+  }
+
+  componentWillUnmount () {
+    clearTimeout(this.timeout);
+  }
+
   render () {
+    const {
+      healthStore: {
+        health: { status }
+      }
+    } = this.props;
+
+    // isVisible is:
+    // - true if the status is anything but ClockNotSync or Syncing
+    // - or else this.state.isVisible
+    const isVisible =
+      ![STATUS.CLOCKNOTSYNC, STATUS.SYNCING].includes(status) ||
+      this.state.isVisible;
+
+    if (!isVisible) {
+      return null;
+    }
+
     return (
       <div className='window_overlay'>
         <div className='alert-screen'>
