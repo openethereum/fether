@@ -83,11 +83,11 @@ class SendStore {
    * Estimate the amount of gas for our transaction.
    */
   estimateGas = () => {
+    if (!this.isTxValid) {
+      return Promise.resolve(DEFAULT_GAS);
+    }
+
     if (this.tokenAddress === 'ETH') {
-      // We only estimate txs to a correct address
-      if (!this.tx || !isAddress(this.tx.to)) {
-        return Promise.resolve(DEFAULT_GAS);
-      }
       return this.api.eth
         .estimateGas(this.txForEth)
         .then(this.setEstimated)
@@ -100,12 +100,32 @@ class SendStore {
     }
   };
 
+  @computed
+  get isTxValid () {
+    // The address should be okay
+    if (!this.tx || !isAddress(this.tx.to)) {
+      return false;
+    }
+
+    // The amount should be a number
+    if (!Number.isFinite(this.tx.amount)) {
+      return false;
+    }
+
+    // The gasPrice should be a number
+    if (!Number.isFinite(this.tx.gasPrice)) {
+      return false;
+    }
+
+    return true;
+  }
+
   /**
    * Create a transaction.
    */
   send = () => {
-    if (!this.tx) {
-      console.error('Cannot send empty transaction.');
+    if (!this.isTxValid) {
+      console.error('Transaction is invalid.');
       return;
     }
 
@@ -149,7 +169,7 @@ class SendStore {
     return {
       gasPrice: toWei(this.tx.gasPrice, 'shannon'), // shannon == gwei
       to: this.tx.to,
-      value: toWei(this.tx.amount)
+      value: toWei(this.tx.amount.toString())
     };
   }
 
@@ -160,7 +180,10 @@ class SendStore {
   @computed
   get txForErc20 () {
     return {
-      args: [this.tx.to, this.tx.amount * 10 ** this.token.decimals],
+      args: [
+        this.tx.to,
+        (this.tx.amount * 10 ** this.token.decimals).toString()
+      ],
       options: {
         gasPrice: toWei(this.tx.gasPrice, 'shannon') // shannon == gwei
       }
