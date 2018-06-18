@@ -15,17 +15,15 @@ import loading from '../assets/img/icons/loading.svg';
 class Overlays extends Component {
   render () {
     return (
-      <div className='window_content'>
-        <div className='box -padded'>
-          <div className='alert-screen'>
-            <div className='alert-screen_content'>
-              <div className='alert-screen_image'>
-                <img alt='loading' src={loading} />
-              </div>
-              <div className='alert-screen_text'>
-                <h1>{this.renderTitle()}</h1>
-                <p>{this.renderDescription()}</p>
-              </div>
+      <div className='window_overlay'>
+        <div className='alert-screen'>
+          <div className='alert-screen_content'>
+            <div className='alert-screen_image'>
+              <img alt='loading' src={loading} />
+            </div>
+            <div className='alert-screen_text'>
+              <h1>{this.renderTitle()}</h1>
+              <p>{this.renderDescription()}</p>
             </div>
           </div>
         </div>
