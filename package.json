@@ -29,6 +29,8 @@
       "packages/*"
     ],
     "nohoist": [
+      "**/electron-builder",
+      "**/electron-builder/**",
       "**/electron-webpack",
       "**/electron-webpack/**"
     ]
