@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@parity/api": "^2.1.22",
-    "@parity/light.js": "https://github.com/parity-js/light.js#165a97deb86d7b77a96b324b7d42d04a27a43b0b",
+    "@parity/light.js": "https://github.com/parity-js/light.js#71bd8077a06ec2fe544650fdde56555d1921c0d4",
     "@parity/shared": "^3.0.2",
     "is-electron": "^2.1.0",
     "light-hoc": "^0.1.0",

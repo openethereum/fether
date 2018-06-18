@@ -5,14 +5,15 @@
 
 import React, { Component } from 'react';
 import { AccountCard, Header } from 'light-ui';
-import { accountsInfo$ } from '@parity/light.js';
+import { accountsInfo$, defaultAccount$ } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
 import light from 'light-hoc';
 
 import Health from '../../Health';
 
 @light({
-  accountsInfo: accountsInfo$
+  accountsInfo: accountsInfo$,
+  defaultAccount: defaultAccount$
 })
 @inject('createAccountStore', 'parityStore')
 @observer
@@ -23,16 +24,34 @@ class AccountsList extends Component {
     }
   }) => {
     const {
+      defaultAccount,
       history,
       parityStore: { api }
     } = this.props;
+
+    // If we selected the same account, just go back to the tokens page
+    if (address === defaultAccount) {
+      history.push('/tokens');
+      return;
+    }
+
+    // We set the defaultAccount temporarily to null. The next
+    // `setNewDappsDefaultAddress` will change it back to the correct default
+    // account. The reason we do this is to show a loading state for
+    // defaultAccount.
+    defaultAccount$().next(null);
+
     // Set default account to the clicked one, and go to Tokens on complete
     // TODO Not 100% clean, I don't want any api.abc.method() in any React
     // component.
     api.parity
       .setNewDappsDefaultAddress(address)
-      .then(() => history.push('/tokens'))
-      .catch(() => {}); // TODO do what?
+      .then(() => {
+        history.push('/tokens');
+      })
+      .catch(err =>
+        console.error(`Error while selecting account, ${err.message}.`)
+      );
   };
 
   handleCreateAccount = () => {
