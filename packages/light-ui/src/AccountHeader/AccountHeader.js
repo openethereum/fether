@@ -41,7 +41,7 @@ const AccountHeader = ({ address, copyAddress, name, ...otherProps }) => {
               <Blockies seed={address.toLowerCase()} scale={2} size={8} />{' '}
               {name}{' '}
               <span className='account_address'>
-                {address.slice(0, 4)}..{address.slice(-2)}
+                {address.slice(0, 4)}..{address.slice(-4)}
               </span>
             </Container>
           )

@@ -6,7 +6,8 @@
   bottom: 0;
   overflow: hidden;
 
-  .content { // TODO: abstract this out
+  .content {
+    // TODO: abstract this out
     overflow: visible;
     max-width: 22rem;
     margin: 0 auto;
@@ -29,10 +30,22 @@
       background: $chrome;
       border-radius: 0.25rem;
       overflow: hidden;
-      box-shadow: 0 0.125rem 0.75rem rgba($black,0.175), 0 0.125rem 0.125rem rgba($black,0.100);
+      position: relative;
+      box-shadow: 0 0.125rem 0.75rem rgba($black, 0.175),
+        0 0.125rem 0.125rem rgba($black, 0.1);
 
       .window_content {
         min-height: 7.5rem;
+      }
+
+      .window_overlay {
+        background-color: $chrome;
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 10;
       }
     }
   }

@@ -1,5 +1,5 @@
 .alert-screen {
-  height: 22rem;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,7 +18,10 @@
   .alert-screen_text {
     margin-top: 1rem;
     text-align: center;
-    h1, h2, big, strong {
+    h1,
+    h2,
+    big,
+    strong {
       font-weight: 600;
       font-size: ms(1);
       line-height: ms(1) * 1.3;

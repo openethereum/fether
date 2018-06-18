@@ -39,7 +39,7 @@ class App extends Component {
                 <polygon points='0 30 60 30 30 0' />
               </svg>
             </div>
-            <div className='window'>{this.renderScreen()}</div>
+            {this.renderScreen()}
           </div>
         </div>
       </Router>
@@ -57,28 +57,27 @@ class App extends Component {
       }
     } = this.props;
 
-    // If we are onboarding, then never show the Overlay. On the other hand, if
-    // we're not onboarding, show the Overlay whenever we have an issue.
-    if (!isOnboarding && status !== STATUS.GOOD) {
-      return <Overlay />;
-    }
-
     return (
-      <Switch>
-        {/* We redirect to Onboarding if necessary, or by default to our
+      <div className='window'>
+        {/* If we are onboarding, then never show the Overlay. On the other hand, if
+            we're not onboarding, show the Overlay whenever we have an issue. */}
+        {!isOnboarding && status !== STATUS.GOOD && <Overlay />}
+        <Switch>
+          {/* We redirect to Onboarding if necessary, or by default to our
         homepage which is Tokens */}
-        <Redirect
-          exact
-          from='/'
-          to={isOnboarding ? '/onboarding' : '/tokens'}
-        />
-        <Route path='/accounts' component={Accounts} />
-        <Route path='/onboarding' component={Onboarding} />
-        <Route path='/send' component={Send} />
-        <Route path='/settings' component={Settings} />
-        <Route path='/tokens' component={Tokens} />
-        <Redirect from='*' to='/' />
-      </Switch>
+          <Redirect
+            exact
+            from='/'
+            to={isOnboarding ? '/onboarding' : '/tokens'}
+          />
+          <Route path='/accounts' component={Accounts} />
+          <Route path='/onboarding' component={Onboarding} />
+          <Route path='/send' component={Send} />
+          <Route path='/settings' component={Settings} />
+          <Route path='/tokens' component={Tokens} />
+          <Redirect from='*' to='/' />
+        </Switch>
+      </div>
     );
   }
 }
