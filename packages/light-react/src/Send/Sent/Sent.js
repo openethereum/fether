@@ -23,7 +23,8 @@ const MIN_CONFIRMATIONS = 6;
 class Sent extends Component {
   render () {
     const {
-      sendStore: { confirmations }
+      chainName,
+      sendStore: { confirmations, txStatus }
     } = this.props;
 
     return (
@@ -38,10 +39,20 @@ class Sent extends Component {
               <p>{this.renderDescription()}</p>
             </div>
             {confirmations >= MIN_CONFIRMATIONS && (
-              <nav className='form-nav'>
+              <nav className='form-nav -binary'>
                 <Link to='/'>
-                  <button className='button'>Go back</button>
+                  <button className='button' disabled={confirmations < 6}>
+                    Go back
+                  </button>
                 </Link>
+                <a
+                  href={`https://${
+                    chainName === 'foundation' ? '' : `${chainName}.`
+                  }etherscan.io/tx/${txStatus.confirmed.transactionHash}`}
+                  target='_blank'
+                >
+                  <button className='button -tiny'>See it on Etherscan</button>
+                </a>
               </nav>
             )}
           </div>
@@ -86,7 +97,6 @@ class Sent extends Component {
 
   renderTitle = () => {
     const {
-      chainName,
       sendStore: { confirmations, txStatus }
     } = this.props;
 
@@ -94,17 +104,8 @@ class Sent extends Component {
       return (
         <span>
           {confirmations >= MIN_CONFIRMATIONS
-            ? 'Confirmed on the '
-            : 'Submitted to the '}
-          <a
-            className='text -underline'
-            href={`https://${
-              chainName === 'foundation' ? '' : `${chainName}.`
-            }etherscan.io/tx/${txStatus.confirmed.transactionHash}`}
-            target='_blank'
-          >
-            blockchain
-          </a>
+            ? 'Transaction confirmed'
+            : 'Submitted'}
         </span>
       );
     }
