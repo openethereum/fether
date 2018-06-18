@@ -20,7 +20,7 @@ class Overlays extends Component {
   componentDidUpdate () {
     this.timeout = setTimeout(() => {
       this.setState({ isVisible: true });
-    }, 2000);
+    }, 3000);
   }
 
   componentWillUnmount () {
