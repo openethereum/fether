@@ -17,14 +17,17 @@ class Overlays extends Component {
     isVisible: false // Only make Overlay visible if the overlay error persists for 2s or more
   };
 
-  componentDidUpdate () {
+  componentDidMount () {
     this.timeout = setTimeout(() => {
       this.setState({ isVisible: true });
     }, 3000);
   }
 
   componentWillUnmount () {
-    clearTimeout(this.timeout);
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+      this.timeout = null;
+    }
   }
 
   render () {
@@ -47,7 +50,7 @@ class Overlays extends Component {
 
     return (
       <div className='window_overlay'>
-        <div className='alert-screen'>
+        <div className='alert-screen -full-screen'>
           <div className='alert-screen_content'>
             <div className='alert-screen_image'>
               <img alt='loading' src={loading} />
