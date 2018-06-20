@@ -69,9 +69,11 @@ class HealthStore {
     // Check if we're syncing
     if (this.syncing) {
       const { currentBlock, highestBlock, startingBlock } = this.syncing;
-      const percentage = Math.round(
-        ((currentBlock - startingBlock) * 100) / (highestBlock - startingBlock)
-      );
+      const percentage = currentBlock
+        .minus(startingBlock)
+        .mul(100)
+        .div(highestBlock.minus(startingBlock));
+
       return {
         status: STATUS.SYNCING,
         payload: { currentBlock, highestBlock, percentage, startingBlock }

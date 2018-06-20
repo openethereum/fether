@@ -80,7 +80,9 @@ class Overlays extends Component {
         and Time" -> Uncheck and recheck "Set date and time automatically"`;
       case STATUS.SYNCING:
       case STATUS.DOWNLOADING:
-        return payload && payload.percentage ? `${payload.percentage}%` : '';
+        return payload && payload.percentage && payload.percentage.gt(0)
+          ? `${payload.percentage.toFixed(0)}%`
+          : '';
       case STATUS.NOINTERNET:
         return 'Please check that you are connected to the internet';
       default:
