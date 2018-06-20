@@ -15,7 +15,7 @@ import Health from '../../Health';
   accountsInfo: accountsInfo$,
   defaultAccount: defaultAccount$
 })
-@inject('createAccountStore', 'parityStore')
+@inject('createAccountStore', 'parityStore', 'tokensStore')
 @observer
 class AccountsList extends Component {
   handleClick = ({
@@ -26,7 +26,8 @@ class AccountsList extends Component {
     const {
       defaultAccount,
       history,
-      parityStore: { api }
+      parityStore: { api },
+      tokensStore
     } = this.props;
 
     // If we selected the same account, just go back to the tokens page
@@ -35,11 +36,12 @@ class AccountsList extends Component {
       return;
     }
 
-    // We set the defaultAccount temporarily to null. The next
-    // `setNewDappsDefaultAddress` will change it back to the correct default
-    // account. The reason we do this is to show a loading state for
-    // defaultAccount.
-    defaultAccount$().next(null);
+    // We set the tokens in tokensStore to {}, to have a smooth transition (so
+    // that we don't see the tokens of the previous account for 1s).
+    tokensStore.fetchTokensFromDb();
+    // TODO Ideally we would set the defaultAccount temporarily to null. Change
+    // light.js to support this.
+    // defaultAccount$().next();
 
     // Set default account to the clicked one, and go to Tokens on complete
     // TODO Not 100% clean, I don't want any api.abc.method() in any React

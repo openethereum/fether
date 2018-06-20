@@ -976,12 +976,13 @@
     u2f-api "0.0.9"
     u2f-api-polyfill "0.4.3"
 
-"@parity/light.js@https://github.com/parity-js/light.js#71bd8077a06ec2fe544650fdde56555d1921c0d4":
+"@parity/light.js@https://github.com/parity-js/light.js#9646ce15d9dd9c4cf11776ddd613d5bd86016f94":
   version "1.0.0"
-  resolved "https://github.com/parity-js/light.js#71bd8077a06ec2fe544650fdde56555d1921c0d4"
+  resolved "https://github.com/parity-js/light.js#9646ce15d9dd9c4cf11776ddd613d5bd86016f94"
   dependencies:
     "@babel/runtime" "^7.0.0-beta.49"
     "@parity/api" "^2.1.23"
+    json-prune "^1.1.0"
     memoizee "^0.4.12"
 
 "@parity/shared@^3.0.2":
@@ -7229,6 +7230,10 @@ json-loader@^0.5.4:
 json-parse-better-errors@^1.0.1, json-parse-better-errors@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/json-parse-better-errors/-/json-parse-better-errors-1.0.2.tgz#bb867cfb3450e69107c131d1c514bab3dc8bcaa9"
+
+json-prune@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/json-prune/-/json-prune-1.1.0.tgz#23e2fad108932b255050e3f1a70500c2b4aa30c7"
 
 json-schema-traverse@^0.3.0:
   version "0.3.1"

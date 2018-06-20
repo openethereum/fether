@@ -5,7 +5,12 @@
 
 import React, { Component } from 'react';
 import abi from '@parity/shared/lib/contracts/abi/eip20';
-import { defaultAccount$, makeContract$, myBalance$ } from '@parity/light.js';
+import {
+  defaultAccount$,
+  isNullOrLoading,
+  makeContract$,
+  myBalance$
+} from '@parity/light.js';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { fromWei } from '@parity/api/lib/util/wei';
 import { inject } from 'mobx-react';
@@ -17,13 +22,17 @@ import { withRouter } from 'react-router-dom';
 @light({
   balance: ({ token: { address, decimals } }) =>
     address === 'ETH'
-      ? myBalance$().pipe(map(value => +fromWei(value)))
+      ? myBalance$().pipe(
+        map(value => (isNullOrLoading(value) ? null : value)),
+        map(value => value && +fromWei(value))
+      )
       : defaultAccount$().pipe(
         filter(x => x),
         switchMap(defaultAccount =>
           makeContract$(address, abi).balanceOf$(defaultAccount)
         ),
-        map(value => +value.div(10 ** decimals))
+        map(value => (isNullOrLoading(value) ? null : value)),
+        map(value => value && +value.div(10 ** decimals))
       )
 })
 @inject('sendStore')
