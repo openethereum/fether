@@ -5,6 +5,7 @@
 
 import React, { Component } from 'react';
 import abi from '@parity/shared/lib/contracts/abi/eip20';
+import { empty } from 'rxjs';
 import {
   defaultAccount$,
   isNullOrLoading,
@@ -20,8 +21,11 @@ import { TokenCard } from 'light-ui';
 import { withRouter } from 'react-router-dom';
 
 @light({
-  balance: ({ token: { address, decimals } }) =>
-    address === 'ETH'
+  balance: ({ token: { address, decimals } }) => {
+    if (!address) {
+      return empty();
+    }
+    return address === 'ETH'
       ? myBalance$().pipe(
         map(value => (isNullOrLoading(value) ? null : value)),
         map(value => value && +fromWei(value))
@@ -33,7 +37,8 @@ import { withRouter } from 'react-router-dom';
         ),
         map(value => (isNullOrLoading(value) ? null : value)),
         map(value => value && +value.div(10 ** decimals))
-      )
+      );
+  }
 })
 @inject('sendStore')
 @withRouter
