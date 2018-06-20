@@ -25,7 +25,7 @@ const TokenCard = ({ balance, children, decimals, token, ...otherProps }) => (
       <div className='token_balance'>
         {Number.isFinite(balance) ? (
           <span>{balance.toFixed(decimals)} </span>
-        ) : balance === null ? null : (
+        ) : (
           <Placeholder height={20} width={50} />
         )}
         <span className='token_symbol'>{token.symbol}</span>
