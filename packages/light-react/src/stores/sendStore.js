@@ -102,18 +102,12 @@ class SendStore {
 
   @computed
   get isTxValid () {
-    // The address should be okay
-    if (!this.tx || !isAddress(this.tx.to)) {
-      return false;
-    }
-
-    // The amount should be a number
-    if (!Number.isFinite(this.tx.amount)) {
-      return false;
-    }
-
-    // The gasPrice should be a number
-    if (!Number.isFinite(this.tx.gasPrice)) {
+    if (
+      !this.tx || // There should be a tx
+      !isAddress(this.tx.to) || // The address should be okay
+      isNaN(this.tx.amount) ||
+      isNaN(this.tx.gasPrice)
+    ) {
       return false;
     }
 
