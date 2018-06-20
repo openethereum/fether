@@ -14,7 +14,7 @@ import { toWei } from '@parity/api/lib/util/wei';
 import parityStore from './parityStore';
 import tokensStore from './tokensStore';
 
-const DEFAULT_GAS = 21000; // Default gas amount to show
+const DEFAULT_GAS = new BigNumber(21000); // Default gas amount to show
 
 class SendStore {
   @observable blockNumber; // Current block number, used to calculate tx confirmations.
@@ -222,7 +222,7 @@ class SendStore {
     // Since estimateGas is not always accurate, we add a 120% factor for buffer.
     const GAS_MULT_FACTOR = 1.2;
 
-    this.estimated = +estimated * GAS_MULT_FACTOR; // Don't store as BigNumber
+    this.estimated = estimated.multipliedBy(GAS_MULT_FACTOR);
   };
 
   @action

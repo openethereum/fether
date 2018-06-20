@@ -52,6 +52,7 @@ class TokensStore {
       this.tokens = {
         ETH: {
           address: 'ETH',
+          decimals: 18,
           logo: ethereumIcon,
           name: 'Ethereum',
           symbol: 'ETH'

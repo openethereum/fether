@@ -30,7 +30,7 @@ const TokenCard = ({
         {token.name ? token.name : <Placeholder height={20} width={100} />}
       </div>
       <div className='token_balance'>
-        {Number.isFinite(balance) ? (
+        {balance ? (
           <span>{balance.toFixed(decimals)} </span>
         ) : showBalance ? (
           <Placeholder height={20} width={50} />
@@ -48,7 +48,6 @@ TokenCard.defaultProps = {
 };
 
 TokenCard.propTypes = {
-  balance: PropTypes.number,
   decimals: PropTypes.number.isRequired,
   token: PropTypes.shape({
     logo: PropTypes.string,
