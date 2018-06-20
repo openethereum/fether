@@ -33,6 +33,11 @@ class TokensStore {
 
   @action
   fetchTokensFromDb = async (chainName, defaultAccount) => {
+    if (!defaultAccount || !chainName) {
+      this.tokens = {};
+      return;
+    }
+
     // Set the localStorage key, we have one key per chain per account, in this
     // format: __paritylight::tokens::0x123::kovan
     this.lsKey = `${LS_KEY}::${defaultAccount}::${chainName}`;

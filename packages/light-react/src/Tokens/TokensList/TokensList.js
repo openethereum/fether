@@ -16,8 +16,8 @@ class Tokens extends Component {
       tokensStore: { tokensArray }
     } = this.props;
 
-    // Show empty 3 tokens placeholders if tokens have not been loaded yet
-    const shownArray = tokensArray.length ? tokensArray : Array(3).fill({});
+    // Show empty token placeholder if tokens have not been loaded yet
+    const shownArray = tokensArray.length ? tokensArray : [{}];
 
     return (
       <div className='window_content'>
