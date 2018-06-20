@@ -77,9 +77,9 @@ class AccountsList extends Component {
 
         <div className='window_content'>
           <div className='box -scroller'>
-            {accountsInfo ? (
-              <ul className='list'>
-                {Object.keys(accountsInfo).map(address => (
+            <ul className='list'>
+              {accountsInfo ? (
+                Object.keys(accountsInfo).map(address => (
                   <li
                     key={address}
                     data-address={address} // Using data- to avoid creating a new item Component
@@ -95,13 +95,13 @@ class AccountsList extends Component {
                       }
                     />
                   </li>
-                ))}
-              </ul>
-            ) : (
-              <div className='loader'>
-                <p>Loading&hellip;</p>
-              </div>
-            )}
+                ))
+              ) : (
+                <li>
+                  <AccountCard />
+                </li>
+              )}
+            </ul>
           </div>
         </div>
 

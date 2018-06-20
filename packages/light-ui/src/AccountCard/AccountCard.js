@@ -27,7 +27,7 @@ const AccountCard = ({ address, name, ...otherProps }) => (
           <Placeholder height={18} width={100} />
         )}
         <div className='account_address'>
-          {address || <Placeholder height={14} width={150} />}
+          {address || <Placeholder height={12} width={150} />}
         </div>
       </div>
     </div>
