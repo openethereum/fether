@@ -66,7 +66,9 @@ class Health extends Component {
         return 'Running...';
       case STATUS.SYNCING:
         return `Syncing...${
-          payload && payload.percentage ? ` (${payload.percentage}%)` : ''
+          payload && payload.percentage && payload.percentage.gt(0)
+            ? ` (${payload.percentage.toFixed(0)}%)`
+            : ''
         }`;
       default:
         return JSON.stringify(payload); // Just in case payload is an object

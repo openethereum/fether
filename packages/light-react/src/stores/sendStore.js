@@ -119,7 +119,7 @@ class SendStore {
    */
   send = () => {
     if (!this.isTxValid) {
-      console.error('Transaction is invalid.');
+      console.error('Transaction is invalid.', this.tx);
       return;
     }
 

@@ -13,8 +13,9 @@ import Health from '../Health';
 @observer
 class Onboarding extends Component {
   handleFirstRun = () => {
-    // Not first run anymore after clicking Start
+    // Not first run anymore after clicking Accept
     this.props.onboardingStore.setIsFirstRun(false);
+    this.props.history.push('/');
   };
 
   render () {
@@ -26,7 +27,7 @@ class Onboarding extends Component {
         This is the onboarding page.<br />
         {hasAccounts ? (
           <Link onClick={this.handleFirstRun} to='/'>
-            Start
+            Accept terms of use
           </Link>
         ) : (
           <Link to='/accounts/new'>Create account</Link>
