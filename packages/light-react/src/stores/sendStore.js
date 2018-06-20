@@ -22,7 +22,7 @@ class SendStore {
   @observable tokenAddress; // 'ETH', or the token contract address
   @observable
   tx = {
-    amount: null, // In Ether or in token
+    amount: '', // In Ether or in token
     gasPrice: 4, // in Gwei
     to: ''
   }; // The actual tx we are sending. No need to be observable.
@@ -106,6 +106,7 @@ class SendStore {
     if (
       !this.tx || // There should be a tx
       !isAddress(this.tx.to) || // The address should be okay
+      !this.tx.amount ||
       isNaN(this.tx.amount) ||
       isNaN(this.tx.gasPrice)
     ) {
@@ -161,6 +162,10 @@ class SendStore {
    */
   @computed
   get txForEth () {
+    if (!this.isTxValid) {
+      return {};
+    }
+
     return {
       gasPrice: toWei(this.tx.gasPrice, 'shannon'), // shannon == gwei
       to: this.tx.to,
@@ -174,6 +179,10 @@ class SendStore {
    */
   @computed
   get txForErc20 () {
+    if (!this.isTxValid) {
+      return {};
+    }
+
     return {
       args: [
         this.tx.to,

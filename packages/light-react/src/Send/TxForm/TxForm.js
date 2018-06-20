@@ -124,13 +124,13 @@ class Send extends Component {
 
                     <FormField
                       input={
-                        <textarea
+                        <input
                           className='-sm'
                           onChange={this.handleChangeTo}
-                          pattern={/^0x[a-fA-F0-9]{40}$/}
+                          pattern='^0x[a-fA-F0-9]{40}$'
                           placeholder='0x...'
                           required
-                          title='Invalid address'
+                          title='Invalid Ethereum address'
                           type='text'
                           value={tx.to}
                         />
