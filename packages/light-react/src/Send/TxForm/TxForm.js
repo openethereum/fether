@@ -102,6 +102,7 @@ class Send extends Component {
                             max={this.getMaxAmount()}
                             min={0}
                             onChange={this.handleChangeAmount}
+                            placeholder='1.00'
                             required
                             step={10 ** -token.decimals}
                             type='number'
@@ -127,7 +128,7 @@ class Send extends Component {
                           className='-sm'
                           onChange={this.handleChangeTo}
                           pattern={/^0x[a-fA-F0-9]{40}$/}
-                          placeholder='Recipient address'
+                          placeholder='0x...'
                           required
                           title='Invalid address'
                           type='text'

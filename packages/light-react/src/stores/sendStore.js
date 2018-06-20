@@ -22,9 +22,9 @@ class SendStore {
   @observable tokenAddress; // 'ETH', or the token contract address
   @observable
   tx = {
-    amount: 0.01, // In Ether or in token
+    amount: null, // In Ether or in token
     gasPrice: 4, // in Gwei
-    to: '0x00Ae02834e91810B223E54ce3f9B7875258a1747'
+    to: ''
   }; // The actual tx we are sending. No need to be observable.
   @observable txStatus; // Status of the tx, see wiki for details.
 
