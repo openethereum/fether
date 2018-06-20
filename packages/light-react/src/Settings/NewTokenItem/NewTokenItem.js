@@ -32,7 +32,7 @@ class NewTokenItem extends Component {
 
     return (
       <li key={token.address}>
-        <TokenCard balance={null} token={token}>
+        <TokenCard balance={null} showBalance={false} token={token}>
           <div className='token_buttons'>
             {tokens[token.address] ? (
               <button
