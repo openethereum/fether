@@ -9,7 +9,6 @@ import parityStore from './parityStore';
 
 class CreateAccountStore {
   @observable address = null;
-  @observable hint = ''; // Password hint (optional)
   @observable isImport = false; // Are we creating a new account, or importing via phrase?
   @observable name = ''; // Account name
   @observable password = '';
@@ -24,10 +23,8 @@ class CreateAccountStore {
    */
   clear () {
     this.setAddress(null);
-    this.setHint('');
     this.setName('');
     this.setPassword('');
-    this.setPhrase(null);
   }
 
   generateNewAccount = () => {
@@ -40,8 +37,7 @@ class CreateAccountStore {
       .then(address => this.api.parity.setAccountName(this.address, this.name))
       .then(() =>
         this.api.parity.setAccountMeta(this.address, {
-          timestamp: Date.now(),
-          passwordHint: this.hint
+          timestamp: Date.now()
         })
       );
   };
@@ -58,11 +54,6 @@ class CreateAccountStore {
     this.phrase = null;
 
     this.isImport = isImport;
-  };
-
-  @action
-  setHint = hint => {
-    this.hint = hint;
   };
 
   @action

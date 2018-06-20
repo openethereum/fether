@@ -14,16 +14,11 @@ import CreateAccountContainer from '../CreateAccountContainer';
 class AccountPassword extends Component {
   state = {
     confirm: '',
-    hint: '',
     password: ''
   };
 
   handleConfirmChange = ({ target: { value } }) => {
     this.setState({ confirm: value });
-  };
-
-  handleHintChange = ({ target: { value } }) => {
-    this.setState({ hint: value });
   };
 
   handlePasswordChange = ({ target: { value } }) => {
@@ -36,16 +31,15 @@ class AccountPassword extends Component {
       history,
       location: { pathname }
     } = this.props;
-    const { hint, password } = this.state;
+    const { password } = this.state;
     createAccountStore.setPassword(password);
-    createAccountStore.setHint(hint);
 
     const currentStep = pathname.slice(-1);
     history.push(`/accounts/new/${+currentStep + 1}`);
   };
 
   render () {
-    const { confirm, hint, password } = this.state;
+    const { confirm, password } = this.state;
 
     return (
       <CreateAccountContainer>
@@ -63,18 +57,11 @@ class AccountPassword extends Component {
           />
 
           <FormField
-            label='Conform'
+            label='Confirm'
             onChange={this.handleConfirmChange}
             required
             type='password'
             value={confirm}
-          />
-
-          <FormField
-            label='Password Hint (optional)'
-            onChange={this.handleHintChange}
-            type='text'
-            value={hint}
           />
 
           <nav className='form-nav'>
