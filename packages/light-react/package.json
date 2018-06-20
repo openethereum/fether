@@ -38,6 +38,7 @@
     "@parity/api": "^2.1.22",
     "@parity/light.js": "https://github.com/parity-js/light.js#9646ce15d9dd9c4cf11776ddd613d5bd86016f94",
     "@parity/shared": "^3.0.2",
+    "bignumber.js": "^7.2.1",
     "is-electron": "^2.1.0",
     "light-hoc": "^0.1.0",
     "light-ui": "^0.1.0",
