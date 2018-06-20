@@ -4,7 +4,6 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import { fromWei, toWei } from '@parity/api/lib/util/wei';
 import { FormField, Header } from 'light-ui';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
@@ -49,7 +48,7 @@ class Send extends Component {
 
   render () {
     const {
-      sendStore: { estimated, token, tx }
+      sendStore: { token, tx }
     } = this.props;
 
     return (
@@ -116,19 +115,14 @@ class Send extends Component {
                             min={MIN_GAS_PRICE}
                             onChange={this.handleChangeGasPrice}
                             required
-                            step={0.1}
+                            step={0.5}
                             type='range'
                             value={tx.gasPrice}
                           />
                           <nav className='range-nav'>
                             <span className='range-nav_label'>Cheap</span>
                             <span className='range-nav_value'>
-                              {fromWei(
-                                toWei(tx.gasPrice, 'shannon').mul(
-                                  estimated.toString()
-                                )
-                              ).toFixed(6)}{' '}
-                              ETH
+                              {tx.gasPrice} Gwei
                             </span>
                             <span className='range-nav_label'>Fast</span>
                           </nav>
