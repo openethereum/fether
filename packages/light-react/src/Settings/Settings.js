@@ -15,7 +15,7 @@ import Health from '../Health';
 import NewTokenItem from './NewTokenItem';
 
 @light({
-  chainName: chainName$
+  chainName: () => chainName$({ withoutLoading: true })
 })
 @inject('tokensStore')
 @observer
@@ -73,7 +73,8 @@ class Settings extends Component {
     try {
       db = await import(`../assets/tokens/${this.props.chainName}.json`);
     } catch (e) {
-      db = await import(`../assets/tokens/foundation.json`);
+      this.setState({ db: [], dbMap: {} });
+      return;
     }
 
     // We create a address=>token mapping here
