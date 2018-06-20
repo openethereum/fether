@@ -17,7 +17,7 @@ export const STATUS = {
   GOOD: 'GOOD', // Everything's fine
   NOINTERNET: 'NOINTERNET', // No network connection
   OTHER: 'OTHER', // Unknown state, might have a payload
-  RUNNING: 'RUNNING', // Currently try to launch Parity
+  RUNNING: 'RUNNING', // Parity is running (only checked at startup)
   SYNCING: 'SYNCING' // Obvious
 };
 

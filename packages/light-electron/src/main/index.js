@@ -72,6 +72,12 @@ function createWindow () {
     }
   );
 
+  // Open external links in browser
+  mainWindow.webContents.on('new-window', function (event, url) {
+    event.preventDefault();
+    electron.shell.openExternal(url);
+  });
+
   mainWindow.on('closed', () => {
     mainWindow = null;
   });

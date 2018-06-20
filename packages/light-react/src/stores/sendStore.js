@@ -5,6 +5,7 @@
 
 import abi from '@parity/shared/lib/contracts/abi/eip20';
 import { action, computed, observable } from 'mobx';
+import { BigNumber } from 'bignumber.js';
 import { blockNumber$, makeContract$, post$ } from '@parity/light.js';
 import { isAddress } from '@parity/api/lib/util/address';
 import noop from 'lodash/noop';
@@ -176,7 +177,9 @@ class SendStore {
     return {
       args: [
         this.tx.to,
-        (this.tx.amount * 10 ** this.token.decimals).toString()
+        new BigNumber(this.tx.amount).multipliedBy(
+          new BigNumber(10).pow(this.token.decimals)
+        )
       ],
       options: {
         gasPrice: toWei(this.tx.gasPrice, 'shannon') // shannon == gwei
