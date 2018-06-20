@@ -65,11 +65,8 @@ class App extends Component {
         <Switch>
           {/* We redirect to Onboarding if necessary, or by default to our
         homepage which is Tokens */}
-          <Redirect
-            exact
-            from='/'
-            to={isOnboarding ? '/onboarding' : '/tokens'}
-          />
+          <Redirect exact from='/' to='/tokens' />
+          {isOnboarding && <Redirect exact from='/tokens' to='/onboarding' />}
           <Route path='/accounts' component={Accounts} />
           <Route path='/onboarding' component={Onboarding} />
           <Route path='/send' component={Send} />
