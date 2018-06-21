@@ -32,7 +32,7 @@ class Onboarding extends Component {
                   readOnly
                 />
               }
-              label="Please read carefully Fether Wallet's Terms of Use"
+              label='Please read carefully'
             />
           </div>
         </div>
