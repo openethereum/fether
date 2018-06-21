@@ -4,8 +4,10 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
+import { accountsInfo$ } from '@parity/light.js';
 import { Header } from 'light-ui';
 import { inject, observer } from 'mobx-react';
+import light from 'light-hoc';
 import memoize from 'lodash/memoize';
 import { Route } from 'react-router-dom';
 
@@ -15,6 +17,7 @@ import AccountName from './AccountName';
 import AccountPassword from './AccountPassword';
 import AccountWritePhrase from './AccountWritePhrase';
 
+@light({ accountsInfo: accountsInfo$ })
 @inject('createAccountStore')
 @observer
 class CreateAccount extends Component {
@@ -54,6 +57,7 @@ class CreateAccount extends Component {
 
   render () {
     const {
+      accountsInfo,
       createAccountStore: { isImport },
       match: {
         params: { step } // Current step in account creation process
@@ -67,9 +71,15 @@ class CreateAccount extends Component {
       <div>
         <Header
           left={
-            <a className='icon -back' onClick={this.handleGoBack}>
-              Back
-            </a>
+            // Show back button if:
+            // - we already have some accounts, so we can go back to AccountsList
+            // - or the step is >1
+            (step > 1 ||
+              (accountsInfo && Object.keys(accountsInfo).length > 0)) && (
+              <a className='icon -back' onClick={this.handleGoBack}>
+                Back
+              </a>
+            )
           }
           title={
             <h1>{isImport ? 'Import account' : 'Create a new account'}</h1>

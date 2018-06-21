@@ -34,7 +34,7 @@ class CreateAccountStore {
   saveAccountToParity = () => {
     return this.api.parity
       .newAccountFromPhrase(this.phrase, this.password)
-      .then(address => this.api.parity.setAccountName(this.address, this.name))
+      .then(() => this.api.parity.setAccountName(this.address, this.name))
       .then(() =>
         this.api.parity.setAccountMeta(this.address, {
           timestamp: Date.now()
