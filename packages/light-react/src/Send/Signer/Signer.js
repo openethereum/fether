@@ -4,9 +4,11 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
+import { findDOMNode } from 'react-dom';
 import { FormField, Header } from 'light-ui';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
+import ReactTooltip from 'react-tooltip';
 
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 
@@ -14,26 +16,31 @@ import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 @observer
 class Signer extends Component {
   state = {
+    error: null,
     isSending: false,
     password: ''
   };
 
-  handleAccept = e => {
+  handleAccept = event => {
     const { history, sendStore } = this.props;
     const { password } = this.state;
 
-    e.preventDefault();
+    event.preventDefault();
 
     this.setState({ isSending: true }, () => {
       sendStore
         .acceptRequest(password)
         .then(() => history.push('/send/sent'))
-        .catch(() => this.setState({ isSending: false }));
+        .catch(error => {
+          this.setState({ error, isSending: false }, () =>
+            ReactTooltip.show(findDOMNode(this.tooltip))
+          );
+        });
     });
   };
 
   handleChangePassword = ({ target: { value } }) => {
-    this.setState({ password: value });
+    this.setState({ error: null, password: value });
   };
 
   handleReject = () => {
@@ -47,11 +54,15 @@ class Signer extends Component {
     });
   };
 
+  handleTooltipRef = ref => {
+    this.tooltip = ref;
+  };
+
   render () {
     const {
       sendStore: { token, tx, txStatus }
     } = this.props;
-    const { isSending, password } = this.state;
+    const { error, isSending, password } = this.state;
 
     return (
       <div>
@@ -85,13 +96,18 @@ class Signer extends Component {
                     <p>Enter your password to confirm this transaction.</p>
                   </div>
 
-                  <FormField
-                    label='Password'
-                    onChange={this.handleChangePassword}
-                    required
-                    type='password'
-                    value={password}
-                  />
+                  <div
+                    data-tip={error ? error.text : ''}
+                    ref={this.handleTooltipRef}
+                  >
+                    <FormField
+                      label='Password'
+                      onChange={this.handleChangePassword}
+                      required
+                      type='password'
+                      value={password}
+                    />
+                  </div>
 
                   <nav className='form-nav -binary'>
                     <button
@@ -101,9 +117,12 @@ class Signer extends Component {
                     >
                       Cancel
                     </button>
+
                     <button
                       className='button -submit'
-                      disabled={!txStatus || !txStatus.requested || isSending}
+                      disabled={
+                        !txStatus || !txStatus.requested || isSending || error
+                      }
                     >
                       Confirm transaction
                     </button>
@@ -115,6 +134,12 @@ class Signer extends Component {
             />
           </div>
         </div>
+        <ReactTooltip
+          effect='solid'
+          event='mouseover'
+          eventOff='keydown mouseout'
+          place='top'
+        />
       </div>
     );
   }

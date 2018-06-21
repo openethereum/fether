@@ -30,7 +30,7 @@ class Send extends Component {
   };
 
   componentDidUpdate () {
-    if (!this.hasErrors()) {
+    if (!this.hasError()) {
       const { amount, gasPrice, to } = this.state;
       this.props.sendStore.setTx({ amount, gasPrice, to });
       this.estimateGas();
@@ -87,7 +87,7 @@ class Send extends Component {
    *
    * TODO Use a React form library to do this?
    */
-  hasErrors = () => {
+  hasError = () => {
     const { amount, maxAmount, to } = this.state;
     if (!amount || isNaN(amount)) {
       return 'Please enter a valid amount';
@@ -114,7 +114,7 @@ class Send extends Component {
     } = this.props;
     const { amount, gasPrice, maxAmount, to } = this.state;
 
-    const errors = this.hasErrors();
+    const error = this.hasError();
 
     return (
       <div>
@@ -206,8 +206,8 @@ class Send extends Component {
                     />
                   </fieldset>
                   <nav className='form-nav'>
-                    <span data-tip={errors || ''}>
-                      <button disabled={errors} className='button'>
+                    <span data-tip={error || ''}>
+                      <button disabled={error} className='button'>
                         Send
                       </button>
                     </span>
