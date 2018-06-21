@@ -7,7 +7,7 @@ import React, { PureComponent } from 'react';
 import { AccountHeader } from 'light-ui';
 import { accountsInfo$, defaultAccount$ } from '@parity/light.js';
 import light from 'light-hoc';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import Health from '../Health';
 import TokensList from './TokensList';
@@ -23,6 +23,12 @@ class Tokens extends PureComponent {
       defaultAccount,
       location: { state }
     } = this.props;
+
+    // If the accountsInfo object is empty (i.e. no accounts), then we redirect
+    // to the accounts page to create an account
+    if (accountsInfo && !Object.keys(accountsInfo).length) {
+      return <Redirect to='/accounts' />;
+    }
 
     // The address is defaultAccount, but if we are coming from the accounts
     // page, then the address is also put inside the route state, for faster

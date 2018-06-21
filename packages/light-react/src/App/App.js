@@ -51,22 +51,22 @@ class App extends Component {
    */
   renderScreen () {
     const {
-      onboardingStore: { isOnboarding },
+      onboardingStore: { isFirstRun },
       healthStore: {
         health: { status }
       }
     } = this.props;
 
+    if (isFirstRun) {
+      return <div className='window'><Onboarding /></div>;
+    }
+
     return (
       <div className='window'>
-        {/* If we are onboarding, then never show the Overlay. On the other hand, if
-            we're not onboarding, show the Overlay whenever we have an issue. */}
-        {!isOnboarding && status !== STATUS.GOOD && <Overlay />}
+        {status !== STATUS.GOOD && <Overlay />}
         <Switch>
-          {/* We redirect to Onboarding if necessary, or by default to our
-        homepage which is Tokens */}
+          {/* The next line is the hoempage */}
           <Redirect exact from='/' to='/tokens' />
-          {isOnboarding && <Redirect exact from='/tokens' to='/onboarding' />}
           <Route path='/accounts' component={Accounts} />
           <Route path='/onboarding' component={Onboarding} />
           <Route path='/send' component={Send} />

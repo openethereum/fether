@@ -8,6 +8,7 @@ import { AccountCard, Header } from 'light-ui';
 import { accountsInfo$, defaultAccount$ } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
 import light from 'light-hoc';
+import { Redirect } from 'react-router-dom';
 
 import Health from '../../Health';
 
@@ -63,6 +64,10 @@ class AccountsList extends Component {
 
   render () {
     const { accountsInfo } = this.props;
+
+    if (accountsInfo && !Object.keys(accountsInfo).length) {
+      return <Redirect to='/accounts/new' />;
+    }
 
     return (
       <div>
