@@ -24,6 +24,7 @@
     border-color: $faint;
     background-color: $faint;
     color: $grey;
+    pointer-events: none;
   }
 
   &.-tiny {

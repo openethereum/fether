@@ -4,10 +4,13 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
+import debounce from 'lodash/debounce';
 import { FormField, Header } from 'light-ui';
 import { fromWei, toWei } from '@parity/api/lib/util/wei';
 import { inject, observer } from 'mobx-react';
+import { isAddress } from '@parity/api/lib/util/address';
 import { Link } from 'react-router-dom';
+import ReactTooltip from 'react-tooltip';
 
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import withBalance from '../../utils/withBalance';
@@ -19,42 +22,54 @@ const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 @withBalance(({ sendStore: { token } }) => token)
 @observer
 class Send extends Component {
-  componentDidMount () {
-    this.props.sendStore.estimateGas();
+  state = {
+    amount: '', // In Ether or in token
+    gasPrice: 4, // in Gwei
+    to: '',
+    ...this.props.sendStore.tx
+  };
+
+  componentDidUpdate () {
+    if (!this.hasError()) {
+      const { amount, gasPrice, to } = this.state;
+      this.props.sendStore.setTx({ amount, gasPrice, to });
+      this.estimateGas();
+    }
   }
 
-  getMaxAmount = () => {
+  estimateGas = debounce(() => {
+    this.props.sendStore.estimateGas();
+  }, 1000);
+
+  static getDerivedStateFromProps (nextProps, prevState) {
     const {
       balance,
-      sendStore: { estimated, tx }
-    } = this.props;
+      sendStore: { estimated }
+    } = nextProps;
 
-    // TODO this in sendStore as @computed?
-    return balance && estimated
-      ? +fromWei(
-        toWei(balance).minus(
-          estimated.multipliedBy(toWei(tx.gasPrice, 'shannon'))
-        )
-      )
-      : 0.01;
-  };
+    return {
+      maxAmount:
+        balance && estimated
+          ? +fromWei(
+            toWei(balance).minus(
+              estimated.mul(toWei(prevState.gasPrice, 'shannon'))
+            )
+          )
+          : 0.01
+    };
+  }
 
   handleChangeAmount = ({ target: { value } }) =>
-    this.props.sendStore.setTxAmount(value);
+    this.setState({ amount: value });
 
   handleChangeGasPrice = ({ target: { value } }) =>
-    this.props.sendStore.setTxGasPrice(value);
+    this.setState({ gasPrice: value });
 
   handleChangeTo = ({ target: { value } }) => {
-    const { sendStore } = this.props;
-    sendStore.setTxTo(value);
-    // Estimate the gas to this address, if we're sending ETH.
-    if (sendStore.tokenAddress === 'ETH') {
-      sendStore.estimateGas();
-    }
+    this.setState({ to: value });
   };
 
-  handleMax = () => this.props.sendStore.setTxAmount(this.getMaxAmount());
+  handleMax = () => this.setState({ amount: this.state.maxAmount });
 
   handleSubmit = e => {
     e.preventDefault();
@@ -67,10 +82,39 @@ class Send extends Component {
     history.push('/send/signer');
   };
 
+  /**
+   * Get form errors.
+   *
+   * TODO Use a React form library to do this?
+   */
+  hasError = () => {
+    const { amount, maxAmount, to } = this.state;
+    if (!amount || isNaN(amount)) {
+      return 'Please enter a valid amount';
+    }
+
+    if (amount < 0) {
+      return 'Please enter a positive amount ';
+    }
+
+    if (amount > maxAmount) {
+      return "You don't have enough balance";
+    }
+
+    if (!isAddress(to)) {
+      return 'Please enter a valid Ethereum address';
+    }
+
+    return null;
+  };
+
   render () {
     const {
-      sendStore: { token, tx }
+      sendStore: { token }
     } = this.props;
+    const { amount, gasPrice, maxAmount, to } = this.state;
+
+    const error = this.hasError();
 
     return (
       <div>
@@ -99,14 +143,14 @@ class Send extends Component {
                         <div>
                           <input
                             className='form_field_amount'
-                            max={this.getMaxAmount()}
+                            formNoValidate
+                            max={maxAmount}
                             min={0}
                             onChange={this.handleChangeAmount}
-                            placeholder='1.00'
                             required
-                            step={10 ** -token.decimals}
+                            step={+fromWei(1)}
                             type='number'
-                            value={tx.amount}
+                            value={amount}
                           />
                           <nav className='form-field_nav'>
                             <button
@@ -124,15 +168,13 @@ class Send extends Component {
 
                     <FormField
                       input={
-                        <input
+                        <textarea
                           className='-sm'
                           onChange={this.handleChangeTo}
-                          pattern='^0x[a-fA-F0-9]{40}$'
                           placeholder='0x...'
                           required
-                          title='Invalid Ethereum address'
                           type='text'
-                          value={tx.to}
+                          value={to}
                         />
                       }
                       label='To'
@@ -149,12 +191,12 @@ class Send extends Component {
                             required
                             step={0.5}
                             type='range'
-                            value={tx.gasPrice}
+                            value={gasPrice}
                           />
                           <nav className='range-nav'>
                             <span className='range-nav_label'>Cheap</span>
                             <span className='range-nav_value'>
-                              {tx.gasPrice} Gwei
+                              {gasPrice} Gwei
                             </span>
                             <span className='range-nav_label'>Fast</span>
                           </nav>
@@ -164,7 +206,11 @@ class Send extends Component {
                     />
                   </fieldset>
                   <nav className='form-nav'>
-                    <button className='button'>Send</button>
+                    <span data-tip={error || ''}>
+                      <button disabled={error} className='button'>
+                        Send
+                      </button>
+                    </span>
                   </nav>
                 </form>
               ]}
@@ -173,6 +219,12 @@ class Send extends Component {
             />
           </div>
         </div>
+        <ReactTooltip
+          effect='solid'
+          event='mouseover'
+          eventOff='mouseout'
+          place='top'
+        />
       </div>
     );
   }

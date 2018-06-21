@@ -6,10 +6,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const FormField = ({ className, input, label, ...otherProps }) => (
+const FormField = ({
+  className,
+  input: inputComponent,
+  label,
+  ...otherProps
+}) => (
   <div className={['form_field', className].join(' ')}>
     <label>{label}</label>
-    {input || <input {...otherProps} />}
+    {inputComponent || <input {...otherProps} />}
   </div>
 );
 
