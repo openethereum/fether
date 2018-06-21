@@ -14,7 +14,7 @@ import { toWei } from '@parity/api/lib/util/wei';
 import parityStore from './parityStore';
 import tokensStore from './tokensStore';
 
-const DEFAULT_GAS = 21000; // Default gas amount to show
+const DEFAULT_GAS = new BigNumber(21000); // Default gas amount to show
 
 class SendStore {
   @observable blockNumber; // Current block number, used to calculate tx confirmations.
@@ -22,9 +22,9 @@ class SendStore {
   @observable tokenAddress; // 'ETH', or the token contract address
   @observable
   tx = {
-    amount: 0.01, // In Ether or in token
+    amount: '', // In Ether or in token
     gasPrice: 4, // in Gwei
-    to: '0x00Ae02834e91810B223E54ce3f9B7875258a1747'
+    to: ''
   }; // The actual tx we are sending. No need to be observable.
   @observable txStatus; // Status of the tx, see wiki for details.
 
@@ -106,6 +106,7 @@ class SendStore {
     if (
       !this.tx || // There should be a tx
       !isAddress(this.tx.to) || // The address should be okay
+      !this.tx.amount ||
       isNaN(this.tx.amount) ||
       isNaN(this.tx.gasPrice)
     ) {
@@ -161,6 +162,10 @@ class SendStore {
    */
   @computed
   get txForEth () {
+    if (!this.isTxValid) {
+      return {};
+    }
+
     return {
       gasPrice: toWei(this.tx.gasPrice, 'shannon'), // shannon == gwei
       to: this.tx.to,
@@ -174,6 +179,10 @@ class SendStore {
    */
   @computed
   get txForErc20 () {
+    if (!this.isTxValid) {
+      return {};
+    }
+
     return {
       args: [
         this.tx.to,
@@ -222,7 +231,7 @@ class SendStore {
     // Since estimateGas is not always accurate, we add a 120% factor for buffer.
     const GAS_MULT_FACTOR = 1.2;
 
-    this.estimated = +estimated * GAS_MULT_FACTOR; // Don't store as BigNumber
+    this.estimated = estimated.multipliedBy(GAS_MULT_FACTOR);
   };
 
   @action

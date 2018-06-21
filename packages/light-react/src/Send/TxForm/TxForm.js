@@ -5,20 +5,39 @@
 
 import React, { Component } from 'react';
 import { FormField, Header } from 'light-ui';
+import { fromWei, toWei } from '@parity/api/lib/util/wei';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
+import withBalance from '../../utils/withBalance';
 
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 
 @inject('sendStore')
+@withBalance(({ sendStore: { token } }) => token)
 @observer
 class Send extends Component {
   componentDidMount () {
     this.props.sendStore.estimateGas();
   }
+
+  getMaxAmount = () => {
+    const {
+      balance,
+      sendStore: { estimated, tx }
+    } = this.props;
+
+    // TODO this in sendStore as @computed?
+    return balance && estimated
+      ? +fromWei(
+        toWei(balance).minus(
+          estimated.multipliedBy(toWei(tx.gasPrice, 'shannon'))
+        )
+      )
+      : 0.01;
+  };
 
   handleChangeAmount = ({ target: { value } }) =>
     this.props.sendStore.setTxAmount(value);
@@ -34,6 +53,8 @@ class Send extends Component {
       sendStore.estimateGas();
     }
   };
+
+  handleMax = () => this.props.sendStore.setTxAmount(this.getMaxAmount());
 
   handleSubmit = e => {
     e.preventDefault();
@@ -65,6 +86,7 @@ class Send extends Component {
         <div className='window_content'>
           <div className='box -padded'>
             <TokenBalance
+              decimals={6}
               drawers={[
                 <form
                   className='send-form'
@@ -77,13 +99,21 @@ class Send extends Component {
                         <div>
                           <input
                             className='form_field_amount'
+                            max={this.getMaxAmount()}
+                            min={0}
                             onChange={this.handleChangeAmount}
+                            placeholder='1.00'
                             required
+                            step={10 ** -token.decimals}
                             type='number'
                             value={tx.amount}
                           />
                           <nav className='form-field_nav'>
-                            <button className='button -utility' type='button'>
+                            <button
+                              className='button -utility'
+                              onClick={this.handleMax}
+                              type='button'
+                            >
                               Max
                             </button>
                           </nav>
@@ -94,12 +124,14 @@ class Send extends Component {
 
                     <FormField
                       input={
-                        <textarea
+                        <input
                           className='-sm'
                           onChange={this.handleChangeTo}
+                          pattern='^0x[a-fA-F0-9]{40}$'
+                          placeholder='0x...'
                           required
+                          title='Invalid Ethereum address'
                           type='text'
-                          placeholder='Recipient address'
                           value={tx.to}
                         />
                       }

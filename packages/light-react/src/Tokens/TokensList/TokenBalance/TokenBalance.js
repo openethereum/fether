@@ -4,42 +4,14 @@
 // SPDX-License-Identifier: MIT
 
 import React, { Component } from 'react';
-import abi from '@parity/shared/lib/contracts/abi/eip20';
-import { empty } from 'rxjs';
-import {
-  defaultAccount$,
-  isNullOrLoading,
-  makeContract$,
-  myBalance$
-} from '@parity/light.js';
-import { filter, map, switchMap } from 'rxjs/operators';
-import { fromWei } from '@parity/api/lib/util/wei';
 import { inject } from 'mobx-react';
-import light from 'light-hoc';
 import PropTypes from 'prop-types';
 import { TokenCard } from 'light-ui';
 import { withRouter } from 'react-router-dom';
 
-@light({
-  balance: ({ token: { address, decimals } }) => {
-    if (!address) {
-      return empty();
-    }
-    return address === 'ETH'
-      ? myBalance$().pipe(
-        map(value => (isNullOrLoading(value) ? null : value)),
-        map(value => value && +fromWei(value))
-      )
-      : defaultAccount$().pipe(
-        filter(x => x),
-        switchMap(defaultAccount =>
-          makeContract$(address, abi).balanceOf$(defaultAccount)
-        ),
-        map(value => (isNullOrLoading(value) ? null : value)),
-        map(value => value && +value.div(10 ** decimals))
-      );
-  }
-})
+import withBalance from '../../../utils/withBalance';
+
+@withBalance()
 @inject('sendStore')
 @withRouter
 class TokenBalance extends Component {
