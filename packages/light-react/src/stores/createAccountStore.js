@@ -14,10 +14,6 @@ class CreateAccountStore {
   @observable password = '';
   @observable phrase = null; // The 12-word seed phrase
 
-  constructor () {
-    this.api = parityStore.api;
-  }
-
   /**
    * Reinitialize everything
    */
@@ -28,15 +24,17 @@ class CreateAccountStore {
   }
 
   generateNewAccount = () => {
-    return this.api.parity.generateSecretPhrase().then(this.setPhrase);
+    return parityStore.api.parity.generateSecretPhrase().then(this.setPhrase);
   };
 
   saveAccountToParity = () => {
-    return this.api.parity
+    return parityStore.api.parity
       .newAccountFromPhrase(this.phrase, this.password)
-      .then(() => this.api.parity.setAccountName(this.address, this.name))
       .then(() =>
-        this.api.parity.setAccountMeta(this.address, {
+        parityStore.api.parity.setAccountName(this.address, this.name)
+      )
+      .then(() =>
+        parityStore.api.parity.setAccountMeta(this.address, {
           timestamp: Date.now()
         })
       );
@@ -69,7 +67,7 @@ class CreateAccountStore {
   @action
   setPhrase = phrase => {
     this.phrase = phrase;
-    return this.api.parity
+    return parityStore.api.parity
       .phraseToAddress(phrase)
       .then(address => this.setAddress(address));
   };
