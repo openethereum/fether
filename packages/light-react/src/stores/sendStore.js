@@ -24,10 +24,6 @@ class SendStore {
   tx = {}; // The actual tx we are sending. No need to be observable.
   @observable txStatus; // Status of the tx, see wiki for details.
 
-  constructor () {
-    this.api = parityStore.api;
-  }
-
   acceptRequest = password => {
     // Avoid calling this method from a random place
     if (!this.requestId) {
@@ -40,7 +36,11 @@ class SendStore {
     // to calculate the number of confirmations
     this.subscription = blockNumber$().subscribe(this.setBlockNumber);
 
-    return this.api.signer.confirmRequest(this.requestId, null, password);
+    return parityStore.api.signer.confirmRequest(
+      this.requestId,
+      null,
+      password
+    );
   };
 
   /**
@@ -103,7 +103,7 @@ class SendStore {
    * memoize it.
    */
   estimateGasForEth = memoize(txForEth => {
-    return this.api.eth
+    return parityStore.api.eth
       .estimateGas(txForEth)
       .then(this.setEstimated)
       .catch(noop);
@@ -136,7 +136,7 @@ class SendStore {
         new Error('The requestId has not been generated yet.')
       );
     }
-    return this.api.signer.rejectRequest(this.requestId);
+    return parityStore.api.signer.rejectRequest(this.requestId);
   };
 
   @computed
