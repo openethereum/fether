@@ -168,7 +168,7 @@ class Send extends Component {
 
                     <FormField
                       input={
-                        <input
+                        <textarea
                           className='-sm'
                           onChange={this.handleChangeTo}
                           placeholder='0x...'
