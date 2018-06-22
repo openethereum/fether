@@ -3,6 +3,6 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import hoc from './hoc';
+import Placeholder from './Placeholder';
 
-export default hoc;
+export default Placeholder;

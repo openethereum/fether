@@ -3,6 +3,5 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import hoc from './hoc';
-
-export default hoc;
+// All keys in localStorage are prefixed with:
+export default '__paritylight';

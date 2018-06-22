@@ -1,6 +1,6 @@
 {
-  "name": "light",
-  "description": "The Parity Light Wallet",
+  "name": "fether",
+  "description": "Fether Wallet",
   "version": "0.1.0",
   "private": true,
   "author": "Parity Team <admin@parity.io>",
@@ -9,7 +9,7 @@
     "Amaury Martiny"
   ],
   "contributors": [],
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/parity-js/light.git"
@@ -41,16 +41,16 @@
   "scripts": {
     "build": "lerna run build",
     "preelectron": "yarn build",
-    "electron": "cd packages/light-electron && yarn electron",
+    "electron": "cd packages/fether-electron && yarn electron",
     "lint": "lerna run lint --parallel",
     "prepackage": "yarn build",
-    "package": "cd packages/light-electron && yarn package",
-    "release": "cd packages/light-electron && yarn release",
+    "package": "cd packages/fether-electron && yarn package",
+    "release": "cd packages/fether-electron && yarn release",
     "start": "npm-run-all -l -p start-*",
-    "start-electron": "cd packages/light-electron && yarn start",
+    "start-electron": "cd packages/fether-electron && yarn start",
     "start-hoc": "cd packages/light-hoc && yarn start",
-    "start-react": "cd packages/light-react && yarn start",
-    "start-ui": "cd packages/light-ui && yarn start",
+    "start-react": "cd packages/fether-react && yarn start",
+    "start-ui": "cd packages/fether-ui && yarn start",
     "test": "lerna run test --parallel"
   },
   "devDependencies": {

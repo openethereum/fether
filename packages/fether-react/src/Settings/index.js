@@ -3,6 +3,6 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import hoc from './hoc';
+import Settings from './Settings';
 
-export default hoc;
+export default Settings;

@@ -3,6 +3,6 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import hoc from './hoc';
+import AccountsList from './AccountsList';
 
-export default hoc;
+export default AccountsList;
