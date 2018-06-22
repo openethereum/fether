@@ -43,6 +43,10 @@
     margin-top: -0.25rem;
     &:focus {
       opacity: 1;
+
+      &::-webkit-input-placeholder {
+        color: transparent;
+      }
     }
   }
 
