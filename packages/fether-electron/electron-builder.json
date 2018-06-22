@@ -1,0 +1,24 @@
+{
+  "appId": "io.parity.fether",
+  "linux": {
+    "category": "Utility",
+    "icon": "./assets/icon/small-white-512x512.png",
+    "target": ["AppImage", "snap", "deb", "tar.xz"]
+  },
+  "mac": {
+    "category": "public.app-category.productivity",
+    "icon": "./assets/icon/small-white-512x512.png"
+  },
+  "nsis": {
+    "include": "./electron/installers/windows/installer.nsh",
+    "oneClick": true,
+    "perMachine": true
+  },
+  "productName": "Fether Wallet",
+  "publish": "github",
+  "win": {
+    "icon": "./assets/icon/small-white-512x512.png",
+    "publisherName": "Parity Technologies (UK) Ltd.",
+    "target": "nsis"
+  }
+}

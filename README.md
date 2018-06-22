@@ -1,11 +1,9 @@
-# light
-
-The Parity Light Wallet
+# Fether Wallet
 
 ## Getting started
 
 ```bash
-git clone https://github.com/parity-js/light
+git clone https://github.com/parity-js/fether
 yarn install
 ```
 
