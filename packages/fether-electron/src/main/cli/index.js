@@ -27,10 +27,6 @@ cli
     `${productName} will not attempt to run the locally installed parity.`
   )
   .option(
-    '--ui-dev',
-    `${productName} will load http://localhost:3000. WARNING: Only use this is you plan on developing on ${productName}.`
-  )
-  .option(
     '--ws-interface <ip>',
     `Specify the hostname portion of the WebSockets server ${productName} will connect to. IP should be an interface's IP address. (default: 127.0.0.1)`
   )

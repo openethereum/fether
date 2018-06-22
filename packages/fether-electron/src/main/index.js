@@ -10,7 +10,6 @@ import path from 'path';
 import url from 'url';
 
 import addMenu from './menu';
-import { cli } from './cli';
 import { doesParityExist } from './operations/doesParityExist';
 import fetchParity from './operations/fetchParity';
 import handleError from './operations/handleError';
@@ -35,20 +34,16 @@ function createWindow () {
     .then(() => runParity(mainWindow))
     .catch(handleError); // Errors should be handled before, this is really just in case
 
-  if (cli.uiDev === true) {
-    // Opens http://127.0.0.1:3000 in --ui-dev mode
-    mainWindow.loadURL('http://127.0.0.1:3000');
-    mainWindow.webContents.openDevTools();
-  } else {
-    // Opens file:///path/to/.build/index.html in prod mode
-    mainWindow.loadURL(
+  // Opens file:///path/to/build/index.html in prod mode, or whatever is
+  // passed to ELECTRON_START_URL
+  mainWindow.loadURL(
+    process.env.ELECTRON_START_URL ||
       url.format({
         pathname: path.join(__static, 'build', 'index.html'),
         protocol: 'file:',
         slashes: true
       })
-    );
-  }
+  );
 
   // Listen to messages from renderer process
   ipcMain.on('asynchronous-message', messages);
