@@ -3,11 +3,13 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-const axios = require('axios');
-const retry = require('async-retry');
+import axios from 'axios';
+import retry from 'async-retry';
 
-const { cli } = require('../cli');
-const pino = require('../utils/pino')();
+import { cli } from '../cli';
+import Pino from '../utils/pino';
+
+const pino = Pino();
 
 // Try to ping these hosts
 const hostsToPing = ['http://127.0.0.1:8545', 'http://127.0.0.1:8546'];
@@ -48,4 +50,4 @@ const isParityRunning = async mainWindow => {
   }
 };
 
-module.exports = isParityRunning;
+export default isParityRunning;

@@ -3,23 +3,22 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-const { app } = require('electron');
-const axios = require('axios');
-const cs = require('checksum');
-const { download } = require('electron-dl');
-const fs = require('fs');
-const { promisify } = require('util');
-const retry = require('async-retry');
+import { app } from 'electron';
+import axios from 'axios';
+import cs from 'checksum';
+import { download } from 'electron-dl';
+import fs from 'fs';
+import { promisify } from 'util';
+import retry from 'async-retry';
 
-const { defaultParityPath, doesParityExist } = require('./doesParityExist');
-const handleError = require('./handleError');
-const {
-  parity: { channel }
-} = require('../../../package.json');
-const pino = require('../utils/pino')();
+import { defaultParityPath, doesParityExist } from './doesParityExist';
+import handleError from './handleError';
+import { parity } from '../../../package.json';
+import Pino from '../utils/pino';
 
 const checksum = promisify(cs.file);
 const fsChmod = promisify(fs.chmod);
+const pino = Pino();
 
 const VANITY_URL = 'https://vanity-service.parity.io/parity-binaries';
 
@@ -64,7 +63,7 @@ const deleteParity = () => {
 };
 
 // Fetch parity from https://vanity-service.parity.io/parity-binaries
-module.exports = mainWindow => {
+export default mainWindow => {
   try {
     return retry(
       async (_, attempt) => {
@@ -74,10 +73,14 @@ module.exports = mainWindow => {
 
         // Fetch the metadata of the correct version of parity
         pino.info(
-          `Downloading from ${VANITY_URL}?version=${channel}&os=${getOs()}&architecture=${getArch()}.`
+          `Downloading from ${VANITY_URL}?version=${
+            parity.channel
+          }&os=${getOs()}&architecture=${getArch()}.`
         );
         const { data } = await axios.get(
-          `${VANITY_URL}?version=${channel}&os=${getOs()}&architecture=${getArch()}`
+          `${VANITY_URL}?version=${
+            parity.channel
+          }&os=${getOs()}&architecture=${getArch()}`
         );
 
         // Get the binary's url

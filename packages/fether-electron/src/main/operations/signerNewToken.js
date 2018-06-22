@@ -3,14 +3,16 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-const pino = require('../utils/pino')();
-const { spawn } = require('child_process');
+import { spawn } from 'child_process';
 
-const { parityPath } = require('./doesParityExist');
+import { getParityPath } from './doesParityExist';
+import Pino from '../utils/pino';
 
-module.exports = event => {
+const pino = Pino();
+
+export default event => {
   // Generate a new token
-  const paritySigner = spawn(parityPath(), ['signer', 'new-token']);
+  const paritySigner = spawn(getParityPath(), ['signer', 'new-token']);
 
   pino.info('Requesting new token.');
 

@@ -3,11 +3,11 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-const electron = require('electron');
+import electron from 'electron';
 
 const { app, Menu, shell } = electron;
 
-module.exports = mainWindow => {
+export default mainWindow => {
   // Create the Application's main menu
   // https://github.com/electron/electron/blob/master/docs/api/menu.md#examples
   const template = [
