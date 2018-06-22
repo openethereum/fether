@@ -9,7 +9,7 @@
     "Amaury Martiny"
   ],
   "contributors": [],
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/parity-js/light.git"
