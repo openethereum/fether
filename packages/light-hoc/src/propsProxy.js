@@ -1,7 +1,7 @@
 // Copyright 2015-2018 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: BSD-3-Clause
 
 /**
  * Define a PropsProxy object so that each rpc$ in Hoc will change its
