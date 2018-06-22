@@ -3,15 +3,14 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-const { app, dialog } = require('electron');
+import { app, dialog } from 'electron';
 
-const {
-  bugs: { url },
-  parity: { channel }
-} = require('../../../package.json');
-const pino = require('../utils/pino')();
+import { bugs, parity } from '../../../package.json';
+import Pino from '../utils/pino';
 
-module.exports = (err, message = 'An error occurred.') => {
+const pino = Pino();
+
+export default (err, message = 'An error occurred.') => {
   pino.error(err);
   dialog.showMessageBox(
     {
@@ -19,12 +18,12 @@ module.exports = (err, message = 'An error occurred.') => {
       detail: `Please attach the following debugging info:
 OS: ${process.platform}
 Arch: ${process.arch}
-Channel: ${channel}
+Channel: ${parity.channel}
 Error: ${err.message}
 
 Please also attach the contents of the following file:
 ${app.getPath('userData')}/parity.log`,
-      message: `${message} Please file an issue at ${url}.`,
+      message: `${message} Please file an issue at ${bugs.url}.`,
       title: 'Parity Error',
       type: 'error'
     },

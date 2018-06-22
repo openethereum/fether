@@ -3,10 +3,10 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-const { app } = require('electron');
-const fs = require('fs');
-const { multistream } = require('pino-multi-stream');
-const pino = require('pino');
+import { app } from 'electron';
+import fs from 'fs';
+import { multistream } from 'pino-multi-stream';
+import pino from 'pino';
 
 // Pino by default outputs JSON. We prettify that.
 const pretty = pino.pretty();
@@ -24,9 +24,13 @@ const streams = [
 ];
 
 /**
- * Usage: const pino = require('../path/to/pino')({ name: 'something' });
+ * Create a pino instance
  *
  * @param {Object} opts - Options to pass to pino. Defaults to { name: 'electron' }.
+ * @example
+ * import Pino from './utils/pino';
+ * const pino1 = Pino();
+ * const pino2 = Pino({ name: 'parity' });
  */
-module.exports = opts =>
+export default opts =>
   pino({ name: 'electron', ...opts }, multistream(streams));

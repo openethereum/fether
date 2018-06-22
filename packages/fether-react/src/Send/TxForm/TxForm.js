@@ -147,6 +147,7 @@ class Send extends Component {
                             max={maxAmount}
                             min={0}
                             onChange={this.handleChangeAmount}
+                            placeholder='1.00'
                             required
                             step={+fromWei(1)}
                             type='number'

@@ -3,12 +3,12 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-const signerNewToken = require('../operations/signerNewToken');
+import signerNewToken from '../operations/signerNewToken';
 
 /**
  * Handle all asynchronous messages from renderer to main.
  */
-module.exports = (event, arg) => {
+export default (event, arg) => {
   switch (arg) {
     case 'signer-new-token': {
       signerNewToken(event);

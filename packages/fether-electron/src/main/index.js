@@ -5,22 +5,23 @@
 
 /* global __static */
 
-const electron = require('electron');
-const path = require('path');
-const url = require('url');
+import electron from 'electron';
+import path from 'path';
+import url from 'url';
 
-const addMenu = require('./menu');
-const { cli } = require('./cli');
-const { doesParityExist } = require('./operations/doesParityExist');
-const fetchParity = require('./operations/fetchParity');
-const handleError = require('./operations/handleError');
-const messages = require('./messages');
-const { productName } = require('../../electron-builder.json');
-const pino = require('./utils/pino')({ name: 'electron' });
-const { runParity, killParity } = require('./operations/runParity');
+import addMenu from './menu';
+import { cli } from './cli';
+import { doesParityExist } from './operations/doesParityExist';
+import fetchParity from './operations/fetchParity';
+import handleError from './operations/handleError';
+import messages from './messages';
+import { productName } from '../../electron-builder.json';
+import Pino from './utils/pino';
+import { runParity, killParity } from './operations/runParity';
 
 const { app, BrowserWindow, ipcMain, session } = electron;
 let mainWindow;
+const pino = Pino();
 
 function createWindow () {
   pino.info(`Starting ${productName}...`);

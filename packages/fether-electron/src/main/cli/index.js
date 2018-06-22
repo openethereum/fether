@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-const cli = require('commander');
+import cli from 'commander';
 
 const { productName } = require('../../../electron-builder.json');
 const { version } = require('../../../package.json');
@@ -54,7 +54,7 @@ const camelcase = flag =>
 
 // Now we must think which arguments passed to cli must be passed down to
 // parity.
-const parityArgv = cli.rawArgs
+export const parityArgv = cli.rawArgs
   .splice(2) // Remove first 2 arguments which are program path
   .filter((item, index, array) => {
     const key = camelcase(item.replace('--', '').replace('no-', '')); // Remove '--' and then camelCase
@@ -87,4 +87,4 @@ const parityArgv = cli.rawArgs
     return true;
   });
 
-module.exports = { cli, parityArgv };
+export { cli };
