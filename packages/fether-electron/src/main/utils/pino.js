@@ -24,9 +24,13 @@ const streams = [
 ];
 
 /**
- * Usage: import pino from '../path/to/pino';({ name: 'something' });
+ * Create a pino instance
  *
  * @param {Object} opts - Options to pass to pino. Defaults to { name: 'electron' }.
+ * @example
+ * import Pino from './utils/pino';
+ * const pino1 = Pino();
+ * const pino2 = Pino({ name: 'parity' });
  */
 export default opts =>
   pino({ name: 'electron', ...opts }, multistream(streams));
