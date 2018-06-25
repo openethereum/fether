@@ -3,52 +3,54 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
+/* global __static */
+
 import electron from 'electron';
 import path from 'path';
 import url from 'url';
 
-import addMenu from './menu';
 import { doesParityExist } from './operations/doesParityExist';
 import fetchParity from './operations/fetchParity';
 import handleError from './operations/handleError';
+import Mb from 'menubar';
 import messages from './messages';
 import { productName } from '../../electron-builder.json';
 import Pino from './utils/pino';
 import { runParity, killParity } from './operations/runParity';
-import staticPath from './utils/staticPath';
 
-const { app, BrowserWindow, ipcMain, session } = electron;
-let mainWindow;
+const { ipcMain, Menu, session } = electron;
 const pino = Pino();
+
+const menubar = Mb({
+  height: 640,
+  index:
+    // Opens file:///path/to/build/index.html in prod mode, or whatever is
+    // passed to ELECTRON_START_URL
+    process.env.ELECTRON_START_URL ||
+    url.format({
+      pathname: path.join(__static, 'build', 'index.html'),
+      protocol: 'file:',
+      slashes: true
+    }),
+  preloadWindow: true,
+  resizable: false,
+  transparent: true,
+  webPreferences: {
+    nodeIntegration: true
+  },
+  width: 360
+});
 
 function createWindow () {
   pino.info(`Starting ${productName}...`);
-  mainWindow = new BrowserWindow({
-    height: 800,
-    width: 1200
-  });
 
   doesParityExist()
-    .catch(() => fetchParity(mainWindow)) // Install parity if not present
-    .then(() => runParity(mainWindow))
+    .catch(() => fetchParity(menubar.window)) // Install parity if not present
+    .then(() => runParity(menubar.window))
     .catch(handleError); // Errors should be handled before, this is really just in case
-
-  // Opens file:///path/to/build/index.html in prod mode, or whatever is
-  // passed to ELECTRON_START_URL
-  mainWindow.loadURL(
-    process.env.ELECTRON_START_URL ||
-      url.format({
-        pathname: path.join(staticPath, 'build', 'index.html'),
-        protocol: 'file:',
-        slashes: true
-      })
-  );
 
   // Listen to messages from renderer process
   ipcMain.on('asynchronous-message', messages);
-
-  // Add application menu
-  addMenu(mainWindow);
 
   // WS calls have Origin `file://` by default, which is not trusted.
   // We override Origin header on all WS connections with an authorized one.
@@ -57,43 +59,51 @@ function createWindow () {
       urls: ['ws://*/*', 'wss://*/*']
     },
     (details, callback) => {
-      if (!mainWindow) {
+      if (!menubar.window) {
         // There might be a split second where the user closes the app, so
-        // mainWindow is null, but there is still a network request done.
+        // menubar.window is null, but there is still a network request done.
         return;
       }
-      details.requestHeaders.Origin = `parity://${mainWindow.id}.ui.parity`;
+      details.requestHeaders.Origin = `parity://${menubar.window.id}.ui.parity`;
       callback({ requestHeaders: details.requestHeaders }); // eslint-disable-line
     }
   );
 
   // Open external links in browser
-  mainWindow.webContents.on('new-window', function (event, url) {
+  menubar.window.webContents.on('new-window', function (event, url) {
     event.preventDefault();
     electron.shell.openExternal(url);
   });
-
-  mainWindow.on('closed', () => {
-    mainWindow = null;
-  });
 }
 
-app.on('ready', createWindow);
+// Right click menu for Tray
+menubar.on('after-create-window', () => {
+  const contextMenu = Menu.buildFromTemplate([
+    { role: 'about' },
+    { type: 'separator' },
+    {
+      label: 'Restart',
+      click: () => {
+        menubar.app.relaunch();
+        menubar.app.exit();
+      }
+    },
+    {
+      label: 'Quit',
+      click: () => {
+        menubar.app.quit();
+      }
+    }
+  ]);
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    killParity();
-    app.quit();
-  }
+  menubar.tray.on('right-click', () => {
+    menubar.tray.popUpContextMenu(contextMenu);
+  });
 });
 
 // Make sure parity stops when UI stops
-app.on('before-quit', killParity);
-app.on('will-quit', killParity);
-app.on('quit', killParity);
+menubar.app.on('before-quit', killParity);
+menubar.app.on('will-quit', killParity);
+menubar.app.on('quit', killParity);
 
-app.on('activate', () => {
-  if (mainWindow === null) {
-    createWindow();
-  }
-});
+menubar.on('ready', createWindow);
