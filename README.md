@@ -1,5 +1,9 @@
 # Fether Wallet
 
+## Get the latest binary
+
+https://github.com/parity-js/fether/releases
+
 ## Getting started
 
 ```bash
