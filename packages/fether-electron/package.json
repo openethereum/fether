@@ -32,7 +32,9 @@
     "build": "electron-webpack",
     "electron": "electron dist/main/main.js --light",
     "lint": "semistandard 'src/**/*.js' --parser babel-eslint",
+    "prepackage": "./scripts/revertElectronBug.sh",
     "package": "electron-builder",
+    "prerelease": "./scripts/revertElectronBug.sh",
     "release": "electron-builder",
     "start": "cross-env ELECTRON_START_URL=http://localhost:3000 electron-webpack dev --light --ws-origins all",
     "test": "echo Skipped."
