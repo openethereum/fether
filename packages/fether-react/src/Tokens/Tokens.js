@@ -17,6 +17,10 @@ import TokensList from './TokensList';
   defaultAccount: defaultAccount$
 })
 class Tokens extends PureComponent {
+  handleGoToSettings = () => {
+    this.props.history.push('/settings');
+  };
+
   render () {
     const {
       accountsInfo,
@@ -60,9 +64,9 @@ class Tokens extends PureComponent {
             <Health />
           </div>
           <div className='footer-nav_icons'>
-            <Link to='/settings' className='icon -settings'>
-              Settings
-            </Link>
+            <button className='button -tiny' onClick={this.handleGoToSettings}>
+              Add token
+            </button>
           </div>
         </nav>
       </div>
