@@ -6,12 +6,42 @@
 import React, { Component } from 'react';
 import { FormField, Header } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
+import ReactMarkdown from 'react-markdown';
 
 import Health from '../Health';
+import termsAndConditions from './termsAndConditions.md';
+
+/**
+ * Options to pass into the renderer of ReactMarkdown
+ */
+const reactMarkdownOptions = {
+  link: props => (
+    <a href={props.href} target='_blank'>
+      {props.children}
+    </a>
+  )
+};
 
 @inject('onboardingStore')
 @observer
 class Onboarding extends Component {
+  state = {
+    markdown: ''
+  };
+
+  componentWillMount () {
+    window
+      .fetch(termsAndConditions)
+      .then(response => {
+        return response.text();
+      })
+      .then(markdown => {
+        this.setState({
+          markdown
+        });
+      });
+  }
+
   handleFirstRun = () => {
     // Not first run anymore after clicking Accept
     this.props.onboardingStore.setIsFirstRun(false);
@@ -26,10 +56,10 @@ class Onboarding extends Component {
           <div className='box -padded'>
             <FormField
               input={
-                <textarea
-                  className='-xlg'
-                  defaultValue="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-                  readOnly
+                <ReactMarkdown
+                  className='terms-and-conditions'
+                  renderers={reactMarkdownOptions}
+                  source={this.state.markdown}
                 />
               }
               label='Please read carefully'
