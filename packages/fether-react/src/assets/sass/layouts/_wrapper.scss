@@ -16,7 +16,11 @@
       height: 0.5rem;
       display: flex;
       justify-content: center;
-      margin-bottom: -1px;
+
+      &.-top {
+        margin-bottom: -1px;
+      }
+
       svg {
         height: 0.5rem;
         width: auto;

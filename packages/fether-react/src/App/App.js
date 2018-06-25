@@ -34,12 +34,17 @@ class App extends Component {
       <Router>
         <div className='wrapper'>
           <div className='content'>
-            <div className='connector'>
+            <div className='connector -top'>
               <svg width='60px' height='30px' viewBox='0 0 60 30'>
                 <polygon points='0 30 60 30 30 0' />
               </svg>
             </div>
             {this.renderScreen()}
+            {/* <div className="connector -bottom">
+              <svg width="60px" height="30px" viewBox="0 0 60 30">
+                <polygon points="0 0 60 0 30 30" />
+              </svg>
+            </div> */}
           </div>
         </div>
       </Router>
@@ -58,7 +63,11 @@ class App extends Component {
     } = this.props;
 
     if (isFirstRun) {
-      return <div className='window'><Onboarding /></div>;
+      return (
+        <div className='window'>
+          <Onboarding />
+        </div>
+      );
     }
 
     return (
