@@ -44,6 +44,9 @@ const menubar = Mb({
 function createWindow () {
   pino.info(`Starting ${productName}...`);
 
+  // Show window on start
+  menubar.showWindow();
+
   doesParityExist()
     .catch(() => fetchParity(menubar.window)) // Install parity if not present
     .then(() => runParity(menubar.window))
@@ -77,7 +80,8 @@ function createWindow () {
 }
 
 // Right click menu for Tray
-menubar.on('after-create-window', () => {
+menubar.on('after-create-window', function () {
+  // Add right-click menu
   const contextMenu = Menu.buildFromTemplate([
     { role: 'about' },
     { type: 'separator' },
