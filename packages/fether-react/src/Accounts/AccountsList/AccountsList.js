@@ -96,7 +96,9 @@ class AccountsList extends Component {
                       name={
                         accountsInfo &&
                         accountsInfo[address] &&
-                        accountsInfo[address].name
+                        (accountsInfo[address].name
+                          ? accountsInfo[address].name
+                          : '(No name)')
                       }
                     />
                   </li>
