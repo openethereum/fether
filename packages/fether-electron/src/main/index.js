@@ -22,6 +22,7 @@ const pino = Pino();
 
 const menubar = Mb({
   height: 640,
+  icon: path.join(staticPath, 'assets', 'menubar', 'icon.png'),
   index:
     // Opens file:///path/to/build/index.html in prod mode, or whatever is
     // passed to ELECTRON_START_URL
@@ -42,9 +43,6 @@ const menubar = Mb({
 
 function createWindow () {
   pino.info(`Starting ${productName}...`);
-
-  // Show window on start
-  menubar.showWindow();
 
   doesParityExist()
     .catch(() => fetchParity(menubar.window)) // Install parity if not present
