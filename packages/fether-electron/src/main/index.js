@@ -3,8 +3,6 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-/* global __static */
-
 import electron from 'electron';
 import path from 'path';
 import url from 'url';
@@ -17,6 +15,7 @@ import messages from './messages';
 import { productName } from '../../electron-builder.json';
 import Pino from './utils/pino';
 import { runParity, killParity } from './operations/runParity';
+import staticPath from './utils/staticPath';
 
 const { ipcMain, Menu, session } = electron;
 const pino = Pino();
@@ -28,7 +27,7 @@ const menubar = Mb({
     // passed to ELECTRON_START_URL
     process.env.ELECTRON_START_URL ||
     url.format({
-      pathname: path.join(__static, 'build', 'index.html'),
+      pathname: path.join(staticPath, 'build', 'index.html'),
       protocol: 'file:',
       slashes: true
     }),
