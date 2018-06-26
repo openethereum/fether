@@ -1,4 +1,4 @@
-# Fether Wallet
+# Fether
 
 ## Get the latest binary
 
