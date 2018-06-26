@@ -15,7 +15,7 @@ import AccountConfirm from './AccountConfirm';
 import AccountCopyPhrase from './AccountCopyPhrase';
 import AccountName from './AccountName';
 import AccountPassword from './AccountPassword';
-import AccountWritePhrase from './AccountWritePhrase';
+import AccountRewritePhrase from './AccountRewritePhrase';
 
 @light({ accountsInfo: accountsInfo$ })
 @inject('createAccountStore')
@@ -27,11 +27,11 @@ class CreateAccount extends Component {
    */
   getSteps = memoize(isImport => {
     return isImport
-      ? [AccountWritePhrase, AccountName, AccountPassword, AccountConfirm]
+      ? [AccountRewritePhrase, AccountName, AccountPassword, AccountConfirm]
       : [
         AccountName,
         AccountCopyPhrase,
-        AccountWritePhrase,
+        AccountRewritePhrase,
         AccountPassword,
         AccountConfirm
       ];
