@@ -1,3 +1,3 @@
 # fether-ui
 
-UI components used in the Fether Wallet.
+UI components used in Fether.

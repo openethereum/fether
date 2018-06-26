@@ -14,7 +14,7 @@
     "oneClick": true,
     "perMachine": true
   },
-  "productName": "Fether Wallet",
+  "productName": "Fether",
   "publish": "github",
   "win": {
     "icon": "./assets/icon/small-white-512x512.png",
