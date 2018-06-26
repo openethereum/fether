@@ -84,19 +84,6 @@ class CreateAccount extends Component {
           title={
             <h1>{isImport ? 'Import account' : 'Create a new account'}</h1>
           }
-          right={
-            <div className='progress-indicator'>
-              {Steps.map((_, index) => (
-                <div
-                  className={[
-                    'progress-indicator_step',
-                    step > index ? '-complete' : ''
-                  ].join(' ')}
-                  key={`progress-indicator_step${index + 1}`}
-                />
-              ))}
-            </div>
-          }
         />
 
         <div className='window_content'>
