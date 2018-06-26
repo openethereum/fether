@@ -21,7 +21,7 @@ const { app, BrowserWindow, ipcMain, session } = electron;
 let mainWindow;
 const pino = Pino();
 
-function createWindow() {
+function createWindow () {
   pino.info(`Starting ${productName}...`);
   mainWindow = new BrowserWindow({
     height: 640,
@@ -69,7 +69,7 @@ function createWindow() {
   );
 
   // Open external links in browser
-  mainWindow.webContents.on('new-window', function(event, url) {
+  mainWindow.webContents.on('new-window', function (event, url) {
     event.preventDefault();
     electron.shell.openExternal(url);
   });
