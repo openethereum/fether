@@ -25,6 +25,20 @@ class AccountCopyPhrase extends Component {
           <p>Please write your secret phrase on a piece of paper:</p>
         </div>
         <div className='text -code'>{phrase}</div>
+        <div className='text'>
+          <div className='text -tiny'>
+            Keep it secure and secret.
+            <ul className='-bulleted'>
+              <li>
+                If you lose your secret phrase, your wallet cannot be recovered.
+              </li>
+              <li>
+                If someone gets hold of your secret phrase, they will be able to
+                drain your account.
+              </li>
+            </ul>
+          </div>
+        </div>
         <nav className='form-nav'>
           <Link to={`/accounts/new/${+currentStep + 1}`}>
             <button className='button'>Next</button>

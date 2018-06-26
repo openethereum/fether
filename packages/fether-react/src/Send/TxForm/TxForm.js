@@ -157,6 +157,7 @@ class Send extends Component {
                             <button
                               className='button -utility'
                               onClick={this.handleMax}
+                              tabIndex={-1}
                               type='button'
                             >
                               Max

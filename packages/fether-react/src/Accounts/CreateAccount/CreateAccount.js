@@ -15,7 +15,7 @@ import AccountConfirm from './AccountConfirm';
 import AccountCopyPhrase from './AccountCopyPhrase';
 import AccountName from './AccountName';
 import AccountPassword from './AccountPassword';
-import AccountWritePhrase from './AccountWritePhrase';
+import AccountRewritePhrase from './AccountRewritePhrase';
 
 @light({ accountsInfo: accountsInfo$ })
 @inject('createAccountStore')
@@ -27,11 +27,11 @@ class CreateAccount extends Component {
    */
   getSteps = memoize(isImport => {
     return isImport
-      ? [AccountWritePhrase, AccountName, AccountPassword, AccountConfirm]
+      ? [AccountRewritePhrase, AccountName, AccountPassword, AccountConfirm]
       : [
         AccountName,
         AccountCopyPhrase,
-        AccountWritePhrase,
+        AccountRewritePhrase,
         AccountPassword,
         AccountConfirm
       ];
@@ -83,19 +83,6 @@ class CreateAccount extends Component {
           }
           title={
             <h1>{isImport ? 'Import account' : 'Create a new account'}</h1>
-          }
-          right={
-            <div className='progress-indicator'>
-              {Steps.map((_, index) => (
-                <div
-                  className={[
-                    'progress-indicator_step',
-                    step > index ? '-complete' : ''
-                  ].join(' ')}
-                  key={`progress-indicator_step${index + 1}`}
-                />
-              ))}
-            </div>
           }
         />
 

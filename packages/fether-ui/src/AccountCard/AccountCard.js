@@ -10,24 +10,24 @@ import PropTypes from 'prop-types';
 import Card from '../Card';
 import Placeholder from '../Placeholder';
 
-const AccountCard = ({ address, name, ...otherProps }) => (
+const AccountCard = ({ address, animate, name, ...otherProps }) => (
   <Card {...otherProps}>
     <div className='account'>
       <div className='account_avatar'>
         {address ? (
           <Blockies seed={address.toLowerCase()} />
         ) : (
-          <Placeholder height={36} width={36} />
+          <Placeholder animate={animate} height={36} width={36} />
         )}
       </div>
       <div className='account_information'>
         {name ? (
           <div className='account_name'>{name}</div>
         ) : (
-          <Placeholder height={18} width={100} />
+          <Placeholder animate={animate} height={18} width={100} />
         )}
         <div className='account_address'>
-          {address || <Placeholder height={12} width={150} />}
+          {address || <Placeholder animate={animate} height={12} width={150} />}
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@ import CreateAccountContainer from '../CreateAccountContainer';
 
 @inject('createAccountStore')
 @observer
-class AccountWritePhrase extends Component {
+class AccountRewritePhrase extends Component {
   state = {
     value: ''
   };
@@ -41,7 +41,9 @@ class AccountWritePhrase extends Component {
     return (
       <CreateAccountContainer>
         <div className='text'>
-          <p>Please write your recovery phrase:</p>
+          <p>
+            Type your secret phrase to confirm that you wrote it down correctly:
+          </p>
         </div>
         <FormField
           input={
@@ -88,4 +90,4 @@ class AccountWritePhrase extends Component {
   };
 }
 
-export default AccountWritePhrase;
+export default AccountRewritePhrase;
