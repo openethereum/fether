@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import { action, computed, observable } from 'mobx';
+import BigNumber from 'bignumber.js';
 import { nodeHealth$, syncing$ } from '@parity/light.js';
 
 import parityStore from './parityStore';
@@ -42,7 +43,11 @@ class HealthStore {
     if (parityStore.downloadProgress > 0 && !parityStore.isParityRunning) {
       return {
         status: STATUS.DOWNLOADING,
-        payload: { percentage: Math.round(parityStore.downloadProgress * 100) }
+        payload: {
+          percentage: new BigNumber(
+            Math.round(parityStore.downloadProgress * 100)
+          )
+        }
       };
     }
 
