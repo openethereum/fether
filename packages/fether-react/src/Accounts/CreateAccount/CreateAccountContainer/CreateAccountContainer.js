@@ -19,6 +19,7 @@ class CreateAccountHeader extends Component {
     return (
       <AccountCard
         address={address}
+        animate={false}
         name={name}
         drawers={[<div key='createAccount'>{children}</div>]}
       />
