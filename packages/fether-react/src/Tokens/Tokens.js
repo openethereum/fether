@@ -31,7 +31,7 @@ class Tokens extends PureComponent {
     // If the accountsInfo object is empty (i.e. no accounts), then we redirect
     // to the accounts page to create an account
     if (accountsInfo && !Object.keys(accountsInfo).length) {
-      return <Redirect to='/accounts' />;
+      return <Redirect to='/accounts/new' />;
     }
 
     // The address is defaultAccount, but if we are coming from the accounts
