@@ -5,7 +5,7 @@
 
 import { app, dialog } from 'electron';
 
-import { bugs, parity } from '../../../package.json';
+import { bugs, name, parity } from '../../../package.json';
 import Pino from '../utils/pino';
 
 const pino = Pino();
@@ -22,7 +22,7 @@ Channel: ${parity.channel}
 Error: ${err.message}
 
 Please also attach the contents of the following file:
-${app.getPath('userData')}/parity.log`,
+${app.getPath('userData')}/${name}.log`,
       message: `${message} Please file an issue at ${bugs.url}.`,
       title: 'Parity Error',
       type: 'error'

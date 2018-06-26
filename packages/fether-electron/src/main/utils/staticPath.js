@@ -5,15 +5,15 @@
 
 /* global __static */
 
-const isDevelopment = process.env.NODE_ENV === 'development';
+const isPackagedApp = !process.defaultApp;
 
 /**
  * Get the path to the `static` folder.
  *
  * @see https://github.com/electron-userland/electron-webpack/issues/52
  */
-const staticPath = isDevelopment
-  ? __static
-  : __dirname.replace(/app\.asar$/, 'static');
+const staticPath = isPackagedApp
+  ? __dirname.replace(/app\.asar$/, 'static')
+  : __static;
 
 export default staticPath;
