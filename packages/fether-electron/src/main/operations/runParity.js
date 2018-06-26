@@ -12,6 +12,7 @@ import { cli, parityArgv } from '../cli';
 import isParityRunning from './isParityRunning';
 import handleError from './handleError';
 import { getParityPath } from './doesParityExist';
+import logCommand from '../utils/logCommand';
 import Pino from '../utils/pino';
 
 const fsChmod = promisify(fs.chmod);
@@ -59,11 +60,7 @@ export const runParity = async mainWindow => {
     // Run an instance of parity with the correct args
     const args = [...parityArgv, '--light'];
     parity = spawn(getParityPath(), args);
-    pino.info(
-      `Running command "${getParityPath().replace(' ', '\\ ')} ${args.join(
-        ' '
-      )}".`
-    );
+    pino.info(logCommand(getParityPath(), args));
 
     // Save in memory the last line of the log file, for handling error
     const callback = data => {

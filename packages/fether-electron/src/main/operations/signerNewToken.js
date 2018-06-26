@@ -6,15 +6,18 @@
 import { spawn } from 'child_process';
 
 import { getParityPath } from './doesParityExist';
+import logCommand from '../utils/logCommand';
 import Pino from '../utils/pino';
 
 const pino = Pino();
 
 export default event => {
+  pino.info('Requesting new token.');
+
   // Generate a new token
   const paritySigner = spawn(getParityPath(), ['signer', 'new-token']);
 
-  pino.info('Requesting new token.');
+  pino.info(logCommand(getParityPath(), ['signer', 'new-token']));
 
   // Listen to the output of the previous command
   paritySigner.stdout.on('data', data => {
