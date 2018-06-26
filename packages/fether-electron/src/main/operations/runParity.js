@@ -57,12 +57,12 @@ export const runParity = async mainWindow => {
     let logLastLine; // Always contains last line of the Parity logs
 
     // Run an instance of parity with the correct args
-    parity = spawn(getParityPath(), parityArgv);
+    const args = [...parityArgv, '--light'];
+    parity = spawn(getParityPath(), args);
     pino.info(
-      `Running command "${getParityPath().replace(
-        ' ',
-        '\\ '
-      )} ${parityArgv.join(' ')}".`
+      `Running command "${getParityPath().replace(' ', '\\ ')} ${args.join(
+        ' '
+      )}".`
     );
 
     // Save in memory the last line of the log file, for handling error
