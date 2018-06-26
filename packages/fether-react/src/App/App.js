@@ -33,19 +33,7 @@ class App extends Component {
     return (
       <Router>
         <div className='wrapper'>
-          <div className='content'>
-            <div className='connector -top'>
-              <svg width='60px' height='30px' viewBox='0 0 60 30'>
-                <polygon points='0 30 60 30 30 0' />
-              </svg>
-            </div>
-            {this.renderScreen()}
-            {/* <div className="connector -bottom">
-              <svg width="60px" height="30px" viewBox="0 0 60 30">
-                <polygon points="0 0 60 0 30 30" />
-              </svg>
-            </div> */}
-          </div>
+          <div className='content'>{this.renderScreen()}</div>
         </div>
       </Router>
     );

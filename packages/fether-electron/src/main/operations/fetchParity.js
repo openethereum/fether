@@ -84,7 +84,7 @@ export default mainWindow => {
         );
 
         // Get the binary's url
-        const { downloadUrl } = data[0].files.find(
+        const { downloadUrl, checksum: expectedChecksum } = data[0].files.find(
           ({ name }) => name === 'parity' || name === 'parity.exe'
         );
 
@@ -97,13 +97,7 @@ export default mainWindow => {
         });
         const downloadPath = downloadItem.getSavePath(); // Equal to defaultParityPath
 
-        // Once downloaded, we fetch the sha256 checksum
-        const { downloadUrl: checksumDownloadUrl } = data[0].files.find(
-          ({ name }) => name === 'parity.sha256' || name === 'parity.exe.sha256'
-        );
-        const { data: checksumData } = await axios.get(checksumDownloadUrl);
-        // Downloaded checksumData is in the format: "{checksum} {filename}"
-        const [expectedChecksum] = checksumData.split(' ');
+        // Once downloaded, we check the sha256 checksum
         // Calculate the actual checksum
         const actualChecksum = await checksum(downloadPath, {
           algorithm: 'sha256'
