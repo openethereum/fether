@@ -84,7 +84,7 @@ class Overlays extends Component {
           ? `${payload.percentage.toFixed(0)}%`
           : '';
       case STATUS.NOINTERNET:
-        return 'Please check that you are connected to the internet';
+        return 'Trying to reconnect to the network...';
       default:
         return '';
     }
