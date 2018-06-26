@@ -5,14 +5,14 @@
 
 /* global __static */
 
-const isPackagedApp = !process.defaultApp;
+import { app } from 'electron';
 
 /**
  * Get the path to the `static` folder.
  *
  * @see https://github.com/electron-userland/electron-webpack/issues/52
  */
-const staticPath = isPackagedApp
+const staticPath = app.isPackaged
   ? __dirname.replace(/app\.asar$/, 'static')
   : __static;
 
