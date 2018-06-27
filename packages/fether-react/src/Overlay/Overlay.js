@@ -84,7 +84,7 @@ class Overlays extends Component {
           ? `${payload.percentage.toFixed(0)}%`
           : '';
       case STATUS.NOINTERNET:
-        return 'Trying to reconnect to the network...';
+        return 'Getting some more peers...';
       default:
         return '';
     }
@@ -103,9 +103,9 @@ class Overlays extends Component {
       case STATUS.DOWNLOADING:
         return 'Downloading Parity...';
       case STATUS.NOINTERNET:
-        return 'Poor connection';
+        return 'Bad connectivity';
       case STATUS.RUNNING:
-        return 'Running...';
+        return 'Connecting to the node...';
       case STATUS.SYNCING:
         return 'Syncing...';
       default:
