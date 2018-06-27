@@ -56,8 +56,8 @@ class AccountName extends Component {
           <div className='account_avatar'>
             {!!address && <Blockies seed={address.toLowerCase()} />}
           </div>
-          <div className='account_information'>
-            <button className='button' onClick={generateNewAccount}>
+          <div className='account_change_blockies'>
+            <button className='button -cancel' onClick={generateNewAccount}>
               Choose another icon
             </button>
           </div>
