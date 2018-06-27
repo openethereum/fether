@@ -8,14 +8,13 @@ import { accountsInfo$ } from '@parity/light.js';
 import { Header } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 import light from 'light-hoc';
-import memoize from 'lodash/memoize';
-import { Route } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 
-import AccountConfirm from './AccountConfirm';
 import AccountCopyPhrase from './AccountCopyPhrase';
 import AccountName from './AccountName';
 import AccountPassword from './AccountPassword';
 import AccountRewritePhrase from './AccountRewritePhrase';
+import Health from '../../Health';
 
 @light({ accountsInfo: accountsInfo$ })
 @inject('createAccountStore')
@@ -25,17 +24,10 @@ class CreateAccount extends Component {
    * Creating account and importing accounts have different processes: 4 steps
    * for importing, and 5 steps for creating
    */
-  getSteps = memoize(isImport => {
-    return isImport
-      ? [AccountRewritePhrase, AccountName, AccountPassword, AccountConfirm]
-      : [
-        AccountName,
-        AccountCopyPhrase,
-        AccountRewritePhrase,
-        AccountPassword,
-        AccountConfirm
-      ];
-  });
+  getSteps = isImport =>
+    isImport
+      ? [AccountRewritePhrase, AccountName, AccountPassword]
+      : [AccountName, AccountCopyPhrase, AccountRewritePhrase, AccountPassword];
 
   handleToggleCreateImport = () => {
     const {
@@ -53,14 +45,12 @@ class CreateAccount extends Component {
     }
   };
 
-  handleGoBack = () => this.props.history.goBack();
-
   render () {
     const {
       accountsInfo,
       createAccountStore: { isImport },
       match: {
-        params: { step } // Current step in account creation process
+        params: { step }
       }
     } = this.props;
 
@@ -71,14 +61,12 @@ class CreateAccount extends Component {
       <div>
         <Header
           left={
-            // Show back button if:
-            // - we already have some accounts, so we can go back to AccountsList
-            // - or the step is >1
-            (step > 1 ||
-              (accountsInfo && Object.keys(accountsInfo).length > 0)) && (
-              <a className='icon -back' onClick={this.handleGoBack}>
+            // Show back button if we already have some accounts, so we can go back to AccountsList
+            accountsInfo &&
+            Object.keys(accountsInfo).length > 0 && (
+              <Link className='icon -back' to='/accounts'>
                 Back
-              </a>
+              </Link>
             )
           }
           title={
@@ -99,29 +87,35 @@ class CreateAccount extends Component {
         </div>
 
         <nav className='footer-nav'>
-          <div className='footer-nav_option'>
-            {isImport ? (
-              <p>
-                Need to create an account?
-                <button
-                  className='button -footer'
-                  onClick={this.handleToggleCreateImport}
-                >
-                  New account
-                </button>
-              </p>
-            ) : (
-              <p>
-                Already have an account?
-                <button
-                  className='button -footer'
-                  onClick={this.handleToggleCreateImport}
-                >
-                  Import account
-                </button>
-              </p>
-            )}
-          </div>
+          {step > 1 ? (
+            <div className='footer-nav_status'>
+              <Health />
+            </div>
+          ) : (
+            <div className='footer-nav_option'>
+              {isImport ? (
+                <p>
+                  Need to create an account?
+                  <button
+                    className='button -footer'
+                    onClick={this.handleToggleCreateImport}
+                  >
+                    New account
+                  </button>
+                </p>
+              ) : (
+                <p>
+                  Already have an account?
+                  <button
+                    className='button -footer'
+                    onClick={this.handleToggleCreateImport}
+                  >
+                    Import account
+                  </button>
+                </p>
+              )}
+            </div>
+          )}
         </nav>
       </div>
     );

@@ -4,11 +4,10 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { FormField } from 'fether-ui';
+import { AccountCard, Card, FormField } from 'fether-ui';
+import Blockies from 'react-blockies';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
-
-import CreateAccountContainer from '../CreateAccountContainer';
 
 @inject('createAccountStore')
 @observer
@@ -26,23 +25,56 @@ class AccountName extends Component {
 
   render () {
     const {
-      createAccountStore: { generateNewAccount, isImport, name },
+      createAccountStore: { isImport }
+    } = this.props;
+
+    return isImport ? this.renderCardWhenImported() : this.renderCardWhenNew();
+  }
+
+  renderCardWhenImported = () => {
+    const {
+      createAccountStore: { address, name }
+    } = this.props;
+
+    return (
+      <AccountCard
+        address={address}
+        drawers={[this.renderDrawer()]}
+        name={name || '(no name)'}
+      />
+    );
+  };
+
+  renderCardWhenNew = () => {
+    const {
+      createAccountStore: { address, generateNewAccount }
+    } = this.props;
+
+    return (
+      <Card drawers={[this.renderDrawer()]}>
+        <div className='account'>
+          <div className='account_avatar'>
+            {!!address && <Blockies seed={address.toLowerCase()} />}
+          </div>
+          <div className='account_information'>
+            <button className='button' onClick={generateNewAccount}>
+              Choose another icon
+            </button>
+          </div>
+        </div>
+      </Card>
+    );
+  };
+
+  renderDrawer = () => {
+    const {
+      createAccountStore: { name },
       location: { pathname }
     } = this.props;
     const currentStep = pathname.slice(-1);
 
     return (
-      <CreateAccountContainer>
-        {!isImport && (
-          <div className='box -pull-up text -right'>
-            <button
-              onClick={generateNewAccount}
-              className='button -tiny -reload'
-            >
-              Regenerate address
-            </button>
-          </div>
-        )}
+      <div key='createAccount'>
         <div className='text'>
           <p>Please give this account a name:</p>
         </div>
@@ -64,9 +96,9 @@ class AccountName extends Component {
             </button>
           )}
         </nav>
-      </CreateAccountContainer>
+      </div>
     );
-  }
+  };
 }
 
 export default AccountName;
