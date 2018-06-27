@@ -106,7 +106,7 @@ class Settings extends Component {
               Close
             </Link>
           }
-          title={<h1>Edit token whitelist</h1>}
+          title={<h1>Token whitelist</h1>}
         />
 
         <div className='window_content'>
