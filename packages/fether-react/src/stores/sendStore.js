@@ -15,7 +15,7 @@ import parityStore from './parityStore';
 import tokensStore from './tokensStore';
 
 const DEFAULT_GAS = new BigNumber(21000); // Default gas amount to show
-const GAS_MULT_FACTOR = 1.2; // Since estimateGas is not always accurate, we add a 120% factor for buffer.
+const GAS_MULT_FACTOR = 1.33; // Since estimateGas is not always accurate, we add a 33% factor for buffer.
 
 class SendStore {
   @observable blockNumber; // Current block number, used to calculate tx confirmations.
