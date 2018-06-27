@@ -21,7 +21,7 @@ class Tokens extends PureComponent {
     this.props.history.push('/whitelist');
   };
 
-  render() {
+  render () {
     const {
       accountsInfo,
       defaultAccount,
@@ -31,7 +31,7 @@ class Tokens extends PureComponent {
     // If the accountsInfo object is empty (i.e. no accounts), then we redirect
     // to the accounts page to create an account
     if (accountsInfo && !Object.keys(accountsInfo).length) {
-      return <Redirect to="/accounts/new" />;
+      return <Redirect to='/accounts/new' />;
     }
 
     // The address is defaultAccount, but if we are coming from the accounts
@@ -51,7 +51,7 @@ class Tokens extends PureComponent {
             accountsInfo[myAddress].name
           }
           left={
-            <Link to="/accounts" className="icon -back">
+            <Link to='/accounts' className='icon -back'>
               Back
             </Link>
           }
@@ -59,13 +59,13 @@ class Tokens extends PureComponent {
 
         <TokensList />
 
-        <nav className="footer-nav">
-          <div className="footer-nav_status">
+        <nav className='footer-nav'>
+          <div className='footer-nav_status'>
             <Health />
           </div>
-          <div className="footer-nav_icons">
-            <button className="button -tiny" onClick={this.handleGoToWhitelist}>
-              View my tokens
+          <div className='footer-nav_icons'>
+            <button className='button -tiny' onClick={this.handleGoToWhitelist}>
+              Add tokens
             </button>
           </div>
         </nav>
