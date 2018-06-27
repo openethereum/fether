@@ -3,6 +3,6 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import Settings from './Settings';
+import ClickToCopy from './ClickToCopy';
 
-export default Settings;
+export default ClickToCopy;

@@ -6,22 +6,18 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { TokenCard } from 'fether-ui';
-import { withRouter } from 'react-router-dom';
 
 @inject('tokensStore')
 @observer
-@withRouter
 class NewTokenItem extends Component {
   handleAddToken = () => {
     const { token, tokensStore } = this.props;
     tokensStore.addToken(token.address, token);
-    this.forceUpdate(); // TODO: I assume this is not the preferred way to do this!
   };
 
   handleRemoveToken = () => {
     const { token, tokensStore } = this.props;
     tokensStore.removeToken(token.address);
-    this.forceUpdate();
   };
 
   render () {

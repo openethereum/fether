@@ -5,27 +5,18 @@
 
 import React from 'react';
 import Blockies from 'react-blockies';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import PropTypes from 'prop-types';
-import ReactTooltip from 'react-tooltip';
 
+import ClickToCopy from '../ClickToCopy';
 import Header from '../Header';
 
 const NormalContainer = ({ children }) => (
   <h1 className='account'>{children}</h1>
 );
 const CopyContainer = ({ address, children, ...otherProps }) => (
-  <CopyToClipboard text={address}>
-    <a className='account' data-tip='Copy address'>
-      {children}
-      <ReactTooltip
-        effect='solid'
-        event='mouseover'
-        eventOff='mouseout click'
-        place='bottom'
-      />
-    </a>
-  </CopyToClipboard>
+  <ClickToCopy label='Copy address' textToCopy={address} {...otherProps}>
+    <a className='account'>{children}</a>
+  </ClickToCopy>
 );
 
 const AccountHeader = ({ address, copyAddress, name, ...otherProps }) => {

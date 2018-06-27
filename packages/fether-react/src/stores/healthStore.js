@@ -118,7 +118,6 @@ class HealthStore {
     }
 
     const message = details[0];
-    console.log(message); // TODO WIP, to catch potential other messages
 
     if (
       message ===

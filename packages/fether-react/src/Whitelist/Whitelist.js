@@ -19,7 +19,7 @@ import NewTokenItem from './NewTokenItem';
 })
 @inject('tokensStore')
 @observer
-class Settings extends Component {
+class Whitelist extends Component {
   state = {
     db: null,
     dbMap: null,
@@ -106,7 +106,7 @@ class Settings extends Component {
               Close
             </Link>
           }
-          title={<h1>Token whitelist</h1>}
+          title={<h1>My tokens</h1>}
         />
 
         <div className='window_content'>
@@ -146,4 +146,4 @@ class Settings extends Component {
   }
 }
 
-export default Settings;
+export default Whitelist;
