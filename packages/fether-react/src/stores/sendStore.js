@@ -11,9 +11,11 @@ import memoize from 'lodash/memoize';
 import noop from 'lodash/noop';
 import { toWei } from '@parity/api/lib/util/wei';
 
+import Debug from '../utils/debug';
 import parityStore from './parityStore';
 import tokensStore from './tokensStore';
 
+const debug = Debug('sendStore');
 const DEFAULT_GAS = new BigNumber(21000); // Default gas amount to show
 const GAS_MULT_FACTOR = 1.2; // Since estimateGas is not always accurate, we add a 120% factor for buffer.
 
@@ -109,6 +111,11 @@ class SendStore {
           this.txForErc20.options
         );
 
+    debug(
+      'Sending tx.',
+      this.tokenAddress === 'ETH' ? this.txForEth : this.txForErc20
+    );
+
     return new Promise((resolve, reject) => {
       send$.subscribe(txStatus => {
         // When we arrive to the `requested` stage, we accept the request
@@ -118,6 +125,7 @@ class SendStore {
             .catch(reject);
         }
         this.setTxStatus(txStatus);
+        debug('Tx status updated.', txStatus);
       });
     });
   };

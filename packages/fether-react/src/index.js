@@ -11,6 +11,11 @@ import App from './App';
 import rootStore from './stores';
 import './index.css';
 
+// Show debug logs in dev environment
+if (process.env.NODE_ENV === 'development') {
+  localStorage.debug = 'fether*'; // https://github.com/visionmedia/debug#browser-support
+}
+
 ReactDOM.render(
   <Provider {...rootStore}>
     <App />
