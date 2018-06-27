@@ -15,7 +15,7 @@
       &:hover {
         border-color: $blue;
         box-shadow: 0 0.125rem 0.675rem rgba($black, 0.175);
-        cursor: default;
+        cursor: pointer;
       }
       &:active {
         border-color: $blue;

@@ -4,10 +4,8 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { FormField } from 'fether-ui';
+import { AccountCard, FormField } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
-
-import CreateAccountContainer from '../CreateAccountContainer';
 
 @inject('createAccountStore')
 @observer
@@ -25,55 +23,62 @@ class AccountPassword extends Component {
     this.setState({ password: value });
   };
 
-  handleSubmit = () => {
-    const {
-      createAccountStore,
-      history,
-      location: { pathname }
-    } = this.props;
+  handleSubmit = event => {
+    const { createAccountStore, history } = this.props;
     const { password } = this.state;
-    createAccountStore.setPassword(password);
 
-    const currentStep = pathname.slice(-1);
-    history.push(`/accounts/new/${+currentStep + 1}`);
+    event.preventDefault();
+
+    // Save to parity
+    createAccountStore.saveAccountToParity(password).then(() => {
+      createAccountStore.clear();
+      history.push('/accounts');
+    });
   };
 
   render () {
+    const {
+      createAccountStore: { address, name }
+    } = this.props;
     const { confirm, password } = this.state;
 
     return (
-      <CreateAccountContainer>
-        <form onSubmit={this.handleSubmit}>
-          <div className='text'>
-            <p>Secure your account with a password:</p>
-          </div>
+      <AccountCard
+        address={address}
+        name={name}
+        drawers={[
+          <form key='createAccount' onSubmit={this.handleSubmit}>
+            <div className='text'>
+              <p>Secure your account with a password:</p>
+            </div>
 
-          <FormField
-            label='Password'
-            onChange={this.handlePasswordChange}
-            required
-            type='password'
-            value={password}
-          />
+            <FormField
+              label='Password'
+              onChange={this.handlePasswordChange}
+              required
+              type='password'
+              value={password}
+            />
 
-          <FormField
-            label='Confirm'
-            onChange={this.handleConfirmChange}
-            required
-            type='password'
-            value={confirm}
-          />
+            <FormField
+              label='Confirm'
+              onChange={this.handleConfirmChange}
+              required
+              type='password'
+              value={confirm}
+            />
 
-          <nav className='form-nav'>
-            <button
-              className='button'
-              disabled={!password || confirm !== password}
-            >
-              Next
-            </button>
-          </nav>
-        </form>
-      </CreateAccountContainer>
+            <nav className='form-nav'>
+              <button
+                className='button'
+                disabled={!password || confirm !== password}
+              >
+                Confirm account creation
+              </button>
+            </nav>
+          </form>
+        ]}
+      />
     );
   }
 }
