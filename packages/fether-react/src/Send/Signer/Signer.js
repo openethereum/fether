@@ -29,7 +29,7 @@ class Signer extends Component {
 
     this.setState({ isSending: true }, () => {
       sendStore
-        .acceptRequest(password)
+        .send(password)
         .then(() => history.push('/send/sent'))
         .catch(error => {
           this.setState({ error, isSending: false }, () =>
@@ -39,28 +39,26 @@ class Signer extends Component {
     });
   };
 
+  handleCancel = () => {
+    const { history } = this.props;
+    history.goBack();
+  };
+
   handleChangePassword = ({ target: { value } }) => {
     this.setState({ error: null, password: value });
   };
 
-  handleReject = () => {
-    const { history, sendStore } = this.props;
-
-    this.setState({ isSending: true }, () => {
-      sendStore
-        .rejectRequest()
-        .then(() => history.goBack())
-        .catch(() => history.goBack());
-    });
-  };
-
+  /**
+   * TODO All this tooltips refs etc should go inside a React validation
+   * library.
+   */
   handleTooltipRef = ref => {
     this.tooltip = ref;
   };
 
   render () {
     const {
-      sendStore: { token, tx, txStatus }
+      sendStore: { token, tx }
     } = this.props;
     const { error, isSending, password } = this.state;
 
@@ -112,7 +110,7 @@ class Signer extends Component {
                   <nav className='form-nav -binary'>
                     <button
                       className='button -cancel'
-                      onClick={this.handleReject}
+                      onClick={this.handleCancel}
                       type='button'
                     >
                       Cancel
@@ -120,9 +118,7 @@ class Signer extends Component {
 
                     <button
                       className='button -submit'
-                      disabled={
-                        !txStatus || !txStatus.requested || isSending || error
-                      }
+                      disabled={!password.length || isSending || error}
                     >
                       Confirm transaction
                     </button>

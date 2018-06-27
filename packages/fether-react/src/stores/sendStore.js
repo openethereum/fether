@@ -15,7 +15,7 @@ import parityStore from './parityStore';
 import tokensStore from './tokensStore';
 
 const DEFAULT_GAS = new BigNumber(21000); // Default gas amount to show
-const GAS_MULT_FACTOR = 1.2; // Since estimateGas is not always accurate, we add a 120% factor for buffer.
+const GAS_MULT_FACTOR = 1.33; // Since estimateGas is not always accurate, we add a 33% factor for buffer.
 
 class SendStore {
   @observable blockNumber; // Current block number, used to calculate tx confirmations.
@@ -24,31 +24,19 @@ class SendStore {
   tx = {}; // The actual tx we are sending. No need to be observable.
   @observable txStatus; // Status of the tx, see wiki for details.
 
-  acceptRequest = password => {
-    // Avoid calling this method from a random place
-    if (!this.requestId) {
-      return Promise.reject(
-        new Error('The requestId has not been generated yet.')
-      );
-    }
-
+  acceptRequest = (requestId, password) => {
     // Since we accepted this request, we also start to listen to blockNumber,
     // to calculate the number of confirmations
     this.subscription = blockNumber$().subscribe(this.setBlockNumber);
 
-    return parityStore.api.signer.confirmRequest(
-      this.requestId,
-      null,
-      password
-    );
+    return parityStore.api.signer.confirmRequest(requestId, null, password);
   };
 
   /**
    * Back to defaults.
    */
   clear = () => {
-    this.tx.amount = 0;
-    this.tx.to = '';
+    this.tx = {};
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
@@ -112,7 +100,7 @@ class SendStore {
   /**
    * Create a transaction.
    */
-  send = () => {
+  send = password => {
     const send$ =
       this.tokenAddress === 'ETH'
         ? post$(this.txForEth)
@@ -121,22 +109,17 @@ class SendStore {
           this.txForErc20.options
         );
 
-    send$.subscribe(txStatus => {
-      if (txStatus.requested) {
-        this.requestId = txStatus.requested;
-      }
-      this.setTxStatus(txStatus);
+    return new Promise((resolve, reject) => {
+      send$.subscribe(txStatus => {
+        // When we arrive to the `requested` stage, we accept the request
+        if (txStatus.requested) {
+          this.acceptRequest(txStatus.requested, password)
+            .then(resolve)
+            .catch(reject);
+        }
+        this.setTxStatus(txStatus);
+      });
     });
-  };
-
-  rejectRequest = () => {
-    // Avoid calling this method from a random place
-    if (!this.requestId) {
-      return Promise.reject(
-        new Error('The requestId has not been generated yet.')
-      );
-    }
-    return parityStore.api.signer.rejectRequest(this.requestId);
   };
 
   @computed

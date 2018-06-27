@@ -7,7 +7,6 @@ import React, { Component } from 'react';
 import { chainName$ } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
 import light from 'light-hoc';
-import { Link } from 'react-router-dom';
 
 import check from '../../assets/img/icons/check.svg';
 import loading from '../../assets/img/icons/loading.svg';
@@ -21,6 +20,12 @@ const MIN_CONFIRMATIONS = 6;
 @inject('sendStore')
 @observer
 class Sent extends Component {
+  handleGoToHomepage = () => {
+    const { history, sendStore } = this.props;
+    sendStore.clear();
+    history.push('/');
+  };
+
   render () {
     const {
       sendStore: { confirmations }
@@ -40,11 +45,13 @@ class Sent extends Component {
             </div>
             {confirmations >= MIN_CONFIRMATIONS && (
               <nav className='form-nav'>
-                <Link to='/'>
-                  <button className='button' disabled={confirmations < 6}>
-                    Go back
-                  </button>
-                </Link>
+                <button
+                  className='button'
+                  disabled={confirmations < 6}
+                  onClick={this.handleGoToHomepage}
+                >
+                  Go back
+                </button>
               </nav>
             )}
           </div>

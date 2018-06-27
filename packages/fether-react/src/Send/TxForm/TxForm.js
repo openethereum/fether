@@ -29,24 +29,13 @@ class Send extends Component {
     ...this.props.sendStore.tx
   };
 
-  componentDidUpdate () {
-    if (!this.hasError()) {
-      const { amount, gasPrice, to } = this.state;
-      this.props.sendStore.setTx({ amount, gasPrice, to });
-      this.estimateGas();
-    }
-  }
-
-  estimateGas = debounce(() => {
-    this.props.sendStore.estimateGas();
-  }, 1000);
-
   static getDerivedStateFromProps (nextProps, prevState) {
     const {
       balance,
       sendStore: { estimated }
     } = nextProps;
 
+    // Calculate the maxAount
     return {
       maxAmount:
         balance && estimated
@@ -58,6 +47,18 @@ class Send extends Component {
           : 0.01
     };
   }
+
+  componentDidUpdate () {
+    if (!this.hasError()) {
+      const { amount, gasPrice, to } = this.state;
+      this.props.sendStore.setTx({ amount, gasPrice, to });
+      this.estimateGas();
+    }
+  }
+
+  estimateGas = debounce(() => {
+    this.props.sendStore.estimateGas();
+  }, 1000);
 
   handleChangeAmount = ({ target: { value } }) =>
     this.setState({ amount: value });
@@ -71,14 +72,9 @@ class Send extends Component {
 
   handleMax = () => this.setState({ amount: this.state.maxAmount });
 
-  handleSubmit = e => {
-    e.preventDefault();
-    const { history, sendStore } = this.props;
-
-    // Post a request to the transaction. There is a next step to sign this
-    // request.
-    sendStore.send();
-
+  handleSubmit = event => {
+    event.preventDefault();
+    const { history } = this.props;
     history.push('/send/signer');
   };
 

@@ -24,6 +24,12 @@
     flex-grow: 1;
   }
 
+  .account_change_blockies {
+    align-items: center;
+    display: flex;
+    padding-left: 1rem;
+  }
+
   .account_name {
     color: $black;
     font-weight: 500;
