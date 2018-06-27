@@ -3,6 +3,6 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import Settings from './Settings';
+import Whitelist from './Whitelist';
 
-export default Settings;
+export default Whitelist;
