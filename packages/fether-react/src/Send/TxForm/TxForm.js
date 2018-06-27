@@ -29,6 +29,10 @@ class Send extends Component {
     ...this.props.sendStore.tx
   };
 
+  componentDidMount () {
+    this.props.sendStore.clear();
+  }
+
   componentDidUpdate () {
     if (!this.hasError()) {
       const { amount, gasPrice, to } = this.state;
