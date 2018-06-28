@@ -67,7 +67,7 @@ export const deleteParity = async () => {
 };
 
 // Fetch parity from https://vanity-service.parity.io/parity-binaries
-export const fetchParity = mainWindow => {
+export const fetchParity = (mainWindow, onProgress) => {
   try {
     return retry(
       async (_, attempt) => {
@@ -88,9 +88,7 @@ export const fetchParity = mainWindow => {
         // Start downloading. This will install parity into defaultParityPath.
         const downloadItem = await download(mainWindow, downloadUrl, {
           directory: app.getPath('userData'),
-          onProgress: progress =>
-            // Notify the renderers
-            mainWindow.webContents.send('parity-download-progress', progress)
+          onProgress
         });
         const downloadPath = downloadItem.getSavePath(); // Equal to defaultParityPath
 
@@ -110,13 +108,11 @@ export const fetchParity = mainWindow => {
         await fsChmod(downloadPath, '755');
 
         // Double-check that Parity exists now.
-        console.log('fetchParity');
         const parityPath = await getParityPath();
         return parityPath;
       },
       {
         onRetry: async err => {
-          console.log('onRetry');
           debug(err);
 
           // Everytime we retry, we remove the parity file we just downloaded.
@@ -128,7 +124,6 @@ export const fetchParity = mainWindow => {
       }
     );
   } catch (err) {
-    console.log('error in fetchParity');
     return deleteParity().then(() => {
       Promise.reject(err);
     });

@@ -29,14 +29,14 @@ const catchableErrors = [
   'IO error: While lock file:'
 ];
 
-export const runParity = async mainWindow => {
+export const runParity = async onParityError => {
   // Do not run parity with --no-run-parity
   if (cli.runParity === false) {
     return;
   }
 
   // Do not run parity if there is already another instance running
-  const isRunning = await isParityRunning(mainWindow);
+  const isRunning = await isParityRunning();
   if (isRunning) {
     return;
   }
@@ -68,7 +68,7 @@ export const runParity = async mainWindow => {
   parity.stderr.on('data', callback);
 
   parity.on('error', err => {
-    throw err;
+    onParityError(err);
   });
   parity.on('close', (exitCode, signal) => {
     if (exitCode === 0) {
@@ -91,15 +91,9 @@ export const runParity = async mainWindow => {
     if (Object.keys(parityArgv()).length > 0) {
       app.exit(1);
     } else {
-      throw new Error(`Exit code ${exitCode}, with signal ${signal}.`);
+      onParityError(new Error(`Exit code ${exitCode}, with signal ${signal}.`));
     }
   });
-
-  // Notify the renderers
-  mainWindow.webContents.send('parity-running', true);
-  global.isParityRunning = true; // Send this variable to renderes via IPC
-
-  return Promise.resolve(true);
 };
 
 export const killParity = () => {
@@ -108,5 +102,5 @@ export const killParity = () => {
     parity.kill();
     parity = null;
   }
-  return Promise.resolve(true);
+  return Promise.resolve();
 };

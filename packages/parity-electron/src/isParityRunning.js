@@ -27,7 +27,7 @@ if (cli.wsInterface || cli.wsPort) {
  *
  * @return [Promise<Boolean>] - Promise that resolves to true or false.
  */
-export const isParityRunning = async mainWindow => {
+export const isParityRunning = async () => {
   try {
     // Retry to ping as many times as there are hosts in `hostsToPing`
     await retry(
@@ -37,10 +37,6 @@ export const isParityRunning = async mainWindow => {
         logger(
           `Another instance of parity is already running on ${host}, skip running local instance.`
         );
-
-        // Notify the renderers
-        mainWindow.webContents.send('parity-running', true);
-        global.isParityRunning = true; // Send this variable to renderes via IPC
       },
       { retries: hostsToPing.length }
     );

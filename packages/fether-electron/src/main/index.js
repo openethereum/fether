@@ -39,9 +39,24 @@ function createWindow () {
     parityChannel: parity.channel
   });
 
+  // Look if Parity is installed
   getParityPath()
-    .catch(() => fetchParity(mainWindow)) // Install parity if not present
-    .then(() => runParity(mainWindow))
+    .catch(() =>
+      // Install parity if not present
+      fetchParity(mainWindow, progress =>
+        // Notify the renderers on download progress
+        mainWindow.webContents.send('parity-download-progress', progress)
+      )
+    )
+    .then(() =>
+      // Run parity when installed
+      runParity(err => handleError(err, 'An error occured with Parity.'))
+    )
+    .then(() => {
+      // Notify the renderers
+      mainWindow.webContents.send('parity-running', true);
+      global.isParityRunning = true; // Send this variable to renderes via IPC
+    })
     .catch(handleError);
 
   // Opens file:///path/to/build/index.html in prod mode, or whatever is

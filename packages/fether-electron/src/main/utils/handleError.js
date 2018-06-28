@@ -16,15 +16,19 @@ export default (err, message = 'An error occurred.') => {
     {
       buttons: ['OK', 'Open logs'],
       defaultId: 0, // Default button id
-      detail: `Please attach the following debugging info:
+      detail: `Please file an issue at ${
+        bugs.url
+      }. Please attach the following debugging info:
+      
 OS: ${process.platform}
 Arch: ${process.arch}
 Channel: ${parity.channel}
 Error: ${err.message}
 
 Please also attach the contents of the following file:
-${logFile}`,
-      message: `${message} Please file an issue at ${bugs.url}.`,
+${logFile}.
+Click on "Open logs" to open this file.`,
+      message: `${message}`,
       title: 'Parity Error',
       type: 'error'
     },
