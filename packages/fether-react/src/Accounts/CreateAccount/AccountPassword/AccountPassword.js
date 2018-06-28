@@ -38,9 +38,12 @@ class AccountPassword extends Component {
 
   render () {
     const {
-      createAccountStore: { address, name }
+      createAccountStore: { address, name },
+      history,
+      location: { pathname }
     } = this.props;
     const { confirm, password } = this.state;
+    const currentStep = pathname.slice(-1);
 
     return (
       <AccountCard
@@ -68,7 +71,12 @@ class AccountPassword extends Component {
               value={confirm}
             />
 
-            <nav className='form-nav'>
+            <nav className='form-nav -space-around'>
+              {currentStep > 1 && (
+                <button className='button -cancel' onClick={history.goBack}>
+                  Back
+                </button>
+              )}
               <button
                 className='button'
                 disabled={!password || confirm !== password}

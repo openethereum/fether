@@ -54,9 +54,12 @@ class AccountRewritePhrase extends Component {
 
   render () {
     const {
-      createAccountStore: { address, isImport, name }
+      createAccountStore: { address, isImport, name },
+      history,
+      location: { pathname }
     } = this.props;
     const { value } = this.state;
+    const currentStep = pathname.slice(-1);
 
     return (
       <AccountCard
@@ -81,7 +84,14 @@ class AccountRewritePhrase extends Component {
               label='Recovery phrase'
             />
 
-            <nav className='form-nav'>{this.renderButton()}</nav>
+            <nav className='form-nav -space-around'>
+              {currentStep > 1 && (
+                <button className='button -cancel' onClick={history.goBack}>
+                  Back
+                </button>
+              )}
+              {this.renderButton()}
+            </nav>
           </div>
         ]}
       />
