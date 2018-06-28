@@ -5,14 +5,12 @@
 
 import { app } from 'electron';
 import commandExists from 'command-exists';
-import debug from 'debug';
 import fs from 'fs';
 import promiseAny from 'promise-any';
 import { promisify } from 'util';
 
-import { name } from '../package.json';
+import debug from './utils/debug';
 
-const logger = debug(`${name}:main`);
 const fsStat = promisify(fs.stat);
 
 // The default path to install parity, in case there's no other instance found
@@ -98,10 +96,10 @@ export const getParityPath = async () => {
   try {
     const path = await doesParityExist();
     parityPath = path; // Save the final result in module variable
-    logger(`Parity found on machine, can be run with "${path}".`);
+    debug('main')(`Parity found on machine, can be run with "${path}".`);
     return path;
   } catch (err) {
-    logger(`Parity not found on machine.`);
+    debug('main')(`Parity not found on machine.`);
     throw err;
   }
 };

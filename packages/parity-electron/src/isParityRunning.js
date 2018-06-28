@@ -4,13 +4,10 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import axios from 'axios';
-import debug from 'debug';
 import retry from 'async-retry';
 
 import { cli } from './utils/cli';
-import { name } from '../package.json';
-
-const logger = debug(`${name}:main`);
+import debug from './utils/debug';
 
 // Try to ping these hosts
 const hostsToPing = ['http://127.0.0.1:8545', 'http://127.0.0.1:8546'];
@@ -34,7 +31,7 @@ export const isParityRunning = async () => {
       async (_, attempt) => {
         const host = hostsToPing[attempt - 1]; // Attempt starts with 1
         await axios.get(host);
-        logger(
+        debug('main')(
           `Another instance of parity is already running on ${host}, skip running local instance.`
         );
       },

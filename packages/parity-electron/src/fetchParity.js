@@ -6,18 +6,16 @@
 import { app } from 'electron';
 import axios from 'axios';
 import cs from 'checksum';
-import debug from 'debug';
 import { download } from 'electron-dl';
 import fs from 'fs';
 import { promisify } from 'util';
 import retry from 'async-retry';
 
+import debug from './utils/debug';
 import { defaultParityPath, getParityPath } from './getParityPath';
-import { name } from '../package.json';
 import parityChannel from './utils/parityChannel';
 
 const checksum = promisify(cs.file);
-const logger = debug(`${name}:main`);
 const fsChmod = promisify(fs.chmod);
 const fsStat = promisify(fs.stat);
 const fsUnlink = promisify(fs.unlink);
@@ -72,12 +70,15 @@ export const fetchParity = (mainWindow, onProgress) => {
     return retry(
       async (_, attempt) => {
         if (attempt > 1) {
-          logger('Retrying.');
+          debug('main')('Retrying.');
         }
 
+        // Delete any old Parity if it exists
+        await deleteParity();
+
         // Fetch the metadata of the correct version of parity
-        const metadataUrl = `${VANITY_URL}?version=${parityChannel}&os=${getOs()}&architecture=${getArch()}`;
-        logger(`Downloading from ${metadataUrl}.`);
+        const metadataUrl = `${VANITY_URL}?version=${parityChannel()}&os=${getOs()}&architecture=${getArch()}`;
+        debug('main')(`Downloading from ${metadataUrl}.`);
         const { data } = await axios.get(metadataUrl);
 
         // Get the binary's url
@@ -112,14 +113,6 @@ export const fetchParity = (mainWindow, onProgress) => {
         return parityPath;
       },
       {
-        onRetry: async err => {
-          debug(err);
-
-          // Everytime we retry, we remove the parity file we just downloaded.
-          // This needs to be done syncly normally, since onRetry is sync
-          // https://github.com/zeit/async-retry/issues/43
-          return deleteParity();
-        },
         retries: 3
       }
     );

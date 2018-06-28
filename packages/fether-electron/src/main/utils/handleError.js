@@ -6,9 +6,10 @@
 import { app, dialog, shell } from 'electron';
 
 import { bugs, name, parity } from '../../../package.json';
-import pino from './pino';
+import Pino from './pino';
 
 const logFile = `${app.getPath('userData')}/${name}.log`;
+const pino = Pino();
 
 export default (err, message = 'An error occurred.') => {
   pino.error(err);

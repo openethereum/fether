@@ -14,4 +14,4 @@ export const setParityChannel = channel => {
   parityChannel = channel;
 };
 
-export default parityChannel;
+export default () => parityChannel;

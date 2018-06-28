@@ -4,11 +4,9 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import { app } from 'electron';
-import debug from 'debug';
 import fs from 'fs';
 import { multistream } from 'pino-multi-stream';
 import Pino from 'pino';
-import pinoDebug from 'pino-debug';
 
 import { name } from '../../../package.json';
 
@@ -34,15 +32,4 @@ const streams = [
   { level: 'info', stream: pretty }
 ];
 
-const pino = Pino({ name }, multistream(streams));
-
-// @parity/electron's debug logs are in namespace "@parity/log", we enable
-// them by default.
-debug.enable('@parity/electron');
-pinoDebug(pino, {
-  map: {
-    '@parity/electron': 'debug'
-  }
-});
-
-export default pino;
+export default opts => Pino({ name, ...opts }, multistream(streams));

@@ -9,6 +9,7 @@ import { accountsInfo$, defaultAccount$ } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
 import light from 'light-hoc';
 
+import debug from '../../utils/debug';
 import Health from '../../Health';
 
 @light({
@@ -52,7 +53,7 @@ class AccountsList extends Component {
         history.push('/tokens', { address });
       })
       .catch(err =>
-        console.error(`Error while selecting account, ${err.message}.`)
+        debug('AccountsList')(`Error while selecting account, ${err.message}.`)
       );
   };
 

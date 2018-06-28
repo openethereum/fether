@@ -4,18 +4,15 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import { app } from 'electron';
-import debug from 'debug';
 import fs from 'fs';
 import { spawn } from 'child_process';
 import { promisify } from 'util';
 
 import { cli, parityArgv } from './utils/cli';
+import debug from './utils/debug';
 import { getParityPath } from './getParityPath';
 import { isParityRunning } from './isParityRunning';
 import logCommand from './utils/logCommand';
-import { name } from '../package.json';
-
-const logger = debug(`${name}:main`);
 
 const fsChmod = promisify(fs.chmod);
 
@@ -55,14 +52,14 @@ export const runParity = async onParityError => {
   // Run an instance of parity with the correct args
   const args = [...parityArgv(), '--light'];
   parity = spawn(parityPath, args);
-  logger(logCommand(parityPath, args));
+  debug('main')(logCommand(parityPath, args));
 
   // Save in memory the last line of the log file, for handling error
   const callback = data => {
     if (data && data.length) {
       logLastLine = data.toString();
     }
-    debug(`${name}:parity`)(data.toString());
+    debug('parity')(data.toString());
   };
   parity.stdout.on('data', callback);
   parity.stderr.on('data', callback);
@@ -83,7 +80,9 @@ export const runParity = async onParityError => {
       logLastLine &&
       catchableErrors.some(error => logLastLine.includes(error))
     ) {
-      logger('Another instance of parity is running, closing local instance.');
+      debug('main')(
+        'Another instance of parity is running, closing local instance.'
+      );
       return;
     }
 

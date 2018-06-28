@@ -8826,13 +8826,6 @@ pinkie@^2.0.0:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
 
-pino-debug@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/pino-debug/-/pino-debug-1.1.1.tgz#7986a1b3de232ea4cee488a0ebcea7073772a622"
-  dependencies:
-    debug "^3.1.0"
-    pino "^4.0.2"
-
 pino-multi-stream@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/pino-multi-stream/-/pino-multi-stream-3.1.2.tgz#261af1b66caf208abe9c97f1bad1990d5c25d303"
@@ -8843,7 +8836,7 @@ pino-std-serializers@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/pino-std-serializers/-/pino-std-serializers-2.1.0.tgz#01953dcaecd5f43b331ecf2e312a49c9fd64851c"
 
-pino@^4.0.2, pino@^4.16.1, pino@^4.7.1:
+pino@^4.16.1, pino@^4.7.1:
   version "4.17.3"
   resolved "https://registry.yarnpkg.com/pino/-/pino-4.17.3.tgz#3536ea36f6258356ba8891d18dbf1afed41fcf09"
   dependencies:

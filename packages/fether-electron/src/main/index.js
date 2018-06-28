@@ -18,12 +18,13 @@ import cli from './cli';
 import handleError from './utils/handleError';
 import messages from './messages';
 import { parity } from '../../package.json';
-import pino from './utils/pino';
+import Pino from './utils/pino';
 import { productName } from '../../electron-builder.json';
 import staticPath from './utils/staticPath';
 
 const { app, BrowserWindow, ipcMain, session } = electron;
 let mainWindow;
+const pino = Pino();
 
 function createWindow () {
   pino.info(`Starting ${productName}...`);
