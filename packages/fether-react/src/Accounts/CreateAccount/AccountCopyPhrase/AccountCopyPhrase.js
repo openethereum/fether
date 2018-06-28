@@ -14,6 +14,7 @@ class AccountCopyPhrase extends Component {
   render () {
     const {
       createAccountStore: { address, name, phrase },
+      history,
       location: { pathname }
     } = this.props;
     const currentStep = pathname.slice(-1);
@@ -43,7 +44,12 @@ class AccountCopyPhrase extends Component {
                 </ul>
               </div>
             </div>
-            <nav className='form-nav'>
+            <nav className='form-nav -space-around'>
+              {currentStep > 1 && (
+                <button className='button -cancel' onClick={history.goBack}>
+                  Back
+                </button>
+              )}
               <Link to={`/accounts/new/${+currentStep + 1}`}>
                 <button className='button'>Next</button>
               </Link>

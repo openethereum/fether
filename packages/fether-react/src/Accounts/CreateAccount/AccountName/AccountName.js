@@ -69,6 +69,7 @@ class AccountName extends Component {
   renderDrawer = () => {
     const {
       createAccountStore: { name },
+      history,
       location: { pathname }
     } = this.props;
     const currentStep = pathname.slice(-1);
@@ -85,7 +86,12 @@ class AccountName extends Component {
           type='text'
           value={name}
         />
-        <nav className='form-nav'>
+        <nav className='form-nav -space-around'>
+          {currentStep > 1 && (
+            <button className='button -cancel' onClick={history.goBack}>
+              Back
+            </button>
+          )}
           {name ? (
             <Link to={`/accounts/new/${+currentStep + 1}`}>
               <button className='button'>Next</button>
