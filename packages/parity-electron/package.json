@@ -1,5 +1,5 @@
 {
-  "name": "fether",
+  "name": "@parity/electron",
   "description": "Fether Wallet",
   "version": "0.1.0",
   "private": true,
@@ -24,23 +24,14 @@
     "Parity"
   ],
   "homepage": "https://github.com/parity-js/fether",
-  "parity": {
-    "channel": "beta"
-  },
+  "main": "lib/index.js",
   "scripts": {
-    "prebuild": "copyfiles -u 2 \"../fether-react/build/**/*\" static/ && ./scripts/fixElectronBug.sh",
-    "build": "electron-webpack",
-    "electron": "electron dist/main/main.js",
+    "prebuild": "rimraf lib",
+    "build": "babel src --out-dir lib",
     "lint": "semistandard 'src/**/*.js' --parser babel-eslint",
-    "prepackage": "./scripts/revertElectronBug.sh",
-    "package": "electron-builder",
-    "prerelease": "./scripts/revertElectronBug.sh",
-    "release": "electron-builder",
-    "start": "cross-env ELECTRON_START_URL=http://localhost:3000 electron-webpack dev --ws-origins all",
-    "test": "echo Skipped."
+    "start": "yarn build --watch"
   },
   "dependencies": {
-    "@parity/electron": "^0.1.0",
     "async-retry": "^1.2.1",
     "axios": "^0.18.0",
     "checksum": "^0.1.1",
@@ -51,12 +42,12 @@
     "fether-react": "^0.1.0",
     "menubar": "^5.2.3",
     "pino": "^4.16.1",
-    "pino-debug": "^1.1.1",
     "pino-multi-stream": "^3.1.2",
     "promise-any": "^0.2.0",
     "source-map-support": "^0.5.6"
   },
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.51",
     "babel-eslint": "^8.2.3",
     "copyfiles": "^2.0.0",
     "cross-env": "^5.2.0",

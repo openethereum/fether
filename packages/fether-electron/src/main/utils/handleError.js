@@ -6,9 +6,8 @@
 import { app, dialog, shell } from 'electron';
 
 import { bugs, name, parity } from '../../../package.json';
-import Pino from '../utils/pino';
+import pino from './pino';
 
-const pino = Pino();
 const logFile = `${app.getPath('userData')}/${name}.log`;
 
 export default (err, message = 'An error occurred.') => {
@@ -16,7 +15,7 @@ export default (err, message = 'An error occurred.') => {
   dialog.showMessageBox(
     {
       buttons: ['OK', 'Open logs'],
-      defaultId: 0,
+      defaultId: 0, // Default button id
       detail: `Please attach the following debugging info:
 OS: ${process.platform}
 Arch: ${process.arch}

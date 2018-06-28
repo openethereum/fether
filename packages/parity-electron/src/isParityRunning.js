@@ -4,12 +4,13 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import axios from 'axios';
+import debug from 'debug';
 import retry from 'async-retry';
 
-import { cli } from '../cli';
-import Pino from '../utils/pino';
+import { cli } from './utils/cli';
+import { name } from '../package.json';
 
-const pino = Pino();
+const logger = debug(`${name}:main`);
 
 // Try to ping these hosts
 const hostsToPing = ['http://127.0.0.1:8545', 'http://127.0.0.1:8546'];
@@ -26,14 +27,14 @@ if (cli.wsInterface || cli.wsPort) {
  *
  * @return [Promise<Boolean>] - Promise that resolves to true or false.
  */
-const isParityRunning = async mainWindow => {
+export const isParityRunning = async mainWindow => {
   try {
     // Retry to ping as many times as there are hosts in `hostsToPing`
     await retry(
       async (_, attempt) => {
         const host = hostsToPing[attempt - 1]; // Attempt starts with 1
         await axios.get(host);
-        pino.info(
+        logger(
           `Another instance of parity is already running on ${host}, skip running local instance.`
         );
 
@@ -49,5 +50,3 @@ const isParityRunning = async mainWindow => {
     return false;
   }
 };
-
-export default isParityRunning;

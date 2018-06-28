@@ -3,23 +3,27 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
+import parityElectron, {
+  getParityPath,
+  fetchParity,
+  runParity,
+  killParity
+} from '@parity/electron';
 import electron from 'electron';
 import path from 'path';
 import url from 'url';
 
 import addMenu from './menu';
-import { doesParityExist } from './operations/doesParityExist';
-import fetchParity from './operations/fetchParity';
-import handleError from './operations/handleError';
+import cli from './cli';
+import handleError from './utils/handleError';
 import messages from './messages';
+import { parity } from '../../package.json';
+import pino from './utils/pino';
 import { productName } from '../../electron-builder.json';
-import Pino from './utils/pino';
-import { runParity, killParity } from './operations/runParity';
 import staticPath from './utils/staticPath';
 
 const { app, BrowserWindow, ipcMain, session } = electron;
 let mainWindow;
-const pino = Pino();
 
 function createWindow () {
   pino.info(`Starting ${productName}...`);
@@ -29,10 +33,16 @@ function createWindow () {
     width: 360
   });
 
-  doesParityExist()
+  // Set options for @parity/electron
+  parityElectron({
+    cli,
+    parityChannel: parity.channel
+  });
+
+  getParityPath()
     .catch(() => fetchParity(mainWindow)) // Install parity if not present
     .then(() => runParity(mainWindow))
-    .catch(handleError); // Errors should be handled before, this is really just in case
+    .catch(handleError);
 
   // Opens file:///path/to/build/index.html in prod mode, or whatever is
   // passed to ELECTRON_START_URL

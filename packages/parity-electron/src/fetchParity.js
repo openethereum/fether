@@ -6,19 +6,21 @@
 import { app } from 'electron';
 import axios from 'axios';
 import cs from 'checksum';
+import debug from 'debug';
 import { download } from 'electron-dl';
 import fs from 'fs';
 import { promisify } from 'util';
 import retry from 'async-retry';
 
-import { defaultParityPath, doesParityExist } from './doesParityExist';
-import handleError from './handleError';
-import { parity } from '../../../package.json';
-import Pino from '../utils/pino';
+import { defaultParityPath, getParityPath } from './getParityPath';
+import { name } from '../package.json';
+import parityChannel from './utils/parityChannel';
 
 const checksum = promisify(cs.file);
+const logger = debug(`${name}:main`);
 const fsChmod = promisify(fs.chmod);
-const pino = Pino();
+const fsStat = promisify(fs.stat);
+const fsUnlink = promisify(fs.unlink);
 
 const VANITY_URL = 'https://vanity-service.parity.io/parity-binaries';
 
@@ -56,32 +58,27 @@ const getOs = () => {
 /**
  * Remove parity binary in the userData folder
  */
-const deleteParity = () => {
-  if (fs.statSync(defaultParityPath)) {
-    fs.unlinkSync(defaultParityPath);
-  }
+export const deleteParity = async () => {
+  try {
+    const parityPath = await defaultParityPath();
+    await fsStat(parityPath);
+    await fsUnlink(parityPath);
+  } catch (e) {}
 };
 
 // Fetch parity from https://vanity-service.parity.io/parity-binaries
-export default mainWindow => {
+export const fetchParity = mainWindow => {
   try {
     return retry(
       async (_, attempt) => {
         if (attempt > 1) {
-          pino.warn(`Retrying.`);
+          logger('Retrying.');
         }
 
         // Fetch the metadata of the correct version of parity
-        pino.info(
-          `Downloading from ${VANITY_URL}?version=${
-            parity.channel
-          }&os=${getOs()}&architecture=${getArch()}.`
-        );
-        const { data } = await axios.get(
-          `${VANITY_URL}?version=${
-            parity.channel
-          }&os=${getOs()}&architecture=${getArch()}`
-        );
+        const metadataUrl = `${VANITY_URL}?version=${parityChannel}&os=${getOs()}&architecture=${getArch()}`;
+        logger(`Downloading from ${metadataUrl}.`);
+        const { data } = await axios.get(metadataUrl);
 
         // Get the binary's url
         const { downloadUrl, checksum: expectedChecksum } = data[0].files.find(
@@ -113,21 +110,27 @@ export default mainWindow => {
         await fsChmod(downloadPath, '755');
 
         // Double-check that Parity exists now.
-        return doesParityExist();
+        console.log('fetchParity');
+        const parityPath = await getParityPath();
+        return parityPath;
       },
       {
-        onRetry: err => {
-          pino.warn(err);
+        onRetry: async err => {
+          console.log('onRetry');
+          debug(err);
 
           // Everytime we retry, we remove the parity file we just downloaded.
-          // This needs to be done syncly, since onRetry is sync
-          deleteParity();
+          // This needs to be done syncly normally, since onRetry is sync
+          // https://github.com/zeit/async-retry/issues/43
+          return deleteParity();
         },
         retries: 3
       }
     );
   } catch (err) {
-    deleteParity();
-    handleError(err, 'An error occured while fetching parity.');
+    console.log('error in fetchParity');
+    return deleteParity().then(() => {
+      Promise.reject(err);
+    });
   }
 };
