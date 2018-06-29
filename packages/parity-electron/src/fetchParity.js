@@ -11,8 +11,8 @@ import fs from 'fs';
 import { promisify } from 'util';
 import retry from 'async-retry';
 
-import debug from './utils/debug';
 import { defaultParityPath, getParityPath } from './getParityPath';
+import logger from './utils/logger';
 import parityChannel from './utils/parityChannel';
 
 const checksum = promisify(cs.file);
@@ -70,7 +70,7 @@ export const fetchParity = (mainWindow, onProgress) => {
     return retry(
       async (_, attempt) => {
         if (attempt > 1) {
-          debug('main')('Retrying.');
+          logger()('@parity/electron:main')('Retrying.');
         }
 
         // Delete any old Parity if it exists
@@ -78,7 +78,7 @@ export const fetchParity = (mainWindow, onProgress) => {
 
         // Fetch the metadata of the correct version of parity
         const metadataUrl = `${VANITY_URL}?version=${parityChannel()}&os=${getOs()}&architecture=${getArch()}`;
-        debug('main')(`Downloading from ${metadataUrl}.`);
+        logger()('@parity/electron:main')(`Downloading from ${metadataUrl}.`);
         const { data } = await axios.get(metadataUrl);
 
         // Get the binary's url

@@ -9,7 +9,7 @@ import fs from 'fs';
 import promiseAny from 'promise-any';
 import { promisify } from 'util';
 
-import debug from './utils/debug';
+import logger from './utils/logger';
 
 const fsStat = promisify(fs.stat);
 
@@ -96,10 +96,12 @@ export const getParityPath = async () => {
   try {
     const path = await doesParityExist();
     parityPath = path; // Save the final result in module variable
-    debug('main')(`Parity found on machine, can be run with "${path}".`);
+    logger()('@parity/electron:main')(
+      `Parity found on machine, can be run with "${path}".`
+    );
     return path;
   } catch (err) {
-    debug('main')(`Parity not found on machine.`);
+    logger()('@parity/electron:main')(`Parity not found on machine.`);
     throw err;
   }
 };

@@ -9,10 +9,10 @@ import { spawn } from 'child_process';
 import { promisify } from 'util';
 
 import { cli, parityArgv } from './utils/cli';
-import debug from './utils/debug';
 import { getParityPath } from './getParityPath';
 import { isParityRunning } from './isParityRunning';
 import logCommand from './utils/logCommand';
+import logger from './utils/logger';
 
 const fsChmod = promisify(fs.chmod);
 
@@ -52,14 +52,14 @@ export const runParity = async onParityError => {
   // Run an instance of parity with the correct args
   const args = [...parityArgv(), '--light'];
   parity = spawn(parityPath, args);
-  debug('main')(logCommand(parityPath, args));
+  logger()('@parity/electron:main')(logCommand(parityPath, args));
 
   // Save in memory the last line of the log file, for handling error
   const callback = data => {
     if (data && data.length) {
       logLastLine = data.toString();
     }
-    debug('parity')(data.toString());
+    logger()('@parity/parity')(data.toString());
   };
   parity.stdout.on('data', callback);
   parity.stderr.on('data', callback);
@@ -80,7 +80,7 @@ export const runParity = async onParityError => {
       logLastLine &&
       catchableErrors.some(error => logLastLine.includes(error))
     ) {
-      debug('main')(
+      logger()('@parity/electron:main')(
         'Another instance of parity is running, closing local instance.'
       );
       return;
@@ -97,7 +97,7 @@ export const runParity = async onParityError => {
 
 export const killParity = () => {
   if (parity) {
-    debug('Stopping parity.');
+    logger()('Stopping parity.');
     parity.kill();
     parity = null;
   }

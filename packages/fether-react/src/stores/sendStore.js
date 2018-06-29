@@ -15,7 +15,7 @@ import Debug from '../utils/debug';
 import parityStore from './parityStore';
 import tokensStore from './tokensStore';
 
-const debug = Debug('sendStore');
+const debug = logger()('sendStore');
 const DEFAULT_GAS = new BigNumber(21000); // Default gas amount to show
 const GAS_MULT_FACTOR = 1.33; // Since estimateGas is not always accurate, we add a 33% factor for buffer.
 
@@ -111,7 +111,7 @@ class SendStore {
           this.txForErc20.options
         );
 
-    debug(
+    logger()(
       'Sending tx.',
       this.tokenAddress === 'ETH' ? this.txForEth : this.txForErc20
     );
@@ -125,7 +125,7 @@ class SendStore {
             .catch(reject);
         }
         this.setTxStatus(txStatus);
-        debug('Tx status updated.', txStatus);
+        logger()('Tx status updated.', txStatus);
       });
     });
   };

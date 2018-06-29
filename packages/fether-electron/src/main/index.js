@@ -37,6 +37,7 @@ function createWindow () {
   // Set options for @parity/electron
   parityElectron({
     cli,
+    logger: namespace => log => Pino({ name: namespace }).info(log),
     parityChannel: parity.channel
   });
 

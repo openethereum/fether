@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import { setCli } from './utils/cli';
+import { setLogger } from './utils/logger';
 import { setParityChannel } from './utils/parityChannel';
 
 export * from './getParityPath';
@@ -16,6 +17,10 @@ export * from './signerNewToken';
 export default opts => {
   if (opts.cli) {
     setCli(opts.cli);
+  }
+
+  if (opts.logger) {
+    setLogger(opts.logger);
   }
 
   if (opts.parityChannel) {

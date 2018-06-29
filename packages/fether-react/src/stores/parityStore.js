@@ -12,7 +12,7 @@ import store from 'store';
 import Debug from '../utils/debug';
 import LS_PREFIX from './utils/lsPrefix';
 
-const debug = Debug('sendStore');
+const debug = logger()('sendStore');
 const electron = isElectron() ? window.require('electron') : null;
 
 const LS_KEY = `${LS_PREFIX}::secureToken`;
@@ -31,7 +31,7 @@ class ParityStore {
     }
 
     if (!electron) {
-      debug(
+      logger()(
         'Not in Electron, ParityStore will only have limited capabilities.'
       );
       return;

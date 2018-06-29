@@ -5,6 +5,10 @@
 
 import debug from 'debug';
 
-import { name } from '../../package.json';
+let logger = debug;
 
-export default namespace => debug(`${name}:${namespace}`);
+export const setLogger = _logger => {
+  logger = _logger;
+};
+
+export default () => logger;
