@@ -11,11 +11,11 @@ import ClickToCopy from '../ClickToCopy';
 import Header from '../Header';
 
 const NormalContainer = ({ children }) => (
-  <h1 className='account'>{children}</h1>
+  <h1 className='account -header'>{children}</h1>
 );
 const CopyContainer = ({ address, children, ...otherProps }) => (
   <ClickToCopy label='Copy address' textToCopy={address} {...otherProps}>
-    <a className='account'>{children}</a>
+    <a className='account -header'>{children}</a>
   </ClickToCopy>
 );
 
@@ -30,10 +30,8 @@ const AccountHeader = ({ address, copyAddress, name, ...otherProps }) => {
           name && (
             <Container address={address}>
               <Blockies seed={address.toLowerCase()} scale={2} size={8} />{' '}
-              {name}{' '}
-              <span className='account_address'>
-                {address.slice(0, 4)}..{address.slice(-4)}
-              </span>
+              {name} <br />
+              <span className='account_address'>{address}</span>
             </Container>
           )
         }

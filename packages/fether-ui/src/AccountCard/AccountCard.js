@@ -4,39 +4,35 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React from 'react';
-import Blockies from 'react-blockies';
 import PropTypes from 'prop-types';
 
+import Address from './Address';
+import Avatar from './Avatar';
 import Card from '../Card';
-import Placeholder from '../Placeholder';
+import Information from './Information';
+import Name from './Name';
 
-const AccountCard = ({ address, animate, name, ...otherProps }) => (
+const AccountCard = ({ address, name, shortAddress, ...otherProps }) => (
   <Card {...otherProps}>
     <div className='account'>
-      <div className='account_avatar'>
-        {address ? (
-          <Blockies seed={address.toLowerCase()} />
-        ) : (
-          <Placeholder animate={animate} height={36} width={36} />
-        )}
-      </div>
-      <div className='account_information'>
-        {name ? (
-          <div className='account_name'>{name}</div>
-        ) : (
-          <Placeholder animate={animate} height={18} width={100} />
-        )}
-        <div className='account_address'>
-          {address || <Placeholder animate={animate} height={12} width={150} />}
-        </div>
-      </div>
+      <Avatar address={address} />
+      <Information>
+        <Name name={name} />
+        <Address address={address} short={shortAddress} />
+      </Information>
     </div>
   </Card>
 );
 
+AccountCard.Address = Address;
+AccountCard.Avatar = Avatar;
+AccountCard.Information = Information;
+AccountCard.Name = Name;
+
 AccountCard.propTypes = {
   address: PropTypes.string,
-  name: PropTypes.string
+  name: PropTypes.string,
+  shortAddress: PropTypes.bool
 };
 
 export default AccountCard;

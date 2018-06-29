@@ -96,6 +96,7 @@ class AccountsList extends Component {
                           ? accountsInfo[address].name
                           : '(No name)')
                       }
+                      shortAddress
                     />
                   </li>
                 ))
