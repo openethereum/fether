@@ -42,7 +42,7 @@
     "build": "lerna run build",
     "preelectron": "yarn build",
     "electron": "cd packages/fether-electron && yarn electron",
-    "lint": "lerna run lint --parallel",
+    "lint": "semistandard 'packages/**/*.js' --parser babel-eslint",
     "prepackage": "yarn build",
     "package": "cd packages/fether-electron && yarn package",
     "release": "cd packages/fether-electron && yarn release",
