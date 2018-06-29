@@ -26,6 +26,12 @@ const { app, BrowserWindow, ipcMain, session } = electron;
 let mainWindow;
 const pino = Pino();
 
+// Disable gpu acceleration on linux
+// https://github.com/parity-js/fether/issues/85
+if (!['darwin', 'win32'].includes(process.platform)) {
+  app.disableHardwareAcceleration();
+}
+
 function createWindow () {
   pino.info(`Starting ${productName}...`);
   mainWindow = new BrowserWindow({
