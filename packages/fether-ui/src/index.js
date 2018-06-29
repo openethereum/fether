@@ -5,6 +5,7 @@
 
 import AccountCard from './AccountCard';
 import AccountHeader from './AccountHeader';
+import AddressShort from './AddressShort';
 import Card from './Card';
 import FormField from './FormField';
 import Header from './Header';
@@ -14,6 +15,7 @@ import TokenCard from './TokenCard';
 export {
   AccountCard,
   AccountHeader,
+  AddressShort,
   Card,
   FormField,
   Header,
