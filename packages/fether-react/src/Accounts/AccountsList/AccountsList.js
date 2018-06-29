@@ -53,7 +53,7 @@ class AccountsList extends Component {
         history.push('/tokens', { address });
       })
       .catch(err =>
-        logger()('AccountsList')(`Error while selecting account, ${err.message}.`)
+        debug('AccountsList')(`Error while selecting account, ${err.message}.`)
       );
   };
 
