@@ -19,7 +19,7 @@ import light from 'light-hoc';
  * A HOC on light.js to get the current balance.
  *
  * @example
- * @withBalance
+ * @withBalance()
  * class MyComponent extends React.Component{
  *
  * }
