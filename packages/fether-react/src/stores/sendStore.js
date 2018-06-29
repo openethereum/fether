@@ -175,6 +175,7 @@ class SendStore {
   @action
   setEstimated = estimated => {
     this.estimated = estimated.mul(GAS_MULT_FACTOR);
+    debug('Estimated gas.', +estimated);
   };
 
   @action

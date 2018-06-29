@@ -31,7 +31,7 @@
     "start": "npm-run-all -p start-*",
     "start-css": "npm run build-css -- --watch --recursive",
     "start-js": "react-app-rewired start",
-    "test": "echo Skipped."
+    "test": "react-app-rewired test --env=jsdom"
   },
   "dependencies": {
     "@parity/api": "^2.1.22",
@@ -56,6 +56,7 @@
   },
   "devDependencies": {
     "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "capitalize": "^1.0.0",
     "node-sass": "^4.9.0",
     "node-sass-chokidar": "^1.2.2",
     "npm-run-all": "^4.1.2",
