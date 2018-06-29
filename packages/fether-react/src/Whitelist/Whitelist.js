@@ -9,7 +9,6 @@ import debounce from 'lodash/debounce';
 import { Header } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 import light from 'light-hoc';
-import { Link } from 'react-router-dom';
 
 import Health from '../Health';
 import NewTokenItem from './NewTokenItem';
@@ -96,17 +95,18 @@ class Whitelist extends Component {
   };
 
   render () {
+    const { history } = this.props;
     const { matches, search } = this.state;
 
     return (
       <div>
         <Header
           left={
-            <Link to='/tokens' className='icon -close'>
+            <a to='/tokens' className='icon -close' onClick={history.goBack}>
               Close
-            </Link>
+            </a>
           }
-          title={<h1>My tokens</h1>}
+          title={<h1>Search tokens</h1>}
         />
 
         <div className='window_content'>
