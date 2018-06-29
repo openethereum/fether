@@ -12,10 +12,10 @@
   "license": "BSD-3-Clause",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/parity-js/light.git"
+    "url": "git+https://github.com/parity-js/fether.git"
   },
   "bugs": {
-    "url": "https://github.com/parity-js/light/issues"
+    "url": "https://github.com/parity-js/fether/issues"
   },
   "keywords": [
     "Ethereum",
@@ -23,7 +23,7 @@
     "Light Client",
     "Parity"
   ],
-  "homepage": "https://github.com/parity-js/light",
+  "homepage": "https://github.com/parity-js/fether",
   "parity": {
     "channel": "beta"
   },
@@ -40,17 +40,12 @@
     "test": "echo Skipped."
   },
   "dependencies": {
-    "async-retry": "^1.2.1",
-    "axios": "^0.18.0",
-    "checksum": "^0.1.1",
-    "command-exists": "^1.2.6",
+    "@parity/electron": "^0.1.0",
     "commander": "^2.15.1",
-    "electron-dl": "^1.11.0",
     "fether-react": "^0.1.0",
     "menubar": "^5.2.3",
     "pino": "^4.16.1",
     "pino-multi-stream": "^3.1.2",
-    "promise-any": "^0.2.0",
     "source-map-support": "^0.5.6"
   },
   "devDependencies": {

@@ -3,18 +3,23 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
+import parityElectron, {
+  getParityPath,
+  fetchParity,
+  runParity,
+  killParity
+} from '@parity/electron';
 import electron from 'electron';
 import path from 'path';
 import url from 'url';
 
 import addMenu from './menu';
-import { doesParityExist } from './operations/doesParityExist';
-import fetchParity from './operations/fetchParity';
-import handleError from './operations/handleError';
+import cli from './cli';
+import handleError from './utils/handleError';
 import messages from './messages';
-import { productName } from '../../electron-builder.json';
+import { parity } from '../../package.json';
 import Pino from './utils/pino';
-import { runParity, killParity } from './operations/runParity';
+import { productName } from '../../electron-builder.json';
 import staticPath from './utils/staticPath';
 
 const { app, BrowserWindow, ipcMain, session } = electron;
@@ -29,10 +34,33 @@ function createWindow () {
     width: 360
   });
 
-  doesParityExist()
-    .catch(() => fetchParity(mainWindow)) // Install parity if not present
-    .then(() => runParity(mainWindow))
-    .catch(handleError); // Errors should be handled before, this is really just in case
+  // Set options for @parity/electron
+  parityElectron({
+    cli,
+    logger: namespace => log => Pino({ name: namespace }).info(log)
+  });
+
+  // Look if Parity is installed
+  getParityPath()
+    .catch(() =>
+      // Install parity if not present
+      fetchParity(mainWindow, {
+        onProgress: progress =>
+          // Notify the renderers on download progress
+          mainWindow.webContents.send('parity-download-progress', progress),
+        parityChannel: parity.channel
+      })
+    )
+    .then(() =>
+      // Run parity when installed
+      runParity(err => handleError(err, 'An error occured with Parity.'))
+    )
+    .then(() => {
+      // Notify the renderers
+      mainWindow.webContents.send('parity-running', true);
+      global.isParityRunning = true; // Send this variable to renderes via IPC
+    })
+    .catch(handleError);
 
   // Opens file:///path/to/build/index.html in prod mode, or whatever is
   // passed to ELECTRON_START_URL

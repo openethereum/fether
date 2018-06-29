@@ -3,15 +3,17 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import signerNewToken from '../operations/signerNewToken';
+import { signerNewToken } from '@parity/electron';
 
 /**
  * Handle all asynchronous messages from renderer to main.
  */
-export default (event, arg) => {
+export default async (event, arg) => {
   switch (arg) {
     case 'signer-new-token': {
-      signerNewToken(event);
+      const token = await signerNewToken();
+      // Send back the token to the renderer process
+      event.sender.send('asynchronous-reply', token);
       break;
     }
     default:

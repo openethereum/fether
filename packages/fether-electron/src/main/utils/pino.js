@@ -6,12 +6,12 @@
 import { app } from 'electron';
 import fs from 'fs';
 import { multistream } from 'pino-multi-stream';
-import pino from 'pino';
+import Pino from 'pino';
 
 import { name } from '../../../package.json';
 
 // Pino by default outputs JSON. We prettify that.
-const pretty = pino.pretty();
+const pretty = Pino.pretty();
 pretty.pipe(process.stdout);
 
 // Create userData folder if it doesn't exist
@@ -32,14 +32,4 @@ const streams = [
   { level: 'info', stream: pretty }
 ];
 
-/**
- * Create a pino instance
- *
- * @param {Object} opts - Options to pass to pino. Defaults to { name: 'electron' }.
- * @example
- * import Pino from './utils/pino';
- * const pino1 = Pino();
- * const pino2 = Pino({ name: 'parity' });
- */
-export default opts =>
-  pino({ name: 'electron', ...opts }, multistream(streams));
+export default opts => Pino({ name, ...opts }, multistream(streams));

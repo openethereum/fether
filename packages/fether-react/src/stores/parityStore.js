@@ -3,14 +3,16 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import Api from '@parity/api';
 import { action, observable } from 'mobx';
+import Api from '@parity/api';
 import isElectron from 'is-electron';
 import light from '@parity/light.js';
 import store from 'store';
 
+import Debug from '../utils/debug';
 import LS_PREFIX from './utils/lsPrefix';
 
+const debug = Debug('sendStore');
 const electron = isElectron() ? window.require('electron') : null;
 
 const LS_KEY = `${LS_PREFIX}::secureToken`;
@@ -29,7 +31,7 @@ class ParityStore {
     }
 
     if (!electron) {
-      console.log(
+      debug(
         'Not in Electron, ParityStore will only have limited capabilities.'
       );
       return;

@@ -1,5 +1,5 @@
 {
-  "name": "light-hoc",
+  "name": "@parity/electron",
   "description": "Fether Wallet",
   "version": "0.1.0",
   "private": true,
@@ -31,18 +31,19 @@
     "lint": "semistandard 'src/**/*.js' --parser babel-eslint",
     "start": "yarn build --watch"
   },
-  "peerDependencies": {
-    "@parity/light.js": "https://github.com/parity-js/light.js#6f6c93920bb41486a8b22fe8a40151704fd8f83a",
-    "react": "^16.4.0"
+  "dependencies": {
+    "async-retry": "^1.2.1",
+    "axios": "^0.18.0",
+    "checksum": "^0.1.1",
+    "command-exists": "^1.2.6",
+    "debug": "^3.1.0",
+    "electron-dl": "^1.11.0",
+    "promise-any": "^0.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.49",
-    "@babel/core": "^7.0.0-beta.49",
-    "@babel/preset-env": "^7.0.0-beta.49",
-    "@babel/preset-react": "^7.0.0-beta.49",
-    "@babel/preset-stage-0": "^7.0.0-beta.49",
-    "babel-eslint": "^8.2.3",
-    "rimraf": "^2.6.2",
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.51",
+    "electron": "^2.0.2",
     "semistandard": "^12.0.1"
-  }
+  },
+  "peerDependencies": {}
 }

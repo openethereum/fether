@@ -11,14 +11,13 @@ import fs from 'fs';
 import { promisify } from 'util';
 import retry from 'async-retry';
 
-import { defaultParityPath, doesParityExist } from './doesParityExist';
-import handleError from './handleError';
-import { parity } from '../../../package.json';
-import Pino from '../utils/pino';
+import { defaultParityPath, getParityPath } from './getParityPath';
+import logger from './utils/logger';
 
 const checksum = promisify(cs.file);
 const fsChmod = promisify(fs.chmod);
-const pino = Pino();
+const fsStat = promisify(fs.stat);
+const fsUnlink = promisify(fs.unlink);
 
 const VANITY_URL = 'https://vanity-service.parity.io/parity-binaries';
 
@@ -56,32 +55,35 @@ const getOs = () => {
 /**
  * Remove parity binary in the userData folder
  */
-const deleteParity = () => {
-  if (fs.statSync(defaultParityPath)) {
-    fs.unlinkSync(defaultParityPath);
-  }
+export const deleteParity = async () => {
+  try {
+    const parityPath = await defaultParityPath();
+    await fsStat(parityPath);
+    await fsUnlink(parityPath);
+  } catch (e) {}
 };
 
 // Fetch parity from https://vanity-service.parity.io/parity-binaries
-export default mainWindow => {
+export const fetchParity = (
+  mainWindow,
+  { onProgress, parityChannel } = {
+    parityChannel: 'beta'
+  }
+) => {
   try {
     return retry(
       async (_, attempt) => {
         if (attempt > 1) {
-          pino.warn(`Retrying.`);
+          logger()('@parity/electron:main')('Retrying.');
         }
 
+        // Delete any old Parity if it exists
+        await deleteParity();
+
         // Fetch the metadata of the correct version of parity
-        pino.info(
-          `Downloading from ${VANITY_URL}?version=${
-            parity.channel
-          }&os=${getOs()}&architecture=${getArch()}.`
-        );
-        const { data } = await axios.get(
-          `${VANITY_URL}?version=${
-            parity.channel
-          }&os=${getOs()}&architecture=${getArch()}`
-        );
+        const metadataUrl = `${VANITY_URL}?version=${parityChannel}&os=${getOs()}&architecture=${getArch()}`;
+        logger()('@parity/electron:main')(`Downloading from ${metadataUrl}.`);
+        const { data } = await axios.get(metadataUrl);
 
         // Get the binary's url
         const { downloadUrl, checksum: expectedChecksum } = data[0].files.find(
@@ -91,9 +93,7 @@ export default mainWindow => {
         // Start downloading. This will install parity into defaultParityPath.
         const downloadItem = await download(mainWindow, downloadUrl, {
           directory: app.getPath('userData'),
-          onProgress: progress =>
-            // Notify the renderers
-            mainWindow.webContents.send('parity-download-progress', progress)
+          onProgress
         });
         const downloadPath = downloadItem.getSavePath(); // Equal to defaultParityPath
 
@@ -113,21 +113,16 @@ export default mainWindow => {
         await fsChmod(downloadPath, '755');
 
         // Double-check that Parity exists now.
-        return doesParityExist();
+        const parityPath = await getParityPath();
+        return parityPath;
       },
       {
-        onRetry: err => {
-          pino.warn(err);
-
-          // Everytime we retry, we remove the parity file we just downloaded.
-          // This needs to be done syncly, since onRetry is sync
-          deleteParity();
-        },
         retries: 3
       }
     );
   } catch (err) {
-    deleteParity();
-    handleError(err, 'An error occured while fetching parity.');
+    return deleteParity().then(() => {
+      Promise.reject(err);
+    });
   }
 };

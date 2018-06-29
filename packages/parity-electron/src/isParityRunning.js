@@ -6,10 +6,8 @@
 import axios from 'axios';
 import retry from 'async-retry';
 
-import { cli } from '../cli';
-import Pino from '../utils/pino';
-
-const pino = Pino();
+import { cli } from './utils/cli';
+import logger from './utils/logger';
 
 // Try to ping these hosts
 const hostsToPing = ['http://127.0.0.1:8545', 'http://127.0.0.1:8546'];
@@ -26,20 +24,16 @@ if (cli.wsInterface || cli.wsPort) {
  *
  * @return [Promise<Boolean>] - Promise that resolves to true or false.
  */
-const isParityRunning = async mainWindow => {
+export const isParityRunning = async () => {
   try {
     // Retry to ping as many times as there are hosts in `hostsToPing`
     await retry(
       async (_, attempt) => {
         const host = hostsToPing[attempt - 1]; // Attempt starts with 1
         await axios.get(host);
-        pino.info(
+        logger()('@parity/electron:main')(
           `Another instance of parity is already running on ${host}, skip running local instance.`
         );
-
-        // Notify the renderers
-        mainWindow.webContents.send('parity-running', true);
-        global.isParityRunning = true; // Send this variable to renderes via IPC
       },
       { retries: hostsToPing.length }
     );
@@ -49,5 +43,3 @@ const isParityRunning = async mainWindow => {
     return false;
   }
 };
-
-export default isParityRunning;
