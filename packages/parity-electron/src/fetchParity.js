@@ -13,7 +13,6 @@ import retry from 'async-retry';
 
 import { defaultParityPath, getParityPath } from './getParityPath';
 import logger from './utils/logger';
-import parityChannel from './utils/parityChannel';
 
 const checksum = promisify(cs.file);
 const fsChmod = promisify(fs.chmod);
@@ -65,7 +64,12 @@ export const deleteParity = async () => {
 };
 
 // Fetch parity from https://vanity-service.parity.io/parity-binaries
-export const fetchParity = (mainWindow, onProgress) => {
+export const fetchParity = (
+  mainWindow,
+  { onProgress, parityChannel } = {
+    parityChannel: 'beta'
+  }
+) => {
   try {
     return retry(
       async (_, attempt) => {
@@ -77,7 +81,7 @@ export const fetchParity = (mainWindow, onProgress) => {
         await deleteParity();
 
         // Fetch the metadata of the correct version of parity
-        const metadataUrl = `${VANITY_URL}?version=${parityChannel()}&os=${getOs()}&architecture=${getArch()}`;
+        const metadataUrl = `${VANITY_URL}?version=${parityChannel}&os=${getOs()}&architecture=${getArch()}`;
         logger()('@parity/electron:main')(`Downloading from ${metadataUrl}.`);
         const { data } = await axios.get(metadataUrl);
 

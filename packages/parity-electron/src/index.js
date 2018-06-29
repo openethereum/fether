@@ -5,7 +5,6 @@
 
 import { setCli } from './utils/cli';
 import { setLogger } from './utils/logger';
-import { setParityChannel } from './utils/parityChannel';
 
 export * from './getParityPath';
 export * from './fetchParity';
@@ -21,9 +20,5 @@ export default opts => {
 
   if (opts.logger) {
     setLogger(opts.logger);
-  }
-
-  if (opts.parityChannel) {
-    setParityChannel(opts.parityChannel);
   }
 };

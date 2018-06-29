@@ -37,18 +37,19 @@ function createWindow () {
   // Set options for @parity/electron
   parityElectron({
     cli,
-    logger: namespace => log => Pino({ name: namespace }).info(log),
-    parityChannel: parity.channel
+    logger: namespace => log => Pino({ name: namespace }).info(log)
   });
 
   // Look if Parity is installed
   getParityPath()
     .catch(() =>
       // Install parity if not present
-      fetchParity(mainWindow, progress =>
-        // Notify the renderers on download progress
-        mainWindow.webContents.send('parity-download-progress', progress)
-      )
+      fetchParity(mainWindow, {
+        onProgress: progress =>
+          // Notify the renderers on download progress
+          mainWindow.webContents.send('parity-download-progress', progress),
+        parityChannel: parity.channel
+      })
     )
     .then(() =>
       // Run parity when installed
