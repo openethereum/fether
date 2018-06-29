@@ -41,11 +41,11 @@
   "scripts": {
     "build": "lerna run build",
     "preelectron": "yarn build",
-    "electron": "cd packages/fether-electron && yarn electron",
-    "lint": "lerna run lint --parallel",
+    "electron": "lerna run electron --scope fether",
+    "lint": "semistandard 'packages/**/*.js' --parser babel-eslint",
     "prepackage": "yarn build",
-    "package": "cd packages/fether-electron && yarn package",
-    "release": "cd packages/fether-electron && yarn release",
+    "package": "lerna run package --scope fether",
+    "release": "lerna run release --scope fether",
     "start": "npm-run-all -l -p start-*",
     "start-electron": "cd packages/fether-electron && yarn start",
     "start-hoc": "cd packages/light-hoc && yarn start",
@@ -55,7 +55,9 @@
     "test": "lerna run test --parallel"
   },
   "devDependencies": {
+    "babel-eslint": "^8.2.5",
     "lerna": "^2.11.0",
-    "npm-run-all": "^4.1.2"
+    "npm-run-all": "^4.1.2",
+    "semistandard": "^12.0.1"
   }
 }
