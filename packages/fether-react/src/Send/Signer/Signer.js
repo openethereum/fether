@@ -12,7 +12,7 @@ import ReactTooltip from 'react-tooltip';
 
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 
-@inject('sendStore')
+@inject('sendStore', 'tokensStore')
 @observer
 class Signer extends Component {
   state = {
@@ -58,9 +58,11 @@ class Signer extends Component {
 
   render () {
     const {
-      sendStore: { token, tx }
+      sendStore: { tokenAddress, tx },
+      tokensStore
     } = this.props;
     const { error, isSending, password } = this.state;
+    const token = tokensStore.tokens[tokenAddress];
 
     return (
       <div>

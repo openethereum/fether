@@ -19,7 +19,7 @@ const debug = Debug('sendStore');
 const DEFAULT_GAS = new BigNumber(21000); // Default gas amount to show
 const GAS_MULT_FACTOR = 1.33; // Since estimateGas is not always accurate, we add a 33% factor for buffer.
 
-class SendStore {
+export class SendStore {
   @observable blockNumber; // Current block number, used to calculate tx confirmations.
   @observable estimated = DEFAULT_GAS; // Estimated gas amount for this transaction.
   @observable tokenAddress; // 'ETH', or the token contract address
@@ -70,6 +70,10 @@ class SendStore {
    * Estimate the amount of gas for our transaction.
    */
   estimateGas = () => {
+    if (!this.tx || !Object.keys(this.tx).length) {
+      return;
+    }
+
     if (this.tokenAddress === 'ETH') {
       return this.estimateGasForEth(this.txForEth);
     } else {
@@ -130,11 +134,6 @@ class SendStore {
     });
   };
 
-  @computed
-  get token () {
-    return tokensStore.tokens[this.tokenAddress];
-  }
-
   /**
    * This.tx is a user-friendly tx object. We convert it now as it can be
    * passed to makeContract$(...).
@@ -145,7 +144,7 @@ class SendStore {
       args: [
         this.tx.to,
         new BigNumber(this.tx.amount).mul(
-          new BigNumber(10).pow(this.token.decimals)
+          new BigNumber(10).pow(tokensStore.tokens[this.tokenAddress].decimals)
         )
       ],
       options: {

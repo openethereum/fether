@@ -7,8 +7,16 @@
 
 import capitalize from 'capitalize';
 
-export const setterTest = (store, variableName) =>
-  test(`should correctly set ${variableName}`, () => {
-    store[`set${capitalize(variableName)}`]('foo');
-    expect(store[variableName]).toEqual('foo');
+let store;
+
+export const setterTest = (Store, variableName) =>
+  describe(`setter ${variableName}`, () => {
+    beforeEach(() => {
+      store = new Store();
+    });
+
+    test(`should correctly set ${variableName}`, () => {
+      store[`set${capitalize(variableName)}`]('foo');
+      expect(store[variableName]).toEqual('foo');
+    });
   });
