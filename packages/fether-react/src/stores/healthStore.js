@@ -22,7 +22,7 @@ export const STATUS = {
   SYNCING: 'SYNCING' // Obvious
 };
 
-class HealthStore {
+export class HealthStore {
   @observable nodeHealth;
   @observable syncing;
 

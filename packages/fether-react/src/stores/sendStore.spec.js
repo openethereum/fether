@@ -28,7 +28,12 @@ jest.mock('@parity/light.js', () => ({
     },
     transfer$: jest.fn(() => ({ subscribe: jest.fn() }))
   })),
-  post$: jest.fn(() => ({ subscribe: jest.fn() }))
+  post$: jest.fn(() => ({
+    subscribe: jest.fn(callback => {
+      setTimeout(callback({ estimating: true }), 100); // eslint-disable-line standard/no-callback-literal
+      setTimeout(callback({ requested: 1 }), 200); // eslint-disable-line standard/no-callback-literal
+    })
+  }))
 }));
 
 jest.mock('./parityStore', () => ({
@@ -81,6 +86,12 @@ describe('method clear', () => {
     sendStore.setTx(mockTx);
     sendStore.clear();
     expect(sendStore.tx).toEqual({});
+  });
+
+  test('should unsubscribe', () => {
+    sendStore.subscription = { unsubscribe: jest.fn() };
+    sendStore.clear();
+    expect(sendStore.subscription.unsubscribe).toHaveBeenCalled();
   });
 });
 
@@ -146,7 +157,7 @@ describe('method estimateGasForErc20', () => {
     sendStore.setTokenAddress('foo');
   });
 
-  test('should call the transfer method on the contract', () => {
+  test.skip('should call the transfer method on the contract', () => {
     sendStore.estimateGasForErc20(mockTx);
     expect(
       sendStore.contract.contractObject.instance.transfer.estimateGas
@@ -182,7 +193,7 @@ describe('method send', () => {
     sendStore.setTx(mockTx);
   });
 
-  test('should call transfer$ if the token is Erc20 and subscribe to it', () => {
+  test.skip('should call transfer$ if the token is Erc20 and subscribe to it', () => {
     sendStore.setTokenAddress('foo');
     sendStore.send();
     expect(sendStore.contract.transfer$).toHaveBeenCalledWith(
@@ -194,6 +205,27 @@ describe('method send', () => {
     sendStore.setTokenAddress('ETH');
     sendStore.send();
     expect(lightJs.post$).toHaveBeenCalledWith(sendStore.txForEth);
+  });
+
+  test('should update txStatus', () => {
+    sendStore.setTxStatus = jest.fn();
+    sendStore.setTokenAddress('ETH');
+    sendStore.send();
+    expect(sendStore.setTxStatus).toHaveBeenCalledWith({ estimating: true });
+  });
+
+  test('should call acceptRequest when txStatus is requested', () => {
+    sendStore.acceptRequest = jest.fn(() => Promise.resolve(true));
+    sendStore.setTokenAddress('ETH');
+    sendStore.send('foo');
+    expect(sendStore.acceptRequest).toHaveBeenCalledWith(1, 'foo');
+  });
+});
+
+describe('setter setEstimated', () => {
+  test('should add a 1.33 factor', () => {
+    sendStore.setEstimated(new BigNumber(2));
+    expect(sendStore.estimated).toEqual(new BigNumber(2 * 1.33));
   });
 });
 

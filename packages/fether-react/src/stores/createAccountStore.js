@@ -7,7 +7,7 @@ import { action, observable } from 'mobx';
 
 import parityStore from './parityStore';
 
-class CreateAccountStore {
+export class CreateAccountStore {
   @observable address = null;
   @observable isImport = false; // Are we creating a new account, or importing via phrase?
   @observable name = ''; // Account name
