@@ -7,7 +7,7 @@ https://github.com/paritytech/fether/releases
 ## Getting started
 
 ```bash
-git clone https://github.com/parity-js/fether
+git clone https://github.com/paritytech/fether
 yarn install
 ```
 
