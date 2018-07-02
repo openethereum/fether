@@ -2,7 +2,7 @@
 
 ## Get the latest binary
 
-https://github.com/parity-js/fether/releases
+https://github.com/paritytech/fether/releases
 
 ## Getting started
 
