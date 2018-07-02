@@ -2,12 +2,12 @@
 
 ## Get the latest binary
 
-https://github.com/parity-js/fether/releases
+https://github.com/paritytech/fether/releases
 
 ## Getting started
 
 ```bash
-git clone https://github.com/parity-js/fether
+git clone https://github.com/paritytech/fether
 yarn install
 ```
 
