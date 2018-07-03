@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 
 const AddressShort = ({ address, as: T = 'span', ...otherProps }) => (
   <T {...otherProps}>
-    {address.slice(0, 4)}..{address.slice(-4)}
+    {address.slice(0, 6)}..{address.slice(-4)}
   </T>
 );
 
