@@ -23,6 +23,10 @@ cli
   .version(version)
   .allowUnknownOption()
   .option(
+    '--chain',
+    'The network to connect to, can be one of "foundation", "kovan" or "ropsten". (default: "kovan")'
+  )
+  .option(
     '--no-run-parity',
     `${productName} will not attempt to run the locally installed parity.`
   )
