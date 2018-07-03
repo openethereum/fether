@@ -7,7 +7,7 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
-const Information = ({ children, ...otherProps }) => (
+export const Information = ({ children, ...otherProps }) => (
   <div className='account_information' {...otherProps}>
     {children}
   </div>
@@ -16,5 +16,3 @@ const Information = ({ children, ...otherProps }) => (
 Information.propTypes = {
   children: PropTypes.node
 };
-
-export default Information;

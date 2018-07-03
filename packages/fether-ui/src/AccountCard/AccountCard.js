@@ -6,15 +6,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Address from './Address';
-import Avatar from './Avatar';
+import { Address } from './Address';
+import { Avatar } from './Avatar';
 import { Card } from '../Card';
-import Information from './Information';
-import Name from './Name';
+import { Information } from './Information';
+import { Name } from './Name';
 
 export const AccountCard = ({ address, name, shortAddress, ...otherProps }) => (
   <Card {...otherProps}>
-    <div className='account'>
+    <div className="account">
       <Avatar address={address} />
       <Information>
         <Name name={name} />

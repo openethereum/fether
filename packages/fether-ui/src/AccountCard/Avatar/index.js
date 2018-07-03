@@ -3,6 +3,4 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import Avatar from './Avatar';
-
-export default Avatar;
+export * from './Avatar';
