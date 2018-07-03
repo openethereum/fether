@@ -47,7 +47,7 @@ export const runParity = async (additionalFlags, onParityError) => {
     await fsChmod(parityPath, '755');
   } catch (e) {}
 
-  let logLastLine; // Always contains last line of the Parity logs
+  let logLastLine = ''; // Always contains last line of the Parity logs
 
   // Run an instance of parity with the correct args
   const args = [...parityArgv(), ...additionalFlags];
