@@ -16,8 +16,8 @@ import parityStore from './parityStore';
 import tokensStore from './tokensStore';
 
 const debug = Debug('sendStore');
-const DEFAULT_GAS = new BigNumber(21000); // Default gas amount to show
-const GAS_MULT_FACTOR = 1.33; // Since estimateGas is not always accurate, we add a 33% factor for buffer.
+const GAS_MULT_FACTOR = 1.25; // Since estimateGas is not always accurate, we add a 33% factor for buffer.
+const DEFAULT_GAS = new BigNumber(21000 * GAS_MULT_FACTOR); // Default gas amount
 
 export class SendStore {
   @observable blockNumber; // Current block number, used to calculate tx confirmations.
@@ -71,7 +71,7 @@ export class SendStore {
    */
   estimateGas = () => {
     if (!this.tx || !Object.keys(this.tx).length) {
-      return;
+      return Promise.reject(new Error('Tx not set in sendStore.'));
     }
 
     if (this.tokenAddress === 'ETH') {
@@ -85,23 +85,27 @@ export class SendStore {
    * Estimate gas to transfer in ERC20 contract. Expensive function, so we
    * memoize it.
    */
-  estimateGasForErc20 = memoize(txForErc20 => {
-    return this.contract.contractObject.instance.transfer
-      .estimateGas(txForErc20.options, txForErc20.args)
-      .then(this.setEstimated)
-      .catch(noop);
-  }, JSON.stringify);
+  estimateGasForErc20 = memoize(
+    txForErc20 =>
+      this.contract.contractObject.instance.transfer
+        .estimateGas(txForErc20.options, txForErc20.args)
+        .then(this.setEstimated)
+        .catch(noop),
+    JSON.stringify
+  );
 
   /**
    * Estimate gas to transfer to an ETH address. Expensive function, so we
    * memoize it.
    */
-  estimateGasForEth = memoize(txForEth => {
-    return parityStore.api.eth
-      .estimateGas(txForEth)
-      .then(this.setEstimated)
-      .catch(noop);
-  }, JSON.stringify);
+  estimateGasForEth = memoize(
+    txForEth =>
+      parityStore.api.eth
+        .estimateGas(txForEth)
+        .then(this.setEstimated)
+        .catch(noop),
+    JSON.stringify
+  );
 
   /**
    * Create a transaction.
@@ -174,7 +178,7 @@ export class SendStore {
   @action
   setEstimated = estimated => {
     this.estimated = estimated.mul(GAS_MULT_FACTOR);
-    debug('Estimated gas.', +estimated);
+    debug('Estimated gas,', +estimated, ', with buffer,', +this.estimated);
   };
 
   @action

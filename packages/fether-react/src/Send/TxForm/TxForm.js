@@ -29,6 +29,7 @@ class Send extends Component {
     amount: '', // In Ether or in token
     gasPrice: 4, // in Gwei
     to: '',
+    estimating: false, // Currently estimating gasPrice
     ...this.props.sendStore.tx
   };
 
@@ -51,29 +52,44 @@ class Send extends Component {
     };
   }
 
-  componentDidUpdate () {
-    if (!this.hasError()) {
-      const { amount, gasPrice, to } = this.state;
-      this.props.sendStore.setTx({ amount, gasPrice, to });
-      this.estimateGas();
-    }
+  componentDidMount () {
+    this.handleEstimateGasPrice();
   }
 
-  estimateGas = debounce(() => {
-    this.props.sendStore.estimateGas();
-  }, 1000);
+  estimateGas = debounce(
+    () =>
+      this.props.sendStore
+        .estimateGas()
+        .then(() => this.setState({ estimating: false }))
+        .catch(() => this.setState({ estimating: false })),
+    1000
+  );
 
   handleChangeAmount = ({ target: { value } }) =>
-    this.setState({ amount: value });
+    this.setState({ amount: value }, this.handleEstimateGasPrice);
 
   handleChangeGasPrice = ({ target: { value } }) =>
-    this.setState({ gasPrice: value });
+    this.setState({ gasPrice: value }, this.handleEstimateGasPrice);
 
   handleChangeTo = ({ target: { value } }) => {
-    this.setState({ to: value });
+    this.setState({ to: value }, this.handleEstimateGasPrice);
   };
 
-  handleMax = () => this.setState({ amount: this.state.maxAmount });
+  handleEstimateGasPrice = () => {
+    if (this.hasError()) {
+      return;
+    }
+
+    const { amount, gasPrice, to } = this.state;
+    this.props.sendStore.setTx({ amount, gasPrice, to });
+    this.setState({ estimating: true }, this.estimateGas);
+  };
+
+  handleMax = () =>
+    this.setState(
+      { amount: this.state.maxAmount },
+      this.handleEstimateGasPrice
+    );
 
   handleSubmit = event => {
     event.preventDefault();
@@ -112,7 +128,7 @@ class Send extends Component {
       sendStore: { tokenAddress },
       tokensStore
     } = this.props;
-    const { amount, gasPrice, maxAmount, to } = this.state;
+    const { amount, estimating, gasPrice, maxAmount, to } = this.state;
 
     const token = tokensStore.tokens[tokenAddress];
     const error = this.hasError();
@@ -210,8 +226,8 @@ class Send extends Component {
                   </fieldset>
                   <nav className='form-nav'>
                     <span data-tip={error || ''}>
-                      <button disabled={error} className='button'>
-                        Send
+                      <button disabled={error || estimating} className='button'>
+                        {estimating ? 'Checking...' : 'Send'}
                       </button>
                     </span>
                   </nav>
