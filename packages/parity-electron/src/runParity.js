@@ -26,7 +26,7 @@ const catchableErrors = [
   'IO error: While lock file:'
 ];
 
-export const runParity = async onParityError => {
+export const runParity = async (additionalFlags, onParityError) => {
   // Do not run parity with --no-run-parity
   if (cli.runParity === false) {
     return;
@@ -50,7 +50,7 @@ export const runParity = async onParityError => {
   let logLastLine; // Always contains last line of the Parity logs
 
   // Run an instance of parity with the correct args
-  const args = [...parityArgv(), '--light'];
+  const args = [...parityArgv(), ...additionalFlags];
   parity = spawn(parityPath, args);
   logger()('@parity/electron:main')(logCommand(parityPath, args));
 
