@@ -127,10 +127,13 @@ describe('@computed contract', () => {
 });
 
 describe('method estimateGas', () => {
-  test('should not estimate if no tx is set', () => {
+  test('should reject and not estimate if no tx is set', () => {
     sendStore.estimateGasForErc20 = jest.fn();
     sendStore.estimateGasForEth = jest.fn();
-    expect(sendStore.estimateGas()).toBe(undefined);
+    expect(sendStore.estimateGas()).rejects.toHaveProperty(
+      'message',
+      'Tx not set in sendStore.'
+    );
     expect(sendStore.estimateGasForErc20).not.toHaveBeenCalled();
     expect(sendStore.estimateGasForEth).not.toHaveBeenCalled();
   });
@@ -223,9 +226,9 @@ describe('method send', () => {
 });
 
 describe('setter setEstimated', () => {
-  test('should add a 1.33 factor', () => {
+  test('should add a 1.25 factor', () => {
     sendStore.setEstimated(new BigNumber(2));
-    expect(sendStore.estimated).toEqual(new BigNumber(2 * 1.33));
+    expect(sendStore.estimated).toEqual(new BigNumber(2 * 1.25));
   });
 });
 
