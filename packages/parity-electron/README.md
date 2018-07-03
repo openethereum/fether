@@ -57,13 +57,14 @@ Returns the path to the Parity path inside Electron's `userData` folder, even if
 
 Resolves to `true` if Parity is currently running, or to `false` if not.
 
-#### `runParity(onParityError: Function): Promise<Null>`
+#### `runParity(additionalFlags: Array<String>, onParityError: Function): Promise<Null>`
 
 Spawns a child process to run Parity. If some `cli` flags are passed into the options in `parityElectron`, then those flags will be passed down to Parity itself.
 
-| Option          | Type       | Description                                                        |
-| --------------- | ---------- | ------------------------------------------------------------------ |
-| `onParityError` | `Function` | Callback with `error` as argument when Parity encounters an error. |
+| Option            | Type            | Description                                                                                   |
+| ----------------- | --------------- | --------------------------------------------------------------------------------------------- |
+| `additionalFlasg` | `Array<String>` | Addtional flags to pass to Parity, listed as an array, to be passed to `child_process.spawn`. |
+| `onParityError`   | `Function`      | Callback with `error` as argument when Parity encounters an error.                            |
 
 #### `killParity(): Promise<Null>`
 

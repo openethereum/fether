@@ -59,7 +59,9 @@ function createWindow () {
     )
     .then(() =>
       // Run parity when installed
-      runParity(err => handleError(err, 'An error occured with Parity.'))
+      runParity(['--light', '--chain', cli.chain || 'kovan'], err =>
+        handleError(err, 'An error occured with Parity.')
+      )
     )
     .then(() => {
       // Notify the renderers

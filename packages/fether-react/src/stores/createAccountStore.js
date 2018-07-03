@@ -5,7 +5,10 @@
 
 import { action, observable } from 'mobx';
 
+import Debug from '../utils/debug';
 import parityStore from './parityStore';
+
+const debug = Debug('createAccountStore');
 
 export class CreateAccountStore {
   @observable address = null;
@@ -22,10 +25,12 @@ export class CreateAccountStore {
   }
 
   generateNewAccount = () => {
+    debug('Generating new account.');
     return parityStore.api.parity.generateSecretPhrase().then(this.setPhrase);
   };
 
   saveAccountToParity = password => {
+    debug('Saving account to Parity.');
     return parityStore.api.parity
       .newAccountFromPhrase(this.phrase, password)
       .then(() =>
