@@ -24,6 +24,7 @@ class TokenBalance extends Component {
     if (!token.address) {
       return;
     }
+    sendStore.clear();
     sendStore.setTokenAddress(token.address);
     history.push('/send');
   };
