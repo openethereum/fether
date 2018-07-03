@@ -7,7 +7,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
 
-class ClickToCopy extends PureComponent {
+export class ClickToCopy extends PureComponent {
   static defaultProps = {
     label: 'Click to copy'
   };
@@ -68,5 +68,3 @@ class ClickToCopy extends PureComponent {
     );
   }
 }
-
-export default ClickToCopy;

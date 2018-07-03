@@ -3,6 +3,4 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import AccountHeader from './AccountHeader';
-
-export default AccountHeader;
+export * from './AccountHeader';

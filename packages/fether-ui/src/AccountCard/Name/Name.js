@@ -6,7 +6,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Placeholder from '../../Placeholder';
+import { Placeholder } from '../../Placeholder';
 
 const Name = ({ name, ...otherProps }) => (
   <div className='account_name' {...otherProps}>

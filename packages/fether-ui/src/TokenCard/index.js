@@ -3,6 +3,4 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import TokenCard from './TokenCard';
-
-export default TokenCard;
+export * from './TokenCard';

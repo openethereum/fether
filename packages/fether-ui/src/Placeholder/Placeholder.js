@@ -7,7 +7,7 @@ import React from 'react';
 import ContentLoader from 'react-content-loader';
 import PropTypes from 'prop-types';
 
-const Placeholder = ({ height, width, ...otherProps }) => (
+export const Placeholder = ({ height, width, ...otherProps }) => (
   <ContentLoader
     className='placeholder'
     height={height}
@@ -23,5 +23,3 @@ Placeholder.propTypes = {
   height: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired
 };
-
-export default Placeholder;

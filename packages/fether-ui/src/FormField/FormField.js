@@ -6,7 +6,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const FormField = ({
+export const FormField = ({
   className,
   input: inputComponent,
   label,
@@ -23,5 +23,3 @@ FormField.propTypes = {
   input: PropTypes.node,
   label: PropTypes.string
 };
-
-export default FormField;

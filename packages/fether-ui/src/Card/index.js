@@ -3,6 +3,4 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import Card from './Card';
-
-export default Card;
+export * from './Card';

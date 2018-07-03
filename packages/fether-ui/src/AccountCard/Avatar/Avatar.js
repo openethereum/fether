@@ -7,7 +7,7 @@ import React from 'react';
 import Blockies from 'react-blockies';
 import PropTypes from 'prop-types';
 
-import Placeholder from '../../Placeholder';
+import { Placeholder } from '../../Placeholder';
 
 const Avatar = ({ address, ...otherProps }) => (
   <div className='account_avatar' {...otherProps}>

@@ -6,8 +6,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import AddressShort from '../../AddressShort';
-import Placeholder from '../../Placeholder';
+import { AddressShort } from '../../AddressShort';
+import { Placeholder } from '../../Placeholder';
 
 const Address = ({ address, short, ...otherProps }) => (
   <div className='account_address' {...otherProps}>

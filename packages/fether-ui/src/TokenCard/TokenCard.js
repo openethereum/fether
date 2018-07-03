@@ -6,10 +6,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Card from '../Card';
-import Placeholder from '../Placeholder';
+import { Card } from '../Card';
+import { Placeholder } from '../Placeholder';
 
-const TokenCard = ({
+export const TokenCard = ({
   balance,
   children,
   decimals,

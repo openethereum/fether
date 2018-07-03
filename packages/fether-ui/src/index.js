@@ -3,22 +3,11 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import AccountCard from './AccountCard';
-import AccountHeader from './AccountHeader';
-import AddressShort from './AddressShort';
-import Card from './Card';
-import FormField from './FormField';
-import Header from './Header';
-import Placeholder from './Placeholder';
-import TokenCard from './TokenCard';
-
-export {
-  AccountCard,
-  AccountHeader,
-  AddressShort,
-  Card,
-  FormField,
-  Header,
-  Placeholder,
-  TokenCard
-};
+export * from './AccountCard';
+export * from './AccountHeader';
+export * from './AddressShort';
+export * from './Card';
+export * from './FormField';
+export * from './Header';
+export * from './Placeholder';
+export * from './TokenCard';

@@ -8,11 +8,11 @@ import PropTypes from 'prop-types';
 
 import Address from './Address';
 import Avatar from './Avatar';
-import Card from '../Card';
+import { Card } from '../Card';
 import Information from './Information';
 import Name from './Name';
 
-const AccountCard = ({ address, name, shortAddress, ...otherProps }) => (
+export const AccountCard = ({ address, name, shortAddress, ...otherProps }) => (
   <Card {...otherProps}>
     <div className='account'>
       <Avatar address={address} />
@@ -34,5 +34,3 @@ AccountCard.propTypes = {
   name: PropTypes.string,
   shortAddress: PropTypes.bool
 };
-
-export default AccountCard;
