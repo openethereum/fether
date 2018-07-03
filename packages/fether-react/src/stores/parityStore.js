@@ -17,7 +17,7 @@ const electron = isElectron() ? window.require('electron') : null;
 
 const LS_KEY = `${LS_PREFIX}::secureToken`;
 
-class ParityStore {
+export class ParityStore {
   @observable downloadProgress = 0;
   @observable isApiConnected = false;
   @observable isParityRunning = false;

@@ -16,12 +16,12 @@ import TxForm from './TxForm';
 class Send extends Component {
   render () {
     const {
-      sendStore: { token }
+      sendStore: { tokenAddress }
     } = this.props;
 
     // We only show then Send components if we have already selected a token to
     // send.
-    if (!token) {
+    if (!tokenAddress) {
       return <Redirect to='/' />;
     }
 

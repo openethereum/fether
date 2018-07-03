@@ -18,8 +18,11 @@ import withBalance from '../../utils/withBalance';
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 
-@inject('sendStore')
-@withBalance(({ sendStore: { token } }) => token)
+@inject('sendStore', 'tokensStore')
+@withBalance(
+  ({ sendStore: { tokenAddress }, tokensStore }) =>
+    tokensStore.tokens[tokenAddress]
+)
 @observer
 class Send extends Component {
   state = {
@@ -106,10 +109,12 @@ class Send extends Component {
 
   render () {
     const {
-      sendStore: { token }
+      sendStore: { tokenAddress },
+      tokensStore
     } = this.props;
     const { amount, gasPrice, maxAmount, to } = this.state;
 
+    const token = tokensStore.tokens[tokenAddress];
     const error = this.hasError();
 
     return (

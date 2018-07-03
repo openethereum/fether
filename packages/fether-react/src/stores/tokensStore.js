@@ -13,7 +13,7 @@ import LS_PREFIX from './utils/lsPrefix';
 
 const LS_KEY = `${LS_PREFIX}::tokens`;
 
-class TokensStore {
+export class TokensStore {
   @observable tokens = {};
 
   constructor () {

@@ -10,7 +10,7 @@ import LS_PREFIX from './utils/lsPrefix';
 
 const LS_KEY = `${LS_PREFIX}::firstRun`;
 
-class OnboardingStore {
+export class OnboardingStore {
   @observable isFirstRun; // If it's the 1st time the user is running the app
 
   constructor () {
