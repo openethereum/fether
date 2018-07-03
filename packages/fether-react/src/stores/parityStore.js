@@ -12,7 +12,7 @@ import store from 'store';
 import Debug from '../utils/debug';
 import LS_PREFIX from './utils/lsPrefix';
 
-const debug = Debug('sendStore');
+const debug = Debug('parityStore');
 const electron = isElectron() ? window.require('electron') : null;
 
 const LS_KEY = `${LS_PREFIX}::secureToken`;
@@ -64,6 +64,7 @@ export class ParityStore {
         defaultPort}`;
     }
 
+    debug(`Connecting to ${provider}.`);
     const api = new Api(
       new Api.Provider.Ws(
         provider,
@@ -78,8 +79,8 @@ export class ParityStore {
     this.api = api;
 
     // TODO This is not working
-    // api.on('connected', () => ...);
-    // api.on('disconnected', () => ...);
+    // api.on('connected', () => this.setIsApiConnected(true));
+    // api.on('disconnected', () => this.setIsApiConnected(false));
     // So instead, we poll every 1s
     setInterval(() => {
       this.setIsApiConnected(api.isConnected);
@@ -90,6 +91,7 @@ export class ParityStore {
     const { ipcRenderer } = electron;
 
     // Request new token from Electron
+    debug('Requesting new token.');
     ipcRenderer.send('asynchronous-message', 'signer-new-token');
     ipcRenderer.once('asynchronous-reply', (_, token) => {
       if (!token) {
@@ -111,7 +113,7 @@ export class ParityStore {
     if (isApiConnected === this.isApiConnected) {
       return;
     }
-
+    debug(`Api is now ${isApiConnected ? 'connected' : 'disconnected'}.`);
     this.isApiConnected = isApiConnected;
   };
 
@@ -135,6 +137,7 @@ export class ParityStore {
       return;
     }
 
+    debug(`Setting token in localStorage.`);
     this.token = token;
 
     // If we receive a new token, then we try to connect to the Api with this
