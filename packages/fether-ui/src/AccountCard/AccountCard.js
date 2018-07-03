@@ -14,7 +14,7 @@ import { Name } from './Name';
 
 export const AccountCard = ({ address, name, shortAddress, ...otherProps }) => (
   <Card {...otherProps}>
-    <div className="account">
+    <div className='account'>
       <Avatar address={address} />
       <Information>
         <Name name={name} />
