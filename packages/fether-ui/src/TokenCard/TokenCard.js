@@ -20,14 +20,18 @@ export const TokenCard = ({
   <Card {...otherProps}>
     <div className='token'>
       <div className='token_icon'>
-        {token.logo ? (
+        {token && token.logo ? (
           <img alt={token.symbol} src={token.logo} />
         ) : (
           <Placeholder height={20} width={20} />
         )}
       </div>
       <div className='token_name'>
-        {token.name ? token.name : <Placeholder height={20} width={100} />}
+        {token && token.name ? (
+          token.name
+        ) : (
+          <Placeholder height={20} width={100} />
+        )}
       </div>
       <div className='token_balance'>
         {balance ? (
@@ -35,7 +39,7 @@ export const TokenCard = ({
         ) : showBalance ? (
           <Placeholder height={20} width={50} />
         ) : null}
-        <span className='token_symbol'>{token.symbol}</span>
+        <span className='token_symbol'>{token && token.symbol}</span>
       </div>
       {children}
     </div>
@@ -53,7 +57,7 @@ TokenCard.propTypes = {
     logo: PropTypes.string,
     name: PropTypes.string,
     symbol: PropTypes.string
-  }).isRequired
+  })
 };
 
 export default TokenCard;
