@@ -7,7 +7,7 @@ export * from './AccountCard';
 export * from './AccountHeader';
 export * from './AddressShort';
 export * from './Card';
-export * from './FormField';
+export * from './Form';
 export * from './Header';
 export * from './Placeholder';
 export * from './TokenCard';
