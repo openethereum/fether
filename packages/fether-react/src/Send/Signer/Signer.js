@@ -9,10 +9,14 @@ import { FormField, Header } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
+import { withProps } from 'recompose';
 
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 
 @inject('sendStore', 'tokensStore')
+@withProps(({ match: { params: { tokenAddress } }, tokensStore }) => ({
+  token: tokensStore.tokens[tokenAddress]
+}))
 @observer
 class Signer extends Component {
   state = {
@@ -58,11 +62,10 @@ class Signer extends Component {
 
   render () {
     const {
-      sendStore: { tokenAddress, tx },
-      tokensStore
+      sendStore: { tx },
+      token
     } = this.props;
     const { error, isSending, password } = this.state;
-    const token = tokensStore.tokens[tokenAddress];
 
     return (
       <div>
@@ -132,12 +135,6 @@ class Signer extends Component {
             />
           </div>
         </div>
-        <ReactTooltip
-          effect='solid'
-          event='mouseover'
-          eventOff='keydown mouseout'
-          place='top'
-        />
       </div>
     );
   }

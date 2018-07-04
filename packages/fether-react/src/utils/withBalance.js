@@ -16,35 +16,35 @@ import { fromWei } from '@parity/api/lib/util/wei';
 import light from 'light-hoc';
 
 /**
- * A HOC on light.js to get the current balance.
+ * A HOC on light.js to get the current balance. The inner component needs to
+ * have a `token` field in its props.
  *
  * @example
- * @withBalance()
+ * @withBalance
  * class MyComponent extends React.Component{
  *
  * }
  */
-export default (propsSelector = ({ token }) => token) =>
-  light({
-    balance: ownProps => {
-      // Find our token object in the props
-      const token = propsSelector(ownProps);
+export default light({
+  balance: ownProps => {
+    // Find our token object in the props
+    const { token } = ownProps;
 
-      if (!token.address) {
-        return empty();
-      }
-      return token.address === 'ETH'
-        ? myBalance$().pipe(
-          map(value => (isNullOrLoading(value) ? null : value)), // Transform loading state to null
-          map(value => value && fromWei(value))
-        )
-        : defaultAccount$().pipe(
-          filter(x => x),
-          switchMap(defaultAccount =>
-            makeContract$(token.address, abi).balanceOf$(defaultAccount)
-          ),
-          map(value => (isNullOrLoading(value) ? null : value)), // Transform loading state to null
-          map(value => value && value.div(10 ** token.decimals))
-        );
+    if (!token || !token.address) {
+      return empty();
     }
-  });
+    return token.address === 'ETH'
+      ? myBalance$().pipe(
+        map(value => (isNullOrLoading(value) ? null : value)), // Transform loading state to null
+        map(value => value && fromWei(value))
+      )
+      : defaultAccount$().pipe(
+        filter(x => x),
+        switchMap(defaultAccount =>
+          makeContract$(token.address, abi).balanceOf$(defaultAccount)
+        ),
+        map(value => (isNullOrLoading(value) ? null : value)), // Transform loading state to null
+        map(value => value && value.div(10 ** token.decimals))
+      );
+  }
+});

@@ -9,11 +9,11 @@ import { BigNumber } from 'bignumber.js';
 import { blockNumber$, makeContract$, post$ } from '@parity/light.js';
 import memoize from 'lodash/memoize';
 import noop from 'lodash/noop';
-import { toWei } from '@parity/api/lib/util/wei';
 
 import Debug from '../utils/debug';
 import parityStore from './parityStore';
 import tokensStore from './tokensStore';
+import { txForErc20, txForEth } from '../utils/estimateGas';
 
 const debug = Debug('sendStore');
 const GAS_MULT_FACTOR = 1.25; // Since estimateGas is not always accurate, we add a 33% factor for buffer.
@@ -75,9 +75,11 @@ export class SendStore {
     }
 
     if (this.tokenAddress === 'ETH') {
-      return this.estimateGasForEth(this.txForEth);
+      return this.estimateGasForEth(txForEth(this.tx));
     } else {
-      return this.estimateGasForErc20(this.txForErc20);
+      return this.estimateGasForErc20(
+        txForErc20(this.tx, tokensStore.tokens[this.tokenAddress])
+      );
     }
   };
 
@@ -113,10 +115,10 @@ export class SendStore {
   send = password => {
     const send$ =
       this.tokenAddress === 'ETH'
-        ? post$(this.txForEth)
+        ? post$(txForEth(this.tx))
         : this.contract.transfer$(
-          ...this.txForErc20.args,
-          this.txForErc20.options
+          ...txForErc20(this.tx).args,
+          txForErc20(this.tx).options
         );
 
     debug(
@@ -137,38 +139,6 @@ export class SendStore {
       });
     });
   };
-
-  /**
-   * This.tx is a user-friendly tx object. We convert it now as it can be
-   * passed to makeContract$(...).
-   */
-  @computed
-  get txForErc20 () {
-    return {
-      args: [
-        this.tx.to,
-        new BigNumber(this.tx.amount).mul(
-          new BigNumber(10).pow(tokensStore.tokens[this.tokenAddress].decimals)
-        )
-      ],
-      options: {
-        gasPrice: toWei(this.tx.gasPrice, 'shannon') // shannon == gwei
-      }
-    };
-  }
-
-  /**
-   * This.tx is a user-friendly tx object. We convert it now as it can be
-   * passed to post$(tx).
-   */
-  @computed
-  get txForEth () {
-    return {
-      gasPrice: toWei(this.tx.gasPrice, 'shannon'), // shannon == gwei
-      to: this.tx.to,
-      value: toWei(this.tx.amount.toString())
-    };
-  }
 
   @action
   setBlockNumber = blockNumber => {
