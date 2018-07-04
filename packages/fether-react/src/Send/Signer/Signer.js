@@ -4,11 +4,10 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { findDOMNode } from 'react-dom';
-import { FormField, Header } from 'fether-ui';
+import { Field, Form } from 'react-final-form';
+import { Form as FetherForm, Header } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
-import { Link } from 'react-router-dom';
-import ReactTooltip from 'react-tooltip';
+import { Link, Redirect } from 'react-router-dom';
 import { withProps } from 'recompose';
 
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
@@ -26,7 +25,7 @@ class Signer extends Component {
   };
 
   handleAccept = event => {
-    const { history, sendStore } = this.props;
+    const { history, sendStore, token } = this.props;
     const { password } = this.state;
 
     event.preventDefault();
@@ -34,38 +33,27 @@ class Signer extends Component {
     this.setState({ isSending: true }, () => {
       sendStore
         .send(password)
-        .then(() => history.push('/send/sent'))
+        .then(() => history.push(`/send/${token.address}/sent`))
         .catch(error => {
-          this.setState({ error, isSending: false }, () =>
-            ReactTooltip.show(findDOMNode(this.tooltip))
-          );
+          this.setState({ error, isSending: false });
         });
     });
-  };
-
-  handleCancel = () => {
-    const { history } = this.props;
-    history.goBack();
   };
 
   handleChangePassword = ({ target: { value } }) => {
     this.setState({ error: null, password: value });
   };
 
-  /**
-   * TODO All this tooltips refs etc should go inside a React validation
-   * library.
-   */
-  handleTooltipRef = ref => {
-    this.tooltip = ref;
-  };
-
   render () {
     const {
+      history,
       sendStore: { tx },
       token
     } = this.props;
-    const { error, isSending, password } = this.state;
+
+    if (!tx || !token) {
+      return <Redirect to={`/`} />;
+    }
 
     return (
       <div>
@@ -75,7 +63,7 @@ class Signer extends Component {
               Close
             </Link>
           }
-          title={<h1>Send {token.name}</h1>}
+          title={token && <h1>Send {token.name}</h1>}
         />
 
         <div className='window_content'>
@@ -94,41 +82,41 @@ class Signer extends Component {
                     <div className='form_field_value'>{tx.to}</div>
                   </div>
                 </div>,
-                <form key='signerForm' onSubmit={this.handleAccept}>
-                  <div className='text'>
-                    <p>Enter your password to confirm this transaction.</p>
-                  </div>
+                <Form
+                  key='signerForm'
+                  onSubmit={this.handleAccept}
+                  render={({ handleSubmit, submitting, valid }) => (
+                    <form onSubmit={handleSubmit}>
+                      <div className='text'>
+                        <p>Enter your password to confirm this transaction.</p>
+                      </div>
 
-                  <div
-                    data-tip={error ? error.text : ''}
-                    ref={this.handleTooltipRef}
-                  >
-                    <FormField
-                      label='Password'
-                      onChange={this.handleChangePassword}
-                      required
-                      type='password'
-                      value={password}
-                    />
-                  </div>
+                      <Field
+                        label='Password'
+                        render={FetherForm.Field}
+                        required
+                        type='password'
+                      />
 
-                  <nav className='form-nav -binary'>
-                    <button
-                      className='button -cancel'
-                      onClick={this.handleCancel}
-                      type='button'
-                    >
-                      Cancel
-                    </button>
+                      <nav className='form-nav -binary'>
+                        <button
+                          className='button -cancel'
+                          onClick={history.goBack}
+                          type='button'
+                        >
+                          Cancel
+                        </button>
 
-                    <button
-                      className='button -submit'
-                      disabled={!password.length || isSending || error}
-                    >
-                      Confirm transaction
-                    </button>
-                  </nav>
-                </form>
+                        <button
+                          className='button -submit'
+                          disabled={!valid || submitting}
+                        >
+                          Confirm transaction
+                        </button>
+                      </nav>
+                    </form>
+                  )}
+                />
               ]}
               onClick={null}
               token={token}

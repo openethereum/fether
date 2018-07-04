@@ -14,7 +14,6 @@ import {
 import { inject, observer } from 'mobx-react';
 
 import Accounts from '../Accounts';
-import Debug from '../utils/debug';
 import Onboarding from '../Onboarding';
 import Overlay from '../Overlay';
 import Send from '../Send';
@@ -22,7 +21,6 @@ import { STATUS } from '../stores/healthStore';
 import Tokens from '../Tokens';
 import Whitelist from '../Whitelist';
 
-const debug = Debug('App');
 // Use MemoryRouter for production viewing in file:// protocol
 // https://github.com/facebook/create-react-app/issues/3591
 const Router =
@@ -31,8 +29,7 @@ const Router =
 @inject('healthStore', 'onboardingStore')
 @observer
 class App extends Component {
-  componentDidCatch (err) {
-    debug(err.message);
+  componentDidCatch () {
     if (process.env.NODE_ENV !== 'development') {
       // Redirect to '/' on errors
       window.location.href = '/';

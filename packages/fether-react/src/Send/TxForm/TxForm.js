@@ -27,10 +27,9 @@ const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 @withBalance
 @observer
 class Send extends Component {
-  handleSubmit = event => {
-    event.preventDefault();
+  handleSubmit = values => {
     const { history, sendStore, token } = this.props;
-    sendStore.setTx(event);
+    sendStore.setTx(values);
     history.push(`/send/${token.address}/signer`);
   };
 
@@ -125,8 +124,16 @@ class Send extends Component {
    * Estimate gas amount, and validate that the user has enough balance to make
    * the tx.
    */
-  validateBalance = debounce(async values => {
+  validateAmount = debounce(async values => {
     try {
+      if (!values.amount || isNaN(values.amount)) {
+        return { amount: 'Please enter a valid amount' };
+      } else if (values.amount < 0) {
+        return { amount: 'Please enter a positive amount ' };
+      } else if (this.props.balance && this.props.balance.lt(values.amount)) {
+        return { amount: "You don't have enough balance" };
+      }
+
       const estimated = await estimateGas(
         values,
         this.props.token,
@@ -153,23 +160,12 @@ class Send extends Component {
   }, 1000);
 
   validateForm = values => {
-    if (!values.amount || isNaN(values.amount)) {
-      return { amount: 'Please enter a valid amount' };
-    }
-
-    if (values.amount < 0) {
-      return { amount: 'Please enter a positive amount ' };
-    }
-
-    if (this.props.balance && this.props.balance.lt(values.amount)) {
-      return { amount: "You don't have enough balance" };
-    }
-
+    const errors = {};
     if (!isAddress(values.to)) {
-      return { to: 'Please enter a valid Ethereum address' };
+      errors.to = 'Please enter a valid Ethereum address';
     }
 
-    return this.validateBalance(values);
+    return Object.keys(errors).length ? errors : this.validateAmount(values);
   };
 }
 
