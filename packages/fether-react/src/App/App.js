@@ -33,6 +33,10 @@ const Router =
 class App extends Component {
   componentDidCatch (err) {
     debug(err.message);
+    if (process.env.NODE_ENV !== 'development') {
+      // Redirect to '/' on errors
+      window.location.href = '/';
+    }
   }
 
   render () {
