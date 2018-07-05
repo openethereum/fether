@@ -18,30 +18,15 @@ import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 }))
 @observer
 class Signer extends Component {
-  state = {
-    error: null,
-    isSending: false,
-    password: ''
-  };
-
-  handleAccept = event => {
+  handleAccept = values => {
     const { history, sendStore, token } = this.props;
-    const { password } = this.state;
 
-    event.preventDefault();
-
-    this.setState({ isSending: true }, () => {
-      sendStore
-        .send(password)
-        .then(() => history.push(`/send/${token.address}/sent`))
-        .catch(error => {
-          this.setState({ error, isSending: false });
-        });
-    });
-  };
-
-  handleChangePassword = ({ target: { value } }) => {
-    this.setState({ error: null, password: value });
+    return sendStore
+      .send(values.password)
+      .then(() => history.push(`/send/${token.address}/sent`))
+      .catch(error => ({
+        password: error
+      }));
   };
 
   render () {
@@ -52,7 +37,7 @@ class Signer extends Component {
     } = this.props;
 
     if (!tx || !token) {
-      return <Redirect to={`/`} />;
+      return <Redirect to='/' />;
     }
 
     return (
@@ -71,16 +56,20 @@ class Signer extends Component {
             <TokenBalance
               drawers={[
                 <div key='txForm'>
-                  <div className='form_field'>
-                    <label>Amount</label>
-                    <div className='form_field_value'>
-                      {tx.amount} {token.symbol}
-                    </div>
-                  </div>
-                  <div className='form_field'>
-                    <label>To</label>
-                    <div className='form_field_value'>{tx.to}</div>
-                  </div>
+                  <FetherForm.Field
+                    className='form_field_value'
+                    disabled
+                    defaultValue={`${tx.amount} ${token.symbol}`}
+                    label='Amount'
+                  />
+
+                  <FetherForm.Field
+                    as='textarea'
+                    className='form_field_value'
+                    disabled
+                    defaultValue={tx.to}
+                    label='To'
+                  />
                 </div>,
                 <Form
                   key='signerForm'
@@ -93,6 +82,7 @@ class Signer extends Component {
 
                       <Field
                         label='Password'
+                        name='password'
                         render={FetherForm.Field}
                         required
                         type='password'
