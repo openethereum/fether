@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { AccountCard, FormField } from 'fether-ui';
+import { AccountCard, Form as FetherForm } from 'fether-ui';
 import debounce from 'lodash/debounce';
 import { inject, observer } from 'mobx-react';
 
@@ -77,11 +77,12 @@ class AccountRewritePhrase extends Component {
                 </p>
               )}
             </div>
-            <FormField
-              input={
-                <textarea onChange={this.handleChange} required value={value} />
-              }
+            <FetherForm.Field
+              as='textarea'
               label='Recovery phrase'
+              onChange={this.handleChange}
+              required
+              value={value}
             />
 
             <nav className='form-nav -space-around'>

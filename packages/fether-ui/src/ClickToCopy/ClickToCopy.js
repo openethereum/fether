@@ -38,7 +38,7 @@ export class ClickToCopy extends PureComponent {
   handleResetCopied = () => this.setState({ copied: false });
 
   render () {
-    const { children, label, ...otherProps } = this.props;
+    const { children, label, textToCopy, ...otherProps } = this.props;
     const { copied } = this.state;
 
     return (

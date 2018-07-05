@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { AccountCard, FormField } from 'fether-ui';
+import { AccountCard, Form as FetherForm } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 
 @inject('createAccountStore')
@@ -55,7 +55,7 @@ class AccountPassword extends Component {
               <p>Secure your account with a password:</p>
             </div>
 
-            <FormField
+            <FetherForm.Field
               label='Password'
               onChange={this.handlePasswordChange}
               required
@@ -63,7 +63,7 @@ class AccountPassword extends Component {
               value={password}
             />
 
-            <FormField
+            <FetherForm.Field
               label='Confirm'
               onChange={this.handleConfirmChange}
               required

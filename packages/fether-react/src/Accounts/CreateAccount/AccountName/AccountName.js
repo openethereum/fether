@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { AccountCard, Card, FormField } from 'fether-ui';
+import { AccountCard, Card, Form as FetherForm } from 'fether-ui';
 import Blockies from 'react-blockies';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
@@ -79,7 +79,7 @@ class AccountName extends Component {
         <div className='text'>
           <p>Please give this account a name:</p>
         </div>
-        <FormField
+        <FetherForm.Field
           label='Name'
           onChange={this.handleChangeName}
           required

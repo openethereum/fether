@@ -37,13 +37,6 @@ jest.mock('./parityStore', () => ({
   }
 }));
 
-jest.mock('./tokensStore', () => ({
-  tokens: {
-    ETH: { decimals: 18 },
-    foo: { decimals: 18 }
-  }
-}));
-
 const mockTx = {
   amount: 0.01, // In Ether or in token
   gasPrice: 4, // in Gwei
@@ -117,9 +110,13 @@ describe('method send', () => {
     sendStore.setTx(mockTx);
   });
 
-  test.skip('should call transfer$ if the token is Erc20 and subscribe to it', () => {
+  test('should call makeContract$ if the token is Erc20 ', () => {
     sendStore.send(mockErc20Token);
-    expect(sendStore.contract.transfer$).toHaveBeenCalled();
+    expect(lightJs.makeContract$).toHaveBeenCalled();
+  });
+
+  test.skip('should call transfer$ if the token is Erc20 and subscribe to it', () => {
+    // TODO
   });
 
   test('should call post$ if the token is ETH  and subscribe to it', () => {

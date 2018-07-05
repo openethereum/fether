@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { FormField, Header } from 'fether-ui';
+import { Form as FetherForm, Header } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 import ReactMarkdown from 'react-markdown';
 
@@ -54,14 +54,11 @@ class Onboarding extends Component {
 
         <div className='window_content'>
           <div className='box -padded'>
-            <FormField
-              input={
-                <ReactMarkdown
-                  className='terms-and-conditions'
-                  renderers={reactMarkdownOptions}
-                  source={this.state.markdown}
-                />
-              }
+            <FetherForm.Field
+              as={ReactMarkdown}
+              className='terms-and-conditions'
+              renderers={reactMarkdownOptions}
+              source={this.state.markdown}
               label='Please read carefully'
             />
           </div>

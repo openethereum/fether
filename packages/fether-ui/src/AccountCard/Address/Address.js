@@ -18,7 +18,7 @@ export const Address = ({ address, short, ...otherProps }) => (
         address
       )
     ) : (
-      <Placeholder height={18} width={100} />
+      <Placeholder height={14} width={100} />
     )}
   </div>
 );
