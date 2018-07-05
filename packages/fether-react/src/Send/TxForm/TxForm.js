@@ -134,7 +134,7 @@ class Send extends Component {
       } else if (amount < 0) {
         return { amount: 'Please enter a positive amount ' };
       } else if (balance && balance.lt(amount)) {
-        return { amount: "You don't have enough balance" };
+        return { amount: `You don't have enough ${token.symbol} balance` };
       }
 
       if (token.address !== 'ETH') {
@@ -154,7 +154,7 @@ class Send extends Component {
       );
 
       if (amount > maxAmount) {
-        return { amount: "You don't have enough balance" };
+        return { amount: "You don't have enough ETH balance" };
       }
     } catch (err) {
       return {
