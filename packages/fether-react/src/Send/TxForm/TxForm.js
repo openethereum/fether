@@ -126,21 +126,25 @@ class Send extends Component {
    */
   validateAmount = debounce(async values => {
     try {
-      if (!values.amount || isNaN(values.amount)) {
+      const { balance, parityStore, token } = this.props;
+      const amount = +values.amount;
+
+      if (!amount || isNaN(amount)) {
         return { amount: 'Please enter a valid amount' };
-      } else if (values.amount < 0) {
+      } else if (amount < 0) {
         return { amount: 'Please enter a positive amount ' };
-      } else if (this.props.balance && this.props.balance.lt(values.amount)) {
+      } else if (balance && balance.lt(amount)) {
         return { amount: "You don't have enough balance" };
       }
 
-      const estimated = await estimateGas(
-        values,
-        this.props.token,
-        this.props.parityStore.api
-      );
+      if (token.address !== 'ETH') {
+        // No need to estimate gas for tokens.
+        // TODO Make sure that user has enough ETH balance
+        return;
+      }
 
-      const { balance } = this.props;
+      const estimated = await estimateGas(values, token, parityStore.api);
+
       if (!balance || isNaN(estimated)) {
         throw new Error('No "balance" or "estimated" value.');
       }
@@ -149,7 +153,7 @@ class Send extends Component {
         toWei(balance).minus(estimated.mul(toWei(values.gasPrice, 'shannon')))
       );
 
-      if (values.amount > maxAmount) {
+      if (amount > maxAmount) {
         return { amount: "You don't have enough balance" };
       }
     } catch (err) {

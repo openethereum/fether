@@ -3,22 +3,17 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import abi from '@parity/shared/lib/contracts/abi/eip20';
 import { action, computed, observable } from 'mobx';
-import { BigNumber } from 'bignumber.js';
-import { blockNumber$, makeContract$, post$ } from '@parity/light.js';
+import { blockNumber$, post$ } from '@parity/light.js';
 
+import { contractForToken, txForErc20, txForEth } from '../utils/estimateGas';
 import Debug from '../utils/debug';
 import parityStore from './parityStore';
-import { txForErc20, txForEth } from '../utils/estimateGas';
 
 const debug = Debug('sendStore');
-const GAS_MULT_FACTOR = 1.25; // Since estimateGas is not always accurate, we add a 33% factor for buffer.
-const DEFAULT_GAS = new BigNumber(21000 * GAS_MULT_FACTOR); // Default gas amount
 
 export class SendStore {
   @observable blockNumber; // Current block number, used to calculate tx confirmations.
-  @observable estimated = DEFAULT_GAS; // Estimated gas amount for this transaction.
   tx = {}; // The actual tx we are sending. No need to be observable.
   @observable txStatus; // Status of the tx, see wiki for details.
 
@@ -52,32 +47,17 @@ export class SendStore {
   }
 
   /**
-   * If it's a token, then return the makeContract$ object.
-   */
-  @computed
-  get contract () {
-    if (this.tokenAddress === 'ETH') {
-      return null;
-    }
-    return makeContract$(this.tokenAddress, abi);
-  }
-
-  /**
    * Create a transaction.
    */
   send = (token, password) => {
+    const tx =
+      token.address === 'ETH' ? txForEth(this.tx) : txForErc20(this.tx, token);
     const send$ =
       token.address === 'ETH'
-        ? post$(txForEth(this.tx))
-        : this.contract.transfer$(
-          ...txForErc20(this.tx, token).args,
-          txForErc20(this.tx, token).options
-        );
+        ? post$(tx)
+        : contractForToken(token.address).transfer$(...tx.args, tx.options);
 
-    debug(
-      'Sending tx.',
-      token.address === 'ETH' ? this.txForEth : this.txForErc20
-    );
+    debug('Sending tx.', tx);
 
     return new Promise((resolve, reject) => {
       send$.subscribe(txStatus => {
@@ -96,12 +76,6 @@ export class SendStore {
   @action
   setBlockNumber = blockNumber => {
     this.blockNumber = blockNumber;
-  };
-
-  @action
-  setEstimated = estimated => {
-    this.estimated = estimated.mul(GAS_MULT_FACTOR);
-    debug('Estimated gas,', +estimated, ', with buffer,', +this.estimated);
   };
 
   @action

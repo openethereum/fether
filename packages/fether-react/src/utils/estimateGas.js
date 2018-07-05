@@ -3,7 +3,9 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
+import abi from '@parity/shared/lib/contracts/abi/eip20';
 import BigNumber from 'bignumber.js';
+import { makeContract$ } from '@parity/light.js';
 import memoize from 'lodash/memoize';
 import { toWei } from '@parity/api/lib/util/wei';
 
@@ -11,6 +13,10 @@ import Debug from './debug';
 
 const debug = Debug('estimateGas');
 const GAS_MULT_FACTOR = 1.25; // Since estimateGas is not always accurate, we add a 33% factor for buffer.
+
+export const contractForToken = memoize(tokenAddress =>
+  makeContract$(tokenAddress, abi)
+);
 
 /**
  * Estimate the amount of gas for our transaction.
@@ -23,7 +29,7 @@ export const estimateGas = (tx, token, api) => {
   if (token.address === 'ETH') {
     return estimateGasForEth(txForEth(tx), api).then(addBuffer);
   } else {
-    return estimateGasForErc20(txForErc20(tx, token), api).then(addBuffer);
+    return estimateGasForErc20(txForErc20(tx, token), token).then(addBuffer);
   }
 };
 
@@ -31,14 +37,15 @@ export const estimateGas = (tx, token, api) => {
  * Estimate gas to transfer in ERC20 contract. Expensive function, so we
  * memoize it.
  */
-const estimateGasForErc20 = memoize(
-  txForErc20 =>
-    this.contract.contractObject.instance.transfer.estimateGas(
-      txForErc20.options,
-      txForErc20.args
-    ),
-  JSON.stringify
-);
+const estimateGasForErc20 = memoize((txForErc20, token) => {
+  debug(`Estimating gas for tx on token contract.`, token, txForErc20);
+  return contractForToken(
+    token.address
+  ).contractObject.instance.transfer.estimateGas(
+    txForErc20.options,
+    txForErc20.args
+  );
+}, JSON.stringify);
 
 /**
  * Estimate gas to transfer to an ETH address. Expensive function, so we
