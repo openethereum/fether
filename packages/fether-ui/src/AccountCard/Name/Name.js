@@ -6,9 +6,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Placeholder from '../../Placeholder';
+import { Placeholder } from '../../Placeholder';
 
-const Name = ({ name, ...otherProps }) => (
+export const Name = ({ name, ...otherProps }) => (
   <div className='account_name' {...otherProps}>
     {name || <Placeholder height={18} width={100} />}
   </div>
@@ -17,5 +17,3 @@ const Name = ({ name, ...otherProps }) => (
 Name.propTypes = {
   name: PropTypes.string
 };
-
-export default Name;

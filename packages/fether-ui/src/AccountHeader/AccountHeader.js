@@ -7,8 +7,8 @@ import React from 'react';
 import Blockies from 'react-blockies';
 import PropTypes from 'prop-types';
 
-import ClickToCopy from '../ClickToCopy';
-import Header from '../Header';
+import { ClickToCopy } from '../ClickToCopy';
+import { Header } from '../Header';
 
 const NormalContainer = ({ children }) => (
   <h1 className='account -header'>{children}</h1>
@@ -19,7 +19,12 @@ const CopyContainer = ({ address, children, ...otherProps }) => (
   </ClickToCopy>
 );
 
-const AccountHeader = ({ address, copyAddress, name, ...otherProps }) => {
+export const AccountHeader = ({
+  address,
+  copyAddress,
+  name,
+  ...otherProps
+}) => {
   const Container = copyAddress ? CopyContainer : NormalContainer;
 
   return (
@@ -45,5 +50,3 @@ AccountHeader.propTypes = {
   address: PropTypes.string,
   name: PropTypes.string
 };
-
-export default AccountHeader;

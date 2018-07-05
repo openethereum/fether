@@ -3,6 +3,4 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import Header from './Header';
-
-export default Header;
+export * from './Header';

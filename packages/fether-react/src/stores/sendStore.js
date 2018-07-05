@@ -3,26 +3,17 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import abi from '@parity/shared/lib/contracts/abi/eip20';
 import { action, computed, observable } from 'mobx';
-import { BigNumber } from 'bignumber.js';
-import { blockNumber$, makeContract$, post$ } from '@parity/light.js';
-import memoize from 'lodash/memoize';
-import noop from 'lodash/noop';
-import { toWei } from '@parity/api/lib/util/wei';
+import { blockNumber$, post$ } from '@parity/light.js';
 
+import { contractForToken, txForErc20, txForEth } from '../utils/estimateGas';
 import Debug from '../utils/debug';
 import parityStore from './parityStore';
-import tokensStore from './tokensStore';
 
 const debug = Debug('sendStore');
-const GAS_MULT_FACTOR = 1.25; // Since estimateGas is not always accurate, we add a 33% factor for buffer.
-const DEFAULT_GAS = new BigNumber(21000 * GAS_MULT_FACTOR); // Default gas amount
 
 export class SendStore {
   @observable blockNumber; // Current block number, used to calculate tx confirmations.
-  @observable estimated = DEFAULT_GAS; // Estimated gas amount for this transaction.
-  @observable tokenAddress; // 'ETH', or the token contract address
   tx = {}; // The actual tx we are sending. No need to be observable.
   @observable txStatus; // Status of the tx, see wiki for details.
 
@@ -56,73 +47,17 @@ export class SendStore {
   }
 
   /**
-   * If it's a token, then return the makeContract$ object.
-   */
-  @computed
-  get contract () {
-    if (this.tokenAddress === 'ETH') {
-      return null;
-    }
-    return makeContract$(this.tokenAddress, abi);
-  }
-
-  /**
-   * Estimate the amount of gas for our transaction.
-   */
-  estimateGas = () => {
-    if (!this.tx || !Object.keys(this.tx).length) {
-      return Promise.reject(new Error('Tx not set in sendStore.'));
-    }
-
-    if (this.tokenAddress === 'ETH') {
-      return this.estimateGasForEth(this.txForEth);
-    } else {
-      return this.estimateGasForErc20(this.txForErc20);
-    }
-  };
-
-  /**
-   * Estimate gas to transfer in ERC20 contract. Expensive function, so we
-   * memoize it.
-   */
-  estimateGasForErc20 = memoize(
-    txForErc20 =>
-      this.contract.contractObject.instance.transfer
-        .estimateGas(txForErc20.options, txForErc20.args)
-        .then(this.setEstimated)
-        .catch(noop),
-    JSON.stringify
-  );
-
-  /**
-   * Estimate gas to transfer to an ETH address. Expensive function, so we
-   * memoize it.
-   */
-  estimateGasForEth = memoize(
-    txForEth =>
-      parityStore.api.eth
-        .estimateGas(txForEth)
-        .then(this.setEstimated)
-        .catch(noop),
-    JSON.stringify
-  );
-
-  /**
    * Create a transaction.
    */
-  send = password => {
+  send = (token, password) => {
+    const tx =
+      token.address === 'ETH' ? txForEth(this.tx) : txForErc20(this.tx, token);
     const send$ =
-      this.tokenAddress === 'ETH'
-        ? post$(this.txForEth)
-        : this.contract.transfer$(
-          ...this.txForErc20.args,
-          this.txForErc20.options
-        );
+      token.address === 'ETH'
+        ? post$(tx)
+        : contractForToken(token.address).transfer$(...tx.args, tx.options);
 
-    debug(
-      'Sending tx.',
-      this.tokenAddress === 'ETH' ? this.txForEth : this.txForErc20
-    );
+    debug('Sending tx.', tx);
 
     return new Promise((resolve, reject) => {
       send$.subscribe(txStatus => {
@@ -138,52 +73,9 @@ export class SendStore {
     });
   };
 
-  /**
-   * This.tx is a user-friendly tx object. We convert it now as it can be
-   * passed to makeContract$(...).
-   */
-  @computed
-  get txForErc20 () {
-    return {
-      args: [
-        this.tx.to,
-        new BigNumber(this.tx.amount).mul(
-          new BigNumber(10).pow(tokensStore.tokens[this.tokenAddress].decimals)
-        )
-      ],
-      options: {
-        gasPrice: toWei(this.tx.gasPrice, 'shannon') // shannon == gwei
-      }
-    };
-  }
-
-  /**
-   * This.tx is a user-friendly tx object. We convert it now as it can be
-   * passed to post$(tx).
-   */
-  @computed
-  get txForEth () {
-    return {
-      gasPrice: toWei(this.tx.gasPrice, 'shannon'), // shannon == gwei
-      to: this.tx.to,
-      value: toWei(this.tx.amount.toString())
-    };
-  }
-
   @action
   setBlockNumber = blockNumber => {
     this.blockNumber = blockNumber;
-  };
-
-  @action
-  setEstimated = estimated => {
-    this.estimated = estimated.mul(GAS_MULT_FACTOR);
-    debug('Estimated gas,', +estimated, ', with buffer,', +this.estimated);
-  };
-
-  @action
-  setTokenAddress = tokenAddress => {
-    this.tokenAddress = tokenAddress;
   };
 
   @action

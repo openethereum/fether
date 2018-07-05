@@ -6,9 +6,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Placeholder from '../Placeholder';
+import { Placeholder } from '../Placeholder';
 
-const Header = ({ left, right, title }) => (
+export const Header = ({ left, right, title }) => (
   <div className='header-nav'>
     <div className='header-nav_left'>{left}</div>
     <div className='header-nav_title'>
@@ -23,5 +23,3 @@ Header.propTypes = {
   right: PropTypes.node,
   title: PropTypes.oneOfType([PropTypes.node, PropTypes.string])
 };
-
-export default Header;

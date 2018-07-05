@@ -14,6 +14,8 @@
   }
 
   .form_field_value {
+    background-color: transparent;
+    border: none;
     font-size: ms(-1);
     font-weight: 400;
     font-family: $mono;
@@ -21,6 +23,8 @@
     opacity: 0.75;
     margin: 0.25rem 0.5rem 0;
     padding-bottom: 0.5rem;
+    padding-left: 0;
+    padding-right: 0;
     overflow: hidden;
     word-wrap: break-word;
   }

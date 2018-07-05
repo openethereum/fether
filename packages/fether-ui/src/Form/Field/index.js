@@ -3,6 +3,4 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import FormField from './FormField';
-
-export default FormField;
+export * from './Field';

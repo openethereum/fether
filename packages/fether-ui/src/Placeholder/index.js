@@ -3,6 +3,4 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import Placeholder from './Placeholder';
-
-export default Placeholder;
+export * from './Placeholder';

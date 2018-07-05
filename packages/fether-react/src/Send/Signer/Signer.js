@@ -4,65 +4,41 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { findDOMNode } from 'react-dom';
-import { FormField, Header } from 'fether-ui';
+import { Field, Form } from 'react-final-form';
+import { Form as FetherForm, Header } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
-import { Link } from 'react-router-dom';
-import ReactTooltip from 'react-tooltip';
+import { Link, Redirect } from 'react-router-dom';
+import { withProps } from 'recompose';
 
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 
 @inject('sendStore', 'tokensStore')
+@withProps(({ match: { params: { tokenAddress } }, tokensStore }) => ({
+  token: tokensStore.tokens[tokenAddress]
+}))
 @observer
 class Signer extends Component {
-  state = {
-    error: null,
-    isSending: false,
-    password: ''
-  };
+  handleAccept = values => {
+    const { history, sendStore, token } = this.props;
 
-  handleAccept = event => {
-    const { history, sendStore } = this.props;
-    const { password } = this.state;
-
-    event.preventDefault();
-
-    this.setState({ isSending: true }, () => {
-      sendStore
-        .send(password)
-        .then(() => history.push('/send/sent'))
-        .catch(error => {
-          this.setState({ error, isSending: false }, () =>
-            ReactTooltip.show(findDOMNode(this.tooltip))
-          );
-        });
-    });
-  };
-
-  handleCancel = () => {
-    const { history } = this.props;
-    history.goBack();
-  };
-
-  handleChangePassword = ({ target: { value } }) => {
-    this.setState({ error: null, password: value });
-  };
-
-  /**
-   * TODO All this tooltips refs etc should go inside a React validation
-   * library.
-   */
-  handleTooltipRef = ref => {
-    this.tooltip = ref;
+    return sendStore
+      .send(token, values.password)
+      .then(() => history.push(`/send/${token.address}/sent`))
+      .catch(error => ({
+        password: error.text
+      }));
   };
 
   render () {
     const {
-      sendStore: { tokenAddress, tx },
-      tokensStore
+      history,
+      sendStore: { tx },
+      token
     } = this.props;
-    const { error, isSending, password } = this.state;
-    const token = tokensStore.tokens[tokenAddress];
+
+    if (!tx || !token) {
+      return <Redirect to='/' />;
+    }
 
     return (
       <div>
@@ -72,7 +48,7 @@ class Signer extends Component {
               Close
             </Link>
           }
-          title={<h1>Send {token.name}</h1>}
+          title={token && <h1>Send {token.name}</h1>}
         />
 
         <div className='window_content'>
@@ -80,64 +56,63 @@ class Signer extends Component {
             <TokenBalance
               drawers={[
                 <div key='txForm'>
-                  <div className='form_field'>
-                    <label>Amount</label>
-                    <div className='form_field_value'>
-                      {tx.amount} {token.symbol}
-                    </div>
-                  </div>
-                  <div className='form_field'>
-                    <label>To</label>
-                    <div className='form_field_value'>{tx.to}</div>
-                  </div>
+                  <FetherForm.Field
+                    className='form_field_value'
+                    disabled
+                    defaultValue={`${tx.amount} ${token.symbol}`}
+                    label='Amount'
+                  />
+
+                  <FetherForm.Field
+                    as='textarea'
+                    className='form_field_value'
+                    disabled
+                    defaultValue={tx.to}
+                    label='To'
+                  />
                 </div>,
-                <form key='signerForm' onSubmit={this.handleAccept}>
-                  <div className='text'>
-                    <p>Enter your password to confirm this transaction.</p>
-                  </div>
+                <Form
+                  key='signerForm'
+                  onSubmit={this.handleAccept}
+                  render={({ handleSubmit, pristine, submitting }) => (
+                    <form onSubmit={handleSubmit}>
+                      <div className='text'>
+                        <p>Enter your password to confirm this transaction.</p>
+                      </div>
 
-                  <div
-                    data-tip={error ? error.text : ''}
-                    ref={this.handleTooltipRef}
-                  >
-                    <FormField
-                      label='Password'
-                      onChange={this.handleChangePassword}
-                      required
-                      type='password'
-                      value={password}
-                    />
-                  </div>
+                      <Field
+                        label='Password'
+                        name='password'
+                        render={FetherForm.Field}
+                        required
+                        type='password'
+                      />
 
-                  <nav className='form-nav -binary'>
-                    <button
-                      className='button -cancel'
-                      onClick={this.handleCancel}
-                      type='button'
-                    >
-                      Cancel
-                    </button>
+                      <nav className='form-nav -binary'>
+                        <button
+                          className='button -cancel'
+                          onClick={history.goBack}
+                          type='button'
+                        >
+                          Cancel
+                        </button>
 
-                    <button
-                      className='button -submit'
-                      disabled={!password.length || isSending || error}
-                    >
-                      Confirm transaction
-                    </button>
-                  </nav>
-                </form>
+                        <button
+                          className='button -submit'
+                          disabled={pristine || submitting}
+                        >
+                          Confirm transaction
+                        </button>
+                      </nav>
+                    </form>
+                  )}
+                />
               ]}
               onClick={null}
               token={token}
             />
           </div>
         </div>
-        <ReactTooltip
-          effect='solid'
-          event='mouseover'
-          eventOff='keydown mouseout'
-          place='top'
-        />
       </div>
     );
   }

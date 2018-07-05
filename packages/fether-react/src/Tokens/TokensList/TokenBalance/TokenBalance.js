@@ -11,12 +11,12 @@ import { withRouter } from 'react-router-dom';
 
 import withBalance from '../../../utils/withBalance';
 
-@withBalance()
+@withBalance
 @inject('sendStore')
 @withRouter
 class TokenBalance extends Component {
   static propTypes = {
-    token: PropTypes.object.isRequired
+    token: PropTypes.object
   };
 
   handleClick = () => {
@@ -24,8 +24,8 @@ class TokenBalance extends Component {
     if (!token.address) {
       return;
     }
-    sendStore.setTokenAddress(token.address);
-    history.push('/send');
+    sendStore.clear();
+    history.push(`/send/${token.address}`);
   };
 
   render () {

@@ -7,9 +7,9 @@ import React from 'react';
 import Blockies from 'react-blockies';
 import PropTypes from 'prop-types';
 
-import Placeholder from '../../Placeholder';
+import { Placeholder } from '../../Placeholder';
 
-const Avatar = ({ address, ...otherProps }) => (
+export const Avatar = ({ address, ...otherProps }) => (
   <div className='account_avatar' {...otherProps}>
     {address ? (
       <Blockies seed={address.toLowerCase()} />
@@ -22,5 +22,3 @@ const Avatar = ({ address, ...otherProps }) => (
 Avatar.propTypes = {
   address: PropTypes.string
 };
-
-export default Avatar;

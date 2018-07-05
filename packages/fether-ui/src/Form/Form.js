@@ -3,4 +3,10 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-export * from './ClickToCopy';
+import { Field } from './Field';
+import { Slider } from './Slider';
+
+export const Form = {
+  Field,
+  Slider
+};

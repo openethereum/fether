@@ -6,7 +6,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const AddressShort = ({ address, as: T = 'span', ...otherProps }) => (
+export const AddressShort = ({ address, as: T = 'span', ...otherProps }) => (
   <T {...otherProps}>
     {address.slice(0, 6)}..{address.slice(-4)}
   </T>
@@ -15,5 +15,3 @@ const AddressShort = ({ address, as: T = 'span', ...otherProps }) => (
 AddressShort.propTypes = {
   address: PropTypes.string.isRequired
 };
-
-export default AddressShort;

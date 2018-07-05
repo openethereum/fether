@@ -6,7 +6,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Card = ({ children, className, drawers, onClick }) => (
+export const Card = ({ children, className, drawers, onClick }) => (
   <div
     className={['box', '-card', onClick ? '-clickable' : '', className].join(
       ' '
@@ -29,5 +29,3 @@ Card.propTypes = {
   drawers: PropTypes.arrayOf(PropTypes.node), // A card can have multiple drawers
   onClick: PropTypes.func
 };
-
-export default Card;

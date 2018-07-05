@@ -27,6 +27,7 @@ export class ParityStore {
     // Retrieve token from localStorage
     const token = store.get(LS_KEY);
     if (token) {
+      debug('Got token from localStorage.');
       this.setToken(token);
     }
 
@@ -99,6 +100,7 @@ export class ParityStore {
       }
       // If `parity signer new-token` has successfully given us a token back,
       // then we submit it
+      debug('Successfully received new token.');
       this.setToken(token);
     });
   };
@@ -137,7 +139,6 @@ export class ParityStore {
       return;
     }
 
-    debug(`Setting token in localStorage.`);
     this.token = token;
 
     // If we receive a new token, then we try to connect to the Api with this

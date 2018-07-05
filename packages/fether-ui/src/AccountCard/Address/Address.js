@@ -6,10 +6,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import AddressShort from '../../AddressShort';
-import Placeholder from '../../Placeholder';
+import { AddressShort } from '../../AddressShort';
+import { Placeholder } from '../../Placeholder';
 
-const Address = ({ address, short, ...otherProps }) => (
+export const Address = ({ address, short, ...otherProps }) => (
   <div className='account_address' {...otherProps}>
     {address ? (
       short ? (
@@ -31,5 +31,3 @@ Address.propTypes = {
   name: PropTypes.string,
   short: PropTypes.bool
 };
-
-export default Address;

@@ -3,6 +3,4 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import Name from './Name';
-
-export default Name;
+export * from './Name';

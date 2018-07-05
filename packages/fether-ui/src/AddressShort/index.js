@@ -3,6 +3,4 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import AddressShort from './AddressShort';
-
-export default AddressShort;
+export * from './AddressShort';

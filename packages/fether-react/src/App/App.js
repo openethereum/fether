@@ -29,6 +29,13 @@ const Router =
 @inject('healthStore', 'onboardingStore')
 @observer
 class App extends Component {
+  componentDidCatch () {
+    if (process.env.NODE_ENV !== 'development') {
+      // Redirect to '/' on errors
+      window.location.href = '/';
+    }
+  }
+
   render () {
     return (
       <Router>

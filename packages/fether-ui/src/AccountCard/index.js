@@ -3,6 +3,4 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import AccountCard from './AccountCard';
-
-export default AccountCard;
+export * from './AccountCard';
