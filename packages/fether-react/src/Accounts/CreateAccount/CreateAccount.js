@@ -37,6 +37,7 @@ class CreateAccount extends Component {
         params: { step }
       }
     } = this.props;
+    createAccountStore.clear();
     createAccountStore.setIsImport(!createAccountStore.isImport);
 
     // If we were further in the account creation, go back to step 1
