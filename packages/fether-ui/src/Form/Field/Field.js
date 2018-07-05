@@ -18,10 +18,10 @@ export const Field = ({
   <div className='form_field'>
     <label>{label}</label>
     <Popup
-      content={meta && meta.error}
+      content={meta && (meta.error || meta.submitError)}
       inverted
       on='click'
-      open={meta && !meta.pristine && !meta.valid}
+      open={meta && !meta.pristine && !meta.valid && !meta.dirtySinceLastSubmit}
       position='top center'
       size='mini'
       trigger={<T {...input} {...otherProps} />}

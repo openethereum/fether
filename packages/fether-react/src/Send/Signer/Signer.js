@@ -22,10 +22,10 @@ class Signer extends Component {
     const { history, sendStore, token } = this.props;
 
     return sendStore
-      .send(values.password)
+      .send(token, values.password)
       .then(() => history.push(`/send/${token.address}/sent`))
       .catch(error => ({
-        password: error
+        password: error.text
       }));
   };
 
@@ -74,7 +74,7 @@ class Signer extends Component {
                 <Form
                   key='signerForm'
                   onSubmit={this.handleAccept}
-                  render={({ handleSubmit, submitting, valid }) => (
+                  render={({ errors, handleSubmit, pristine, submitting }) => (
                     <form onSubmit={handleSubmit}>
                       <div className='text'>
                         <p>Enter your password to confirm this transaction.</p>
@@ -99,7 +99,7 @@ class Signer extends Component {
 
                         <button
                           className='button -submit'
-                          disabled={!valid || submitting}
+                          disabled={pristine || submitting}
                         >
                           Confirm transaction
                         </button>

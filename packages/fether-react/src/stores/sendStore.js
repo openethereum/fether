@@ -7,12 +7,9 @@ import abi from '@parity/shared/lib/contracts/abi/eip20';
 import { action, computed, observable } from 'mobx';
 import { BigNumber } from 'bignumber.js';
 import { blockNumber$, makeContract$, post$ } from '@parity/light.js';
-import memoize from 'lodash/memoize';
-import noop from 'lodash/noop';
 
 import Debug from '../utils/debug';
 import parityStore from './parityStore';
-import tokensStore from './tokensStore';
 import { txForErc20, txForEth } from '../utils/estimateGas';
 
 const debug = Debug('sendStore');
@@ -22,7 +19,6 @@ const DEFAULT_GAS = new BigNumber(21000 * GAS_MULT_FACTOR); // Default gas amoun
 export class SendStore {
   @observable blockNumber; // Current block number, used to calculate tx confirmations.
   @observable estimated = DEFAULT_GAS; // Estimated gas amount for this transaction.
-  @observable tokenAddress; // 'ETH', or the token contract address
   tx = {}; // The actual tx we are sending. No need to be observable.
   @observable txStatus; // Status of the tx, see wiki for details.
 
@@ -67,63 +63,20 @@ export class SendStore {
   }
 
   /**
-   * Estimate the amount of gas for our transaction.
-   */
-  estimateGas = () => {
-    if (!this.tx || !Object.keys(this.tx).length) {
-      return Promise.reject(new Error('Tx not set in sendStore.'));
-    }
-
-    if (this.tokenAddress === 'ETH') {
-      return this.estimateGasForEth(txForEth(this.tx));
-    } else {
-      return this.estimateGasForErc20(
-        txForErc20(this.tx, tokensStore.tokens[this.tokenAddress])
-      );
-    }
-  };
-
-  /**
-   * Estimate gas to transfer in ERC20 contract. Expensive function, so we
-   * memoize it.
-   */
-  estimateGasForErc20 = memoize(
-    txForErc20 =>
-      this.contract.contractObject.instance.transfer
-        .estimateGas(txForErc20.options, txForErc20.args)
-        .then(this.setEstimated)
-        .catch(noop),
-    JSON.stringify
-  );
-
-  /**
-   * Estimate gas to transfer to an ETH address. Expensive function, so we
-   * memoize it.
-   */
-  estimateGasForEth = memoize(
-    txForEth =>
-      parityStore.api.eth
-        .estimateGas(txForEth)
-        .then(this.setEstimated)
-        .catch(noop),
-    JSON.stringify
-  );
-
-  /**
    * Create a transaction.
    */
-  send = password => {
+  send = (token, password) => {
     const send$ =
-      this.tokenAddress === 'ETH'
+      token.address === 'ETH'
         ? post$(txForEth(this.tx))
         : this.contract.transfer$(
-          ...txForErc20(this.tx).args,
-          txForErc20(this.tx).options
+          ...txForErc20(this.tx, token).args,
+          txForErc20(this.tx, token).options
         );
 
     debug(
       'Sending tx.',
-      this.tokenAddress === 'ETH' ? this.txForEth : this.txForErc20
+      token.address === 'ETH' ? this.txForEth : this.txForErc20
     );
 
     return new Promise((resolve, reject) => {
@@ -149,11 +102,6 @@ export class SendStore {
   setEstimated = estimated => {
     this.estimated = estimated.mul(GAS_MULT_FACTOR);
     debug('Estimated gas,', +estimated, ', with buffer,', +this.estimated);
-  };
-
-  @action
-  setTokenAddress = tokenAddress => {
-    this.tokenAddress = tokenAddress;
   };
 
   @action
