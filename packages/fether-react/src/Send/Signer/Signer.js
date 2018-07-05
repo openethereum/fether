@@ -74,7 +74,7 @@ class Signer extends Component {
                 <Form
                   key='signerForm'
                   onSubmit={this.handleAccept}
-                  render={({ errors, handleSubmit, pristine, submitting }) => (
+                  render={({ handleSubmit, pristine, submitting }) => (
                     <form onSubmit={handleSubmit}>
                       <div className='text'>
                         <p>Enter your password to confirm this transaction.</p>
