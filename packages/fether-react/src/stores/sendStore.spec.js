@@ -5,8 +5,10 @@
 
 /* eslint-env jest */
 
+import BigNumber from 'bignumber.js';
 import lightJs from '@parity/light.js'; // Mocked
 
+import * as mock from '../utils/testHelpers/mock';
 import parityStore from './parityStore';
 import { SendStore } from './sendStore';
 import * as storeTests from '../utils/testHelpers/storeTests';
@@ -18,39 +20,13 @@ jest.mock('@parity/light.js', () => ({
         unsubscribe: jest.fn()
       }))
   })),
-  makeContract$: jest.fn(() => ({
-    transfer$: jest.fn(() => ({ subscribe: jest.fn() }))
-  })),
-  post$: jest.fn(() => ({
-    subscribe: jest.fn(callback => {
-      setTimeout(callback({ estimating: true }), 100); // eslint-disable-line standard/no-callback-literal
-      setTimeout(callback({ requested: 1 }), 200); // eslint-disable-line standard/no-callback-literal
-    })
-  }))
+  makeContract$: jest.fn(() => mock.makeContract$),
+  post$: jest.fn(() => mock.post$)
 }));
 
 jest.mock('./parityStore', () => ({
-  api: {
-    signer: {
-      confirmRequest: jest.fn(() => Promise.resolve(true))
-    }
-  }
+  api: mock.api
 }));
-
-const mockTx = {
-  amount: 0.01, // In Ether or in token
-  gasPrice: 4, // in Gwei
-  to: '0x123'
-};
-
-const mockErc20Token = {
-  address: 'foo',
-  decimals: 18
-};
-
-const mockEthToken = {
-  address: 'ETH'
-};
 
 let sendStore; // Will hold the newly created instance of SendStore in each test
 beforeEach(() => {
@@ -75,7 +51,7 @@ describe('method acceptRequest', () => {
 
 describe('method clear', () => {
   test('should clear tx', () => {
-    sendStore.setTx(mockTx);
+    sendStore.setTx(mock.tx);
     sendStore.clear();
     expect(sendStore.tx).toEqual({});
   });
@@ -107,32 +83,36 @@ describe('@computed confirmations', () => {
 
 describe('method send', () => {
   beforeEach(() => {
-    sendStore.setTx(mockTx);
+    sendStore.setTx(mock.tx);
   });
 
-  test('should call makeContract$ if the token is Erc20 ', () => {
-    sendStore.send(mockErc20Token);
-    expect(lightJs.makeContract$).toHaveBeenCalled();
+  test('should call transfer$ if the token is Erc20', () => {
+    sendStore.send(mock.erc20);
+    expect(mock.makeContract$.transfer$).toHaveBeenCalledWith(
+      '0x123',
+      new BigNumber('10000000000000000'),
+      { gasPrice: new BigNumber('4000000000') }
+    );
   });
 
-  test.skip('should call transfer$ if the token is Erc20 and subscribe to it', () => {
-    // TODO
-  });
-
-  test('should call post$ if the token is ETH  and subscribe to it', () => {
-    sendStore.send(mockEthToken);
-    expect(lightJs.post$).toHaveBeenCalled();
+  test('should call post$ if the token is ETH', () => {
+    sendStore.send(mock.eth);
+    expect(lightJs.post$).toHaveBeenCalledWith({
+      gasPrice: new BigNumber('4000000000'),
+      to: '0x123',
+      value: new BigNumber('10000000000000000')
+    });
   });
 
   test('should update txStatus', () => {
     sendStore.setTxStatus = jest.fn();
-    sendStore.send(mockEthToken);
+    sendStore.send(mock.eth);
     expect(sendStore.setTxStatus).toHaveBeenCalledWith({ estimating: true });
   });
 
   test('should call acceptRequest when txStatus is requested', () => {
     sendStore.acceptRequest = jest.fn(() => Promise.resolve(true));
-    sendStore.send(mockEthToken, 'foo');
+    sendStore.send(mock.eth, 'foo');
     expect(sendStore.acceptRequest).toHaveBeenCalledWith(1, 'foo');
   });
 });

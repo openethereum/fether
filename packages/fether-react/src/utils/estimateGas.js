@@ -23,7 +23,7 @@ export const contractForToken = memoize(tokenAddress =>
  */
 export const estimateGas = (tx, token, api) => {
   if (!tx || !Object.keys(tx).length) {
-    return Promise.reject(new Error('Tx not set in sendStore.'));
+    return Promise.reject(new Error('Tx not set.'));
   }
 
   if (token.address === 'ETH') {

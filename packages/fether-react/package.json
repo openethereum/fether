@@ -31,7 +31,7 @@
     "start": "npm-run-all -p start-*",
     "start-css": "npm run build-css -- --watch --recursive",
     "start-js": "react-app-rewired start",
-    "test": "react-app-rewired test --env=jsdom --coverage"
+    "test": "react-app-rewired test --env=jsdom"
   },
   "dependencies": {
     "@parity/api": "^2.1.22",
