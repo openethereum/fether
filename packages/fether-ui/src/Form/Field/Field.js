@@ -21,7 +21,9 @@ export const Field = ({
       content={meta && (meta.error || meta.submitError)}
       inverted
       on='click'
-      open={meta && !meta.pristine && !meta.valid && !meta.dirtySinceLastSubmit}
+      open={
+        !!meta && !meta.pristine && !meta.valid && !meta.dirtySinceLastSubmit
+      }
       position='top center'
       size='mini'
       trigger={<T {...input} {...otherProps} />}
