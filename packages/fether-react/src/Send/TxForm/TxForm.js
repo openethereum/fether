@@ -144,8 +144,12 @@ class Send extends Component {
         throw new Error('No "ethBalance" or "estimated" value.');
       }
 
+      // Verify that `gas + (eth amount if sending eth) <= ethBalance`
       if (
-        toWei(ethBalance).lt(estimated.mul(toWei(values.gasPrice, 'shannon')))
+        estimated
+          .mul(toWei(values.gasPrice, 'shannon'))
+          .plus(token.address === 'ETH' ? toWei(values.amount) : 0)
+          .gt(toWei(ethBalance))
       ) {
         return { amount: "You don't have enough ETH balance" };
       }
