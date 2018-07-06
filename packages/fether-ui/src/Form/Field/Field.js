@@ -29,7 +29,7 @@ export const Field = ({
       }
       position='top center'
       size='mini'
-      trigger={<T {...input} {...otherProps} />}
+      trigger={<T id={input && input.name} {...input} {...otherProps} />}
     />
 
     {children}

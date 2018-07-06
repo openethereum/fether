@@ -89,7 +89,7 @@ class Send extends Component {
                           centerText={`${values.gasPrice} GWEI`}
                           className='-range'
                           label='Transaction Fee'
-                          leftText='Cheap'
+                          leftText='Slow'
                           max={MAX_GAS_PRICE}
                           min={MIN_GAS_PRICE}
                           name='gasPrice'
