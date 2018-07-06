@@ -1,15 +1,74 @@
 @mixin reset {
   @viewport {
-    zoom: 1.0;
+    zoom: 1;
     width: extend-to-zoom;
   }
 
   @-ms-viewport {
     width: extend-to-zoom;
-    zoom: 1.0;
+    zoom: 1;
   }
 
-  html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, font, img, ins, kbd, q, s, samp, small, strike, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+  html,
+  body,
+  div,
+  span,
+  applet,
+  object,
+  iframe,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  blockquote,
+  pre,
+  a,
+  abbr,
+  acronym,
+  address,
+  big,
+  cite,
+  code,
+  del,
+  dfn,
+  font,
+  img,
+  ins,
+  kbd,
+  q,
+  s,
+  samp,
+  small,
+  strike,
+  sub,
+  sup,
+  tt,
+  var,
+  b,
+  u,
+  i,
+  center,
+  dl,
+  dt,
+  dd,
+  ol,
+  ul,
+  li,
+  fieldset,
+  form,
+  label,
+  legend,
+  table,
+  caption,
+  tbody,
+  tfoot,
+  thead,
+  tr,
+  th,
+  td {
     margin: 0;
     padding: 0;
     font-size: 100%;
@@ -17,7 +76,7 @@
     border: 0;
     outline: 0;
     background: transparent;
-    font-feature-settings: "kern", "liga", "pnum";
+    font-feature-settings: 'kern', 'liga', 'pnum';
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     webkit-text-size-adjust: 100%;
@@ -25,11 +84,15 @@
     text-size-adjust: 100%;
   }
 
-  blockquote, q {
+  blockquote,
+  q {
     quotes: none;
   }
 
-  input:focus, select:focus, button:focus {
+  button:focus,
+  input:focus,
+  select:focus,
+  textarea:focus {
     outline: 0;
   }
 
@@ -38,7 +101,8 @@
     border-spacing: 0;
   }
 
-  ul, ol {
+  ul,
+  ol {
     list-style: none;
   }
 
