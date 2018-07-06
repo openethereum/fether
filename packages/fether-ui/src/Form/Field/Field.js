@@ -16,13 +16,16 @@ export const Field = ({
   ...otherProps
 }) => (
   <div className='form_field'>
-    <label>{label}</label>
+    <label htmlFor={input && input.name}>{label}</label>
     <Popup
       content={meta && (meta.error || meta.submitError)}
       inverted
       on='click'
       open={
-        !!meta && !meta.pristine && !meta.valid && !meta.dirtySinceLastSubmit
+        !!meta &&
+        !meta.valid &&
+        (!meta.pristine || meta.touched) &&
+        !meta.dirtySinceLastSubmit
       }
       position='top center'
       size='mini'
