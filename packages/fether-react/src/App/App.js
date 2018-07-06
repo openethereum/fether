@@ -12,6 +12,8 @@ import {
   Switch
 } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
+import isElectron from 'is-electron';
+import ReactResizeDetector from 'react-resize-detector';
 
 import Accounts from '../Accounts';
 import Onboarding from '../Onboarding';
@@ -25,17 +27,26 @@ import Whitelist from '../Whitelist';
 // https://github.com/facebook/create-react-app/issues/3591
 const Router =
   process.env.NODE_ENV === 'production' ? MemoryRouter : BrowserRouter;
+const electron = isElectron() ? window.require('electron') : null;
 
 @inject('healthStore', 'onboardingStore')
 @observer
 class App extends Component {
+  handleResize = (_, height) => {
+    if (!electron) {
+      return;
+    }
+    // Send height to main process
+    electron.ipcRenderer.send('asynchronous-message', 'app-resize', height);
+  };
+
   render () {
     return (
-      <Router>
-        <div className='wrapper'>
+      <ReactResizeDetector handleHeight onResize={this.handleResize}>
+        <Router>
           <div className='content'>{this.renderScreen()}</div>
-        </div>
-      </Router>
+        </Router>
+      </ReactResizeDetector>
     );
   }
 
