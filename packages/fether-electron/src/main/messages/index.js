@@ -5,17 +5,34 @@
 
 import { signerNewToken } from '@parity/electron';
 
+import Pino from './utils/pino';
+
+const pino = Pino();
+
 /**
  * Handle all asynchronous messages from renderer to main.
  */
-export default async (event, arg) => {
-  switch (arg) {
-    case 'signer-new-token': {
-      const token = await signerNewToken();
-      // Send back the token to the renderer process
-      event.sender.send('asynchronous-reply', token);
-      break;
+export default async (mainWindow, event, ...args) => {
+  try {
+    if (!args.length) {
+      return;
     }
-    default:
+    switch (args[0]) {
+      case 'app-resize': {
+        const [width] = mainWindow.getSize();
+        const newHeight = args[1];
+        mainWindow.setContentSize(width, Math.round(newHeight) + 2);
+        break;
+      }
+      case 'signer-new-token': {
+        const token = await signerNewToken();
+        // Send back the token to the renderer process
+        event.sender.send('asynchronous-reply', token);
+        break;
+      }
+      default:
+    }
+  } catch (err) {
+    pino.error(err);
   }
 };

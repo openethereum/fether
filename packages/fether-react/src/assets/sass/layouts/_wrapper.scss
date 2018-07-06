@@ -1,58 +1,49 @@
-.wrapper {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  overflow: hidden;
+.content {
+  // TODO: abstract this out
+  overflow: visible;
+  max-width: 22rem;
+  margin: 0 auto;
 
-  .content {
-    // TODO: abstract this out
-    overflow: visible;
-    max-width: 22rem;
-    margin: 0 auto;
+  .connector {
+    height: 0.5rem;
+    display: flex;
+    justify-content: center;
 
-    .connector {
-      height: 0.5rem;
-      display: flex;
-      justify-content: center;
-
-      &.-top {
-        margin-bottom: -1px;
-      }
-
-      svg {
-        height: 0.5rem;
-        width: auto;
-        polygon {
-          fill: $chrome;
-        }
-      }
+    &.-top {
+      margin-bottom: -1px;
     }
 
-    .window {
-      background: $chrome;
-      border-radius: 0.25rem;
-      overflow: hidden;
-      position: relative;
-      box-shadow: 0 0.125rem 0.75rem rgba($black, 0.175),
-        0 0.125rem 0.125rem rgba($black, 0.1);
-
-      .window_content {
-        min-height: 7.5rem;
+    svg {
+      height: 0.5rem;
+      width: auto;
+      polygon {
+        fill: $chrome;
       }
+    }
+  }
 
-      .window_overlay {
-        background-color: $chrome;
-        bottom: 0;
-        left: 0;
-        min-height: 7.5rem;
-        opacity: 0.98;
-        position: absolute;
-        right: 0;
-        top: 0;
-        z-index: 10;
-      }
+  .window {
+    background: $chrome;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0.125rem 0.75rem rgba($black, 0.175),
+      0 0.125rem 0.125rem rgba($black, 0.1);
+
+    .window_content {
+      min-height: 7.5rem;
+    }
+
+    .window_overlay {
+      background-color: $chrome;
+      bottom: 0;
+      left: 0;
+      min-height: 7.5rem;
+      opacity: 0.98;
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 10;
     }
   }
 }

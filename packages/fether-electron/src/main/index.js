@@ -82,7 +82,9 @@ function createWindow () {
   );
 
   // Listen to messages from renderer process
-  ipcMain.on('asynchronous-message', messages);
+  ipcMain.on('asynchronous-message', (...args) =>
+    messages(mainWindow, ...args)
+  );
 
   // Add application menu
   addMenu(mainWindow);
