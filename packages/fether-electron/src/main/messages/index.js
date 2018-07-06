@@ -5,22 +5,22 @@
 
 import { signerNewToken } from '@parity/electron';
 
-import Pino from './utils/pino';
+import Pino from '../utils/pino';
 
 const pino = Pino();
 
 /**
  * Handle all asynchronous messages from renderer to main.
  */
-export default async (mainWindow, event, ...args) => {
+export default async (mainWindow, event, action, ...args) => {
   try {
-    if (!args.length) {
+    if (!action) {
       return;
     }
-    switch (args[0]) {
+    switch (action) {
       case 'app-resize': {
-        const [width] = mainWindow.getSize();
-        const newHeight = args[1];
+        const [width] = mainWindow.getContentSize();
+        const newHeight = args[0];
         mainWindow.setContentSize(width, Math.round(newHeight) + 2);
         break;
       }
