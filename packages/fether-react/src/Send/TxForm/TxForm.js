@@ -69,6 +69,7 @@ class Send extends Component {
                           formNoValidate
                           label='Amount'
                           name='amount'
+                          id='amount'
                           placeholder='1.00'
                           render={FetherForm.Field}
                           required
@@ -80,6 +81,7 @@ class Send extends Component {
                           className='-sm'
                           label='To'
                           name='to'
+                          id='to'
                           placeholder='0x...'
                           required
                           render={FetherForm.Field}
@@ -89,7 +91,7 @@ class Send extends Component {
                           centerText={`${values.gasPrice} GWEI`}
                           className='-range'
                           label='Transaction Fee'
-                          leftText='Cheap'
+                          leftText='Slow'
                           max={MAX_GAS_PRICE}
                           min={MIN_GAS_PRICE}
                           name='gasPrice'
