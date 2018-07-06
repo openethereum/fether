@@ -8,14 +8,14 @@ import debounce from 'debounce-promise';
 import { estimateGas } from '../../utils/estimateGas';
 import { Field, Form } from 'react-final-form';
 import { Form as FetherForm, Header } from 'fether-ui';
-import { fromWei, toWei } from '@parity/api/lib/util/wei';
+import { toWei } from '@parity/api/lib/util/wei';
 import { inject, observer } from 'mobx-react';
 import { isAddress } from '@parity/api/lib/util/address';
 import { Link } from 'react-router-dom';
 import { withProps } from 'recompose';
 
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
-import withBalance from '../../utils/withBalance';
+import withBalance, { withEthBalance } from '../../utils/withBalance';
 
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
@@ -24,7 +24,8 @@ const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 @withProps(({ match: { params: { tokenAddress } }, tokensStore }) => ({
   token: tokensStore.tokens[tokenAddress]
 }))
-@withBalance
+@withBalance // Balance of current token (can be ETH)
+@withEthBalance // ETH balance
 @observer
 class Send extends Component {
   handleSubmit = values => {
@@ -87,7 +88,7 @@ class Send extends Component {
                         <Field
                           centerText={`${values.gasPrice} GWEI`}
                           className='-range'
-                          label='Gas'
+                          label='Transaction Fee'
                           leftText='Cheap'
                           max={MAX_GAS_PRICE}
                           min={MIN_GAS_PRICE}
@@ -126,7 +127,7 @@ class Send extends Component {
    */
   validateAmount = debounce(async values => {
     try {
-      const { balance, parityStore, token } = this.props;
+      const { balance, ethBalance, parityStore, token } = this.props;
       const amount = +values.amount;
 
       if (!amount || isNaN(amount)) {
@@ -137,23 +138,15 @@ class Send extends Component {
         return { amount: `You don't have enough ${token.symbol} balance` };
       }
 
-      if (token.address !== 'ETH') {
-        // No need to estimate gas for tokens.
-        // TODO Make sure that user has enough ETH balance
-        return;
-      }
-
       const estimated = await estimateGas(values, token, parityStore.api);
 
-      if (!balance || isNaN(estimated)) {
-        throw new Error('No "balance" or "estimated" value.');
+      if (!ethBalance || isNaN(estimated)) {
+        throw new Error('No "ethBalance" or "estimated" value.');
       }
-      // Calculate the max amount the user can send
-      const maxAmount = +fromWei(
-        toWei(balance).minus(estimated.mul(toWei(values.gasPrice, 'shannon')))
-      );
 
-      if (amount > maxAmount) {
+      if (
+        toWei(ethBalance).lt(estimated.mul(toWei(values.gasPrice, 'shannon')))
+      ) {
         return { amount: "You don't have enough ETH balance" };
       }
     } catch (err) {
