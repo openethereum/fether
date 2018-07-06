@@ -69,7 +69,7 @@ class Send extends Component {
                           formNoValidate
                           label='Amount'
                           name='amount'
-                          placeholder='1.00'
+                          placeholder='0.00'
                           render={FetherForm.Field}
                           required
                           type='number' // In ETH or coin
