@@ -40,16 +40,17 @@
   },
   "scripts": {
     "build": "lerna run build",
+    "build-parity-electron": "cd packages/parity-electron && yarn build",
     "preelectron": "yarn build",
     "electron": "cd packages/fether-electron && yarn electron",
     "lint": "semistandard 'packages/**/*.js' --parser babel-eslint",
     "prepackage": "yarn build",
     "package": "cd packages/fether-electron && yarn package",
     "release": "cd packages/fether-electron && yarn release",
+    "prestart": "yarn build-parity-electron",
     "start": "npm-run-all -l -p start-*",
     "start-electron": "cd packages/fether-electron && yarn start",
     "start-hoc": "cd packages/light-hoc && yarn start",
-    "start-parity-electron": "cd packages/parity-electron && yarn start",
     "start-react": "cd packages/fether-react && yarn start",
     "start-ui": "cd packages/fether-ui && yarn start",
     "test": "lerna run test --parallel"
