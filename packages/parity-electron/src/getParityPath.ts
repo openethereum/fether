@@ -5,16 +5,20 @@
 
 import { app } from 'electron';
 import commandExists from 'command-exists';
-import fs from 'fs';
+import { stat } from 'fs';
 import promiseAny from 'promise-any';
 import { promisify } from 'util';
 
 import logger from './utils/logger';
 
-const fsStat = promisify(fs.stat);
+const fsStat = promisify(stat);
 
-// The default path to install parity, in case there's no other instance found
-// on the machine.
+/**
+ * The default path to install parity, in case there's no other instance found
+ * on the machine.
+ *
+ * @ignore
+ */
 export const defaultParityPath = () =>
   Promise.resolve(
     `${app.getPath('userData')}/parity${
@@ -22,10 +26,12 @@ export const defaultParityPath = () =>
     }`
   );
 
-let parityPath; // The real parity path, will be populated after doesParityExist Promise resolves
+let parityPath: string; // The real parity path, will be populated after doesParityExist Promise resolves
 
 /**
  * Test if `parity` command is in $PATH.
+ *
+ * @ignore
  */
 const isParityInPath = async () => {
   const parityCommandExists = await commandExists('parity');
@@ -37,8 +43,10 @@ const isParityInPath = async () => {
 
 /**
  * Test if Parity is in the common OS locations.
+ *
+ * @ignore
  */
-const isParityInOs = async () => {
+const isParityInOs = async (): Promise<string> => {
   // OS locations to test if parity binary exists
   const locations = {
     linux: ['/bin/parity', '/usr/bin/parity', '/usr/local/bin/parity'],
@@ -54,6 +62,8 @@ const isParityInOs = async () => {
 
 /**
  * Test is Parity is already downloaded in electron app's userData folder.
+ *
+ * @ignore
  */
 const isParityInUserData = async () => {
   const parityPath = await defaultParityPath();
@@ -68,7 +78,8 @@ const isParityInUserData = async () => {
  * - finally check parity-ui's own userData folder
  * This function should run in node env.
  *
- * @return Promise<String> - Resolves to a string which is the command to run parity.
+ * @ignore
+ * @return Promise<string> - Resolves to a string which is the command to run parity.
  */
 const doesParityExist = async () => {
   try {
@@ -89,6 +100,9 @@ const doesParityExist = async () => {
   }
 };
 
+/**
+ * Returns the path to Parity, or throws if parity is not found.
+ */
 export const getParityPath = async () => {
   if (parityPath) {
     return parityPath;
