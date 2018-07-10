@@ -16,8 +16,7 @@ import parityElectron, { isParityRunning } from '@parity/electron';
 // Optional: override default options
 parityElectron({
   cli: myOwnCliObject,
-  logger: myCustomLoggerFunction,
-  parityChannel: 'nightly'
+  logger: myCustomLoggerFunction
 })
 
 isParityRunning()

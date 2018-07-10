@@ -977,9 +977,9 @@
     u2f-api "0.0.9"
     u2f-api-polyfill "0.4.3"
 
-"@parity/light.js@https://github.com/parity-js/light.js#5a0c372607e6e88de74b49df5cbb9b79a23b4cc4":
+"@parity/light.js@https://github.com/parity-js/light.js#4520ff71ff46cef1f5fa8b3c7f6ec97968d":
   version "1.0.0"
-  resolved "https://github.com/parity-js/light.js#5a0c372607e6e88de74b49df5cbb9b79a23b4cc4"
+  resolved "https://github.com/parity-js/light.js#4520ff71ff46cef1f5fa8b3c7f6ec97968dd1fd2"
   dependencies:
     "@parity/api" "^2.1.23"
     json-prune "^1.1.0"
