@@ -3,21 +3,21 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { app } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import axios from 'axios';
-import cs from 'checksum';
+import { file } from 'checksum';
 import { download } from 'electron-dl';
-import fs from 'fs';
+import { chmod, stat, unlink } from 'fs';
 import { promisify } from 'util';
-import retry from 'async-retry';
+import * as retry from 'async-retry';
 
 import { defaultParityPath, getParityPath } from './getParityPath';
 import logger from './utils/logger';
 
-const checksum = promisify(cs.file);
-const fsChmod = promisify(fs.chmod);
-const fsStat = promisify(fs.stat);
-const fsUnlink = promisify(fs.unlink);
+const checksum = promisify(file);
+const fsChmod = promisify(chmod);
+const fsStat = promisify(stat);
+const fsUnlink = promisify(unlink);
 
 const VANITY_URL = 'https://vanity-service.parity.io/parity-binaries';
 
@@ -53,7 +53,7 @@ const getOs = () => {
 };
 
 /**
- * Remove parity binary in the userData folder
+ * Remove parity binary in the userData folder, if it exists.
  */
 export const deleteParity = async () => {
   try {
@@ -63,16 +63,23 @@ export const deleteParity = async () => {
   } catch (e) {}
 };
 
-// Fetch parity from https://vanity-service.parity.io/parity-binaries
-export const fetchParity = (
-  mainWindow,
-  { onProgress, parityChannel } = {
+/**
+ * Downloads Parity, saves it to Electron's `userData` folder, and returns the
+ * path to the downloaded binary once finished.
+ */
+export const fetchParity = async (
+  mainWindow: BrowserWindow,
+  {
+    onProgress,
+    parityChannel
+  }: { onProgress: (progress: number) => void; parityChannel: string } = {
+    onProgress: () => {},
     parityChannel: 'beta'
   }
 ) => {
   try {
-    return retry(
-      async (_, attempt) => {
+    const parityPath: string = retry(
+      async (_, attempt: number) => {
         if (attempt > 1) {
           logger()('@parity/electron:main')('Retrying.');
         }
@@ -86,7 +93,10 @@ export const fetchParity = (
         const { data } = await axios.get(metadataUrl);
 
         // Get the binary's url
-        const { downloadUrl, checksum: expectedChecksum } = data[0].files.find(
+        const {
+          downloadUrl,
+          checksum: expectedChecksum
+        }: { downloadUrl: string; checksum: string } = data[0].files.find(
           ({ name }) => name === 'parity' || name === 'parity.exe'
         );
 
@@ -95,11 +105,11 @@ export const fetchParity = (
           directory: app.getPath('userData'),
           onProgress
         });
-        const downloadPath = downloadItem.getSavePath(); // Equal to defaultParityPath
+        const downloadPath: string = downloadItem.getSavePath(); // Equal to defaultParityPath
 
         // Once downloaded, we check the sha256 checksum
         // Calculate the actual checksum
-        const actualChecksum = await checksum(downloadPath, {
+        const actualChecksum: string = await checksum(downloadPath, {
           algorithm: 'sha256'
         });
         // The 2 checksums should of course match
@@ -113,16 +123,16 @@ export const fetchParity = (
         await fsChmod(downloadPath, '755');
 
         // Double-check that Parity exists now.
-        const parityPath = await getParityPath();
-        return parityPath;
+        return await getParityPath();
       },
       {
         retries: 3
       }
     );
+
+    return parityPath;
   } catch (err) {
-    return deleteParity().then(() => {
-      Promise.reject(err);
-    });
+    await deleteParity();
+    throw err;
   }
 };

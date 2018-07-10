@@ -27,7 +27,7 @@
   "main": "lib/index.js",
   "scripts": {
     "prebuild": "rimraf lib",
-    "build": "babel src --out-dir lib",
+    "build": "tsc",
     "start": "yarn build --watch"
   },
   "dependencies": {
@@ -40,7 +40,6 @@
     "promise-any": "^0.2.0"
   },
   "devDependencies": {
-    "@babel/plugin-transform-runtime": "^7.0.0-beta.51",
     "electron": "^2.0.2"
   },
   "peerDependencies": {

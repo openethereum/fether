@@ -5,9 +5,11 @@
 
 import debug from 'debug';
 
-let logger = debug;
+import { LoggerFunction } from '../types';
 
-export const setLogger = _logger => {
+let logger: LoggerFunction = debug;
+
+export const setLogger = (_logger: LoggerFunction) => {
   logger = _logger;
 };
 

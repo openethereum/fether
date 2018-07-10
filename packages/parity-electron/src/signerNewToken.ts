@@ -12,7 +12,7 @@ import logger from './utils/logger';
 /**
  * Launch a parity instance to get a secure token.
  */
-export const signerNewToken = () =>
+export const signerNewToken = (): Promise<string> =>
   new Promise(async (resolve, reject) => {
     logger()('@parity/electron:main')('Requesting new token.');
 

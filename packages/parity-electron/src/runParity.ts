@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import { app } from 'electron';
-import fs from 'fs';
+import { chmod } from 'fs';
 import { spawn } from 'child_process';
 import { promisify } from 'util';
 
@@ -14,7 +14,7 @@ import { isParityRunning } from './isParityRunning';
 import logCommand from './utils/logCommand';
 import logger from './utils/logger';
 
-const fsChmod = promisify(fs.chmod);
+const fsChmod = promisify(chmod);
 
 let parity = null; // Will hold the running parity instance
 
@@ -26,7 +26,15 @@ const catchableErrors = [
   'IO error: While lock file:'
 ];
 
-export const runParity = async (additionalFlags, onParityError) => {
+/**
+ * Spawns a child process to run Parity. If some cli flags are passed into the
+ * options in parityElectron, then those flags will be passed down to Parity
+ * itself.
+ */
+export const runParity = async (
+  additionalFlags: string[],
+  onParityError: (error: Error) => void = () => {}
+) => {
   // Do not run parity with --no-run-parity
   if (cli.runParity === false) {
     return;

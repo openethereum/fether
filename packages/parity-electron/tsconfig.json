@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "outDir": "./lib",
+    "lib": ["es2015", "dom"],
+    "target": "es5"
+  },
+  "exclude": ["./src/**/*.spec.ts", "./src/utils/testHelpers/*.ts"],
+  "include": ["./src/**/*"]
+}

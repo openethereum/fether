@@ -3,25 +3,25 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-let cli = {};
+import { CliObject } from '../types';
+
+let cli: CliObject = {};
 
 /**
  * Set custom cli options.
  *
  * @param {*} cliOptions
  */
-export const setCli = cliObject => {
+export const setCli = (cliObject: CliObject) => {
   cli = cliObject;
 };
 
 /**
  * Camel-case the given `flag`
  *
- * @param {String} flag
- * @return {String}
  * @see https://github.com/tj/commander.js/blob/dcddf698c5463795401ad3d6382f5ec5ec060478/index.js#L1160-L1172
  */
-const camelcase = flag =>
+const camelcase = (flag: string) =>
   flag
     .split('-')
     .reduce((str, word) => str + word[0].toUpperCase() + word.slice(1));
