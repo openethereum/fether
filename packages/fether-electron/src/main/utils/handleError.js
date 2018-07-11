@@ -8,10 +8,13 @@ import { app, dialog, shell } from 'electron';
 import { bugs, name, parity } from '../../../package.json';
 import Pino from './pino';
 
-const logFile = `${app.getPath('userData')}/${name}.log`;
-const pino = Pino();
-
 export default (err, message = 'An error occurred.') => {
+
+  // `userData` (which Pino also uses) needs to be gotten inside the exports,
+  // otherwise it is evaluated straight away, before index.js has set it
+  const logFile = `${app.getPath('userData')}/${name}.log`;
+  const pino = Pino();
+
   pino.error(err);
   dialog.showMessageBox(
     {

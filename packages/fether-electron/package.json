@@ -1,5 +1,6 @@
 {
   "name": "fether",
+  "appName": "fether",
   "description": "Fether Wallet",
   "version": "0.1.0",
   "private": true,

@@ -17,20 +17,28 @@ import addMenu from './menu';
 import cli from './cli';
 import handleError from './utils/handleError';
 import messages from './messages';
-import { parity } from '../../package.json';
+import { appName, parity } from '../../package.json';
 import Pino from './utils/pino';
 import { productName } from '../../electron-builder.json';
 import staticPath from './utils/staticPath';
 
 const { app, BrowserWindow, ipcMain, session } = electron;
 let mainWindow;
-const pino = Pino();
 
 // Disable gpu acceleration on linux
 // https://github.com/parity-js/fether/issues/85
 if (!['darwin', 'win32'].includes(process.platform)) {
   app.disableHardwareAcceleration();
 }
+
+// userData value is derived from the Electron app name by default. However,
+// Electron doesn't know the app name defined in package.json because we
+// execute Electron directly on a file. Running Electron on a folder (either
+// .build/ or electron/) doesn't solve the issue because the package.json
+// is located in a different directory.
+app.setPath('userData', path.join(app.getPath('appData'), appName));
+
+const pino = Pino();
 
 function createWindow () {
   pino.info(`Starting ${productName}...`);
