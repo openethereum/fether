@@ -5,9 +5,12 @@
 
 import { action, computed, observable } from 'mobx';
 import BigNumber from 'bignumber.js';
-import { nodeHealth$, syncing$ } from '@parity/light.js';
+import isElectron from 'is-electron';
 
+import { nodeHealth$, syncing$ } from '@parity/light.js';
 import parityStore from './parityStore';
+
+const electron = isElectron() ? window.require('electron') : null;
 
 // List here all possible states of our health store. Each state can have a
 // payload.
@@ -22,19 +25,28 @@ export const STATUS = {
   SYNCING: 'SYNCING' // Obvious
 };
 
+export const MAX_TIME_DRIFT = 10000; // seconds
+
 export class HealthStore {
   @observable nodeHealth;
   @observable syncing;
+  @observable timeDrift;
 
   constructor () {
     nodeHealth$().subscribe(this.setNodeHealth);
     syncing$().subscribe(this.setSyncing);
+
+    const { ipcRenderer } = electron;
+    ipcRenderer.send('asynchronous-message', 'check-time');
+    ipcRenderer.once('check-time-reply', (_, {drift}) => {
+      this.timeDrift = drift;
+    });
   }
 
   /**
    * Calculate the current status.
    *
-   * @return [Object{ status: StatusEnum, payload: Any}] - An object which
+   * @return {Object{ status: StatusEnum, payload: Any}} - An object which
    * represents the current status, with a custom payload.
    */
   @computed
@@ -133,11 +145,7 @@ export class HealthStore {
       return { status: STATUS.NOINTERNET, payload: message };
     }
 
-    if (
-      message.includes(
-        'Your clock is not in sync. Detected difference is too big for the protocol to work'
-      )
-    ) {
+    if (this.timeDrift !== undefined && this.timeDrift > MAX_TIME_DRIFT) {
       return { status: STATUS.CLOCKNOTSYNC, payload: message };
     }
 

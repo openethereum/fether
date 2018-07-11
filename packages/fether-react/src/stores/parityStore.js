@@ -94,7 +94,7 @@ export class ParityStore {
     // Request new token from Electron
     debug('Requesting new token.');
     ipcRenderer.send('asynchronous-message', 'signer-new-token');
-    ipcRenderer.once('asynchronous-reply', (_, token) => {
+    ipcRenderer.once('signer-new-token-reply', (_, token) => {
       if (!token) {
         return;
       }
