@@ -8,6 +8,7 @@ import BigNumber from 'bignumber.js';
 import isElectron from 'is-electron';
 
 import { nodeHealth$, syncing$ } from '@parity/light.js';
+
 import parityStore from './parityStore';
 
 const electron = isElectron() ? window.require('electron') : null;
@@ -25,21 +26,19 @@ export const STATUS = {
   SYNCING: 'SYNCING' // Obvious
 };
 
-export const MAX_TIME_DRIFT = 10000; // seconds
-
 export class HealthStore {
   @observable nodeHealth;
   @observable syncing;
-  @observable timeDrift;
+  @observable clockSync;
 
-  constructor () {
+  constructor() {
     nodeHealth$().subscribe(this.setNodeHealth);
     syncing$().subscribe(this.setSyncing);
 
     const { ipcRenderer } = electron;
-    ipcRenderer.send('asynchronous-message', 'check-time');
-    ipcRenderer.once('check-time-reply', (_, {drift}) => {
-      this.timeDrift = drift;
+    ipcRenderer.send('asynchronous-message', 'check-clock-sync');
+    ipcRenderer.once('check-clock-sync-reply', (_, clockSync) => {
+      this.setClockSync(clockSync);
     });
   }
 
@@ -50,7 +49,7 @@ export class HealthStore {
    * represents the current status, with a custom payload.
    */
   @computed
-  get health () {
+  get health() {
     // Check download progress
     if (parityStore.downloadProgress > 0 && !parityStore.isParityRunning) {
       return {
@@ -145,7 +144,7 @@ export class HealthStore {
       return { status: STATUS.NOINTERNET, payload: message };
     }
 
-    if (this.timeDrift !== undefined && this.timeDrift > MAX_TIME_DRIFT) {
+    if (this.clockSync && this.clockSync.isSync) {
       return { status: STATUS.CLOCKNOTSYNC, payload: message };
     }
 
@@ -155,6 +154,11 @@ export class HealthStore {
   @action
   setNodeHealth = nodeHealth => {
     this.nodeHealth = nodeHealth;
+  };
+
+  @action
+  setClockSync = clockSync => {
+    this.clockSync = clockSync;
   };
 
   @action

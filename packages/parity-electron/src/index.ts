@@ -7,7 +7,7 @@ import { CliObject, LoggerFunction } from './types';
 import { setCli } from './utils/cli';
 import { setLogger } from './utils/logger';
 
-export * from './checkTime';
+export * from './checkClockSync';
 export * from './getParityPath';
 export * from './fetchParity';
 export * from './isParityRunning';

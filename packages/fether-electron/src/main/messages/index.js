@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { signerNewToken, checkTime } from '@parity/electron';
+import { checkClockSync, signerNewToken } from '@parity/electron';
 
 import Pino from '../utils/pino';
 
@@ -24,9 +24,9 @@ export default async (mainWindow, event, action, ...args) => {
         mainWindow.setContentSize(width, Math.round(newHeight) + 2);
         break;
       }
-      case 'check-time': {
-        checkTime().then(t => {
-          event.sender.send('check-time-reply', t);
+      case 'check-clock-sync': {
+        checkClockSync().then(t => {
+          event.sender.send('check-clock-sync-reply', t);
         });
         break;
       }

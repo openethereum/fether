@@ -43,7 +43,7 @@
     "build-parity-electron": "cd packages/parity-electron && yarn build",
     "preelectron": "yarn build",
     "electron": "cd packages/fether-electron && yarn electron",
-    "lint": "semistandard 'packages/**/*.js' --parser babel-eslint",
+    "lint": "semistandard 'packages/**/*.js' 'packages/**/*.ts' --parser babel-eslint",
     "prepackage": "yarn build",
     "package": "cd packages/fether-electron && yarn package",
     "release": "cd packages/fether-electron && yarn release",
