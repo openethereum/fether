@@ -7,12 +7,16 @@ import { signerNewToken } from '@parity/electron';
 
 import Pino from '../utils/pino';
 
-const pino = Pino();
-
 /**
  * Handle all asynchronous messages from renderer to main.
  */
 export default async (mainWindow, event, action, ...args) => {
+
+  // Pino mustn't be instantiated in the body of the module (outside of the
+  // exports), or else it will be evaluated straight away and use `userData`
+  // before `userData` was set in index.js
+  const pino = Pino();
+
   try {
     if (!action) {
       return;
