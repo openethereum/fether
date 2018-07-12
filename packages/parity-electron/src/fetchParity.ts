@@ -123,7 +123,7 @@ export const fetchParity = async (
         await fsChmod(downloadPath, '755');
 
         // Double-check that Parity exists now.
-        return await getParityPath();
+        return getParityPath();
       },
       {
         retries: 3

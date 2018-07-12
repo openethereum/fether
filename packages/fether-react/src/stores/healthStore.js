@@ -31,7 +31,7 @@ export class HealthStore {
   @observable syncing;
   @observable clockSync;
 
-  constructor() {
+  constructor () {
     nodeHealth$().subscribe(this.setNodeHealth);
     syncing$().subscribe(this.setSyncing);
 
@@ -49,7 +49,7 @@ export class HealthStore {
    * represents the current status, with a custom payload.
    */
   @computed
-  get health() {
+  get health () {
     // Check download progress
     if (parityStore.downloadProgress > 0 && !parityStore.isParityRunning) {
       return {
@@ -144,7 +144,7 @@ export class HealthStore {
       return { status: STATUS.NOINTERNET, payload: message };
     }
 
-    if (this.clockSync && this.clockSync.isSync) {
+    if (this.clockSync && this.clockSync.isClockSync) {
       return { status: STATUS.CLOCKNOTSYNC, payload: message };
     }
 
