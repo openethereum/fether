@@ -3,13 +3,14 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-const { time } = require('sntp');
+import { time } from 'sntp';
 
 export const MAX_TIME_DRIFT = 10000; // milliseconds
 
-export const checkClockSync : () => Promise<{isClockSync: boolean, timeDrift: number}> = () => {
-  return time().then(({ t: timeDrift }) => ({
+export const checkClockSync = async () => {
+  const { t: timeDrift }: { t: number } = await time();
+  return {
     isClockSync: timeDrift < MAX_TIME_DRIFT,
     timeDrift
-  }));
+  };
 };

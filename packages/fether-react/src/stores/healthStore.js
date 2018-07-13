@@ -9,8 +9,10 @@ import isElectron from 'is-electron';
 
 import { nodeHealth$, syncing$ } from '@parity/light.js';
 
+import Debug from '../utils/debug';
 import parityStore from './parityStore';
 
+const debug = Debug('healthStore');
 const electron = isElectron() ? window.require('electron') : null;
 
 // List here all possible states of our health store. Each state can have a
@@ -34,6 +36,13 @@ export class HealthStore {
   constructor () {
     nodeHealth$().subscribe(this.setNodeHealth);
     syncing$().subscribe(this.setSyncing);
+
+    if (!electron) {
+      debug(
+        'Not in Electron, ignoring clock sync verification.'
+      );
+      return;
+    }
 
     const { ipcRenderer } = electron;
     ipcRenderer.send('asynchronous-message', 'check-clock-sync');
