@@ -70,12 +70,9 @@ export const deleteParity = async () => {
 export const fetchParity = async (
   mainWindow: BrowserWindow,
   {
-    onProgress,
-    parityChannel
-  }: { onProgress: (progress: number) => void; parityChannel: string } = {
-    onProgress: () => {},
-    parityChannel: 'beta'
-  }
+    onProgress = () => {},
+    parityChannel = 'beta'
+  }: { onProgress: (progress: number) => void; parityChannel: string }
 ) => {
   try {
     const parityPath: string = retry(
