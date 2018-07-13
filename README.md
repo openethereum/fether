@@ -1,4 +1,4 @@
-# Parity Fether a fast and decentralized wallet based on a light-client
+# Parity Fether - a fast and decentralized wallet based on a light-client
 
 ## Get the latest binary
 
@@ -31,15 +31,30 @@ Parity Fether connects to the light node using light.js, a Javascript library sp
 
 ### Manually
 
-To start Parity Fether manually, just run
+To start Parity Fether manually, just run:
 
 ```bash
 $ fether
 ```
-You can pass specific flags to the underlying Parity Ethereum node such as:
+Fether will launch a Partity Ethereum light node and print its output in the command line.
 
+### Passing Parity Ethereum flags
+
+You can pass specific flags for fether to launch the underlying Parity Ethereum with:
 ```bash
-$ fether --chain ropsten
+# Launch Parity Ethereum light client on Ropsten and connect Fether to it
+$ fether --chain ropsten --light
+```
+### Separately launch Parity Ethereum node
+
+You can launch Parity Ethereum before Fether:
+```bash
+$ parity --chain ropsten --light
+```
+In another console launch Fether:
+```bash
+# Fether will connect to the running node
+$ fether
 ```
 
 ## Build from sources
@@ -59,19 +74,19 @@ cd ./fether
 yarn install
 ```
 
-## Build this repo and run
+### Build this repo and run
 
 ```bash
 yarn electron
 ```
 
-## Build binaries
+### Build binaries
 
 ```bash
 yarn package
 ```
 
-## Run with live reload for development
+### Run with live reload for development
 
 ```bash
 yarn start
