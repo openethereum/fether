@@ -76,3 +76,7 @@ If Parity has been downloaded to Electron's `userData` folder, then it deletes t
 #### `signerNewToken(): Promise<String>`
 
 Runs `parity signer new-token` and resolves with a new secure token to be used in a dapp. Rejects if no token could be extracted.
+
+#### `checkClockSync(): Promise<Object{isClockSync: boolean, timeDrift: number}>`
+
+Use SNTP to check if the local clock is synchronized; return the time drift.
