@@ -8,7 +8,7 @@
 ### Join the chat!
 
 Get in touch with us on Gitter:
-[![Gitter: Parity](https://img.shields.io/badge/gitter-parity-4AB495.svg)](https://gitter.im/paritytech/parity)
+[![Gitter](https://img.shields.io/badge/Gitter-Fether-brightgreen.svg)](https://gitter.im/paritytech/fether)
 
 
 Official website: https://parity.io | Be sure to check out [our Wiki](https://wiki.parity.io) for more information.
