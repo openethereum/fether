@@ -12,10 +12,10 @@
   "license": "BSD-3-Clause",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/parity-js/fether.git"
+    "url": "git+https://github.com/paritytech/fether.git"
   },
   "bugs": {
-    "url": "https://github.com/parity-js/fether/issues"
+    "url": "https://github.com/paritytech/fether/issues"
   },
   "keywords": [
     "Ethereum",
@@ -23,7 +23,7 @@
     "Light Client",
     "Parity"
   ],
-  "homepage": "https://github.com/parity-js/fether",
+  "homepage": "https://github.com/paritytech/fether",
   "main": "lib/index.js",
   "scripts": {
     "prebuild": "rimraf lib",
