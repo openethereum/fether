@@ -95,7 +95,7 @@ export const runParity = async (
     }
 
     // If the exit code is not 0, then we show some error message
-    if (Object.keys(parityArgv()).length > 0) {
+    if (parityArgv().length > 0) {
       app.exit(1);
     } else {
       onParityError(new Error(`Exit code ${exitCode}, with signal ${signal}.`));
