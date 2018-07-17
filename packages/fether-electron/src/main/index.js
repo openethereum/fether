@@ -22,6 +22,9 @@ import Pino from './utils/pino';
 import { productName } from '../../electron-builder.json';
 import staticPath from './utils/staticPath';
 
+// @TODO TEMP, will be made a separate module
+import getRemainingArgs from './getRemainingArgs';
+
 const { app, BrowserWindow, ipcMain, session } = electron;
 let mainWindow;
 const pino = Pino();
@@ -42,7 +45,6 @@ function createWindow () {
 
   // Set options for @parity/electron
   parityElectron({
-    cli,
     logger: namespace => log => Pino({ name: namespace }).info(log)
   });
 
@@ -59,9 +61,14 @@ function createWindow () {
     )
     .then(() =>
       // Run parity when installed
-      runParity(['--light', '--chain', cli.chain || 'kovan'], err =>
-        handleError(err, 'An error occured with Parity.')
-      )
+      cli.runParity && // only if the user hasn't set the flag --no-run-parity
+      runParity({
+        wsInterface: cli.wsInterface,
+        wsPort: cli.wsPort,
+        flags: [...getRemainingArgs(cli), '--light', '--chain', cli.chain || 'kovan'],
+        onParityError: err =>
+          handleError(err, 'An error occured with Parity.')
+      })
     )
     .then(() => {
       // Notify the renderers
@@ -74,11 +81,11 @@ function createWindow () {
   // passed to ELECTRON_START_URL
   mainWindow.loadURL(
     process.env.ELECTRON_START_URL ||
-      url.format({
-        pathname: path.join(staticPath, 'build', 'index.html'),
-        protocol: 'file:',
-        slashes: true
-      })
+    url.format({
+      pathname: path.join(staticPath, 'build', 'index.html'),
+      protocol: 'file:',
+      slashes: true
+    })
   );
 
   // Listen to messages from renderer process

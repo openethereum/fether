@@ -15,7 +15,6 @@ import parityElectron, { isParityRunning } from '@parity/electron';
 
 // Optional: override default options
 parityElectron({
-  cli: myOwnCliObject,
   logger: myCustomLoggerFunction
 })
 
@@ -31,7 +30,6 @@ If you don't want to override the default options, there's no need to call this 
 
 | Option           | Default Value      | Description                                                                                                                                                                |
 | ---------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `options.cli`    | `{}`               | An object where key/values are --flags passed to the binary. The `cli` object returned by `yargs` or [`commander.js`](https://github.com/tj/commander.js/) would fit here. |
 | `options.logger` | `require('debug')` | A function with the same signature as [`debug`](https://github.com/visionmedia/debug). All logs inside `@parity/electron` will then be logged by this function.            |
 
 #### `fetchParity(mainWindow: BrowserWindow, options: Object): Promise<String>`
@@ -56,14 +54,16 @@ Returns the path to the Parity path inside Electron's `userData` folder, even if
 
 Resolves to `true` if Parity is currently running, or to `false` if not.
 
-#### `runParity(additionalFlags: Array<String>, onParityError: Function): Promise<Null>`
+#### `runParity(options: Object): Promise<Null>`
 
 Spawns a child process to run Parity. If some `cli` flags are passed into the options in `parityElectron`, then those flags will be passed down to Parity itself.
 
-| Option            | Type            | Description                                                                                   |
-| ----------------- | --------------- | --------------------------------------------------------------------------------------------- |
-| `additionalFlasg` | `Array<String>` | Addtional flags to pass to Parity, listed as an array, to be passed to `child_process.spawn`. |
-| `onParityError`   | `Function`      | Callback with `error` as argument when Parity encounters an error.                            |
+| Option                    | Type            | Description                                                                                                                    |
+| ------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `options.flags`           | `Array<String>` | Additional flags to pass to Parity, listed as an array, to be passed to `child_process.spawn`.                                 |
+| `options.wsInterface`     | `String`        | Hostname portion of the WebSockets server Fether will connect to. It should be an interface's IP address. (default: 127.0.0.1) |
+| `options.wsPort`          | `String`        | Port portion of the WebSockets server Fether will connect to. (default: 8546)                                                  |
+| `options.onParityError`   | `Function`      | Callback with `error` as argument when Parity encounters an error.                                                             |
 
 #### `killParity(): Promise<Null>`
 

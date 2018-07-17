@@ -3,8 +3,7 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { CliObject, LoggerFunction } from './types';
-import { setCli } from './utils/cli';
+import { LoggerFunction } from './types';
 import { setLogger } from './utils/logger';
 
 export * from './checkClockSync';
@@ -17,11 +16,7 @@ export * from './signerNewToken';
 /**
  * Set default options for @parity/electron.
  */
-export default (opts: { cli: CliObject; logger: LoggerFunction }) => {
-  if (opts.cli) {
-    setCli(opts.cli);
-  }
-
+export default (opts: { logger: LoggerFunction }) => {
   if (opts.logger) {
     setLogger(opts.logger);
   }

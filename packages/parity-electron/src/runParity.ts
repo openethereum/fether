@@ -7,7 +7,6 @@ import { chmod } from 'fs';
 import { spawn } from 'child_process';
 import { promisify } from 'util';
 
-import { cli, parityArgv } from './utils/cli';
 import { getParityPath } from './getParityPath';
 import { isParityRunning } from './isParityRunning';
 import logCommand from './utils/logCommand';
@@ -26,21 +25,21 @@ const catchableErrors = [
 ];
 
 /**
- * Spawns a child process to run Parity. If some cli flags are passed into the
- * options in parityElectron, then those flags will be passed down to Parity
- * itself.
+ * Spawns a child process to run Parity.
  */
-export const runParity = async (
-  additionalFlags: string[],
-  onParityError: (error: Error) => void = () => {}
-) => {
-  // Do not run parity with --no-run-parity
-  if (cli.runParity === false) {
-    return;
-  }
-
+export const runParity = async ({
+  wsInterface = '127.0.0.1',
+  wsPort = '8546',
+  flags = [],
+  onParityError = () => { }
+}: {
+    wsInterface: string;
+    wsPort: string;
+    flags: string[];
+    onParityError: (error: Error) => void
+  }) => {
   // Do not run parity if there is already another instance running
-  const isRunning = await isParityRunning();
+  const isRunning = await isParityRunning({ wsInterface, wsPort });
   if (isRunning) {
     return;
   }
@@ -52,12 +51,12 @@ export const runParity = async (
   // have rights to do it).
   try {
     await fsChmod(parityPath, '755');
-  } catch (e) {}
+  } catch (e) { }
 
   let logLastLine = ''; // Always contains last line of the Parity logs
 
-  // Run an instance of parity with the correct args
-  const args = [...parityArgv(), ...additionalFlags];
+  // Run an instance of parity with the correct flags
+  const args = ['--ws-interface', wsInterface, '--ws-port', wsPort, ...flags];
   parity = spawn(parityPath, args);
   logger()('@parity/electron:main')(logCommand(parityPath, args));
 
