@@ -16,7 +16,7 @@ const hostsToPing = ['http://127.0.0.1:8545', 'http://127.0.0.1:8546'];
 if (cli.wsInterface || cli.wsPort) {
   // Also try custom host/port if a --ws-interface or --ws-port flag is passed
   hostsToPing.push(
-    `http://${cli.wsInterface || '127.0.0.1'}:${cli.wsPort || '8545'}`
+    `http://${cli.wsInterface || '127.0.0.1'}:${cli.wsPort || '8546'}`
   );
 }
 
