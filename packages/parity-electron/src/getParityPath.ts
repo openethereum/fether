@@ -75,7 +75,7 @@ const isParityInUserData = async () => {
  * This function checks if parity has been installed on the local machine:
  * - first check if the program is in $PATH, using `command-exists`
  * - then check the OS default installation dir if a parity folder exists
- * - finally check parity-ui's own userData folder
+ * - finally check fether's own userData folder
  * This function should run in node env.
  *
  * @ignore
