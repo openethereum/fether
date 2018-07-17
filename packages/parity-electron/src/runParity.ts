@@ -3,7 +3,6 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { app } from 'electron';
 import { chmod } from 'fs';
 import { spawn } from 'child_process';
 import { promisify } from 'util';
@@ -94,12 +93,8 @@ export const runParity = async (
       return;
     }
 
-    // If the exit code is not 0, then we show some error message
-    if (Object.keys(parityArgv()).length > 0) {
-      app.exit(1);
-    } else {
-      onParityError(new Error(`Exit code ${exitCode}, with signal ${signal}.`));
-    }
+    // Otherwise, if the exit code is not 0, then we show some error message
+    onParityError(new Error(`Exit code ${exitCode}, with signal ${signal}.`));
   });
 };
 
