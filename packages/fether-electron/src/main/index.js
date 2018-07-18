@@ -11,6 +11,7 @@ import parityElectron, {
   killParity
 } from '@parity/electron';
 import electron from 'electron';
+import getRemainingArgs from 'commander-remaining-args';
 import path from 'path';
 import url from 'url';
 
@@ -22,9 +23,6 @@ import { parity } from '../../package.json';
 import Pino from './utils/pino';
 import { productName } from '../../electron-builder.json';
 import staticPath from './utils/staticPath';
-
-// @TODO TEMP, will be made a separate module
-import getRemainingArgs from './getRemainingArgs';
 
 const { app, BrowserWindow, ipcMain, session } = electron;
 let mainWindow;
