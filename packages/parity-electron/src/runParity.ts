@@ -8,7 +8,6 @@ import { spawn } from 'child_process';
 import { promisify } from 'util';
 
 import { getParityPath } from './getParityPath';
-import { isParityRunning } from './isParityRunning';
 import logCommand from './utils/logCommand';
 import logger from './utils/logger';
 
@@ -28,22 +27,12 @@ const catchableErrors = [
  * Spawns a child process to run Parity.
  */
 export const runParity = async ({
-  wsInterface = '127.0.0.1',
-  wsPort = '8546',
   flags = [],
   onParityError = () => { }
 }: {
-    wsInterface: string;
-    wsPort: string;
     flags: string[];
     onParityError: (error: Error) => void
   }) => {
-  // Do not run parity if there is already another instance running
-  const isRunning = await isParityRunning({ wsInterface, wsPort });
-  if (isRunning) {
-    return;
-  }
-
   const parityPath = await getParityPath();
 
   // Some users somehow had no +x on the parity binary after downloading
@@ -56,9 +45,8 @@ export const runParity = async ({
   let logLastLine = ''; // Always contains last line of the Parity logs
 
   // Run an instance of parity with the correct flags
-  const args = ['--ws-interface', wsInterface, '--ws-port', wsPort, ...flags];
-  parity = spawn(parityPath, args);
-  logger()('@parity/electron:main')(logCommand(parityPath, args));
+  parity = spawn(parityPath, flags);
+  logger()('@parity/electron:main')(logCommand(parityPath, flags));
 
   // Save in memory the last line of the log file, for handling error
   const callback = data => {

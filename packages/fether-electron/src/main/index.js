@@ -6,6 +6,7 @@
 import parityElectron, {
   getParityPath,
   fetchParity,
+  isParityRunning,
   runParity,
   killParity
 } from '@parity/electron';
@@ -59,17 +60,33 @@ function createWindow () {
         parityChannel: parity.channel
       })
     )
-    .then(() =>
+    .then(async () => {
       // Run parity when installed
-      cli.runParity && // only if the user hasn't set the flag --no-run-parity
-      runParity({
+
+      // Don't run parity if the user ran fether with --no-run-parity
+      if (!cli.runParity) {
+        return;
+      }
+
+      if (await isParityRunning({
         wsInterface: cli.wsInterface,
-        wsPort: cli.wsPort,
-        flags: [...getRemainingArgs(cli), '--light', '--chain', cli.chain || 'kovan'],
+        wsPort: cli.wsPort
+      })) {
+        return;
+      }
+
+      return runParity({
+        flags: [
+          ...getRemainingArgs(cli),
+          '--light',
+          '--chain', cli.chain || 'kovan',
+          '--ws-interface', cli.wsInterface,
+          '--ws-port', cli.wsPort
+        ],
         onParityError: err =>
           handleError(err, 'An error occured with Parity.')
-      })
-    )
+      });
+    })
     .then(() => {
       // Notify the renderers
       mainWindow.webContents.send('parity-running', true);

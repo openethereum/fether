@@ -50,19 +50,22 @@ Returns the path to Parity. It checks (in this order) if Parity is in `$PATH`, i
 
 Returns the path to the Parity path inside Electron's `userData` folder, even if that binary doesn't exist. It's the default download location for [`fetchParity`](#fetchParitymainWindow-BrowserWindow-options-Object-PromiseltStringgt0).
 
-#### `isParityRunning(): Promise<Boolean>`
+#### `isParityRunning(options: Object): Promise<Boolean>`
+
+| Option                    | Type              | Description                                                                                                                           |
+| ------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `options.wsInterface`     | `String`          | Hostname portion of the WebSockets server Fether will try to connect to. It should be an interface's IP address. (default: 127.0.0.1) |
+| `options.wsPort`          | `Number | String` | Port portion of the WebSockets server Fether will try to connect to. (default: 8546)                                                  |
 
 Resolves to `true` if Parity is currently running, or to `false` if not.
 
 #### `runParity(options: Object): Promise<Null>`
 
-Spawns a child process to run Parity. If some `cli` flags are passed into the options in `parityElectron`, then those flags will be passed down to Parity itself.
+Spawns a child process to run Parity, with optional additional flags.
 
 | Option                    | Type            | Description                                                                                                                    |
 | ------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | `options.flags`           | `Array<String>` | Additional flags to pass to Parity, listed as an array, to be passed to `child_process.spawn`.                                 |
-| `options.wsInterface`     | `String`        | Hostname portion of the WebSockets server Fether will connect to. It should be an interface's IP address. (default: 127.0.0.1) |
-| `options.wsPort`          | `String`        | Port portion of the WebSockets server Fether will connect to. (default: 8546)                                                  |
 | `options.onParityError`   | `Function`      | Callback with `error` as argument when Parity encounters an error.                                                             |
 
 #### `killParity(): Promise<Null>`

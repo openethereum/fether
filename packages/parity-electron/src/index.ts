@@ -16,7 +16,7 @@ export * from './signerNewToken';
 /**
  * Set default options for @parity/electron.
  */
-export default (opts: { logger: LoggerFunction }) => {
+export default (opts: { logger?: LoggerFunction }) => {
   if (opts.logger) {
     setLogger(opts.logger);
   }

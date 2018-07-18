@@ -4,7 +4,3 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 export type LoggerFunction = (namespace: string) => (log: string) => void;
-
-export type Options = {
-  logger: LoggerFunction;
-};
