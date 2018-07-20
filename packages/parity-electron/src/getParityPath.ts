@@ -6,7 +6,7 @@
 import { app } from 'electron';
 import commandExists from 'command-exists';
 import { stat } from 'fs';
-import promiseAny from 'promise-any';
+import * as promiseAny from 'promise-any';
 import { promisify } from 'util';
 
 import logger from './utils/logger';
