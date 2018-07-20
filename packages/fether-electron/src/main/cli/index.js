@@ -23,7 +23,7 @@ cli
   .version(version)
   .allowUnknownOption()
   .option(
-    '--chain',
+    '--chain <chain>',
     'The network to connect to, can be one of "foundation", "kovan" or "ropsten". (default: "kovan")'
   )
   .option(
