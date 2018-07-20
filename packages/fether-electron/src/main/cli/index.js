@@ -32,11 +32,13 @@ cli
   )
   .option(
     '--ws-interface <ip>',
-    `Specify the hostname portion of the WebSockets server ${productName} will connect to. IP should be an interface's IP address. (default: 127.0.0.1)`
+    `Specify the hostname portion of the WebSockets server ${productName} will connect to. IP should be an interface's IP address. (default: 127.0.0.1)`,
+    '127.0.0.1'
   )
   .option(
     '--ws-port <port>',
-    `Specify the port portion of the WebSockets server ${productName} will connect to. (default: 8546)`
+    `Specify the port portion of the WebSockets server ${productName} will connect to. (default: 8546)`,
+    8546
   )
   .parse(process.argv);
 
