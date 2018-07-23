@@ -34,7 +34,7 @@ Parity Fether connects to the light node using light.js, a Javascript library sp
 To start Parity Fether manually, simply run:
 
 ```bash
-$ fether
+$ /path/to/fether
 ```
 Fether will launch a Partity Ethereum light node and print its output in the command line.
 
@@ -43,7 +43,7 @@ Fether will launch a Partity Ethereum light node and print its output in the com
 You can pass specific flags for fether to launch the underlying Parity Ethereum with:
 ```bash
 # Launching Parity Ethereum light client on Ropsten instead of Kovan (default) and connect Fether to it
-$ fether --chain ropsten --light
+$ /path/to/fether --chain ropsten --light
 ```
 ### Separately launch Parity Ethereum node
 
@@ -55,7 +55,7 @@ $ parity --chain ropsten --light
 In another console launch Fether:
 ```bash
 # Fether will connect to the running node
-$ fether
+$ /path/to/fether
 ```
 
 ## Build from sources
