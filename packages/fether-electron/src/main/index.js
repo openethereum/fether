@@ -77,7 +77,7 @@ function createWindow () {
         flags: [
           ...getRemainingArgs(cli),
           '--light',
-          '--chain', cli.chain || 'kovan',
+          '--chain', cli.chain,
           '--ws-interface', cli.wsInterface,
           '--ws-port', cli.wsPort
         ],
