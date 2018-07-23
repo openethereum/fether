@@ -17,7 +17,7 @@ Official website: https://parity.io | Be sure to check out [our Wiki](https://wi
 
 ## About Parity Fether
 
-Fether aims to be the lightest and simplest decentralized wallet. It supports Ether and ERC-20 tokens and runs on top of [Parity Ethereum](https://github.com/paritytech/parity) light client allowing smooth synchronization and interaction with the Ethereum blockchain, in a decentralized manner.
+Fether aims to be the lightest and simplest decentralized wallet. It supports Ether and ERC-20 tokens and runs on top of [Parity Ethereum](https://github.com/paritytech/parity-ethereum) light client allowing smooth synchronization and interaction with the Ethereum blockchain, in a decentralized manner.
 
 By default, Parity Fether alpha runs on the Kovan test network. You can receive free Kovan Ether by posting your address in the [Kovan Faucet](https://gitter.im/kovan-testnet/faucet) Gitter channel. Fether will download and launch Parity Ethereum node at startup if it's not found on the computer. You can also separately launch your Ethereum client, Fether will automatically connect to it.
 
@@ -29,32 +29,33 @@ Parity Fether connects to the light node using light.js, a Javascript library sp
 
 ## Start Parity Fether
 
-### Manually
+### Using the command line
 
-To start Parity Fether manually, just run:
+To start Parity Fether manually, simply run:
 
 ```bash
-$ fether
+$ /path/to/fether
 ```
 Fether will launch a Partity Ethereum light node and print its output in the command line.
 
-### Passing Parity Ethereum flags
+### Passing config flags to the underlying Parity Ethereum node
 
 You can pass specific flags for fether to launch the underlying Parity Ethereum with:
 ```bash
-# Launch Parity Ethereum light client on Ropsten and connect Fether to it
-$ fether --chain ropsten --light
+# Launching Parity Ethereum light client on Ropsten instead of Kovan (default) and connect Fether to it
+$ /path/to/fether --chain ropsten --light
 ```
 ### Separately launch Parity Ethereum node
 
-You can launch Parity Ethereum before Fether:
+You can also launch Parity Ethereum node before, with any flag you want:
 ```bash
+# Launching Parity Ethereum lieght client on Ropsten instead of Kovan (default)
 $ parity --chain ropsten --light
 ```
 In another console launch Fether:
 ```bash
 # Fether will connect to the running node
-$ fether
+$ /path/to/fether
 ```
 
 ## Build from sources
