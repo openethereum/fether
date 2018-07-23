@@ -3244,9 +3244,9 @@ command-join@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/command-join/-/command-join-2.0.0.tgz#52e8b984f4872d952ff1bdc8b98397d27c7144cf"
 
-commander-remaining-args@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/commander-remaining-args/-/commander-remaining-args-1.0.0.tgz#20bdf6af6de7f7065bb7ee4e42efe5cc0b70365a"
+commander-remaining-args@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/commander-remaining-args/-/commander-remaining-args-1.2.0.tgz#6fab4cce4a59db1698121f59105364adcb0b4c68"
 
 commander@2.15.x, commander@^2.11.0, commander@^2.15.1, commander@^2.8.1, commander@^2.9.0, commander@~2.15.0:
   version "2.15.1"
