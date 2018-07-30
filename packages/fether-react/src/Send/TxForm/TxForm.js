@@ -13,6 +13,7 @@ import { inject, observer } from 'mobx-react';
 import { isAddress } from '@parity/api/lib/util/address';
 import { Link } from 'react-router-dom';
 import { withProps } from 'recompose';
+import { Popup } from 'semantic-ui-react'
 
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
@@ -85,8 +86,9 @@ class Send extends Component {
                           render={FetherForm.Field}
                         />
 
+                        < Popup trigger = {
                         <Field
-                          centerText={`${values.gasPrice} GWEI`}
+                          centerText={`${values.gasPrice} USD`}
                           className='-range'
                           label='Transaction Fee'
                           leftText='Slow'
@@ -99,6 +101,11 @@ class Send extends Component {
                           step={0.5}
                           type='range' // In Gwei
                         />
+                        }
+                        size = 'mini'
+                        inverted
+                        content = {`${values.gasPrice} GWEI`} 
+                        on = 'focus' / >
                       </fieldset>
                       <nav className='form-nav'>
                         <button
