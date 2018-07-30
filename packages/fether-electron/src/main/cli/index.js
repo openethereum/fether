@@ -23,8 +23,9 @@ cli
   .version(version)
   .allowUnknownOption()
   .option(
-    '--chain',
-    'The network to connect to, can be one of "foundation", "kovan" or "ropsten". (default: "kovan")'
+    '--chain <chain>',
+    'The network to connect to, can be one of "foundation", "kovan" or "ropsten". (default: "kovan")',
+    'kovan'
   )
   .option(
     '--no-run-parity',
@@ -32,12 +33,16 @@ cli
   )
   .option(
     '--ws-interface <ip>',
-    `Specify the hostname portion of the WebSockets server ${productName} will connect to. IP should be an interface's IP address. (default: 127.0.0.1)`
+    `Specify the hostname portion of the WebSockets server ${productName} will connect to. IP should be an interface's IP address. (default: 127.0.0.1)`,
+    '127.0.0.1'
   )
   .option(
     '--ws-port <port>',
-    `Specify the port portion of the WebSockets server ${productName} will connect to. (default: 8546)`
+    `Specify the port portion of the WebSockets server ${productName} will connect to. (default: 8546)`,
+    8546
   )
-  .parse(process.argv);
+  // `electron-webpack dev` runs Electron with the `--inspect` flag for HMR;
+  // we want to ignore this flag and not pass it down to Parity
+  .parse(process.argv.filter(arg => !arg.startsWith('--inspect')));
 
 export default cli;

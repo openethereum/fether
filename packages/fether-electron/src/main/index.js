@@ -6,10 +6,12 @@
 import parityElectron, {
   getParityPath,
   fetchParity,
+  isParityRunning,
   runParity,
   killParity
 } from '@parity/electron';
 import electron from 'electron';
+import getRemainingArgs from 'commander-remaining-args';
 import path from 'path';
 import url from 'url';
 
@@ -42,7 +44,6 @@ function createWindow () {
 
   // Set options for @parity/electron
   parityElectron({
-    cli,
     logger: namespace => log => Pino({ name: namespace }).info(log)
   });
 
@@ -57,12 +58,33 @@ function createWindow () {
         parityChannel: parity.channel
       })
     )
-    .then(() =>
+    .then(async () => {
       // Run parity when installed
-      runParity(['--light', '--chain', cli.chain || 'kovan'], err =>
-        handleError(err, 'An error occured with Parity.')
-      )
-    )
+
+      // Don't run parity if the user ran fether with --no-run-parity
+      if (!cli.runParity) {
+        return;
+      }
+
+      if (await isParityRunning({
+        wsInterface: cli.wsInterface,
+        wsPort: cli.wsPort
+      })) {
+        return;
+      }
+
+      return runParity({
+        flags: [
+          ...getRemainingArgs(cli),
+          '--light',
+          '--chain', cli.chain,
+          '--ws-interface', cli.wsInterface,
+          '--ws-port', cli.wsPort
+        ],
+        onParityError: err =>
+          handleError(err, 'An error occured with Parity.')
+      });
+    })
     .then(() => {
       // Notify the renderers
       mainWindow.webContents.send('parity-running', true);
@@ -74,11 +96,11 @@ function createWindow () {
   // passed to ELECTRON_START_URL
   mainWindow.loadURL(
     process.env.ELECTRON_START_URL ||
-      url.format({
-        pathname: path.join(staticPath, 'build', 'index.html'),
-        protocol: 'file:',
-        slashes: true
-      })
+    url.format({
+      pathname: path.join(staticPath, 'build', 'index.html'),
+      protocol: 'file:',
+      slashes: true
+    })
   );
 
   // Listen to messages from renderer process

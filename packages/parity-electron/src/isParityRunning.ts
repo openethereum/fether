@@ -6,25 +6,28 @@
 import axios from 'axios';
 import * as retry from 'async-retry';
 
-import { cli } from './utils/cli';
 import logger from './utils/logger';
-
-/**
- * Try to ping these hosts to test if Parity is running.
- */
-const hostsToPing = ['http://127.0.0.1:8545', 'http://127.0.0.1:8546'];
-if (cli.wsInterface || cli.wsPort) {
-  // Also try custom host/port if a --ws-interface or --ws-port flag is passed
-  hostsToPing.push(
-    `http://${cli.wsInterface || '127.0.0.1'}:${cli.wsPort || '8546'}`
-  );
-}
 
 /**
  * Detect if another instance of parity is already running or not. To achieve
  * that, we just ping on the common hosts, see {@link hostsToPing} array.
  */
-export const isParityRunning = async () => {
+export const isParityRunning = async ({
+  wsInterface = '127.0.0.1',
+  wsPort = '8546'
+}: {
+    wsInterface: string;
+    wsPort: number | string;
+  }) => {
+  /**
+   * Try to ping these hosts to test if Parity is running.
+   */
+  const hostsToPing = [
+    'http://127.0.0.1:8545',
+    'http://127.0.0.1:8546',
+    `http://${wsInterface}:${wsPort}`
+  ];
+
   try {
     // Retry to ping as many times as there are hosts in `hostsToPing`
     await retry(
