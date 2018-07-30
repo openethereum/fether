@@ -41,6 +41,8 @@ cli
     `Specify the port portion of the WebSockets server ${productName} will connect to. (default: 8546)`,
     8546
   )
-  .parse(process.argv);
+  // `electron-webpack dev` runs Electron with the `--inspect` flag for HMR;
+  // we want to ignore this flag and not pass it down to Parity
+  .parse(process.argv.filter(arg => !arg.startsWith('--inspect')));
 
 export default cli;
