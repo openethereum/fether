@@ -52,7 +52,6 @@ class Send extends Component {
           }
           title={token && <h1>Send {token.name}</h1>}
         />
-          {/* <EstimateUsd /> */}
         <div className='window_content'>
           <div className='box -padded'>
             <TokenBalance
@@ -106,7 +105,7 @@ class Send extends Component {
                         size='mini'
                         inverted
                         content={`${values.gasPrice} GWEI`}
-                        on = 'focus' />
+                        on='focus' />
                       </fieldset>
                       <nav className='form-nav'>
                         <button
@@ -152,7 +151,7 @@ class Send extends Component {
       var convertEthtoUsd = (values.gasPrice) * estimatusd;
       console.log(convertEthtoUsd);
 
-      const estimated = await estimateGas(values, token, parityStore.api)
+      const estimated = await estimateGas(values, token, parityStore.api);
       if (!ethBalance || isNaN(estimated)) {
         throw new Error('No "ethBalance" or "estimated" value.');
       }
