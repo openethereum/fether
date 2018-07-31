@@ -6,6 +6,7 @@
 import React, { Component } from 'react';
 import debounce from 'debounce-promise';
 import { estimateGas } from '../../utils/estimateGas';
+import { estimateUSD } from "../../utils/estimateUsd";
 import { Field, Form } from 'react-final-form';
 import { Form as FetherForm, Header } from 'fether-ui';
 import { toWei } from '@parity/api/lib/util/wei';
@@ -13,7 +14,7 @@ import { inject, observer } from 'mobx-react';
 import { isAddress } from '@parity/api/lib/util/address';
 import { Link } from 'react-router-dom';
 import { withProps } from 'recompose';
-import { Popup } from 'semantic-ui-react'
+import { Popup } from 'semantic-ui-react';
 
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
@@ -51,7 +52,7 @@ class Send extends Component {
           }
           title={token && <h1>Send {token.name}</h1>}
         />
-
+          {/* <EstimateUsd /> */}
         <div className='window_content'>
           <div className='box -padded'>
             <TokenBalance
@@ -86,26 +87,26 @@ class Send extends Component {
                           render={FetherForm.Field}
                         />
 
-                        < Popup trigger = {
-                        <Field
-                          centerText={`${values.gasPrice} USD`}
-                          className='-range'
-                          label='Transaction Fee'
-                          leftText='Slow'
-                          max={MAX_GAS_PRICE}
-                          min={MIN_GAS_PRICE}
-                          name='gasPrice'
-                          render={FetherForm.Slider}
-                          required
-                          rightText='Fast'
-                          step={0.5}
-                          type='range' // In Gwei
-                        />
+                        <Popup trigger={
+                          <Field
+                            centerText={`${values.gasPrice} USD`}
+                            className='-range'
+                            label='Transaction Fee'
+                            leftText='Slow'
+                            max={MAX_GAS_PRICE}
+                            min={MIN_GAS_PRICE}
+                            name='gasPrice'
+                            render={FetherForm.Slider}
+                            required
+                            rightText='Fast'
+                            step={0.5}
+                            type='range' // In Gwei
+                          />
                         }
-                        size = 'mini'
+                        size='mini'
                         inverted
-                        content = {`${values.gasPrice} GWEI`} 
-                        on = 'focus' / >
+                        content={`${values.gasPrice} GWEI`}
+                        on = 'focus' />
                       </fieldset>
                       <nav className='form-nav'>
                         <button
@@ -145,8 +146,13 @@ class Send extends Component {
         return { amount: `You don't have enough ${token.symbol} balance` };
       }
 
-      const estimated = await estimateGas(values, token, parityStore.api);
+      /** ESTIMATE USD */
+      const estimatusd = await estimateUSD();
+      values.ethUsd = estimatusd;
+      var convertEthtoUsd = (values.gasPrice) * estimatusd;
+      console.log(convertEthtoUsd);
 
+      const estimated = await estimateGas(values, token, parityStore.api)
       if (!ethBalance || isNaN(estimated)) {
         throw new Error('No "ethBalance" or "estimated" value.');
       }
@@ -176,5 +182,4 @@ class Send extends Component {
     return Object.keys(errors).length ? errors : this.validateAmount(values);
   };
 }
-
 export default Send;
