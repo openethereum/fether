@@ -7,7 +7,7 @@ import { action, computed, observable } from 'mobx';
 import BigNumber from 'bignumber.js';
 import isElectron from 'is-electron';
 
-import { nodeHealth$, syncing$ } from '@parity/light.js';
+import { peerCount$, syncing$ } from '@parity/light.js';
 
 import Debug from '../utils/debug';
 import parityStore from './parityStore';
@@ -22,19 +22,18 @@ export const STATUS = {
   CLOCKNOTSYNC: 'CLOCKNOTSYNC', // Local clock is not sync
   DOWNLOADING: 'DOWNLOADING', // Currently downloading Parity
   GOOD: 'GOOD', // Everything's fine
-  NOINTERNET: 'NOINTERNET', // No network connection
-  OTHER: 'OTHER', // Unknown state, might have a payload
+  NOPEERS: 'NOPEERS', // Not connected to any peers
   RUNNING: 'RUNNING', // Parity is running (only checked at startup)
   SYNCING: 'SYNCING' // Obvious
 };
 
 export class HealthStore {
-  @observable nodeHealth;
+  @observable peerCount;
   @observable syncing;
   @observable clockSync;
 
   constructor () {
-    nodeHealth$().subscribe(this.setNodeHealth);
+    peerCount$(({withoutLoading: true})).subscribe(this.setPeerCount);
     syncing$().subscribe(this.setSyncing);
 
     if (!electron) {
@@ -80,9 +79,7 @@ export class HealthStore {
 
     // Check if we get responses from the WS server
     if (
-      !parityStore.isApiConnected ||
-      !this.nodeHealth ||
-      !Object.keys(this.nodeHealth).length
+      !parityStore.isApiConnected
     ) {
       return {
         status: STATUS.CANTCONNECT
@@ -105,64 +102,22 @@ export class HealthStore {
       };
     }
 
-    // Find out if there are bad statuses
-    const bad = Object.values(this.nodeHealth)
-      .filter(x => x)
-      .map(({ status }) => status)
-      .find(s => s === 'bad');
-    // Find out if there are needsAttention statuses
-    const needsAttention = Object.keys(this.nodeHealth)
-      .filter(key => key !== 'time')
-      .map(key => this.nodeHealth[key])
-      .filter(x => x)
-      .map(({ status }) => status)
-      .find(s => s === 'needsattention');
+    if (this.clockSync && !this.clockSync.isClockSync) {
+      return { status: STATUS.CLOCKNOTSYNC };
+    }
 
-    if (!bad && !needsAttention) {
-      return {
+    if (this.peerCount.eq(0)) {
+      return { status: STATUS.NOPEERS };
+    }
+
+    return {
         status: STATUS.GOOD
-      };
-    }
-
-    // Now we have a bad or a needsattention message
-
-    // Get all non-empty messages from all statuses
-    const details = Object.values(this.nodeHealth)
-      .map(({ message }) => message)
-      .filter(x => x);
-
-    // If status is bad or needsattention, there should be an associated
-    // message. Just in case, we do an additional test.
-    if (!details || !details.length) {
-      return { status: STATUS.OTHER };
-    }
-
-    const message = details[0];
-
-    if (
-      message ===
-      "Your node is still syncing, the values you see might be outdated. Wait until it's fully synced."
-    ) {
-      return { status: STATUS.SYNCING };
-    }
-
-    if (
-      message ===
-      'You are not connected to any peers. There is most likely some network issue. Fix connectivity.'
-    ) {
-      return { status: STATUS.NOINTERNET, payload: message };
-    }
-
-    if (this.clockSync && this.clockSync.isClockSync) {
-      return { status: STATUS.CLOCKNOTSYNC, payload: message };
-    }
-
-    return { status: STATUS.OTHER, payload: message };
+    };
   }
 
   @action
-  setNodeHealth = nodeHealth => {
-    this.nodeHealth = nodeHealth;
+  setPeerCount = peerCount => {
+    this.peerCount = peerCount;
   };
 
   @action
