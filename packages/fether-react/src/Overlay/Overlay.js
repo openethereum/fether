@@ -74,7 +74,7 @@ class Overlays extends Component {
 
     switch (status) {
       case STATUS.CLOCKNOTSYNC:
-        return `Mac: System Preferences -> Date &amp; Time -> Uncheck and recheck
+        return `Mac: System Preferences -> Date & Time -> Uncheck and recheck
         "Set date and time automatically"
         Windows: Control Panel -> "Clock, Language, and Region" -> "Date
         and Time" -> Uncheck and recheck "Set date and time automatically"`;
@@ -83,7 +83,7 @@ class Overlays extends Component {
         return payload && payload.percentage && payload.percentage.gt(0)
           ? `${payload.percentage.toFixed(0)}%`
           : '';
-      case STATUS.NOINTERNET:
+      case STATUS.NOPEERS:
         return 'Getting some more peers...';
       default:
         return '';
@@ -102,7 +102,7 @@ class Overlays extends Component {
         return 'Your clock is not sync';
       case STATUS.DOWNLOADING:
         return 'Downloading Parity...';
-      case STATUS.NOINTERNET:
+      case STATUS.NOPEERS:
         return 'Bad connectivity';
       case STATUS.RUNNING:
         return 'Connecting to the node...';

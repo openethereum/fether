@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@parity/api": "^2.1.22",
-    "@parity/light.js": "https://github.com/parity-js/light.js#458d9318ef16bc583375d7a5cd414e2939d6ecfd",
+    "@parity/light.js": "https://github.com/parity-js/light.js#f2e4648db57a97380ad374d7cd15342f44a5ade1",
     "@parity/shared": "^3.0.2",
     "bignumber.js": "^4.1.0",
     "debounce-promise": "^3.1.0",
