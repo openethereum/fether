@@ -5,7 +5,7 @@
 
 import abi from '@parity/shared/lib/contracts/abi/eip20';
 import BigNumber from 'bignumber.js';
-import { makeContract$ } from '@parity/light.js';
+import { makeContract } from '@parity/light.js';
 import memoize from 'lodash/memoize';
 import { toWei } from '@parity/api/lib/util/wei';
 
@@ -15,7 +15,7 @@ const debug = Debug('estimateGas');
 const GAS_MULT_FACTOR = 1.25; // Since estimateGas is not always accurate, we add a 33% factor for buffer.
 
 export const contractForToken = memoize(tokenAddress =>
-  makeContract$(tokenAddress, abi)
+  makeContract(tokenAddress, abi)
 );
 
 /**
@@ -70,7 +70,7 @@ const addBuffer = estimated => {
 
 /**
  * This.tx is a user-friendly tx object. We convert it now as it can be
- * passed to makeContract$.transfer(...).
+ * passed to makeContract.transfer(...).
  */
 export const txForErc20 = (tx, token) => {
   return {

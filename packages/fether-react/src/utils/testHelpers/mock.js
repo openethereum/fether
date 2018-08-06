@@ -32,7 +32,7 @@ export const eth = {
   address: 'ETH'
 };
 
-export const makeContract$ = {
+export const makeContract = {
   contractObject: {
     instance: {
       transfer: {

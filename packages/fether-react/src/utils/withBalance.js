@@ -9,7 +9,7 @@ import compose from 'recompose/compose';
 import {
   defaultAccount$,
   isNullOrLoading,
-  makeContract$,
+  makeContract,
   myBalance$
 } from '@parity/light.js';
 import { filter, map, switchMap } from 'rxjs/operators';
@@ -22,7 +22,7 @@ export const withErc20Balance = light({
     defaultAccount$().pipe(
       filter(x => x),
       switchMap(defaultAccount =>
-        makeContract$(token.address, abi).balanceOf$(defaultAccount)
+        makeContract(token.address, abi).balanceOf$(defaultAccount)
       ),
       map(value => (isNullOrLoading(value) ? null : value)), // Transform loading state to null
       map(value => value && value.div(10 ** token.decimals))
