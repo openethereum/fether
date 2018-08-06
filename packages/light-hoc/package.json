@@ -31,7 +31,7 @@
     "start": "yarn build --watch"
   },
   "peerDependencies": {
-    "@parity/light.js": "https://github.com/parity-js/light.js#458d9318ef16bc583375d7a5cd414e2939d6ecfd",
+    "@parity/light.js": "https://github.com/parity-js/light.js#f2e4648db57a97380ad374d7cd15342f44a5ade1",
     "react": "^16.4.0"
   },
   "devDependencies": {
