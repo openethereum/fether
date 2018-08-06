@@ -18,13 +18,13 @@ const electron = isElectron() ? window.require('electron') : null;
 // List here all possible states of our health store. Each state can have a
 // payload.
 export const STATUS = {
-  CANTCONNECT: 'CANTCONNECT', // Can't connect to Parity's api
-  CLOCKNOTSYNC: 'CLOCKNOTSYNC', // Local clock is not sync
-  DOWNLOADING: 'DOWNLOADING', // Currently downloading Parity
-  GOOD: 'GOOD', // Everything's fine
-  NOPEERS: 'NOPEERS', // Not connected to any peers
-  RUNNING: 'RUNNING', // Parity is running (only checked at startup)
-  SYNCING: 'SYNCING' // Obvious
+  CANTCONNECT: Symbol('CANTCONNECT'), // Can't connect to Parity's api
+  CLOCKNOTSYNC: Symbol('CLOCKNOTSYNC'), // Local clock is not sync
+  DOWNLOADING: Symbol('DOWNLOADING'), // Currently downloading Parity
+  GOOD: Symbol('GOOD'), // Everything's fine
+  NOPEERS: Symbol('NOPEERS'), // Not connected to any peers
+  RUNNING: Symbol('RUNNING'), // Parity is running (only checked at startup)
+  SYNCING: Symbol('SYNCING') // Obvious
 };
 
 export class HealthStore {
