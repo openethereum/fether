@@ -111,7 +111,7 @@ export class HealthStore {
     }
 
     return {
-        status: STATUS.GOOD
+      status: STATUS.GOOD
     };
   }
 
