@@ -106,7 +106,7 @@ export class HealthStore {
       return { status: STATUS.CLOCKNOTSYNC };
     }
 
-    if (this.peerCount.eq(0)) {
+    if (this.peerCount && this.peerCount.eq(0)) {
       return { status: STATUS.NOPEERS };
     }
 
