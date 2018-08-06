@@ -13,13 +13,13 @@ import { estimateGas, contractForToken } from './estimateGas';
 import * as mock from './testHelpers/mock';
 
 jest.mock('@parity/light.js', () => ({
-  makeContract$: jest.fn(() => mock.makeContract$)
+  makeContract: jest.fn(() => mock.makeContract)
 }));
 
 describe('contractForToken', () => {
-  test('should call makeContract$', () => {
+  test('should call makeContract', () => {
     contractForToken('foo');
-    expect(lightJs.makeContract$).toHaveBeenCalledWith('foo', abi);
+    expect(lightJs.makeContract).toHaveBeenCalledWith('foo', abi);
   });
 
   test('should be memoized', () => {
