@@ -60,6 +60,8 @@ class Health extends Component {
         return `Downloading... (${payload.percentage}%)`;
       case STATUS.GOOD:
         return 'Synced';
+      case STATUS.NOINTERNET:
+        return 'No Internet connection';
       case STATUS.NOPEERS:
         return 'Not connected to any peers';
       case STATUS.RUNNING:

@@ -22,17 +22,23 @@ export const STATUS = {
   CLOCKNOTSYNC: Symbol('CLOCKNOTSYNC'), // Local clock is not sync
   DOWNLOADING: Symbol('DOWNLOADING'), // Currently downloading Parity
   GOOD: Symbol('GOOD'), // Everything's fine
+  NOINTERNET: Symbol('NOINTERNET'), // No Internet connection
   NOPEERS: Symbol('NOPEERS'), // Not connected to any peers
   RUNNING: Symbol('RUNNING'), // Parity is running (only checked at startup)
   SYNCING: Symbol('SYNCING') // Obvious
 };
 
 export class HealthStore {
+  @observable hasInternet;
   @observable peerCount;
   @observable syncing;
   @observable clockSync;
 
   constructor () {
+    this.setHasInternet(navigator.onLine);
+    window.addEventListener('online', () => this.setHasInternet(true));
+    window.addEventListener('offline', () => this.setHasInternet(false));
+
     peerCount$(({withoutLoading: true})).subscribe(this.setPeerCount);
     syncing$().subscribe(this.setSyncing);
 
@@ -106,7 +112,11 @@ export class HealthStore {
       return { status: STATUS.CLOCKNOTSYNC };
     }
 
-    if (this.peerCount && this.peerCount.eq(0)) {
+    if (!this.hasInternet) {
+      return { status: STATUS.NOINTERNET };
+    }
+
+    if (this.peerCount && this.peerCount.lte(1)) {
       return { status: STATUS.NOPEERS };
     }
 
@@ -128,6 +138,11 @@ export class HealthStore {
   @action
   setSyncing = syncing => {
     this.syncing = syncing;
+  };
+
+  @action
+  setHasInternet = hasInternet => {
+    this.hasInternet = hasInternet;
   };
 }
 
