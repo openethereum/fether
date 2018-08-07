@@ -35,7 +35,10 @@ export class HealthStore {
   @observable clockSync;
 
   constructor () {
-    setInterval(this.verifyInternet, 5000);
+    this.setHasInternet(navigator.onLine);
+    window.addEventListener('online', () => this.setHasInternet(true));
+    window.addEventListener('offline', () => this.setHasInternet(false));
+
     peerCount$(({withoutLoading: true})).subscribe(this.setPeerCount);
     syncing$().subscribe(this.setSyncing);
 
@@ -138,8 +141,8 @@ export class HealthStore {
   };
 
   @action
-  verifyInternet = () => {
-    this.hasInternet = navigator.onLine;
+  setHasInternet = hasInternet => {
+    this.hasInternet = hasInternet;
   };
 }
 
