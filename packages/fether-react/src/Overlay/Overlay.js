@@ -83,6 +83,8 @@ class Overlays extends Component {
         return payload && payload.percentage && payload.percentage.gt(0)
           ? `${payload.percentage.toFixed(0)}%`
           : '';
+      case STATUS.NOINTERNET:
+        return 'Please connect to the Internet';
       case STATUS.NOPEERS:
         return 'Getting some more peers...';
       default:
@@ -102,6 +104,8 @@ class Overlays extends Component {
         return 'Your clock is not sync';
       case STATUS.DOWNLOADING:
         return 'Downloading Parity...';
+      case STATUS.NOINTERNET:
+        return 'No Internet connection';
       case STATUS.NOPEERS:
         return 'Bad connectivity';
       case STATUS.RUNNING:
