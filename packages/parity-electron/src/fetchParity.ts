@@ -7,7 +7,7 @@ import { app, BrowserWindow } from 'electron';
 import axios from 'axios';
 import { file } from 'checksum';
 import { download } from 'electron-dl';
-import { chmod, stat, unlink } from 'fs';
+import { chmod, rename, unlink } from 'fs';
 import { promisify } from 'util';
 import * as retry from 'async-retry';
 
@@ -16,7 +16,7 @@ import logger from './utils/logger';
 
 const checksum = promisify(file);
 const fsChmod = promisify(chmod);
-const fsStat = promisify(stat);
+const fsRename = promisify(rename);
 const fsUnlink = promisify(unlink);
 
 const VANITY_URL = 'https://vanity-service.parity.io/parity-binaries';
@@ -53,13 +53,19 @@ const getOs = () => {
 };
 
 /**
- * Remove parity binary in the userData folder, if it exists.
+ * Remove parity binary or partial binary in the userData folder, if it exists.
  */
 export const deleteParity = async () => {
+  const parityPath = await defaultParityPath();
+
+  // Remove parity binary
   try {
-    const parityPath = await defaultParityPath();
-    await fsStat(parityPath);
     await fsUnlink(parityPath);
+  } catch (e) {}
+
+  // Remove parity partial binary (download was still in progress)
+  try {
+    await fsUnlink(`${parityPath}.part`);
   } catch (e) {}
 };
 
@@ -81,7 +87,8 @@ export const fetchParity = async (
           logger()('@parity/electron:main')('Retrying.');
         }
 
-        // Delete any old Parity if it exists
+        // Delete any old Parity if it exists, otherwise electron-dl will
+        // download the new binary with a (1) at the end of the filename
         await deleteParity();
 
         // Fetch the metadata of the correct version of parity
@@ -91,18 +98,20 @@ export const fetchParity = async (
 
         // Get the binary's url
         const {
+          name,
           downloadUrl,
           checksum: expectedChecksum
-        }: { downloadUrl: string; checksum: string } = data[0].files.find(
+        }: { name: string; downloadUrl: string; checksum: string } = data[0].files.find(
           ({ name }) => name === 'parity' || name === 'parity.exe'
         );
 
-        // Start downloading. This will install parity into defaultParityPath.
+        // Start downloading.
         const downloadItem = await download(mainWindow, downloadUrl, {
           directory: app.getPath('userData'),
+          filename: `${name}.part`,
           onProgress
         });
-        const downloadPath: string = downloadItem.getSavePath(); // Equal to defaultParityPath
+        const downloadPath: string = downloadItem.getSavePath();
 
         // Once downloaded, we check the sha256 checksum
         // Calculate the actual checksum
@@ -118,6 +127,9 @@ export const fetchParity = async (
 
         // Set a+x permissions on the downloaded binary
         await fsChmod(downloadPath, '755');
+
+        // Binary is ready to be used: remove `.part` from filename
+        await fsRename(downloadPath, await defaultParityPath());
 
         // Double-check that Parity exists now.
         return getParityPath();
