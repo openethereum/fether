@@ -26,7 +26,7 @@ linux-test:
     - yarn test
   tags:
     - javascript
-linux-builde:
+linux-build:
   stage: build
   image: node:8
   only:
@@ -39,6 +39,6 @@ linux-builde:
     - curl -o- -L https://yarnpkg.com/install.sh | bash 
     - export PATH=$HOME/.yarn/bin:$PATH
     - yarn install
-    - yarn build
+    - yarn release --linux 
   tags:
     - javascript
