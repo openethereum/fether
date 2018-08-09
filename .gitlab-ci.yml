@@ -23,6 +23,8 @@ linux-test:
     - yarn install
     - yarn lint
     - yarn test
+  tags:
+    - docker
 linux-builde:
   stage: build
   image: node8
@@ -36,3 +38,5 @@ linux-builde:
     - curl -o- -L https://yarnpkg.com/install.sh | bash 
     - yarn install
     - yarn build
+  tags:
+    - docker
