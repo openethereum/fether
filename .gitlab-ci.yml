@@ -1,0 +1,38 @@
+stages:
+  - test
+  - build
+variables:
+  GIT_DEPTH: "3"
+  SIMPLECOV: "true"
+  RUST_BACKTRACE: "1"
+  RUSTFLAGS: ""
+  CARGOFLAGS: ""
+cache:
+  untracked: true
+linux-test:
+  stage: test
+  image: node8
+  only:
+    - beta
+    - tags
+    - stable
+    - triggers
+    - master
+  script:
+    - curl -o- -L https://yarnpkg.com/install.sh | bash 
+    - yarn install
+    - yarn lint
+    - yarn test
+linux-builde:
+  stage: build
+  image: node8
+  only:
+    - beta
+    - tags
+    - stable
+    - triggers
+    - master
+  script:
+    - curl -o- -L https://yarnpkg.com/install.sh | bash 
+    - yarn install
+    - yarn build
