@@ -11,7 +11,7 @@ cache:
   untracked: true
 linux-test:
   stage: test
-  image: node8
+  image: node:8
   only:
     - beta
     - tags
@@ -28,7 +28,7 @@ linux-test:
     - docker
 linux-builde:
   stage: build
-  image: node8
+  image: node:8
   only:
     - beta
     - tags
