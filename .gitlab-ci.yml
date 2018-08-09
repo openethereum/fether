@@ -43,3 +43,19 @@ linux-build:
     - yarn release --linux 
   tags:
     - javascript
+osx-build:
+  stage: build
+  only:
+    - beta
+    - tags
+    - stable
+    - triggers
+    - master
+  script:
+    - curl -o- -L https://yarnpkg.com/install.sh | bash 
+    - export PATH=$HOME/.yarn/bin:$PATH
+    - yarn install
+    - yarn build
+    - yarn release --mac
+  tags:
+    - osx 
