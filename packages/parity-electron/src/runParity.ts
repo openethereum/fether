@@ -28,11 +28,11 @@ const catchableErrors = [
  */
 export const runParity = async ({
   flags = [],
-  onParityError = () => { }
+  onParityError = () => {}
 }: {
-    flags: string[];
-    onParityError: (error: Error) => void
-  }) => {
+  flags: string[];
+  onParityError: (error: Error) => void;
+}) => {
   const parityPath = await getParityPath();
 
   // Some users somehow had no +x on the parity binary after downloading
@@ -40,7 +40,7 @@ export const runParity = async ({
   // have rights to do it).
   try {
     await fsChmod(parityPath, '755');
-  } catch (e) { }
+  } catch (e) {}
 
   let logLastLine = ''; // Always contains last line of the Parity logs
 

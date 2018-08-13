@@ -13,9 +13,11 @@ import parityStore from './parityStore';
 const debug = Debug('sendStore');
 
 export class SendStore {
-  @observable blockNumber; // Current block number, used to calculate tx confirmations.
+  @observable
+  blockNumber; // Current block number, used to calculate tx confirmations.
   tx = {}; // The actual tx we are sending. No need to be observable.
-  @observable txStatus; // Status of the tx, see wiki for details.
+  @observable
+  txStatus; // Status of the tx, see wiki for details.
 
   acceptRequest = (requestId, password) => {
     // Since we accepted this request, we also start to listen to blockNumber,

@@ -66,10 +66,12 @@ function createWindow () {
         return;
       }
 
-      if (await isParityRunning({
-        wsInterface: cli.wsInterface,
-        wsPort: cli.wsPort
-      })) {
+      if (
+        await isParityRunning({
+          wsInterface: cli.wsInterface,
+          wsPort: cli.wsPort
+        })
+      ) {
         return;
       }
 
@@ -77,12 +79,14 @@ function createWindow () {
         flags: [
           ...getRemainingArgs(cli),
           '--light',
-          '--chain', cli.chain,
-          '--ws-interface', cli.wsInterface,
-          '--ws-port', cli.wsPort
+          '--chain',
+          cli.chain,
+          '--ws-interface',
+          cli.wsInterface,
+          '--ws-port',
+          cli.wsPort
         ],
-        onParityError: err =>
-          handleError(err, 'An error occured with Parity.')
+        onParityError: err => handleError(err, 'An error occured with Parity.')
       });
     })
     .then(() => {
@@ -96,11 +100,11 @@ function createWindow () {
   // passed to ELECTRON_START_URL
   mainWindow.loadURL(
     process.env.ELECTRON_START_URL ||
-    url.format({
-      pathname: path.join(staticPath, 'build', 'index.html'),
-      protocol: 'file:',
-      slashes: true
-    })
+      url.format({
+        pathname: path.join(staticPath, 'build', 'index.html'),
+        protocol: 'file:',
+        slashes: true
+      })
   );
 
   // Listen to messages from renderer process

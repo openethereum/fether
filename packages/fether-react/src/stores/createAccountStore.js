@@ -11,10 +11,14 @@ import parityStore from './parityStore';
 const debug = Debug('createAccountStore');
 
 export class CreateAccountStore {
-  @observable address = null;
-  @observable isImport = false; // Are we creating a new account, or importing via phrase?
-  @observable name = ''; // Account name
-  @observable phrase = null; // The 12-word seed phrase
+  @observable
+  address = null;
+  @observable
+  isImport = false; // Are we creating a new account, or importing via phrase?
+  @observable
+  name = ''; // Account name
+  @observable
+  phrase = null; // The 12-word seed phrase
 
   /**
    * Reinitialize everything
