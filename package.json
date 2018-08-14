@@ -43,7 +43,7 @@
     "build-parity-electron": "cd packages/parity-electron && yarn build",
     "preelectron": "yarn build",
     "electron": "cd packages/fether-electron && yarn electron",
-    "lint-files": "lintfiles() { [ $# -eq 0 ] && exit 0; echo 'Linting...' && prettier --write --ignore-path .gitignore --loglevel error $@ && semistandard $@ --fix --parser babel-eslint; }; lintfiles",
+    "lint-files": "./scripts/lint-files.sh",
     "lint": "yarn lint-files '**/*.{js,ts}'",
     "prepackage": "yarn build",
     "package": "cd packages/fether-electron && yarn package",
@@ -58,8 +58,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "FILES=`git diff --staged --name-only HEAD | grep -E '.js$|.ts$'`; [ -z \"$FILES\" ] && exit 0; yarn lint-files $FILES; git add $FILES",
-      "pre-rewrite": "FILES=`git diff --staged --name-only HEAD | grep -E '.js$|.ts$'`; [ -z \"$FILES\" ] && exit 0; yarn lint-files $FILES; git add $FILES"
+      "pre-commit": "FILES=`git diff --staged --name-only HEAD | grep -E '.js$|.ts$'`; [ -z \"$FILES\" ] && exit 0; yarn lint-files $FILES; git add $FILES"
     }
   },
   "devDependencies": {
