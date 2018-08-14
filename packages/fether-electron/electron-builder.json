@@ -2,22 +2,17 @@
   "appId": "io.parity.fether",
   "linux": {
     "category": "Utility",
-    "icon": "./assets/icon/small-white-512x512.png",
+    "icon": "./static/assets/logo/logo-1024x1024.png",
     "target": ["AppImage", "snap", "deb", "tar.xz"]
   },
   "mac": {
     "category": "public.app-category.productivity",
-    "icon": "./assets/icon/small-white-512x512.png"
+    "icon": "./static/assets/logo/logo-1024x1024.png"
   },
-  "nsis": {
-    "include": "./electron/installers/windows/installer.nsh",
-    "oneClick": true,
-    "perMachine": true
-  },
-  "productName": "Fether",
+  "productName": "Parity Fether",
   "publish": "github",
   "win": {
-    "icon": "./assets/icon/small-white-512x512.png",
+    "icon": "./static/assets/logo/logo-1024x1024.png",
     "publisherName": "Parity Technologies (UK) Ltd.",
     "target": "nsis"
   }
