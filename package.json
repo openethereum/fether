@@ -54,7 +54,7 @@
     "start-hoc": "cd packages/light-hoc && yarn start",
     "start-react": "cd packages/fether-react && yarn start",
     "start-ui": "cd packages/fether-ui && yarn start",
-    "test": "CI=true lerna run test --parallel"
+    "test": "semistandard '**/*.{js,ts}' --parser babel-eslint && CI=true lerna run test --parallel"
   },
   "husky": {
     "hooks": {
