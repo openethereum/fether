@@ -29,23 +29,25 @@ export const STATUS = {
 };
 
 export class HealthStore {
-  @observable hasInternet;
-  @observable peerCount;
-  @observable syncing;
-  @observable clockSync;
+  @observable
+  hasInternet;
+  @observable
+  peerCount;
+  @observable
+  syncing;
+  @observable
+  clockSync;
 
   constructor () {
     this.setHasInternet(navigator.onLine);
     window.addEventListener('online', () => this.setHasInternet(true));
     window.addEventListener('offline', () => this.setHasInternet(false));
 
-    peerCount$(({withoutLoading: true})).subscribe(this.setPeerCount);
+    peerCount$({ withoutLoading: true }).subscribe(this.setPeerCount);
     syncing$().subscribe(this.setSyncing);
 
     if (!electron) {
-      debug(
-        'Not in Electron, ignoring clock sync verification.'
-      );
+      debug('Not in Electron, ignoring clock sync verification.');
       return;
     }
 
@@ -84,9 +86,7 @@ export class HealthStore {
     }
 
     // Check if we get responses from the WS server
-    if (
-      !parityStore.isApiConnected
-    ) {
+    if (!parityStore.isApiConnected) {
       return {
         status: STATUS.CANTCONNECT
       };

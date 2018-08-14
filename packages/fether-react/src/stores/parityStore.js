@@ -18,10 +18,14 @@ const electron = isElectron() ? window.require('electron') : null;
 const LS_KEY = `${LS_PREFIX}::secureToken`;
 
 export class ParityStore {
-  @observable downloadProgress = 0;
-  @observable isApiConnected = false;
-  @observable isParityRunning = false;
-  @observable token = null;
+  @observable
+  downloadProgress = 0;
+  @observable
+  isApiConnected = false;
+  @observable
+  isParityRunning = false;
+  @observable
+  token = null;
 
   constructor () {
     // Retrieve token from localStorage

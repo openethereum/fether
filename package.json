@@ -43,7 +43,8 @@
     "build-parity-electron": "cd packages/parity-electron && yarn build",
     "preelectron": "yarn build",
     "electron": "cd packages/fether-electron && yarn electron",
-    "lint": "semistandard 'packages/**/*.js' 'packages/**/*.ts' --parser babel-eslint",
+    "lint-files": "./scripts/lint-files.sh",
+    "lint": "yarn lint-files '**/*.{js,ts}'",
     "prepackage": "yarn build",
     "package": "cd packages/fether-electron && yarn package",
     "release": "cd packages/fether-electron && yarn release",
@@ -53,12 +54,19 @@
     "start-hoc": "cd packages/light-hoc && yarn start",
     "start-react": "cd packages/fether-react && yarn start",
     "start-ui": "cd packages/fether-ui && yarn start",
-    "test": "lerna run test --parallel"
+    "test": "semistandard '**/*.{js,ts}' --parser babel-eslint && CI=true lerna run test --parallel"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "FILES=`git diff --staged --name-only HEAD | grep -E '.js$|.ts$'`; [ -z \"$FILES\" ] && exit 0; yarn lint-files $FILES; git add $FILES"
+    }
   },
   "devDependencies": {
     "babel-eslint": "^8.2.5",
+    "husky": "^1.0.0-rc.13",
     "lerna": "^2.11.0",
     "npm-run-all": "^4.1.2",
+    "prettier": "^1.14.2",
     "semistandard": "^12.0.1"
   }
 }

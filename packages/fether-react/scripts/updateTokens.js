@@ -30,7 +30,7 @@ const run = async () => {
   const githubHintContract = await githubHint.getContract();
 
   // Get tokenCount to loop through all tokens
-  const tokenCount = +await tokenRegContract.instance.tokenCount.call();
+  const tokenCount = +(await tokenRegContract.instance.tokenCount.call());
   for (let i = 0; i < tokenCount; i++) {
     // Get token information
     const token = await tokenRegContract.instance.token.call({}, [i]);

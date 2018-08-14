@@ -101,7 +101,11 @@ export const fetchParity = async (
           name,
           downloadUrl,
           checksum: expectedChecksum
-        }: { name: string; downloadUrl: string; checksum: string } = data[0].files.find(
+        }: {
+          name: string;
+          downloadUrl: string;
+          checksum: string;
+        } = data[0].files.find(
           ({ name }) => name === 'parity' || name === 'parity.exe'
         );
 
