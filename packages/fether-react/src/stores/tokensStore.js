@@ -55,7 +55,7 @@ export class TokensStore {
           address: 'ETH',
           decimals: 18,
           logo: ethereumIcon,
-          name: 'Ethereum',
+          name: 'Ether',
           symbol: 'ETH'
         }
       };
