@@ -12,6 +12,7 @@ import { inject, observer } from 'mobx-react';
 class AccountPassword extends Component {
   state = {
     confirm: '',
+    isLoading: false,
     password: ''
   };
 
@@ -28,6 +29,7 @@ class AccountPassword extends Component {
     const { password } = this.state;
 
     event.preventDefault();
+    this.setState({ isLoading: true });
 
     // Save to parity
     createAccountStore.saveAccountToParity(password).then(() => {
@@ -42,7 +44,7 @@ class AccountPassword extends Component {
       history,
       location: { pathname }
     } = this.props;
-    const { confirm, password } = this.state;
+    const { confirm, isLoading, password } = this.state;
     const currentStep = pathname.slice(-1);
 
     return (
@@ -79,7 +81,7 @@ class AccountPassword extends Component {
               )}
               <button
                 className='button'
-                disabled={!password || confirm !== password}
+                disabled={!password || confirm !== password || isLoading}
               >
                 Confirm account creation
               </button>
