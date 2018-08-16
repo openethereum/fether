@@ -96,6 +96,10 @@ function createWindow () {
     })
     .catch(handleError);
 
+  // Globals for fether-react parityStore
+  global.wsInterface = cli.wsInterface;
+  global.wsPort = cli.wsPort;
+
   // Opens file:///path/to/build/index.html in prod mode, or whatever is
   // passed to ELECTRON_START_URL
   mainWindow.loadURL(
