@@ -56,10 +56,6 @@ export class CreateAccountStore {
 
   @action
   setIsImport = isImport => {
-    // First set address and phrase back to null
-    this.address = null;
-    this.phrase = null;
-
     this.isImport = isImport;
   };
 

@@ -20,6 +20,11 @@ import Health from '../../Health';
 @inject('createAccountStore')
 @observer
 class CreateAccount extends Component {
+  constructor (props) {
+    super(props);
+    props.createAccountStore.clear();
+  }
+
   /**
    * Creating account and importing accounts have different processes: 4 steps
    * for importing, and 5 steps for creating
