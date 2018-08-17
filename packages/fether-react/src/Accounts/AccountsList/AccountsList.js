@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import { AccountCard, Header } from 'fether-ui';
 import { accountsInfo$, defaultAccount$ } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
-import light from 'light-hoc';
+import light from '@parity/light.js-react';
 
 import debug from '../../utils/debug';
 import Health from '../../Health';
@@ -48,7 +48,7 @@ class AccountsList extends Component {
     // TODO Not 100% clean, I don't want any api.abc.method() in any React
     // component.
     api.parity
-      .setNewDappsDefaultAddress(address)
+      .setAuthor(address)
       .then(() => {
         history.push('/tokens', { address });
       })

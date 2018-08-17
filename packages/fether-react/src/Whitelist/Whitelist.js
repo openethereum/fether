@@ -8,7 +8,7 @@ import { chainName$ } from '@parity/light.js';
 import debounce from 'lodash/debounce';
 import { Header } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
-import light from 'light-hoc';
+import light from '@parity/light.js-react';
 
 import Health from '../Health';
 import NewTokenItem from './NewTokenItem';
