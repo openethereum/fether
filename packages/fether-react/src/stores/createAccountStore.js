@@ -24,13 +24,15 @@ export class CreateAccountStore {
    * Reinitialize everything
    */
   clear () {
-    this.setAddress(null);
+    this.setPhrase(null);
     this.setName('');
   }
 
   generateNewAccount = () => {
     debug('Generating new account.');
-    return parityStore.api.parity.generateSecretPhrase().then(this.setPhrase);
+    return this.setPhrase(null)
+      .then(() => parityStore.api.parity.generateSecretPhrase())
+      .then(this.setPhrase);
   };
 
   saveAccountToParity = password => {
@@ -54,10 +56,6 @@ export class CreateAccountStore {
 
   @action
   setIsImport = isImport => {
-    // First set address and phrase back to null
-    this.address = null;
-    this.phrase = null;
-
     this.isImport = isImport;
   };
 
@@ -66,12 +64,20 @@ export class CreateAccountStore {
     this.name = name;
   };
 
+  /**
+   * Set phrase and corresponding address
+   */
   @action
   setPhrase = phrase => {
     this.phrase = phrase;
-    return parityStore.api.parity
-      .phraseToAddress(phrase)
-      .then(address => this.setAddress(address));
+    this.address = null;
+
+    if (!phrase) return Promise.resolve();
+    else {
+      return parityStore.api.parity
+        .phraseToAddress(phrase)
+        .then(address => this.setAddress(address));
+    }
   };
 }
 

@@ -9,6 +9,8 @@ import Blockies from 'react-blockies';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 
+import loading from '../../../assets/img/icons/loading.svg';
+
 @inject('createAccountStore')
 @observer
 class AccountName extends Component {
@@ -54,11 +56,19 @@ class AccountName extends Component {
       <Card drawers={[this.renderDrawer()]}>
         <div className='account'>
           <div className='account_avatar'>
-            {!!address && <Blockies seed={address.toLowerCase()} />}
+            {address ? (
+              <Blockies seed={address.toLowerCase()} />
+            ) : (
+              <img
+                className='account_avatar_loading'
+                alt='loading'
+                src={loading}
+              />
+            )}
           </div>
           <div className='account_change_blockies'>
             <button className='button -cancel' onClick={generateNewAccount}>
-              Choose another icon
+              Generate another icon
             </button>
           </div>
         </div>
@@ -68,7 +78,7 @@ class AccountName extends Component {
 
   renderDrawer = () => {
     const {
-      createAccountStore: { name },
+      createAccountStore: { address, name },
       history,
       location: { pathname }
     } = this.props;
@@ -92,7 +102,7 @@ class AccountName extends Component {
               Back
             </button>
           )}
-          {name ? (
+          {name && address ? (
             <Link to={`/accounts/new/${+currentStep + 1}`}>
               <button className='button'>Next</button>
             </Link>

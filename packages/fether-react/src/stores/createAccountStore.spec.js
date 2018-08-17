@@ -27,19 +27,24 @@ beforeEach(() => {
 });
 
 describe('method clear', () => {
-  test('should call setAddress and setName', () => {
-    createAccountStore.setAddress = jest.fn();
-    createAccountStore.setName = jest.fn();
+  test('should reset phrase, address and name', () => {
+    createAccountStore.phrase = 'phrase';
+    createAccountStore.address = '0x123';
+    createAccountStore.name = 'account name';
     createAccountStore.clear();
-    expect(createAccountStore.setAddress).toHaveBeenCalledWith(null);
-    expect(createAccountStore.setName).toHaveBeenCalledWith('');
+    expect(createAccountStore.phrase).toBe(null);
+    expect(createAccountStore.address).toBe(null);
+    expect(createAccountStore.name).toBe('');
   });
 });
 
 describe('method generateNewAccount', () => {
   test('should call api.parity.generateSecretPhrase', () => {
-    createAccountStore.generateNewAccount();
-    expect(parityStore.api.parity.generateSecretPhrase).toHaveBeenCalledWith();
+    createAccountStore.generateNewAccount().then(() => {
+      expect(
+        parityStore.api.parity.generateSecretPhrase
+      ).toHaveBeenCalledWith();
+    });
   });
 });
 

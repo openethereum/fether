@@ -22,6 +22,11 @@
       height: (ms(0) * 1.3) + 1rem !important;
       width: auto !important;
     }
+
+    .account_avatar_loading {
+      width: 100%;
+      height: 100%;
+    }
   }
 
   .account_information {
