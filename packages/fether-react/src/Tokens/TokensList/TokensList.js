@@ -3,26 +3,32 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react';
+import React, { Component } from "react";
 
-import TokenBalance from './TokenBalance';
+import TokenBalance from "./TokenBalance";
 
-@inject('tokensStore')
-@observer
+import { consumeTokens, provideTokens } from "../TokensContext.js";
+
+@provideTokens
+@consumeTokens
 class Tokens extends Component {
-  render () {
-    const {
-      tokensStore: { tokensArray }
-    } = this.props;
+  render() {
+    const { tokensArray, address } = this.props;
 
     // Show empty token placeholder if tokens have not been loaded yet
     const shownArray = tokensArray.length ? tokensArray : [{}];
 
+    console.log(
+      "TokensList -- render -- tokensStore",
+      this.props.tokens,
+      this.props.tokensArray,
+      this.props.tokensArrayWithoutEth
+    );
+
     return (
-      <div className='window_content'>
-        <div className='box -scroller'>
-          <ul className='list -padded'>
+      <div className="window_content">
+        <div className="box -scroller">
+          <ul className="list -padded">
             {shownArray.map((
               token,
               index // With empty tokens, the token.address is not defined, so we prefix with index

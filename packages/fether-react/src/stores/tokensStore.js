@@ -3,13 +3,13 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { action, computed, observable } from 'mobx';
-import { chainName$, defaultAccount$ } from '@parity/light.js';
-import { combineLatest } from 'rxjs';
-import store from 'store';
+import { action, computed, observable } from "mobx";
+import { chainName$, defaultAccount$ } from "@parity/light.js";
+import { combineLatest } from "rxjs";
+import store from "store";
 
-import ethereumIcon from '../assets/img/tokens/ethereum.png';
-import LS_PREFIX from './utils/lsPrefix';
+import ethereumIcon from "../assets/img/tokens/ethereum.png";
+import LS_PREFIX from "./utils/lsPrefix";
 
 const LS_KEY = `${LS_PREFIX}::tokens`;
 
@@ -17,7 +17,7 @@ export class TokensStore {
   @observable
   tokens = {};
 
-  constructor () {
+  constructor() {
     combineLatest(chainName$(), defaultAccount$()).subscribe(
       ([chainName, defaultAccount]) =>
         // Refetch token from localStorage everytime we have a new chainName
@@ -52,11 +52,11 @@ export class TokensStore {
 
       this.tokens = {
         ETH: {
-          address: 'ETH',
+          address: "ETH",
           decimals: 18,
           logo: ethereumIcon,
-          name: 'Ether',
-          symbol: 'ETH'
+          name: "Ether",
+          symbol: "ETH"
         }
       };
     } else {
@@ -71,14 +71,14 @@ export class TokensStore {
   };
 
   @computed
-  get tokensArray () {
+  get tokensArray() {
     return Object.values(this.tokens);
   }
 
   @computed
-  get tokensArrayWithoutEth () {
+  get tokensArrayWithoutEth() {
     return this.tokensArray.filter(
-      ({ address }) => address !== 'ETH' // Ethereum is the only token without address, has 'ETH' instead
+      ({ address }) => address !== "ETH" // Ethereum is the only token without address, has 'ETH' instead
     );
   }
 

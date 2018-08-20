@@ -3,68 +3,64 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import React, { PureComponent } from 'react';
-import { AccountHeader } from 'fether-ui';
-import { accountsInfo$, defaultAccount$ } from '@parity/light.js';
-import light from 'light-hoc';
-import { Link, Redirect } from 'react-router-dom';
+import React, { PureComponent } from "react";
+import { AccountHeader } from "fether-ui";
+import { accountsInfo$ } from "@parity/light.js";
+import light from "light-hoc";
+import { Link, Redirect } from "react-router-dom";
 
-import Health from '../Health';
-import TokensList from './TokensList';
+import Health from "../Health";
+import TokensList from "./TokensList";
 
 @light({
-  accountsInfo: accountsInfo$,
-  defaultAccount: defaultAccount$
+  accountsInfo: accountsInfo$
 })
 class Tokens extends PureComponent {
   handleGoToWhitelist = () => {
-    this.props.history.push('/whitelist');
+    this.props.history.push("/whitelist");
   };
 
-  render () {
+  render() {
     const {
       accountsInfo,
-      defaultAccount,
-      location: { state }
+      match: {
+        params: { accountAddress }
+      }
     } = this.props;
 
     // If the accountsInfo object is empty (i.e. no accounts), then we redirect
     // to the accounts page to create an account
     if (accountsInfo && !Object.keys(accountsInfo).length) {
-      return <Redirect to='/accounts/new' />;
+      return <Redirect to="/accounts/new" />;
     }
 
-    // The address is defaultAccount, but if we are coming from the accounts
-    // page, then the address is also put inside the route state, for faster
-    // access.
-    const myAddress = (state && state.address) || defaultAccount;
+    // @todo keeps on being rerendered... even though nothings changes?
 
     return (
       <div>
         <AccountHeader
-          address={myAddress}
+          address={accountAddress}
           copyAddress
           name={
             accountsInfo &&
-            myAddress &&
-            accountsInfo[myAddress] &&
-            accountsInfo[myAddress].name
+            accountsInfo[accountAddress] &&
+            accountsInfo[accountAddress].name
           }
           left={
-            <Link to='/accounts' className='icon -back'>
+            <Link to="/accounts" className="icon -back">
               Back
             </Link>
           }
         />
 
-        <TokensList />
+        <TokensList accountAddress={accountAddress} />
 
-        <nav className='footer-nav'>
-          <div className='footer-nav_status'>
+        <nav className="footer-nav">
+          <div className="footer-nav_status">
             <Health />
           </div>
-          <div className='footer-nav_icons'>
-            <button className='button -tiny' onClick={this.handleGoToWhitelist}>
+          <div className="footer-nav_icons">
+            <button className="button -tiny" onClick={this.handleGoToWhitelist}>
               Add tokens
             </button>
           </div>
