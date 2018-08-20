@@ -35,7 +35,8 @@
   },
   "dependencies": {
     "@parity/api": "^2.1.22",
-    "@parity/light.js": "https://github.com/parity-js/light.js#f2e4648db57a97380ad374d7cd15342f44a5ade1",
+    "@parity/light.js": "^1.0.1",
+    "@parity/light.js-react": "^1.0.0",
     "@parity/shared": "^3.0.2",
     "bignumber.js": "^4.1.0",
     "debounce-promise": "^3.1.0",
@@ -43,7 +44,6 @@
     "fether-ui": "^0.1.0",
     "final-form": "^4.8.3",
     "is-electron": "^2.1.0",
-    "light-hoc": "^0.1.0",
     "lodash": "^4.17.10",
     "mobx": "^5.0.2",
     "mobx-react": "^5.2.3",

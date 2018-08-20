@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import { AccountCard, Header } from 'fether-ui';
 import { accountsInfo$, defaultAccount$ } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
-import light from 'light-hoc';
+import light from '@parity/light.js-react';
 
 import debug from '../../utils/debug';
 import Health from '../../Health';

@@ -6,6 +6,7 @@
 import React from 'react';
 import { Provider } from 'mobx-react';
 import ReactDOM from 'react-dom';
+import 'symbol-observable'; // TODO Remove this once https://github.com/acdlite/recompose/pull/660 is merged
 
 import App from './App';
 import rootStore from './stores';

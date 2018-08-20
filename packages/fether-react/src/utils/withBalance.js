@@ -14,7 +14,7 @@ import {
 } from '@parity/light.js';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { fromWei } from '@parity/api/lib/util/wei';
-import light from 'light-hoc';
+import light from '@parity/light.js-react';
 import withProps from 'recompose/withProps';
 
 export const withErc20Balance = light({
