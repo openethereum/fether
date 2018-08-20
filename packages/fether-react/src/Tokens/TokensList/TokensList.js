@@ -7,7 +7,7 @@ import React, { Component } from "react";
 
 import TokenBalance from "./TokenBalance";
 
-import { consumeTokens, provideTokens } from "../TokensContext.js";
+import { consumeTokens, provideTokens } from "../../contexts/TokensContext.js";
 
 @provideTokens
 @consumeTokens
@@ -17,13 +17,6 @@ class Tokens extends Component {
 
     // Show empty token placeholder if tokens have not been loaded yet
     const shownArray = tokensArray.length ? tokensArray : [{}];
-
-    console.log(
-      "TokensList -- render -- tokensStore",
-      this.props.tokens,
-      this.props.tokensArray,
-      this.props.tokensArrayWithoutEth
-    );
 
     return (
       <div className="window_content">
