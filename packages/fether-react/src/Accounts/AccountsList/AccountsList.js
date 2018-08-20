@@ -48,7 +48,7 @@ class AccountsList extends Component {
     // TODO Not 100% clean, I don't want any api.abc.method() in any React
     // component.
     api.parity
-      .setAuthor(address)
+      .setNewDappsDefaultAddress(address)
       .then(() => {
         history.push('/tokens', { address });
       })
