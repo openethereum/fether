@@ -83,9 +83,7 @@ class Tokens extends PureComponent {
 
     return (
       <Switch>
-        <Route path={`${url}/whitelist`}>
-          <Whitelist />
-        </Route>
+        <Route path={`${url}/whitelist`} component={Whitelist} />
         <Route path={`${url}/send`} component={Send} />
         <Route path={url}>{this.renderTokensList}</Route>
       </Switch>

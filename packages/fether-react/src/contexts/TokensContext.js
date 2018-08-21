@@ -47,7 +47,7 @@ class Init extends Component {
 class WithProvider extends Component {
   tokensStore = null;
 
-  // @todo won't update if props.accountAddress changes
+  // (won't update if props.accountAddress changes)
   constructor (props) {
     super(props);
     const { accountAddress } = props;
@@ -112,6 +112,7 @@ class WithProvider extends Component {
   }
 }
 
+// Decorated class needs to have an accountAddress prop
 export const provideTokens = Component =>
   withProps({ Component })(WithProvider);
 

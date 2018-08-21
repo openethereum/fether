@@ -71,9 +71,8 @@ class App extends Component {
       <div className='window'>
         {status !== STATUS.GOOD && <Overlay />}
         <Switch>
-          {/* The next line is the hoempage */}
+          {/* The next line is the homepage */}
           <Redirect exact from='/' to='/accounts' />{' '}
-          {/* todo redirect to latest account localstorage ? */}
           <Route path='/accounts' component={Accounts} />
           <Route path='/onboarding' component={Onboarding} />
           <Route path='/tokens/:accountAddress' component={Tokens} />
