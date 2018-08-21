@@ -3,17 +3,17 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import React, { Component } from "react";
-import { Field, Form } from "react-final-form";
-import { Form as FetherForm, Header } from "fether-ui";
-import { inject, observer } from "mobx-react";
-import { Link, Redirect } from "react-router-dom";
-import { withProps } from "recompose";
+import React, { Component } from 'react';
+import { Field, Form } from 'react-final-form';
+import { Form as FetherForm, Header } from 'fether-ui';
+import { inject, observer } from 'mobx-react';
+import { Link, Redirect } from 'react-router-dom';
+import { withProps } from 'recompose';
 
-import { consumeTokens } from "../../contexts/TokensContext.js";
-import TokenBalance from "../../Tokens/TokensList/TokenBalance";
+import { consumeTokens } from '../../contexts/TokensContext.js';
+import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 
-@inject("sendStore")
+@inject('sendStore')
 @consumeTokens
 @withProps(({ match: { params: { tokenAddress } }, tokens }) => ({
   token: tokens[tokenAddress]
@@ -33,7 +33,7 @@ class Signer extends Component {
       }));
   };
 
-  render() {
+  render () {
     const {
       history,
       sendStore: { tx },
@@ -41,68 +41,68 @@ class Signer extends Component {
     } = this.props;
 
     if (!tx || !token) {
-      return <Redirect to="/" />;
+      return <Redirect to='/' />;
     }
 
     return (
       <div>
         <Header
           left={
-            <Link to="/tokens" className="icon -close">
+            <Link to='/tokens' className='icon -close'>
               Close
             </Link>
           }
           title={token && <h1>Send {token.name}</h1>}
         />
 
-        <div className="window_content">
-          <div className="box -padded">
+        <div className='window_content'>
+          <div className='box -padded'>
             <TokenBalance
               drawers={[
-                <div key="txForm">
+                <div key='txForm'>
                   <FetherForm.Field
-                    className="form_field_value"
+                    className='form_field_value'
                     disabled
                     defaultValue={`${tx.amount} ${token.symbol}`}
-                    label="Amount"
+                    label='Amount'
                   />
 
                   <FetherForm.Field
-                    as="textarea"
-                    className="form_field_value"
+                    as='textarea'
+                    className='form_field_value'
                     disabled
                     defaultValue={tx.to}
-                    label="To"
+                    label='To'
                   />
                 </div>,
                 <Form
-                  key="signerForm"
+                  key='signerForm'
                   onSubmit={this.handleAccept}
                   render={({ handleSubmit, pristine, submitting }) => (
                     <form onSubmit={handleSubmit}>
-                      <div className="text">
+                      <div className='text'>
                         <p>Enter your password to confirm this transaction.</p>
                       </div>
 
                       <Field
-                        label="Password"
-                        name="password"
+                        label='Password'
+                        name='password'
                         render={FetherForm.Field}
                         required
-                        type="password"
+                        type='password'
                       />
 
-                      <nav className="form-nav -binary">
+                      <nav className='form-nav -binary'>
                         <button
-                          className="button -cancel"
+                          className='button -cancel'
                           onClick={history.goBack}
-                          type="button"
+                          type='button'
                         >
                           Cancel
                         </button>
 
                         <button
-                          className="button -submit"
+                          className='button -submit'
                           disabled={pristine || submitting}
                         >
                           Confirm transaction

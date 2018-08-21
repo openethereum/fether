@@ -3,34 +3,34 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import React, { Component } from "react";
-import { chainName$ } from "@parity/light.js";
-import store from "store";
-import { Provider, subscribe } from "react-contextual";
-import { withProps } from "recompose";
+import React, { Component } from 'react';
+import { chainName$ } from '@parity/light.js';
+import store from 'store';
+import { Provider, subscribe } from 'react-contextual';
+import { withProps } from 'recompose';
 
-import ethereumIcon from "../assets/img/tokens/ethereum.png";
-import LS_PREFIX from "../stores/utils/lsPrefix";
+import ethereumIcon from '../assets/img/tokens/ethereum.png';
+import LS_PREFIX from '../stores/utils/lsPrefix';
 
-import Debug from "../utils/debug";
+import Debug from '../utils/debug';
 
-const debug = Debug("TokensContext");
+const debug = Debug('TokensContext');
 
 const LS_KEY = `${LS_PREFIX}::tokens`;
 
 const DEFAULT_TOKENS = {
   ETH: {
-    address: "ETH",
+    address: 'ETH',
     decimals: 18,
     logo: ethereumIcon,
-    name: "Ether",
-    symbol: "ETH"
+    name: 'Ether',
+    symbol: 'ETH'
   }
 };
 
-@subscribe("tokens")
+@subscribe('tokens')
 class Init extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
 
     chainName$({ withoutLoading: true }).subscribe(chainName => {
@@ -39,7 +39,7 @@ class Init extends Component {
     });
   }
 
-  render() {
+  render () {
     return this.props.children;
   }
 }
@@ -48,7 +48,7 @@ class WithProvider extends Component {
   tokensStore = null;
 
   // @todo won't update if props.accountAddress changes
-  constructor(props) {
+  constructor (props) {
     super(props);
     const { accountAddress } = props;
 
@@ -99,11 +99,11 @@ class WithProvider extends Component {
     };
   }
 
-  render() {
+  render () {
     const { Component, ...propsRest } = this.props;
 
     return (
-      <Provider id="tokens" {...this.tokensStore}>
+      <Provider id='tokens' {...this.tokensStore}>
         <Init>
           <Component {...propsRest} />
         </Init>
@@ -119,10 +119,10 @@ const mapContextToProps = ({ tokens, addToken, removeToken }) => ({
   tokens,
   tokensArray: Object.values(tokens),
   tokensArrayWithoutEth: Object.values(tokens).filter(
-    ({ address }) => address !== "ETH" // Ethereum is the only token without address, has 'ETH' instead
+    ({ address }) => address !== 'ETH' // Ethereum is the only token without address, has 'ETH' instead
   ),
   addToken: addToken,
   removeToken: removeToken
 });
 
-export const consumeTokens = subscribe("tokens", mapContextToProps);
+export const consumeTokens = subscribe('tokens', mapContextToProps);

@@ -3,15 +3,15 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import React, { Component } from "react";
-import { Route, Redirect, Switch } from "react-router-dom";
+import React, { Component } from 'react';
+import { Route, Redirect, Switch } from 'react-router-dom';
 
-import Sent from "./Sent";
-import Signer from "./Signer";
-import TxForm from "./TxForm";
+import Sent from './Sent';
+import Signer from './Signer';
+import TxForm from './TxForm';
 
 class Send extends Component {
-  render() {
+  render () {
     const {
       match: { url }
     } = this.props;
@@ -21,7 +21,7 @@ class Send extends Component {
         <Route exact path={`${url}/:tokenAddress`} component={TxForm} />
         <Route path={`${url}/:tokenAddress/signer`} component={Signer} />
         <Route path={`${url}/:tokenAddress/sent`} component={Sent} />
-        <Redirect to="/" />
+        <Redirect to='/' />
       </Switch>
     );
   }

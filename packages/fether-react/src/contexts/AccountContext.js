@@ -3,14 +3,14 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import React from "react";
-import { Provider, subscribe } from "react-contextual";
+import React from 'react';
+import { Provider, subscribe } from 'react-contextual';
 
-export const consumeAccount = subscribe("account");
+export const consumeAccount = subscribe('account');
 
 export const provideAccount = getAccountAddress => Component => props => {
   return (
-    <Provider id="account" accountAddress={getAccountAddress(props)}>
+    <Provider id='account' accountAddress={getAccountAddress(props)}>
       <Component {...props} />
     </Provider>
   );
