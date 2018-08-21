@@ -7,29 +7,30 @@ import React, { Component } from "react";
 import { chainName$ } from "@parity/light.js";
 import debounce from "lodash/debounce";
 import { Header } from "fether-ui";
-import { inject, observer } from "mobx-react";
+import { consumeTokens } from "../contexts/TokensContext.js";
+import { consumeAccount } from "../contexts/AccountContext.js";
 import light from "light-hoc";
+import { withRouter } from "react-router-dom";
 
 import Health from "../Health";
 import NewTokenItem from "./NewTokenItem";
 
+@consumeAccount
+@consumeTokens
 @light({
   chainName: () => chainName$({ withoutLoading: true })
 })
-@inject("tokensStore")
-@observer
+@withRouter
 class Whitelist extends Component {
   state = {
     db: null,
     dbMap: null,
-    matches: this.props.tokensStore.tokensArrayWithoutEth,
+    matches: this.props.tokensArrayWithoutEth,
     search: ""
   };
 
   calculateMatches = debounce(() => {
-    const {
-      tokensStore: { tokensArrayWithoutEth }
-    } = this.props;
+    const { tokensArrayWithoutEth } = this.props;
     const { db, search } = this.state;
 
     if (search.length <= 1) {

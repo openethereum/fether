@@ -7,34 +7,41 @@ import React, { PureComponent } from "react";
 import { AccountHeader } from "fether-ui";
 import { accountsInfo$ } from "@parity/light.js";
 import light from "light-hoc";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, Route, Switch } from "react-router-dom";
 
 import Health from "../Health";
+import Send from "../Send";
 import TokensList from "./TokensList";
+import Whitelist from "../Whitelist";
 
+import { provideTokens } from "../contexts/TokensContext.js";
+import { provideAccount, consumeAccount } from "../contexts/AccountContext.js";
+
+@provideAccount(
+  ({
+    match: {
+      params: { accountAddress }
+    }
+  }) => accountAddress
+)
+@consumeAccount
+@provideTokens
 @light({
   accountsInfo: accountsInfo$
 })
 class Tokens extends PureComponent {
   handleGoToWhitelist = () => {
-    this.props.history.push("/whitelist");
+    this.props.history.push(`/tokens/${this.props.accountAddress}/whitelist`);
   };
 
-  render() {
-    const {
-      accountsInfo,
-      match: {
-        params: { accountAddress }
-      }
-    } = this.props;
+  renderTokensList = () => {
+    const { accountsInfo, accountAddress } = this.props;
 
     // If the accountsInfo object is empty (i.e. no accounts), then we redirect
     // to the accounts page to create an account
     if (accountsInfo && !Object.keys(accountsInfo).length) {
       return <Redirect to="/accounts/new" />;
     }
-
-    // @todo keeps on being rerendered... even though nothings changes?
 
     return (
       <div>
@@ -53,7 +60,7 @@ class Tokens extends PureComponent {
           }
         />
 
-        <TokensList accountAddress={accountAddress} />
+        <TokensList />
 
         <nav className="footer-nav">
           <div className="footer-nav_status">
@@ -66,6 +73,22 @@ class Tokens extends PureComponent {
           </div>
         </nav>
       </div>
+    );
+  };
+
+  render() {
+    const {
+      match: { url }
+    } = this.props;
+
+    return (
+      <Switch>
+        <Route path={`${url}/whitelist`}>
+          <Whitelist />
+        </Route>
+        <Route path={`${url}/send`} component={Send} />
+        <Route path={url}>{this.renderTokensList}</Route>
+      </Switch>
     );
   }
 }

@@ -34,7 +34,6 @@ class Init extends Component {
     super(props);
 
     chainName$({ withoutLoading: true }).subscribe(chainName => {
-      console.log("observable chainname", chainName);
       props.setChainName(chainName);
       props.fetchTokensFromLS();
     });
@@ -45,7 +44,7 @@ class Init extends Component {
   }
 }
 
-class WrappedWithProvider extends Component {
+class WithProvider extends Component {
   tokensStore = null;
 
   // @todo won't update if props.accountAddress changes
@@ -53,8 +52,8 @@ class WrappedWithProvider extends Component {
     super(props);
     const { accountAddress } = props;
 
-    // Cannot put it in the object or else it's considered an action and must
-    // return the new state
+    // Cannot put the function in the store or else it's considered an action
+    // and must return the new state
     const getLsKey = () =>
       // We have one key per chain per account, in this format:
       // __paritylight::tokens::0x123::kovan
@@ -63,9 +62,9 @@ class WrappedWithProvider extends Component {
       }`;
 
     this.tokensStore = {
-      accountAddress: accountAddress, // invariable
+      accountAddress,
       chainName: null,
-      tokensObject: {},
+      tokens: {},
       setChainName: chainName => ({ chainName }),
       fetchTokensFromLS: () => state => {
         debug(
@@ -78,32 +77,30 @@ class WrappedWithProvider extends Component {
 
         if (tokensFromLS) {
           debug(`Got tokens from localStorage`, tokensFromLS);
-          return { tokensObject: tokensFromLS };
+          return { tokens: tokensFromLS };
         } else {
-          debug(`No tokens in localStorage; setting default.`);
           // If there's nothing in the localStorage, we add by default only
           // Ethereum. We consider Ethereum as a token, with address 'ETH'
+          debug(`No tokens in localStorage; setting default.`);
           store.set(lsKey, DEFAULT_TOKENS);
-          return { tokensObject: DEFAULT_TOKENS };
+          return { tokens: DEFAULT_TOKENS };
         }
       },
       addToken: (address, token) => state => {
         const newTokens = { ...state.tokens, [address]: token };
         store.set(getLsKey(), newTokens);
-        return { tokensObject: newTokens };
+        return { tokens: newTokens };
       },
       removeToken: address => state => {
-        const newTokens = state.tokens.filter(
-          tokenAddress => tokenAddress !== address
-        );
+        const { [address]: _, ...newTokens } = state.tokens;
         store.set(getLsKey(), newTokens);
-        return { tokensObject: newTokens };
+        return { tokens: newTokens };
       }
     };
   }
 
   render() {
-    const { accountAddress, Component, ...propsRest } = this.props;
+    const { Component, ...propsRest } = this.props;
 
     return (
       <Provider id="tokens" {...this.tokensStore}>
@@ -116,14 +113,16 @@ class WrappedWithProvider extends Component {
 }
 
 export const provideTokens = Component =>
-  withProps({ Component })(WrappedWithProvider);
+  withProps({ Component })(WithProvider);
 
-const mapContextToProps = context => ({
-  tokens: context.tokensObject,
-  tokensArray: Object.values(context.tokensObject),
-  tokensArrayWithoutEth: Object.values(context.tokensObject).filter(
+const mapContextToProps = ({ tokens, addToken, removeToken }) => ({
+  tokens,
+  tokensArray: Object.values(tokens),
+  tokensArrayWithoutEth: Object.values(tokens).filter(
     ({ address }) => address !== "ETH" // Ethereum is the only token without address, has 'ETH' instead
-  )
+  ),
+  addToken: addToken,
+  removeToken: removeToken
 });
 
 export const consumeTokens = subscribe("tokens", mapContextToProps);

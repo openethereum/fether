@@ -7,13 +7,12 @@ import React, { Component } from "react";
 
 import TokenBalance from "./TokenBalance";
 
-import { consumeTokens, provideTokens } from "../../contexts/TokensContext.js";
+import { consumeTokens } from "../../contexts/TokensContext.js";
 
-@provideTokens
 @consumeTokens
-class Tokens extends Component {
+class TokensList extends Component {
   render() {
-    const { tokensArray, address } = this.props;
+    const { tokensArray } = this.props;
 
     // Show empty token placeholder if tokens have not been loaded yet
     const shownArray = tokensArray.length ? tokensArray : [{}];
@@ -37,4 +36,4 @@ class Tokens extends Component {
   }
 }
 
-export default Tokens;
+export default TokensList;

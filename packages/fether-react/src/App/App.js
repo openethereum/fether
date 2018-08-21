@@ -18,10 +18,8 @@ import ReactResizeDetector from "react-resize-detector";
 import Accounts from "../Accounts";
 import Onboarding from "../Onboarding";
 import Overlay from "../Overlay";
-import Send from "../Send";
 import { STATUS } from "../stores/healthStore";
 import Tokens from "../Tokens";
-import Whitelist from "../Whitelist";
 
 // Use MemoryRouter for production viewing in file:// protocol
 // https://github.com/facebook/create-react-app/issues/3591
@@ -78,8 +76,6 @@ class App extends Component {
           {/* todo redirect to latest account localstorage ? */}
           <Route path="/accounts" component={Accounts} />
           <Route path="/onboarding" component={Onboarding} />
-          <Route path="/send" component={Send} />
-          <Route path="/whitelist" component={Whitelist} />
           <Route path="/tokens/:accountAddress" component={Tokens} />
           <Redirect from="*" to="/" />
         </Switch>
