@@ -43,6 +43,17 @@ export const TokenCard = ({
       </div>
       {children}
     </div>
+    <div className='token_usd'>
+      <div className='token_balance_usd'>
+        {balance ? (
+          <span>{balance.toFixed(decimals)} </span>
+        ) : showBalance ? (
+          <Placeholder height={15} width={50} />
+        ) : null}
+        <span className='token_symbol_usd'>{'USD'}</span>
+      </div>
+      {children}
+    </div>
   </Card>
 );
 
