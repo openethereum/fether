@@ -6,7 +6,7 @@
 import React, { Component } from 'react';
 import { chainName$ } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
-import light from 'light-hoc';
+import light from '@parity/light.js-react';
 
 import check from '../../assets/img/icons/check.svg';
 import loading from '../../assets/img/icons/loading.svg';

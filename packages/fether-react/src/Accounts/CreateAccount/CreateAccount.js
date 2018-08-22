@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import { accountsInfo$ } from '@parity/light.js';
 import { Header } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
-import light from 'light-hoc';
+import light from '@parity/light.js-react';
 import { Link, Route } from 'react-router-dom';
 
 import AccountCopyPhrase from './AccountCopyPhrase';

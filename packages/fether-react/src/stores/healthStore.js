@@ -7,7 +7,7 @@ import { action, computed, observable } from 'mobx';
 import BigNumber from 'bignumber.js';
 import isElectron from 'is-electron';
 
-import { peerCount$, syncing$ } from '@parity/light.js';
+import { peerCount$, syncStatus$ } from '@parity/light.js';
 
 import Debug from '../utils/debug';
 import parityStore from './parityStore';
@@ -34,7 +34,7 @@ export class HealthStore {
   @observable
   peerCount;
   @observable
-  syncing;
+  syncStatus;
   @observable
   clockSync;
 
@@ -44,7 +44,7 @@ export class HealthStore {
     window.addEventListener('offline', () => this.setHasInternet(false));
 
     peerCount$({ withoutLoading: true }).subscribe(this.setPeerCount);
-    syncing$().subscribe(this.setSyncing);
+    syncStatus$().subscribe(this.setSyncStatus);
 
     if (!electron) {
       debug('Not in Electron, ignoring clock sync verification.');
@@ -95,8 +95,8 @@ export class HealthStore {
     // At this point we have a successful connection to parity
 
     // Check if we're syncing
-    if (this.syncing) {
-      const { currentBlock, highestBlock, startingBlock } = this.syncing;
+    if (this.syncStatus) {
+      const { currentBlock, highestBlock, startingBlock } = this.syncStatus;
       const percentage = currentBlock
         .minus(startingBlock)
         .mul(100)
@@ -136,8 +136,8 @@ export class HealthStore {
   };
 
   @action
-  setSyncing = syncing => {
-    this.syncing = syncing;
+  setSyncStatus = syncStatus => {
+    this.syncStatus = syncStatus;
   };
 
   @action

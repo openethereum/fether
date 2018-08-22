@@ -9,7 +9,7 @@ import debounce from 'lodash/debounce';
 import { Header } from 'fether-ui';
 import { consumeTokens } from '../contexts/TokensContext.js';
 import { consumeAccount } from '../contexts/AccountContext.js';
-import light from 'light-hoc';
+import light from '@parity/light.js-react';
 import { withRouter } from 'react-router-dom';
 
 import Health from '../Health';

@@ -51,7 +51,6 @@
     "prestart": "yarn build-parity-electron",
     "start": "npm-run-all -l -p start-*",
     "start-electron": "cd packages/fether-electron && yarn start",
-    "start-hoc": "cd packages/light-hoc && yarn start",
     "start-react": "cd packages/fether-react && yarn start",
     "start-ui": "cd packages/fether-ui && yarn start",
     "test": "semistandard '**/*.{js,ts}' --parser babel-eslint && CI=true lerna run test --parallel"
