@@ -12,10 +12,10 @@ import { withRouter } from 'react-router-dom';
 import withBalance from '../../../utils/withBalance';
 import { consumeAccount } from '../../../contexts/AccountContext.js';
 
+@withRouter
 @consumeAccount
 @withBalance
 @inject('sendStore')
-@withRouter
 class TokenBalance extends Component {
   static propTypes = {
     token: PropTypes.object

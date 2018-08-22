@@ -15,12 +15,12 @@ import { withRouter } from 'react-router-dom';
 import Health from '../Health';
 import NewTokenItem from './NewTokenItem';
 
+@withRouter
 @consumeAccount
 @consumeTokens
 @light({
   chainName: () => chainName$({ withoutLoading: true })
 })
-@withRouter
 class Whitelist extends Component {
   state = {
     db: null,

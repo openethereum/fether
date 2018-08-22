@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import { Field, Form } from 'react-final-form';
 import { Form as FetherForm, Header } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import { withProps } from 'recompose';
 
 import { consumeAccount } from '../../contexts/AccountContext.js';
@@ -15,6 +15,7 @@ import { consumeTokens } from '../../contexts/TokensContext.js';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 
 @inject('sendStore')
+@withRouter
 @consumeAccount
 @consumeTokens
 @withProps(({ match: { params: { tokenAddress } }, tokens }) => ({

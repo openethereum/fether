@@ -3,29 +3,9 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import React from "react";
+import { withProps } from 'recompose';
 
-// Shape of the default value needs to match the shape that the consumers expect
-export const AccountContext = React.createContext({
-  accountAddress: null
-});
-
-export const consumeAccount = Component => props => (
-  <AccountContext.Consumer>
-    {contextValues => {
-      console.log("consumer function, contextvalues:", contextValues);
-      return <Component {...contextValues} />;
-    }}
-  </AccountContext.Consumer>
-);
-
-export const provideAccount = getAccountAddress => Component => props => {
-  console.log("provider get account address returns", getAccountAddress(props));
-  return (
-    <AccountContext.Provider
-      value={{ accountAddress: getAccountAddress(props) }}
-    >
-      <Component {...props} />
-    </AccountContext.Provider>
-  );
-};
+// react-router doesn't pass match params to child components
+export const consumeAccount = withProps(({ match: { url } }) => ({
+  accountAddress: /^\/?tokens\/([^/]+)/.exec(url)[1]
+}));
