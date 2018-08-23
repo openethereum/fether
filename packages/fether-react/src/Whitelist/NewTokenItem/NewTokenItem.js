@@ -4,31 +4,28 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react';
 import { TokenCard } from 'fether-ui';
 import { withRouter } from 'react-router-dom';
 
+import { consumeTokens } from '../../contexts/TokensContext.js';
+
 @withRouter
-@inject('tokensStore')
-@observer
+@consumeTokens
 class NewTokenItem extends Component {
   handleAddToken = () => {
-    const { history, token, tokensStore } = this.props;
-    tokensStore.addToken(token.address, token);
+    const { history, token, addToken } = this.props;
+    addToken(token.address, token);
     history.goBack();
   };
 
   handleRemoveToken = () => {
-    const { history, token, tokensStore } = this.props;
-    tokensStore.removeToken(token.address);
+    const { history, token, removeToken } = this.props;
+    removeToken(token.address);
     history.goBack();
   };
 
   render () {
-    const {
-      token,
-      tokensStore: { tokens }
-    } = this.props;
+    const { token, tokens } = this.props;
 
     return (
       <li key={token.address}>

@@ -8,13 +8,11 @@ import healthStore from './healthStore';
 import onboardingStore from './onboardingStore';
 import parityStore from './parityStore';
 import sendStore from './sendStore';
-import tokensStore from './tokensStore';
 
 export default {
   createAccountStore,
   healthStore,
   onboardingStore,
   parityStore,
-  sendStore,
-  tokensStore
+  sendStore
 };

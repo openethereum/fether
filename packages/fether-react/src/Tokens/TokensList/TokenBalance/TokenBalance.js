@@ -9,23 +9,25 @@ import PropTypes from 'prop-types';
 import { TokenCard } from 'fether-ui';
 import { withRouter } from 'react-router-dom';
 
+import withAccount from '../../../utils/withAccount.js';
 import withBalance from '../../../utils/withBalance';
 
+@withRouter
+@withAccount
 @withBalance
 @inject('sendStore')
-@withRouter
 class TokenBalance extends Component {
   static propTypes = {
     token: PropTypes.object
   };
 
   handleClick = () => {
-    const { history, sendStore, token } = this.props;
+    const { accountAddress, history, sendStore, token } = this.props;
     if (!token.address) {
       return;
     }
     sendStore.clear();
-    history.push(`/send/${token.address}`);
+    history.push(`/send/${token.address}/from/${accountAddress}`);
   };
 
   render () {

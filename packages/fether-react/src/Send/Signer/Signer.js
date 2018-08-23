@@ -10,20 +10,26 @@ import { inject, observer } from 'mobx-react';
 import { Link, Redirect } from 'react-router-dom';
 import { withProps } from 'recompose';
 
+import { consumeTokens } from '../../contexts/TokensContext.js';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
+import withAccount from '../../utils/withAccount.js';
 
-@inject('sendStore', 'tokensStore')
-@withProps(({ match: { params: { tokenAddress } }, tokensStore }) => ({
-  token: tokensStore.tokens[tokenAddress]
+@inject('sendStore')
+@withAccount
+@consumeTokens
+@withProps(({ match: { params: { tokenAddress } }, tokens }) => ({
+  token: tokens[tokenAddress]
 }))
 @observer
 class Signer extends Component {
   handleAccept = values => {
-    const { history, sendStore, token } = this.props;
+    const { accountAddress, history, sendStore, token } = this.props;
 
     return sendStore
       .send(token, values.password)
-      .then(() => history.push(`/send/${token.address}/sent`))
+      .then(() =>
+        history.push(`/send/${token.address}/from/${accountAddress}/sent`)
+      )
       .catch(error => ({
         password: error.text
       }));
@@ -31,6 +37,7 @@ class Signer extends Component {
 
   render () {
     const {
+      accountAddress,
       history,
       sendStore: { tx },
       token
@@ -44,7 +51,7 @@ class Signer extends Component {
       <div>
         <Header
           left={
-            <Link to='/tokens' className='icon -close'>
+            <Link to={`/tokens/${accountAddress}`} className='icon -close'>
               Close
             </Link>
           }

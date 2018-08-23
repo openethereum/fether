@@ -4,17 +4,14 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react';
 
+import { consumeTokens } from '../../contexts/TokensContext.js';
 import TokenBalance from './TokenBalance';
 
-@inject('tokensStore')
-@observer
-class Tokens extends Component {
+@consumeTokens
+class TokensList extends Component {
   render () {
-    const {
-      tokensStore: { tokensArray }
-    } = this.props;
+    const { tokensArray } = this.props;
 
     // Show empty token placeholder if tokens have not been loaded yet
     const shownArray = tokensArray.length ? tokensArray : [{}];
@@ -38,4 +35,4 @@ class Tokens extends Component {
   }
 }
 
-export default Tokens;
+export default TokensList;

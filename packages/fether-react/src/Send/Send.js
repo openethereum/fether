@@ -4,19 +4,26 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
+import { provideTokens } from '../contexts/TokensContext.js';
 import { Route, Redirect, Switch } from 'react-router-dom';
+import withAccount from '../utils/withAccount.js';
 
 import Sent from './Sent';
 import Signer from './Signer';
 import TxForm from './TxForm';
 
+@withAccount
+@provideTokens
 class Send extends Component {
   render () {
+    const {
+      match: { path }
+    } = this.props;
     return (
       <Switch>
-        <Route exact path='/send/:tokenAddress' component={TxForm} />
-        <Route path='/send/:tokenAddress/signer' component={Signer} />
-        <Route path='/send/:tokenAddress/sent' component={Sent} />
+        <Route exact path={`${path}`} component={TxForm} />
+        <Route path={`${path}/signer`} component={Signer} />
+        <Route path={`${path}/sent`} component={Sent} />
         <Redirect to='/' />
       </Switch>
     );

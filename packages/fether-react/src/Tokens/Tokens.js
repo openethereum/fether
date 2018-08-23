@@ -5,28 +5,28 @@
 
 import React, { PureComponent } from 'react';
 import { AccountHeader } from 'fether-ui';
-import { accountsInfo$, defaultAccount$ } from '@parity/light.js';
+import { accountsInfo$ } from '@parity/light.js';
 import light from '@parity/light.js-react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 
 import Health from '../Health';
+import { provideTokens } from '../contexts/TokensContext.js';
 import TokensList from './TokensList';
+import withAccount from '../utils/withAccount.js';
 
+@withRouter
+@withAccount
+@provideTokens
 @light({
-  accountsInfo: accountsInfo$,
-  defaultAccount: defaultAccount$
+  accountsInfo: accountsInfo$
 })
 class Tokens extends PureComponent {
   handleGoToWhitelist = () => {
-    this.props.history.push('/whitelist');
+    this.props.history.push(`/whitelist/${this.props.accountAddress}`);
   };
 
   render () {
-    const {
-      accountsInfo,
-      defaultAccount,
-      location: { state }
-    } = this.props;
+    const { accountsInfo, accountAddress } = this.props;
 
     // If the accountsInfo object is empty (i.e. no accounts), then we redirect
     // to the accounts page to create an account
@@ -34,21 +34,15 @@ class Tokens extends PureComponent {
       return <Redirect to='/accounts/new' />;
     }
 
-    // The address is defaultAccount, but if we are coming from the accounts
-    // page, then the address is also put inside the route state, for faster
-    // access.
-    const myAddress = (state && state.address) || defaultAccount;
-
     return (
       <div>
         <AccountHeader
-          address={myAddress}
+          address={accountAddress}
           copyAddress
           name={
             accountsInfo &&
-            myAddress &&
-            accountsInfo[myAddress] &&
-            accountsInfo[myAddress].name
+            accountsInfo[accountAddress] &&
+            accountsInfo[accountAddress].name
           }
           left={
             <Link to='/accounts' className='icon -back'>

@@ -5,18 +5,16 @@
 
 import React, { Component } from 'react';
 import { AccountCard, Header } from 'fether-ui';
-import { accountsInfo$, defaultAccount$ } from '@parity/light.js';
+import { accountsInfo$ } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
 import light from '@parity/light.js-react';
 
-import debug from '../../utils/debug';
 import Health from '../../Health';
 
 @light({
-  accountsInfo: accountsInfo$,
-  defaultAccount: defaultAccount$
+  accountsInfo: accountsInfo$
 })
-@inject('createAccountStore', 'parityStore', 'tokensStore')
+@inject('createAccountStore', 'parityStore')
 @observer
 class AccountsList extends Component {
   handleClick = ({
@@ -24,37 +22,9 @@ class AccountsList extends Component {
       dataset: { address }
     }
   }) => {
-    const {
-      defaultAccount,
-      history,
-      parityStore: { api },
-      tokensStore
-    } = this.props;
+    const { history } = this.props;
 
-    // If we selected the same account, just go back to the tokens page
-    if (address === defaultAccount) {
-      history.push('/tokens');
-      return;
-    }
-
-    // We set the tokens in tokensStore to {}, to have a smooth transition (so
-    // that we don't see the tokens of the previous account for 1s).
-    tokensStore.fetchTokensFromDb();
-    // TODO Ideally we would set the defaultAccount temporarily to null. Change
-    // light.js to support this.
-    // defaultAccount$().next();
-
-    // Set default account to the clicked one, and go to Tokens on complete
-    // TODO Not 100% clean, I don't want any api.abc.method() in any React
-    // component.
-    api.parity
-      .setNewDappsDefaultAddress(address)
-      .then(() => {
-        history.push('/tokens', { address });
-      })
-      .catch(err =>
-        debug('AccountsList')(`Error while selecting account, ${err.message}.`)
-      );
+    history.push(`/tokens/${address}`);
   };
 
   handleCreateAccount = () => {

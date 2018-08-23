@@ -5,37 +5,42 @@
 
 import React, { Component } from 'react';
 import debounce from 'debounce-promise';
-import { estimateGas } from '../../utils/estimateGas';
 import { Field, Form } from 'react-final-form';
 import { Form as FetherForm, Header } from 'fether-ui';
-import { toWei } from '@parity/api/lib/util/wei';
 import { inject, observer } from 'mobx-react';
 import { isAddress } from '@parity/api/lib/util/address';
 import { Link } from 'react-router-dom';
+import { toWei } from '@parity/api/lib/util/wei';
 import { withProps } from 'recompose';
 
+import { consumeTokens } from '../../contexts/TokensContext.js';
+import { estimateGas } from '../../utils/estimateGas';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
+import withAccount from '../../utils/withAccount.js';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
 
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 
-@inject('parityStore', 'sendStore', 'tokensStore')
-@withProps(({ match: { params: { tokenAddress } }, tokensStore }) => ({
-  token: tokensStore.tokens[tokenAddress]
+@inject('parityStore', 'sendStore')
+@consumeTokens
+@withProps(({ match: { params: { tokenAddress } }, tokens }) => ({
+  token: tokens[tokenAddress]
 }))
+@withAccount
 @withBalance // Balance of current token (can be ETH)
 @withEthBalance // ETH balance
 @observer
 class Send extends Component {
   handleSubmit = values => {
-    const { history, sendStore, token } = this.props;
+    const { accountAddress, history, sendStore, token } = this.props;
     sendStore.setTx(values);
-    history.push(`/send/${token.address}/signer`);
+    history.push(`/send/${token.address}/from/${accountAddress}/signer`);
   };
 
   render () {
     const {
+      accountAddress,
       sendStore: { tx },
       token
     } = this.props;
@@ -44,7 +49,7 @@ class Send extends Component {
       <div>
         <Header
           left={
-            <Link to='/tokens' className='icon -close'>
+            <Link to={`/tokens/${accountAddress}`} className='icon -close'>
               Close
             </Link>
           }

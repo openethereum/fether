@@ -73,13 +73,16 @@ class App extends Component {
       <div className='window'>
         {status !== STATUS.GOOD && <Overlay />}
         <Switch>
-          {/* The next line is the hoempage */}
-          <Redirect exact from='/' to='/tokens' />
+          {/* The next line is the homepage */}
+          <Redirect exact from='/' to='/accounts' />
           <Route path='/accounts' component={Accounts} />
           <Route path='/onboarding' component={Onboarding} />
-          <Route path='/send' component={Send} />
-          <Route path='/whitelist' component={Whitelist} />
-          <Route path='/tokens' component={Tokens} />
+          <Route path='/tokens/:accountAddress' component={Tokens} />
+          <Route path='/whitelist/:accountAddress' component={Whitelist} />
+          <Route
+            path='/send/:tokenAddress/from/:accountAddress'
+            component={Send}
+          />
           <Redirect from='*' to='/' />
         </Switch>
       </div>
