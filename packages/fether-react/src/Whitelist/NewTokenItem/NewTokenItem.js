@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import { TokenCard } from 'fether-ui';
 import { withRouter } from 'react-router-dom';
 
-import { withTokens } from '../../utils/withTokens';
+import withTokens from '../../utils/withTokens';
 
 @withRouter
 @withTokens
