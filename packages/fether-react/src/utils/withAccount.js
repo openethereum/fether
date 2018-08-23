@@ -6,10 +6,9 @@
 import { compose, withProps } from 'recompose';
 import { withRouter } from 'react-router-dom';
 
-// react-router doesn't pass match params to child components
-export const consumeAccount = compose(
+export default compose(
   withRouter,
-  withProps(({ match: { url } }) => ({
-    accountAddress: /^\/?tokens\/([^/]+)/.exec(url)[1]
+  withProps(({ match: { params: { accountAddress } } }) => ({
+    accountAddress
   }))
 );

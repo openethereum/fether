@@ -7,28 +7,26 @@ import React, { PureComponent } from 'react';
 import { AccountHeader } from 'fether-ui';
 import { accountsInfo$ } from '@parity/light.js';
 import light from '@parity/light.js-react';
-import { Link, Redirect, Route, Switch, withRouter } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 
 import Health from '../Health';
-import Send from '../Send';
 import TokensList from './TokensList';
-import Whitelist from '../Whitelist';
 
 import { provideTokens } from '../contexts/TokensContext.js';
-import { consumeAccount } from '../contexts/AccountContext.js';
+import withAccount from '../utils/withAccount.js';
 
 @withRouter
-@consumeAccount
+@withAccount
 @provideTokens
 @light({
   accountsInfo: accountsInfo$
 })
 class Tokens extends PureComponent {
   handleGoToWhitelist = () => {
-    this.props.history.push(`/tokens/${this.props.accountAddress}/whitelist`);
+    this.props.history.push(`/whitelist/${this.props.accountAddress}`);
   };
 
-  renderTokensList = () => {
+  render () {
     const { accountsInfo, accountAddress } = this.props;
 
     // If the accountsInfo object is empty (i.e. no accounts), then we redirect
@@ -67,20 +65,6 @@ class Tokens extends PureComponent {
           </div>
         </nav>
       </div>
-    );
-  };
-
-  render () {
-    const {
-      match: { url }
-    } = this.props;
-
-    return (
-      <Switch>
-        <Route path={`${url}/whitelist`} component={Whitelist} />
-        <Route path={`${url}/send`} component={Send} />
-        <Route path={url}>{this.renderTokensList}</Route>
-      </Switch>
     );
   }
 }

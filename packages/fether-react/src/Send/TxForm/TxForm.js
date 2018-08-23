@@ -15,7 +15,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { withProps } from 'recompose';
 
 import { consumeTokens } from '../../contexts/TokensContext.js';
-import { consumeAccount } from '../../contexts/AccountContext.js';
+import withAccount from '../../utils/withAccount.js';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
 
@@ -28,7 +28,7 @@ const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
   token: tokens[tokenAddress]
 }))
 @withRouter
-@consumeAccount
+@withAccount
 @withBalance // Balance of current token (can be ETH)
 @withEthBalance // ETH balance
 @observer
@@ -36,11 +36,12 @@ class Send extends Component {
   handleSubmit = values => {
     const { accountAddress, history, sendStore, token } = this.props;
     sendStore.setTx(values);
-    history.push(`/tokens/${accountAddress}/send/${token.address}/signer`);
+    history.push(`/send/${token.address}/from/${accountAddress}/signer`);
   };
 
   render () {
     const {
+      accountAddress,
       sendStore: { tx },
       token
     } = this.props;
@@ -49,7 +50,7 @@ class Send extends Component {
       <div>
         <Header
           left={
-            <Link to='/tokens' className='icon -close'>
+            <Link to={`/tokens/${accountAddress}`} className='icon -close'>
               Close
             </Link>
           }

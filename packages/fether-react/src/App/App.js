@@ -19,7 +19,9 @@ import Accounts from '../Accounts';
 import Onboarding from '../Onboarding';
 import Overlay from '../Overlay';
 import { STATUS } from '../stores/healthStore';
+import Send from '../Send';
 import Tokens from '../Tokens';
+import Whitelist from '../Whitelist';
 
 // Use MemoryRouter for production viewing in file:// protocol
 // https://github.com/facebook/create-react-app/issues/3591
@@ -76,6 +78,11 @@ class App extends Component {
           <Route path='/accounts' component={Accounts} />
           <Route path='/onboarding' component={Onboarding} />
           <Route path='/tokens/:accountAddress' component={Tokens} />
+          <Route path='/whitelist/:accountAddress' component={Whitelist} />
+          <Route
+            path='/send/:tokenAddress/from/:accountAddress'
+            component={Send}
+          />
           <Redirect from='*' to='/' />
         </Switch>
       </div>

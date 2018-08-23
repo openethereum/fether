@@ -80,8 +80,7 @@ class WithTokens extends Component {
 
   componentDidMount = () => {
     chainName$({ withoutLoading: true }).subscribe(chainName => {
-      this.setState({ chainName });
-      this.state.fetchTokensFromLS();
+      this.setState({ chainName }, this.state.fetchTokensFromLS);
     });
   };
 

@@ -10,13 +10,13 @@ import { inject, observer } from 'mobx-react';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import { withProps } from 'recompose';
 
-import { consumeAccount } from '../../contexts/AccountContext.js';
+import withAccount from '../../utils/withAccount.js';
 import { consumeTokens } from '../../contexts/TokensContext.js';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 
 @inject('sendStore')
 @withRouter
-@consumeAccount
+@withAccount
 @consumeTokens
 @withProps(({ match: { params: { tokenAddress } }, tokens }) => ({
   token: tokens[tokenAddress]
@@ -29,7 +29,7 @@ class Signer extends Component {
     return sendStore
       .send(token, values.password)
       .then(() =>
-        history.push(`/tokens/${accountAddress}/send/${token.address}/sent`)
+        history.push(`/send/${token.address}/from/${accountAddress}/sent`)
       )
       .catch(error => ({
         password: error.text
@@ -38,6 +38,7 @@ class Signer extends Component {
 
   render () {
     const {
+      accountAddress,
       history,
       sendStore: { tx },
       token
@@ -51,7 +52,7 @@ class Signer extends Component {
       <div>
         <Header
           left={
-            <Link to='/tokens' className='icon -close'>
+            <Link to={`/tokens/${accountAddress}`} className='icon -close'>
               Close
             </Link>
           }

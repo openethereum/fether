@@ -7,8 +7,8 @@ import React, { Component } from 'react';
 import { chainName$ } from '@parity/light.js';
 import debounce from 'lodash/debounce';
 import { Header } from 'fether-ui';
-import { consumeTokens } from '../contexts/TokensContext.js';
-import { consumeAccount } from '../contexts/AccountContext.js';
+import { consumeTokens, provideTokens } from '../contexts/TokensContext.js';
+import withAccount from '../utils/withAccount.js';
 import light from '@parity/light.js-react';
 import { withRouter } from 'react-router-dom';
 
@@ -16,7 +16,8 @@ import Health from '../Health';
 import NewTokenItem from './NewTokenItem';
 
 @withRouter
-@consumeAccount
+@withAccount
+@provideTokens
 @consumeTokens
 @light({
   chainName: () => chainName$({ withoutLoading: true })
@@ -25,16 +26,15 @@ class Whitelist extends Component {
   state = {
     db: null,
     dbMap: null,
-    matches: this.props.tokensArrayWithoutEth,
+    matches: [],
     search: ''
   };
 
   calculateMatches = debounce(() => {
-    const { tokensArrayWithoutEth } = this.props;
     const { db, search } = this.state;
 
     if (search.length <= 1) {
-      this.setState({ matches: tokensArrayWithoutEth });
+      this.setState({ matches: [] });
       return;
     }
 
@@ -99,6 +99,8 @@ class Whitelist extends Component {
     const { history } = this.props;
     const { matches, search } = this.state;
 
+    const displayedTokens = search ? matches : this.props.tokensArrayWithoutEth;
+
     return (
       <div>
         <Header
@@ -130,7 +132,7 @@ class Whitelist extends Component {
           </div>
           <div className='box -scroller'>
             <ul className='list -tokens'>
-              {matches.map(token => (
+              {displayedTokens.map(token => (
                 <NewTokenItem key={token.address} token={token} />
               ))}
             </ul>

@@ -10,10 +10,10 @@ import { TokenCard } from 'fether-ui';
 import { withRouter } from 'react-router-dom';
 
 import withBalance from '../../../utils/withBalance';
-import { consumeAccount } from '../../../contexts/AccountContext.js';
+import withAccount from '../../../utils/withAccount.js';
 
 @withRouter
-@consumeAccount
+@withAccount
 @withBalance
 @inject('sendStore')
 class TokenBalance extends Component {
@@ -27,7 +27,7 @@ class TokenBalance extends Component {
       return;
     }
     sendStore.clear();
-    history.push(`/tokens/${accountAddress}/send/${token.address}`);
+    history.push(`/send/${token.address}/from/${accountAddress}`);
   };
 
   render () {
