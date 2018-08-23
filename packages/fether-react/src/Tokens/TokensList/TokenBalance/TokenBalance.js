@@ -9,8 +9,8 @@ import PropTypes from 'prop-types';
 import { TokenCard } from 'fether-ui';
 import { withRouter } from 'react-router-dom';
 
-import withBalance from '../../../utils/withBalance';
 import withAccount from '../../../utils/withAccount.js';
+import withBalance from '../../../utils/withBalance';
 
 @withRouter
 @withAccount

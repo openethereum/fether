@@ -5,18 +5,18 @@
 
 import React, { Component } from 'react';
 import debounce from 'debounce-promise';
-import { estimateGas } from '../../utils/estimateGas';
 import { Field, Form } from 'react-final-form';
 import { Form as FetherForm, Header } from 'fether-ui';
-import { toWei } from '@parity/api/lib/util/wei';
 import { inject, observer } from 'mobx-react';
 import { isAddress } from '@parity/api/lib/util/address';
 import { Link } from 'react-router-dom';
+import { toWei } from '@parity/api/lib/util/wei';
 import { withProps } from 'recompose';
 
 import { consumeTokens } from '../../contexts/TokensContext.js';
-import withAccount from '../../utils/withAccount.js';
+import { estimateGas } from '../../utils/estimateGas';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
+import withAccount from '../../utils/withAccount.js';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
 
 const MAX_GAS_PRICE = 40; // In Gwei

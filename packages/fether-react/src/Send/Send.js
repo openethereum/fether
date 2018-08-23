@@ -4,8 +4,8 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { Route, Redirect, Switch } from 'react-router-dom';
 import { provideTokens } from '../contexts/TokensContext.js';
+import { Route, Redirect, Switch } from 'react-router-dom';
 import withAccount from '../utils/withAccount.js';
 
 import Sent from './Sent';

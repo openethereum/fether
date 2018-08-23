@@ -18,8 +18,8 @@ import ReactResizeDetector from 'react-resize-detector';
 import Accounts from '../Accounts';
 import Onboarding from '../Onboarding';
 import Overlay from '../Overlay';
-import { STATUS } from '../stores/healthStore';
 import Send from '../Send';
+import { STATUS } from '../stores/healthStore';
 import Tokens from '../Tokens';
 import Whitelist from '../Whitelist';
 

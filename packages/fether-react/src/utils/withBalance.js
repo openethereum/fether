@@ -4,12 +4,12 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import abi from '@parity/shared/lib/contracts/abi/eip20';
+import { balanceOf$, isNullOrLoading, makeContract } from '@parity/light.js';
 import branch from 'recompose/branch';
 import compose from 'recompose/compose';
-import { balanceOf$, isNullOrLoading, makeContract } from '@parity/light.js';
-import { map } from 'rxjs/operators';
 import { fromWei } from '@parity/api/lib/util/wei';
 import light from '@parity/light.js-react';
+import { map } from 'rxjs/operators';
 import withProps from 'recompose/withProps';
 
 export const withErc20Balance = light({

@@ -5,14 +5,14 @@
 
 import React, { Component } from 'react';
 import { chainName$ } from '@parity/light.js';
+import { consumeTokens, provideTokens } from '../contexts/TokensContext.js';
 import debounce from 'lodash/debounce';
 import { Header } from 'fether-ui';
-import { consumeTokens, provideTokens } from '../contexts/TokensContext.js';
-import withAccount from '../utils/withAccount.js';
 import light from '@parity/light.js-react';
 
 import Health from '../Health';
 import NewTokenItem from './NewTokenItem';
+import withAccount from '../utils/withAccount.js';
 
 @withAccount
 @provideTokens

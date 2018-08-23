@@ -8,10 +8,9 @@ import { chainName$ } from '@parity/light.js';
 import store from 'store';
 import { withProps } from 'recompose';
 
+import Debug from '../utils/debug';
 import ethereumIcon from '../assets/img/tokens/ethereum.png';
 import LS_PREFIX from '../stores/utils/lsPrefix';
-
-import Debug from '../utils/debug';
 
 const debug = Debug('TokensContext');
 

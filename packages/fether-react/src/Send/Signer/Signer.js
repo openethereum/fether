@@ -10,9 +10,9 @@ import { inject, observer } from 'mobx-react';
 import { Link, Redirect } from 'react-router-dom';
 import { withProps } from 'recompose';
 
-import withAccount from '../../utils/withAccount.js';
 import { consumeTokens } from '../../contexts/TokensContext.js';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
+import withAccount from '../../utils/withAccount.js';
 
 @inject('sendStore')
 @withAccount
