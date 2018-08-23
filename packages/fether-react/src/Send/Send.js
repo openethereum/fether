@@ -16,21 +16,14 @@ import TxForm from './TxForm';
 @provideTokens
 class Send extends Component {
   render () {
+    const {
+      match: { path }
+    } = this.props;
     return (
       <Switch>
-        <Route
-          exact
-          path={`/send/:tokenAddress/from/:accountAddress`}
-          component={TxForm}
-        />
-        <Route
-          path={`/send/:tokenAddress/from/:accountAddress/signer`}
-          component={Signer}
-        />
-        <Route
-          path={`/send/:tokenAddress/from/:accountAddress/sent`}
-          component={Sent}
-        />
+        <Route exact path={`${path}`} component={TxForm} />
+        <Route path={`${path}/signer`} component={Signer} />
+        <Route path={`${path}/sent`} component={Sent} />
         <Redirect to='/' />
       </Switch>
     );

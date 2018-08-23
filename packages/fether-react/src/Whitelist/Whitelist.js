@@ -10,12 +10,10 @@ import { Header } from 'fether-ui';
 import { consumeTokens, provideTokens } from '../contexts/TokensContext.js';
 import withAccount from '../utils/withAccount.js';
 import light from '@parity/light.js-react';
-import { withRouter } from 'react-router-dom';
 
 import Health from '../Health';
 import NewTokenItem from './NewTokenItem';
 
-@withRouter
 @withAccount
 @provideTokens
 @consumeTokens

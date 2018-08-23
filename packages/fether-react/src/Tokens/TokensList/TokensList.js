@@ -5,13 +5,10 @@
 
 import React, { Component } from 'react';
 
-import { withRouter } from 'react-router-dom';
-
 import TokenBalance from './TokenBalance';
 
 import { consumeTokens } from '../../contexts/TokensContext.js';
 
-@withRouter
 @consumeTokens
 class TokensList extends Component {
   render () {

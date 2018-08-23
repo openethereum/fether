@@ -11,7 +11,7 @@ import { Form as FetherForm, Header } from 'fether-ui';
 import { toWei } from '@parity/api/lib/util/wei';
 import { inject, observer } from 'mobx-react';
 import { isAddress } from '@parity/api/lib/util/address';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { withProps } from 'recompose';
 
 import { consumeTokens } from '../../contexts/TokensContext.js';
@@ -27,7 +27,6 @@ const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 @withProps(({ match: { params: { tokenAddress } }, tokens }) => ({
   token: tokens[tokenAddress]
 }))
-@withRouter
 @withAccount
 @withBalance // Balance of current token (can be ETH)
 @withEthBalance // ETH balance
