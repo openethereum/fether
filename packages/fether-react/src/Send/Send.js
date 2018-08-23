@@ -12,7 +12,6 @@ import Signer from './Signer';
 import TxForm from './TxForm';
 
 @withAccount
-@provideTokens
 class Send extends Component {
   render () {
     const {

@@ -3,20 +3,20 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import "symbol-observable"; // TODO Remove this once https://github.com/acdlite/recompose/pull/660 is merged
+import 'symbol-observable'; // TODO Remove this once https://github.com/acdlite/recompose/pull/660 is merged
 
-import React from "react";
-import { from } from "rxjs";
-import { Provider } from "mobx-react";
-import ReactDOM from "react-dom";
-import { setObservableConfig } from "recompose";
+import React from 'react';
+import { from } from 'rxjs';
+import { Provider } from 'mobx-react';
+import ReactDOM from 'react-dom';
+import { setObservableConfig } from 'recompose';
 
-import App from "./App";
-import rootStore from "./stores";
-import "./index.css";
+import App from './App';
+import rootStore from './stores';
+import './index.css';
 
 // Show debug logs
-window.localStorage.debug = "fether*"; // https://github.com/visionmedia/debug#browser-support
+window.localStorage.debug = 'fether*'; // https://github.com/visionmedia/debug#browser-support
 
 // Set recompose to use RxJS
 // https://github.com/acdlite/recompose/blob/master/docs/API.md#setobservableconfig
@@ -30,5 +30,5 @@ ReactDOM.render(
   <Provider {...rootStore}>
     <App />
   </Provider>,
-  document.getElementById("root")
+  document.getElementById('root')
 );

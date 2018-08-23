@@ -3,11 +3,11 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import React, { Component } from "react";
-import { TokenCard } from "fether-ui";
-import { withRouter } from "react-router-dom";
+import React, { Component } from 'react';
+import { TokenCard } from 'fether-ui';
+import { withRouter } from 'react-router-dom';
 
-import { withTokens } from "../../utils/withTokens";
+import { withTokens } from '../../utils/withTokens';
 
 @withRouter
 @withTokens
@@ -24,23 +24,23 @@ class NewTokenItem extends Component {
     history.goBack();
   };
 
-  render() {
+  render () {
     const { token, tokens } = this.props;
 
     return (
       <li key={token.address}>
         <TokenCard balance={null} showBalance={false} token={token}>
-          <div className="token_buttons">
+          <div className='token_buttons'>
             {tokens[token.address] ? (
               <button
-                className="button -utility -bad"
+                className='button -utility -bad'
                 onClick={this.handleRemoveToken}
               >
                 Remove
               </button>
             ) : (
               <button
-                className="button -utility -good"
+                className='button -utility -good'
                 onClick={this.handleAddToken}
               >
                 Add

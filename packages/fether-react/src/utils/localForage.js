@@ -1,7 +1,7 @@
-import { from, Observable } from "rxjs";
-import localForage from "localforage";
-import { switchMap } from "rxjs/operators";
-import "localforage-observable";
+import { from, Observable } from 'rxjs';
+import localForage from 'localforage';
+import { switchMap } from 'rxjs/operators';
+import 'localforage-observable';
 
 // Use RxJS as Observable in localforage-observable
 // https://github.com/localForage/localForage-observable#using-a-different-observable-library
@@ -11,7 +11,7 @@ localForage.newObservable.factory = subscribeFn =>
 /**
  * Make localForage available in browser console for easier debug.
  */
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== 'production') {
   window.localForage = localForage;
 }
 
