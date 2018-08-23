@@ -3,27 +3,26 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import React, { Component } from 'react';
-import { chainName$ } from '@parity/light.js';
-import store from 'store';
-import { withProps } from 'recompose';
+import React, { Component } from "react";
+import { chainName$ } from "@parity/light.js";
+import store from "store";
+import { withProps } from "recompose";
 
-import ethereumIcon from '../assets/img/tokens/ethereum.png';
-import LS_PREFIX from '../stores/utils/lsPrefix';
+import Debug from "../utils/debug";
+import ethereumIcon from "../assets/img/tokens/ethereum.png";
+import LS_PREFIX from "../stores/utils/lsPrefix";
 
-import Debug from '../utils/debug';
-
-const debug = Debug('TokensContext');
+const debug = Debug("TokensContext");
 
 const LS_KEY = `${LS_PREFIX}::tokens`;
 
 const DEFAULT_TOKENS = {
   ETH: {
-    address: 'ETH',
+    address: "ETH",
     decimals: 18,
     logo: ethereumIcon,
-    name: 'Ether',
-    symbol: 'ETH'
+    name: "Ether",
+    symbol: "ETH"
   }
 };
 
@@ -38,7 +37,7 @@ const TokensContext = React.createContext({
 });
 
 class WithTokens extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -89,7 +88,7 @@ class WithTokens extends Component {
   getLsKey = () =>
     `${LS_KEY}::${this.state.accountAddress}::${this.state.chainName}`;
 
-  render () {
+  render() {
     const { Component, ...propsRest } = this.props;
 
     return (
@@ -107,7 +106,7 @@ const mapContextToProps = ({ tokens, addToken, removeToken }) => ({
   tokens,
   tokensArray: Object.values(tokens),
   tokensArrayWithoutEth: Object.values(tokens).filter(
-    ({ address }) => address !== 'ETH' // Ethereum is the only token without address, has 'ETH' instead
+    ({ address }) => address !== "ETH" // Ethereum is the only token without address, has 'ETH' instead
   ),
   addToken: addToken,
   removeToken: removeToken

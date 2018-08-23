@@ -7,13 +7,12 @@ import React, { Component } from "react";
 import { chainName$ } from "@parity/light.js";
 import debounce from "lodash/debounce";
 import { Header } from "fether-ui";
-import { consumeTokens, provideTokens } from "../contexts/TokensContext.js";
-import withAccount from "../utils/withAccount.js";
 import light from "@parity/light.js-react";
 
 import Health from "../Health";
 import NewTokenItem from "./NewTokenItem";
-import withTokens from "fether-react/src/utils/withTokens";
+import withAccount from "../utils/withAccount";
+import withTokens from "../utils/withTokens";
 
 @withAccount
 @withTokens

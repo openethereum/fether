@@ -6,8 +6,6 @@
 import React, { Component } from "react";
 
 import TokenBalance from "./TokenBalance";
-
-import { consumeTokens } from "../../contexts/TokensContext.js";
 import withTokens from "../../utils/withTokens";
 
 @withTokens

@@ -3,19 +3,19 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import React, { Component } from 'react';
-import { Route, Redirect, Switch } from 'react-router-dom';
-import { provideTokens } from '../contexts/TokensContext.js';
-import withAccount from '../utils/withAccount.js';
+import React, { Component } from "react";
+import { provideTokens } from "../contexts/TokensContext.js";
+import { Route, Redirect, Switch } from "react-router-dom";
+import withAccount from "../utils/withAccount.js";
 
-import Sent from './Sent';
-import Signer from './Signer';
-import TxForm from './TxForm';
+import Sent from "./Sent";
+import Signer from "./Signer";
+import TxForm from "./TxForm";
 
 @withAccount
 @provideTokens
 class Send extends Component {
-  render () {
+  render() {
     const {
       match: { path }
     } = this.props;
@@ -24,7 +24,7 @@ class Send extends Component {
         <Route exact path={`${path}`} component={TxForm} />
         <Route path={`${path}/signer`} component={Signer} />
         <Route path={`${path}/sent`} component={Sent} />
-        <Redirect to='/' />
+        <Redirect to="/" />
       </Switch>
     );
   }

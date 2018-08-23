@@ -3,26 +3,26 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import React, { Component } from 'react';
-import debounce from 'debounce-promise';
-import { estimateGas } from '../../utils/estimateGas';
-import { Field, Form } from 'react-final-form';
-import { Form as FetherForm, Header } from 'fether-ui';
-import { toWei } from '@parity/api/lib/util/wei';
-import { inject, observer } from 'mobx-react';
-import { isAddress } from '@parity/api/lib/util/address';
-import { Link } from 'react-router-dom';
-import { withProps } from 'recompose';
+import React, { Component } from "react";
+import debounce from "debounce-promise";
+import { Field, Form } from "react-final-form";
+import { Form as FetherForm, Header } from "fether-ui";
+import { inject, observer } from "mobx-react";
+import { isAddress } from "@parity/api/lib/util/address";
+import { Link } from "react-router-dom";
+import { toWei } from "@parity/api/lib/util/wei";
+import { withProps } from "recompose";
 
-import { consumeTokens } from '../../contexts/TokensContext.js';
-import withAccount from '../../utils/withAccount.js';
-import TokenBalance from '../../Tokens/TokensList/TokenBalance';
-import withBalance, { withEthBalance } from '../../utils/withBalance';
+import { consumeTokens } from "../../contexts/TokensContext.js";
+import { estimateGas } from "../../utils/estimateGas";
+import TokenBalance from "../../Tokens/TokensList/TokenBalance";
+import withAccount from "../../utils/withAccount.js";
+import withBalance, { withEthBalance } from "../../utils/withBalance";
 
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 
-@inject('parityStore', 'sendStore')
+@inject("parityStore", "sendStore")
 @consumeTokens
 @withProps(({ match: { params: { tokenAddress } }, tokens }) => ({
   token: tokens[tokenAddress]
@@ -38,7 +38,7 @@ class Send extends Component {
     history.push(`/send/${token.address}/from/${accountAddress}/signer`);
   };
 
-  render () {
+  render() {
     const {
       accountAddress,
       sendStore: { tx },
@@ -49,68 +49,68 @@ class Send extends Component {
       <div>
         <Header
           left={
-            <Link to={`/tokens/${accountAddress}`} className='icon -close'>
+            <Link to={`/tokens/${accountAddress}`} className="icon -close">
               Close
             </Link>
           }
           title={token && <h1>Send {token.name}</h1>}
         />
 
-        <div className='window_content'>
-          <div className='box -padded'>
+        <div className="window_content">
+          <div className="box -padded">
             <TokenBalance
               decimals={6}
               drawers={[
                 <Form
-                  key='txForm'
+                  key="txForm"
                   initialValues={{ gasPrice: 4, ...tx }}
                   onSubmit={this.handleSubmit}
                   validate={this.validateForm}
                   render={({ handleSubmit, valid, validating, values }) => (
-                    <form className='send-form' onSubmit={handleSubmit}>
-                      <fieldset className='form_fields'>
+                    <form className="send-form" onSubmit={handleSubmit}>
+                      <fieldset className="form_fields">
                         <Field
-                          className='form_field_amount'
+                          className="form_field_amount"
                           formNoValidate
-                          label='Amount'
-                          name='amount'
-                          placeholder='0.00'
+                          label="Amount"
+                          name="amount"
+                          placeholder="0.00"
                           render={FetherForm.Field}
                           required
-                          type='number' // In ETH or coin
+                          type="number" // In ETH or coin
                         />
 
                         <Field
-                          as='textarea'
-                          className='-sm'
-                          label='To'
-                          name='to'
-                          placeholder='0x...'
+                          as="textarea"
+                          className="-sm"
+                          label="To"
+                          name="to"
+                          placeholder="0x..."
                           required
                           render={FetherForm.Field}
                         />
 
                         <Field
                           centerText={`${values.gasPrice} GWEI`}
-                          className='-range'
-                          label='Transaction Fee'
-                          leftText='Slow'
+                          className="-range"
+                          label="Transaction Fee"
+                          leftText="Slow"
                           max={MAX_GAS_PRICE}
                           min={MIN_GAS_PRICE}
-                          name='gasPrice'
+                          name="gasPrice"
                           render={FetherForm.Slider}
                           required
-                          rightText='Fast'
+                          rightText="Fast"
                           step={0.5}
-                          type='range' // In Gwei
+                          type="range" // In Gwei
                         />
                       </fieldset>
-                      <nav className='form-nav'>
+                      <nav className="form-nav">
                         <button
                           disabled={!valid || validating}
-                          className='button'
+                          className="button"
                         >
-                          {validating ? 'Checking...' : 'Send'}
+                          {validating ? "Checking..." : "Send"}
                         </button>
                       </nav>
                     </form>
@@ -136,9 +136,9 @@ class Send extends Component {
       const amount = +values.amount;
 
       if (!amount || isNaN(amount)) {
-        return { amount: 'Please enter a valid amount' };
+        return { amount: "Please enter a valid amount" };
       } else if (amount < 0) {
-        return { amount: 'Please enter a positive amount ' };
+        return { amount: "Please enter a positive amount " };
       } else if (balance && balance.lt(amount)) {
         return { amount: `You don't have enough ${token.symbol} balance` };
       }
@@ -152,15 +152,15 @@ class Send extends Component {
       // Verify that `gas + (eth amount if sending eth) <= ethBalance`
       if (
         estimated
-          .mul(toWei(values.gasPrice, 'shannon'))
-          .plus(token.address === 'ETH' ? toWei(values.amount) : 0)
+          .mul(toWei(values.gasPrice, "shannon"))
+          .plus(token.address === "ETH" ? toWei(values.amount) : 0)
           .gt(toWei(ethBalance))
       ) {
         return { amount: "You don't have enough ETH balance" };
       }
     } catch (err) {
       return {
-        amount: 'Failed estimating balance, please try again'
+        amount: "Failed estimating balance, please try again"
       };
     }
   }, 1000);
@@ -168,7 +168,7 @@ class Send extends Component {
   validateForm = values => {
     const errors = {};
     if (!isAddress(values.to)) {
-      errors.to = 'Please enter a valid Ethereum address';
+      errors.to = "Please enter a valid Ethereum address";
     }
 
     return Object.keys(errors).length ? errors : this.validateAmount(values);

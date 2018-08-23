@@ -4,11 +4,10 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from "react";
-import { consumeTokens } from "../../contexts/TokensContext.js";
 import { TokenCard } from "fether-ui";
 import { withRouter } from "react-router-dom";
 
-import withTokens from "fether-react/src/utils/withTokens";
+import { withTokens } from "../../utils/withTokens";
 
 @withRouter
 @withTokens

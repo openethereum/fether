@@ -3,19 +3,19 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import React, { Component } from 'react';
-import { inject } from 'mobx-react';
-import PropTypes from 'prop-types';
-import { TokenCard } from 'fether-ui';
-import { withRouter } from 'react-router-dom';
+import React, { Component } from "react";
+import { inject } from "mobx-react";
+import PropTypes from "prop-types";
+import { TokenCard } from "fether-ui";
+import { withRouter } from "react-router-dom";
 
-import withBalance from '../../../utils/withBalance';
-import withAccount from '../../../utils/withAccount.js';
+import withAccount from "../../../utils/withAccount.js";
+import withBalance from "../../../utils/withBalance";
 
 @withRouter
 @withAccount
 @withBalance
-@inject('sendStore')
+@inject("sendStore")
 class TokenBalance extends Component {
   static propTypes = {
     token: PropTypes.object
@@ -30,7 +30,7 @@ class TokenBalance extends Component {
     history.push(`/send/${token.address}/from/${accountAddress}`);
   };
 
-  render () {
+  render() {
     return <TokenCard onClick={this.handleClick} {...this.props} />;
   }
 }

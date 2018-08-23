@@ -11,9 +11,7 @@ import { Link, Redirect, withRouter } from "react-router-dom";
 
 import Health from "../Health";
 import TokensList from "./TokensList";
-
-import { provideTokens } from "../contexts/TokensContext.js";
-import withAccount from "../utils/withAccount.js";
+import withAccount from "../utils/withAccount";
 
 @withRouter
 @withAccount
