@@ -17,11 +17,13 @@ import { estimateGas } from '../../utils/estimateGas';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import withAccount from '../../utils/withAccount.js';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
+import withTokens from '../../utils/withTokens';
 
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 
 @inject('parityStore', 'sendStore')
+@withTokens
 @withProps(({ match: { params: { tokenAddress } }, tokens }) => ({
   token: tokens[tokenAddress]
 }))
