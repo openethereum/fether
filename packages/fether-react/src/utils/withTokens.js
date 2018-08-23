@@ -8,7 +8,7 @@ import { map, switchMap } from 'rxjs/operators';
 
 import ethereumIcon from '../assets/img/tokens/ethereum.png';
 import localForage$ from './localForage';
-import withAccount from 'fether-react/src/utils/withAccount';
+import withAccount from './withAccount';
 
 const LS_KEY = `${LS_PREFIX}::tokens`;
 
