@@ -1,7 +1,12 @@
 import { from, Observable } from 'rxjs';
 import localForage from 'localforage';
+import memoize from 'lodash/memoize';
 import { switchMap } from 'rxjs/operators';
 import 'localforage-observable';
+
+import Debug from '../utils/debug';
+
+const debug = Debug('localForage');
 
 // Use RxJS as Observable in localforage-observable
 // https://github.com/localForage/localForage-observable#using-a-different-observable-library
@@ -30,7 +35,9 @@ const ready$ = from(localForage.ready());
  *
  * @param {string} item - The localForage key to query
  */
-const localForage$ = item =>
-  ready$.pipe(switchMap(() => localForage.getItemObservable(item)));
+const localForage$ = memoize(item => {
+  debug(`Listening to "${item}".`);
+  return ready$.pipe(switchMap(() => localForage.getItemObservable(item)));
+});
 
 export default localForage$;
