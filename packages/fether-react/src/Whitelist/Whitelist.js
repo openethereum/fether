@@ -5,18 +5,17 @@
 
 import React, { Component } from 'react';
 import { chainName$ } from '@parity/light.js';
-import { consumeTokens, provideTokens } from '../contexts/TokensContext.js';
 import debounce from 'lodash/debounce';
 import { Header } from 'fether-ui';
 import light from '@parity/light.js-react';
 
 import Health from '../Health';
 import NewTokenItem from './NewTokenItem';
-import withAccount from '../utils/withAccount.js';
+import withAccount from '../utils/withAccount';
+import withTokens from '../utils/withTokens';
 
 @withAccount
-@provideTokens
-@consumeTokens
+@withTokens
 @light({
   chainName: () => chainName$({ withoutLoading: true })
 })

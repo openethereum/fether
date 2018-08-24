@@ -13,17 +13,17 @@ import { Link } from 'react-router-dom';
 import { toWei } from '@parity/api/lib/util/wei';
 import { withProps } from 'recompose';
 
-import { consumeTokens } from '../../contexts/TokensContext.js';
 import { estimateGas } from '../../utils/estimateGas';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import withAccount from '../../utils/withAccount.js';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
+import withTokens from '../../utils/withTokens';
 
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 
 @inject('parityStore', 'sendStore')
-@consumeTokens
+@withTokens
 @withProps(({ match: { params: { tokenAddress } }, tokens }) => ({
   token: tokens[tokenAddress]
 }))

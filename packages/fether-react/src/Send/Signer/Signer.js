@@ -10,13 +10,13 @@ import { inject, observer } from 'mobx-react';
 import { Link, Redirect } from 'react-router-dom';
 import { withProps } from 'recompose';
 
-import { consumeTokens } from '../../contexts/TokensContext.js';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import withAccount from '../../utils/withAccount.js';
+import withTokens from '../../utils/withTokens';
 
 @inject('sendStore')
 @withAccount
-@consumeTokens
+@withTokens
 @withProps(({ match: { params: { tokenAddress } }, tokens }) => ({
   token: tokens[tokenAddress]
 }))

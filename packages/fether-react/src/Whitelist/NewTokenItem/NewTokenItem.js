@@ -7,20 +7,20 @@ import React, { Component } from 'react';
 import { TokenCard } from 'fether-ui';
 import { withRouter } from 'react-router-dom';
 
-import { consumeTokens } from '../../contexts/TokensContext.js';
+import withTokens from '../../utils/withTokens';
 
 @withRouter
-@consumeTokens
+@withTokens
 class NewTokenItem extends Component {
-  handleAddToken = () => {
+  handleAddToken = async () => {
     const { history, token, addToken } = this.props;
-    addToken(token.address, token);
+    await addToken(token.address, token);
     history.goBack();
   };
 
-  handleRemoveToken = () => {
+  handleRemoveToken = async () => {
     const { history, token, removeToken } = this.props;
-    removeToken(token.address);
+    await removeToken(token.address);
     history.goBack();
   };
 

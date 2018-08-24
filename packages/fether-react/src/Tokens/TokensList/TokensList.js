@@ -5,10 +5,10 @@
 
 import React, { Component } from 'react';
 
-import { consumeTokens } from '../../contexts/TokensContext.js';
 import TokenBalance from './TokenBalance';
+import withTokens from '../../utils/withTokens';
 
-@consumeTokens
+@withTokens
 class TokensList extends Component {
   render () {
     const { tokensArray } = this.props;

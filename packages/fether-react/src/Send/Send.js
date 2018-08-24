@@ -4,7 +4,6 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { provideTokens } from '../contexts/TokensContext.js';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import withAccount from '../utils/withAccount.js';
 
@@ -13,7 +12,6 @@ import Signer from './Signer';
 import TxForm from './TxForm';
 
 @withAccount
-@provideTokens
 class Send extends Component {
   render () {
     const {

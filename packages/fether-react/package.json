@@ -44,6 +44,8 @@
     "fether-ui": "^0.1.0",
     "final-form": "^4.8.3",
     "is-electron": "^2.1.0",
+    "localforage": "^1.7.2",
+    "localforage-observable": "^1.4.0",
     "lodash": "^4.17.10",
     "mobx": "^5.0.2",
     "mobx-react": "^5.2.3",

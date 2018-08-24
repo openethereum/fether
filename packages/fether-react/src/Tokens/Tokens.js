@@ -10,13 +10,11 @@ import light from '@parity/light.js-react';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 
 import Health from '../Health';
-import { provideTokens } from '../contexts/TokensContext.js';
 import TokensList from './TokensList';
-import withAccount from '../utils/withAccount.js';
+import withAccount from '../utils/withAccount';
 
 @withRouter
 @withAccount
-@provideTokens
 @light({
   accountsInfo: accountsInfo$
 })
