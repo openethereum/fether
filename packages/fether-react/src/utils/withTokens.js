@@ -1,13 +1,12 @@
 import { chainName$ } from '@parity/light.js';
-import { combineLatest } from 'rxjs';
-import { compose, mapPropsStream, withProps, withHandlers } from 'recompose';
+import { compose, mapPropsStream, withHandlers, withProps } from 'recompose';
 import light from '@parity/light.js-react';
 import localForage from 'localforage';
-import LS_PREFIX from '../stores/utils/lsPrefix';
 import { map, switchMap } from 'rxjs/operators';
 
 import ethereumIcon from '../assets/img/tokens/ethereum.png';
 import localForage$ from './localForage';
+import LS_PREFIX from '../stores/utils/lsPrefix';
 import withAccount from './withAccount';
 
 const LS_KEY = `${LS_PREFIX}::tokens`;
@@ -37,12 +36,11 @@ const withTokens = compose(
   }),
   withAccount,
   // mapPropsStream and add localForage$
-  mapPropsStream(props$ =>
-    combineLatest(
-      props$,
-      props$.pipe(switchMap(props => localForage$(getLsKey(props))))
-    ).pipe(
-      map(([props, tokens]) => ({ ...props, tokens: tokens || DEFAULT_TOKENS }))
+  mapPropsStream(
+    switchMap(props =>
+      localForage$(getLsKey(props)).pipe(
+        map(tokens => ({ ...props, tokens: tokens || DEFAULT_TOKENS }))
+      )
     )
   ),
   // Also compute some related props related to tokens
@@ -59,11 +57,11 @@ const withTokens = compose(
   withHandlers({
     addToken: props => (address, token) => {
       const newTokens = { ...props.tokens, [address]: token };
-      localForage.setItem(getLsKey(props), newTokens);
+      return localForage.setItem(getLsKey(props), newTokens);
     },
     removeToken: props => address => {
       const { [address]: _, ...newTokens } = props.tokens;
-      localForage.setItem(getLsKey(props), newTokens);
+      return localForage.setItem(getLsKey(props), newTokens);
     }
   })
 );
