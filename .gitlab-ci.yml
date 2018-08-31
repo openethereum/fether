@@ -1,23 +1,34 @@
+
 stages:
   - test
   - build
+
+
 variables:
   GIT_DEPTH: "3"
   SIMPLECOV: "true"
   RUST_BACKTRACE: "1"
   RUSTFLAGS: ""
   CARGOFLAGS: ""
+
 cache:
   untracked: true
-linux-test:
-  stage: test
-  image: node:8
+
+
+.branches: &branches
   only:
     - beta
     - tags
     - stable
     - triggers
     - master
+
+
+
+linux-test:
+  stage: test
+  image: node:8
+  <<: *branches
   script:
     - curl -o- -L https://yarnpkg.com/install.sh | bash 
     - export PATH=$HOME/.yarn/bin:$PATH
@@ -25,15 +36,13 @@ linux-test:
     - yarn test
   tags:
     - javascript
+
+
+
 linux-build:
   stage: build
   image: node:8
-  only:
-    - beta
-    - tags
-    - stable
-    - triggers
-    - master
+  <<: *branches
   script:
     - curl -o- -L https://yarnpkg.com/install.sh | bash 
     - export PATH=$HOME/.yarn/bin:$PATH
@@ -42,14 +51,17 @@ linux-build:
     - yarn release --linux 
   tags:
     - javascript
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - "packages/fether-electron/dist/*.AppImage"
+      - "packages/fether-electron/dist/*.tar.xz"
+      - "packages/fether-electron/dist/*.snap"
+      - "packages/fether-electron/dist/*.deb"
+
 osx-build:
   stage: build
-  only:
-    - beta
-    - tags
-    - stable
-    - triggers
-    - master
+  <<: *branches
   script:
     - curl -o- -L https://yarnpkg.com/install.sh | bash 
     - export PATH=$HOME/.yarn/bin:$PATH
@@ -59,3 +71,26 @@ osx-build:
     - yarn release --mac
   tags:
     - osx 
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - "packages/fether-electron/dist/*.dmg"
+      - "packages/fether-electron/dist/*.zip"
+
+win-build:
+  stage: build
+  <<: *branches
+  script:
+    - curl -o- -L https://yarnpkg.com/install.sh | bash 
+    - export PATH=$HOME/.yarn/bin:$PATH
+    - brew install node
+    - yarn install
+    - yarn build
+    - yarn release --win
+  tags:
+    - win
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - "packages/fether-electron/dist/*.exe"
+
