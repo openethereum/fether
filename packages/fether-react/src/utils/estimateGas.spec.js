@@ -5,7 +5,7 @@
 
 /* eslint-env jest */
 
-import abi from '@parity/shared/lib/contracts/abi/eip20';
+import abi from '@parity/contracts/lib/abi/eip20';
 import BigNumber from 'bignumber.js';
 import lightJs from '@parity/light.js';
 

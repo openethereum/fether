@@ -5,7 +5,7 @@
 
 const Api = require('@parity/api');
 const { bytesToHex } = require('@parity/api/lib/util');
-const Contracts = require('@parity/shared/lib/contracts').default;
+const Contracts = require('@parity/contracts').default;
 const fs = require('fs');
 
 // A node serving a HTTP server needs to be running at the following port. The

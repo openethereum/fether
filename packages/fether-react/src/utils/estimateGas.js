@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import abi from '@parity/shared/lib/contracts/abi/eip20';
+import abi from '@parity/contracts/lib/abi/eip20';
 import BigNumber from 'bignumber.js';
 import { makeContract } from '@parity/light.js';
 import memoize from 'lodash/memoize';
