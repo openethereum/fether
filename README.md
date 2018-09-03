@@ -1,3 +1,4 @@
+![Parity Fether](https://wiki.parity.io/images/logo-parity-fether.jpg)
 # Parity Fether - a fast and decentralized wallet based on a light-client
 
 ## Get the latest binary
@@ -26,6 +27,8 @@ If you run into problems while using Parity Fether, feel free to file an issue i
 Parity Fether connects to the light node using light.js, a Javascript library specifically crafted for Wallets to connect with light clients. It is licensed under the BSD 3-Clause, and can be used for all your Ethereum needs.
 
 ----
+## Screenshots
+![Parity Fether](https://wiki.parity.io/images/fether-screenshot-0.jpg)
 
 ## Start Parity Fether
 
