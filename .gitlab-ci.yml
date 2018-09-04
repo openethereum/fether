@@ -78,16 +78,14 @@ osx-build:
 
 win-build:
   stage: build
+  image: electronuserland/builder:wine
   <<: *branches
   script:
-    - curl -o- -L https://yarnpkg.com/install.sh | bash 
-    - export PATH=$HOME/.yarn/bin:$PATH
-    - brew install node
     - yarn install
     - yarn build
     - yarn release --win
   tags:
-    - win
+    - javascript
   artifacts:
     expire_in: 1 week
     paths:
