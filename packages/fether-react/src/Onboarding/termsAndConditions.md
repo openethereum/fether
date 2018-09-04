@@ -136,12 +136,11 @@ Subject to any liability which may not be excluded, you expressly understand and
 1. any direct, indirect, incidental, special consequential or exemplary damages which may be incurred by you, however caused and under any theory of liability. This shall include, but not be limited to, any loss of profit (whether incurred directly or indirectly), any loss of goodwill or business reputation, any loss of data suffered, cost of procurement of substitute goods or services, or other intangible loss; or
 2. any loss or damage which may be incurred by you, including but not limited to loss or damage as a result of:
 
-1.
-  1. any reliance placed by you on the completeness, accuracy or existence of any advertising, or as a result of any relationship or transaction between you and any advertiser or sponsor whose advertising appears on Parity Technologies&#39; Products;
-  2. any changes which Parity Technologies may make to Parity Technologies&#39; Products, or for any permanent or temporary cessation in the provision of Parity Technologies&#39; Products (or any features within Parity Technologies&#39; Products);
-  3. the deletion of, corruption of, or failure to store, any content and other communications data maintained or transmitted by or through your use of Parity Technologies&#39; Products;
-  4. your failure to provide Parity Technologies with accurate account information (if this is required); and
-  5. your failure to keep your password or account details secure and confidential.
+   1. any reliance placed by you on the completeness, accuracy or existence of any advertising, or as a result of any relationship or transaction between you and any advertiser or sponsor whose advertising appears on Parity Technologies&#39; Products;
+   2. any changes which Parity Technologies may make to Parity Technologies&#39; Products, or for any permanent or temporary cessation in the provision of Parity Technologies&#39; Products (or any features within Parity Technologies&#39; Products);
+   3. the deletion of, corruption of, or failure to store, any content and other communications data maintained or transmitted by or through your use of Parity Technologies&#39; Products;
+   4. your failure to provide Parity Technologies with accurate account information (if this is required); and
+   5. your failure to keep your password or account details secure and confidential.
 
 The limitations on Parity Technologies&#39; liability to you shall apply whether or not Parity Technologies has been advised of or should have been aware of the possibility of any such losses arising.
 
