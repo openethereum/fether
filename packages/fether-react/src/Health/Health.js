@@ -4,12 +4,10 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react';
 
-import { STATUS } from '../stores/healthStore';
+import withHealth, { STATUS } from '../utils/withHealth';
 
-@inject('healthStore')
-@observer
+@withHealth
 class Health extends Component {
   render () {
     return (
@@ -29,9 +27,7 @@ class Health extends Component {
    */
   statusToClassName = () => {
     const {
-      healthStore: {
-        health: { status }
-      }
+      health: { status }
     } = this.props;
     switch (status) {
       case STATUS.GOOD:
@@ -47,9 +43,7 @@ class Health extends Component {
 
   statusToFriendlyMessage = () => {
     const {
-      healthStore: {
-        health: { status, payload }
-      }
+      health: { status, payload }
     } = this.props;
     switch (status) {
       case STATUS.CANTCONNECT:

@@ -8,6 +8,7 @@ import Api from '@parity/api';
 import isElectron from 'is-electron';
 import light from '@parity/light.js';
 import store from 'store';
+import { Subject } from 'rxjs';
 
 import Debug from '../utils/debug';
 import LS_PREFIX from './utils/lsPrefix';
@@ -19,9 +20,8 @@ const LS_KEY = `${LS_PREFIX}::secureToken`;
 
 export class ParityStore {
   @observable
-  downloadProgress = 0;
-  @observable
   isApiConnected = false;
+  isApiConnected$ = new Subject();
   @observable
   isParityRunning = false;
   @observable
@@ -42,6 +42,8 @@ export class ParityStore {
       return;
     }
 
+    this.isApiConnected$.next(false);
+
     const { ipcRenderer, remote } = electron;
 
     // Check if isParityRunning
@@ -49,11 +51,6 @@ export class ParityStore {
     // We also listen to future changes
     ipcRenderer.on('parity-running', (_, isParityRunning) => {
       this.setIsParityRunning(isParityRunning);
-    });
-
-    // Set download progress
-    ipcRenderer.on('parity-download-progress', (_, progress) => {
-      this.setDownloadProgress(progress);
     });
   }
 
@@ -110,17 +107,13 @@ export class ParityStore {
   };
 
   @action
-  setDownloadProgress = downloadProgress => {
-    this.downloadProgress = downloadProgress;
-  };
-
-  @action
   setIsApiConnected = isApiConnected => {
     if (isApiConnected === this.isApiConnected) {
       return;
     }
     debug(`Api is now ${isApiConnected ? 'connected' : 'disconnected'}.`);
     this.isApiConnected = isApiConnected;
+    this.isApiConnected$.next(isApiConnected);
   };
 
   @action
