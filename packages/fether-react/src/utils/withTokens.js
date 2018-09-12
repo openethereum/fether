@@ -1,23 +1,28 @@
-import { chainName$ } from '@parity/light.js';
-import { compose, mapPropsStream, withHandlers, withProps } from 'recompose';
-import light from '@parity/light.js-react';
-import localForage from 'localforage';
-import { map, switchMap } from 'rxjs/operators';
+// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// This file is part of Parity.
+//
+// SPDX-License-Identifier: BSD-3-Clause
 
-import ethereumIcon from '../assets/img/tokens/ethereum.png';
-import localForage$ from './localForage';
-import LS_PREFIX from '../stores/utils/lsPrefix';
-import withAccount from './withAccount';
+import { chainName$ } from "@parity/light.js";
+import { compose, mapPropsStream, withHandlers, withProps } from "recompose";
+import light from "@parity/light.js-react";
+import localForage from "localforage";
+import { map, switchMap } from "rxjs/operators";
+
+import ethereumIcon from "../assets/img/tokens/ethereum.png";
+import localForage$ from "./localForage";
+import LS_PREFIX from "../stores/utils/lsPrefix";
+import withAccount from "./withAccount";
 
 const LS_KEY = `${LS_PREFIX}::tokens`;
 
 const DEFAULT_TOKENS = {
   ETH: {
-    address: 'ETH',
+    address: "ETH",
     decimals: 18,
     logo: ethereumIcon,
-    name: 'Ether',
-    symbol: 'ETH'
+    name: "Ether",
+    symbol: "ETH"
   }
 };
 
@@ -49,7 +54,7 @@ const withTokens = compose(
     return {
       tokensArray,
       tokensArrayWithoutEth: tokensArray.filter(
-        ({ address }) => address !== 'ETH' // Ethereum is the only token without address, has 'ETH' instead
+        ({ address }) => address !== "ETH" // Ethereum is the only token without address, has 'ETH' instead
       )
     };
   }),

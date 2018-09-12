@@ -3,24 +3,23 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import React, { Component } from 'react';
-import { accountsInfo$ } from '@parity/light.js';
-import { Header } from 'fether-ui';
-import { inject, observer } from 'mobx-react';
-import light from '@parity/light.js-react';
-import { Link, Route } from 'react-router-dom';
+import React, { Component } from "react";
+import { Header } from "fether-ui";
+import { inject, observer } from "mobx-react";
+import { Link, Route } from "react-router-dom";
 
-import AccountCopyPhrase from './AccountCopyPhrase';
-import AccountName from './AccountName';
-import AccountPassword from './AccountPassword';
-import AccountRewritePhrase from './AccountRewritePhrase';
-import Health from '../../Health';
+import AccountCopyPhrase from "./AccountCopyPhrase";
+import AccountName from "./AccountName";
+import AccountPassword from "./AccountPassword";
+import AccountRewritePhrase from "./AccountRewritePhrase";
+import Health from "../../Health";
+import withLight from "../../utils/withLight";
 
-@light({ accountsInfo: accountsInfo$ })
-@inject('createAccountStore')
+@withLight(light => ({ accountsInfo: light.accountsInfo$ }))
+@inject("createAccountStore")
 @observer
 class CreateAccount extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     props.createAccountStore.clear();
   }
@@ -47,11 +46,11 @@ class CreateAccount extends Component {
 
     // If we were further in the account creation, go back to step 1
     if (step > 1) {
-      history.push('/accounts/new/1');
+      history.push("/accounts/new/1");
     }
   };
 
-  render () {
+  render() {
     const {
       accountsInfo,
       createAccountStore: { isImport },
@@ -70,18 +69,18 @@ class CreateAccount extends Component {
             // Show back button if we already have some accounts, so we can go back to AccountsList
             accountsInfo &&
             Object.keys(accountsInfo).length > 0 && (
-              <Link className='icon -back' to='/accounts'>
+              <Link className="icon -back" to="/accounts">
                 Back
               </Link>
             )
           }
           title={
-            <h1>{isImport ? 'Import account' : 'Create a new account'}</h1>
+            <h1>{isImport ? "Import account" : "Create a new account"}</h1>
           }
         />
 
-        <div className='window_content'>
-          <div className='box -padded'>
+        <div className="window_content">
+          <div className="box -padded">
             {Steps.map((StepComponent, index) => (
               <Route
                 component={StepComponent}
@@ -92,18 +91,18 @@ class CreateAccount extends Component {
           </div>
         </div>
 
-        <nav className='footer-nav'>
+        <nav className="footer-nav">
           {step > 1 ? (
-            <div className='footer-nav_status'>
+            <div className="footer-nav_status">
               <Health />
             </div>
           ) : (
-            <div className='footer-nav_option'>
+            <div className="footer-nav_option">
               {isImport ? (
                 <p>
                   Need to create an account?
                   <button
-                    className='button -footer'
+                    className="button -footer"
                     onClick={this.handleToggleCreateImport}
                   >
                     New account
@@ -113,7 +112,7 @@ class CreateAccount extends Component {
                 <p>
                   Already have an account?
                   <button
-                    className='button -footer'
+                    className="button -footer"
                     onClick={this.handleToggleCreateImport}
                   >
                     Import account

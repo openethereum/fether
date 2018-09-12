@@ -3,50 +3,49 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import React, { Component } from 'react';
-import { chainName$ } from '@parity/light.js';
-import { inject, observer } from 'mobx-react';
-import light from '@parity/light.js-react';
+import React, { Component } from "react";
+import { inject, observer } from "mobx-react";
 
-import check from '../../assets/img/icons/check.svg';
-import loading from '../../assets/img/icons/loading.svg';
+import check from "../../assets/img/icons/check.svg";
+import loading from "../../assets/img/icons/loading.svg";
+import withLight from "../../utils/withLight";
 
 // Number of confirmations to consider a transaction successful
 const MIN_CONFIRMATIONS = 6;
 
-@light({
-  chainName: chainName$
-})
-@inject('sendStore')
+@withLight(light => ({
+  chainName: light.chainName$
+}))
+@inject("sendStore")
 @observer
 class Sent extends Component {
   handleGoToHomepage = () => {
     const { history, sendStore } = this.props;
     sendStore.clear();
-    history.push('/');
+    history.push("/");
   };
 
-  render () {
+  render() {
     const {
       sendStore: { confirmations }
     } = this.props;
 
     return (
-      <div className='window_content'>
-        <div className='alert-screen'>
-          <div className='alert-screen_content'>
-            <div className='alert-screen_image'>
-              <img alt='loading' src={this.renderIcon()} />
+      <div className="window_content">
+        <div className="alert-screen">
+          <div className="alert-screen_content">
+            <div className="alert-screen_image">
+              <img alt="loading" src={this.renderIcon()} />
             </div>
-            <div className='alert-screen_text'>
+            <div className="alert-screen_text">
               <h1>{this.renderTitle()}</h1>
               <p>{this.renderDescription()}</p>
               <p>{this.renderLink()}</p>
             </div>
             {confirmations >= MIN_CONFIRMATIONS && (
-              <nav className='form-nav'>
+              <nav className="form-nav">
                 <button
-                  className='button'
+                  className="button"
                   disabled={confirmations < 6}
                   onClick={this.handleGoToHomepage}
                 >
@@ -74,7 +73,7 @@ class Sent extends Component {
     }
 
     if (txStatus.confirmed) {
-      return 'Waiting for confirmations...';
+      return "Waiting for confirmations...";
     }
 
     if (txStatus.failed) {
@@ -103,17 +102,17 @@ class Sent extends Component {
       return (
         <span>
           {confirmations >= MIN_CONFIRMATIONS
-            ? 'Transaction confirmed'
-            : 'Submitted'}
+            ? "Transaction confirmed"
+            : "Submitted"}
         </span>
       );
     }
 
     if (txStatus.failed) {
-      return 'Error';
+      return "Error";
     }
 
-    return 'Sending your transaction...';
+    return "Sending your transaction...";
   };
 
   renderLink = () => {
@@ -126,11 +125,11 @@ class Sent extends Component {
       return (
         <a
           href={`https://${
-            chainName === 'foundation' ? '' : `${chainName}.`
+            chainName === "foundation" ? "" : `${chainName}.`
           }etherscan.io/tx/${txStatus.confirmed.transactionHash}`}
-          target='_blank'
+          target="_blank"
         >
-          <button className='button -tiny'>See it on Etherscan</button>
+          <button className="button -tiny">See it on Etherscan</button>
         </a>
       );
     }

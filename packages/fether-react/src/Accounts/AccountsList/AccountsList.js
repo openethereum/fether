@@ -3,18 +3,17 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import React, { Component } from 'react';
-import { AccountCard, Header } from 'fether-ui';
-import { accountsInfo$ } from '@parity/light.js';
-import { inject, observer } from 'mobx-react';
-import light from '@parity/light.js-react';
+import React, { Component } from "react";
+import { AccountCard, Header } from "fether-ui";
+import { inject, observer } from "mobx-react";
 
-import Health from '../../Health';
+import Health from "../../Health";
+import withLight from "../../utils/withLight";
 
-@light({
-  accountsInfo: accountsInfo$
-})
-@inject('createAccountStore', 'parityStore')
+@withLight(light => ({
+  accountsInfo: light.accountsInfo$
+}))
+@inject("createAccountStore", "parityStore")
 @observer
 class AccountsList extends Component {
   handleClick = ({
@@ -29,10 +28,10 @@ class AccountsList extends Component {
 
   handleCreateAccount = () => {
     this.props.createAccountStore.setIsImport(false);
-    this.props.history.push('/accounts/new');
+    this.props.history.push("/accounts/new");
   };
 
-  render () {
+  render() {
     const { accountsInfo } = this.props;
 
     return (
@@ -40,15 +39,15 @@ class AccountsList extends Component {
         <Header
           title={<h1>Accounts</h1>}
           right={
-            <a className='icon -new' onClick={this.handleCreateAccount}>
+            <a className="icon -new" onClick={this.handleCreateAccount}>
               New account
             </a>
           }
         />
 
-        <div className='window_content'>
-          <div className='box -scroller'>
-            <ul className='list'>
+        <div className="window_content">
+          <div className="box -scroller">
+            <ul className="list">
               {accountsInfo ? (
                 Object.keys(accountsInfo).map(address => (
                   <li
@@ -58,13 +57,13 @@ class AccountsList extends Component {
                   >
                     <AccountCard
                       address={address}
-                      className='-clickable'
+                      className="-clickable"
                       name={
                         accountsInfo &&
                         accountsInfo[address] &&
                         (accountsInfo[address].name
                           ? accountsInfo[address].name
-                          : '(No name)')
+                          : "(No name)")
                       }
                       shortAddress
                     />
@@ -79,8 +78,8 @@ class AccountsList extends Component {
           </div>
         </div>
 
-        <nav className='footer-nav'>
-          <div className='footer-nav_status'>
+        <nav className="footer-nav">
+          <div className="footer-nav_status">
             <Health />
           </div>
         </nav>
