@@ -996,6 +996,19 @@
     "@parity/api" "^2.1.24"
     bignumber.js "^7.2.1"
 
+"@parity/electron@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@parity/electron/-/electron-1.0.1.tgz#cd0fc067ff7b118397c550126c14ac99d1b8f19b"
+  dependencies:
+    async-retry "^1.2.1"
+    axios "^0.18.0"
+    checksum "^0.1.1"
+    command-exists "^1.2.6"
+    debug "^3.1.0"
+    electron-dl "^1.11.0"
+    promise-any "^0.2.0"
+    sntp "^3.0.1"
+
 "@parity/jsonrpc@2.1.x":
   version "2.1.6"
   resolved "https://registry.yarnpkg.com/@parity/jsonrpc/-/jsonrpc-2.1.6.tgz#260bbe7dfcec18d59f0bf1668dfd6021452d6452"
@@ -11528,10 +11541,6 @@ typedarray-to-buffer@^3.1.2:
 typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
-
-typescript@^2.9.2:
-  version "2.9.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
 
 ua-parser-js@^0.7.18:
   version "0.7.18"
