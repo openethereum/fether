@@ -20,6 +20,13 @@ const MIN_CONFIRMATIONS = 6;
 @inject('sendStore')
 @observer
 class Sent extends Component {
+  componentWillMount () {
+    // If we refresh on this page, return to homepage
+    if (!this.props.sendStore.txStatus) {
+      this.handleGoToHomepage();
+    }
+  }
+
   handleGoToHomepage = () => {
     const { history, sendStore } = this.props;
     sendStore.clear();
