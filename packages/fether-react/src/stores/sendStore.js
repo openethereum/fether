@@ -57,7 +57,7 @@ export class SendStore {
     const send$ =
       token.address === 'ETH'
         ? post$(tx)
-        : contractForToken(token.address).transfer$(...tx.args, tx.options);
+        : contractForToken(token.address).transferFrom$(...tx.args, tx.options);
 
     debug('Sending tx.', tx);
 
