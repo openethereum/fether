@@ -24,7 +24,8 @@ export const withErc20Balance = light({
 
 export const withEthBalance = light({
   ethBalance: ({ accountAddress }) =>
-    balanceOf$(accountAddress, { withoutLoading: true }).pipe(
+    balanceOf$(accountAddress).pipe(
+      withoutLoading(),
       map(value => value && fromWei(value))
     )
 });

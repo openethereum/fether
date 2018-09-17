@@ -7,7 +7,7 @@ import { action, computed, observable } from 'mobx';
 import BigNumber from 'bignumber.js';
 import isElectron from 'is-electron';
 
-import { peerCount$, syncStatus$ } from '@parity/light.js';
+import { peerCount$, syncStatus$, withoutLoading } from '@parity/light.js';
 
 import Debug from '../utils/debug';
 import parityStore from './parityStore';
@@ -43,7 +43,9 @@ export class HealthStore {
     window.addEventListener('online', () => this.setHasInternet(true));
     window.addEventListener('offline', () => this.setHasInternet(false));
 
-    peerCount$({ withoutLoading: true }).subscribe(this.setPeerCount);
+    peerCount$()
+      .pipe(withoutLoading())
+      .subscribe(this.setPeerCount);
     syncStatus$().subscribe(this.setSyncStatus);
 
     if (!electron) {
