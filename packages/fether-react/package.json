@@ -30,7 +30,7 @@
     "build-js": "react-app-rewired build",
     "start": "npm-run-all -p start-*",
     "start-css": "npm run build-css -- --watch --recursive",
-    "start-js": "react-app-rewired start",
+    "start-js": "BROWSER=none react-app-rewired start",
     "test": "react-app-rewired test --env=jsdom"
   },
   "dependencies": {
