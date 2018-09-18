@@ -1020,16 +1020,14 @@
     recompose "^0.28.2"
     symbol-observable "^1.2.0"
 
-"@parity/light.js@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@parity/light.js/-/light.js-1.0.2.tgz#26ee3ed3c706bca44a7dc65cf64e332ac06e61a6"
+"@parity/light.js@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@parity/light.js/-/light.js-1.0.5.tgz#612d1557abf395a3f55b2a004f60c6e3f8eb8824"
   dependencies:
     "@parity/abi" "^2.1.4"
     "@parity/api" "^2.1.23"
     bignumber.js "^7.2.1"
     debug "^3.1.0"
-    eventemitter3 "^3.1.0"
-    json-prune "^1.1.0"
     memoizee "^0.4.12"
 
 "@parity/wordlist@1.1.x":
@@ -4938,7 +4936,7 @@ eventemitter3@^2.0.2:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-2.0.3.tgz#b5e1079b59fb5e1ba2771c0a993be060a58c99ba"
 
-eventemitter3@^3.0.0, eventemitter3@^3.1.0:
+eventemitter3@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.1.0.tgz#090b4d6cdbd645ed10bf750d4b5407942d7ba163"
 
@@ -7240,10 +7238,6 @@ json-loader@^0.5.4:
 json-parse-better-errors@^1.0.1, json-parse-better-errors@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/json-parse-better-errors/-/json-parse-better-errors-1.0.2.tgz#bb867cfb3450e69107c131d1c514bab3dc8bcaa9"
-
-json-prune@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/json-prune/-/json-prune-1.1.0.tgz#23e2fad108932b255050e3f1a70500c2b4aa30c7"
 
 json-schema-traverse@^0.3.0:
   version "0.3.1"

@@ -75,6 +75,7 @@ const addBuffer = estimated => {
 export const txForErc20 = (tx, token) => {
   return {
     args: [
+      tx.from,
       tx.to,
       new BigNumber(tx.amount).mul(new BigNumber(10).pow(token.decimals))
     ],
@@ -90,6 +91,7 @@ export const txForErc20 = (tx, token) => {
  */
 export const txForEth = tx => {
   return {
+    from: tx.from,
     gasPrice: toWei(tx.gasPrice, 'shannon'), // shannon == gwei
     to: tx.to,
     value: toWei(tx.amount.toString())

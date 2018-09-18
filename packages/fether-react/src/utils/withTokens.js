@@ -1,4 +1,4 @@
-import { chainName$ } from '@parity/light.js';
+import { chainName$, withoutLoading } from '@parity/light.js';
 import { compose, mapPropsStream, withHandlers, withProps } from 'recompose';
 import light from '@parity/light.js-react';
 import localForage from 'localforage';
@@ -32,7 +32,7 @@ const getLsKey = ({ accountAddress, chainName }) =>
 const withTokens = compose(
   // Inject chainName and accountAddress into props
   light({
-    chainName: () => chainName$({ withoutLoading: true })
+    chainName: () => chainName$().pipe(withoutLoading())
   }),
   withAccount,
   // mapPropsStream and add localForage$

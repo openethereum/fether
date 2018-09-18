@@ -86,9 +86,10 @@ describe('method send', () => {
     sendStore.setTx(mock.tx);
   });
 
-  test('should call transfer$ if the token is Erc20', () => {
+  test('should call transferFrom$ if the token is Erc20', () => {
     sendStore.send(mock.erc20);
-    expect(mock.makeContract.transfer$).toHaveBeenCalledWith(
+    expect(mock.makeContract.transferFrom$).toHaveBeenCalledWith(
+      '0x456',
       '0x123',
       new BigNumber('10000000000000000'),
       { gasPrice: new BigNumber('4000000000') }
@@ -98,6 +99,7 @@ describe('method send', () => {
   test('should call post$ if the token is ETH', () => {
     sendStore.send(mock.eth);
     expect(lightJs.post$).toHaveBeenCalledWith({
+      from: '0x456',
       gasPrice: new BigNumber('4000000000'),
       to: '0x123',
       value: new BigNumber('10000000000000000')

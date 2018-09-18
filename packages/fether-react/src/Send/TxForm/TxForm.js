@@ -63,7 +63,7 @@ class Send extends Component {
               drawers={[
                 <Form
                   key='txForm'
-                  initialValues={{ gasPrice: 4, ...tx }}
+                  initialValues={{ from: accountAddress, gasPrice: 4, ...tx }}
                   onSubmit={this.handleSubmit}
                   validate={this.validateForm}
                   render={({ handleSubmit, valid, validating, values }) => (
