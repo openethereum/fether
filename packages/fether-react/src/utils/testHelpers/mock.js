@@ -40,7 +40,7 @@ export const makeContract = {
       }
     }
   },
-  transfer$: jest.fn(() => ({ subscribe: jest.fn() }))
+  transferFrom$: jest.fn(() => ({ subscribe: jest.fn() }))
 };
 
 export const post$ = {
@@ -52,6 +52,7 @@ export const post$ = {
 
 export const tx = {
   amount: 0.01, // In Ether or in token
+  from: '0x456',
   gasPrice: 4, // in Gwei
   to: '0x123'
 };
