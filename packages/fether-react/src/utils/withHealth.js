@@ -7,12 +7,8 @@ import BigNumber from 'bignumber.js';
 import { combineLatest, Observable, fromEvent, merge } from 'rxjs';
 import { compose, mapPropsStream } from 'recompose';
 import isElectron from 'is-electron';
-import {
-  peerCount$ as _peerCount$,
-  syncStatus$,
-  withoutLoading
-} from '@parity/light.js';
-import { startWith, map, publishReplay } from 'rxjs/operators';
+import { peerCount$, syncStatus$, withoutLoading } from '@parity/light.js';
+import { publishReplay, map, startWith } from 'rxjs/operators';
 
 import parityStore from '../stores/parityStore';
 
@@ -38,16 +34,8 @@ const isParityRunning$ = Observable.create(observer => {
     });
   }
 }).pipe(
-  startWith(electron ? !!electron.remote.getGlobal('isParityRunning') : false),
-  // All the observables are publishReplay, otherwise combineLatest would stall
-  // until the observable emits a value after the combineLatest subscription
-  // (happens for withHealth components rendered later on)
-  publishReplay(1)
+  startWith(electron ? !!electron.remote.getGlobal('isParityRunning') : false)
 );
-isParityRunning$.connect();
-
-const isApiConnected$ = parityStore.isApiConnected$.pipe(publishReplay(1));
-isApiConnected$.connect();
 
 const downloadProgress$ = Observable.create(observer => {
   if (electron) {
@@ -55,11 +43,7 @@ const downloadProgress$ = Observable.create(observer => {
       observer.next(progress);
     });
   }
-}).pipe(
-  startWith(0),
-  publishReplay(1)
-);
-downloadProgress$.connect();
+}).pipe(startWith(0));
 
 const isClockSync$ = Observable.create(observer => {
   if (electron) {
@@ -68,20 +52,12 @@ const isClockSync$ = Observable.create(observer => {
       observer.next(clockSync.isClockSync);
     });
   }
-}).pipe(
-  startWith(true),
-  publishReplay(1)
-);
-isClockSync$.connect();
+}).pipe(startWith(true));
 
 const online$ = merge(
   fromEvent(window, 'online').pipe(map(() => true)),
   fromEvent(window, 'offline').pipe(map(() => false))
-).pipe(
-  startWith(navigator.onLine),
-  publishReplay(1)
-);
-online$.connect();
+).pipe(startWith(navigator.onLine));
 
 const syncStatusWithPayload$ = syncStatus$().pipe(
   map(syncStatus => {
@@ -106,40 +82,36 @@ const syncStatusWithPayload$ = syncStatus$().pipe(
         startingBlock
       }
     };
-  }),
-  publishReplay(1)
+  })
 );
-syncStatusWithPayload$.connect();
 
-const peerCount$ = _peerCount$().pipe(
-  withoutLoading(),
-  publishReplay(1)
-);
-peerCount$.connect();
+const combined$ = combineLatest(
+  isParityRunning$,
+  parityStore.isApiConnected$,
+  downloadProgress$,
+  syncStatusWithPayload$,
+  isClockSync$,
+  online$,
+  peerCount$().pipe(withoutLoading())
+).pipe(publishReplay(1));
+combined$.connect();
 
 // Inject node health information as health.{status, payload} props
 export default compose(
   mapPropsStream(props$ =>
-    combineLatest(
-      props$,
-      isParityRunning$,
-      isApiConnected$,
-      downloadProgress$,
-      syncStatusWithPayload$,
-      isClockSync$,
-      online$,
-      peerCount$
-    ).pipe(
+    combineLatest(props$, combined$).pipe(
       map(
         ([
           props,
-          isParityRunning,
-          isApiConnected,
-          downloadProgress,
-          { isSync, syncPayload },
-          isClockSync,
-          online,
-          peerCount
+          [
+            isParityRunning,
+            isApiConnected,
+            downloadProgress,
+            { isSync, syncPayload },
+            isClockSync,
+            online,
+            peerCount
+          ]
         ]) => {
           // Parity is being downloaded
           if (downloadProgress > 0 && !isParityRunning) {

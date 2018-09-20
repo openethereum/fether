@@ -7,8 +7,9 @@ import { action, observable } from 'mobx';
 import Api from '@parity/api';
 import isElectron from 'is-electron';
 import light from '@parity/light.js';
+import { map } from 'rxjs/operators';
 import store from 'store';
-import { Subject } from 'rxjs';
+import { timer } from 'rxjs';
 
 import Debug from '../utils/debug';
 import LS_PREFIX from './utils/lsPrefix';
@@ -21,7 +22,7 @@ const LS_KEY = `${LS_PREFIX}::secureToken`;
 export class ParityStore {
   @observable
   isApiConnected = false;
-  isApiConnected$ = new Subject();
+  isApiConnected$ = timer(0, 1000).pipe(map(_ => this.isApiConnected));
   @observable
   isParityRunning = false;
   @observable
@@ -41,8 +42,6 @@ export class ParityStore {
       );
       return;
     }
-
-    this.isApiConnected$.next(false);
 
     const { ipcRenderer, remote } = electron;
 
@@ -113,7 +112,6 @@ export class ParityStore {
     }
     debug(`Api is now ${isApiConnected ? 'connected' : 'disconnected'}.`);
     this.isApiConnected = isApiConnected;
-    this.isApiConnected$.next(isApiConnected);
   };
 
   @action
