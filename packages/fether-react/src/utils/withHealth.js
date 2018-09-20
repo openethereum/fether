@@ -8,7 +8,7 @@ import { combineLatest, Observable, fromEvent, merge } from 'rxjs';
 import { compose, mapPropsStream } from 'recompose';
 import isElectron from 'is-electron';
 import { peerCount$, syncStatus$, withoutLoading } from '@parity/light.js';
-import { publishReplay, map, startWith } from 'rxjs/operators';
+import { filter, map, take, publishReplay, startWith } from 'rxjs/operators';
 
 import parityStore from '../stores/parityStore';
 
@@ -26,6 +26,8 @@ export const STATUS = {
   RUNNING: Symbol('RUNNING'), // Parity is running (only checked at startup)
   SYNCING: Symbol('SYNCING') // Obvious
 };
+
+const isApiConnected$ = parityStore.isApiConnected$;
 
 const isParityRunning$ = Observable.create(observer => {
   if (electron) {
@@ -87,14 +89,21 @@ const syncStatusWithPayload$ = syncStatus$().pipe(
 
 const combined$ = combineLatest(
   isParityRunning$,
-  parityStore.isApiConnected$,
+  isApiConnected$,
   downloadProgress$,
   syncStatusWithPayload$,
   isClockSync$,
   online$,
   peerCount$().pipe(withoutLoading())
 ).pipe(publishReplay(1));
-combined$.connect();
+
+// Subscribe to the RPCs only once we set a provider
+isApiConnected$
+  .pipe(
+    filter(isApiConnected => isApiConnected),
+    take(1)
+  )
+  .subscribe(_ => combined$.connect());
 
 // Inject node health information as health.{status, payload} props
 export default compose(
