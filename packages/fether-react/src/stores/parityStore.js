@@ -22,7 +22,9 @@ const LS_KEY = `${LS_PREFIX}::secureToken`;
 export class ParityStore {
   @observable
   isApiConnected = false;
-  isApiConnected$ = timer(0, 1000).pipe(map(_ => this.isApiConnected));
+  isApiConnected$ = timer(0, 1000).pipe(
+    map(_ => this.api && this.api.isConnected)
+  );
   @observable
   isParityRunning = false;
   @observable
@@ -83,9 +85,7 @@ export class ParityStore {
     // api.on('connected', () => this.setIsApiConnected(true));
     // api.on('disconnected', () => this.setIsApiConnected(false));
     // So instead, we poll every 1s
-    setInterval(() => {
-      this.setIsApiConnected(api.isConnected);
-    }, 1000);
+    this.isApiConnected$.subscribe(this.setApiIsConnected);
   };
 
   requestNewToken = () => {
