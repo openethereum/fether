@@ -7,7 +7,7 @@ import { action, observable } from 'mobx';
 import Api from '@parity/api';
 import isElectron from 'is-electron';
 import light from '@parity/light.js';
-import { map } from 'rxjs/operators';
+import { map, distinctUntilChanged } from 'rxjs/operators';
 import store from 'store';
 import { timer } from 'rxjs';
 
@@ -20,13 +20,18 @@ const electron = isElectron() ? window.require('electron') : null;
 const LS_KEY = `${LS_PREFIX}::secureToken`;
 
 export class ParityStore {
-  @observable
-  isApiConnected = false;
+  // TODO This is not working
+  // api.on('connected', () => ...);
+  // api.on('disconnected', () => ...);
+  // So instead, we poll every 1s
   isApiConnected$ = timer(0, 1000).pipe(
-    map(_ => this.api && this.api.isConnected)
+    map(_ => this.api && this.api.isConnected),
+    distinctUntilChanged()
   );
+
   @observable
   isParityRunning = false;
+
   @observable
   token = null;
 
@@ -80,12 +85,6 @@ export class ParityStore {
 
     // Also set api as member for React Components to use it if needed
     this.api = api;
-
-    // TODO This is not working
-    // api.on('connected', () => this.setIsApiConnected(true));
-    // api.on('disconnected', () => this.setIsApiConnected(false));
-    // So instead, we poll every 1s
-    this.isApiConnected$.subscribe(this.setApiIsConnected);
   };
 
   requestNewToken = () => {
@@ -103,15 +102,6 @@ export class ParityStore {
       debug('Successfully received new token.');
       this.setToken(token);
     });
-  };
-
-  @action
-  setIsApiConnected = isApiConnected => {
-    if (isApiConnected === this.isApiConnected) {
-      return;
-    }
-    debug(`Api is now ${isApiConnected ? 'connected' : 'disconnected'}.`);
-    this.isApiConnected = isApiConnected;
   };
 
   @action
