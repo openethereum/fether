@@ -6,9 +6,18 @@
 import BigNumber from 'bignumber.js';
 import { combineLatest, Observable, fromEvent, merge } from 'rxjs';
 import { compose, mapPropsStream } from 'recompose';
+import {
+  distinctUntilChanged,
+  filter,
+  map,
+  publishReplay,
+  startWith,
+  switchMap,
+  take
+} from 'rxjs/operators';
 import isElectron from 'is-electron';
+import isEqual from 'lodash/isEqual';
 import { peerCount$, syncStatus$, withoutLoading } from '@parity/light.js';
-import { filter, map, take, publishReplay, startWith } from 'rxjs/operators';
 
 import parityStore from '../stores/parityStore';
 
@@ -61,54 +70,58 @@ const online$ = merge(
   fromEvent(window, 'offline').pipe(map(() => false))
 ).pipe(startWith(navigator.onLine));
 
-const syncStatusWithPayload$ = syncStatus$().pipe(
-  map(syncStatus => {
-    if (!syncStatus) {
-      return {
-        isSync: true
-      };
-    }
-
-    const { currentBlock, highestBlock, startingBlock } = syncStatus;
-    const percentage = currentBlock
-      .minus(startingBlock)
-      .mul(100)
-      .div(highestBlock.minus(startingBlock));
-
-    return {
-      isSync: false,
-      syncPayload: {
-        currentBlock,
-        highestBlock,
-        percentage,
-        startingBlock
-      }
-    };
-  })
-);
-
 const combined$ = combineLatest(
   isParityRunning$,
   isApiConnected$,
   downloadProgress$,
-  syncStatusWithPayload$,
-  isClockSync$,
   online$,
-  peerCount$().pipe(withoutLoading())
+  isClockSync$
 ).pipe(publishReplay(1));
+combined$.connect();
 
 // Subscribe to the RPCs only once we set a provider
-isApiConnected$
-  .pipe(
-    filter(isApiConnected => isApiConnected),
-    take(1)
-  )
-  .subscribe(_ => combined$.connect());
+const rpcs$ = isApiConnected$.pipe(
+  filter(isApiConnected => isApiConnected),
+  take(1),
+  switchMap(() =>
+    combineLatest(
+      syncStatus$().pipe(
+        map(syncStatus => {
+          if (!syncStatus) {
+            return {
+              isSync: true
+            };
+          }
+
+          const { currentBlock, highestBlock, startingBlock } = syncStatus;
+          const percentage = currentBlock
+            .minus(startingBlock)
+            .mul(100)
+            .div(highestBlock.minus(startingBlock));
+
+          return {
+            isSync: false,
+            syncPayload: {
+              currentBlock,
+              highestBlock,
+              percentage,
+              startingBlock
+            }
+          };
+        })
+      ),
+      peerCount$().pipe(withoutLoading())
+    )
+  ),
+  startWith([{ isSync: true }, null]), // Don't stall the HOC's combineLatest; emit immediately
+  publishReplay(1)
+);
+rpcs$.connect();
 
 // Inject node health information as health.{status, payload} props
 export default compose(
   mapPropsStream(props$ =>
-    combineLatest(props$, combined$).pipe(
+    combineLatest(props$, combined$, rpcs$).pipe(
       map(
         ([
           props,
@@ -116,11 +129,10 @@ export default compose(
             isParityRunning,
             isApiConnected,
             downloadProgress,
-            { isSync, syncPayload },
-            isClockSync,
             online,
-            peerCount
-          ]
+            isClockSync
+          ],
+          [{ isSync, syncPayload }, peerCount]
         ]) => {
           // Parity is being downloaded
           if (downloadProgress > 0 && !isParityRunning) {
@@ -208,7 +220,8 @@ export default compose(
             }
           };
         }
-      )
+      ),
+      distinctUntilChanged(isEqual) // Perform deep comparison
     )
   )
 );

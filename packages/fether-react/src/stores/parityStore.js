@@ -7,7 +7,7 @@ import { action, observable } from 'mobx';
 import Api from '@parity/api';
 import isElectron from 'is-electron';
 import light from '@parity/light.js';
-import { map, distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 import store from 'store';
 import { timer } from 'rxjs';
 
@@ -25,7 +25,7 @@ export class ParityStore {
   // api.on('disconnected', () => ...);
   // So instead, we poll every 1s
   isApiConnected$ = timer(0, 1000).pipe(
-    map(_ => this.api && this.api.isConnected),
+    map(_ => Boolean(this.api && this.api.isConnected)),
     distinctUntilChanged()
   );
 

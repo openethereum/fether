@@ -71,19 +71,25 @@ class App extends Component {
     return (
       <div className='window'>
         {status !== STATUS.GOOD && <Overlay />}
-        <Switch>
-          {/* The next line is the homepage */}
-          <Redirect exact from='/' to='/accounts' />
-          <Route path='/accounts' component={Accounts} />
-          <Route path='/onboarding' component={Onboarding} />
-          <Route path='/tokens/:accountAddress' component={Tokens} />
-          <Route path='/whitelist/:accountAddress' component={Whitelist} />
-          <Route
-            path='/send/:tokenAddress/from/:accountAddress'
-            component={Send}
-          />
-          <Redirect from='*' to='/' />
-        </Switch>
+
+        {/* Don't display child components requiring RPCs if API is not yet set */
+          ![STATUS.DOWNLOADING, STATUS.RUNNING, STATUS.CANTCONNECT].includes(
+            status
+          ) && (
+            <Switch>
+              {/* The next line is the homepage */}
+              <Redirect exact from='/' to='/accounts' />
+              <Route path='/accounts' component={Accounts} />
+              <Route path='/onboarding' component={Onboarding} />
+              <Route path='/tokens/:accountAddress' component={Tokens} />
+              <Route path='/whitelist/:accountAddress' component={Whitelist} />
+              <Route
+                path='/send/:tokenAddress/from/:accountAddress'
+                component={Send}
+              />
+              <Redirect from='*' to='/' />
+            </Switch>
+          )}
       </div>
     );
   }
