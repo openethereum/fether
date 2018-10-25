@@ -141,9 +141,7 @@ export default compose(
               health: {
                 status: STATUS.DOWNLOADING,
                 payload: {
-                  percentage: new BigNumber(
-                    Math.round(parityStore.downloadProgress * 100)
-                  )
+                  percentage: new BigNumber(Math.round(downloadProgress * 100))
                 }
               }
             };
