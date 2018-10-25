@@ -72,6 +72,10 @@ class Sent extends Component {
       sendStore: { confirmations, txStatus }
     } = this.props;
 
+    if (!txStatus) {
+      return '';
+    }
+
     if (confirmations >= MIN_CONFIRMATIONS) {
       return null;
     }
@@ -105,6 +109,10 @@ class Sent extends Component {
     const {
       sendStore: { confirmations, txStatus }
     } = this.props;
+
+    if (!txStatus) {
+      return '';
+    }
 
     if (txStatus.confirmed) {
       return (
