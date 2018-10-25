@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { chainName$ } from '@parity/light.js';
+import { chainName$, withoutLoading } from '@parity/light.js';
 import debounce from 'lodash/debounce';
 import { Header } from 'fether-ui';
 import light from '@parity/light.js-react';
@@ -17,7 +17,7 @@ import withTokens from '../utils/withTokens';
 @withAccount
 @withTokens
 @light({
-  chainName: () => chainName$({ withoutLoading: true })
+  chainName: () => chainName$().pipe(withoutLoading())
 })
 class Whitelist extends Component {
   state = {

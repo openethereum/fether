@@ -30,14 +30,14 @@
     "build-js": "react-app-rewired build",
     "start": "npm-run-all -p start-*",
     "start-css": "npm run build-css -- --watch --recursive",
-    "start-js": "react-app-rewired start",
+    "start-js": "BROWSER=none react-app-rewired start",
     "test": "react-app-rewired test --env=jsdom"
   },
   "dependencies": {
     "@parity/api": "^2.1.22",
-    "@parity/light.js": "^1.0.2",
+    "@parity/contracts": "^1.0.0",
+    "@parity/light.js": "^1.0.5",
     "@parity/light.js-react": "^1.0.0",
-    "@parity/shared": "^3.0.2",
     "bignumber.js": "^4.1.0",
     "debounce-promise": "^3.1.0",
     "debug": "^3.1.0",

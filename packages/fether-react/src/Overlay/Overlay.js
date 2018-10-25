@@ -4,14 +4,12 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react';
 
-import { STATUS } from '../stores/healthStore';
+import withHealth, { STATUS } from '../utils/withHealth';
 
 import loading from '../assets/img/icons/loading.svg';
 
-@inject('healthStore')
-@observer
+@withHealth
 class Overlays extends Component {
   state = {
     isVisible: false // Only make Overlay visible if the overlay error persists for 2s or more
@@ -32,9 +30,7 @@ class Overlays extends Component {
 
   render () {
     const {
-      healthStore: {
-        health: { status }
-      }
+      health: { status }
     } = this.props;
 
     // isVisible is:
@@ -67,9 +63,7 @@ class Overlays extends Component {
 
   renderDescription = () => {
     const {
-      healthStore: {
-        health: { status, payload }
-      }
+      health: { status, payload }
     } = this.props;
 
     switch (status) {
@@ -94,9 +88,7 @@ class Overlays extends Component {
 
   renderTitle = () => {
     const {
-      healthStore: {
-        health: { status }
-      }
+      health: { status }
     } = this.props;
 
     switch (status) {

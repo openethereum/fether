@@ -7,7 +7,9 @@ import { action, observable } from 'mobx';
 import Api from '@parity/api';
 import isElectron from 'is-electron';
 import light from '@parity/light.js';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 import store from 'store';
+import { timer } from 'rxjs';
 
 import Debug from '../utils/debug';
 import LS_PREFIX from './utils/lsPrefix';
@@ -18,12 +20,18 @@ const electron = isElectron() ? window.require('electron') : null;
 const LS_KEY = `${LS_PREFIX}::secureToken`;
 
 export class ParityStore {
-  @observable
-  downloadProgress = 0;
-  @observable
-  isApiConnected = false;
+  // TODO This is not working
+  // api.on('connected', () => ...);
+  // api.on('disconnected', () => ...);
+  // So instead, we poll every 1s
+  isApiConnected$ = timer(0, 1000).pipe(
+    map(_ => Boolean(this.api && this.api.isConnected)),
+    distinctUntilChanged()
+  );
+
   @observable
   isParityRunning = false;
+
   @observable
   token = null;
 
@@ -49,11 +57,6 @@ export class ParityStore {
     // We also listen to future changes
     ipcRenderer.on('parity-running', (_, isParityRunning) => {
       this.setIsParityRunning(isParityRunning);
-    });
-
-    // Set download progress
-    ipcRenderer.on('parity-download-progress', (_, progress) => {
-      this.setDownloadProgress(progress);
     });
   }
 
@@ -82,14 +85,6 @@ export class ParityStore {
 
     // Also set api as member for React Components to use it if needed
     this.api = api;
-
-    // TODO This is not working
-    // api.on('connected', () => this.setIsApiConnected(true));
-    // api.on('disconnected', () => this.setIsApiConnected(false));
-    // So instead, we poll every 1s
-    setInterval(() => {
-      this.setIsApiConnected(api.isConnected);
-    }, 1000);
   };
 
   requestNewToken = () => {
@@ -107,20 +102,6 @@ export class ParityStore {
       debug('Successfully received new token.');
       this.setToken(token);
     });
-  };
-
-  @action
-  setDownloadProgress = downloadProgress => {
-    this.downloadProgress = downloadProgress;
-  };
-
-  @action
-  setIsApiConnected = isApiConnected => {
-    if (isApiConnected === this.isApiConnected) {
-      return;
-    }
-    debug(`Api is now ${isApiConnected ? 'connected' : 'disconnected'}.`);
-    this.isApiConnected = isApiConnected;
   };
 
   @action
