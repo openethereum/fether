@@ -1020,12 +1020,13 @@
     recompose "^0.28.2"
     symbol-observable "^1.2.0"
 
-"@parity/light.js@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@parity/light.js/-/light.js-1.0.5.tgz#612d1557abf395a3f55b2a004f60c6e3f8eb8824"
+"@parity/light.js@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@parity/light.js/-/light.js-1.0.6.tgz#43b9cfccf5d0d1b4f5dd2ae1d9ca7e38ae2df3fc"
   dependencies:
     "@parity/abi" "^2.1.4"
     "@parity/api" "^2.1.23"
+    async-retry "^1.2.3"
     bignumber.js "^7.2.1"
     debug "^3.1.0"
     memoizee "^0.4.12"
@@ -1545,6 +1546,12 @@ async-retry@^1.2.1:
   resolved "https://registry.yarnpkg.com/async-retry/-/async-retry-1.2.1.tgz#308c6c4e1d91e63397a4676290334ae9bda7bcb1"
   dependencies:
     retry "0.10.1"
+
+async-retry@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/async-retry/-/async-retry-1.2.3.tgz#a6521f338358d322b1a0012b79030c6f411d1ce0"
+  dependencies:
+    retry "0.12.0"
 
 async@^1.4.0, async@^1.5.0, async@^1.5.2:
   version "1.5.2"
@@ -10305,6 +10312,10 @@ ret@~0.1.10:
 retry@0.10.1:
   version "0.10.1"
   resolved "https://registry.yarnpkg.com/retry/-/retry-0.10.1.tgz#e76388d217992c252750241d3d3956fed98d8ff4"
+
+retry@0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/retry/-/retry-0.12.0.tgz#1b42a6266a21f07421d1b0b54b7dc167b01c013b"
 
 right-align@^0.1.1:
   version "0.1.3"
