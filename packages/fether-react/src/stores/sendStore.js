@@ -71,7 +71,7 @@ export class SendStore {
         }
         this.setTxStatus(txStatus);
         debug('Tx status updated.', txStatus);
-      });
+      }, reject);
     });
   };
 
