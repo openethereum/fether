@@ -2,7 +2,7 @@
   "appId": "io.parity.fether",
   "linux": {
     "category": "Utility",
-    "icon": "./static/assets/logo/logo-1024x1024.png",
+    "icon": "./static/assets/logo/logo-512x512.png",
     "target": ["AppImage", "snap", "deb", "tar.xz"]
   },
   "mac": {
