@@ -79,7 +79,7 @@ class AccountsList extends Component {
                   Nothing here yet!
                   <br />
                   <br />
-                  Click the + icon to create a new account.
+                  Click the + icon to add a new account.
                 </p>
               )}
             </ul>
