@@ -100,7 +100,7 @@ class Overlays extends Component {
         return 'No Internet connection';
       case STATUS.NOPEERS:
         return 'Bad connectivity';
-      case STATUS.RUNNING:
+      case STATUS.LAUNCHING:
         return 'Connecting to the node...';
       case STATUS.SYNCING:
         return 'Syncing...';

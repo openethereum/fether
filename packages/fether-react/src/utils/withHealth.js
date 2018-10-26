@@ -26,13 +26,12 @@ const electron = isElectron() ? window.require('electron') : null;
 // List here all possible states of our health store. Each state can have a
 // payload.
 export const STATUS = {
-  CANTCONNECT: Symbol('CANTCONNECT'), // Can't connect to Parity's api
   CLOCKNOTSYNC: Symbol('CLOCKNOTSYNC'), // Local clock is not sync
   DOWNLOADING: Symbol('DOWNLOADING'), // Currently downloading Parity
   GOOD: Symbol('GOOD'), // Everything's fine
   NOINTERNET: Symbol('NOINTERNET'), // No Internet connection
   NOPEERS: Symbol('NOPEERS'), // Not connected to any peers
-  RUNNING: Symbol('RUNNING'), // Parity is running (only checked at startup)
+  LAUNCHING: Symbol('LAUNCHING'), // Parity is being launched (only happens at startup)
   SYNCING: Symbol('SYNCING') // Obvious
 };
 
@@ -113,7 +112,7 @@ const rpcs$ = isApiConnected$.pipe(
       peerCount$().pipe(withoutLoading())
     )
   ),
-  startWith([{ isSync: false }, null]), // Don't stall the HOC's combineLatest; emit immediately
+  startWith([{ isSync: false }, undefined]), // Don't stall the HOC's combineLatest; emit immediately
   publishReplay(1)
 );
 rpcs$.connect();
@@ -148,21 +147,11 @@ export default compose(
           }
 
           // Parity is being launched
-          if (isParityRunning && !isApiConnected) {
-            return {
-              ...props,
-              health: {
-                status: STATUS.RUNNING
-              }
-            };
-          }
-
-          // Not connected to the WS server
           if (!isApiConnected) {
             return {
               ...props,
               health: {
-                status: STATUS.CANTCONNECT
+                status: STATUS.LAUNCHING
               }
             };
           }
@@ -201,7 +190,7 @@ export default compose(
           }
 
           // Not enough peers
-          if (peerCount && peerCount.lte(1)) {
+          if (peerCount === undefined || peerCount.lte(1)) {
             return {
               ...props,
               health: {
