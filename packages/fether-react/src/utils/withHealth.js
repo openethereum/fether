@@ -113,7 +113,7 @@ const rpcs$ = isApiConnected$.pipe(
       peerCount$().pipe(withoutLoading())
     )
   ),
-  startWith([{ isSync: true }, null]), // Don't stall the HOC's combineLatest; emit immediately
+  startWith([{ isSync: false }, null]), // Don't stall the HOC's combineLatest; emit immediately
   publishReplay(1)
 );
 rpcs$.connect();
