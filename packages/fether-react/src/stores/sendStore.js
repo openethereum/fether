@@ -3,14 +3,14 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { action, computed, observable } from 'mobx';
-import { blockNumber$, post$ } from '@parity/light.js';
+import { action, computed, observable } from "mobx";
+import { blockNumber$, post$ } from "@parity/light.js";
 
-import { contractForToken, txForErc20, txForEth } from '../utils/estimateGas';
-import Debug from '../utils/debug';
-import parityStore from './parityStore';
+import { contractForToken, txForErc20, txForEth } from "../utils/estimateGas";
+import Debug from "../utils/debug";
+import parityStore from "./parityStore";
 
-const debug = Debug('sendStore');
+const debug = Debug("sendStore");
 
 export class SendStore {
   @observable
@@ -41,7 +41,7 @@ export class SendStore {
    * Get the number of confirmations our transaction has.
    */
   @computed
-  get confirmations () {
+  get confirmations() {
     if (!this.txStatus || !this.txStatus.confirmed) {
       return -1;
     }
@@ -53,13 +53,13 @@ export class SendStore {
    */
   send = (token, password) => {
     const tx =
-      token.address === 'ETH' ? txForEth(this.tx) : txForErc20(this.tx, token);
+      token.address === "ETH" ? txForEth(this.tx) : txForErc20(this.tx, token);
     const send$ =
-      token.address === 'ETH'
+      token.address === "ETH"
         ? post$(tx)
-        : contractForToken(token.address).transferFrom$(...tx.args, tx.options);
+        : contractForToken(token.address).transfer$(...tx.args, tx.options);
 
-    debug('Sending tx.', tx);
+    debug("Sending tx.", tx);
 
     return new Promise((resolve, reject) => {
       send$.subscribe(txStatus => {
@@ -70,7 +70,7 @@ export class SendStore {
             .catch(reject);
         }
         this.setTxStatus(txStatus);
-        debug('Tx status updated.', txStatus);
+        debug("Tx status updated.", txStatus);
       }, reject);
     });
   };

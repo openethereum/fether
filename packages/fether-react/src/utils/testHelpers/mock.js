@@ -5,16 +5,16 @@
 
 /* eslint-env jest */
 
-import BigNumber from 'bignumber.js';
+import BigNumber from "bignumber.js";
 
 export const api = {
   eth: {
     estimateGas: jest.fn(() => Promise.resolve(new BigNumber(456)))
   },
   parity: {
-    generateSecretPhrase: jest.fn(() => Promise.resolve('foo')),
+    generateSecretPhrase: jest.fn(() => Promise.resolve("foo")),
     newAccountFromPhrase: jest.fn(() => Promise.resolve()),
-    phraseToAddress: jest.fn(() => Promise.resolve('0x123')),
+    phraseToAddress: jest.fn(() => Promise.resolve("0x123")),
     setAccountName: jest.fn(() => Promise.resolve()),
     setAccountMeta: jest.fn(() => Promise.resolve())
   },
@@ -24,12 +24,12 @@ export const api = {
 };
 
 export const erc20 = {
-  address: 'foo',
+  address: "foo",
   decimals: 18
 };
 
 export const eth = {
-  address: 'ETH'
+  address: "ETH"
 };
 
 export const makeContract = {
@@ -40,7 +40,7 @@ export const makeContract = {
       }
     }
   },
-  transferFrom$: jest.fn(() => ({ subscribe: jest.fn() }))
+  transfer$: jest.fn(() => ({ subscribe: jest.fn() }))
 };
 
 export const post$ = {
@@ -52,7 +52,7 @@ export const post$ = {
 
 export const tx = {
   amount: 0.01, // In Ether or in token
-  from: '0x456',
+  from: "0x456",
   gasPrice: 4, // in Gwei
-  to: '0x123'
+  to: "0x123"
 };
