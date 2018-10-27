@@ -17,7 +17,6 @@ import ReactResizeDetector from 'react-resize-detector';
 
 import Accounts from '../Accounts';
 import Onboarding from '../Onboarding';
-import Overlay from '../Overlay';
 import Send from '../Send';
 import withHealth, { STATUS } from '../utils/withHealth';
 import Tokens from '../Tokens';
@@ -70,8 +69,6 @@ class App extends Component {
 
     return (
       <div className='window'>
-        {status !== STATUS.GOOD && <Overlay />}
-
         {/* Don't display child components requiring RPCs if API is not yet set */
           ![STATUS.DOWNLOADING, STATUS.LAUNCHING].includes(status) && (
             <Switch>

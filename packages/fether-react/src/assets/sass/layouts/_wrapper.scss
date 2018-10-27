@@ -34,17 +34,5 @@
     .window_content {
       min-height: 7.5rem;
     }
-
-    .window_overlay {
-      background-color: $chrome;
-      bottom: 0;
-      left: 0;
-      min-height: 7.5rem;
-      opacity: 0.98;
-      position: absolute;
-      right: 0;
-      top: 0;
-      z-index: 10;
-    }
   }
 }
