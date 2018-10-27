@@ -73,9 +73,7 @@ class App extends Component {
         {status !== STATUS.GOOD && <Overlay />}
 
         {/* Don't display child components requiring RPCs if API is not yet set */
-          ![STATUS.DOWNLOADING, STATUS.RUNNING, STATUS.CANTCONNECT].includes(
-            status
-          ) && (
+          ![STATUS.DOWNLOADING, STATUS.LAUNCHING].includes(status) && (
             <Switch>
               {/* The next line is the homepage */}
               <Redirect exact from='/' to='/accounts' />

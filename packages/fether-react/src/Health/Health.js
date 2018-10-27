@@ -33,7 +33,7 @@ class Health extends Component {
       case STATUS.GOOD:
         return '-good';
       case STATUS.DOWNLOADING:
-      case STATUS.RUNNING:
+      case STATUS.LAUNCHING:
       case STATUS.SYNCING:
         return '-syncing';
       default:
@@ -46,8 +46,6 @@ class Health extends Component {
       health: { status, payload }
     } = this.props;
     switch (status) {
-      case STATUS.CANTCONNECT:
-        return "Can't connect to Parity";
       case STATUS.CLOCKNOTSYNC:
         return 'Clock not sync';
       case STATUS.DOWNLOADING:
@@ -58,8 +56,8 @@ class Health extends Component {
         return 'No Internet connection';
       case STATUS.NOPEERS:
         return 'Not connected to any peers';
-      case STATUS.RUNNING:
-        return 'Running...';
+      case STATUS.LAUNCHING:
+        return 'Launching the node...';
       case STATUS.SYNCING:
         return `Syncing...${
           payload && payload.percentage && payload.percentage.gt(0)

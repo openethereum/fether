@@ -5,14 +5,14 @@
 
 import React, { Component } from 'react';
 import { AccountCard, Header } from 'fether-ui';
-import { accountsInfo$ } from '@parity/light.js';
+import { accountsInfo$, withoutLoading } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
 import light from '@parity/light.js-react';
 
 import Health from '../../Health';
 
 @light({
-  accountsInfo: accountsInfo$
+  accountsInfo: () => accountsInfo$().pipe(withoutLoading())
 })
 @inject('createAccountStore', 'parityStore')
 @observer
@@ -35,8 +35,10 @@ class AccountsList extends Component {
   render () {
     const { accountsInfo } = this.props;
 
+    const accountsList = Object.keys(accountsInfo);
+
     return (
-      <div>
+      <div className='accounts-list'>
         <Header
           title={<h1>Accounts</h1>}
           right={
@@ -49,31 +51,36 @@ class AccountsList extends Component {
         <div className='window_content'>
           <div className='box -scroller'>
             <ul className='list'>
-              {accountsInfo ? (
-                Object.keys(accountsInfo).map(address => (
-                  <li
-                    key={address}
-                    data-address={address} // Using data- to avoid creating a new item Component
-                    onClick={this.handleClick}
-                  >
-                    <AccountCard
-                      address={address}
-                      className='-clickable'
-                      name={
-                        accountsInfo &&
-                        accountsInfo[address] &&
-                        (accountsInfo[address].name
-                          ? accountsInfo[address].name
-                          : '(No name)')
-                      }
-                      shortAddress
-                    />
-                  </li>
-                ))
+              {accountsList.length ? (
+                <ul>
+                  {accountsList.map(address => (
+                    <li
+                      key={address}
+                      data-address={address} // Using data- to avoid creating a new item Component
+                      onClick={this.handleClick}
+                    >
+                      <AccountCard
+                        address={address}
+                        className='-clickable'
+                        name={
+                          accountsInfo &&
+                          accountsInfo[address] &&
+                          (accountsInfo[address].name
+                            ? accountsInfo[address].name
+                            : '(No name)')
+                        }
+                        shortAddress
+                      />
+                    </li>
+                  ))}
+                </ul>
               ) : (
-                <li>
-                  <AccountCard />
-                </li>
+                <p className='create-hint'>
+                  Nothing here yet!
+                  <br />
+                  <br />
+                  Click the + icon to add a new account.
+                </p>
               )}
             </ul>
           </div>
