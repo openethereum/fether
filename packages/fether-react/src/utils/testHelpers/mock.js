@@ -40,7 +40,7 @@ export const makeContract = {
       }
     }
   },
-  transferFrom$: jest.fn(() => ({ subscribe: jest.fn() }))
+  transfer$: jest.fn(() => ({ subscribe: jest.fn() }))
 };
 
 export const post$ = {

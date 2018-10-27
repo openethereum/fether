@@ -86,13 +86,12 @@ describe('method send', () => {
     sendStore.setTx(mock.tx);
   });
 
-  test('should call transferFrom$ if the token is Erc20', () => {
+  test('should call transfer$ if the token is Erc20', () => {
     sendStore.send(mock.erc20);
-    expect(mock.makeContract.transferFrom$).toHaveBeenCalledWith(
-      '0x456',
+    expect(mock.makeContract.transfer$).toHaveBeenCalledWith(
       '0x123',
       new BigNumber('10000000000000000'),
-      { gasPrice: new BigNumber('4000000000') }
+      { from: '0x456', gasPrice: new BigNumber('4000000000') }
     );
   });
 

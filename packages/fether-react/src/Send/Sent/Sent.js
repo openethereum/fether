@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { chainName$ } from '@parity/light.js';
+import { chainName$, withoutLoading } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
 import light from '@parity/light.js-react';
 
@@ -15,7 +15,7 @@ import loading from '../../assets/img/icons/loading.svg';
 const MIN_CONFIRMATIONS = 6;
 
 @light({
-  chainName: chainName$
+  chainName: () => chainName$().pipe(withoutLoading())
 })
 @inject('sendStore')
 @observer
@@ -72,6 +72,10 @@ class Sent extends Component {
       sendStore: { confirmations, txStatus }
     } = this.props;
 
+    if (!txStatus) {
+      return '';
+    }
+
     if (confirmations >= MIN_CONFIRMATIONS) {
       return null;
     }
@@ -105,6 +109,10 @@ class Sent extends Component {
     const {
       sendStore: { confirmations, txStatus }
     } = this.props;
+
+    if (!txStatus) {
+      return '';
+    }
 
     if (txStatus.confirmed) {
       return (
