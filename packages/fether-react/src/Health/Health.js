@@ -5,12 +5,12 @@
 
 import React, { Component } from 'react';
 
-import { chainName$, withoutLoading } from '@parity/light.js';
+import { chainName$, isLoading } from '@parity/light.js';
 import light from '@parity/light.js-react';
 import withHealth, { STATUS } from '../utils/withHealth';
 
 @light({
-  chainName: () => chainName$().pipe(withoutLoading())
+  chainName: chainName$
 })
 @withHealth
 class Health extends Component {
@@ -51,13 +51,16 @@ class Health extends Component {
       health: { status, payload },
       chainName
     } = this.props;
+
+    const chainNameAppend = isLoading(chainName) ? '' : ` (${chainName})`;
+
     switch (status) {
       case STATUS.CLOCKNOTSYNC:
         return 'Clock not sync';
       case STATUS.DOWNLOADING:
         return `Downloading... (${payload.percentage}%)`;
       case STATUS.GOOD:
-        return `Synced (${chainName})`;
+        return `Synced${chainNameAppend}`;
       case STATUS.NOINTERNET:
         return 'No Internet connection';
       case STATUS.NOPEERS:
@@ -69,7 +72,7 @@ class Health extends Component {
           payload && payload.percentage && payload.percentage.gt(0)
             ? ` (${payload.percentage.toFixed(0)}%)`
             : ''
-        } (${chainName})`;
+        }${chainNameAppend}`;
       default:
         return JSON.stringify(payload); // Just in case payload is an object
     }
