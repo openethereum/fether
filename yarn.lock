@@ -1020,9 +1020,9 @@
     recompose "^0.28.2"
     symbol-observable "^1.2.0"
 
-"@parity/light.js@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@parity/light.js/-/light.js-1.0.6.tgz#43b9cfccf5d0d1b4f5dd2ae1d9ca7e38ae2df3fc"
+"@parity/light.js@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@parity/light.js/-/light.js-1.0.7.tgz#a07d13d08bb89960d585fd715ec72885b380276f"
   dependencies:
     "@parity/abi" "^2.1.4"
     "@parity/api" "^2.1.23"
