@@ -50,39 +50,37 @@ class AccountsList extends Component {
 
         <div className='window_content'>
           <div className='box -scroller'>
-            <ul className='list'>
-              {accountsList.length ? (
-                <ul>
-                  {accountsList.map(address => (
-                    <li
-                      key={address}
-                      data-address={address} // Using data- to avoid creating a new item Component
-                      onClick={this.handleClick}
-                    >
-                      <AccountCard
-                        address={address}
-                        className='-clickable'
-                        name={
-                          accountsInfo &&
-                          accountsInfo[address] &&
-                          (accountsInfo[address].name
-                            ? accountsInfo[address].name
-                            : '(No name)')
-                        }
-                        shortAddress
-                      />
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className='create-hint'>
-                  Nothing here yet!
-                  <br />
-                  <br />
-                  Click the + icon to add a new account.
-                </p>
-              )}
-            </ul>
+            {accountsList.length ? (
+              <ul className='list'>
+                {accountsList.map(address => (
+                  <li
+                    key={address}
+                    data-address={address} // Using data- to avoid creating a new item Component
+                    onClick={this.handleClick}
+                  >
+                    <AccountCard
+                      address={address}
+                      className='-clickable'
+                      name={
+                        accountsInfo &&
+                        accountsInfo[address] &&
+                        (accountsInfo[address].name
+                          ? accountsInfo[address].name
+                          : '(No name)')
+                      }
+                      shortAddress
+                    />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className='create-hint'>
+                Nothing here yet!
+                <br />
+                <br />
+                Click the + icon to add a new account.
+              </p>
+            )}
           </div>
         </div>
 
