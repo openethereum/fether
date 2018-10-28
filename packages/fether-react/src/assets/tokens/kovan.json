@@ -1,5 +1,6 @@
 [
 {"address":"0x4733659a5cB7896A65c918Add6f59C5148FB5ffa","decimals":6,"name":"GavCoin","symbol":"GAV","logo":"https://raw.githubusercontent.com/ethcore/dapp-assets/9e135f76fe9ba61e2d8ccbd72ed144c26c450780/tokens/gavcoin-64x64.png"},
+{"address":"0x7B6B10CAa9E8E9552bA72638eA5b47c25afea1f3","decimals":18,"name":"Maker","symbol":"MKR"},
 {"address":"0x7A1767DF4Bad56bA284aC2a07b55D0825aBAb91C","decimals":9,"name":"TESTNET DGX","symbol":"DX1"},
 {"address":"0xD18E0764167a3288C16eb35723819c15C6352111","decimals":0,"name":"MyToken","symbol":"MTY"},
 {"address":"0x126e563451F658D53c60781b954C367175545611","decimals":0,"name":"HSBC","symbol":"HSB","logo":""},
@@ -95,7 +96,6 @@
 {"address":"0x18587A635F748e5Bb13a5D21c05186D63458859e","decimals":2,"name":"Rockets","symbol":"RKK"},
 {"address":"0x1A5B0cF6bBde17EAD32f53883aF2ac71535A11ef","decimals":18,"name":"Rocket Pool","symbol":"RPL"},
 {"address":"0xFD7722f453A7f0ff0F214e74b0883E383f2A5F02","decimals":0,"name":"MA STARTUP (SHARES)","symbol":"ACT"},
-{"address":"0xC807c602f5bB5A926d23dc5d8a20e193cA6Fc5d4","decimals":18,"name":"0x Protocol Token","symbol":"ZRX"},
 {"address":"0x8067B4b40e22006c0d5898ad63F1aAf57eA34610","decimals":0,"name":"MarcoDroid","symbol":"MDS"},
 {"address":"0xd468427Fe8Ab8c7b51FeF9602EE6dE3C241557b1","decimals":0,"name":"MJC","symbol":"MJC"},
 {"address":"0xB7676c4544aa1702281CE75275ef9Afc1Df477ba","decimals":0,"name":"Tomorrowshares","symbol":"STR"},
@@ -113,7 +113,7 @@
 {"address":"0x5EA4FCEF969dBDa2029b60842DFFD0B3fAC94423","decimals":18,"name":"Webqlo Token 3","symbol":"WQ3"},
 {"address":"0x889b7c1c0fe4c39026d4ada4EA7703ca3a2aE6C9","decimals":18,"name":"Webqlo Token 4","symbol":"WQ4"},
 {"address":"0x1721aa0603aB3A4FE083F16aE502E66F11551156","decimals":0,"name":"VEM","symbol":"VEM"},
-{"address":"0x6Ff6C0Ff1d68b964901F986d4C9FA3ac68346570","decimals":18,"name":"ZRX Kovan","symbol":"ZRK","logo":"https://www.0xproject.com/images/token_icons/zero_ex.png"},
+{"address":"0x2002D3812F58e35F0EA1fFbf80A75a38c32175fA","decimals":18,"name":"ZRX Kovan","symbol":"ZRK","logo":"https://www.0xproject.com/images/token_icons/zero_ex.png"},
 {"address":"0x186B14180Cd0C085B0675A93E56A6EfD93b87C33","decimals":18,"name":"Atmatrix Token","symbol":"ATT","logo":"https://raw.githubusercontent.com/ATMatrix/token-sale-contracts/8a6e98989e3e8179571e5d94c151a84ed205d868/assets/att-icon%40128x128.png"},
 {"address":"0xe0C22B8cbfe67e723C525Dc9b00De8D1bEAfF636","decimals":0,"name":"TUT","symbol":"TUT"},
 {"address":"0x5D82cD72Bdf41B7dbB2b397acdFCCa04ea610c72","decimals":1,"name":"BelugaDB","symbol":"BLG"},

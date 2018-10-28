@@ -190,7 +190,7 @@ export default compose(
           }
 
           // Not enough peers
-          if (peerCount === undefined || peerCount.lte(1)) {
+          if (peerCount === undefined || peerCount.lte(0)) {
             return {
               ...props,
               health: {
