@@ -133,6 +133,16 @@ export default compose(
           ],
           [{ isSync, syncPayload }, peerCount]
         ]) => {
+          // No connexion to the internet
+          if (!online) {
+            return {
+              ...props,
+              health: {
+                status: STATUS.NOINTERNET
+              }
+            };
+          }
+
           // Parity is being downloaded
           if (downloadProgress > 0 && !isParityRunning) {
             return {
@@ -158,17 +168,6 @@ export default compose(
 
           // At this point we have a successful connection to parity
 
-          // Syncing blocks
-          if (!isSync) {
-            return {
-              ...props,
-              health: {
-                status: STATUS.SYNCING,
-                payload: syncPayload
-              }
-            };
-          }
-
           // Clock is not synchronized
           if (!isClockSync) {
             return {
@@ -179,22 +178,23 @@ export default compose(
             };
           }
 
-          // No connexion to the internet
-          if (!online) {
-            return {
-              ...props,
-              health: {
-                status: STATUS.NOINTERNET
-              }
-            };
-          }
-
           // Not enough peers
           if (peerCount === undefined || peerCount.lte(1)) {
             return {
               ...props,
               health: {
                 status: STATUS.NOPEERS
+              }
+            };
+          }
+
+          // Syncing blocks
+          if (!isSync) {
+            return {
+              ...props,
+              health: {
+                status: STATUS.SYNCING,
+                payload: syncPayload
               }
             };
           }
