@@ -2,17 +2,14 @@
   "appId": "io.parity.fether",
   "linux": {
     "category": "Utility",
-    "icon": "./static/assets/logo/logo-512x512.png",
     "target": ["AppImage", "snap", "deb", "tar.xz"]
   },
   "mac": {
-    "category": "public.app-category.productivity",
-    "icon": "./static/assets/logo/logo-1024x1024.png"
+    "category": "public.app-category.productivity"
   },
   "productName": "Parity Fether",
   "publish": "github",
   "win": {
-    "icon": "./static/assets/logo/logo-1024x1024.png",
     "publisherName": "Parity Technologies (UK) Ltd.",
     "target": "nsis"
   }
