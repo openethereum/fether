@@ -7,14 +7,14 @@
 - The user expressly acknowledges and agrees that Parity Technologies Limited makes the Fether client available to the user at the user&#39;s sole risk.
 - The user represents that the user has an adequate understanding of the risks, usage and intricacies of cryptographic tokens and blockchain-based open source software, the Ethereum platform and ETH.
 - The user acknowledges and agrees that, to the fullest extent permitted by any applicable law, the disclaimers of liability contained herein apply to any and all damages or injury whatsoever caused by or related to risks of, use of, or inability to use, the Fether client under any cause or action whatsoever of any kind in any jurisdiction, including, without limitation, actions for breach of warranty, breach of contract or tort (including negligence) and that Parity Technologies Limited shall not be liable for any indirect, incidental, special, exemplary or consequential damages, including for loss of profits, goodwill or data.
-- Some jurisdictions do not allow the exclusion of certain warranties or the limitation or exclusion of liability for certain types of damages. Therefore, some of the above limitations in this section may not apply to a user. In particular, nothing in these terms shall affect the statutory rights of any user or limit or exclude liability for death or physical injury arising from the negligence or wilful misconduct of Parity Technologies Limited or for fraud or fraudulent misrepresentation.
+- Some jurisdictions do not allow the exclusion of certain warranties or the limitation or exclusion of liability for certain types of damages. Therefore, some of the above limitations in this section may not apply to a user. In particular, nothing in these terms shall affect the statutory rights of any user or limit or exclude liability for death or physical injury arising from the negligence or willful misconduct of Parity Technologies Limited or for fraud or fraudulent misrepresentation.
 - All rights reserved by Parity Technologies Limited. Licensed to the public under the BSD3.0 License (also known as &quot;BSD-3-Clause&quot;): [https://opensource.org/licenses/BSD-3-Clause](https://opensource.org/licenses/BSD-3-Clause)
 
 **LEGAL WARNING LONG VERSION**
 
 The following Terms and Conditions (&quot;Terms&quot;) govern the use of Parity Technologies Limited&#39;s open source software product (&quot;Fether&quot;). Prior to any use of Fether or any of Parity Technologies Limited&#39;s products (&quot;Parity Technologies&#39; Products&quot;), you (&quot;User&quot; or &quot;you&quot;) confirm on your own behalf and on behalf of anyone who uses Fether on your behalf that you (and they) understand, expressly agree to and will comply with all of the Terms. All capitalized words and expressions in these Terms will have the effect and meaning given to them in the Terms. The group of developers and other personnel that is now, or will be, employed by, or contracted with, or affiliated with, Parity Technologies Limited (&quot;Parity Technologies&quot; or &quot;we&quot;) is termed the &quot;Parity Technologies Team&quot;.
 
-**Acknowledgement of Risks**
+**Acknowledgment of Risks**
 
 The User acknowledges the following serious risks to any use of Fether and expressly agrees not to hold liable Parity Technologies or the Parity Technologies Team should any of these risks occur:
 
@@ -36,7 +36,7 @@ If Ethereum is rapidly adopted, the demand for transaction processing and distri
 
 **Risk of temporary network incoherence**
 
-We recommend any groups handling large or important transactions to maintain a voluntary 24 hour waiting period on any ETH deposited. If we become aware that the integrity of the network is at risk due to issues with Fether, we will endeavour to publish patches in a timely fashion to address the issues. We will endeavour to provide solutions within the voluntary 24 hour waiting period.
+We recommend any groups handling large or important transactions to maintain a voluntary 24 hour waiting period on any ETH deposited. If we become aware that the integrity of the network is at risk due to issues with Fether, we will endeavor to publish patches in a timely fashion to address the issues. We will endeavor to provide solutions within the voluntary 24 hour waiting period.
 
 **Use of Fether by you**
 
@@ -50,7 +50,7 @@ You agree that you are solely responsible for (and that Parity Technologies has 
 
 **Privacy and your personal information**
 
-You agree to the use of your data (if any is gathered) in accordance with Parity Technologies&#39; privacy policies: [https://paritytech.io/legal.html](https://paritytech.io/legal.html). This policy explains how Parity Technologies treats your personal information (if any is gathered), and protects your privacy, when you use Parity Technologies&#39; Products.
+You agree to the use of your data (if any is gathered) in accordance with Parity Technologies&#39; privacy policies: [https://paritytech.io/legal.html](https://paritytech.io/legal.html). This policy explains how Parity Technologies treats your personal information (if any is gathered), and protects your privacy when you use Parity Technologies&#39; Products.
 
 **Content in Fether**
 
@@ -86,7 +86,7 @@ Unless Parity Technologies has given you specific written permission to do so, y
 
 **Software updates**
 
-Fether may automatically download and install updates from time to time from Parity Technologies. These updates are designed to improve, enhance and further develop Fether and may take the form of bug fixes, enhanced functions, new software modules and completely new versions. You agree to receive such updates (and permit Parity Technologies to deliver these to you) as part of your use of Fether and Parity Technologies&#39; Products.
+Fether may automatically download and install updates from time to time from Parity Technologies. These updates are designed to improve, enhance and further develop Fether and may take the form of bug fixes, enhanced functions, new software modules, and completely new versions. You agree to receive such updates (and permit Parity Technologies to deliver these to you) as part of your use of Fether and Parity Technologies&#39; Products.
 
 **Ending your relationship with Parity Technologies**
 
@@ -104,15 +104,15 @@ When these Terms come to an end for any reason:
 2. you must delete or remove Fether or Parity Technologies&#39; Products from all computer equipment in your possession or under your control; and
 3. all of the rights granted to you in these Terms shall cease.
 
-Except as set out above, termination of these Terms shall not affect any rights, remedies, obligations and liabilities that have accrued to you or Parity Technologies up to the date of termination, including the right to claim damages in respect of any breach of these Terms which existed at or before the date of termination, and the courts of England and Wales shall continue to have jurisdiction in respect of such rights, obligations and liabilities indefinitely.
+Except as set out above, termination of these Terms shall not affect any rights, remedies, obligations, and liabilities that have accrued to you or Parity Technologies up to the date of termination, including the right to claim damages in respect of any breach of these Terms which existed at or before the date of termination, and the courts of England and Wales shall continue to have jurisdiction in respect of such rights, obligations and liabilities indefinitely.
 
-**Acknowledgement and acceptance of all risks, exclusion of warranties**
+**Acknowledgment and acceptance of all risks, exclusion of warranties**
 
-The User expressly acknowledges and agrees that the User is using Fether and Parity Technologies&#39; Products at the User&#39;s sole risk. The User represents that the User has an adequate understanding of the risks, usage and intricacies of cryptographic tokens and blockchain-based open source software.
+The User expressly acknowledges and agrees that the User is using Fether and Parity Technologies&#39; Products at the User&#39;s sole risk. The User represents that the User has an adequate understanding of the risks, usage, and intricacies of cryptographic tokens and blockchain-based open source software.
 
 You expressly understand and agree that Fether and Parity Technologies&#39; Products are provided &quot;as is&quot; and &quot;as available.&quot;
 
-Parity Technologies, its subsidiaries and affiliates, and its licensors do not represent or warrant to you that:
+Parity Technologies, its subsidiaries, and affiliates, and its licensors do not represent or warrant to you that:
 
 1. your use of Fether or Parity Technologies&#39; Products will meet your requirements,
 2. your use of Fether or Parity Technologies&#39; Products will be uninterrupted, timely, secure or free from error,
@@ -129,11 +129,11 @@ To the fullest extent permitted by applicable law, Parity Technologies expressly
 
 The User acknowledges and agrees that, to the fullest extent permitted by any applicable law, the disclaimers and exclusion of liability contained herein apply to any and all damages or injury whatsoever caused by or related to risks of, use of, or inability to use, Fether under any cause of action whatsoever of any kind in any jurisdiction, including, without limitation, actions for breach of warranty, breach of contract or tort (including negligence).
 
-Some jurisdictions do not allow the exclusion of certain warranties or the limitation or exclusion of liability for certain types of damages. Therefore, some of the above limitations in this section may not apply to you. In particular, nothing in these terms shall affect the statutory rights of any User or limit or exclude liability for death or physical injury arising from the negligence or wilful misconduct of Parity Technologies or for fraud or fraudulent misrepresentation.
+Some jurisdictions do not allow the exclusion of certain warranties or the limitation or exclusion of liability for certain types of damages. Therefore, some of the above limitations in this section may not apply to you. In particular, nothing in these terms shall affect the statutory rights of any User or limit or exclude liability for death or physical injury arising from the negligence or willful misconduct of Parity Technologies or for fraud or fraudulent misrepresentation.
 
-Subject to any liability which may not be excluded, you expressly understand and agree that Parity Technologies, its subsidiaries and affiliates, and its licensors shall not be liable to you for:
+Subject to any liability which may not be excluded, you expressly understand and agree that Parity Technologies, its subsidiaries, and affiliates, and its licensors shall not be liable to you for:
 
-1. any direct, indirect, incidental, special consequential or exemplary damages which may be incurred by you, however caused and under any theory of liability. This shall include, but not be limited to, any loss of profit (whether incurred directly or indirectly), any loss of goodwill or business reputation, any loss of data suffered, cost of procurement of substitute goods or services, or other intangible loss; or
+1. any direct, indirect, incidental, special consequential or exemplary damages which may be incurred by you, however, caused and under any theory of liability. This shall include, but not be limited to, any loss of profit (whether incurred directly or indirectly), any loss of goodwill or business reputation, any loss of data suffered, cost of procurement of substitute goods or services, or other intangible loss; or
 2. any loss or damage which may be incurred by you, including but not limited to loss or damage as a result of:
 
    1. any reliance placed by you on the completeness, accuracy or existence of any advertising, or as a result of any relationship or transaction between you and any advertiser or sponsor whose advertising appears on Parity Technologies&#39; Products;
@@ -146,7 +146,7 @@ The limitations on Parity Technologies&#39; liability to you shall apply whether
 
 **Copyright and trade mark policies**
 
-It is Parity Technologies&#39; policy to respond to notices of alleged copyright infringement that comply with applicable international intellectual property law (including, in the United States, the Digital Millennium Copyright Act) where Parity Technologies is put on notice and it is under Parity Technologies&#39; control. In such cases Parity Technologies shall be entitled to terminate the accounts of repeat infringers.
+It is Parity Technologies&#39; policy to respond to notices of alleged copyright infringement that comply with applicable international intellectual property law (including, in the United States, the Digital Millennium Copyright Act) where Parity Technologies is put on notice and it is under Parity Technologies&#39; control. In such cases, Parity Technologies shall be entitled to terminate the accounts of repeat infringers.
 
 **Possible Advertisements**
 
