@@ -36,7 +36,7 @@
   "dependencies": {
     "@parity/api": "^2.1.22",
     "@parity/contracts": "^1.0.0",
-    "@parity/light.js": "^1.0.7",
+    "@parity/light.js": "^1.0.9",
     "@parity/light.js-react": "^1.0.0",
     "bignumber.js": "^4.1.0",
     "debounce-promise": "^3.1.0",

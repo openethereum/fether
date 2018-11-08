@@ -1149,10 +1149,10 @@
     recompose "^0.28.2"
     symbol-observable "^1.2.0"
 
-"@parity/light.js@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@parity/light.js/-/light.js-1.0.7.tgz#a07d13d08bb89960d585fd715ec72885b380276f"
-  integrity sha512-6/DaiBlCOhP/85t7vQ0CClzfAHUZc/lrsFPsHlJ8jJKL3fhhCLLYZWe17djxejdOIGRf/XOE1z5GyxehuLFYTA==
+"@parity/light.js@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@parity/light.js/-/light.js-1.0.9.tgz#e7685712d6d5265923ad2852f50462344af92b5c"
+  integrity sha512-gCZsnv8Yilk6kTEZwRJBPF4FpLkpH7dJ/1ngrYy+6cGcgWLWvPJMaP2tQUUziMsbpBSDWKhYpZMD0jFTVzuy5g==
   dependencies:
     "@parity/abi" "^2.1.4"
     "@parity/api" "^2.1.23"
