@@ -25,17 +25,31 @@ If you run into problems while using Parity Fether, feel free to file an issue i
 
 ![Parity Fether](https://wiki.parity.io/images/fether-screenshot-0.jpg)
 
-## Start Parity Fether
+## Install and start Parity Fether
 
-### Using the command line
+### Linux
+  #### Using the AppImage (any distro)
+  - Download the `.AppImage` file.
+  - Make it executable `chmod +x /path/to/fether-x.x.x-x86_64.AppImage`.
+  - Launch it `/path/to/fether-x.x.x-x86_64.AppImage`.
+  
+  #### Using the binary (any distro)
+  - Download the `.tar.xz` file.
+  - Unarchive it `tar xf fether-x.x.x.tar.xz`.
+  - Launch it `./fether-x.x.x/fether`.
+  
+  #### Debian installer (Ubuntu, Linux Mint..)
+  - Download the `.deb` file.
+  - Double click on the file to install Fether.
+  - Fether will be added to the programm menu.
 
-To start Parity Fether manually, simply run:
+### Mac
+- Download the `.dmg` file
 
-```bash
-$ /path/to/fether
-```
-
-Fether will launch a Partity Ethereum light node and print its output in the command line.
+### Windows
+- Download the `.exe` file
+- Double click on it to install Fether
+- Fether will be added to the programm menu
 
 ### Passing config flags to the underlying Parity Ethereum node
 
