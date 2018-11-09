@@ -1,6 +1,6 @@
 ![Parity Fether](https://wiki.parity.io/images/logo-parity-fether.jpg)
 
-# Parity Fether - a fast and decentralized wallet based on a light-client
+# Parity Fether - a decentralised, light client-based wallet
 
 ## [» Download the latest release «](https://github.com/paritytech/fether/releases)
 
