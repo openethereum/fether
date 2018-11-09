@@ -25,17 +25,32 @@ If you run into problems while using Parity Fether, feel free to file an issue i
 
 ![Parity Fether](https://wiki.parity.io/images/fether-screenshot-0.jpg)
 
-## Start Parity Fether
+## Install and start Parity Fether
 
-### Using the command line
+### Linux
+  #### Using the AppImage (any distro)
+  - Download the [`.AppImage` file](https://github.com/paritytech/fether/releases).
+  - Make it executable `chmod +x /path/to/fether-x.x.x-x86_64.AppImage`.
+  - Launch it `/path/to/fether-x.x.x-x86_64.AppImage`.
+  
+  #### Using the binary (any distro)
+  - Download the [`.tar.xz` file](https://github.com/paritytech/fether/releases).
+  - Unarchive it `tar xf fether-x.x.x.tar.xz`.
+  - Launch it `./fether-x.x.x/fether`.
+  
+  #### Debian installer (Ubuntu, Linux Mint..)
+  - Download the [`.deb` file](https://github.com/paritytech/fether/releases).
+  - Double click on the file to install Fether.
+  - Fether will be added to the program menu.
+  
+### Mac
+- Download the [`.dmg` file](https://github.com/paritytech/fether/releases).
+- Double click on it to install Fether.
 
-To start Parity Fether manually, simply run:
-
-```bash
-$ /path/to/fether
-```
-
-Fether will launch a Partity Ethereum light node and print its output in the command line.
+### Windows
+- Download the [`.exe` file](https://github.com/paritytech/fether/releases).
+- Double click on it to install Fether.
+- Fether will be added to the program menu.
 
 ### Passing config flags to the underlying Parity Ethereum node
 
@@ -51,7 +66,7 @@ $ /path/to/fether --chain ropsten --light
 You can also launch Parity Ethereum node before, with any flag you want:
 
 ```bash
-# Launching Parity Ethereum lieght client on Ropsten instead of Kovan (default)
+# Launching Parity Ethereum light client on Ropsten instead of Kovan (default)
 $ parity --chain ropsten --light
 ```
 
