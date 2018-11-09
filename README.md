@@ -41,15 +41,16 @@ If you run into problems while using Parity Fether, feel free to file an issue i
   #### Debian installer (Ubuntu, Linux Mint..)
   - Download the [`.deb` file](https://github.com/paritytech/fether/releases).
   - Double click on the file to install Fether.
-  - Fether will be added to the programm menu.
-
+  - Fether will be added to the program menu.
+  
 ### Mac
 - Download the [`.dmg` file](https://github.com/paritytech/fether/releases).
+- Double click on it to install Fether.
 
 ### Windows
 - Download the [`.exe` file](https://github.com/paritytech/fether/releases).
-- Double click on it to install Fether
-- Fether will be added to the programm menu
+- Double click on it to install Fether.
+- Fether will be added to the program menu.
 
 ### Passing config flags to the underlying Parity Ethereum node
 
@@ -65,7 +66,7 @@ $ /path/to/fether --chain ropsten --light
 You can also launch Parity Ethereum node before, with any flag you want:
 
 ```bash
-# Launching Parity Ethereum lieght client on Ropsten instead of Kovan (default)
+# Launching Parity Ethereum light client on Ropsten instead of Kovan (default)
 $ parity --chain ropsten --light
 ```
 
