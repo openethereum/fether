@@ -14,7 +14,7 @@ import { toWei } from '@parity/api/lib/util/wei';
 import { withProps } from 'recompose';
 
 import { estimateGas } from '../../utils/estimateGas';
-import RequireSync from '../RequireSyncOverlay';
+import RequireHealth from '../../RequireHealthOverlay';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import withAccount from '../../utils/withAccount.js';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
@@ -57,7 +57,7 @@ class Send extends Component {
           title={token && <h1>Send {token.name}</h1>}
         />
 
-        <RequireSync>
+        <RequireHealth require='sync'>
           <div className='window_content'>
             <div className='box -padded'>
               <TokenBalance
@@ -124,7 +124,7 @@ class Send extends Component {
               />
             </div>
           </div>
-        </RequireSync>
+        </RequireHealth>
       </div>
     );
   }

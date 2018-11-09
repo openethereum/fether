@@ -10,7 +10,7 @@ import { inject, observer } from 'mobx-react';
 import { Link, Redirect } from 'react-router-dom';
 import { withProps } from 'recompose';
 
-import RequireSync from '../RequireSyncOverlay';
+import RequireHealth from '../../RequireHealthOverlay';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import withAccount from '../../utils/withAccount.js';
 import withTokens from '../../utils/withTokens';
@@ -59,7 +59,7 @@ class Signer extends Component {
           title={token && <h1>Send {token.name}</h1>}
         />
 
-        <RequireSync>
+        <RequireHealth require='sync'>
           <div className='window_content'>
             <div className='box -padded'>
               <TokenBalance
@@ -124,7 +124,7 @@ class Signer extends Component {
               />
             </div>
           </div>
-        </RequireSync>
+        </RequireHealth>
       </div>
     );
   }

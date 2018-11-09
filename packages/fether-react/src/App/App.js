@@ -17,8 +17,8 @@ import ReactResizeDetector from 'react-resize-detector';
 
 import Accounts from '../Accounts';
 import Onboarding from '../Onboarding';
+import RequireHealth from '../RequireHealthOverlay';
 import Send from '../Send';
-import withHealth, { STATUS } from '../utils/withHealth';
 import Tokens from '../Tokens';
 import Whitelist from '../Whitelist';
 
@@ -28,7 +28,6 @@ const Router =
   process.env.NODE_ENV === 'production' ? MemoryRouter : BrowserRouter;
 const electron = isElectron() ? window.require('electron') : null;
 
-@withHealth
 @inject('onboardingStore')
 @observer
 class App extends Component {
@@ -40,23 +39,12 @@ class App extends Component {
     electron.ipcRenderer.send('asynchronous-message', 'app-resize', height);
   };
 
-  render () {
-    return (
-      <ReactResizeDetector handleHeight onResize={this.handleResize}>
-        <Router>
-          <div className='content'>{this.renderScreen()}</div>
-        </Router>
-      </ReactResizeDetector>
-    );
-  }
-
   /**
    * Decide which screen to render.
    */
-  renderScreen () {
+  render () {
     const {
-      onboardingStore: { isFirstRun },
-      health: { status }
+      onboardingStore: { isFirstRun }
     } = this.props;
 
     if (isFirstRun) {
@@ -68,24 +56,33 @@ class App extends Component {
     }
 
     return (
-      <div className='window'>
-        {/* Don't display child components requiring RPCs if API is not yet set */
-          ![STATUS.DOWNLOADING, STATUS.LAUNCHING].includes(status) && (
-            <Switch>
-              {/* The next line is the homepage */}
-              <Redirect exact from='/' to='/accounts' />
-              <Route path='/accounts' component={Accounts} />
-              <Route path='/onboarding' component={Onboarding} />
-              <Route path='/tokens/:accountAddress' component={Tokens} />
-              <Route path='/whitelist/:accountAddress' component={Whitelist} />
-              <Route
-                path='/send/:tokenAddress/from/:accountAddress'
-                component={Send}
-              />
-              <Redirect from='*' to='/' />
-            </Switch>
-          )}
-      </div>
+      <ReactResizeDetector handleHeight onResize={this.handleResize}>
+        <div className='content'>
+          <div className='window'>
+            {/* Don't display child components requiring RPCs if API is not yet set */}
+            <RequireHealth require='connected' fullscreen>
+              <Router>
+                <Switch>
+                  {/* The next line is the homepage */}
+                  <Redirect exact from='/' to='/accounts' />
+                  <Route path='/accounts' component={Accounts} />
+                  <Route path='/onboarding' component={Onboarding} />
+                  <Route path='/tokens/:accountAddress' component={Tokens} />
+                  <Route
+                    path='/whitelist/:accountAddress'
+                    component={Whitelist}
+                  />
+                  <Route
+                    path='/send/:tokenAddress/from/:accountAddress'
+                    component={Send}
+                  />
+                  <Redirect from='*' to='/' />
+                </Switch>
+              </Router>
+            </RequireHealth>
+          </div>
+        </div>
+      </ReactResizeDetector>
     );
   }
 }

@@ -4,13 +4,31 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import withHealth, { STATUS } from '../../utils/withHealth';
+import withHealth, { STATUS } from '../utils/withHealth';
+import loading from '../assets/img/icons/loading.svg';
 
-import loading from '../../assets/img/icons/loading.svg';
+function statusMatches (status, require) {
+  switch (require) {
+    case 'connected':
+      return (
+        status !== STATUS.NOINTERNET &&
+        status !== STATUS.DOWNLOADING &&
+        status !== STATUS.LAUNCHING
+      );
+    case 'sync':
+      return status === STATUS.GOOD;
+  }
+}
 
 @withHealth
-class RequireSyncOverlay extends Component {
+class RequireHealthOverlay extends Component {
+  static propTypes = {
+    require: PropTypes.oneOf(['connected', 'sync']),
+    fullscreen: PropTypes.bool
+  };
+
   state = {
     visible: false // false | true | id of the timeout that will make the overlay visible
     // We want to display the overlay after 2s of problematic health. Syncing
@@ -20,13 +38,13 @@ class RequireSyncOverlay extends Component {
 
   componentDidMount () {
     // Initial render check. Display overlay immediately if problematic health.
-    if (this.props.health.status !== STATUS.GOOD) {
+    if (!statusMatches(this.props.health.status, this.props.require)) {
       this.setState({ visible: true });
     }
   }
 
   componentDidUpdate () {
-    if (this.props.health.status === STATUS.GOOD) {
+    if (statusMatches(this.props.health.status, this.props.require)) {
       // If there is an ongoing timeout to make the overlay visible, clear it
       if (typeof this.state.visible === 'number') {
         clearTimeout(this.state.visible);
@@ -56,9 +74,12 @@ class RequireSyncOverlay extends Component {
 
   render () {
     const { visible } = this.state;
+    const { fullscreen } = this.props;
 
     return visible === true ? (
-      <div className='alert-screen -full-screen'>
+      <div
+        className={['alert-screen', fullscreen ? '-full-screen' : ''].join(' ')}
+      >
         <div className='alert-screen_content'>
           <div className='alert-screen_image'>
             <img alt='loading' src={loading} />
@@ -104,10 +125,8 @@ class RequireSyncOverlay extends Component {
 
     switch (status) {
       case STATUS.CLOCKNOTSYNC:
-        return `Mac: System Preferences -> Date & Time -> Uncheck and recheck
-        "Set date and time automatically"
-        Windows: Control Panel -> "Clock, Language, and Region" -> "Date
-        and Time" -> Uncheck and recheck "Set date and time automatically"`;
+        return `Mac: System Preferences -> Date & Time -> Uncheck and recheck "Set date and time automatically"
+        Windows: Control Panel -> "Clock, Language, and Region" -> "Date and Time" -> Uncheck and recheck "Set date and time automatically"`;
       case STATUS.SYNCING:
       case STATUS.DOWNLOADING:
         return payload && payload.percentage && payload.percentage.gt(0)
@@ -123,4 +142,4 @@ class RequireSyncOverlay extends Component {
   };
 }
 
-export default RequireSyncOverlay;
+export default RequireHealthOverlay;

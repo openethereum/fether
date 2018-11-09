@@ -3,6 +3,6 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import RequireSyncOverlay from './RequireSyncOverlay';
+import RequireHealthOverlay from './RequireHealthOverlay';
 
-export default RequireSyncOverlay;
+export default RequireHealthOverlay;
