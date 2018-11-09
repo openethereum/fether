@@ -1122,10 +1122,10 @@
     "@parity/api" "^2.1.24"
     bignumber.js "^7.2.1"
 
-"@parity/electron@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@parity/electron/-/electron-1.0.1.tgz#cd0fc067ff7b118397c550126c14ac99d1b8f19b"
-  integrity sha512-bodpgk057IWyg50q3B8as2vbaBMr4FCbDN3eeV2i01Q5Pk4ugzsMq5xiTucrOchy1RcXtNqN47S9lTyJcnLjtA==
+"@parity/electron@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@parity/electron/-/electron-1.0.2.tgz#097e7f8b345b374a33ff13c3d286cc5029127f05"
+  integrity sha512-ZwynbH8jyxY7bH/lYiEB2bttq4lwtmml+WyZM5G3O4P2AJRBYKoAnoc3as8HDJ+hsqdZ/6Ok+sTp8BqzqLLDRA==
   dependencies:
     async-retry "^1.2.1"
     axios "^0.18.0"
