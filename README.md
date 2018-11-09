@@ -29,25 +29,25 @@ If you run into problems while using Parity Fether, feel free to file an issue i
 
 ### Linux
   #### Using the AppImage (any distro)
-  - Download the `.AppImage` file.
+  - Download the [`.AppImage` file](https://github.com/paritytech/fether/releases).
   - Make it executable `chmod +x /path/to/fether-x.x.x-x86_64.AppImage`.
   - Launch it `/path/to/fether-x.x.x-x86_64.AppImage`.
   
   #### Using the binary (any distro)
-  - Download the `.tar.xz` file.
+  - Download the [`.tar.xz` file](https://github.com/paritytech/fether/releases).
   - Unarchive it `tar xf fether-x.x.x.tar.xz`.
   - Launch it `./fether-x.x.x/fether`.
   
   #### Debian installer (Ubuntu, Linux Mint..)
-  - Download the `.deb` file.
+  - Download the [`.deb` file](https://github.com/paritytech/fether/releases).
   - Double click on the file to install Fether.
   - Fether will be added to the programm menu.
 
 ### Mac
-- Download the `.dmg` file
+- Download the [`.dmg` file](https://github.com/paritytech/fether/releases).
 
 ### Windows
-- Download the `.exe` file
+- Download the [`.exe` file](https://github.com/paritytech/fether/releases).
 - Double click on it to install Fether
 - Fether will be added to the programm menu
 
