@@ -14,6 +14,7 @@ import { toWei } from '@parity/api/lib/util/wei';
 import { withProps } from 'recompose';
 
 import { estimateGas } from '../../utils/estimateGas';
+import RequireHealth from '../../RequireHealthOverlay';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import withAccount from '../../utils/withAccount.js';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
@@ -56,72 +57,74 @@ class Send extends Component {
           title={token && <h1>Send {token.name}</h1>}
         />
 
-        <div className='window_content'>
-          <div className='box -padded'>
-            <TokenBalance
-              decimals={6}
-              drawers={[
-                <Form
-                  key='txForm'
-                  initialValues={{ from: accountAddress, gasPrice: 4, ...tx }}
-                  onSubmit={this.handleSubmit}
-                  validate={this.validateForm}
-                  render={({ handleSubmit, valid, validating, values }) => (
-                    <form className='send-form' onSubmit={handleSubmit}>
-                      <fieldset className='form_fields'>
-                        <Field
-                          className='form_field_amount'
-                          formNoValidate
-                          label='Amount'
-                          name='amount'
-                          placeholder='0.00'
-                          render={FetherForm.Field}
-                          required
-                          type='number' // In ETH or coin
-                        />
+        <RequireHealth require='sync'>
+          <div className='window_content'>
+            <div className='box -padded'>
+              <TokenBalance
+                decimals={6}
+                drawers={[
+                  <Form
+                    key='txForm'
+                    initialValues={{ from: accountAddress, gasPrice: 4, ...tx }}
+                    onSubmit={this.handleSubmit}
+                    validate={this.validateForm}
+                    render={({ handleSubmit, valid, validating, values }) => (
+                      <form className='send-form' onSubmit={handleSubmit}>
+                        <fieldset className='form_fields'>
+                          <Field
+                            className='form_field_amount'
+                            formNoValidate
+                            label='Amount'
+                            name='amount'
+                            placeholder='0.00'
+                            render={FetherForm.Field}
+                            required
+                            type='number' // In ETH or coin
+                          />
 
-                        <Field
-                          as='textarea'
-                          className='-sm'
-                          label='To'
-                          name='to'
-                          placeholder='0x...'
-                          required
-                          render={FetherForm.Field}
-                        />
+                          <Field
+                            as='textarea'
+                            className='-sm'
+                            label='To'
+                            name='to'
+                            placeholder='0x...'
+                            required
+                            render={FetherForm.Field}
+                          />
 
-                        <Field
-                          centerText={`${values.gasPrice} GWEI`}
-                          className='-range'
-                          label='Transaction Fee'
-                          leftText='Slow'
-                          max={MAX_GAS_PRICE}
-                          min={MIN_GAS_PRICE}
-                          name='gasPrice'
-                          render={FetherForm.Slider}
-                          required
-                          rightText='Fast'
-                          step={0.5}
-                          type='range' // In Gwei
-                        />
-                      </fieldset>
-                      <nav className='form-nav'>
-                        <button
-                          disabled={!valid || validating}
-                          className='button'
-                        >
-                          {validating ? 'Checking...' : 'Send'}
-                        </button>
-                      </nav>
-                    </form>
-                  )}
-                />
-              ]}
-              onClick={null} // To disable cursor:pointer on card // TODO Can this be done better?
-              token={token}
-            />
+                          <Field
+                            centerText={`${values.gasPrice} GWEI`}
+                            className='-range'
+                            label='Transaction Fee'
+                            leftText='Slow'
+                            max={MAX_GAS_PRICE}
+                            min={MIN_GAS_PRICE}
+                            name='gasPrice'
+                            render={FetherForm.Slider}
+                            required
+                            rightText='Fast'
+                            step={0.5}
+                            type='range' // In Gwei
+                          />
+                        </fieldset>
+                        <nav className='form-nav'>
+                          <button
+                            disabled={!valid || validating}
+                            className='button'
+                          >
+                            {validating ? 'Checking...' : 'Send'}
+                          </button>
+                        </nav>
+                      </form>
+                    )}
+                  />
+                ]}
+                onClick={null} // To disable cursor:pointer on card // TODO Can this be done better?
+                token={token}
+              />
+            </div>
           </div>
-        </div>
+        </RequireHealth>
       </div>
     );
   }

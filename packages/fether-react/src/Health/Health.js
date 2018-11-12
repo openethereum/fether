@@ -64,7 +64,7 @@ class Health extends Component {
       case STATUS.NOINTERNET:
         return 'No Internet connection';
       case STATUS.NOPEERS:
-        return 'Not connected to any peers';
+        return 'Not connected to any peer';
       case STATUS.LAUNCHING:
         return 'Launching the node...';
       case STATUS.SYNCING:

@@ -3,6 +3,6 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import Overlay from './Overlay';
+import RequireHealthOverlay from './RequireHealthOverlay';
 
-export default Overlay;
+export default RequireHealthOverlay;
