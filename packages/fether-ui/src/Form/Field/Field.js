@@ -18,12 +18,12 @@ export const Field = ({
   <div className='form_field'>
     <label htmlFor={input && input.name}>{label}</label>
     <Popup
-      content={meta && (meta.error || meta.submitError)}
+      content={meta && (meta.data.warning || meta.error || meta.submitError)}
       inverted
       on='click'
       open={
         !!meta &&
-        !meta.valid &&
+        (!meta.valid || meta.data.warning) &&
         (!meta.pristine || meta.touched) &&
         !meta.dirtySinceLastSubmit
       }

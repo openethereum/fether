@@ -5,7 +5,8 @@
 
 import React, { Component } from 'react';
 import debounce from 'debounce-promise';
-import { Field, Form } from 'react-final-form';
+import { Field, Form, FormSpy } from 'react-final-form';
+import setFieldData from 'final-form-set-field-data';
 import { Form as FetherForm, Header } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 import { isAddress } from '@parity/api/lib/util/address';
@@ -22,6 +23,22 @@ import withTokens from '../../utils/withTokens';
 
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
+
+const WarningEngine = ({ mutators: { setFieldData } }) => {
+  return (
+    <FormSpy
+      subscription={{ values: true }}
+      onChange={({ values }) => {
+        setFieldData('to', {
+          warning:
+            values.to === values.from
+              ? 'WARNING: Are you sure you want to send this to yourself?'
+              : undefined
+        });
+      }}
+    />
+  );
+};
 
 @inject('parityStore', 'sendStore')
 @withTokens
@@ -68,7 +85,14 @@ class Send extends Component {
                     initialValues={{ from: accountAddress, gasPrice: 4, ...tx }}
                     onSubmit={this.handleSubmit}
                     validate={this.validateForm}
-                    render={({ handleSubmit, valid, validating, values }) => (
+                    mutators={{ setFieldData }}
+                    render={({
+                      handleSubmit,
+                      form,
+                      valid,
+                      validating,
+                      values
+                    }) => (
                       <form className='send-form' onSubmit={handleSubmit}>
                         <fieldset className='form_fields'>
                           <Field
@@ -115,6 +139,7 @@ class Send extends Component {
                             {validating ? 'Checking...' : 'Send'}
                           </button>
                         </nav>
+                        <WarningEngine mutators={form.mutators} />
                       </form>
                     )}
                   />
@@ -170,12 +195,9 @@ class Send extends Component {
 
   validateForm = values => {
     const errors = {};
+
     if (!isAddress(values.to)) {
       errors.to = 'Please enter a valid Ethereum address';
-    }
-
-    if (values.from === values.to) {
-      errors.to = 'Recipient and sender accounts should not be the same!';
     }
 
     return Object.keys(errors).length ? errors : this.validateAmount(values);
