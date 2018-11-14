@@ -174,6 +174,10 @@ class Send extends Component {
       errors.to = 'Please enter a valid Ethereum address';
     }
 
+    if (values.from === values.to) {
+      errors.to = 'Recipient and sender accounts should not be the same!';
+    }
+
     return Object.keys(errors).length ? errors : this.validateAmount(values);
   };
 }
