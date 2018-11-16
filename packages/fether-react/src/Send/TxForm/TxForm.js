@@ -5,8 +5,7 @@
 
 import React, { Component } from 'react';
 import debounce from 'debounce-promise';
-import { Field, Form, FormSpy } from 'react-final-form';
-import setFieldData from 'final-form-set-field-data';
+import { Field, Form } from 'react-final-form';
 import { Form as FetherForm, Header } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 import { isAddress } from '@parity/api/lib/util/address';
@@ -23,31 +22,6 @@ import withTokens from '../../utils/withTokens';
 
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
-
-const WarningEngine = ({ mutators: { setFieldData } }) => {
-  return (
-    <FormSpy
-      subscription={{ values: true }}
-      onChange={({ values }) => {
-        setFieldData('to', {
-          warning:
-            values.to === values.from ? (
-              <div>
-                <p>WARNING: You are sending this to yourself.</p>
-                <button
-                  onClick={() => setFieldData('to', { warning: undefined })}
-                >
-                  acknowledge
-                </button>
-              </div>
-            ) : (
-              undefined
-            )
-        });
-      }}
-    />
-  );
-};
 
 @inject('parityStore', 'sendStore')
 @withTokens
@@ -94,7 +68,6 @@ class Send extends Component {
                     initialValues={{ from: accountAddress, gasPrice: 4, ...tx }}
                     onSubmit={this.handleSubmit}
                     validate={this.validateForm}
-                    mutators={{ setFieldData }}
                     render={({
                       handleSubmit,
                       form,
@@ -148,7 +121,14 @@ class Send extends Component {
                             {validating ? 'Checking...' : 'Send'}
                           </button>
                         </nav>
-                        <WarningEngine mutators={form.mutators} />
+                        {values.to === values.from ? (
+                          <div>
+                            <h3>WARNING:</h3>
+                            <p>
+                              The sender and receiver addresses are the same.
+                            </p>
+                          </div>
+                        ) : null}
                       </form>
                     )}
                   />
