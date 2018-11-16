@@ -31,9 +31,18 @@ const WarningEngine = ({ mutators: { setFieldData } }) => {
       onChange={({ values }) => {
         setFieldData('to', {
           warning:
-            values.to === values.from
-              ? 'WARNING: Are you sure you want to send this to yourself?'
-              : undefined
+            values.to === values.from ? (
+              <div>
+                <p>WARNING: You are sending this to yourself.</p>
+                <button
+                  onClick={() => setFieldData('to', { warning: undefined })}
+                >
+                  acknowledge
+                </button>
+              </div>
+            ) : (
+              undefined
+            )
         });
       }}
     />

@@ -23,15 +23,14 @@ export const Field = ({
       on='click'
       open={
         !!meta &&
-        (!meta.valid || meta.data.warning) &&
+        (!meta.valid || meta.data.warning !== undefined) &&
         (!meta.pristine || meta.touched) &&
         !meta.dirtySinceLastSubmit
       }
-      position='top center'
+      position='bottom right'
       size='mini'
       trigger={<T id={input && input.name} {...input} {...otherProps} />}
     />
-
     {children}
   </div>
 );
