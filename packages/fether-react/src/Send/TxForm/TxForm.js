@@ -113,14 +113,6 @@ class Send extends Component {
                             type='range' // In Gwei
                           />
                         </fieldset>
-                        <nav className='form-nav'>
-                          <button
-                            disabled={!valid || validating}
-                            className='button'
-                          >
-                            {validating ? 'Checking...' : 'Send'}
-                          </button>
-                        </nav>
                         {values.to === values.from ? (
                           <div>
                             <h3>WARNING:</h3>
@@ -129,6 +121,14 @@ class Send extends Component {
                             </p>
                           </div>
                         ) : null}
+                        <nav className='form-nav'>
+                          <button
+                            disabled={!valid || validating}
+                            className='button'
+                          >
+                            {validating ? 'Checking...' : 'Send'}
+                          </button>
+                        </nav>
                       </form>
                     )}
                   />
