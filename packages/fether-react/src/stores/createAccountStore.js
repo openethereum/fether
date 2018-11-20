@@ -3,50 +3,68 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { action, observable } from 'mobx';
+import { action, observable } from "mobx";
 
-import Debug from '../utils/debug';
-import parityStore from './parityStore';
+import Debug from "../utils/debug";
+import parityStore from "./parityStore";
 
-const debug = Debug('createAccountStore');
+const debug = Debug("createAccountStore");
 
 export class CreateAccountStore {
   @observable
   address = null;
   @observable
+  json = {};
+  @observable
   isImport = false; // Are we creating a new account, or importing via phrase?
   @observable
-  name = ''; // Account name
+  isJSON = false; // Are we recovering an account from a JSON backup file/
+  @observable
+  name = ""; // Account name
   @observable
   phrase = null; // The 12-word seed phrase
 
   /**
    * Reinitialize everything
    */
-  clear () {
+  clear() {
     this.setPhrase(null);
-    this.setName('');
+    this.setName("");
   }
 
   generateNewAccount = () => {
-    debug('Generating new account.');
+    debug("Generating new account.");
     return this.setPhrase(null)
       .then(() => parityStore.api.parity.generateSecretPhrase())
       .then(this.setPhrase);
   };
 
   saveAccountToParity = password => {
-    debug('Saving account to Parity.');
-    return parityStore.api.parity
-      .newAccountFromPhrase(this.phrase, password)
-      .then(() =>
-        parityStore.api.parity.setAccountName(this.address, this.name)
-      )
-      .then(() =>
-        parityStore.api.parity.setAccountMeta(this.address, {
-          timestamp: Date.now()
-        })
-      );
+    debug("Saving account to Parity.");
+
+    if (!this.json) {
+      return parityStore.api.parity
+        .newAccountFromPhrase(this.phrase, password)
+        .then(() =>
+          parityStore.api.parity.setAccountName(this.address, this.name)
+        )
+        .then(() =>
+          parityStore.api.parity.setAccountMeta(this.address, {
+            timestamp: Date.now()
+          })
+        );
+    } else {
+      return parityStore.api.parity
+        .newAccountFromWallet(JSON.stringify(this.json), password)
+        .then(() =>
+          parityStore.api.parity.setAccountName(this.address, this.name)
+        )
+        .then(() =>
+          parityStore.api.parity.setAccountMeta(this.address, {
+            timestamp: this.json.meta.timestamp
+          })
+        );
+    }
   };
 
   @action
@@ -55,8 +73,18 @@ export class CreateAccountStore {
   };
 
   @action
+  setJSON = json => {
+    this.json = json;
+  };
+
+  @action
   setIsImport = isImport => {
     this.isImport = isImport;
+  };
+
+  @action
+  setIsJSON = isJSON => {
+    this.isJSON = isJSON;
   };
 
   @action

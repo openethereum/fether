@@ -29,6 +29,24 @@
     word-wrap: break-word;
   }
 
+  .dropzone {
+    &.-sm {
+      height: 3.5rem;
+    }
+
+    &.-md {
+      height: 4.75rem;
+    }
+
+    &.-lg {
+      height: 8rem;
+    }
+
+    &.-xlg {
+      height: 12rem;
+    }
+  }
+
   input[type='text'],
   input[type='number'],
   input[type='tel'],
