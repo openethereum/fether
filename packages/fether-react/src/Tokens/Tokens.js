@@ -101,7 +101,7 @@ class Tokens extends Component {
   };
 
   render() {
-    const { confirm, password, toggleBackupScreen } = this.state;
+    const { password, toggleBackupScreen } = this.state;
     const { accountsInfo, accountAddress } = this.props;
 
     // If the accountsInfo object is empty (i.e. no accounts), then we redirect

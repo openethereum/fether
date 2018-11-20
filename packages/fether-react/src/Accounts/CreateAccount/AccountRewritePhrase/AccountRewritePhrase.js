@@ -58,7 +58,6 @@ class AccountRewritePhrase extends Component {
       this.setState({ isLoading: true });
       console.log("setting address ", json.address);
       await setJSON(json);
-      // await setAddress(json.address);
     }
 
     // If we're importing, derive address from recovery phrase when we submit
@@ -85,7 +84,7 @@ class AccountRewritePhrase extends Component {
     const currentStep = pathname.slice(-1);
     const body = [
       <div key="createAccount">
-        <div className="text">
+        <div className="text -centered">
           {isImport ? (
             isJSON ? (
               <div>
