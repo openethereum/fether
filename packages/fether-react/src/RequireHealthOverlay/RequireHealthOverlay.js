@@ -19,6 +19,8 @@ function statusMatches (status, require) {
       );
     case 'sync':
       return status === STATUS.GOOD;
+    default:
+      throw new Error(`Status '${status}' must be one of 'connected|sync'.`);
   }
 }
 
