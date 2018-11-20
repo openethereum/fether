@@ -26,7 +26,7 @@ export class InputFile extends React.PureComponent {
     const { onChangeFile } = this.props;
 
     files.forEach(file => {
-      const reader = new FileReader();
+      const reader = new window.FileReader();
 
       reader.onabort = () => {
         // ignore
