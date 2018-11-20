@@ -3,29 +3,30 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import React, { Component } from 'react';
-import { AccountHeader, Form as FetherForm } from 'fether-ui';
-import { accountsInfo$ } from '@parity/light.js';
-import light from '@parity/light.js-react';
-import { Link, Redirect, withRouter } from 'react-router-dom';
+import React, { Component } from "react";
+import { AccountHeader, Form as FetherForm } from "fether-ui";
+import { accountsInfo$ } from "@parity/light.js";
+import light from "@parity/light.js-react";
+import { Link, Redirect, withRouter } from "react-router-dom";
 
-import Health from '../Health';
-import TokensList from './TokensList';
-import withAccount from '../utils/withAccount';
+import Health from "../Health";
+import TokensList from "./TokensList";
+import withAccount from "../utils/withAccount";
 
-import { inject, observer } from 'mobx-react';
+import { inject, observer } from "mobx-react";
 
 @withRouter
 @withAccount
 @light({
   accountsInfo: accountsInfo$
 })
-@inject('createAccountStore')
+@inject("createAccountStore")
 @observer
 class Tokens extends Component {
   state = {
-    password: '',
-    toggleBackupScreen: false
+    password: "",
+    toggleBackupScreen: false,
+    error: ""
   };
 
   handleGoToWhitelist = () => {
@@ -42,10 +43,17 @@ class Tokens extends Component {
 
     event.preventDefault();
 
-    // Save to parity
-    createAccountStore.backupAccount(accountAddress, password).then(() => {
-      createAccountStore.clear();
-    });
+    // api.parity.exportAccount
+    createAccountStore
+      .backupAccount(accountAddress, password)
+      .then(() => {
+        createAccountStore.clear();
+        history.push(`/accounts`);
+      })
+      .catch(err => {
+        this.toggleError(err);
+        console.log(err);
+      });
   };
 
   toggleBackupScreen = () => {
@@ -53,26 +61,36 @@ class Tokens extends Component {
     this.setState({ toggleBackupScreen: !toggleBackupScreen });
   };
 
+  toggleError = err => {
+    this.setState({
+      error: err
+    });
+  };
+
   renderPasswordFormField = password => {
+    const { error } = this.state;
+
     return (
       <div>
-        <div className='text -centered'>
-          <button className='button' onClick={this.toggleBackupScreen}>
+        <div className="text -centered">
+          <button className="button" onClick={this.toggleBackupScreen}>
             close
           </button>
           <p>Unlock your account:</p>
         </div>
-        <fieldset className='form_fields -centered'>
-          <form key='createAccount' onSubmit={this.handleSubmit}>
+        <fieldset className="form_fields -centered">
+          <form key="createAccount" onSubmit={this.handleSubmit}>
             <FetherForm.Field
-              label='Password'
+              label="Password"
               onChange={this.handlePasswordChange}
               required
-              type='password'
+              type="password"
               value={password}
             />
 
-            <button className='button -right' disabled={!password}>
+            <p className="error"> {error ? error : null} </p>
+
+            <button className="button -right" disabled={!password}>
               Confirm Backup
             </button>
           </form>
@@ -81,14 +99,14 @@ class Tokens extends Component {
     );
   };
 
-  render () {
+  render() {
     const { confirm, password, toggleBackupScreen } = this.state;
     const { accountsInfo, accountAddress } = this.props;
 
     // If the accountsInfo object is empty (i.e. no accounts), then we redirect
     // to the accounts page to create an account
     if (accountsInfo && !Object.keys(accountsInfo).length) {
-      return <Redirect to='/accounts/new' />;
+      return <Redirect to="/accounts/new" />;
     }
 
     return (
@@ -102,7 +120,7 @@ class Tokens extends Component {
             accountsInfo[accountAddress].name
           }
           left={
-            <Link to='/accounts' className='icon -back'>
+            <Link to="/accounts" className="icon -back">
               Back
             </Link>
           }
@@ -113,7 +131,7 @@ class Tokens extends Component {
             this.renderPasswordFormField(password)
           ) : (
             <button
-              className='button -centered'
+              className="button -centered"
               onClick={this.toggleBackupScreen}
             >
               backup
@@ -123,12 +141,12 @@ class Tokens extends Component {
 
         <TokensList />
 
-        <nav className='footer-nav'>
-          <div className='footer-nav_status'>
+        <nav className="footer-nav">
+          <div className="footer-nav_status">
             <Health />
           </div>
-          <div className='footer-nav_icons'>
-            <button className='button -tiny' onClick={this.handleGoToWhitelist}>
+          <div className="footer-nav_icons">
+            <button className="button -tiny" onClick={this.handleGoToWhitelist}>
               Add tokens
             </button>
           </div>

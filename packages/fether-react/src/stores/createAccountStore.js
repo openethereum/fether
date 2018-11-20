@@ -3,13 +3,13 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { action, observable } from 'mobx';
+import { action, observable } from "mobx";
 
-import Debug from '../utils/debug';
-import parityStore from './parityStore';
-import FileSaver from 'file-saver';
+import Debug from "../utils/debug";
+import parityStore from "./parityStore";
+import FileSaver from "file-saver";
 
-const debug = Debug('createAccountStore');
+const debug = Debug("createAccountStore");
 
 export class CreateAccountStore {
   @observable
@@ -21,47 +21,48 @@ export class CreateAccountStore {
   @observable
   isJSON = false; // Are we recovering an account from a JSON backup file/
   @observable
-  name = ''; // Account name
+  name = ""; // Account name
   @observable
   phrase = null; // The 12-word seed phrase
 
   /**
    * Reinitialize everything
    */
-  clear () {
+  clear() {
     this.setPhrase(null);
-    this.setName('');
+    this.setName("");
   }
 
   backupAccount = (address, password) => {
-    debug('Generating Backup JSON');
+    debug("Generating Backup JSON");
 
     return parityStore.api.parity
       .exportAccount(address, password)
       .then(res => {
-        console.log('good, ', res);
+        console.log("good, ", res);
 
         const blob = new Blob([JSON.stringify(res)], {
-          type: 'application/json; charset=utf-8'
+          type: "application/json; charset=utf-8"
         });
 
         console.log(blob);
         FileSaver.saveAs(blob, `${res.address}.json`);
       })
       .catch(err => {
-        console.error('bad, ', err);
+        console.error("bad, ", err);
+        return err;
       });
   };
 
   generateNewAccount = () => {
-    debug('Generating new account.');
+    debug("Generating new account.");
     return this.setPhrase(null)
       .then(() => parityStore.api.parity.generateSecretPhrase())
       .then(this.setPhrase);
   };
 
   saveAccountToParity = password => {
-    debug('Saving account to Parity.');
+    debug("Saving account to Parity.");
     console.log(this.phrase);
     return parityStore.api.parity
       .newAccountFromPhrase(this.phrase, password)
