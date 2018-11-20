@@ -8,8 +8,6 @@ import Dropzone from 'react-dropzone';
 import PropTypes from 'prop-types';
 
 export class InputFile extends React.PureComponent {
-  static defaultProps = {};
-
   static propTypes = {
     label: PropTypes.string.isRequired,
     onChangeFile: PropTypes.func.isRequired,
