@@ -126,15 +126,12 @@ class Tokens extends Component {
           }
         />
 
-        <div>
+        <div className="center-md">
           {toggleBackupScreen ? (
             this.renderPasswordFormField(password)
           ) : (
-            <button
-              className="button -centered"
-              onClick={this.toggleBackupScreen}
-            >
-              backup
+            <button className="button" onClick={this.toggleBackupScreen}>
+              backup account
             </button>
           )}
         </div>
