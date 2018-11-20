@@ -32,6 +32,15 @@ export class CreateAccountStore {
     this.setName("");
   }
 
+  // backupAccount = password => {
+  //   debug("Generating Backup JSON");
+  //
+  //   return parityStore.api.parity.exportAccount(this.address, password)
+  //     .then(() => {
+  //       console.log('good')
+  //     })
+  // }
+
   generateNewAccount = () => {
     debug("Generating new account.");
     return this.setPhrase(null)

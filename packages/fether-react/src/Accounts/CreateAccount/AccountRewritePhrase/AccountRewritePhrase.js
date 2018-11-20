@@ -29,7 +29,7 @@ class AccountRewritePhrase extends Component {
       const isFileValid =
         json.address.length === 32 &&
         typeof json.meta === "object" &&
-        json.encoding.content === "pkcs8";
+        json.encoding.content === "";
 
       this.setState({
         isFileValid,
