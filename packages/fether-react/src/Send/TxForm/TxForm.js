@@ -112,15 +112,15 @@ class Send extends Component {
                             step={0.5}
                             type='range' // In Gwei
                           />
+                          {values.to === values.from ? (
+                            <span>
+                              <h3>WARNING:</h3>
+                              <p>
+                                The sender and receiver addresses are the same.
+                              </p>
+                            </span>
+                          ) : null}
                         </fieldset>
-                        {values.to === values.from ? (
-                          <div>
-                            <h3>WARNING:</h3>
-                            <p>
-                              The sender and receiver addresses are the same.
-                            </p>
-                          </div>
-                        ) : null}
                         <nav className='form-nav'>
                           <button
                             disabled={!valid || validating}

@@ -27,7 +27,7 @@ export const Field = ({
         (!meta.pristine || meta.touched) &&
         !meta.dirtySinceLastSubmit
       }
-      position='top center'
+      position='bottom center'
       size='mini'
       trigger={<T id={input && input.name} {...input} {...otherProps} />}
     />
