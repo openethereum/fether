@@ -32,45 +32,26 @@ class RequireHealthOverlay extends Component {
   };
 
   state = {
-    visible: false // false | true | id of the timeout that will make the overlay visible
-    // We want to display the overlay after 2s of problematic health. Syncing
-    // to new blocks from the top of the chain takes 1s and we don't want to
-    // display the overlay in that case.
+    visible: false
   };
 
   componentDidMount () {
-    // Initial render check. Display overlay immediately if problematic health.
-    if (!statusMatches(this.props.health.status, this.props.require)) {
-      this.setState({ visible: true });
-    }
+    this.updateVisibility();
   }
 
   componentDidUpdate () {
-    if (statusMatches(this.props.health.status, this.props.require)) {
-      // If there is an ongoing timeout to make the overlay visible, clear it
-      if (typeof this.state.visible === 'number') {
-        clearTimeout(this.state.visible);
-      }
+    this.updateVisibility();
+  }
 
+  updateVisibility = () => {
+    if (statusMatches(this.props.health.status, this.props.require)) {
       if (this.state.visible !== false) {
         this.setState({ visible: false });
       }
     } else {
-      // Bad node health
-      // Display the overlay after 2s (if there is no ongoing timeout)
       if (this.state.visible === false) {
-        this.setState({
-          visible: setTimeout(() => {
-            this.setState({ visible: true });
-          }, 2000)
-        });
+        this.setState({ visible: true });
       }
-    }
-  }
-
-  componentWillUnmount () {
-    if (typeof this.state.visible === 'number') {
-      clearTimeout(this.state.visible);
     }
   }
 
