@@ -43,17 +43,18 @@ class Tokens extends Component {
 
     event.preventDefault();
 
+    const _this = this;
     // api.parity.exportAccount
-    createAccountStore
-      .backupAccount(accountAddress, password)
-      .then(() => {
+    createAccountStore.backupAccount(accountAddress, password).then(res => {
+      if (res && res.type === "ACCOUNT_ERROR") {
+        _this.toggleError(
+          res.text + " Please check your password and try again."
+        );
+      } else {
         createAccountStore.clear();
         history.push(`/accounts`);
-      })
-      .catch(err => {
-        this.toggleError(err);
-        console.log(err);
-      });
+      }
+    });
   };
 
   toggleBackupScreen = () => {
