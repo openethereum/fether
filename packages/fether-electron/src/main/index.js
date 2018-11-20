@@ -23,6 +23,9 @@ import { parity } from '../../package.json';
 import Pino from './utils/pino';
 import { productName } from '../../electron-builder.json';
 import staticPath from './utils/staticPath';
+import installExtension, {
+  REACT_DEVELOPER_TOOLS
+} from 'electron-devtools-installer';
 
 const { app, BrowserWindow, ipcMain, session } = electron;
 let mainWindow;
@@ -41,6 +44,10 @@ function createWindow () {
     resizable: false,
     width: 360
   });
+
+  installExtension(REACT_DEVELOPER_TOOLS)
+    .then(name => console.log(`Added Extension:  ${name}`))
+    .catch(err => console.log('An error occurred: ', err));
 
   // Set options for @parity/electron
   parityElectron({
