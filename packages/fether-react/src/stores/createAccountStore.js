@@ -7,6 +7,7 @@ import { action, observable } from 'mobx';
 
 import Debug from '../utils/debug';
 import parityStore from './parityStore';
+import FileSaver from 'file-saver';
 
 const debug = Debug('createAccountStore');
 
@@ -37,11 +38,18 @@ export class CreateAccountStore {
 
     return parityStore.api.parity
       .exportAccount(address, password)
-      .then(() => {
-        console.log('good');
+      .then(res => {
+        console.log('good, ', res);
+
+        const blob = new Blob([JSON.stringify(res)], {
+          type: 'application/json; charset=utf-8'
+        });
+
+        console.log(blob);
+        FileSaver.saveAs(blob, `${res.address}.json`);
       })
       .catch(err => {
-        console.error(err);
+        console.error('bad, ', err);
       });
   };
 
