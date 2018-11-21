@@ -6,6 +6,7 @@
 import React, { Component } from 'react';
 import { AccountCard, Card, Form as FetherForm } from 'fether-ui';
 
+import AccountImportOptions from '../AccountImportOptions';
 import { inject, observer } from 'mobx-react';
 
 @inject('createAccountStore')
@@ -38,11 +39,6 @@ class AccountRewritePhrase extends Component {
     history.push(`/accounts/new/${+currentStep + 1}`);
   };
 
-  toggleImportMethod = () => {
-    const { createAccountStore } = this.props;
-    createAccountStore.setIsJSON(!createAccountStore.isJSON);
-  };
-
   render () {
     const {
       createAccountStore: { address, isImport, name },
@@ -52,18 +48,10 @@ class AccountRewritePhrase extends Component {
     const { value } = this.state;
     const currentStep = pathname.slice(-1);
     const body = [
-      <div key='importBackup'>
+      <div key='createAccount'>
         <div className='text -centered'>
           {isImport ? (
-            <div className='center-md'>
-              <p> Type your Recovery phrase </p>
-              <button
-                onClick={this.toggleImportMethod}
-                className='button -tiny'
-              >
-                Use JSON Keyfile
-              </button>
-            </div>
+            <AccountImportOptions />
           ) : (
             <p>
               Type your secret phrase to confirm that you wrote it down

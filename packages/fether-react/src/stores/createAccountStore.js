@@ -68,21 +68,20 @@ export class CreateAccountStore {
           JSON.stringify(this.json),
           password
         );
-        console.log('jsoning');
       } else {
         await parityStore.api.parity.newAccountFromPhrase(
           this.phrase,
           password
         );
       }
+
+      await parityStore.api.parity.setAccountName(this.address, this.name);
+      await parityStore.api.parity.setAccountMeta(this.address, {
+        timestamp: Date.now()
+      });
     } catch (e) {
       console.log(e);
     }
-
-    await parityStore.api.parity.setAccountName(this.address, this.name);
-    await parityStore.api.parity.setAccountMeta(this.address, {
-      timestamp: Date.now()
-    });
   };
 
   @action

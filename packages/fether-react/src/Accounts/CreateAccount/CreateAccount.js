@@ -11,10 +11,10 @@ import light from '@parity/light.js-react';
 import { Link, Route } from 'react-router-dom';
 
 import AccountCopyPhrase from './AccountCopyPhrase';
-import AccountImportBackup from './AccountImportBackup';
+import AccountImportOptions from './AccountImportOptions';
+import AccountRewritePhrase from './AccountRewritePhrase';
 import AccountName from './AccountName';
 import AccountPassword from './AccountPassword';
-import AccountRewritePhrase from './AccountRewritePhrase';
 import Health from '../../Health';
 
 @light({ accountsInfo: accountsInfo$ })
@@ -30,11 +30,9 @@ class CreateAccount extends Component {
    * Creating account and importing accounts have different processes: 4 steps
    * for importing, and 5 steps for creating
    */
-  getSteps = (isImport, isJSON) =>
+  getSteps = isImport =>
     isImport
-      ? isJSON
-        ? [AccountImportBackup, AccountName, AccountPassword]
-        : [AccountRewritePhrase, AccountName, AccountPassword]
+      ? [AccountImportOptions, AccountName, AccountPassword]
       : [AccountName, AccountCopyPhrase, AccountRewritePhrase, AccountPassword];
 
   handleToggleCreateImport = () => {
@@ -57,14 +55,14 @@ class CreateAccount extends Component {
   render () {
     const {
       accountsInfo,
-      createAccountStore: { isImport, isJSON },
+      createAccountStore: { isImport },
       match: {
         params: { step }
       }
     } = this.props;
 
     // Get all the steps of our account process
-    const Steps = this.getSteps(isImport, isJSON);
+    const Steps = this.getSteps(isImport);
 
     return (
       <div>

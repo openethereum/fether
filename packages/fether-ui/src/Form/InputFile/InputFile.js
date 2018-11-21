@@ -57,7 +57,6 @@ export class InputFile extends React.PureComponent {
     const acceptedFormats = ['application/json', 'text/plain'].join(', ');
 
     const { label } = this.props;
-    const { file } = this.state;
 
     return (
       <Dropzone
@@ -66,13 +65,16 @@ export class InputFile extends React.PureComponent {
         disabled={false}
         multiple={false}
         onDrop={this.onDrop}
+        disableClick
       >
-        <div className='form_field_value'>
-          <label className='label'> {label} </label>
-          <div className='dropzone -sm'>
-            {!file ? 'Drag and drop the file here' : file.name}
+        {({ open }) => (
+          <div className='dropzone -md'>
+            <label htmlFor='backupKeyfile'>{label}</label>
+            <button type='button' className='button' onClick={() => open()}>
+              Select File
+            </button>
           </div>
-        </div>
+        )}
       </Dropzone>
     );
   }
