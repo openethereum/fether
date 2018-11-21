@@ -34,23 +34,21 @@ export class CreateAccountStore {
   }
 
   backupAccount = (address, password) => {
-    debug('Generating Backup JSON');
-
+    debug('Generating Backup JSON.');
     return parityStore.api.parity
       .exportAccount(address, password)
       .then(res => {
-        console.log('good, ', res);
-
         const blob = new window.Blob([JSON.stringify(res)], {
           type: 'application/json; charset=utf-8'
         });
 
-        console.log(blob);
         FileSaver.saveAs(blob, `${res.address}.json`);
+
+        return Promise.resolve('Successfully backed up account');
       })
       .catch(err => {
-        console.error('bad, ', err);
-        return err;
+        console.error(err);
+        return Promise.reject(err);
       });
   };
 
@@ -61,19 +59,30 @@ export class CreateAccountStore {
       .then(this.setPhrase);
   };
 
-  saveAccountToParity = password => {
+  saveAccountToParity = async password => {
     debug('Saving account to Parity.');
-    console.log(this.phrase);
-    return parityStore.api.parity
-      .newAccountFromPhrase(this.phrase, password)
-      .then(() =>
-        parityStore.api.parity.setAccountName(this.address, this.name)
-      )
-      .then(() =>
-        parityStore.api.parity.setAccountMeta(this.address, {
-          timestamp: Date.now()
-        })
-      );
+
+    try {
+      if (this.isJSON) {
+        await parityStore.api.parity.newAccountFromWallet(
+          JSON.stringify(this.json),
+          password
+        );
+        console.log('jsoning');
+      } else {
+        await parityStore.api.parity.newAccountFromPhrase(
+          this.phrase,
+          password
+        );
+      }
+    } catch (e) {
+      console.log(e);
+    }
+
+    await parityStore.api.parity.setAccountName(this.address, this.name);
+    await parityStore.api.parity.setAccountMeta(this.address, {
+      timestamp: Date.now()
+    });
   };
 
   @action
@@ -84,6 +93,9 @@ export class CreateAccountStore {
   @action
   setJSON = json => {
     this.json = json;
+
+    this.setAddress(json.address || null);
+    this.setName(json.name || null);
   };
 
   @action

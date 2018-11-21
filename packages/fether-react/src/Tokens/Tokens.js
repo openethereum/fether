@@ -13,7 +13,7 @@ import Health from '../Health';
 import TokensList from './TokensList';
 import withAccount from '../utils/withAccount';
 
-import { inject, observer } from 'mobx-react';
+import { inject } from 'mobx-react';
 
 @withRouter
 @withAccount
@@ -21,7 +21,6 @@ import { inject, observer } from 'mobx-react';
   accountsInfo: accountsInfo$
 })
 @inject('createAccountStore')
-@observer
 class Tokens extends Component {
   state = {
     password: '',
@@ -43,18 +42,18 @@ class Tokens extends Component {
 
     event.preventDefault();
 
-    const _this = this;
     // api.parity.exportAccount
-    createAccountStore.backupAccount(accountAddress, password).then(res => {
-      if (res && res.type === 'ACCOUNT_ERROR') {
-        _this.toggleError(
-          res.text + ' Please check your password and try again.'
-        );
-      } else {
-        createAccountStore.clear();
-        history.push(`/accounts`);
-      }
-    });
+    createAccountStore
+      .backupAccount(accountAddress, password)
+      .then(res => {
+        if (res) {
+          createAccountStore.clear();
+          setTimeout(() => history.push(`/accounts`), 5000);
+        }
+      })
+      .catch(err => {
+        this.toggleMsg(err.text + ' Please check your password and try again.');
+      });
   };
 
   toggleBackupScreen = () => {
@@ -62,7 +61,7 @@ class Tokens extends Component {
     this.setState({ toggleBackupScreen: !toggleBackupScreen });
   };
 
-  toggleError = err => {
+  toggleMsg = err => {
     this.setState({
       error: err
     });
@@ -74,12 +73,12 @@ class Tokens extends Component {
     return (
       <div>
         <div className='text -centered'>
-          <button className='button' onClick={this.toggleBackupScreen}>
-            close
-          </button>
           <p>Unlock your account:</p>
         </div>
-        <fieldset className='form_fields -centered'>
+        <button className='button -tiny' onClick={this.toggleBackupScreen}>
+          Close
+        </button>
+        <fieldset className='form_fields center-md'>
           <form key='createAccount' onSubmit={this.handleSubmit}>
             <FetherForm.Field
               label='Password'
@@ -91,7 +90,7 @@ class Tokens extends Component {
 
             <p className='error'> {error} </p>
 
-            <button className='button -right' disabled={!password}>
+            <button className='button' disabled={!password}>
               Confirm Backup
             </button>
           </form>
@@ -127,15 +126,7 @@ class Tokens extends Component {
           }
         />
 
-        <div className='center-md'>
-          {toggleBackupScreen ? (
-            this.renderPasswordFormField(password)
-          ) : (
-            <button className='button' onClick={this.toggleBackupScreen}>
-              backup account
-            </button>
-          )}
-        </div>
+        {toggleBackupScreen ? this.renderPasswordFormField(password) : null}
 
         <TokensList />
 
@@ -144,6 +135,9 @@ class Tokens extends Component {
             <Health />
           </div>
           <div className='footer-nav_icons'>
+            <button className='button -tiny' onClick={this.toggleBackupScreen}>
+              Backup Account
+            </button>
             <button className='button -tiny' onClick={this.handleGoToWhitelist}>
               Add tokens
             </button>

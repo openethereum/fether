@@ -13,8 +13,6 @@ import { inject, observer } from 'mobx-react';
 class AccountRewritePhrase extends Component {
   state = {
     isLoading: false,
-    isFileValid: false,
-    json: null,
     value: ''
   };
 
@@ -22,45 +20,17 @@ class AccountRewritePhrase extends Component {
     this.setState({ value });
   };
 
-  handleChangeFile = ({ target: { result } }) => {
-    try {
-      const json = JSON.parse(result);
-
-      const isFileValid =
-        json.address.length === 32 &&
-        typeof json.meta === 'object' &&
-        json.crpyto &&
-        json.crypto.cipher === 'aes-128-ctr';
-
-      this.setState({
-        isFileValid,
-        json
-      });
-    } catch (error) {
-      this.setState({
-        isFileValid: false,
-        json: null
-      });
-      console.error(error);
-    }
-  };
-
   handleNextStep = async () => {
     const {
       history,
       location: { pathname },
-      createAccountStore: { isImport, isJSON, setJSON, setPhrase }
+      createAccountStore: { isImport, setPhrase }
     } = this.props;
     const currentStep = pathname.slice(-1);
-    const { json, value } = this.state;
-
-    if (isJSON) {
-      this.setState({ isLoading: true });
-      await setJSON(json);
-    }
+    const { value } = this.state;
 
     // If we're importing, derive address from recovery phrase when we submit
-    if (isImport && !isJSON) {
+    if (isImport) {
       this.setState({ isLoading: true });
       await setPhrase(value);
     }
@@ -75,31 +45,25 @@ class AccountRewritePhrase extends Component {
 
   render () {
     const {
-      createAccountStore: { address, isImport, isJSON, name },
+      createAccountStore: { address, isImport, name },
       history,
       location: { pathname }
     } = this.props;
     const { value } = this.state;
     const currentStep = pathname.slice(-1);
     const body = [
-      <div key='createAccount'>
+      <div key='importBackup'>
         <div className='text -centered'>
           {isImport ? (
-            isJSON ? (
-              <div>
-                <p> Drop your JSON keyfile below </p>
-                <button onClick={this.toggleImportMethod} className='button'>
-                  Use Seed Phrase
-                </button>
-              </div>
-            ) : (
-              <div>
-                <p> Type your Recovery phrase </p>
-                <button onClick={this.toggleImportMethod} className='button'>
-                  Use JSON Keyfile
-                </button>
-              </div>
-            )
+            <div className='center-md'>
+              <p> Type your Recovery phrase </p>
+              <button
+                onClick={this.toggleImportMethod}
+                className='button -tiny'
+              >
+                Use JSON Keyfile
+              </button>
+            </div>
           ) : (
             <p>
               Type your secret phrase to confirm that you wrote it down
@@ -108,22 +72,13 @@ class AccountRewritePhrase extends Component {
           )}
         </div>
 
-        {isJSON ? (
-          <FetherForm.InputFile
-            label='JSON Backup Keyfile'
-            onChangeFile={this.handleChangeFile}
-            required
-            value={value}
-          />
-        ) : (
-          <FetherForm.Field
-            as='textarea'
-            label='Recovery phrase'
-            onChange={this.handleChange}
-            required
-            value={value}
-          />
-        )}
+        <FetherForm.Field
+          as='textarea'
+          label='Recovery phrase'
+          onChange={this.handleChange}
+          required
+          value={value}
+        />
 
         <nav className='form-nav -space-around'>
           {currentStep > 1 && (
@@ -151,7 +106,7 @@ class AccountRewritePhrase extends Component {
     const {
       createAccountStore: { isImport, phrase }
     } = this.props;
-    const { isLoading, json, value } = this.state;
+    const { isLoading, value } = this.state;
 
     // If we are creating a new account, the button just checks the phrase has
     // been correctly written by the user.
@@ -171,7 +126,7 @@ class AccountRewritePhrase extends Component {
     return (
       <button
         className='button'
-        disabled={(!value.length && !json) || isLoading}
+        disabled={!value.length || isLoading}
         onClick={this.handleNextStep}
       >
         Next

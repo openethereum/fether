@@ -69,7 +69,7 @@ export class InputFile extends React.PureComponent {
       >
         <div className='form_field_value'>
           <label className='label'> {label} </label>
-          <div className='dropzone -md'>
+          <div className='dropzone -sm'>
             {!file ? 'Drag and drop the file here' : file.name}
           </div>
         </div>
