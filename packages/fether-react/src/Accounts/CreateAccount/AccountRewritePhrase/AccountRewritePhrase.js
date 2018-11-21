@@ -3,19 +3,19 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import React, { Component } from "react";
-import { AccountCard, Card, Form as FetherForm } from "fether-ui";
+import React, { Component } from 'react';
+import { AccountCard, Card, Form as FetherForm } from 'fether-ui';
 
-import { inject, observer } from "mobx-react";
+import { inject, observer } from 'mobx-react';
 
-@inject("createAccountStore")
+@inject('createAccountStore')
 @observer
 class AccountRewritePhrase extends Component {
   state = {
     isLoading: false,
     isFileValid: false,
     json: null,
-    value: ""
+    value: ''
   };
 
   handleChange = ({ target: { value } }) => {
@@ -28,9 +28,9 @@ class AccountRewritePhrase extends Component {
 
       const isFileValid =
         json.address.length === 32 &&
-        typeof json.meta === "object" &&
+        typeof json.meta === 'object' &&
         json.crpyto &&
-        json.crypto.cipher === "aes-128-ctr";
+        json.crypto.cipher === 'aes-128-ctr';
 
       this.setState({
         isFileValid,
@@ -56,7 +56,6 @@ class AccountRewritePhrase extends Component {
 
     if (isJSON) {
       this.setState({ isLoading: true });
-      console.log("setting address ", json.address);
       await setJSON(json);
     }
 
@@ -74,7 +73,7 @@ class AccountRewritePhrase extends Component {
     createAccountStore.setIsJSON(!createAccountStore.isJSON);
   };
 
-  render() {
+  render () {
     const {
       createAccountStore: { address, isImport, isJSON, name },
       history,
@@ -83,20 +82,20 @@ class AccountRewritePhrase extends Component {
     const { value } = this.state;
     const currentStep = pathname.slice(-1);
     const body = [
-      <div key="createAccount">
-        <div className="text -centered">
+      <div key='createAccount'>
+        <div className='text -centered'>
           {isImport ? (
             isJSON ? (
               <div>
                 <p> Drop your JSON keyfile below </p>
-                <button onClick={this.toggleImportMethod} className="button">
+                <button onClick={this.toggleImportMethod} className='button'>
                   Use Seed Phrase
                 </button>
               </div>
             ) : (
               <div>
                 <p> Type your Recovery phrase </p>
-                <button onClick={this.toggleImportMethod} className="button">
+                <button onClick={this.toggleImportMethod} className='button'>
                   Use JSON Keyfile
                 </button>
               </div>
@@ -111,24 +110,24 @@ class AccountRewritePhrase extends Component {
 
         {isJSON ? (
           <FetherForm.InputFile
-            label="JSON Backup Keyfile"
+            label='JSON Backup Keyfile'
             onChangeFile={this.handleChangeFile}
             required
             value={value}
           />
         ) : (
           <FetherForm.Field
-            as="textarea"
-            label="Recovery phrase"
+            as='textarea'
+            label='Recovery phrase'
             onChange={this.handleChange}
             required
             value={value}
           />
         )}
 
-        <nav className="form-nav -space-around">
+        <nav className='form-nav -space-around'>
           {currentStep > 1 && (
-            <button className="button -cancel" onClick={history.goBack}>
+            <button className='button -cancel' onClick={history.goBack}>
               Back
             </button>
           )}
@@ -142,7 +141,7 @@ class AccountRewritePhrase extends Component {
     ) : (
       <AccountCard
         address={address}
-        name={address && !name ? "(no name)" : name}
+        name={address && !name ? '(no name)' : name}
         drawers={[body]}
       />
     );
@@ -159,7 +158,7 @@ class AccountRewritePhrase extends Component {
     if (!isImport) {
       return (
         <button
-          className="button"
+          className='button'
           disabled={value !== phrase}
           onClick={this.handleNextStep}
         >
@@ -171,7 +170,7 @@ class AccountRewritePhrase extends Component {
     // If we are importing an existing account, the button goes to the next step
     return (
       <button
-        className="button"
+        className='button'
         disabled={(!value.length && !json) || isLoading}
         onClick={this.handleNextStep}
       >

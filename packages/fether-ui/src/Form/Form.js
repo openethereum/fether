@@ -3,9 +3,9 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { Field } from "./Field";
-import { Slider } from "./Slider";
-import { InputFile } from "./InputFile";
+import { Field } from './Field';
+import { Slider } from './Slider';
+import { InputFile } from './InputFile';
 
 export const Form = {
   Field,
