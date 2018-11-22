@@ -55,6 +55,10 @@ class AccountImportOptions extends Component {
         json.crypto &&
         json.crypto.cipher === 'aes-128-ctr';
 
+      const prefix = '0x';
+
+      json.address = prefix.concat(json.address);
+
       if (isFileValid) {
         this.setState({
           json: json
