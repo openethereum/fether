@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-
+import RequireHealth from '../../RequireHealthOverlay';
 import TokenBalance from './TokenBalance';
 import withTokens from '../../utils/withTokens';
 
@@ -17,20 +17,22 @@ class TokensList extends Component {
     const shownArray = tokensArray.length ? tokensArray : [{}];
 
     return (
-      <div className='window_content'>
-        <div className='box -scroller'>
-          <ul className='list -padded'>
-            {shownArray.map((
-              token,
-              index // With empty tokens, the token.address is not defined, so we prefix with index
-            ) => (
-              <li key={`${index}-${token.address}`}>
-                <TokenBalance token={token} />
-              </li>
-            ))}
-          </ul>
+      <RequireHealth require='sync'>
+        <div className='window_content'>
+          <div className='box -scroller'>
+            <ul className='list -padded'>
+              {shownArray.map((
+                token,
+                index // With empty tokens, the token.address is not defined, so we prefix with index
+              ) => (
+                <li key={`${index}-${token.address}`}>
+                  <TokenBalance token={token} />
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-      </div>
+      </RequireHealth>
     );
   }
 }

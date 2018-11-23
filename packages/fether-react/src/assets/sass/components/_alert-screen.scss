@@ -5,6 +5,8 @@
   right: 0;
   bottom: 0;
   height: auto;
+  background: $chrome;
+  z-index: 1;
 
   display: flex;
   align-items: center;
@@ -41,7 +43,7 @@
 
     p {
       color: $grey;
-      font-size: .8rem;
+      font-size: 0.8rem;
       line-height: 1.4;
     }
   }
