@@ -22,7 +22,7 @@ class AccountPassword extends Component {
 
   handleKeyPress = e => {
     if (e.key === 'Enter') {
-      this.handleSubmit;
+      this.handleSubmit();
     }
   };
 
