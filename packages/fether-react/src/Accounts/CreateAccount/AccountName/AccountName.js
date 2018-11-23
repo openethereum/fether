@@ -33,6 +33,18 @@ class AccountName extends Component {
     return isImport ? this.renderCardWhenImported() : this.renderCardWhenNew();
   }
 
+  handleKeyPress = e => {
+    const {
+      history,
+      location: { pathname }
+    } = this.props;
+    const currentStep = pathname.slice(-1);
+
+    if (e.key === 'Enter') {
+      history.push(`/accounts/new/${+currentStep + 1}`);
+    }
+  };
+
   renderCardWhenImported = () => {
     const {
       createAccountStore: { address, name }
@@ -92,6 +104,7 @@ class AccountName extends Component {
         <FetherForm.Field
           label='Name'
           onChange={this.handleChangeName}
+          onKeyPress={this.handleKeyPress}
           required
           type='text'
           value={name}
