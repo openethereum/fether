@@ -54,7 +54,8 @@ export class InputFile extends React.PureComponent {
   };
 
   render () {
-    const acceptedFormats = ['application/json', 'text/plain'].join(', ');
+    // const acceptedFormats = ['application/json', 'text/plain'].join(', ');
+    const acceptedFormats = '*';
 
     const { label } = this.props;
 
