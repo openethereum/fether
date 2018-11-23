@@ -20,6 +20,12 @@ class AccountPassword extends Component {
     this.setState({ confirm: value });
   };
 
+  handleKeyPress = e => {
+    if (e.key === 'Enter') {
+      this.handleSubmit();
+    }
+  };
+
   handlePasswordChange = ({ target: { value } }) => {
     this.setState({ password: value });
   };
@@ -68,6 +74,7 @@ class AccountPassword extends Component {
             <FetherForm.Field
               label='Confirm'
               onChange={this.handleConfirmChange}
+              onKeyPress={this.handleKeyPress}
               required
               type='password'
               value={confirm}
