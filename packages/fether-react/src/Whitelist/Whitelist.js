@@ -102,7 +102,7 @@ class Whitelist extends Component {
       <div>
         <Header
           left={
-            <a to='/tokens' className='icon -close' onClick={history.goBack}>
+            <a to='/tokens' className='icon -back' onClick={history.goBack}>
               Close
             </a>
           }
