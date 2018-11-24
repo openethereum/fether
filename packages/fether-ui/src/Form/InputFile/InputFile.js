@@ -11,6 +11,7 @@ export class InputFile extends React.PureComponent {
   static propTypes = {
     label: PropTypes.string.isRequired,
     onChangeFile: PropTypes.func.isRequired,
+    onDropRejected: PropTypes.func,
     required: PropTypes.bool,
     value: PropTypes.any
   };
@@ -23,6 +24,12 @@ export class InputFile extends React.PureComponent {
   };
 
   onDropRejected = () => {
+    const { onDropRejected } = this.props;
+
+    onDropRejected(
+      'The file you uploaded was rejected. Please make sure this is the actual keyfile generated from a wallet'
+    );
+
     console.log(
       'The file you uploaded was rejected. Please make sure this is the actual keyfile generated from a wallet'
     );

@@ -7,6 +7,7 @@ import { inject, observer } from 'mobx-react';
 @observer
 class AccountImportOptions extends Component {
   state = {
+    error: '',
     isLoading: false,
     isFileValid: false,
     json: null,
@@ -37,6 +38,10 @@ class AccountImportOptions extends Component {
 
   handleChange = ({ target: { value } }) => {
     this.setState({ value });
+  };
+
+  handleRejectedFile = msg => {
+    this.setState({ error: msg });
   };
 
   handleChangeFile = ({ target: { result } }) => {
@@ -76,7 +81,7 @@ class AccountImportOptions extends Component {
       history,
       location: { pathname }
     } = this.props;
-    const { value } = this.state;
+    const { error, value } = this.state;
     const currentStep = pathname.slice(-1);
 
     const jsonCard = [
@@ -87,6 +92,7 @@ class AccountImportOptions extends Component {
           <FetherForm.InputFile
             label='JSON Backup Keyfile'
             onChangeFile={this.handleChangeFile}
+            onDropRejected={this.handleRejectedFile}
             required
           />
         </div>
@@ -115,6 +121,7 @@ class AccountImportOptions extends Component {
         <br />
         <Card> {phraseCard} </Card>
         <br />
+        <p> {error} </p>
         {this.renderButton()}
         <nav className='form-nav -space-around'>
           {currentStep > 1 && (
