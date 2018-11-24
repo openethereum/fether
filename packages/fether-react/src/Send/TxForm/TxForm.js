@@ -68,13 +68,7 @@ class Send extends Component {
                     initialValues={{ from: accountAddress, gasPrice: 4, ...tx }}
                     onSubmit={this.handleSubmit}
                     validate={this.validateForm}
-                    render={({
-                      handleSubmit,
-                      form,
-                      valid,
-                      validating,
-                      values
-                    }) => (
+                    render={({ handleSubmit, valid, validating, values }) => (
                       <form className='send-form' onSubmit={handleSubmit}>
                         <fieldset className='form_fields'>
                           <Field
@@ -112,14 +106,14 @@ class Send extends Component {
                             step={0.5}
                             type='range' // In Gwei
                           />
-                          {values.to === values.from ? (
+                          {values.to === values.from && (
                             <span>
                               <h3>WARNING:</h3>
                               <p>
                                 The sender and receiver addresses are the same.
                               </p>
                             </span>
-                          ) : null}
+                          )}
                         </fieldset>
                         <nav className='form-nav'>
                           <button
