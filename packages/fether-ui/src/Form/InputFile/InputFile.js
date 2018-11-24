@@ -22,6 +22,12 @@ export class InputFile extends React.PureComponent {
     }
   };
 
+  onDropRejected = () => {
+    console.log(
+      'The file you uploaded was rejected. Please make sure this is the actual keyfile generated from a wallet'
+    );
+  };
+
   onDrop = files => {
     const { onChangeFile } = this.props;
 
@@ -54,8 +60,7 @@ export class InputFile extends React.PureComponent {
   };
 
   render () {
-    // const acceptedFormats = ['application/json', 'text/plain'].join(', ');
-    const acceptedFormats = '*';
+    const acceptedFormats = ['application/json', 'text/plain'].join(', ');
 
     const { label } = this.props;
 
@@ -66,6 +71,7 @@ export class InputFile extends React.PureComponent {
         disabled={false}
         multiple={false}
         onDrop={this.onDrop}
+        onDropRejected={this.onDropRejected}
         disableClick
       >
         {({ open }) => (

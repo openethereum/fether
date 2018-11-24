@@ -64,6 +64,9 @@ export class CreateAccountStore {
 
     try {
       if (this.isJSON) {
+        // api.parity.newAccountFromWallet needs the address without prefix
+        this.json.address = this.address.slice(2);
+
         await parityStore.api.parity.newAccountFromWallet(
           JSON.stringify(this.json),
           password
@@ -79,8 +82,9 @@ export class CreateAccountStore {
       await parityStore.api.parity.setAccountMeta(this.address, {
         timestamp: Date.now()
       });
-    } catch (e) {
-      console.log(e);
+      return Promise.resolve(`Saved account ${this.address} to Parity`);
+    } catch (err) {
+      return Promise.reject(err);
     }
   };
 

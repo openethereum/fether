@@ -38,7 +38,7 @@ class AccountPassword extends Component {
     this.setState({ isLoading: true });
 
     // Save to parity
-    createAccountStore.saveAccountToParity(password).then(() => {
+    createAccountStore.saveAccountToParity(password).then(res => {
       createAccountStore.clear();
       history.push('/accounts');
     });
