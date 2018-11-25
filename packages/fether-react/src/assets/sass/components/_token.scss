@@ -1,4 +1,4 @@
-.token {
+.token, .token_usd {
   display: flex;
   align-items: center;
   align-content: center;
@@ -36,7 +36,7 @@
     height: ms(0) * 1.3;
   }
 
-  .token_symbol {
+  .token_symbol, .token_symbol_usd {
     height: ms(0) * 1.3;
     font-size: ms(-2);
     &:before {

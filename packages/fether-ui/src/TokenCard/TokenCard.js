@@ -11,6 +11,7 @@ import { Placeholder } from '../Placeholder';
 
 export const TokenCard = ({
   balance,
+  usdBalance,
   children,
   decimals,
   showBalance,
@@ -33,13 +34,22 @@ export const TokenCard = ({
           <Placeholder height={20} width={100} />
         )}
       </div>
-      <div className='token_balance'>
-        {balance ? (
-          <span>{balance.toFixed(decimals)} </span>
-        ) : showBalance ? (
-          <Placeholder height={20} width={50} />
+      <div className='token_balances'>
+        <div className='token_balance'>
+          {balance ? (
+            <span>{balance.toFixed(decimals)} </span>
+          ) : showBalance ? (
+            <Placeholder height={20} width={50} />
+          ) : null}
+          <span className='token_symbol'>{token && token.symbol}</span>
+        </div>
+        {usdBalance !== null ? (
+          <div className='token_usd'>
+            <div className='token_balance'>
+              {<span className='token_symbol_usd'>{`${usdBalance} USD`}</span>}
+            </div>
+          </div>
         ) : null}
-        <span className='token_symbol'>{token && token.symbol}</span>
       </div>
       {children}
     </div>

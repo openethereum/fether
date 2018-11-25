@@ -10,7 +10,8 @@ import { TokenCard } from 'fether-ui';
 import { withRouter } from 'react-router-dom';
 
 import withAccount from '../../../utils/withAccount.js';
-import withBalance from '../../../utils/withBalance';
+import withBalance from '../../../utils/withBalance.js';
+import { estimateUsd } from '../../../utils/estimateUsd';
 
 @withRouter
 @withAccount
@@ -19,6 +20,20 @@ import withBalance from '../../../utils/withBalance';
 class TokenBalance extends Component {
   static propTypes = {
     token: PropTypes.object
+  };
+
+  state = {
+    usdBalance: null
+  };
+
+  componentDidMount = async () => {
+    const { balance, token } = this.props;
+
+    if (token.symbol === 'ETH') {
+      this.setState({
+        usdBalance: (await estimateUsd()) * balance
+      });
+    }
   };
 
   handleClick = () => {
@@ -31,7 +46,15 @@ class TokenBalance extends Component {
   };
 
   render () {
-    return <TokenCard onClick={this.handleClick} {...this.props} />;
+    const { usdBalance } = this.state;
+
+    return (
+      <TokenCard
+        onClick={this.handleClick}
+        usdBalance={usdBalance}
+        {...this.props}
+      />
+    );
   }
 }
 
