@@ -21,12 +21,6 @@ class AccountPassword extends Component {
     this.setState({ confirm: value });
   };
 
-  handleKeyPress = e => {
-    if (e.key === 'Enter') {
-      this.handleSubmit();
-    }
-  };
-
   handlePasswordChange = ({ target: { value } }) => {
     this.setState({ password: value });
   };
@@ -55,16 +49,10 @@ class AccountPassword extends Component {
       });
   };
 
-  goBack = () => {
-    const { createAccountStore, history } = this.props;
-
-    createAccountStore.clear();
-    history.goBack();
-  };
-
   render () {
     const {
       createAccountStore: { address, name, isJSON },
+      history,
       location: { pathname }
     } = this.props;
     const { confirm, error, isLoading, password } = this.state;
@@ -97,7 +85,6 @@ class AccountPassword extends Component {
               <FetherForm.Field
                 label='Confirm'
                 onChange={this.handleConfirmChange}
-                onKeyPress={this.handleKeyPress}
                 required
                 type='password'
                 value={confirm}
@@ -107,12 +94,12 @@ class AccountPassword extends Component {
             <p>
               {error
                 ? error + ' Please check your password and try again.'
-                : null}{' '}
+                : null}
             </p>
 
             <nav className='form-nav -space-around'>
               {currentStep > 1 && (
-                <button className='button -cancel' onClick={this.goBack}>
+                <button className='button -cancel' onClick={history.goBack}>
                   Back
                 </button>
               )}
