@@ -50,7 +50,7 @@ class Send extends Component {
       <div>
         <Header
           left={
-            <Link to={`/tokens/${accountAddress}`} className='icon -close'>
+            <Link to={`/tokens/${accountAddress}`} className='icon -back'>
               Close
             </Link>
           }
@@ -106,6 +106,14 @@ class Send extends Component {
                             step={0.5}
                             type='range' // In Gwei
                           />
+                          {values.to === values.from && (
+                            <span>
+                              <h3>WARNING:</h3>
+                              <p>
+                                The sender and receiver addresses are the same.
+                              </p>
+                            </span>
+                          )}
                         </fieldset>
                         <nav className='form-nav'>
                           <button
@@ -170,6 +178,7 @@ class Send extends Component {
 
   validateForm = values => {
     const errors = {};
+
     if (!isAddress(values.to)) {
       errors.to = 'Please enter a valid Ethereum address';
     }
