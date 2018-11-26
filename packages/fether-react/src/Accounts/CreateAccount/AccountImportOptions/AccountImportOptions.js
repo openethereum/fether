@@ -40,32 +40,29 @@ class AccountImportOptions extends Component {
     this.setState({ value });
   };
 
-  handleRejectedFile = msg => {
-    this.setState({ error: msg });
-  };
-
-  handleChangeFile = ({ target: { result } }) => {
+  handleChangeFile = data => {
     const {
       createAccountStore: { setIsJSON }
     } = this.props;
 
     try {
-      const json = JSON.parse(result);
-
-      setIsJSON(true);
+      const json = JSON.parse(data);
 
       const isFileValid =
+        json &&
         json.address.length === 40 &&
         json.meta &&
         json.crypto &&
         json.crypto.cipher === 'aes-128-ctr';
 
-      const prefix = '0x';
-
-      json.address = prefix.concat(json.address);
-
       if (isFileValid) {
+        const prefix = '0x';
+        json.address = prefix.concat(json.address);
+
+        setIsJSON(true);
+
         this.setState({
+          isFileValid: true,
           json: json
         });
 
@@ -73,6 +70,12 @@ class AccountImportOptions extends Component {
       }
     } catch (error) {
       console.error(error);
+
+      this.setState({
+        isFileValid: false,
+        error:
+          'Invalid file. Please check this is your actual Parity backup json keyfile and try again.'
+      });
     }
   };
 
@@ -92,7 +95,6 @@ class AccountImportOptions extends Component {
           <FetherForm.InputFile
             label='JSON Backup Keyfile'
             onChangeFile={this.handleChangeFile}
-            onDropRejected={this.handleRejectedFile}
             required
           />
         </div>

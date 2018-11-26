@@ -20,7 +20,6 @@ import withAccount from '../utils/withAccount';
 @observer
 class BackupAccount extends Component {
   state = {
-    confirm: '',
     isLoading: false,
     password: '',
     message: ''
@@ -30,10 +29,6 @@ class BackupAccount extends Component {
     this.setState({
       message: msg
     });
-  };
-
-  handleConfirmChange = ({ target: { value } }) => {
-    this.setState({ confirm: value });
   };
 
   handlePasswordChange = ({ target: { value } }) => {
@@ -53,7 +48,7 @@ class BackupAccount extends Component {
       .then(res => {
         if (res) {
           createAccountStore.clear();
-          setTimeout(() => history.push(`/accounts`), 5000);
+          setTimeout(() => history.push(`/accounts`), 3000);
         }
       })
       .catch(err => {
@@ -67,7 +62,7 @@ class BackupAccount extends Component {
       history,
       location: { pathname }
     } = this.props;
-    const { confirm, isLoading, message, password } = this.state;
+    const { isLoading, message, password } = this.state;
     const accountAddress = pathname.slice(-42);
 
     return (
@@ -90,7 +85,7 @@ class BackupAccount extends Component {
         <Card className='-space-around'>
           <form key='backupAccount' onSubmit={this.handleSubmit}>
             <div className='text'>
-              <p>Encrypt your backup with your password:</p>
+              <p>Unlock your account:</p>
             </div>
 
             <FetherForm.Field
@@ -101,24 +96,13 @@ class BackupAccount extends Component {
               value={password}
             />
 
-            <FetherForm.Field
-              label='Confirm'
-              onChange={this.handleConfirmChange}
-              required
-              type='password'
-              value={confirm}
-            />
-
             <p className='error'> {message} </p>
 
             <nav className='form-nav -space-around'>
               <button className='button -cancel' onClick={history.goBack}>
                 Back
               </button>
-              <button
-                className='button'
-                disabled={!password || confirm !== password || isLoading}
-              >
+              <button className='button' disabled={!password || isLoading}>
                 Confirm backup
               </button>
             </nav>

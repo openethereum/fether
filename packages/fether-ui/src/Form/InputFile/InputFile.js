@@ -11,7 +11,6 @@ export class InputFile extends React.PureComponent {
   static propTypes = {
     label: PropTypes.string.isRequired,
     onChangeFile: PropTypes.func.isRequired,
-    onDropRejected: PropTypes.func,
     required: PropTypes.bool,
     value: PropTypes.any
   };
@@ -21,18 +20,6 @@ export class InputFile extends React.PureComponent {
       name: '',
       size: 0
     }
-  };
-
-  onDropRejected = () => {
-    const { onDropRejected } = this.props;
-
-    onDropRejected(
-      'The file you uploaded was rejected. Please make sure this is the actual keyfile generated from a wallet'
-    );
-
-    console.log(
-      'The file you uploaded was rejected. Please make sure this is the actual keyfile generated from a wallet'
-    );
   };
 
   onDrop = files => {
@@ -52,7 +39,7 @@ export class InputFile extends React.PureComponent {
       reader.onload = evt => {
         const data = evt.target.result;
 
-        onChangeFile && onChangeFile(evt);
+        onChangeFile && onChangeFile(data);
 
         this.setState({
           file: {
@@ -67,18 +54,14 @@ export class InputFile extends React.PureComponent {
   };
 
   render () {
-    const acceptedFormats = ['application/json', 'text/plain'].join(', ');
-
     const { label } = this.props;
 
     return (
       <Dropzone
-        accept={acceptedFormats}
         className='form_field'
         disabled={false}
         multiple={false}
         onDrop={this.onDrop}
-        onDropRejected={this.onDropRejected}
         disableClick
       >
         {({ open }) => (

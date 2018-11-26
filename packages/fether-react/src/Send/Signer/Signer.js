@@ -52,7 +52,7 @@ class Signer extends Component {
       <div>
         <Header
           left={
-            <Link to={`/tokens/${accountAddress}`} className='icon -close'>
+            <Link to={`/tokens/${accountAddress}`} className='icon -back'>
               Close
             </Link>
           }

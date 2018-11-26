@@ -63,7 +63,7 @@ export class CreateAccountStore {
     debug('Saving account to Parity.');
 
     try {
-      if (this.isJSON) {
+      if (this.isJSON && this.address) {
         // api.parity.newAccountFromWallet needs the address without prefix
         this.json.address = this.address.slice(2);
 
