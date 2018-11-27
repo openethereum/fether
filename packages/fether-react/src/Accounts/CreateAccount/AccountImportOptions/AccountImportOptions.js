@@ -1,6 +1,10 @@
+// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// This file is part of Parity.
+//
+// SPDX-License-Identifier: BSD-3-Clause
+
 import React, { Component } from 'react';
 import { Card, Form as FetherForm } from 'fether-ui';
-
 import { inject, observer } from 'mobx-react';
 
 @inject('createAccountStore')
@@ -49,11 +53,7 @@ class AccountImportOptions extends Component {
       const json = JSON.parse(data);
 
       const isFileValid =
-        json &&
-        json.address.length === 40 &&
-        json.meta &&
-        json.crypto &&
-        json.crypto.cipher === 'aes-128-ctr';
+        json && json.address.length === 40 && json.version === 3;
 
       if (isFileValid) {
         const prefix = '0x';
@@ -87,7 +87,7 @@ class AccountImportOptions extends Component {
     const { error, value } = this.state;
     const currentStep = pathname.slice(-1);
 
-    const jsonCard = [
+    const jsonCard = (
       <div key='createAccount'>
         <div className='text -centered'>
           <p> Recover from JSON Keyfile </p>
@@ -99,9 +99,9 @@ class AccountImportOptions extends Component {
           />
         </div>
       </div>
-    ];
+    );
 
-    const phraseCard = [
+    const phraseCard = (
       <div key='importBackup'>
         <div className='text -centered'>
           <p>Recover from Seed Phrase</p>
@@ -115,7 +115,7 @@ class AccountImportOptions extends Component {
           value={value}
         />
       </div>
-    ];
+    );
 
     return (
       <div className='center-md'>
@@ -123,7 +123,7 @@ class AccountImportOptions extends Component {
         <br />
         <Card> {phraseCard} </Card>
         <br />
-        <p> {error} </p>
+        <p>{error}</p>
         {this.renderButton()}
         <nav className='form-nav -space-around'>
           {currentStep > 1 && (

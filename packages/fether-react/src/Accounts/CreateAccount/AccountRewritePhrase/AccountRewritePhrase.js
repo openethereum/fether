@@ -5,9 +5,9 @@
 
 import React, { Component } from 'react';
 import { AccountCard, Card, Form as FetherForm } from 'fether-ui';
+import { inject, observer } from 'mobx-react';
 
 import AccountImportOptions from '../AccountImportOptions';
-import { inject, observer } from 'mobx-react';
 
 @inject('createAccountStore')
 @observer

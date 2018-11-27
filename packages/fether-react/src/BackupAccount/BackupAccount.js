@@ -9,6 +9,7 @@ import { inject, observer } from 'mobx-react';
 import { accountsInfo$ } from '@parity/light.js';
 import light from '@parity/light.js-react';
 import { Link, withRouter } from 'react-router-dom';
+
 import withAccount from '../utils/withAccount';
 
 @withRouter
@@ -85,7 +86,7 @@ class BackupAccount extends Component {
         <Card className='-space-around'>
           <form key='backupAccount' onSubmit={this.handleSubmit}>
             <div className='text'>
-              <p>Unlock your account:</p>
+              <p>Unlock your account to encrypt the JSON keystore file:</p>
             </div>
 
             <FetherForm.Field

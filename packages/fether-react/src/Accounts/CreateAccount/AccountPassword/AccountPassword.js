@@ -51,7 +51,7 @@ class AccountPassword extends Component {
 
   render () {
     const {
-      createAccountStore: { address, name, isJSON },
+      createAccountStore: { address, name, isJSON, isImport },
       history,
       location: { pathname }
     } = this.props;
@@ -68,7 +68,7 @@ class AccountPassword extends Component {
               <p>
                 {' '}
                 {isJSON
-                  ? 'Unlock your account: '
+                  ? 'Unlock your account to decrypt your JSON keystore file: '
                   : 'Secure your account with a password:'}
               </p>
             </div>
@@ -81,7 +81,7 @@ class AccountPassword extends Component {
               value={password}
             />
 
-            {!isJSON ? (
+            {!isJSON && (
               <FetherForm.Field
                 label='Confirm'
                 onChange={this.handleConfirmChange}
@@ -89,12 +89,10 @@ class AccountPassword extends Component {
                 type='password'
                 value={confirm}
               />
-            ) : null}
+            )}
 
             <p>
-              {error
-                ? error + ' Please check your password and try again.'
-                : null}
+              {error && error + ' Please check your password and try again.'}
             </p>
 
             <nav className='form-nav -space-around'>
@@ -109,7 +107,7 @@ class AccountPassword extends Component {
                   !password || (!isJSON && confirm !== password) || isLoading
                 }
               >
-                Confirm account creation
+                Confirm account {isImport ? `${'import'}` : `${'creation'}`}
               </button>
             </nav>
           </form>
