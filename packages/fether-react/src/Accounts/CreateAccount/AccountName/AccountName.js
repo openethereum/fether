@@ -38,6 +38,7 @@ class AccountName extends Component {
       history,
       location: { pathname }
     } = this.props;
+
     const currentStep = pathname.slice(-1);
 
     if (e.key === 'Enter') {

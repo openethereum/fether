@@ -67,6 +67,8 @@ class AccountImportOptions extends Component {
         });
 
         this.handleNextStep();
+      } else {
+        throw new Error('File is not valid');
       }
     } catch (error) {
       console.error(error);
