@@ -29,7 +29,7 @@ class AccountImportOptions extends Component {
 
     if (isJSON) {
       this.setState({ isLoading: true });
-      await setJSON(json);
+      await setJSON(JSON.stringify(json));
     }
 
     if (isImport && !isJSON) {
@@ -56,9 +56,6 @@ class AccountImportOptions extends Component {
         json && json.address.length === 40 && json.version === 3;
 
       if (isFileValid) {
-        const prefix = '0x';
-        json.address = prefix.concat(json.address);
-
         setIsJSON(true);
 
         this.setState({
@@ -107,15 +104,17 @@ class AccountImportOptions extends Component {
       <div key='importBackup'>
         <div className='text -centered'>
           <p>Recover from Seed Phrase</p>
-        </div>
 
-        <FetherForm.Field
-          as='textarea'
-          label='Recovery phrase'
-          onChange={this.handleChange}
-          required
-          value={value}
-        />
+          <FetherForm.Field
+            as='textarea'
+            label='Recovery phrase'
+            onChange={this.handleChange}
+            required
+            value={value}
+          />
+
+          {this.renderButton()}
+        </div>
       </div>
     );
 
@@ -126,7 +125,6 @@ class AccountImportOptions extends Component {
         <Card> {phraseCard} </Card>
         <br />
         <p>{error}</p>
-        {this.renderButton()}
         <nav className='form-nav -space-around'>
           {currentStep > 1 && (
             <button className='button -cancel' onClick={history.goBack}>
