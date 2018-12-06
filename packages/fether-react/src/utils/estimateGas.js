@@ -12,7 +12,7 @@ import { toWei } from '@parity/api/lib/util/wei';
 import Debug from './debug';
 
 const debug = Debug('estimateGas');
-const GAS_MULT_FACTOR = 1.25; // Since estimateGas is not always accurate, we add a 33% factor for buffer.
+const GAS_MULT_FACTOR = 1.25; // Since estimateGas is not always accurate, we add a 25% factor for buffer.
 
 export const contractForToken = memoize(tokenAddress =>
   makeContract(tokenAddress, abi)
@@ -27,7 +27,12 @@ export const estimateGas = (tx, token, api) => {
   }
 
   if (token.address === 'ETH') {
-    return estimateGasForEth(txForEth(tx), api).then(addBuffer);
+    return estimateGasForEth(txForEth(tx), api).then(estimatedGasForEth => {
+      // do not add any buffer in case of an account to account transaction
+      return estimatedGasForEth.eq(21000)
+        ? estimatedGasForEth
+        : addBuffer(estimatedGasForEth);
+    });
   } else {
     return estimateGasForErc20(txForErc20(tx, token), token).then(addBuffer);
   }
