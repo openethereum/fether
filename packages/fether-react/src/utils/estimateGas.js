@@ -95,10 +95,15 @@ export const txForErc20 = (tx, token) => {
  * passed to post$(tx).
  */
 export const txForEth = tx => {
-  return {
+  let output = {
     from: tx.from,
     gasPrice: toWei(tx.gasPrice, 'shannon'), // shannon == gwei
     to: tx.to,
     value: toWei(tx.amount.toString())
   };
+  // gas field should not be present when the function is called for gas estimation.
+  if (tx.gas) {
+    output.gas = tx.gas;
+  }
+  return output;
 };

@@ -33,8 +33,22 @@ const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 @withEthBalance // ETH balance
 @observer
 class Send extends Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      gas: 0
+    };
+    this.isUnmounted = false;
+  }
+
+  componentWillUnmount () {
+    this.isUnmounted = true;
+  }
+
   handleSubmit = values => {
     const { accountAddress, history, sendStore, token } = this.props;
+    values.gas = this.state.gas;
+
     sendStore.setTx(values);
     history.push(`/send/${token.address}/from/${accountAddress}/signer`);
   };
@@ -155,6 +169,7 @@ class Send extends Component {
       }
 
       const estimated = await estimateGas(values, token, parityStore.api);
+      !this.isUnmounted && this.setState({ gas: estimated.toString() });
 
       if (!ethBalance || isNaN(estimated)) {
         throw new Error('No "ethBalance" or "estimated" value.');
