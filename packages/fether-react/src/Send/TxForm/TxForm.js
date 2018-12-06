@@ -35,13 +35,8 @@ const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 class Send extends Component {
   handleSubmit = values => {
     const { accountAddress, history, sendStore, token } = this.props;
-    console.log('values: ', values);
     sendStore.setTx(values);
     history.push(`/send/${token.address}/from/${accountAddress}/signer`);
-  };
-
-  updateGas = (value, state, { changeValue }) => {
-    changeValue(state, 'gas', value => value);
   };
 
   render () {
@@ -73,8 +68,6 @@ class Send extends Component {
                     initialValues={{ from: accountAddress, gasPrice: 4, ...tx }}
                     onSubmit={this.handleSubmit}
                     validate={this.validateForm}
-                    /** Converts a form value to uppercase **/
-                    mutators={this.updateGas}
                     render={({ handleSubmit, valid, validating, values }) => (
                       <form className='send-form' onSubmit={handleSubmit}>
                         <fieldset className='form_fields'>
@@ -113,15 +106,6 @@ class Send extends Component {
                             step={0.5}
                             type='range' // In Gwei
                           />
-
-                          <Field
-                            className='form_field_gas'
-                            name='gas'
-                            render={FetherForm.Slider}
-                            required
-                            value={values.gas}
-                          />
-
                           {values.to === values.from && (
                             <span>
                               <h3>WARNING:</h3>
@@ -171,9 +155,7 @@ class Send extends Component {
       }
 
       const estimated = await estimateGas(values, token, parityStore.api);
-      values.gas = estimated;
-      this.updateGas(estimated);
-      console.log('values estimated: ', values);
+
       if (!ethBalance || isNaN(estimated)) {
         throw new Error('No "ethBalance" or "estimated" value.');
       }
@@ -188,7 +170,6 @@ class Send extends Component {
         return { amount: "You don't have enough ETH balance" };
       }
     } catch (err) {
-      console.log(err);
       return {
         amount: 'Failed estimating balance, please try again'
       };
