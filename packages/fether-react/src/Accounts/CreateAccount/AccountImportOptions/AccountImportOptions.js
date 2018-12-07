@@ -29,7 +29,7 @@ class AccountImportOptions extends Component {
 
     if (isJSON) {
       this.setState({ isLoading: true });
-      await setJSON(JSON.stringify(json));
+      await setJSON(json);
     }
 
     if (isImport && !isJSON) {

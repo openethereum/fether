@@ -64,14 +64,11 @@ export class CreateAccountStore {
 
     try {
       if (this.isJSON && this.address) {
-        // api.parity.newAccountFromWallet needs the address without prefix
-        this.json.address = this.address.slice(2);
-
         await parityStore.api.parity.newAccountFromWallet(
           JSON.stringify(this.json),
           password
         );
-      } else {
+      } else if (this.phrase) {
         await parityStore.api.parity.newAccountFromPhrase(
           this.phrase,
           password
@@ -97,7 +94,10 @@ export class CreateAccountStore {
   setJSON = json => {
     this.json = json;
 
-    this.setAddress(json.address || null);
+    const prefix = '0x';
+    const prefixedAddress = prefix.concat(json.address);
+
+    this.setAddress(prefixedAddress || null);
     this.setName(json.name || null);
   };
 
