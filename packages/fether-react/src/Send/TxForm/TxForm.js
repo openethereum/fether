@@ -161,7 +161,7 @@ class Send extends Component {
     );
   }
 
-  validateAndEstimate = async (values, withError) => {
+  validateAndEstimate = (values, withError) => {
     const { balance, parityStore, token } = this.props;
     const amount = +values.amount;
 
@@ -175,7 +175,7 @@ class Send extends Component {
         : false;
     }
 
-    return await estimateGas(values, token, parityStore.api);
+    return estimateGas(values, token, parityStore.api);
   };
 
   /**
