@@ -54,8 +54,9 @@ class Send extends Component {
         field: 'to', // when the value of these fields change...
         updates: {
           // ...set field "gas"
-          gas: async (amountValue, allValues) => {
+          gas: async (value, allValues) => {
             const estimated = await this.validateAndEstimate(allValues, false);
+            console.log('estimated: ', estimated);
             return estimated ? estimated.toString() : null;
           }
         }
@@ -125,7 +126,7 @@ class Send extends Component {
                           <div className='hidden'>
                             <Field
                               name='gas'
-                              required
+                              // required
                               render={FetherForm.Field}
                             />
                           </div>
