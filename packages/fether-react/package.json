@@ -43,6 +43,7 @@
     "debug": "^3.1.0",
     "fether-ui": "^0.1.2",
     "final-form": "^4.8.3",
+    "final-form-calculate": "^1.2.1",
     "is-electron": "^2.1.0",
     "localforage": "^1.7.2",
     "localforage-observable": "^1.4.0",

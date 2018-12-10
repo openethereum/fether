@@ -19,6 +19,7 @@ import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import withAccount from '../../utils/withAccount.js';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
 import withTokens from '../../utils/withTokens';
+import createDecorator from 'final-form-calculate';
 
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
@@ -33,21 +34,8 @@ const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 @withEthBalance // ETH balance
 @observer
 class Send extends Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-      gas: 0
-    };
-    this.isUnmounted = false;
-  }
-
-  componentWillUnmount () {
-    this.isUnmounted = true;
-  }
-
   handleSubmit = values => {
     const { accountAddress, history, sendStore, token } = this.props;
-    values.gas = this.state.gas;
 
     sendStore.setTx(values);
     history.push(`/send/${token.address}/from/${accountAddress}/signer`);
@@ -60,6 +48,19 @@ class Send extends Component {
       token
     } = this.props;
 
+    const decorator = createDecorator(
+      // Calculations:
+      {
+        field: 'to', // when the value of these fields change...
+        updates: {
+          // ...set field "gas"
+          gas: async (amountValue, allValues) => {
+            const estimated = await this.validateAndEstimate(allValues, false);
+            return estimated ? estimated.toString() : null;
+          }
+        }
+      }
+    );
     return (
       <div>
         <Header
@@ -82,6 +83,7 @@ class Send extends Component {
                     initialValues={{ from: accountAddress, gasPrice: 4, ...tx }}
                     onSubmit={this.handleSubmit}
                     validate={this.validateForm}
+                    decorators={[decorator]}
                     render={({ handleSubmit, valid, validating, values }) => (
                       <form className='send-form' onSubmit={handleSubmit}>
                         <fieldset className='form_fields'>
@@ -120,6 +122,13 @@ class Send extends Component {
                             step={0.5}
                             type='range' // In Gwei
                           />
+                          <div className='hidden'>
+                            <Field
+                              name='gas'
+                              required
+                              render={FetherForm.Field}
+                            />
+                          </div>
                           {values.to === values.from && (
                             <span>
                               <h3>WARNING:</h3>
@@ -151,25 +160,36 @@ class Send extends Component {
     );
   }
 
+  validateAndEstimate = async (values, withError) => {
+    const { balance, parityStore, token } = this.props;
+    const amount = +values.amount;
+
+    if (!amount || isNaN(amount)) {
+      return withError ? { amount: 'Please enter a valid amount' } : false;
+    } else if (amount < 0) {
+      return withError ? { amount: 'Please enter a positive amount ' } : false;
+    } else if (balance && balance.lt(amount)) {
+      return withError
+        ? { amount: `You don't have enough ${token.symbol} balance` }
+        : false;
+    }
+
+    return await estimateGas(values, token, parityStore.api);
+  };
+
   /**
    * Estimate gas amount, and validate that the user has enough balance to make
    * the tx.
    */
   validateAmount = debounce(async values => {
     try {
-      const { balance, ethBalance, parityStore, token } = this.props;
-      const amount = +values.amount;
+      const { ethBalance, token } = this.props;
 
-      if (!amount || isNaN(amount)) {
-        return { amount: 'Please enter a valid amount' };
-      } else if (amount < 0) {
-        return { amount: 'Please enter a positive amount ' };
-      } else if (balance && balance.lt(amount)) {
-        return { amount: `You don't have enough ${token.symbol} balance` };
+      const estimated = await this.validateAndEstimate(values, true);
+      // validateAndEstimate return an error if a field isn't valid
+      if (estimated.amount) {
+        return estimated;
       }
-
-      const estimated = await estimateGas(values, token, parityStore.api);
-      !this.isUnmounted && this.setState({ gas: estimated.toString() });
 
       if (!ethBalance || isNaN(estimated)) {
         throw new Error('No "ethBalance" or "estimated" value.');
