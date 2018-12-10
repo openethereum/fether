@@ -95,7 +95,7 @@ export const txForErc20 = (tx, token) => {
  * passed to post$(tx).
  */
 export const txForEth = tx => {
-  let output = {
+  const output = {
     from: tx.from,
     gasPrice: toWei(tx.gasPrice, 'shannon'), // shannon == gwei
     to: tx.to,
