@@ -78,7 +78,7 @@ const addBuffer = estimated => {
  * passed to makeContract.transfer(...).
  */
 export const txForErc20 = (tx, token) => {
-  return {
+  const output = {
     args: [
       tx.to,
       new BigNumber(tx.amount).mul(new BigNumber(10).pow(token.decimals))
@@ -88,6 +88,12 @@ export const txForErc20 = (tx, token) => {
       gasPrice: toWei(tx.gasPrice, 'shannon') // shannon == gwei
     }
   };
+
+  if (tx.gas) {
+    output.options.gas = tx.gas;
+  }
+
+  return output;
 };
 
 /**
