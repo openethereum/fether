@@ -173,6 +173,9 @@ class Send extends Component {
       return withError
         ? { amount: `You don't have enough ${token.symbol} balance` }
         : false;
+    } else if (!values.to || isNaN(values.to)) {
+      // for gas estimation, the receiving address must be set
+      return false;
     }
     return true;
   };
