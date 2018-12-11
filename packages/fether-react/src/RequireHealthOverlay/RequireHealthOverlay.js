@@ -53,7 +53,7 @@ class RequireHealthOverlay extends Component {
         this.setState({ visible: true });
       }
     }
-  }
+  };
 
   render () {
     const { visible } = this.state;

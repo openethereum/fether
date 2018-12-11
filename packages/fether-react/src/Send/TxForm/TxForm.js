@@ -54,11 +54,11 @@ class Send extends Component {
         field: /to|amount/, // when the value of these fields change...
         updates: {
           // ...set field "gas"
-          gas: async (value, allValues) => {
+          gas: (value, allValues) => {
             const { parityStore, token } = this.props;
             if (this.preValidate(allValues, false)) {
               // this means amount has errors
-              return await estimateGas(allValues, token, parityStore.api);
+              return estimateGas(allValues, token, parityStore.api);
             } else {
               return null;
             }
