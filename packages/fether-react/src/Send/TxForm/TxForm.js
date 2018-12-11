@@ -51,13 +51,17 @@ class Send extends Component {
     const decorator = createDecorator(
       // Calculations:
       {
-        field: 'to', // when the value of these fields change...
+        field: /to|amount/, // when the value of these fields change...
         updates: {
           // ...set field "gas"
           gas: async (value, allValues) => {
-            const estimated = await this.validateAndEstimate(allValues, false);
-            console.log('estimated: ', estimated);
-            return estimated ? estimated.toString() : null;
+            const { parityStore, token } = this.props;
+            if (this.preValidate(allValues, false)) {
+              // this means amount has errors
+              return await estimateGas(allValues, token, parityStore.api);
+            } else {
+              return null;
+            }
           }
         }
       }
@@ -123,13 +127,11 @@ class Send extends Component {
                             step={0.5}
                             type='range' // In Gwei
                           />
+
                           <div className='hidden'>
-                            <Field
-                              name='gas'
-                              // required
-                              render={FetherForm.Field}
-                            />
+                            <Field name='gas' render={FetherForm.Field} />
                           </div>
+
                           {values.to === values.from && (
                             <span>
                               <h3>WARNING:</h3>
@@ -161,8 +163,8 @@ class Send extends Component {
     );
   }
 
-  validateAndEstimate = (values, withError) => {
-    const { balance, parityStore, token } = this.props;
+  preValidate = (values, withError) => {
+    const { balance, token } = this.props;
     const amount = +values.amount;
 
     if (!amount || isNaN(amount)) {
@@ -174,8 +176,7 @@ class Send extends Component {
         ? { amount: `You don't have enough ${token.symbol} balance` }
         : false;
     }
-
-    return estimateGas(values, token, parityStore.api);
+    return true;
   };
 
   /**
@@ -186,19 +187,19 @@ class Send extends Component {
     try {
       const { ethBalance, token } = this.props;
 
-      const estimated = await this.validateAndEstimate(values, true);
-      // validateAndEstimate return an error if a field isn't valid
-      if (estimated.amount) {
-        return estimated;
+      const preValidation = this.preValidate(values, true);
+      // preValidate return an error if a field isn't valid
+      if (preValidation.amount) {
+        return preValidation;
       }
 
-      if (!ethBalance || isNaN(estimated)) {
-        throw new Error('No "ethBalance" or "estimated" value.');
+      if (!ethBalance || isNaN(values.gas)) {
+        throw new Error('No "ethBalance" or "gas" value.');
       }
 
       // Verify that `gas + (eth amount if sending eth) <= ethBalance`
       if (
-        estimated
+        values.gas
           .mul(toWei(values.gasPrice, 'shannon'))
           .plus(token.address === 'ETH' ? toWei(values.amount) : 0)
           .gt(toWei(ethBalance))
@@ -206,6 +207,7 @@ class Send extends Component {
         return { amount: "You don't have enough ETH balance" };
       }
     } catch (err) {
+      console.log(err);
       return {
         amount: 'Failed estimating balance, please try again'
       };
