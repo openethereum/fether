@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
+import createDecorator from 'final-form-calculate';
 import debounce from 'debounce-promise';
 import { Field, Form } from 'react-final-form';
 import { Form as FetherForm, Header } from 'fether-ui';
@@ -19,7 +20,6 @@ import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import withAccount from '../../utils/withAccount.js';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
 import withTokens from '../../utils/withTokens';
-import createDecorator from 'final-form-calculate';
 
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
@@ -47,7 +47,8 @@ class Send extends Component {
       // ...set field "gas"
       gas: (value, allValues) => {
         const { parityStore, token } = this.props;
-        if (this.preValidate(allValues, false)) {
+
+        if (this.preValidate(allValues) === true) {
           return estimateGas(allValues, token, parityStore.api);
         } else {
           // this means amount has errors
@@ -126,10 +127,6 @@ class Send extends Component {
                             type='range' // In Gwei
                           />
 
-                          <div className='hidden'>
-                            <Field name='gas' render={FetherForm.Field} />
-                          </div>
-
                           {values.to === values.from && (
                             <span>
                               <h3>WARNING:</h3>
@@ -161,18 +158,16 @@ class Send extends Component {
     );
   }
 
-  preValidate = (values, withError) => {
+  preValidate = values => {
     const { balance, token } = this.props;
     const amount = +values.amount;
 
     if (!amount || isNaN(amount)) {
-      return withError ? { amount: 'Please enter a valid amount' } : false;
+      return { amount: 'Please enter a valid amount' };
     } else if (amount < 0) {
-      return withError ? { amount: 'Please enter a positive amount ' } : false;
+      return { amount: 'Please enter a positive amount ' };
     } else if (balance && balance.lt(amount)) {
-      return withError
-        ? { amount: `You don't have enough ${token.symbol} balance` }
-        : false;
+      return { amount: `You don't have enough ${token.symbol} balance` };
     } else if (!values.to || isNaN(values.to)) {
       // for gas estimation, the receiving address must be set
       return false;
@@ -184,13 +179,13 @@ class Send extends Component {
    * Estimate gas amount, and validate that the user has enough balance to make
    * the tx.
    */
-  validateAmount = debounce(async values => {
+  validateAmount = debounce(values => {
     try {
       const { ethBalance, token } = this.props;
 
-      const preValidation = this.preValidate(values, true);
+      const preValidation = this.preValidate(values);
       // preValidate return an error if a field isn't valid
-      if (preValidation.amount) {
+      if (preValidation !== true) {
         return preValidation;
       }
 
@@ -208,7 +203,7 @@ class Send extends Component {
         return { amount: "You don't have enough ETH balance" };
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       return {
         amount: 'Failed estimating balance, please try again'
       };
