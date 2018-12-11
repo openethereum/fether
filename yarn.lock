@@ -6127,6 +6127,11 @@ fill-range@^4.0.0:
     repeat-string "^1.6.1"
     to-regex-range "^2.1.0"
 
+final-form-calculate@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/final-form-calculate/-/final-form-calculate-1.2.1.tgz#906f09e2d3410b3338a94b596062848d9b7c7d03"
+  integrity sha512-uAmVfJ68Qe8HEs7fzbe+u2UJ89ZFAEa9LIfDKVNm4KDeSXGvSe/e2XODRjayvm34X36SmkP8TJMmsRd6OW8oRw==
+
 final-form@^4.8.3:
   version "4.8.3"
   resolved "https://registry.yarnpkg.com/final-form/-/final-form-4.8.3.tgz#86a03da6cd6459ed8fe3737dbd9dc87ed40c11d7"

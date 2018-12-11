@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
+import createDecorator from 'final-form-calculate';
 import debounce from 'debounce-promise';
 import { Field, Form } from 'react-final-form';
 import { Form as FetherForm, Header } from 'fether-ui';
@@ -35,9 +36,26 @@ const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 class Send extends Component {
   handleSubmit = values => {
     const { accountAddress, history, sendStore, token } = this.props;
+
     sendStore.setTx(values);
     history.push(`/send/${token.address}/from/${accountAddress}/signer`);
   };
+
+  decorator = createDecorator({
+    field: /to|amount/, // when the value of these fields change...
+    updates: {
+      // ...set field "gas"
+      gas: (value, allValues) => {
+        const { parityStore, token } = this.props;
+
+        if (this.preValidate(allValues) === true) {
+          return estimateGas(allValues, token, parityStore.api);
+        } else {
+          return null;
+        }
+      }
+    }
+  });
 
   render () {
     const {
@@ -68,6 +86,7 @@ class Send extends Component {
                     initialValues={{ from: accountAddress, gasPrice: 4, ...tx }}
                     onSubmit={this.handleSubmit}
                     validate={this.validateForm}
+                    decorators={[this.decorator]}
                     render={({ handleSubmit, valid, validating, values }) => (
                       <form className='send-form' onSubmit={handleSubmit}>
                         <fieldset className='form_fields'>
@@ -106,6 +125,7 @@ class Send extends Component {
                             step={0.5}
                             type='range' // In Gwei
                           />
+
                           {values.to === values.from && (
                             <span>
                               <h3>WARNING:</h3>
@@ -137,32 +157,43 @@ class Send extends Component {
     );
   }
 
+  preValidate = values => {
+    const { balance, token } = this.props;
+    const amount = +values.amount;
+
+    if (!amount || isNaN(amount)) {
+      return { amount: 'Please enter a valid amount' };
+    } else if (amount < 0) {
+      return { amount: 'Please enter a positive amount ' };
+    } else if (balance && balance.lt(amount)) {
+      return { amount: `You don't have enough ${token.symbol} balance` };
+    } else if (!values.to || !isAddress(values.to)) {
+      return { to: 'Please enter a valid Ethereum address' };
+    }
+    return true;
+  };
+
   /**
    * Estimate gas amount, and validate that the user has enough balance to make
    * the tx.
    */
-  validateAmount = debounce(async values => {
+  validateForm = debounce(values => {
     try {
-      const { balance, ethBalance, parityStore, token } = this.props;
-      const amount = +values.amount;
+      const { ethBalance, token } = this.props;
 
-      if (!amount || isNaN(amount)) {
-        return { amount: 'Please enter a valid amount' };
-      } else if (amount < 0) {
-        return { amount: 'Please enter a positive amount ' };
-      } else if (balance && balance.lt(amount)) {
-        return { amount: `You don't have enough ${token.symbol} balance` };
+      const preValidation = this.preValidate(values);
+      // preValidate return an error if a field isn't valid
+      if (preValidation !== true) {
+        return preValidation;
       }
 
-      const estimated = await estimateGas(values, token, parityStore.api);
-
-      if (!ethBalance || isNaN(estimated)) {
-        throw new Error('No "ethBalance" or "estimated" value.');
+      if (!ethBalance || isNaN(values.gas)) {
+        throw new Error('No "ethBalance" or "gas" value.');
       }
 
       // Verify that `gas + (eth amount if sending eth) <= ethBalance`
       if (
-        estimated
+        values.gas
           .mul(toWei(values.gasPrice, 'shannon'))
           .plus(token.address === 'ETH' ? toWei(values.amount) : 0)
           .gt(toWei(ethBalance))
@@ -170,21 +201,12 @@ class Send extends Component {
         return { amount: "You don't have enough ETH balance" };
       }
     } catch (err) {
+      console.error(err);
       return {
         amount: 'Failed estimating balance, please try again'
       };
     }
   }, 1000);
-
-  validateForm = values => {
-    const errors = {};
-
-    if (!isAddress(values.to)) {
-      errors.to = 'Please enter a valid Ethereum address';
-    }
-
-    return Object.keys(errors).length ? errors : this.validateAmount(values);
-  };
 }
 
 export default Send;

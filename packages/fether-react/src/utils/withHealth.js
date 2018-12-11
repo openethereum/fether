@@ -113,7 +113,7 @@ const rpcs$ = isApiConnected$.pipe(
         // as syncing to new blocks from the top of the chain usually takes ~1s.
         // syncStatus$() is distinctUntilChanged, so {isSync: false} will never
         // be fired twice in a row.
-        switchMap(sync => sync.isSync ? of(sync) : of(sync).pipe(delay(2000)))
+        switchMap(sync => (sync.isSync ? of(sync) : of(sync).pipe(delay(2000))))
       ),
       peerCount$().pipe(withoutLoading())
     )

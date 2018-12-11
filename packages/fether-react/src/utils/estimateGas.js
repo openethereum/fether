@@ -12,7 +12,7 @@ import { toWei } from '@parity/api/lib/util/wei';
 import Debug from './debug';
 
 const debug = Debug('estimateGas');
-const GAS_MULT_FACTOR = 1.25; // Since estimateGas is not always accurate, we add a 33% factor for buffer.
+const GAS_MULT_FACTOR = 1.25; // Since estimateGas is not always accurate, we add a 25% factor for buffer.
 
 export const contractForToken = memoize(tokenAddress =>
   makeContract(tokenAddress, abi)
@@ -27,7 +27,12 @@ export const estimateGas = (tx, token, api) => {
   }
 
   if (token.address === 'ETH') {
-    return estimateGasForEth(txForEth(tx), api).then(addBuffer);
+    return estimateGasForEth(txForEth(tx), api).then(estimatedGasForEth => {
+      // do not add any buffer in case of an account to account transaction
+      return estimatedGasForEth.eq(21000)
+        ? estimatedGasForEth
+        : addBuffer(estimatedGasForEth);
+    });
   } else {
     return estimateGasForErc20(txForErc20(tx, token), token).then(addBuffer);
   }
@@ -73,7 +78,7 @@ const addBuffer = estimated => {
  * passed to makeContract.transfer(...).
  */
 export const txForErc20 = (tx, token) => {
-  return {
+  const output = {
     args: [
       tx.to,
       new BigNumber(tx.amount).mul(new BigNumber(10).pow(token.decimals))
@@ -83,6 +88,12 @@ export const txForErc20 = (tx, token) => {
       gasPrice: toWei(tx.gasPrice, 'shannon') // shannon == gwei
     }
   };
+
+  if (tx.gas) {
+    output.options.gas = tx.gas;
+  }
+
+  return output;
 };
 
 /**
@@ -90,10 +101,15 @@ export const txForErc20 = (tx, token) => {
  * passed to post$(tx).
  */
 export const txForEth = tx => {
-  return {
+  const output = {
     from: tx.from,
     gasPrice: toWei(tx.gasPrice, 'shannon'), // shannon == gwei
     to: tx.to,
     value: toWei(tx.amount.toString())
   };
+  // gas field should not be present when the function is called for gas estimation.
+  if (tx.gas) {
+    output.gas = tx.gas;
+  }
+  return output;
 };
