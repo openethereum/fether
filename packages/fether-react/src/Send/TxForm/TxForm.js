@@ -41,6 +41,22 @@ class Send extends Component {
     history.push(`/send/${token.address}/from/${accountAddress}/signer`);
   };
 
+  decorator = createDecorator({
+    field: /to|amount/, // when the value of these fields change...
+    updates: {
+      // ...set field "gas"
+      gas: (value, allValues) => {
+        const { parityStore, token } = this.props;
+        if (this.preValidate(allValues, false)) {
+          return estimateGas(allValues, token, parityStore.api);
+        } else {
+          // this means amount has errors
+          return null;
+        }
+      }
+    }
+  });
+
   render () {
     const {
       accountAddress,
@@ -48,24 +64,6 @@ class Send extends Component {
       token
     } = this.props;
 
-    const decorator = createDecorator(
-      // Calculations:
-      {
-        field: /to|amount/, // when the value of these fields change...
-        updates: {
-          // ...set field "gas"
-          gas: (value, allValues) => {
-            const { parityStore, token } = this.props;
-            if (this.preValidate(allValues, false)) {
-              // this means amount has errors
-              return estimateGas(allValues, token, parityStore.api);
-            } else {
-              return null;
-            }
-          }
-        }
-      }
-    );
     return (
       <div>
         <Header
@@ -88,7 +86,7 @@ class Send extends Component {
                     initialValues={{ from: accountAddress, gasPrice: 4, ...tx }}
                     onSubmit={this.handleSubmit}
                     validate={this.validateForm}
-                    decorators={[decorator]}
+                    decorators={[this.decorator]}
                     render={({ handleSubmit, valid, validating, values }) => (
                       <form className='send-form' onSubmit={handleSubmit}>
                         <fieldset className='form_fields'>
