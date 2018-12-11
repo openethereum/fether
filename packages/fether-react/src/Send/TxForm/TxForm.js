@@ -51,7 +51,6 @@ class Send extends Component {
         if (this.preValidate(allValues) === true) {
           return estimateGas(allValues, token, parityStore.api);
         } else {
-          // this means amount has errors
           return null;
         }
       }
@@ -168,9 +167,8 @@ class Send extends Component {
       return { amount: 'Please enter a positive amount ' };
     } else if (balance && balance.lt(amount)) {
       return { amount: `You don't have enough ${token.symbol} balance` };
-    } else if (!values.to || isNaN(values.to)) {
-      // for gas estimation, the receiving address must be set
-      return false;
+    } else if (!values.to || !isAddress(values.to)) {
+      return { to: 'Please enter a valid Ethereum address' };
     }
     return true;
   };
@@ -179,7 +177,7 @@ class Send extends Component {
    * Estimate gas amount, and validate that the user has enough balance to make
    * the tx.
    */
-  validateAmount = debounce(values => {
+  validateForm = debounce(values => {
     try {
       const { ethBalance, token } = this.props;
 
@@ -209,16 +207,6 @@ class Send extends Component {
       };
     }
   }, 1000);
-
-  validateForm = values => {
-    const errors = {};
-
-    if (!isAddress(values.to)) {
-      errors.to = 'Please enter a valid Ethereum address';
-    }
-
-    return Object.keys(errors).length ? errors : this.validateAmount(values);
-  };
 }
 
 export default Send;
