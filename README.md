@@ -92,6 +92,14 @@ yarn --version // Should be at least 1.4.2
 ```bash
 git clone https://github.com/paritytech/fether
 cd ./fether
+```
+
+### Update Yarn and install dependencies
+
+```bash
+npm install --global yarn;
+brew upgrade yarn;
+npm install copyfiles -g;
 yarn install
 ```
 
