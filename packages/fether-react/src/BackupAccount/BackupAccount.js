@@ -62,6 +62,7 @@ class BackupAccount extends Component {
       })
       .catch(err => {
         this.toggleMsg(err.text + ' Please check your password and try again.');
+        this.setState({ isLoading: false });
       });
   };
 

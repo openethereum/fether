@@ -63,7 +63,7 @@ export class CreateAccountStore {
     debug('Saving account to Parity.');
 
     try {
-      if (this.isJSON && this.address) {
+      if (this.isJSON && this.json) {
         await parityStore.api.parity.newAccountFromWallet(
           JSON.stringify(this.json),
           password
