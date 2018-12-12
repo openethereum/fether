@@ -19,6 +19,10 @@ import withAccount from '../utils/withAccount';
   accountsInfo: accountsInfo$
 })
 class Tokens extends PureComponent {
+  handleGoToBackup = () => {
+    this.props.history.push(`/backup/${this.props.accountAddress}`);
+  };
+
   handleGoToWhitelist = () => {
     this.props.history.push(`/whitelist/${this.props.accountAddress}`);
   };
@@ -56,6 +60,9 @@ class Tokens extends PureComponent {
             <Health />
           </div>
           <div className='footer-nav_icons'>
+            <button className='button -tiny' onClick={this.handleGoToBackup}>
+              Backup Account
+            </button>
             <button className='button -tiny' onClick={this.handleGoToWhitelist}>
               Add tokens
             </button>

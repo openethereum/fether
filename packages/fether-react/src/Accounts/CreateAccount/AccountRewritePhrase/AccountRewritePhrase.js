@@ -7,6 +7,8 @@ import React, { Component } from 'react';
 import { AccountCard, Card, Form as FetherForm } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 
+import AccountImportOptions from '../AccountImportOptions';
+
 @inject('createAccountStore')
 @observer
 class AccountRewritePhrase extends Component {
@@ -47,9 +49,9 @@ class AccountRewritePhrase extends Component {
     const currentStep = pathname.slice(-1);
     const body = [
       <div key='createAccount'>
-        <div className='text'>
+        <div className='text -centered'>
           {isImport ? (
-            <p>Type your Recovery phrase</p>
+            <AccountImportOptions />
           ) : (
             <p>
               Type your secret phrase to confirm that you wrote it down
@@ -57,6 +59,7 @@ class AccountRewritePhrase extends Component {
             </p>
           )}
         </div>
+
         <FetherForm.Field
           as='textarea'
           label='Recovery phrase'
