@@ -163,10 +163,12 @@ class Send extends Component {
     const amount = +values.amount;
     const amountBn = new BigNumber(amount.toString());
 
-    if (!amount || isNaN(amount)) {
+    if (!amount || amountBn.isNaN()) {
       return { amount: 'Please enter a valid amount' };
-    } else if (amount < 0) {
-      return { amount: 'Please enter a positive amount ' };
+    } else if (amountBn.lt(0)) {
+      return { amount: 'Please enter a positive amount' };
+    } else if (toWei(amount).lt(1)) {
+      return { amount: 'Please enter at least 1 Wei' };
     } else if (balance && balance.lt(amountBn)) {
       return { amount: `You don't have enough ${token.symbol} balance` };
     } else if (!values.to || !isAddress(values.to)) {
