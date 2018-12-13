@@ -5,8 +5,10 @@
 
 import { Field } from './Field';
 import { Slider } from './Slider';
+import { InputFile } from './InputFile';
 
 export const Form = {
   Field,
+  InputFile,
   Slider
 };

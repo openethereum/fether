@@ -13,7 +13,8 @@ class AccountPassword extends Component {
   state = {
     confirm: '',
     isLoading: false,
-    password: ''
+    password: '',
+    error: ''
   };
 
   handleConfirmChange = ({ target: { value } }) => {
@@ -32,19 +33,29 @@ class AccountPassword extends Component {
     this.setState({ isLoading: true });
 
     // Save to parity
-    createAccountStore.saveAccountToParity(password).then(() => {
-      createAccountStore.clear();
-      history.push('/accounts');
-    });
+    createAccountStore
+      .saveAccountToParity(password)
+      .then(res => {
+        createAccountStore.clear();
+        history.push('/accounts');
+      })
+      .catch(err => {
+        console.error(err);
+
+        this.setState({
+          isLoading: false,
+          error: err.text
+        });
+      });
   };
 
   render () {
     const {
-      createAccountStore: { address, name },
+      createAccountStore: { address, name, isJSON, isImport },
       history,
       location: { pathname }
     } = this.props;
-    const { confirm, isLoading, password } = this.state;
+    const { confirm, error, isLoading, password } = this.state;
     const currentStep = pathname.slice(-1);
 
     return (
@@ -54,7 +65,12 @@ class AccountPassword extends Component {
         drawers={[
           <form key='createAccount' onSubmit={this.handleSubmit}>
             <div className='text'>
-              <p>Secure your account with a password:</p>
+              <p>
+                {' '}
+                {isJSON
+                  ? 'Unlock your account to decrypt your JSON keystore file: '
+                  : 'Secure your account with a password:'}
+              </p>
             </div>
 
             <FetherForm.Field
@@ -65,13 +81,19 @@ class AccountPassword extends Component {
               value={password}
             />
 
-            <FetherForm.Field
-              label='Confirm'
-              onChange={this.handleConfirmChange}
-              required
-              type='password'
-              value={confirm}
-            />
+            {!isJSON && (
+              <FetherForm.Field
+                label='Confirm'
+                onChange={this.handleConfirmChange}
+                required
+                type='password'
+                value={confirm}
+              />
+            )}
+
+            <p>
+              {error && error + ' Please check your password and try again.'}
+            </p>
 
             <nav className='form-nav -space-around'>
               {currentStep > 1 && (
@@ -81,9 +103,11 @@ class AccountPassword extends Component {
               )}
               <button
                 className='button'
-                disabled={!password || confirm !== password || isLoading}
+                disabled={
+                  !password || (!isJSON && confirm !== password) || isLoading
+                }
               >
-                Confirm account creation
+                Confirm account {isImport ? `${'import'}` : `${'creation'}`}
               </button>
             </nav>
           </form>

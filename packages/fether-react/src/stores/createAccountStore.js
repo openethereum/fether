@@ -7,6 +7,7 @@ import { action, observable } from 'mobx';
 
 import Debug from '../utils/debug';
 import parityStore from './parityStore';
+import FileSaver from 'file-saver';
 
 const debug = Debug('createAccountStore');
 
@@ -14,7 +15,11 @@ export class CreateAccountStore {
   @observable
   address = null;
   @observable
+  json = {};
+  @observable
   isImport = false; // Are we creating a new account, or importing via phrase?
+  @observable
+  isJSON = false; // Are we recovering an account from a JSON backup file/
   @observable
   name = ''; // Account name
   @observable
@@ -28,6 +33,25 @@ export class CreateAccountStore {
     this.setName('');
   }
 
+  backupAccount = (address, password) => {
+    debug('Generating Backup JSON.');
+    return parityStore.api.parity
+      .exportAccount(address, password)
+      .then(res => {
+        const blob = new window.Blob([JSON.stringify(res)], {
+          type: 'application/json; charset=utf-8'
+        });
+
+        FileSaver.saveAs(blob, `${res.address}.json`);
+
+        return Promise.resolve('Successfully backed up account');
+      })
+      .catch(err => {
+        console.error(err);
+        return Promise.reject(err);
+      });
+  };
+
   generateNewAccount = () => {
     debug('Generating new account.');
     return this.setPhrase(null)
@@ -35,18 +59,30 @@ export class CreateAccountStore {
       .then(this.setPhrase);
   };
 
-  saveAccountToParity = password => {
+  saveAccountToParity = async password => {
     debug('Saving account to Parity.');
-    return parityStore.api.parity
-      .newAccountFromPhrase(this.phrase, password)
-      .then(() =>
-        parityStore.api.parity.setAccountName(this.address, this.name)
-      )
-      .then(() =>
-        parityStore.api.parity.setAccountMeta(this.address, {
-          timestamp: Date.now()
-        })
-      );
+
+    try {
+      if (this.isJSON && this.json) {
+        await parityStore.api.parity.newAccountFromWallet(
+          JSON.stringify(this.json),
+          password
+        );
+      } else if (this.phrase) {
+        await parityStore.api.parity.newAccountFromPhrase(
+          this.phrase,
+          password
+        );
+      }
+
+      await parityStore.api.parity.setAccountName(this.address, this.name);
+      await parityStore.api.parity.setAccountMeta(this.address, {
+        timestamp: Date.now()
+      });
+      return Promise.resolve(`Saved account ${this.address} to Parity`);
+    } catch (err) {
+      return Promise.reject(err);
+    }
   };
 
   @action
@@ -55,8 +91,24 @@ export class CreateAccountStore {
   };
 
   @action
+  setJSON = json => {
+    this.json = json;
+
+    const prefix = '0x';
+    const prefixedAddress = prefix.concat(json.address);
+
+    this.setAddress(prefixedAddress || null);
+    this.setName(json.name || null);
+  };
+
+  @action
   setIsImport = isImport => {
     this.isImport = isImport;
+  };
+
+  @action
+  setIsJSON = isJSON => {
+    this.isJSON = isJSON;
   };
 
   @action

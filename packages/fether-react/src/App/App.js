@@ -16,6 +16,7 @@ import isElectron from 'is-electron';
 import ReactResizeDetector from 'react-resize-detector';
 
 import Accounts from '../Accounts';
+import BackupAccount from '../BackupAccount';
 import Onboarding from '../Onboarding';
 import RequireHealth from '../RequireHealthOverlay';
 import Send from '../Send';
@@ -71,6 +72,10 @@ class App extends Component {
                   <Route
                     path='/whitelist/:accountAddress'
                     component={Whitelist}
+                  />
+                  <Route
+                    path='/backup/:accountAddress'
+                    component={BackupAccount}
                   />
                   <Route
                     path='/send/:tokenAddress/from/:accountAddress'

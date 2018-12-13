@@ -11,9 +11,10 @@ import light from '@parity/light.js-react';
 import { Link, Route } from 'react-router-dom';
 
 import AccountCopyPhrase from './AccountCopyPhrase';
+import AccountImportOptions from './AccountImportOptions';
+import AccountRewritePhrase from './AccountRewritePhrase';
 import AccountName from './AccountName';
 import AccountPassword from './AccountPassword';
-import AccountRewritePhrase from './AccountRewritePhrase';
 import Health from '../../Health';
 
 @light({ accountsInfo: accountsInfo$ })
@@ -31,7 +32,7 @@ class CreateAccount extends Component {
    */
   getSteps = isImport =>
     isImport
-      ? [AccountRewritePhrase, AccountName, AccountPassword]
+      ? [AccountImportOptions, AccountName, AccountPassword]
       : [AccountName, AccountCopyPhrase, AccountRewritePhrase, AccountPassword];
 
   handleToggleCreateImport = () => {
