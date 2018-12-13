@@ -169,6 +169,14 @@ class Send extends Component {
       return { amount: 'Please enter a positive amount' };
     } else if (toWei(amount).lt(1)) {
       return { amount: 'Please enter at least 1 Wei' };
+    } else if (token.symbol === 'ETH' && toWei(amount).lt(1)) {
+      return { amount: 'Please enter at least 1 Wei' };
+    } else if (token.symbol !== 'ETH' && amountBn.dp() > token.decimals) {
+      return {
+        amount: `Please enter a ${token.name} value of at least ${
+          token.decimals
+        } decimal places`
+      };
     } else if (balance && balance.lt(amountBn)) {
       return { amount: `You don't have enough ${token.symbol} balance` };
     } else if (!values.to || !isAddress(values.to)) {
