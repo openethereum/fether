@@ -10,7 +10,7 @@ import hdkey from 'ethereumjs-wallet/hdkey';
 
 import Debug from '../utils/debug';
 import parityStore from './parityStore';
-import PARITY_WORDLIST from './res/parity_wordlist';
+import getParityWordlist from './utils/getParityWordlist';
 
 const debug = Debug('createAccountStore');
 
@@ -129,6 +129,7 @@ export class CreateAccountStore {
     this.clear();
 
     const words = phrase.split(' ');
+    const PARITY_WORDLIST = getParityWordlist();
     if (
       words.length < 12 ||
       words.length > 24 ||
