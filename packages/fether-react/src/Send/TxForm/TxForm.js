@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
+import BigNumber from 'bignumber.js';
 import createDecorator from 'final-form-calculate';
 import debounce from 'debounce-promise';
 import { Field, Form } from 'react-final-form';
@@ -160,15 +161,30 @@ class Send extends Component {
   preValidate = values => {
     const { balance, token } = this.props;
     const amount = +values.amount;
+    const amountBn = new BigNumber(amount);
 
     if (!amount || isNaN(amount)) {
       return { amount: 'Please enter a valid amount' };
     } else if (amount < 0) {
-      return { amount: 'Please enter a positive amount ' };
+      return { amount: 'Please enter a positive amount' };
+    } else if (token.symbol === 'ETH' && toWei(amount).lt(1)) {
+      return { amount: 'Please enter at least 1 Wei' };
+    } else if (token.symbol !== 'ETH' && amountBn.dp() > token.decimals) {
+      return {
+        amount: `Please enter a ${token.name} value of at least ${
+          token.decimals
+        } decimal places`
+      };
     } else if (balance && balance.lt(amount)) {
       return { amount: `You don't have enough ${token.symbol} balance` };
     } else if (!values.to || !isAddress(values.to)) {
       return { to: 'Please enter a valid Ethereum address' };
+    } else if (values.to === '0x0000000000000000000000000000000000000000') {
+      return {
+        to: `You are not permitted to send ${
+          token.name
+        } to the zero account (0x0)`
+      };
     }
     return true;
   };
