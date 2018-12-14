@@ -44,13 +44,13 @@ export class CreateAccountStore {
    * Reinitialize everything
    */
   @action
-  clear () {
+  clear = async () => {
     this.jsonString = null;
     this.parityPhrase = null;
     this.bip39Phrase = null;
     this.address = null;
     this.name = '';
-  }
+  };
 
   /**
    * Generate a BIP39 seed phrase and derive the address from it
@@ -168,7 +168,7 @@ export class CreateAccountStore {
   };
 
   @action
-  setName = name => {
+  setName = async name => {
     this.name = name;
   };
 }

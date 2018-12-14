@@ -71,6 +71,7 @@ describe('method setPhrase', () => {
     expect(parityStore.api.parity.phraseToAddress).toHaveBeenCalledWith(
       parityPhrase
     );
+    expect(createAccountStore.address).toEqual('0x123');
   });
 });
 
