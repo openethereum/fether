@@ -27,13 +27,14 @@
   "scripts": {
     "build": "npm-run-all build-*",
     "build-css": "node-sass-chokidar src/ -o src/",
-    "build-js": "react-app-rewired build",
+    "build-js": "craco build --react-scripts ../../node_modules/react-scripts",
     "start": "npm-run-all -p start-*",
     "start-css": "npm run build-css -- --watch --recursive",
-    "start-js": "BROWSER=none react-app-rewired start",
-    "test": "react-app-rewired test --env=jsdom"
+    "start-js": "BROWSER=none craco start --react-scripts ../../node_modules/react-scripts",
+    "test": "craco test --react-scripts ../../node_modules/react-scripts"
   },
   "dependencies": {
+    "@craco/craco": "^3.2.3",
     "@parity/api": "^2.1.22",
     "@parity/contracts": "^1.0.0",
     "@parity/light.js": "^1.0.9",
@@ -69,8 +70,7 @@
     "capitalize": "^1.0.0",
     "node-sass": "^4.9.0",
     "node-sass-chokidar": "^1.2.2",
-    "npm-run-all": "^4.1.2",
-    "react-app-rewired": "^1.5.2"
+    "npm-run-all": "^4.1.2"
   },
   "browserslist": [
     ">0.2%",
