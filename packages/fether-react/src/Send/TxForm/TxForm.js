@@ -171,6 +171,12 @@ class Send extends Component {
       return { amount: `You don't have enough ${token.symbol} balance` };
     } else if (!values.to || !isAddress(values.to)) {
       return { to: 'Please enter a valid Ethereum address' };
+    } else if (values.to === '0x0000000000000000000000000000000000000000') {
+      return {
+        to: `You are not permitted to send ${
+          token.name
+        } to the zero account (0x0)`
+      };
     }
     return true;
   };
