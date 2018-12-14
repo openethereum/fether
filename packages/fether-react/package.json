@@ -31,7 +31,7 @@
     "start": "npm-run-all -p start-*",
     "start-css": "npm run build-css -- --watch --recursive",
     "start-js": "BROWSER=none craco start --react-scripts ../../node_modules/react-scripts",
-    "test": "craco test --react-scripts ../../node_modules/react-scripts"
+    "test": "ln -s ../../../node_modules/react-scripts node_modules/ && craco test; rm node_modules/react-scripts"
   },
   "dependencies": {
     "@craco/craco": "^3.2.3",
