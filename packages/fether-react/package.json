@@ -27,11 +27,11 @@
   "scripts": {
     "build": "npm-run-all build-*",
     "build-css": "node-sass-chokidar src/ -o src/",
-    "build-js": "craco build --react-scripts ../../node_modules/react-scripts",
+    "build-js": "cross-env SKIP_PREFLIGHT_CHECK=true craco build --react-scripts ../../node_modules/react-scripts",
     "start": "npm-run-all -p start-*",
     "start-css": "npm run build-css -- --watch --recursive",
-    "start-js": "BROWSER=none craco start --react-scripts ../../node_modules/react-scripts",
-    "test": "ln -s ../../../node_modules/react-scripts node_modules/ && craco test; rm node_modules/react-scripts"
+    "start-js": "cross-env SKIP_PREFLIGHT_CHECK=true BROWSER=none craco start --react-scripts ../../node_modules/react-scripts",
+    "test": "ln -s ../../../node_modules/react-scripts node_modules/ && cross-env SKIP_PREFLIGHT_CHECK=true craco test; rm node_modules/react-scripts"
   },
   "dependencies": {
     "@craco/craco": "^3.2.3",

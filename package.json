@@ -40,19 +40,19 @@
     "yarn": "^1.4.2"
   },
   "scripts": {
-    "build": "cross-env SKIP_PREFLIGHT_CHECK=true lerna run build",
+    "build": "lerna run build",
     "preelectron": "yarn build",
-    "electron": "cd packages/fether-electron && cross-env SKIP_PREFLIGHT_CHECK=true yarn electron",
+    "electron": "cd packages/fether-electron && yarn electron",
     "lint-files": "./scripts/lint-files.sh",
     "lint": "yarn lint-files '**/*.{js,ts}'",
     "prepackage": "yarn build",
     "package": "cd packages/fether-electron && yarn package",
     "release": "cd packages/fether-electron && yarn release",
-    "start": "cross-env SKIP_PREFLIGHT_CHECK=true npm-run-all -l -p start-*",
+    "start": "npm-run-all -l -p start-*",
     "start-electron": "cd packages/fether-electron && yarn start",
     "start-react": "cd packages/fether-react && yarn start",
     "start-ui": "cd packages/fether-ui && yarn start",
-    "test": "cross-env SKIP_PREFLIGHT_CHECK=true semistandard '**/*.{js,ts}' --parser babel-eslint && cross-env SKIP_PREFLIGHT_CHECK=true CI=true lerna run test --parallel"
+    "test": "semistandard '**/*.{js,ts}' --parser babel-eslint && CI=true lerna run test --parallel"
   },
   "husky": {
     "hooks": {
