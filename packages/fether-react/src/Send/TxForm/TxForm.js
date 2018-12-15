@@ -160,14 +160,20 @@ class Send extends Component {
 
   preValidate = values => {
     const { balance, token } = this.props;
-    const amount = +values.amount;
-    const amountBn = new BigNumber(amount.toString());
 
-    if (!amount || amountBn.isNaN()) {
+    if (!values.amount) {
       return { amount: 'Please enter a valid amount' };
-    } else if (amountBn.lt(0)) {
+    }
+
+    const amountBn = new BigNumber(values.amount.toString());
+
+    if (amountBn.isNaN()) {
+      return { amount: 'Please enter a valid amount' };
+    } else if (amountBn.isZero()) {
+      return { amount: 'Please enter a non-zero amount' };
+    } else if (amountBn.isNegative()) {
       return { amount: 'Please enter a positive amount' };
-    } else if (token.symbol === 'ETH' && toWei(amount).lt(1)) {
+    } else if (token.symbol === 'ETH' && toWei(values.amount).lt(1)) {
       return { amount: 'Please enter at least 1 Wei' };
     } else if (token.symbol !== 'ETH' && amountBn.dp() > token.decimals) {
       return {
