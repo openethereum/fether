@@ -203,15 +203,33 @@ class Send extends Component {
         return preValidation;
       }
 
-      if (!ethBalance || isNaN(values.gas)) {
-        throw new Error('No "ethBalance" or "gas" value.');
+      if (!values.amount || !values.gas || !values.gasPrice) {
+        throw new Error('No "amount" or "gas" or "gasPrice" value.');
+      }
+
+      const amountBn = new BigNumber(values.amount.toString());
+      const gasBn = new BigNumber(values.gas.toString());
+      const gasPriceBn = new BigNumber(values.gasPrice.toString());
+
+      if (
+        !ethBalance ||
+        amountBn.isNaN() ||
+        amountBn.isZero() ||
+        gasBn.isNaN() ||
+        gasBn.isZero() ||
+        gasPriceBn.isNaN() ||
+        gasPriceBn.isZero()
+      ) {
+        throw new Error(
+          'No "ethBalance" or "amount" or "gas" or "gasPrice" value.'
+        );
       }
 
       // Verify that `gas + (eth amount if sending eth) <= ethBalance`
       if (
-        values.gas
-          .mul(toWei(values.gasPrice, 'shannon'))
-          .plus(token.address === 'ETH' ? toWei(values.amount) : 0)
+        gasBn
+          .mul(toWei(gasPriceBn, 'shannon'))
+          .plus(token.address === 'ETH' ? toWei(amountBn) : 0)
           .gt(toWei(ethBalance))
       ) {
         return { amount: "You don't have enough ETH balance" };
