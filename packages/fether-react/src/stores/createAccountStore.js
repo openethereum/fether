@@ -8,12 +8,16 @@ import { action, observable } from 'mobx';
 import bip39 from 'bip39';
 import hdkey from 'ethereumjs-wallet/hdkey';
 
+import LS_PREFIX from './utils/lsPrefix';
+import localForage from 'localforage';
+
 import Debug from '../utils/debug';
 import parityStore from './parityStore';
 import getParityWordlist from './utils/getParityWordlist';
 
 const debug = Debug('createAccountStore');
 
+export const SIGNER_ACCOUNTS_LS_KEY = `${LS_PREFIX}::paritySignerAccounts`;
 const DERIVATION_PATH = "m/44'/60'/0'/0/0";
 
 export class CreateAccountStore {
@@ -70,37 +74,54 @@ export class CreateAccountStore {
   saveAccountToParity = async password => {
     debug('Saving account to Parity.');
 
-    if (this.jsonString) {
-      await parityStore.api.parity.newAccountFromWallet(
-        this.jsonString,
-        password
-      );
-    } else if (this.parityPhrase) {
-      await parityStore.api.parity.newAccountFromPhrase(
-        this.parityPhrase,
-        password
-      );
-    } else if (this.bip39Phrase) {
-      await parityStore.api.parity.newAccountFromSecret(
-        '0x' +
-          hdkey
-            .fromMasterSeed(bip39.mnemonicToSeed(this.bip39Phrase))
-            .derivePath(DERIVATION_PATH)
-            .getWallet()
-            .getPrivateKey()
-            .toString('hex'),
-        password
-      );
+    if (this.noPrivateKey()) {
+      // Store new Signer account in local storage
+      // If the address of the account to add doesn't already exist, add it
+      const accounts =
+        (await localForage.getItem(SIGNER_ACCOUNTS_LS_KEY)) || [];
+      if (
+        !accounts.some(
+          ({ address: existingAddress }) =>
+            existingAddress.toLowerCase() === this.address.toLowerCase()
+        )
+      ) {
+        accounts.push({ address: this.address, name: this.name });
+      }
+      await localForage.setItem(SIGNER_ACCOUNTS_LS_KEY, accounts);
     } else {
-      throw new Error(
-        'saveAccountToParity: no JSON, Parity phrase or BIP39 phrase'
-      );
-    }
+      // Otherwise, store the new account in the node
+      if (this.jsonString) {
+        await parityStore.api.parity.newAccountFromWallet(
+          this.jsonString,
+          password
+        );
+      } else if (this.parityPhrase) {
+        await parityStore.api.parity.newAccountFromPhrase(
+          this.parityPhrase,
+          password
+        );
+      } else if (this.bip39Phrase) {
+        await parityStore.api.parity.newAccountFromSecret(
+          '0x' +
+            hdkey
+              .fromMasterSeed(bip39.mnemonicToSeed(this.bip39Phrase))
+              .derivePath(DERIVATION_PATH)
+              .getWallet()
+              .getPrivateKey()
+              .toString('hex'),
+          password
+        );
+      } else {
+        throw new Error(
+          'saveAccountToParity: no JSON, Parity phrase, BIP39 phrase or address'
+        );
+      }
 
-    await parityStore.api.parity.setAccountName(this.address, this.name);
-    await parityStore.api.parity.setAccountMeta(this.address, {
-      timestamp: Date.now()
-    });
+      await parityStore.api.parity.setAccountName(this.address, this.name);
+      await parityStore.api.parity.setAccountMeta(this.address, {
+        timestamp: Date.now()
+      });
+    }
   };
 
   /**
@@ -171,6 +192,17 @@ export class CreateAccountStore {
   setName = async name => {
     this.name = name;
   };
+
+  @action
+  setAddressOnly = async address => {
+    await this.clear();
+    this.address = address;
+  };
+
+  // Returns true for Signer account imports
+  // @computed get
+  noPrivateKey = () =>
+    !this.jsonString && !this.parityPhrase && !this.bip39Phrase;
 }
 
 export default new CreateAccountStore();

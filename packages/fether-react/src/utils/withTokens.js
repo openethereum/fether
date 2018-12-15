@@ -23,8 +23,8 @@ const DEFAULT_TOKENS = {
 
 // We have one key per chain per account, in this format:
 // __paritylight::tokens::0x123::kovan
-const getLsKey = ({ accountAddress, chainName }) =>
-  `${LS_KEY}::${accountAddress}::${chainName}`;
+const getLsKey = ({ account: { address }, chainName }) =>
+  `${LS_KEY}::${address}::${chainName}`;
 
 /**
  * HOC which injects the user's whitelisted tokens (stored in localStorage).

@@ -11,10 +11,8 @@ import light from '@parity/light.js-react';
 
 import Health from '../Health';
 import NewTokenItem from './NewTokenItem';
-import withAccount from '../utils/withAccount';
 import withTokens from '../utils/withTokens';
 
-@withAccount
 @withTokens
 @light({
   chainName: () => chainName$().pipe(withoutLoading())

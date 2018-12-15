@@ -26,13 +26,32 @@ class AccountName extends Component {
 
   handleSubmit = () => {
     const {
+      createAccountStore,
       history,
       location: { pathname }
     } = this.props;
 
     const currentStep = pathname.slice(-1);
+    
+    if (createAccountStore.noPrivateKey()) {
+      // Save Signer account to Parity without asking for a password
+      createAccountStore
+        .saveAccountToParity()
+        .then(res => {
+          createAccountStore.clear();
+          history.push('/accounts');
+        })
+        .catch(err => {
+          console.error(err);
 
-    history.push(`/accounts/new/${+currentStep + 1}`);
+          this.setState({
+            error: err.text
+          });
+        });
+    } else {
+      // Ask for a password otherwise
+      history.push(`/accounts/new/${+currentStep + 1}`);
+    }
   };
 
   render () {
@@ -45,12 +64,13 @@ class AccountName extends Component {
 
   renderCardWhenImported = () => {
     const {
-      createAccountStore: { address, name }
+      createAccountStore: { address, name, noPrivateKey }
     } = this.props;
 
     return (
       <AccountCard
         address={address}
+        type={noPrivateKey() ? 'signer' : 'node'}
         drawers={[this.renderDrawer()]}
         name={name || '(no name)'}
       />
@@ -89,6 +109,7 @@ class AccountName extends Component {
   renderDrawer = () => {
     const {
       createAccountStore: { address, name },
+      error,
       history,
       location: { pathname }
     } = this.props;
@@ -107,6 +128,7 @@ class AccountName extends Component {
           type='text'
           value={name}
         />
+        {error && <p>{error}</p>}
         <nav className='form-nav -space-around'>
           {currentStep > 1 && (
             <button

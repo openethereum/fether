@@ -29,7 +29,7 @@ class AccountPassword extends Component {
     const { createAccountStore, history } = this.props;
     const { confirm, password } = this.state;
 
-    event && event.preventDefault();
+    event.preventDefault();
 
     if (!createAccountStore.jsonString && confirm !== password) {
       this.setState({

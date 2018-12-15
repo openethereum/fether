@@ -8,8 +8,6 @@
   }
 
   .account_avatar {
-    width: (ms(0) * 1.3) + 1rem;
-    height: (ms(0) * 1.3) + 1rem;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -19,8 +17,6 @@
 
     canvas {
       display: block;
-      height: (ms(0) * 1.3) + 1rem !important;
-      width: auto !important;
     }
 
     .account_avatar_loading {

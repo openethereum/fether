@@ -5,16 +5,13 @@
 
 import React, { Component } from 'react';
 import { AccountCard, Header } from 'fether-ui';
-import { accountsInfo$, withoutLoading } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
-import light from '@parity/light.js-react';
 
 import Health from '../../Health';
 import Feedback from './Feedback';
+import withAccountsInfo from '../../utils/withAccountsInfo';
 
-@light({
-  accountsInfo: () => accountsInfo$().pipe(withoutLoading())
-})
+@withAccountsInfo
 @inject('createAccountStore', 'parityStore')
 @observer
 class AccountsList extends Component {
@@ -63,13 +60,8 @@ class AccountsList extends Component {
                     <AccountCard
                       address={address}
                       className='-clickable'
-                      name={
-                        accountsInfo &&
-                        accountsInfo[address] &&
-                        (accountsInfo[address].name
-                          ? accountsInfo[address].name
-                          : '(No name)')
-                      }
+                      type={accountsInfo[address].type}
+                      name={accountsInfo[address].name || '(no name)'}
                       shortAddress
                     />
                   </li>
