@@ -15,12 +15,16 @@ import { Link } from 'react-router-dom';
 import { toWei } from '@parity/api/lib/util/wei';
 import { withProps } from 'recompose';
 
+import {
+  isAmountDecimalPlacesMoreThanTokenDecimalPlaces,
+  significantDigits
+} from '../../utils/amount';
 import { estimateGas } from '../../utils/estimateGas';
-import RequireHealth from '../../RequireHealthOverlay';
-import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import withAccount from '../../utils/withAccount.js';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
 import withTokens from '../../utils/withTokens';
+import RequireHealth from '../../RequireHealthOverlay';
+import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
@@ -49,7 +53,29 @@ class Send extends Component {
       gas: (value, allValues) => {
         const { parityStore, token } = this.props;
 
+        if (!allValues.amount) {
+          return null;
+        }
+
+        const amountBn = new BigNumber(allValues.amount.toString());
+
         if (this.preValidate(allValues) === true) {
+          if (significantDigits(amountBn).length >= 15) {
+            console.error(
+              'Error: Unable to estimate. Amount cannot have more than 15 significant digits'
+            );
+            return null;
+          }
+
+          if (
+            isAmountDecimalPlacesMoreThanTokenDecimalPlaces(amountBn, token)
+          ) {
+            console.error(
+              'Error: Unable to estimate. Amount must be greater than the smallest denomination of the token'
+            );
+            return null;
+          }
+
           return estimateGas(allValues, token, parityStore.api);
         } else {
           return null;
@@ -161,21 +187,27 @@ class Send extends Component {
   preValidate = values => {
     const { balance, token } = this.props;
     const amount = +values.amount;
-    const amountBn = new BigNumber(amount);
+    const amountBn = new BigNumber(amount.toString());
 
     if (!amount || isNaN(amount)) {
       return { amount: 'Please enter a valid amount' };
     } else if (amount < 0) {
       return { amount: 'Please enter a positive amount' };
-    } else if (token.symbol === 'ETH' && amountBn.dp() > 18) {
+    } else if (
+      token.symbol === 'ETH' &&
+      isAmountDecimalPlacesMoreThanTokenDecimalPlaces(amountBn, token)
+    ) {
       return { amount: 'Please enter at least 1 Wei' };
-    } else if (token.symbol !== 'ETH' && amountBn.dp() > token.decimals) {
+    } else if (
+      token.symbol !== 'ETH' &&
+      isAmountDecimalPlacesMoreThanTokenDecimalPlaces(amountBn, token)
+    ) {
       return {
         amount: `Please enter a ${token.name} value of at least ${
           token.decimals
         } decimal places`
       };
-    } else if (balance && balance.lt(amount)) {
+    } else if (balance && balance.lt(amountBn)) {
       return { amount: `You don't have enough ${token.symbol} balance` };
     } else if (!values.to || !isAddress(values.to)) {
       return { to: 'Please enter a valid Ethereum address' };
