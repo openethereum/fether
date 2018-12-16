@@ -12,7 +12,7 @@ import { Form as FetherForm, Header } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 import { isAddress } from '@parity/api/lib/util/address';
 import { Link } from 'react-router-dom';
-import { toWei } from '@parity/api/lib/util/wei';
+import { toWei, fromWei } from '@parity/api/lib/util/wei';
 import { withProps } from 'recompose';
 
 import { estimateGas } from '../../utils/estimateGas';
@@ -35,6 +35,9 @@ const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 @withEthBalance // ETH balance
 @observer
 class Send extends Component {
+  state = {
+    maxSelected: false
+  };
   handleSubmit = values => {
     const { accountAddress, history, sendStore, token } = this.props;
 
@@ -42,21 +45,48 @@ class Send extends Component {
     history.push(`/send/${token.address}/from/${accountAddress}/signer`);
   };
 
-  decorator = createDecorator({
-    field: /to|amount/, // when the value of these fields change...
-    updates: {
-      // ...set field "gas"
-      gas: (value, allValues) => {
-        const { parityStore, token } = this.props;
-
-        if (this.preValidate(allValues) === true) {
-          return estimateGas(allValues, token, parityStore.api);
-        } else {
-          return null;
+  launchEstimation = createDecorator(
+    {
+      field: /to|amount/, // when the value of these fields change...
+      updates: {
+        // ...set field "gas"
+        gas: (value, allValues) => {
+          const { parityStore, token } = this.props;
+          if (this.preValidate(allValues) === true) {
+            return estimateGas(allValues, token, parityStore.api);
+          } else {
+            return null;
+          }
+        }
+      }
+    },
+    {
+      field: /gas|gasPrice/, // when the value of these fields change...
+      updates: {
+        // ...set field "gas"
+        amount: (value, allValues) => {
+          if (this.state.maxSelected) {
+            return this.calculateMax(allValues.gas, allValues.gasPrice);
+          } else {
+            // This return is needed for the amount not to be set to 0 when Max is deactivated and gasPrice changes
+            // TODO understand why returning "value" here makes the amount field change when gasPrice changes..
+            return allValues.amount;
+          }
         }
       }
     }
-  });
+  );
+
+  calculateMax = (gas, gasPrice) => {
+    const { token, balance } = this.props;
+
+    const gasBn = gas ? new BigNumber(gas) : new BigNumber(21000);
+    const gasPriceBn = new BigNumber(gasPrice);
+
+    return token.address === 'ETH'
+      ? fromWei(toWei(balance).minus(gasBn.mul(toWei(gasPriceBn, 'shannon'))))
+      : balance;
+  };
 
   render () {
     const {
@@ -64,6 +94,29 @@ class Send extends Component {
       sendStore: { tx },
       token
     } = this.props;
+
+    const toggleMax = ([name], state, { changeValue }) => {
+      if (!this.state.maxSelected) {
+        changeValue(state, 'amount', value => {
+          return this.calculateMax(
+            state.formState.values.gas,
+            state.formState.values.gasPrice
+          );
+        });
+      }
+      this.setState({ maxSelected: !this.state.maxSelected });
+    };
+
+    const recalculateMax = ([name], state, { changeValue }) => {
+      if (this.state.maxSelected) {
+        changeValue(state, 'amount', value => {
+          return this.calculateMax(
+            state.formState.values.gas,
+            state.formState.values.gasPrice
+          );
+        });
+      }
+    };
 
     return (
       <div>
@@ -87,8 +140,15 @@ class Send extends Component {
                     initialValues={{ from: accountAddress, gasPrice: 4, ...tx }}
                     onSubmit={this.handleSubmit}
                     validate={this.validateForm}
-                    decorators={[this.decorator]}
-                    render={({ handleSubmit, valid, validating, values }) => (
+                    decorators={[this.launchEstimation]}
+                    mutators={{ toggleMax, recalculateMax }}
+                    render={({
+                      handleSubmit,
+                      valid,
+                      validating,
+                      values,
+                      form: { mutators }
+                    }) => (
                       <form className='send-form' onSubmit={handleSubmit}>
                         <fieldset className='form_fields'>
                           <Field
@@ -96,11 +156,19 @@ class Send extends Component {
                             formNoValidate
                             label='Amount'
                             name='amount'
+                            disabled={this.state.maxSelected}
                             placeholder='0.00'
                             render={FetherForm.Field}
                             required
                             type='number' // In ETH or coin
-                          />
+                          >
+                            <FetherForm.ToggleButton
+                              label='Max'
+                              name='max'
+                              active={this.state.maxSelected}
+                              onClick={mutators.toggleMax}
+                            />
+                          </Field>
 
                           <Field
                             as='textarea'

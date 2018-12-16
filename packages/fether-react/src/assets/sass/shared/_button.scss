@@ -15,7 +15,7 @@
     cursor: pointer;
   }
 
-  &:active {
+  &:active,  &.active{
     background-color: darken($blue, 2.5%);
     color: $white;
   }

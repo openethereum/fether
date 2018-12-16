@@ -4,11 +4,13 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import { Field } from './Field';
-import { Slider } from './Slider';
 import { InputFile } from './InputFile';
+import { Slider } from './Slider';
+import { ToggleButton } from './ToggleButton';
 
 export const Form = {
   Field,
   InputFile,
-  Slider
+  Slider,
+  ToggleButton
 };
