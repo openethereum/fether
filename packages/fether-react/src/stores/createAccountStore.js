@@ -5,131 +5,171 @@
 
 import { action, observable } from 'mobx';
 
+import bip39 from 'bip39';
+import hdkey from 'ethereumjs-wallet/hdkey';
+
 import Debug from '../utils/debug';
 import parityStore from './parityStore';
-import FileSaver from 'file-saver';
+import getParityWordlist from './utils/getParityWordlist';
 
 const debug = Debug('createAccountStore');
 
+const DERIVATION_PATH = "m/44'/60'/0'/0/0";
+
 export class CreateAccountStore {
   @observable
-  address = null;
-  @observable
-  json = {};
-  @observable
   isImport = false; // Are we creating a new account, or importing via phrase?
+
   @observable
-  isJSON = false; // Are we recovering an account from a JSON backup file/
+  jsonString = null;
+
+  @observable
+  parityPhrase = null; // 12-word seed phrase
+
+  @observable
+  bip39Phrase = null; // 12- to 24-word seed phrase
+
+  @observable
+  address = null;
+
   @observable
   name = ''; // Account name
-  @observable
-  phrase = null; // The 12-word seed phrase
-
-  /**
-   * Reinitialize everything
-   */
-  clear () {
-    this.setPhrase(null);
-    this.setName('');
-  }
-
-  backupAccount = (address, password) => {
-    debug('Generating Backup JSON.');
-    return parityStore.api.parity
-      .exportAccount(address, password)
-      .then(res => {
-        const blob = new window.Blob([JSON.stringify(res)], {
-          type: 'application/json; charset=utf-8'
-        });
-
-        FileSaver.saveAs(blob, `${res.address}.json`);
-
-        return Promise.resolve('Successfully backed up account');
-      })
-      .catch(err => {
-        console.error(err);
-        return Promise.reject(err);
-      });
-  };
-
-  generateNewAccount = () => {
-    debug('Generating new account.');
-    return this.setPhrase(null)
-      .then(() => parityStore.api.parity.generateSecretPhrase())
-      .then(this.setPhrase);
-  };
-
-  saveAccountToParity = async password => {
-    debug('Saving account to Parity.');
-
-    try {
-      if (this.isJSON && this.json) {
-        await parityStore.api.parity.newAccountFromWallet(
-          JSON.stringify(this.json),
-          password
-        );
-      } else if (this.phrase) {
-        await parityStore.api.parity.newAccountFromPhrase(
-          this.phrase,
-          password
-        );
-      }
-
-      await parityStore.api.parity.setAccountName(this.address, this.name);
-      await parityStore.api.parity.setAccountMeta(this.address, {
-        timestamp: Date.now()
-      });
-      return Promise.resolve(`Saved account ${this.address} to Parity`);
-    } catch (err) {
-      return Promise.reject(err);
-    }
-  };
-
-  @action
-  setAddress = address => {
-    this.address = address;
-  };
-
-  @action
-  setJSON = json => {
-    this.json = json;
-
-    const prefix = '0x';
-    const prefixedAddress = prefix.concat(json.address);
-
-    this.setAddress(prefixedAddress || null);
-    this.setName(json.name || null);
-  };
 
   @action
   setIsImport = isImport => {
     this.isImport = isImport;
   };
 
+  /**
+   * Reinitialize everything
+   */
   @action
-  setIsJSON = isJSON => {
-    this.isJSON = isJSON;
-  };
-
-  @action
-  setName = name => {
-    this.name = name;
+  clear = async () => {
+    this.jsonString = null;
+    this.parityPhrase = null;
+    this.bip39Phrase = null;
+    this.address = null;
+    this.name = '';
   };
 
   /**
-   * Set phrase and corresponding address
+   * Generate a BIP39 seed phrase and derive the address from it
    */
-  @action
-  setPhrase = phrase => {
-    this.phrase = phrase;
-    this.address = null;
+  generateNewAccount = async () => {
+    debug('Generating new account.');
 
-    if (!phrase) return Promise.resolve();
-    else {
-      return parityStore.api.parity
-        .phraseToAddress(phrase)
-        .then(address => this.setAddress(address));
+    const mnemonic = bip39.generateMnemonic();
+    const hdwallet = hdkey.fromMasterSeed(bip39.mnemonicToSeed(mnemonic));
+    const wallet = hdwallet.derivePath(DERIVATION_PATH).getWallet();
+    const address = `0x${wallet.getAddress().toString('hex')}`;
+
+    this.bip39Phrase = mnemonic;
+    this.address = address;
+  };
+
+  saveAccountToParity = async password => {
+    debug('Saving account to Parity.');
+
+    if (this.jsonString) {
+      await parityStore.api.parity.newAccountFromWallet(
+        this.jsonString,
+        password
+      );
+    } else if (this.parityPhrase) {
+      await parityStore.api.parity.newAccountFromPhrase(
+        this.parityPhrase,
+        password
+      );
+    } else if (this.bip39Phrase) {
+      await parityStore.api.parity.newAccountFromSecret(
+        '0x' +
+          hdkey
+            .fromMasterSeed(bip39.mnemonicToSeed(this.bip39Phrase))
+            .derivePath(DERIVATION_PATH)
+            .getWallet()
+            .getPrivateKey()
+            .toString('hex'),
+        password
+      );
+    } else {
+      throw new Error(
+        'saveAccountToParity: no JSON, Parity phrase or BIP39 phrase'
+      );
     }
+
+    await parityStore.api.parity.setAccountName(this.address, this.name);
+    await parityStore.api.parity.setAccountMeta(this.address, {
+      timestamp: Date.now()
+    });
+  };
+
+  /**
+   * Set phrase (detect type) and corresponding address
+   */
+
+  setPhrase = phrase => {
+    return this.setBip39Phrase(phrase).catch(() =>
+      this.setParityPhrase(phrase)
+    );
+  };
+
+  setBip39Phrase = async phrase => {
+    this.clear();
+
+    if (!bip39.validateMnemonic(phrase)) throw new Error('Not a BIP39 phrase');
+
+    const hdwallet = hdkey.fromMasterSeed(bip39.mnemonicToSeed(phrase));
+    const wallet = hdwallet.derivePath(DERIVATION_PATH).getWallet();
+
+    this.bip39Phrase = phrase;
+    this.address = `0x${wallet.getAddress().toString('hex')}`;
+  };
+
+  setParityPhrase = async phrase => {
+    this.clear();
+
+    const words = phrase.split(' ');
+    const PARITY_WORDLIST = getParityWordlist();
+    if (
+      words.length < 12 ||
+      words.length > 24 ||
+      !words.every(word => PARITY_WORDLIST.has(word))
+    ) {
+      throw new Error('Not a Parity phrase');
+    }
+
+    return parityStore.api.parity.phraseToAddress(phrase).then(
+      action(address => {
+        this.parityPhrase = phrase;
+        this.address = address;
+      })
+    );
+  };
+
+  /**
+   * Recover from a JSON keyfile
+   */
+
+  @action
+  setJsonString = async jsonString => {
+    this.clear();
+
+    const json = JSON.parse(jsonString);
+
+    if (!json || json.address.length !== 40 || json.version !== 3) {
+      throw new Error('File is not valid json');
+    }
+
+    this.jsonString = jsonString;
+    this.address = `0x${json.address}`;
+    if (json.name) {
+      this.setName(json.name);
+    }
+  };
+
+  @action
+  setName = async name => {
+    this.name = name;
   };
 }
 

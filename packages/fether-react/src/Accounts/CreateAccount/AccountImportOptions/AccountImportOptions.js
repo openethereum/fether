@@ -13,68 +13,57 @@ class AccountImportOptions extends Component {
   state = {
     error: '',
     isLoading: false,
-    isFileValid: false,
-    json: null,
-    value: ''
+    phrase: ''
   };
 
   handleNextStep = async () => {
     const {
       history,
-      location: { pathname },
-      createAccountStore: { isImport, isJSON, setJSON, setPhrase }
+      location: { pathname }
     } = this.props;
     const currentStep = pathname.slice(-1);
-    const { json, value } = this.state;
-
-    if (isJSON) {
-      this.setState({ isLoading: true });
-      await setJSON(json);
-    }
-
-    if (isImport && !isJSON) {
-      this.setState({ isLoading: true });
-      await setPhrase(value);
-    }
-
     history.push(`/accounts/new/${+currentStep + 1}`);
   };
 
-  handleChange = ({ target: { value } }) => {
-    this.setState({ value });
+  handlePhraseChange = ({ target: { value: phrase } }) => {
+    this.setState({ phrase });
   };
 
-  handleChangeFile = data => {
+  handleSubmitPhrase = async () => {
+    const phrase = this.state.phrase.trim();
     const {
-      createAccountStore: { setIsJSON }
+      createAccountStore: { setPhrase }
     } = this.props;
 
+    this.setState({ isLoading: true, phrase });
     try {
-      const json = JSON.parse(data);
-
-      const isFileValid =
-        json && json.address.length === 40 && json.version === 3;
-
-      if (isFileValid) {
-        setIsJSON(true);
-
-        this.setState({
-          isFileValid: true,
-          json: json
-        });
-
-        this.handleNextStep();
-      } else {
-        throw new Error('File is not valid');
-      }
-    } catch (error) {
-      console.error(error);
-
+      await setPhrase(phrase);
+      this.handleNextStep();
+    } catch (e) {
       this.setState({
-        isFileValid: false,
+        isLoading: false,
         error:
-          'Invalid file. Please check this is your actual Parity backup json keyfile and try again.'
+          'The passphrase was not recognized. Please verify that you entered your passphrase correctly.'
       });
+    }
+  };
+
+  handleChangeFile = async jsonString => {
+    const {
+      createAccountStore: { setJsonString }
+    } = this.props;
+
+    this.setState({ isLoading: true });
+    try {
+      await setJsonString(jsonString);
+      this.handleNextStep();
+    } catch (error) {
+      this.setState({
+        isLoading: false,
+        error:
+          'Invalid file. Please check this is your actual Parity backup JSON keyfile and try again.'
+      });
+      console.error(error);
     }
   };
 
@@ -83,7 +72,7 @@ class AccountImportOptions extends Component {
       history,
       location: { pathname }
     } = this.props;
-    const { error, value } = this.state;
+    const { error, phrase } = this.state;
     const currentStep = pathname.slice(-1);
 
     const jsonCard = (
@@ -108,9 +97,9 @@ class AccountImportOptions extends Component {
           <FetherForm.Field
             as='textarea'
             label='Recovery phrase'
-            onChange={this.handleChange}
+            onChange={this.handlePhraseChange}
             required
-            value={value}
+            phrase={phrase}
           />
 
           {this.renderButton()}
@@ -137,15 +126,14 @@ class AccountImportOptions extends Component {
   }
 
   renderButton = () => {
-    const { isFileValid, isLoading, json, value } = this.state;
+    const { isLoading, json, phrase } = this.state;
+
     // If we are importing an existing account, the button goes to the next step
     return (
       <button
         className='button'
-        disabled={
-          (!json && !value.length) || (json && !isFileValid) || isLoading
-        }
-        onClick={this.handleNextStep}
+        disabled={(!json && !phrase) || isLoading}
+        onClick={this.handleSubmitPhrase}
       >
         Next
       </button>
