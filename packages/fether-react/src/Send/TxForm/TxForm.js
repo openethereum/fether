@@ -45,7 +45,7 @@ class Send extends Component {
     history.push(`/send/${token.address}/from/${accountAddress}/signer`);
   };
 
-  launchEstimation = createDecorator(
+  decorator = createDecorator(
     {
       field: /to|amount/, // when the value of these fields change...
       updates: {
@@ -140,7 +140,7 @@ class Send extends Component {
                     initialValues={{ from: accountAddress, gasPrice: 4, ...tx }}
                     onSubmit={this.handleSubmit}
                     validate={this.validateForm}
-                    decorators={[this.launchEstimation]}
+                    decorators={[this.decorator]}
                     mutators={{ toggleMax, recalculateMax }}
                     render={({
                       handleSubmit,

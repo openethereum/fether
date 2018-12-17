@@ -5,7 +5,6 @@
 
 import React from 'react';
 import { Button } from 'semantic-ui-react';
-import 'semantic-ui-css/components/popup.min.css';
 
 export const ToggleButton = ({ label, ...otherProps }) => (
   <Button {...otherProps}>{label}</Button>
