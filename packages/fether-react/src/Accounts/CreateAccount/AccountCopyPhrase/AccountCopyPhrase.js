@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 class AccountCopyPhrase extends Component {
   render () {
     const {
-      createAccountStore: { address, name, phrase },
+      createAccountStore: { address, name, bip39Phrase },
       history,
       location: { pathname }
     } = this.props;
@@ -28,7 +28,7 @@ class AccountCopyPhrase extends Component {
             <div className='text'>
               <p>Please write your secret phrase on a piece of paper:</p>
             </div>
-            <div className='text -code'>{phrase}</div>
+            <div className='text -code'>{bip39Phrase}</div>
             <div className='text'>
               <div className='text -tiny'>
                 Keep it secure and secret.
