@@ -68,8 +68,7 @@ class Whitelist extends Component {
     // homepage) are stored in localStorage.
     let db;
     try {
-      db = await import(`../assets/tokens/${this.props.chainName}.json`);
-      db = db.default;
+      db = await import(`../assets/tokens/${this.props.chainName}.json`).default;
     } catch (e) {
       this.setState({ db: [], dbMap: {} });
       return;
