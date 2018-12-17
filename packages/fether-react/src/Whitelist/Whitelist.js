@@ -69,6 +69,7 @@ class Whitelist extends Component {
     let db;
     try {
       db = await import(`../assets/tokens/${this.props.chainName}.json`);
+      db = db.default;
     } catch (e) {
       this.setState({ db: [], dbMap: {} });
       return;
