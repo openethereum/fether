@@ -57,25 +57,7 @@ class Send extends Component {
           return null;
         }
 
-        const amountBn = new BigNumber(allValues.amount.toString());
-
         if (this.preValidate(allValues) === true) {
-          if (significantDigits(amountBn).length >= 15) {
-            console.error(
-              'Error: Unable to estimate. Amount cannot have more than 15 significant digits'
-            );
-            return null;
-          }
-
-          if (
-            isAmountDecimalPlacesMoreThanTokenDecimalPlaces(amountBn, token)
-          ) {
-            console.error(
-              'Error: Unable to estimate. Amount must be greater than the smallest denomination of the token'
-            );
-            return null;
-          }
-
           return estimateGas(allValues, token, parityStore.api);
         } else {
           return null;
@@ -203,10 +185,14 @@ class Send extends Component {
       isAmountDecimalPlacesMoreThanTokenDecimalPlaces(amountBn, token)
     ) {
       return {
-        amount: `Please enter a ${token.name} value of at least ${
+        amount: `Please enter a ${
+          token.name
+        } value of at least its smallest denomination of ${
           token.decimals
         } decimal places`
       };
+    } else if (significantDigits(amountBn).length >= 15) {
+      return { amount: `Amount cannot have more than 15 significant digits` };
     } else if (balance && balance.lt(amountBn)) {
       return { amount: `You don't have enough ${token.symbol} balance` };
     } else if (!values.to || !isAddress(values.to)) {
