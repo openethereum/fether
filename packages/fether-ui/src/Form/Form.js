@@ -6,11 +6,9 @@
 import { Field } from './Field';
 import { InputFile } from './InputFile';
 import { Slider } from './Slider';
-import { ToggleButton } from './ToggleButton';
 
 export const Form = {
   Field,
   InputFile,
-  Slider,
-  ToggleButton
+  Slider
 };
