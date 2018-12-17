@@ -166,8 +166,8 @@ class Send extends Component {
                               type='button'
                               className={
                                 this.state.maxSelected
-                                  ? 'button -tiny active'
-                                  : 'button -tiny'
+                                  ? 'button -tiny active max'
+                                  : 'button -tiny max'
                               }
                               onClick={mutators.toggleMax}
                             >

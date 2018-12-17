@@ -28,26 +28,40 @@
     pointer-events: none;
   }
 
+
   &.-tiny {
     font-size: ms(-2);
     text-transform: none;
+    border: 0;
+    border-radius: 2px;
     color: $black;
     background-size: auto 0.675rem;
     background-position: left center;
     background-repeat: no-repeat;
     background-color: transparent;
+    padding: 0 0 0 0.925rem;
     opacity: 0.425;
-    border-radius: 1rem;
-    border: 1px solid $black;
+
+    &.max {
+      padding: 0.325rem 0.675rem;;
+      border-radius: 1rem;
+      border: 1px solid $black;
+   
+      &.active{
+        background-color: darken($black, 2.5%);
+        color: $white;
+      }
+    }
+
 
     &:hover {
       opacity: 0.625;
       background-color: transparent;
     }
 
-    &:active,  &.active{
-      background-color: darken($black, 2.5%);
-      color: $white;
+    &:active {
+      opacity: 0.75;
+      background-color: transparent;
     }
 
     &.-reload {
