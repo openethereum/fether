@@ -53,10 +53,6 @@ class Send extends Component {
       gas: (value, allValues) => {
         const { parityStore, token } = this.props;
 
-        if (!allValues.amount) {
-          return null;
-        }
-
         if (this.preValidate(allValues) === true) {
           return estimateGas(allValues, token, parityStore.api);
         } else {
