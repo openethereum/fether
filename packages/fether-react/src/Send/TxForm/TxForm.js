@@ -99,7 +99,7 @@ class Send extends Component {
                             placeholder='0.00'
                             render={FetherForm.Field}
                             required
-                            type='number' // In ETH or coin
+                            type='number'
                           />
 
                           <Field
@@ -173,11 +173,11 @@ class Send extends Component {
       return { amount: 'Please enter a non-zero amount' };
     } else if (amountBn.isNegative()) {
       return { amount: 'Please enter a positive amount' };
-    } else if (token.symbol === 'ETH' && toWei(values.amount).lt(1)) {
+    } else if (token.address === 'ETH' && toWei(values.amount).lt(1)) {
       return { amount: 'Please enter at least 1 Wei' };
-    } else if (token.symbol !== 'ETH' && amountBn.dp() > token.decimals) {
+    } else if (amountBn.dp() > token.decimals) {
       return {
-        amount: `Please enter a ${token.name} value of at least ${
+        amount: `Please enter a ${token.name} value of less than ${
           token.decimals
         } decimal places`
       };
