@@ -209,14 +209,18 @@ class Send extends Component {
         return preValidation;
       }
 
-      if (!ethBalance || isNaN(values.gas)) {
+      if (!ethBalance) {
         throw new Error('No "ethBalance" or "gas" value.');
+      }
+
+      if (!values.gas || isNaN(values.gas)) {
+        throw new Error('Gas value not calculated yet.');
       }
 
       // Verify that `gas + (eth amount if sending eth) <= ethBalance`
       if (
         values.gas
-          .mul(toWei(values.gasPrice, 'shannon'))
+          .multipliedBy(toWei(values.gasPrice, 'shannon'))
           .plus(token.address === 'ETH' ? toWei(values.amount) : 0)
           .gt(toWei(ethBalance))
       ) {

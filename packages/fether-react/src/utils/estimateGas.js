@@ -68,7 +68,7 @@ const estimateGasForEth = memoize((txForEth, api) => {
  * estimateGas.
  */
 const addBuffer = estimated => {
-  const withBuffer = estimated.mul(GAS_MULT_FACTOR);
+  const withBuffer = estimated.multipliedBy(GAS_MULT_FACTOR);
   debug(`Estimated gas ${+estimated}, with buffer ${+withBuffer}.`);
   return withBuffer;
 };
