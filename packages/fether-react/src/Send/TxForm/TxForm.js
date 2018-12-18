@@ -24,6 +24,7 @@ import withTokens from '../../utils/withTokens';
 
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
+const ZERO = new BigNumber('0');
 
 @inject('parityStore', 'sendStore')
 @withTokens
@@ -35,6 +36,18 @@ const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 @withEthBalance // ETH balance
 @observer
 class Send extends Component {
+  isCancelled = false;
+
+  state = {
+    estimatedTxFee: ZERO
+  };
+
+  componentWillUnmount () {
+    // Avoids encountering error `Can't call setState (or forceUpdate)
+    // on an unmounted component` when navigate from 'Send Ether' to 'Send THIBCoin'
+    this.isCancelled = true;
+  }
+
   handleSubmit = values => {
     const { accountAddress, history, sendStore, token } = this.props;
 
@@ -48,6 +61,8 @@ class Send extends Component {
       // ...set field "gas"
       gas: (value, allValues) => {
         const { parityStore, token } = this.props;
+
+        !this.isCancelled && this.setState({ estimatedTxFee: ZERO });
 
         if (this.preValidate(allValues) === true) {
           return estimateGas(allValues, token, parityStore.api);
@@ -64,6 +79,8 @@ class Send extends Component {
       sendStore: { tx },
       token
     } = this.props;
+
+    const { estimatedTxFee } = this.state;
 
     return (
       <div>
@@ -115,7 +132,7 @@ class Send extends Component {
                           <Field
                             centerText={`${values.gasPrice} GWEI`}
                             className='-range'
-                            label='Transaction Fee'
+                            label='Gas Price'
                             leftText='Slow'
                             max={MAX_GAS_PRICE}
                             min={MIN_GAS_PRICE}
@@ -126,7 +143,37 @@ class Send extends Component {
                             step={0.5}
                             type='range' // In Gwei
                           />
+                          {estimatedTxFee &&
+                            !estimatedTxFee.isZero() && (
+                            <div>
+                              <Field
+                                as='textarea'
+                                className='-xs'
+                                label='Transaction Fee (Estimate)'
+                                name='txFeeEstimate'
+                                render={FetherForm.Field}
+                                placeholder={`${estimatedTxFee
+                                  .div(10 ** 18)
+                                  .toString()} ETH`}
+                              />
 
+                              <Field
+                                as='textarea'
+                                className='-xs'
+                                label='Total Amount (Estimate)'
+                                name='totalAmountEstimate'
+                                render={FetherForm.Field}
+                                placeholder={`${estimatedTxFee
+                                  .plus(
+                                    token.address === 'ETH'
+                                      ? toWei(values.amount)
+                                      : 0
+                                  )
+                                  .div(10 ** 18)
+                                  .toString()} ETH`}
+                              />
+                            </div>
+                          )}
                           {values.to === values.from && (
                             <span>
                               <h3>WARNING:</h3>
@@ -160,6 +207,10 @@ class Send extends Component {
 
   preValidate = values => {
     const { balance, token } = this.props;
+
+    if (!values) {
+      return;
+    }
 
     if (!values.amount) {
       return { amount: 'Please enter a valid amount' };
@@ -200,6 +251,10 @@ class Send extends Component {
    * the tx.
    */
   validateForm = debounce(values => {
+    if (!values) {
+      return;
+    }
+
     try {
       const { ethBalance, token } = this.props;
 
@@ -213,14 +268,24 @@ class Send extends Component {
         throw new Error('No "ethBalance" or "gas" value.');
       }
 
+      if (!values.gas) {
+        return;
+      }
+
+      const estimatedTxFee = values.gas.mul(toWei(values.gasPrice, 'shannon'));
+
       // Verify that `gas + (eth amount if sending eth) <= ethBalance`
       if (
-        values.gas
-          .mul(toWei(values.gasPrice, 'shannon'))
+        estimatedTxFee
           .plus(token.address === 'ETH' ? toWei(values.amount) : 0)
           .gt(toWei(ethBalance))
       ) {
+        !this.isCancelled &&
+          this.setState({ estimatedTxFee: new BigNumber('0') });
+
         return { amount: "You don't have enough ETH balance" };
+      } else {
+        !this.isCancelled && this.setState({ estimatedTxFee });
       }
     } catch (err) {
       console.error(err);
