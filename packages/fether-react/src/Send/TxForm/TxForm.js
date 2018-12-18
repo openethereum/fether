@@ -209,12 +209,14 @@ class Send extends Component {
         return preValidation;
       }
 
-      if (!ethBalance) {
-        throw new Error('No "ethBalance" or "gas" value.');
+      // If the gas hasn't been calculated yet, then we don't show any errors,
+      // just wait a bit more
+      if (!values.gas) {
+        return;
       }
 
-      if (!values.gas || isNaN(values.gas)) {
-        throw new Error('Gas value not calculated yet.');
+      if (!ethBalance || isNaN(values.gas)) {
+        throw new Error('No "ethBalance" or "gas" value.');
       }
 
       // Verify that `gas + (eth amount if sending eth) <= ethBalance`
