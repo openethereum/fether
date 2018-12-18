@@ -95,26 +95,15 @@ class Send extends Component {
       token
     } = this.props;
 
-    const toggleMax = ([name], state, { changeValue }) => {
-      if (!this.state.maxSelected) {
-        changeValue(state, 'amount', value => {
-          return this.calculateMax(
-            state.formState.values.gas,
-            state.formState.values.gasPrice
-          );
-        });
-      }
-      this.setState({ maxSelected: !this.state.maxSelected });
-    };
-
-    const recalculateMax = ([name], state, { changeValue }) => {
-      if (this.state.maxSelected) {
-        changeValue(state, 'amount', value => {
-          return this.calculateMax(
-            state.formState.values.gas,
-            state.formState.values.gasPrice
-          );
-        });
+    const recalculateMax = (args, state, { changeValue }) => {
+      changeValue(state, 'amount', value => {
+        return this.calculateMax(
+          state.formState.values.gas,
+          state.formState.values.gasPrice
+        );
+      });
+      if (args[0].toggleMax) {
+        this.setState({ maxSelected: !this.state.maxSelected });
       }
     };
 
@@ -141,7 +130,7 @@ class Send extends Component {
                     onSubmit={this.handleSubmit}
                     validate={this.validateForm}
                     decorators={[this.decorator]}
-                    mutators={{ toggleMax, recalculateMax }}
+                    mutators={{ recalculateMax }}
                     render={({
                       handleSubmit,
                       valid,
@@ -169,7 +158,10 @@ class Send extends Component {
                                   ? 'button -tiny active max'
                                   : 'button -tiny max'
                               }
-                              onClick={mutators.toggleMax}
+                              onClick={() => {
+                                const args = { toggleMax: true };
+                                mutators.recalculateMax(args);
+                              }}
                             >
                               Max
                             </button>
@@ -245,6 +237,9 @@ class Send extends Component {
     } else if (amountBn.isZero()) {
       return { amount: 'Please enter a non-zero amount' };
     } else if (amountBn.isNegative()) {
+      if (this.state.maxSelected) {
+        return { amount: 'ETH balance too low to pay for gas.' };
+      }
       return { amount: 'Please enter a positive amount' };
     } else if (token.symbol === 'ETH' && toWei(values.amount).lt(1)) {
       return { amount: 'Please enter at least 1 Wei' };
