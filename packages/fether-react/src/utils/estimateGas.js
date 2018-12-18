@@ -68,6 +68,7 @@ const estimateGasForEth = memoize((txForEth, api) => {
  * estimateGas.
  */
 const addBuffer = estimated => {
+  // Add a buffer to the estimated gas, and round the number
   const withBuffer = estimated.multipliedBy(GAS_MULT_FACTOR).decimalPlaces(0);
   debug(`Estimated gas ${+estimated}, with buffer ${+withBuffer}.`);
   return withBuffer;
