@@ -180,14 +180,14 @@ class Send extends Component {
                           <Field
                             centerText={`${values.gasPrice} GWEI`}
                             className='-range'
-                            label='Transaction Fee'
-                            leftText='Slow'
+                            label='Transaction Speed'
+                            leftText='Low'
                             max={MAX_GAS_PRICE}
                             min={MIN_GAS_PRICE}
                             name='gasPrice'
                             render={FetherForm.Slider}
                             required
-                            rightText='Fast'
+                            rightText='High'
                             step={0.5}
                             type='range' // In Gwei
                           />
