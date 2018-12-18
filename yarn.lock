@@ -1742,10 +1742,10 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
-"@babel/runtime@7.0.0-beta.56":
-  version "7.0.0-beta.56"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-beta.56.tgz#cda612dffd5b1719a7b8e91e3040bd6ae64de8b0"
-  integrity sha512-vP9XV2VP013UEyZdU9eWClCsm6rQPUYHVNCfmpcv5uKviW7mKmUZq71Y5cr5dYsFKfnGDxSo8h6plUGR60lwHg==
+"@babel/runtime@^7.0.0":
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.2.0.tgz#b03e42eeddf5898e00646e4c840fa07ba8dcad7f"
+  integrity sha512-oouEibCbHMVdZSDlJBO6bZmID/zA/G/Qx3H1d3rSNPTD+L8UNKvCat7aKWSJ74zYbm5zWGh0GQN0hKj8zYFTCg==
   dependencies:
     regenerator-runtime "^0.12.0"
 
@@ -1861,66 +1861,45 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.0.tgz#50c1e2260ac0ed9439a181de3725a0168d59c48a"
   integrity sha512-LAQ1d4OPfSJ/BMbI2DuizmYrrkD9JMaTdi2hQTlI53lQ4kRQPyZQRS4CYQ7O66bnBBnP/oYdRxbk++X0xuFU6A==
 
-"@parity/abi@^2.1.4", "@parity/abi@~2.1.4":
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/@parity/abi/-/abi-2.1.4.tgz#23e2b9e6d37a54035b76d941d6d74b9c5d21fb99"
-  integrity sha512-4yPqCYXlLhb9jmmAg+0SkA/2Rmf1ZvPzmGF3WBKvgrAjWPAvj5hZYW5rquRqrP3L22KfG+7A9RAw3aZYp45AMQ==
+"@parity/abi@^3.0.10":
+  version "3.0.10"
+  resolved "https://registry.yarnpkg.com/@parity/abi/-/abi-3.0.10.tgz#8c4107b69f7d099998e80d8f7a95a2a5ea5099ee"
+  integrity sha512-bN8s4426l4qfCcKLzjU0CRIbYhUQpnJWPeQIkASShnDwuxNrn0b5HqO54kScHKvsWwW3KdwbnGz7cP6shAzUzg==
   dependencies:
-    bignumber.js "4.1.0"
-    js-sha3 "0.5.5"
-    utf8 "^2.1.2"
+    bignumber.js "^8.0.1"
+    js-sha3 "0.7.0"
+    utf8 "^3.0.0"
 
-"@parity/api@^2.1.22":
-  version "2.1.23"
-  resolved "https://registry.yarnpkg.com/@parity/api/-/api-2.1.23.tgz#c9cba0d64085cd03fafc69d1bd5b53cbabd0c280"
-  integrity sha512-Oeo0qvTWczpsMy8IeaN54Jz/JrKLNkIWB69eDE6KsouSnXEOGGh8pWup2LCZoaKhRX3HdXQFYCnWekvsDhst6Q==
+"@parity/api@^3.0.10":
+  version "3.0.10"
+  resolved "https://registry.yarnpkg.com/@parity/api/-/api-3.0.10.tgz#fda47688f721f9f355c14de36e9001515c9fe5a3"
+  integrity sha512-KL1doOtIq7N242NALIH+8KA8GEpibYGcSEQ82hrc9c5dhY62J5zkmQyVd0ynrrsLTFxprMF612CozyJSpNE9Ig==
   dependencies:
-    "@parity/abi" "~2.1.4"
-    "@parity/jsonrpc" "2.1.x"
-    "@parity/wordlist" "1.1.x"
-    bignumber.js "4.1.0"
+    "@parity/abi" "^3.0.10"
+    bignumber.js "^8.0.1"
     blockies "0.0.2"
     es6-error "4.0.2"
     es6-promise "^4.1.1"
-    eventemitter3 "^2.0.2"
+    eventemitter3 "^3.1.0"
     isomorphic-fetch "^2.2.1"
     js-sha3 "0.5.5"
-    lodash "^4.17.4"
+    lodash "^4.17.11"
     store "^2.0.12"
     websocket "^1.0.25"
 
-"@parity/api@^2.1.23", "@parity/api@^2.1.24":
-  version "2.1.24"
-  resolved "https://registry.yarnpkg.com/@parity/api/-/api-2.1.24.tgz#e04ca177598354b435b83c8cfe7c7c3672bf3e44"
-  integrity sha512-jJ93cyC5eZC9pQY/FXcSyQiFHNzg5wFzrVLB+RVfbKbIqCWmOAhlv+rssN35qPZ4ccehIGgFB5i7rkpfSajzkQ==
+"@parity/contracts@^3.0.10":
+  version "3.0.10"
+  resolved "https://registry.yarnpkg.com/@parity/contracts/-/contracts-3.0.10.tgz#defc93b575d712582f5a74c7f575c30b9e9daab0"
+  integrity sha512-5hLVKluT2eFXQtTWhSeHqV3BPel0fehhCVpd57LJ057h2shuiXINGraefx6SgZX9ucWzyijl04M1/XZwf6FXcw==
   dependencies:
-    "@parity/abi" "~2.1.4"
-    "@parity/jsonrpc" "2.1.x"
-    "@parity/wordlist" "1.1.x"
-    bignumber.js "4.1.0"
-    blockies "0.0.2"
-    es6-error "4.0.2"
-    es6-promise "^4.1.1"
-    eventemitter3 "^2.0.2"
-    isomorphic-fetch "^2.2.1"
-    js-sha3 "0.5.5"
-    lodash "^4.17.4"
-    store "^2.0.12"
-    websocket "^1.0.25"
+    "@parity/abi" "^3.0.10"
+    "@parity/api" "^3.0.10"
+    bignumber.js "^8.0.1"
 
-"@parity/contracts@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@parity/contracts/-/contracts-1.0.0.tgz#a8b6ed787974ce3198ac2de046f434b0eea77b04"
-  integrity sha512-s6iPQc9PaNwi1qrDkkTIGMcqwgptmD9jyTgxMWsNIodz1Ojyu1VyRbAYq+gNKFW4ZaJeW22r9xS1dQQr0DE4CQ==
-  dependencies:
-    "@parity/abi" "^2.1.4"
-    "@parity/api" "^2.1.24"
-    bignumber.js "^7.2.1"
-
-"@parity/electron@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@parity/electron/-/electron-1.0.2.tgz#097e7f8b345b374a33ff13c3d286cc5029127f05"
-  integrity sha512-ZwynbH8jyxY7bH/lYiEB2bttq4lwtmml+WyZM5G3O4P2AJRBYKoAnoc3as8HDJ+hsqdZ/6Ok+sTp8BqzqLLDRA==
+"@parity/electron@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@parity/electron/-/electron-3.0.1.tgz#78b87a6e8c3e981cf9dde9a543450cfdf4c08fcd"
+  integrity sha512-ri3qBmXQI8DVqbLusbDHhVjADj2xHetUWcJc5idXOyJgk2rMojW6I7ZEdSXp32vTV7C3TR2GQu2wJQS/QiSLgg==
   dependencies:
     async-retry "^1.2.1"
     axios "^0.18.0"
@@ -1931,35 +1910,25 @@
     promise-any "^0.2.0"
     sntp "^3.0.1"
 
-"@parity/jsonrpc@2.1.x":
-  version "2.1.6"
-  resolved "https://registry.yarnpkg.com/@parity/jsonrpc/-/jsonrpc-2.1.6.tgz#260bbe7dfcec18d59f0bf1668dfd6021452d6452"
-  integrity sha512-9RLsnAmgpl07EwDSDGu+OYW8xZ4cKDPQ/Zhxy4h6LXuPwTsF1eCWc0M3R8201/U+OrDUK/G6RXoUfoKnUpO+LA==
-
-"@parity/light.js-react@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@parity/light.js-react/-/light.js-react-1.0.0.tgz#0c97957585aea66f9483c8268b0b69cf97f54bd5"
-  integrity sha512-QU3rvCc/ZshuVLEtzpTbAYxcM1SBrZFy+Als3NmLIfm9bUPryCXL1rGuUq4GDj9MRiEbzNy8QFJWuF3OZyPIlA==
+"@parity/light.js-react@^3.0.10":
+  version "3.0.10"
+  resolved "https://registry.yarnpkg.com/@parity/light.js-react/-/light.js-react-3.0.10.tgz#e7ccc96d2082d9e4fbe8fd549681b7662b7c04bf"
+  integrity sha512-5/4HTa2tBpWd4Vlw8/Me2nRR2giiL+Kcv5Vun2rO6Qpmy1jtZuovBnVLTq73ZEgS5iaDT4iW4p27A87zuevSSg==
   dependencies:
-    recompose "^0.28.2"
+    recompose "^0.30.0"
     symbol-observable "^1.2.0"
 
-"@parity/light.js@^1.0.9":
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/@parity/light.js/-/light.js-1.0.9.tgz#e7685712d6d5265923ad2852f50462344af92b5c"
-  integrity sha512-gCZsnv8Yilk6kTEZwRJBPF4FpLkpH7dJ/1ngrYy+6cGcgWLWvPJMaP2tQUUziMsbpBSDWKhYpZMD0jFTVzuy5g==
+"@parity/light.js@^3.0.10":
+  version "3.0.10"
+  resolved "https://registry.yarnpkg.com/@parity/light.js/-/light.js-3.0.10.tgz#e4f34772377be6ec8a1f8ae3456ceeab99d5b246"
+  integrity sha512-BRWRBdqzHsyPn+ga5lclQiJBgV2YVPWbuu4oqd1F40+UdjkM3YDfdSPJKE8k5tAiEIfmnYJeBpFQYejNY56YFw==
   dependencies:
-    "@parity/abi" "^2.1.4"
-    "@parity/api" "^2.1.23"
+    "@parity/abi" "^3.0.10"
+    "@parity/api" "^3.0.10"
     async-retry "^1.2.3"
-    bignumber.js "^7.2.1"
-    debug "^3.1.0"
+    bignumber.js "^8.0.1"
+    debug "^4.1.0"
     memoizee "^0.4.12"
-
-"@parity/wordlist@1.1.x":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@parity/wordlist/-/wordlist-1.1.0.tgz#9e9ed3ab7837f5633b5844e60a355e9e63e427ae"
-  integrity sha1-np7Tq3g39WM7WETmCjVenmPkJ64=
 
 "@posthtml/esm@^1.0.0":
   version "1.0.0"
@@ -3830,15 +3799,15 @@ big.js@^3.1.3:
   resolved "https://registry.yarnpkg.com/big.js/-/big.js-3.2.0.tgz#a5fc298b81b9e0dca2e458824784b65c52ba588e"
   integrity sha512-+hN/Zh2D08Mx65pZ/4g5bsmNiZUuChDiQfTUQ7qJr4/kuopCr88xZsAXv6mBoZEsUI4OuGHlX59qE94K2mMW8Q==
 
-bignumber.js@4.1.0, bignumber.js@^4.1.0:
+bignumber.js@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-4.1.0.tgz#db6f14067c140bd46624815a7916c92d9b6c24b1"
   integrity sha512-eJzYkFYy9L4JzXsbymsFn3p54D+llV27oTQ+ziJG7WFRheJcNZilgVXMG0LoZtlQSKBsJdWtLFqOD0u+U0jZKA==
 
-bignumber.js@^7.2.1:
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-7.2.1.tgz#80c048759d826800807c4bfd521e50edbba57a5f"
-  integrity sha512-S4XzBk5sMB+Rcb/LNcpzXr57VRTxgAvaAEDAl1AwRx27j00hT84O6OkteE7u8UB3NuaaygCRrEpqox4uDOrbdQ==
+bignumber.js@^8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-8.0.1.tgz#5d419191370fb558c64e3e5f70d68e5947138832"
+  integrity sha512-zAySveTJXkgLYCBi0b14xzfnOs+f3G6x36I8w2a1+PFQpWk/dp0mI0F+ZZK2bu+3ELewDcSyP+Cfq++NcHX7sg==
 
 binary-extensions@^1.0.0:
   version "1.11.0"
@@ -6992,12 +6961,7 @@ event-stream@~3.3.0:
     stream-combiner "~0.0.4"
     through "~2.3.1"
 
-eventemitter3@^2.0.2:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-2.0.3.tgz#b5e1079b59fb5e1ba2771c0a993be060a58c99ba"
-  integrity sha1-teEHm1n7XhuidxwKmTvgYKWMmbo=
-
-eventemitter3@^3.0.0:
+eventemitter3@^3.0.0, eventemitter3@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.1.0.tgz#090b4d6cdbd645ed10bf750d4b5407942d7ba163"
   integrity sha512-ivIvhpq/Y0uSjcHDcOIccjmYjGLcP09MFGE7ysAwkAvkXfpZlC985pH2/ui64DKazbTW/4kN3yqozUxlXzI6cA==
@@ -9988,6 +9952,11 @@ js-sha3@0.5.5:
   version "0.5.5"
   resolved "https://registry.yarnpkg.com/js-sha3/-/js-sha3-0.5.5.tgz#baf0c0e8c54ad5903447df96ade7a4a1bca79a4a"
   integrity sha1-uvDA6MVK1ZA0R9+Wreekobynmko=
+
+js-sha3@0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/js-sha3/-/js-sha3-0.7.0.tgz#0a5c57b36f79882573b2d84051f8bb85dd1bd63a"
+  integrity sha512-Wpks3yBDm0UcL5qlVhwW9Jr9n9i4FfeWBFOOXP5puDS/SiudJGhw7DPyBqn3487qD4F0lsC0q3zxink37f7zeA==
 
 js-tokens@^3.0.0, js-tokens@^3.0.2:
   version "3.0.2"
@@ -14025,12 +13994,12 @@ recompose@^0.27.1:
     react-lifecycles-compat "^3.0.2"
     symbol-observable "^1.0.4"
 
-recompose@^0.28.2:
-  version "0.28.2"
-  resolved "https://registry.yarnpkg.com/recompose/-/recompose-0.28.2.tgz#19e679227bdf979e0d31b73ffe7ae38c9194f4a7"
-  integrity sha512-baVNKQBQAAAuLRnv6Cb/6/j59a1BVj6c6Pags1KXVyRB0yPfQVUZtuAUnqHDBXoR8iXPrLGWE4RNtCQ/AaRP3g==
+recompose@^0.30.0:
+  version "0.30.0"
+  resolved "https://registry.yarnpkg.com/recompose/-/recompose-0.30.0.tgz#82773641b3927e8c7d24a0d87d65aeeba18aabd0"
+  integrity sha512-ZTrzzUDa9AqUIhRk4KmVFihH0rapdCSMFXjhHbNrjAWxBuUD/guYlyysMnuHjlZC/KRiOKRtB4jf96yYSkKE8w==
   dependencies:
-    "@babel/runtime" "7.0.0-beta.56"
+    "@babel/runtime" "^7.0.0"
     change-emitter "^0.1.2"
     fbjs "^0.8.1"
     hoist-non-react-statics "^2.3.1"
@@ -16450,11 +16419,6 @@ utf8-byte-length@^1.0.1:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/utf8-byte-length/-/utf8-byte-length-1.0.4.tgz#f45f150c4c66eee968186505ab93fcbb8ad6bf61"
   integrity sha1-9F8VDExm7uloGGUFq5P8u4rWv2E=
-
-utf8@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/utf8/-/utf8-2.1.2.tgz#1fa0d9270e9be850d9b05027f63519bf46457d96"
-  integrity sha1-H6DZJw6b6FDZsFAn9jUZv0ZFfZY=
 
 utf8@^3.0.0:
   version "3.0.0"
