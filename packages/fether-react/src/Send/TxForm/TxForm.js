@@ -12,7 +12,7 @@ import { Form as FetherForm, Header } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 import { isAddress } from '@parity/api/lib/util/address';
 import { Link } from 'react-router-dom';
-import { toWei, fromWei } from '@parity/api/lib/util/wei';
+import { fromWei, toWei } from '@parity/api/lib/util/wei';
 import { withProps } from 'recompose';
 
 import { estimateGas } from '../../utils/estimateGas';
@@ -79,13 +79,30 @@ class Send extends Component {
 
   calculateMax = (gas, gasPrice) => {
     const { token, balance } = this.props;
-
     const gasBn = gas ? new BigNumber(gas) : new BigNumber(21000);
     const gasPriceBn = new BigNumber(gasPrice);
+    let output = new BigNumber(gasPrice);
 
-    return token.address === 'ETH'
-      ? fromWei(toWei(balance).minus(gasBn.mul(toWei(gasPriceBn, 'shannon'))))
-      : balance;
+    if (token.address === 'ETH') {
+      output = fromWei(
+        toWei(balance).minus(gasBn.mul(toWei(gasPriceBn, 'shannon')))
+      );
+      console.log('output: ', output);
+      output = output.isNegative ? new BigNumber(0) : output;
+    } else {
+      output = balance;
+    }
+    return output;
+  };
+
+  recalculateMax = ([name], state, { changeValue }) => {
+    changeValue(state, 'amount', value => {
+      return this.calculateMax(
+        state.formState.values.gas,
+        state.formState.values.gasPrice
+      );
+    });
+    this.setState({ maxSelected: !this.state.maxSelected });
   };
 
   render () {
@@ -94,18 +111,6 @@ class Send extends Component {
       sendStore: { tx },
       token
     } = this.props;
-
-    const recalculateMax = (args, state, { changeValue }) => {
-      changeValue(state, 'amount', value => {
-        return this.calculateMax(
-          state.formState.values.gas,
-          state.formState.values.gasPrice
-        );
-      });
-      if (args[0].toggleMax) {
-        this.setState({ maxSelected: !this.state.maxSelected });
-      }
-    };
 
     return (
       <div>
@@ -130,7 +135,7 @@ class Send extends Component {
                     onSubmit={this.handleSubmit}
                     validate={this.validateForm}
                     decorators={[this.decorator]}
-                    mutators={{ recalculateMax }}
+                    mutators={{ recalculateMax: this.recalculateMax }}
                     render={({
                       handleSubmit,
                       valid,
@@ -158,10 +163,7 @@ class Send extends Component {
                                   ? 'button -tiny active max'
                                   : 'button -tiny max'
                               }
-                              onClick={() => {
-                                const args = { toggleMax: true };
-                                mutators.recalculateMax(args);
-                              }}
+                              onClick={mutators.recalculateMax}
                             >
                               Max
                             </button>
@@ -235,11 +237,11 @@ class Send extends Component {
     if (amountBn.isNaN()) {
       return { amount: 'Please enter a valid amount' };
     } else if (amountBn.isZero()) {
-      return { amount: 'Please enter a non-zero amount' };
-    } else if (amountBn.isNegative()) {
       if (this.state.maxSelected) {
         return { amount: 'ETH balance too low to pay for gas.' };
       }
+      return { amount: 'Please enter a non-zero amount' };
+    } else if (amountBn.isNegative()) {
       return { amount: 'Please enter a positive amount' };
     } else if (token.symbol === 'ETH' && toWei(values.amount).lt(1)) {
       return { amount: 'Please enter at least 1 Wei' };
@@ -288,8 +290,7 @@ class Send extends Component {
           .plus(token.symbol === 'ETH' ? toWei(values.amount) : 0)
           .gt(toWei(ethBalance))
       ) {
-        console.log('token.address: ', token.symbol);
-        return token.symbol !== 'ETH'
+        return token.address !== 'ETH'
           ? { amount: 'ETH balance too low to pay for gas' }
           : { amount: "You don't have enough ETH balance" };
       }
