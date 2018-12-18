@@ -285,10 +285,13 @@ class Send extends Component {
       if (
         values.gas
           .mul(toWei(values.gasPrice, 'shannon'))
-          .plus(token.address === 'ETH' ? toWei(values.amount) : 0)
+          .plus(token.symbol === 'ETH' ? toWei(values.amount) : 0)
           .gt(toWei(ethBalance))
       ) {
-        return { amount: "You don't have enough ETH balance" };
+        console.log('token.address: ', token.symbol);
+        return token.symbol !== 'ETH'
+          ? { amount: 'ETH balance too low to pay for gas' }
+          : { amount: "You don't have enough ETH balance" };
       }
     } catch (err) {
       console.error(err);
