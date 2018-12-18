@@ -45,37 +45,24 @@ class Send extends Component {
     history.push(`/send/${token.address}/from/${accountAddress}/signer`);
   };
 
-  decorator = createDecorator(
-    {
-      field: /to|amount/, // when the value of these fields change...
-      updates: {
-        // ...set field "gas"
-        gas: (value, allValues) => {
-          const { parityStore, token } = this.props;
-          if (this.preValidate(allValues) === true) {
-            return estimateGas(allValues, token, parityStore.api);
-          } else {
-            return null;
-          }
-        }
-      }
-    },
-    {
-      field: /gas|gasPrice/, // when the value of these fields change...
-      updates: {
-        // ...set field "gas"
-        amount: (value, allValues) => {
-          if (this.state.maxSelected) {
-            return this.calculateMax(allValues.gas, allValues.gasPrice);
-          } else {
-            // This return is needed for the amount not to be set to 0 when Max is deactivated and gasPrice changes
-            // TODO understand why returning "value" here makes the amount field change when gasPrice changes..
-            return allValues.amount;
-          }
+  decorator = createDecorator({
+    field: /to|amount/, // when the value of these fields change...
+    updates: {
+      // ...set field "gas"
+      gas: (value, allValues) => {
+        const { parityStore, token } = this.props;
+        console.log(
+          'Decorator gasPrice value: ',
+          allValues.gasPrice.toString()
+        );
+        if (this.preValidate(allValues) === true) {
+          return estimateGas(allValues, token, parityStore.api);
+        } else {
+          return null;
         }
       }
     }
-  );
+  });
 
   calculateMax = (gas, gasPrice) => {
     const { token, balance } = this.props;
@@ -87,22 +74,27 @@ class Send extends Component {
       output = fromWei(
         toWei(balance).minus(gasBn.mul(toWei(gasPriceBn, 'shannon')))
       );
-      console.log('output: ', output);
-      output = output.isNegative ? new BigNumber(0) : output;
+      output = output.isNegative() ? new BigNumber(0) : output;
     } else {
       output = balance;
     }
     return output;
   };
 
-  recalculateMax = ([name], state, { changeValue }) => {
+  recalculateMax = (args, state, { changeValue }) => {
+    console.log(
+      'recalculateMax gasPrice value: ',
+      state.formState.values.gasPrice
+    );
     changeValue(state, 'amount', value => {
       return this.calculateMax(
         state.formState.values.gas,
         state.formState.values.gasPrice
       );
     });
-    this.setState({ maxSelected: !this.state.maxSelected });
+    if (args[0].toggleMax) {
+      this.setState({ maxSelected: !this.state.maxSelected });
+    }
   };
 
   render () {
@@ -163,7 +155,10 @@ class Send extends Component {
                                   ? 'button -tiny active max'
                                   : 'button -tiny max'
                               }
-                              onClick={mutators.recalculateMax}
+                              onClick={() => {
+                                const args = { toggleMax: true };
+                                mutators.recalculateMax(args);
+                              }}
                             >
                               Max
                             </button>
@@ -188,6 +183,12 @@ class Send extends Component {
                             min={MIN_GAS_PRICE}
                             name='gasPrice'
                             render={FetherForm.Slider}
+                            onInput={() => {
+                              if (this.state.maxSelected) {
+                                const args = { toggleMax: false };
+                                mutators.recalculateMax(args);
+                              }
+                            }}
                             required
                             rightText='High'
                             step={0.5}
