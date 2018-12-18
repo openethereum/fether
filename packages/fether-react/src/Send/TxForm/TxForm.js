@@ -9,10 +9,11 @@ import createDecorator from 'final-form-calculate';
 import debounce from 'debounce-promise';
 import { Field, Form } from 'react-final-form';
 import { Form as FetherForm, Header } from 'fether-ui';
+import { fromWei, toWei } from '@parity/api/lib/util/wei';
 import { inject, observer } from 'mobx-react';
 import { isAddress } from '@parity/api/lib/util/address';
 import { Link } from 'react-router-dom';
-import { fromWei, toWei } from '@parity/api/lib/util/wei';
+import { OnChange } from 'react-final-form-listeners';
 import { withProps } from 'recompose';
 
 import { estimateGas } from '../../utils/estimateGas';
@@ -51,10 +52,6 @@ class Send extends Component {
       // ...set field "gas"
       gas: (value, allValues) => {
         const { parityStore, token } = this.props;
-        console.log(
-          'Decorator gasPrice value: ',
-          allValues.gasPrice.toString()
-        );
         if (this.preValidate(allValues) === true) {
           return estimateGas(allValues, token, parityStore.api);
         } else {
@@ -82,10 +79,6 @@ class Send extends Component {
   };
 
   recalculateMax = (args, state, { changeValue }) => {
-    console.log(
-      'recalculateMax gasPrice value: ',
-      state.formState.values.gasPrice
-    );
     changeValue(state, 'amount', value => {
       return this.calculateMax(
         state.formState.values.gas,
@@ -160,7 +153,7 @@ class Send extends Component {
                                 mutators.recalculateMax(args);
                               }}
                             >
-                              Max
+                              MAX
                             </button>
                           </Field>
 
@@ -183,17 +176,20 @@ class Send extends Component {
                             min={MIN_GAS_PRICE}
                             name='gasPrice'
                             render={FetherForm.Slider}
-                            onInput={() => {
-                              if (this.state.maxSelected) {
-                                const args = { toggleMax: false };
-                                mutators.recalculateMax(args);
-                              }
-                            }}
                             required
                             rightText='High'
                             step={0.5}
                             type='range' // In Gwei
                           />
+
+                          <OnChange name='gasPrice'>
+                            {(value, previous) => {
+                              if (this.state.maxSelected) {
+                                const args = { toggleMax: false };
+                                mutators.recalculateMax(args);
+                              }
+                            }}
+                          </OnChange>
 
                           {values.to === values.from && (
                             <span>

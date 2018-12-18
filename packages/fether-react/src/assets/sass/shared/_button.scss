@@ -42,13 +42,15 @@
     opacity: 0.425;
 
     &.max {
-      padding: 0.325rem 0.675rem;;
-      border-radius: 1rem;
-      border: 1px solid $black;
+        padding: 0.125rem 0.275rem;
+        border-radius: 1rem;
+        width: 100%;
+        opacity: 0.625;
    
       &.active{
         background-color: darken($black, 2.5%);
         color: $white;
+        opacity: 0.75;
       }
     }
 
