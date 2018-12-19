@@ -39,7 +39,8 @@ class Send extends Component {
   isCancelled = false;
 
   state = {
-    estimatedTxFee: ZERO
+    estimatedTxFee: ZERO,
+    showDetails: false
   };
 
   componentWillUnmount () {
@@ -53,6 +54,11 @@ class Send extends Component {
 
     sendStore.setTx(values);
     history.push(`/send/${token.address}/from/${accountAddress}/signer`);
+  };
+
+  toggleDetails = () => {
+    const { showDetails } = this.state;
+    !this.isCancelled && this.setState({ showDetails: !showDetails });
   };
 
   decorator = createDecorator({
@@ -80,7 +86,34 @@ class Send extends Component {
       token
     } = this.props;
 
-    const { estimatedTxFee } = this.state;
+    const { estimatedTxFee, showDetails } = this.state;
+
+    const renderFee = () => {
+      return `Fee: ${estimatedTxFee
+        .div(10 ** 18)
+        .toString()} ETH (Gas Limit * Gas Price)`;
+    };
+
+    const renderCalculation = values => {
+      return `Calculation: (${estimatedTxFee
+        .div(new BigNumber(values.gasPrice.toString()))
+        .div(10 ** 9)} GWEI * ${new BigNumber(
+        values.gasPrice.toString()
+      )} GWEI) / 10**18`;
+    };
+
+    const renderTotalAmount = values => {
+      return `Total Amount: ${estimatedTxFee
+        .plus(token.address === 'ETH' ? toWei(values.amount.toString()) : 0)
+        .div(10 ** 18)
+        .toString()} ETH`;
+    };
+
+    const renderDetails = values => {
+      return `${renderFee()}\n${renderCalculation(values)}\n${renderTotalAmount(
+        values
+      )}`;
+    };
 
     return (
       <div>
@@ -146,24 +179,30 @@ class Send extends Component {
                           {estimatedTxFee &&
                             !estimatedTxFee.isZero() && (
                             <div>
-                              <Field
-                                as='textarea'
-                                className='-sm'
-                                disabled
-                                label='Transaction Details (Estimate)'
-                                name='txFeeEstimate'
-                                render={FetherForm.Field}
-                                placeholder={`Fee (Estimate): ${estimatedTxFee
-                                  .div(10 ** 18)
-                                  .toString()} ETH\nTotal Amount: ${estimatedTxFee
-                                  .plus(
-                                    token.address === 'ETH'
-                                      ? toWei(values.amount)
-                                      : 0
-                                  )
-                                  .div(10 ** 18)
-                                  .toString()} ETH`}
-                              />
+                              {showDetails && !isNaN(values.amount) ? (
+                                <div>
+                                  <span className='details'>
+                                    <a onClick={() => this.toggleDetails()}>
+                                        &uarr; Hide
+                                    </a>
+                                  </span>
+                                  <Field
+                                    as='textarea'
+                                    className='-sm-details'
+                                    disabled
+                                    label='Transaction Details (Estimate)'
+                                    name='txFeeEstimate'
+                                    render={FetherForm.Field}
+                                    placeholder={renderDetails(values)}
+                                  />
+                                </div>
+                              ) : (
+                                <span className='details'>
+                                  <a onClick={() => this.toggleDetails()}>
+                                      &darr; Details
+                                  </a>
+                                </span>
+                              )}
                             </div>
                           )}
                           {values.to === values.from && (

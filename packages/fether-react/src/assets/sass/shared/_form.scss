@@ -106,9 +106,14 @@
     font-family: $mono;
     font-size: ms(-1);
 
-    &.-xs {
+    &.-xs-inline {
       display: inline-flex;
       height: 2.5rem;
+    }
+
+    &.-sm-details {
+      font-size: 0.6rem;
+      height: 4.5rem;
     }
 
     &.-sm {
@@ -127,6 +132,12 @@
       height: 12rem;
     }
   }
+}
+
+.details > a {
+  color: #444444;
+  font-size: 0.8rem;
+  font-weight: 400;
 }
 
 input.form_field_amount[type='number'] {
