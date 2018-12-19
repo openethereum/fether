@@ -5,6 +5,8 @@
 
 import React, { Component } from 'react';
 import BigNumber from 'bignumber.js';
+import { chainName$, isLoading } from '@parity/light.js';
+import light from '@parity/light.js-react';
 import createDecorator from 'final-form-calculate';
 import debounce from 'debounce-promise';
 import { Field, Form } from 'react-final-form';
@@ -26,6 +28,9 @@ const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 
 @inject('parityStore', 'sendStore')
+@light({
+  chainName: chainName$
+})
 @withTokens
 @withProps(({ match: { params: { tokenAddress } }, tokens }) => ({
   token: tokens[tokenAddress]
@@ -57,6 +62,27 @@ class Send extends Component {
       }
     }
   });
+
+  openEtherscanLink () {
+    const { accountAddress, chainName, token } = this.props;
+    const chainNamePrefix = isLoading(chainName) ? '' : `${chainName}`;
+
+    if (!accountAddress || !chainNamePrefix || !token.address) {
+      return;
+    }
+
+    const getEthereumAddress = () =>
+      `https://${chainNamePrefix}.etherscan.io/address/${accountAddress}`;
+    const getTokenAddress = () =>
+      `https://${chainNamePrefix}.etherscan.io/token/${
+        token.address
+      }?a=${accountAddress}`;
+
+    const href =
+      token.address === 'ETH' ? getEthereumAddress() : getTokenAddress();
+
+    window.open(href, '_blank');
+  }
 
   render () {
     const {
@@ -148,7 +174,7 @@ class Send extends Component {
                     )}
                   />
                 ]}
-                onClick={null} // To disable cursor:pointer on card // TODO Can this be done better?
+                onClick={() => this.openEtherscanLink()} // To disable cursor:pointer on card // TODO Can this be done better?
                 token={token}
               />
             </div>
