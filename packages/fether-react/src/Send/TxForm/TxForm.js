@@ -71,15 +71,11 @@ class Send extends Component {
       return;
     }
 
-    const getEthereumAddress = () =>
-      `https://${chainNamePrefix}.etherscan.io/address/${accountAddress}`;
-    const getTokenAddress = () =>
-      `https://${chainNamePrefix}.etherscan.io/token/${
-        token.address
-      }?a=${accountAddress}`;
-
-    const href =
-      token.address === 'ETH' ? getEthereumAddress() : getTokenAddress();
+    const baseUrl = `https://${chainNamePrefix}.etherscan.io`;
+    const getEthAddr = () => `${baseUrl}/address/${accountAddress}`;
+    const getTokenAddr = () =>
+      `${baseUrl}/token/${token.address}?a=${accountAddress}`;
+    const href = token.address === 'ETH' ? getEthAddr() : getTokenAddr();
 
     window.open(href, '_blank');
   }
