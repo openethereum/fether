@@ -153,7 +153,7 @@ class Send extends Component {
                                 mutators.recalculateMax(args);
                               }}
                             >
-                              MAX
+                              Max
                             </button>
                           </Field>
 
