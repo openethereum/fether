@@ -23,6 +23,7 @@ import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import withAccount from '../../utils/withAccount.js';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
 import withTokens from '../../utils/withTokens';
+import { blockscoutAccountUrl } from '../blockscout';
 
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
@@ -63,21 +64,17 @@ class Send extends Component {
     }
   });
 
-  openEtherscanLink () {
+  openBlockscoutLink () {
     const { accountAddress, chainName, token } = this.props;
-    const chainNamePrefix = isLoading(chainName) ? '' : `${chainName}`;
 
-    if (!accountAddress || !chainNamePrefix || !token.address) {
+    if (isLoading(chainName) || !accountAddress || !token.address) {
       return;
     }
 
-    const baseUrl = `https://${chainNamePrefix}.etherscan.io`;
-    const ethUrl = () => `${baseUrl}/address/${accountAddress}`;
-    const tokenUrl = () =>
-      `${baseUrl}/token/${token.address}?a=${accountAddress}`;
-    const href = token.address === 'ETH' ? ethUrl() : tokenUrl();
-
-    window.open(href, '_blank');
+    window.open(
+      blockscoutAccountUrl(accountAddress, chainName, token.address),
+      '_blank'
+    );
   }
 
   render () {
@@ -170,7 +167,7 @@ class Send extends Component {
                     )}
                   />
                 ]}
-                onClick={() => this.openEtherscanLink()} // To disable cursor:pointer on card // TODO Can this be done better?
+                onClick={() => this.openBlockscoutLink()} // To disable cursor:pointer on card // TODO Can this be done better?
                 token={token}
               />
             </div>
