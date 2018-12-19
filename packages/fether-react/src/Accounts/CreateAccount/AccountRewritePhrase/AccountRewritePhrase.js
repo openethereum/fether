@@ -92,7 +92,7 @@ class AccountRewritePhrase extends Component {
 
   renderButton = () => {
     const {
-      createAccountStore: { isImport, phrase }
+      createAccountStore: { isImport, bip39Phrase }
     } = this.props;
     const { isLoading, value } = this.state;
 
@@ -102,7 +102,7 @@ class AccountRewritePhrase extends Component {
       return (
         <button
           className='button'
-          disabled={value !== phrase}
+          disabled={value !== bip39Phrase}
           onClick={this.handleNextStep}
         >
           Next

@@ -5,11 +5,12 @@
 
 import React, { Component } from 'react';
 import { AccountHeader, Card, Form as FetherForm } from 'fether-ui';
-import { inject, observer } from 'mobx-react';
+import { observer } from 'mobx-react';
 import { accountsInfo$ } from '@parity/light.js';
 import light from '@parity/light.js-react';
 import { Link, withRouter } from 'react-router-dom';
 
+import backupAccount from '../utils/backupAccount';
 import withAccount from '../utils/withAccount';
 
 @withRouter
@@ -17,7 +18,6 @@ import withAccount from '../utils/withAccount';
 @light({
   accountsInfo: accountsInfo$
 })
-@inject('createAccountStore')
 @observer
 class BackupAccount extends Component {
   state = {
@@ -26,32 +26,19 @@ class BackupAccount extends Component {
     message: ''
   };
 
-  toggleMsg = msg => {
-    this.setState({
-      message: msg
-    });
-  };
-
   handlePasswordChange = ({ target: { value } }) => {
     this.setState({ password: value });
   };
 
   handleSubmit = event => {
-    const { accountAddress, createAccountStore, history } = this.props;
+    const { accountAddress, history } = this.props;
     const { password } = this.state;
 
     event.preventDefault();
     this.setState({ isLoading: true });
 
-    // Save to parity
-    createAccountStore
-      .backupAccount(accountAddress, password)
+    backupAccount(accountAddress, password)
       .then(res => {
-        if (!res) {
-          throw new Error('Failed to backup account.');
-        }
-
-        createAccountStore.clear();
         /*
           FIXME: this timeout is a placeholder for after the backup file is saved.
           AFAICT there is no callback from FileSaver.saveAs() so I'm not sure how to handle this yet.
@@ -61,7 +48,9 @@ class BackupAccount extends Component {
         setTimeout(() => history.push(`/accounts`), 3000);
       })
       .catch(err => {
-        this.toggleMsg(err.text + ' Please check your password and try again.');
+        this.setState({
+          message: err.text + ' Please check your password and try again.'
+        });
         this.setState({ isLoading: false });
       });
   };
