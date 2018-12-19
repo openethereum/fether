@@ -109,6 +109,16 @@ class Send extends Component {
                       <form className='send-form' onSubmit={handleSubmit}>
                         <fieldset className='form_fields'>
                           <Field
+                            as='textarea'
+                            className='-sm'
+                            label='To'
+                            name='to'
+                            placeholder='0x...'
+                            required
+                            render={FetherForm.Field}
+                          />
+
+                          <Field
                             className='form_field_amount'
                             formNoValidate
                             label='Amount'
@@ -117,16 +127,6 @@ class Send extends Component {
                             render={FetherForm.Field}
                             required
                             type='number' // In ETH or coin
-                          />
-
-                          <Field
-                            as='textarea'
-                            className='-sm'
-                            label='To'
-                            name='to'
-                            placeholder='0x...'
-                            required
-                            render={FetherForm.Field}
                           />
 
                           <Field
