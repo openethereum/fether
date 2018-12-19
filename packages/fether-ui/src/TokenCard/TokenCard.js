@@ -9,14 +9,6 @@ import PropTypes from 'prop-types';
 import { Card } from '../Card';
 import { Placeholder } from '../Placeholder';
 
-// Concatenates a string balance value by an amount of characters after the decimal place
-function concatBalanceByDecimalPlaces (value, decimals) {
-  return value
-    .split('.')
-    .map((el, i) => (i === 1 ? el.slice(0, decimals) : el))
-    .join('.');
-}
-
 export const TokenCard = ({
   balance,
   children,
@@ -43,9 +35,7 @@ export const TokenCard = ({
       </div>
       <div className='token_balance'>
         {balance ? (
-          <span>
-            {concatBalanceByDecimalPlaces(balance.toString(), decimals)}{' '}
-          </span>
+          <span>{balance.toFixed(decimals, 1)} </span>
         ) : showBalance ? (
           <Placeholder height={20} width={50} />
         ) : null}
