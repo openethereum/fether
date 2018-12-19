@@ -35,7 +35,7 @@ export const TokenCard = ({
       </div>
       <div className='token_balance'>
         {balance ? (
-          <span>{balance.toFixed(decimals)} </span>
+          <span>{balance.toFixed(decimals, 1)} </span>
         ) : showBalance ? (
           <Placeholder height={20} width={50} />
         ) : null}
