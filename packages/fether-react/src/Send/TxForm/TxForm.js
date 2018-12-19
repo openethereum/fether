@@ -148,22 +148,14 @@ class Send extends Component {
                             <div>
                               <Field
                                 as='textarea'
-                                className='-xs'
-                                label='Transaction Fee (Estimate)'
+                                className='-sm'
+                                disabled
+                                label='Transaction Details (Estimate)'
                                 name='txFeeEstimate'
                                 render={FetherForm.Field}
-                                placeholder={`${estimatedTxFee
+                                placeholder={`Fee (Estimate): ${estimatedTxFee
                                   .div(10 ** 18)
-                                  .toString()} ETH`}
-                              />
-
-                              <Field
-                                as='textarea'
-                                className='-xs'
-                                label='Total Amount (Estimate)'
-                                name='totalAmountEstimate'
-                                render={FetherForm.Field}
-                                placeholder={`${estimatedTxFee
+                                  .toString()} ETH\nTotal Amount: ${estimatedTxFee
                                   .plus(
                                     token.address === 'ETH'
                                       ? toWei(values.amount)
