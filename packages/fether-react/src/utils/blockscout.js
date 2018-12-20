@@ -15,7 +15,6 @@ const baseUrl = chainName => {
       break;
     case 'kovan':
     case 'ropsten':
-    case 'rinkeby':
       chainNameBlockscout = chainName;
       baseUrl = `https://blockscout.com/eth/${chainNameBlockscout}`;
       break;
