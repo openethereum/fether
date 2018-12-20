@@ -155,7 +155,7 @@ class Sent extends Component {
           )}
           target='_blank'
         >
-          <button className='button -tiny'>See it on Blockscout</button>
+          <button className='button -tiny'>See it on BlockScout</button>
         </a>
       );
     }
