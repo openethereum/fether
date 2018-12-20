@@ -3,18 +3,39 @@
 }
 
 .menu {
-  background: $faint;
+  background: $eggshell;
+  border: 0px solid $eggshell;
   border-radius: 4px;
+  box-shadow: 0 0.250rem 0.5rem rgba($black, 0.300);
   padding: 5px 15px 5px 0px;
   position: absolute;
-  right: 37px;
+  right: 8px;
   top: 14px;
   z-index: 3;
+
+  &:hover {
+    border-color: $blue;
+    box-shadow: 0 0.250rem 0.675rem rgba($black, 0.400);
+    cursor: pointer;
+  }
 }
 
 .menu-item {
   clear: both;
   display: block;
+  margin-right: 20px;
+  font-size: 1em;
+  font-weight: 500;
+  padding: 0 0 0 0.925rem;
+  line-height: 2;
+  opacity: 0.8;
+  &.spacer {
+    border-bottom: 1px solid lightgray;
+  }
+  &:hover {
+    opacity: 0.625;
+    background-color: transparent;
+  }
 }
 
 .account {

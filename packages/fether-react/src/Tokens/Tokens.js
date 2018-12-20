@@ -29,6 +29,8 @@ class Tokens extends PureComponent {
     super(props);
 
     this.menuRef = React.createRef();
+    this.menuIconMoreRef = React.createRef();
+    this.menuIconCloseRef = React.createRef();
   }
 
   componentDidMount () {
@@ -52,19 +54,32 @@ class Tokens extends PureComponent {
   };
 
   handleMenuBlur = event => {
-    const { showMenu } = this.state;
     const menuDiv = this.menuRef.current;
+    const menuIconClose = this.menuIconCloseRef.current;
 
-    if (menuDiv && !menuDiv.contains(event.target)) {
+    // Hide the menu if the user clicked an element in the DOM other
+    // than the menu div or the close icon div
+    if (
+      menuDiv &&
+      menuIconClose &&
+      (!menuDiv.contains(event.target) || menuIconClose.contains(event.target))
+    ) {
       menuDiv.style.display = 'none';
-      !this.isCancelled && this.setState({ showMenu: !showMenu });
     }
   };
 
-  handleToggleMenu = () => {
-    const { showMenu } = this.state;
+  handleOpenMenu = () => {
+    !this.isCancelled &&
+      this.setState({
+        showMenu: true
+      });
+  };
 
-    !this.isCancelled && this.setState({ showMenu: !showMenu });
+  handleCloseMenu = () => {
+    !this.isCancelled &&
+      this.setState({
+        showMenu: false
+      });
   };
 
   render () {
@@ -81,18 +96,11 @@ class Tokens extends PureComponent {
       <div className='wrapper'>
         {showMenu ? (
           <div className='menu' ref={this.menuRef}>
-            <div className='menu-item'>
-              <button className='button -tiny' onClick={this.handleGoToBackup}>
-                Backup Account
-              </button>
+            <div className='menu-item spacer' onClick={this.handleGoToBackup}>
+              Backup Account
             </div>
-            <div className='menu-item'>
-              <button
-                className='button -tiny'
-                onClick={this.handleGoToWhitelist}
-              >
-                Add tokens
-              </button>
+            <div className='menu-item' onClick={this.handleGoToWhitelist}>
+              Add tokens
             </div>
           </div>
         ) : null}
@@ -110,9 +118,23 @@ class Tokens extends PureComponent {
             </Link>
           }
           right={
-            <a className='icon -more' onClick={this.handleToggleMenu}>
-              Menu
-            </a>
+            showMenu ? (
+              <a
+                className='icon -close'
+                onClick={() => this.handleCloseMenu()}
+                ref={this.menuIconCloseRef}
+              >
+                Menu
+              </a>
+            ) : (
+              <a
+                className='icon -more'
+                onClick={() => this.handleOpenMenu()}
+                ref={this.menuIconMoreRef}
+              >
+                Menu
+              </a>
+            )
           }
         />
 
