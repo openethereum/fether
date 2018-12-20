@@ -9,13 +9,10 @@ import PropTypes from 'prop-types';
 import { Card } from '../Card';
 import { Placeholder } from '../Placeholder';
 
-import blockscoutLogo from '../../../fether-react/src/assets/img/icons/blockscoutLogo.svg';
-
 export const TokenCard = ({
   balance,
   children,
   decimals,
-  openBlockscoutLink,
   showBalance,
   token,
   ...otherProps
@@ -43,13 +40,6 @@ export const TokenCard = ({
           <Placeholder height={20} width={50} />
         ) : null}
         <span className='token_symbol'>{token && token.symbol}</span>
-      </div>
-      <div className='token_blockscout_logo'>
-        <img
-          alt='blockscout'
-          onClick={() => openBlockscoutLink()}
-          src={blockscoutLogo}
-        />
       </div>
       {children}
     </div>

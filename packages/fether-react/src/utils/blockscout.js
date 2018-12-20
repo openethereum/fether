@@ -28,20 +28,6 @@ const baseUrl = chainName => {
   return baseUrl;
 };
 
-// Account URL
-const ethUrl = (accountAddress, chainName) =>
-  `${baseUrl(chainName)}/address/${accountAddress}/tokens`;
-
-const tokenUrl = (accountAddress, chainName, tokenAddress) =>
-  `${baseUrl(
-    chainName
-  )}/address/${accountAddress}/tokens/${tokenAddress}/token_transfers`;
-
-const blockscoutAccountUrl = (accountAddress, chainName, tokenAddress) =>
-  tokenAddress === 'ETH'
-    ? ethUrl(accountAddress, chainName)
-    : tokenUrl(accountAddress, chainName, tokenAddress);
-
 // Tx URL
 const ethTxUrl = (chainName, transactionHash) =>
   `${baseUrl(chainName)}/tx/${transactionHash}/internal_transactions`;
@@ -54,4 +40,4 @@ const blockscoutTxUrl = (chainName, transactionHash, tokenAddress) =>
     ? ethTxUrl(chainName, transactionHash)
     : tokenTxUrl(chainName, transactionHash);
 
-export { blockscoutAccountUrl, blockscoutTxUrl };
+export { blockscoutTxUrl };
