@@ -5,8 +5,6 @@
 
 import React, { Component } from 'react';
 import BigNumber from 'bignumber.js';
-import { chainName$, isLoading } from '@parity/light.js';
-import light from '@parity/light.js-react';
 import createDecorator from 'final-form-calculate';
 import debounce from 'debounce-promise';
 import { Field, Form } from 'react-final-form';
@@ -23,15 +21,11 @@ import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import withAccount from '../../utils/withAccount.js';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
 import withTokens from '../../utils/withTokens';
-import { blockscoutAccountUrl } from '../blockscout';
 
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 
 @inject('parityStore', 'sendStore')
-@light({
-  chainName: chainName$
-})
 @withTokens
 @withProps(({ match: { params: { tokenAddress } }, tokens }) => ({
   token: tokens[tokenAddress]
@@ -63,19 +57,6 @@ class Send extends Component {
       }
     }
   });
-
-  openBlockscoutLink () {
-    const { accountAddress, chainName, token } = this.props;
-
-    if (isLoading(chainName) || !accountAddress || !token.address) {
-      return;
-    }
-
-    window.open(
-      blockscoutAccountUrl(accountAddress, chainName, token.address),
-      '_blank'
-    );
-  }
 
   render () {
     const {
@@ -167,7 +148,7 @@ class Send extends Component {
                     )}
                   />
                 ]}
-                onClick={() => this.openBlockscoutLink()} // To disable cursor:pointer on card // TODO Can this be done better?
+                onClick={null} // To disable cursor:pointer on card // TODO Can this be done better?
                 token={token}
               />
             </div>

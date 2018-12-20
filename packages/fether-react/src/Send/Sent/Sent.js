@@ -12,7 +12,7 @@ import { withProps } from 'recompose';
 import check from '../../assets/img/icons/check.svg';
 import loading from '../../assets/img/icons/loading.svg';
 import withTokens from '../../utils/withTokens';
-import { blockscoutTxUrl } from '../blockscout';
+import { blockscoutTxUrl } from '../../utils/blockscout';
 
 // Number of confirmations to consider a transaction successful
 const MIN_CONFIRMATIONS = 6;
