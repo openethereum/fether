@@ -114,6 +114,9 @@
     &.-sm-details {
       font-size: 0.6rem;
       height: 4.5rem;
+      &::-webkit-input-placeholder {
+        color: $black;
+      }
     }
 
     &.-sm {
