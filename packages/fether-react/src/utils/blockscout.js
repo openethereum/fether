@@ -20,7 +20,7 @@ const baseUrl = chainName => {
       break;
     default:
       console.error(
-        'Chain name not yet supported. Please notify admin@parity.io'
+        'Chain name not yet supported. Please open a Github issue at https://github.com/paritytech/fether/issues/new'
       );
   }
 
