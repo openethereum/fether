@@ -69,7 +69,7 @@ class Send extends Component {
 
     if (token.address === 'ETH') {
       output = fromWei(
-        toWei(balance).minus(gasBn.mul(toWei(gasPriceBn, 'shannon')))
+        toWei(balance).minus(gasBn.multipliedBy(toWei(gasPriceBn, 'shannon')))
       );
       output = output.isNegative() ? new BigNumber(0) : output;
     } else {
