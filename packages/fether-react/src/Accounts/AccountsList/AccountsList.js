@@ -9,6 +9,7 @@ import { accountsInfo$, withoutLoading } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
 import light from '@parity/light.js-react';
 
+import Feedback from '../../Feedback';
 import Health from '../../Health';
 
 @light({
@@ -87,6 +88,9 @@ class AccountsList extends Component {
         <nav className='footer-nav'>
           <div className='footer-nav_status'>
             <Health />
+          </div>
+          <div className='footer-feedback'>
+            <Feedback />
           </div>
         </nav>
       </div>
