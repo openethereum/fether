@@ -25,10 +25,22 @@ class Tokens extends PureComponent {
     showMenu: false
   };
 
+  constructor (props) {
+    super(props);
+
+    this.menuRef = React.createRef();
+  }
+
+  componentDidMount () {
+    document.addEventListener('mouseup', this.handleMenuBlur);
+  }
+
   componentWillUnmount () {
     // Avoids encountering error `Can't call setState (or forceUpdate)
     // on an unmounted component` when navigate
     this.isCancelled = true;
+
+    document.removeEventListener('mouseup', this.handleMenuBlur);
   }
 
   handleGoToBackup = () => {
@@ -37,6 +49,16 @@ class Tokens extends PureComponent {
 
   handleGoToWhitelist = () => {
     this.props.history.push(`/whitelist/${this.props.accountAddress}`);
+  };
+
+  handleMenuBlur = event => {
+    const { showMenu } = this.state;
+    const menuDiv = this.menuRef.current;
+
+    if (menuDiv && !menuDiv.contains(event.target)) {
+      menuDiv.style.display = 'none';
+      !this.isCancelled && this.setState({ showMenu: !showMenu });
+    }
   };
 
   handleToggleMenu = () => {
@@ -58,7 +80,7 @@ class Tokens extends PureComponent {
     return (
       <div className='wrapper'>
         {showMenu ? (
-          <div className='menu'>
+          <div className='menu' ref={this.menuRef}>
             <div className='menu-item'>
               <button className='button -tiny' onClick={this.handleGoToBackup}>
                 Backup Account
