@@ -13707,6 +13707,11 @@ react-error-overlay@^5.1.0:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-5.1.0.tgz#c516995a5652e7bfbed8b497910d5280df74a7e8"
   integrity sha512-akMy/BQT5m1J3iJIHkSb4qycq2wzllWsmmolaaFVnb+LPV9cIJ/nTud40ZsiiT0H3P+/wXIdbjx2fzF61OaeOQ==
 
+react-final-form-listeners@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-final-form-listeners/-/react-final-form-listeners-1.0.1.tgz#1604bdaa4b8a2ee16bf6bafadd8f977e359c9900"
+  integrity sha512-RtxE9VtB9hp0Buro3VgtB4CpdpEYyVueJQy9lZ7gYMVBRzAT3t3+Bvtu2kmxOfwmWvMyL8jts2HPAcTGNJdA2Q==
+
 react-final-form@^3.6.4:
   version "3.6.4"
   resolved "https://registry.yarnpkg.com/react-final-form/-/react-final-form-3.6.4.tgz#1ca37935c2af0bc659a53b293dd84a75d2381548"

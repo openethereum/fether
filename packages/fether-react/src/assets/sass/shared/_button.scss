@@ -15,7 +15,7 @@
     cursor: pointer;
   }
 
-  &:active {
+  &:active,  &.active{
     background-color: darken($blue, 2.5%);
     color: $white;
   }
@@ -40,6 +40,23 @@
     background-color: transparent;
     padding: 0 0 0 0.925rem;
     opacity: 0.425;
+
+    &.max {
+      padding: 0.0rem 0.375rem;
+        border-radius: 1rem;
+        opacity: 0.625;
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        border: solid 1px $black;
+   
+      &.active{
+        background-color: darken($black, 2.5%);
+        color: $white;
+        opacity: 0.75;
+      }
+    }
+
 
     &:hover {
       opacity: 0.625;

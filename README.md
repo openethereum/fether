@@ -113,6 +113,8 @@ yarn package
 yarn start
 ```
 
+> Troubleshooting: If it hangs on a white screen in Electron even though it has compiled and has been syncing for a long time, then simply choose 'View > Reload' (CMD + R on macOS) from the Electron menu
+
 ## Join the chat!
 
 Get in touch with us on Gitter:

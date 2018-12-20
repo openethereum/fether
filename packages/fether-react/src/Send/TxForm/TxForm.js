@@ -9,10 +9,11 @@ import createDecorator from 'final-form-calculate';
 import debounce from 'debounce-promise';
 import { Field, Form } from 'react-final-form';
 import { Form as FetherForm, Header } from 'fether-ui';
+import { fromWei, toWei } from '@parity/api/lib/util/wei';
 import { inject, observer } from 'mobx-react';
 import { isAddress } from '@parity/api/lib/util/address';
 import { Link } from 'react-router-dom';
-import { toWei } from '@parity/api/lib/util/wei';
+import { OnChange } from 'react-final-form-listeners';
 import { withProps } from 'recompose';
 
 import { estimateGas } from '../../utils/estimateGas';
@@ -40,6 +41,7 @@ class Send extends Component {
 
   state = {
     estimatedTxFee: ZERO,
+    maxSelected: false,
     showDetails: false
   };
 
@@ -79,6 +81,36 @@ class Send extends Component {
       }
     }
   });
+
+  calculateMax = (gas, gasPrice) => {
+    const { token, balance } = this.props;
+    const gasBn = gas ? new BigNumber(gas) : new BigNumber(21000);
+    const gasPriceBn = new BigNumber(gasPrice);
+    let output;
+
+    if (token.address === 'ETH') {
+      output = fromWei(
+        toWei(balance).minus(gasBn.mul(toWei(gasPriceBn, 'shannon')))
+      );
+      output = output.isNegative() ? new BigNumber(0) : output;
+    } else {
+      output = balance;
+    }
+    return output;
+  };
+
+  recalculateMax = (args, state, { changeValue }) => {
+    changeValue(state, 'amount', value => {
+      return this.calculateMax(
+        state.formState.values.gas,
+        state.formState.values.gasPrice
+      );
+    });
+  };
+
+  toggleMax = () => {
+    this.setState({ maxSelected: !this.state.maxSelected });
+  };
 
   render () {
     const {
@@ -155,7 +187,14 @@ class Send extends Component {
                     onSubmit={this.handleSubmit}
                     validate={this.validateForm}
                     decorators={[this.decorator]}
-                    render={({ handleSubmit, valid, validating, values }) => (
+                    mutators={{ recalculateMax: this.recalculateMax }}
+                    render={({
+                      handleSubmit,
+                      valid,
+                      validating,
+                      values,
+                      form: { mutators }
+                    }) => (
                       <form className='send-form' onSubmit={handleSubmit}>
                         <fieldset className='form_fields'>
                           <Field
@@ -173,26 +212,43 @@ class Send extends Component {
                             formNoValidate
                             label='Amount'
                             name='amount'
+                            disabled={this.state.maxSelected}
                             placeholder='0.00'
                             render={FetherForm.Field}
                             required
                             type='number' // In ETH or coin
-                          />
+                          >
+                            <button
+                              type='button'
+                              className={
+                                this.state.maxSelected
+                                  ? 'button -tiny active max'
+                                  : 'button -tiny max'
+                              }
+                              onClick={() => {
+                                this.toggleMax();
+                                mutators.recalculateMax();
+                              }}
+                            >
+                              Max
+                            </button>
+                          </Field>
 
                           <Field
                             centerText={`${values.gasPrice} GWEI`}
                             className='-range'
                             label='Transaction Speed'
-                            leftText='Slow'
+                            leftText='Low'
                             max={MAX_GAS_PRICE}
                             min={MIN_GAS_PRICE}
                             name='gasPrice'
                             render={FetherForm.Slider}
                             required
-                            rightText='Fast'
+                            rightText='High'
                             step={0.5}
                             type='range' // In Gwei
                           />
+
                           {estimatedTxFee &&
                             !estimatedTxFee.isZero() && (
                             <div>
@@ -227,6 +283,15 @@ class Send extends Component {
                               ) : null}
                             </div>
                           )}
+
+                          <OnChange name='gasPrice'>
+                            {(value, previous) => {
+                              if (this.state.maxSelected) {
+                                mutators.recalculateMax();
+                              }
+                            }}
+                          </OnChange>
+
                           {values.to === values.from && (
                             <span>
                               <h3>WARNING:</h3>
@@ -274,12 +339,15 @@ class Send extends Component {
     if (amountBn.isNaN()) {
       return { amount: 'Please enter a valid amount' };
     } else if (amountBn.isZero()) {
+      if (this.state.maxSelected) {
+        return { amount: 'ETH balance too low to pay for gas.' };
+      }
       return { amount: 'Please enter a non-zero amount' };
     } else if (amountBn.isNegative()) {
       return { amount: 'Please enter a positive amount' };
-    } else if (token.symbol === 'ETH' && toWei(values.amount).lt(1)) {
+    } else if (token.address === 'ETH' && toWei(values.amount).lt(1)) {
       return { amount: 'Please enter at least 1 Wei' };
-    } else if (token.symbol !== 'ETH' && amountBn.dp() > token.decimals) {
+    } else if (token.address !== 'ETH' && amountBn.dp() > token.decimals) {
       return {
         amount: `Please enter a ${token.name} value of at least ${
           token.decimals
@@ -336,7 +404,9 @@ class Send extends Component {
         !this.isCancelled &&
           this.setState({ estimatedTxFee: new BigNumber('0') });
 
-        return { amount: "You don't have enough ETH balance" };
+        return token.address !== 'ETH'
+          ? { amount: 'ETH balance too low to pay for gas' }
+          : { amount: "You don't have enough ETH balance" };
       } else {
         !this.isCancelled && this.setState({ estimatedTxFee });
       }
