@@ -52,8 +52,8 @@ class TokenBalance extends Component {
   render () {
     return (
       <TokenCard
-        openBlockscoutLink={() => this.openBlockscoutLink()}
         onClick={this.handleClick}
+        openBlockscoutLink={() => this.openBlockscoutLink()}
         {...this.props}
       />
     );

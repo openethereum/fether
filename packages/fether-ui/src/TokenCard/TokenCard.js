@@ -13,9 +13,9 @@ import blockscoutLogo from '../../../fether-react/src/assets/img/icons/blockscou
 
 export const TokenCard = ({
   balance,
-  openBlockscoutLink,
   children,
   decimals,
+  openBlockscoutLink,
   showBalance,
   token,
   ...otherProps
