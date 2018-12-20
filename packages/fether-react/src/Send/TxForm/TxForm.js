@@ -65,7 +65,7 @@ class Send extends Component {
     const { token, balance } = this.props;
     const gasBn = gas ? new BigNumber(gas) : new BigNumber(21000);
     const gasPriceBn = new BigNumber(gasPrice);
-    let output = new BigNumber(gasPrice);
+    let output;
 
     if (token.address === 'ETH') {
       output = fromWei(
@@ -85,9 +85,10 @@ class Send extends Component {
         state.formState.values.gasPrice
       );
     });
-    if (args[0].toggleMax) {
-      this.setState({ maxSelected: !this.state.maxSelected });
-    }
+  };
+
+  toggleMax = () => {
+    this.setState({ maxSelected: !this.state.maxSelected });
   };
 
   render () {
@@ -149,8 +150,8 @@ class Send extends Component {
                                   : 'button -tiny max'
                               }
                               onClick={() => {
-                                const args = { toggleMax: true };
-                                mutators.recalculateMax(args);
+                                this.toggleMax();
+                                mutators.recalculateMax();
                               }}
                             >
                               Max
@@ -185,8 +186,7 @@ class Send extends Component {
                           <OnChange name='gasPrice'>
                             {(value, previous) => {
                               if (this.state.maxSelected) {
-                                const args = { toggleMax: false };
-                                mutators.recalculateMax(args);
+                                mutators.recalculateMax();
                               }
                             }}
                           </OnChange>
@@ -240,9 +240,9 @@ class Send extends Component {
       return { amount: 'Please enter a non-zero amount' };
     } else if (amountBn.isNegative()) {
       return { amount: 'Please enter a positive amount' };
-    } else if (token.symbol === 'ETH' && toWei(values.amount).lt(1)) {
+    } else if (token.address === 'ETH' && toWei(values.amount).lt(1)) {
       return { amount: 'Please enter at least 1 Wei' };
-    } else if (token.symbol !== 'ETH' && amountBn.dp() > token.decimals) {
+    } else if (token.address !== 'ETH' && amountBn.dp() > token.decimals) {
       return {
         amount: `Please enter a ${token.name} value of at least ${
           token.decimals
@@ -284,7 +284,7 @@ class Send extends Component {
       if (
         values.gas
           .mul(toWei(values.gasPrice, 'shannon'))
-          .plus(token.symbol === 'ETH' ? toWei(values.amount) : 0)
+          .plus(token.address === 'ETH' ? toWei(values.amount) : 0)
           .gt(toWei(ethBalance))
       ) {
         return token.address !== 'ETH'
