@@ -19,6 +19,18 @@ import withAccount from '../utils/withAccount';
   accountsInfo: accountsInfo$
 })
 class Tokens extends PureComponent {
+  isCancelled = false;
+
+  state = {
+    showMenu: false
+  };
+
+  componentWillUnmount () {
+    // Avoids encountering error `Can't call setState (or forceUpdate)
+    // on an unmounted component` when navigate
+    this.isCancelled = true;
+  }
+
   handleGoToBackup = () => {
     this.props.history.push(`/backup/${this.props.accountAddress}`);
   };
@@ -27,8 +39,15 @@ class Tokens extends PureComponent {
     this.props.history.push(`/whitelist/${this.props.accountAddress}`);
   };
 
+  handleToggleMenu = () => {
+    const { showMenu } = this.state;
+
+    !this.isCancelled && this.setState({ showMenu: !showMenu });
+  };
+
   render () {
     const { accountsInfo, accountAddress } = this.props;
+    const { showMenu } = this.state;
 
     // If the accountsInfo object is empty (i.e. no accounts), then we redirect
     // to the accounts page to create an account
@@ -37,7 +56,24 @@ class Tokens extends PureComponent {
     }
 
     return (
-      <div>
+      <div className='wrapper'>
+        {showMenu ? (
+          <div className='menu'>
+            <div className='menu-item'>
+              <button className='button -tiny' onClick={this.handleGoToBackup}>
+                Backup Account
+              </button>
+            </div>
+            <div className='menu-item'>
+              <button
+                className='button -tiny'
+                onClick={this.handleGoToWhitelist}
+              >
+                Add tokens
+              </button>
+            </div>
+          </div>
+        ) : null}
         <AccountHeader
           address={accountAddress}
           copyAddress
@@ -51,6 +87,11 @@ class Tokens extends PureComponent {
               Back
             </Link>
           }
+          right={
+            <a className='icon -more' onClick={this.handleToggleMenu}>
+              Menu
+            </a>
+          }
         />
 
         <TokensList />
@@ -58,14 +99,6 @@ class Tokens extends PureComponent {
         <nav className='footer-nav'>
           <div className='footer-nav_status'>
             <Health />
-          </div>
-          <div className='footer-nav_icons'>
-            <button className='button -tiny' onClick={this.handleGoToBackup}>
-              Backup Account
-            </button>
-            <button className='button -tiny' onClick={this.handleGoToWhitelist}>
-              Add tokens
-            </button>
           </div>
         </nav>
       </div>

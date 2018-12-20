@@ -1,3 +1,22 @@
+.wrapper {
+  position: relative;
+}
+
+.menu {
+  background: $faint;
+  border-radius: 4px;
+  padding: 5px 15px 5px 0px;
+  position: absolute;
+  right: 37px;
+  top: 14px;
+  z-index: 100;
+}
+
+.menu-item {
+  clear: both;
+  display: block;
+}
+
 .account {
   display: flex;
 
