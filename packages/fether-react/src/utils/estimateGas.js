@@ -82,7 +82,9 @@ export const txForErc20 = (tx, token) => {
   const output = {
     args: [
       tx.to,
-      new BigNumber(tx.amount).mul(new BigNumber(10).pow(token.decimals))
+      new BigNumber(tx.amount).multipliedBy(
+        new BigNumber(10).pow(token.decimals)
+      )
     ],
     options: {
       from: tx.from,
