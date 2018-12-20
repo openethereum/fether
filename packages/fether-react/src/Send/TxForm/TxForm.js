@@ -97,7 +97,7 @@ class Send extends Component {
     const renderCalculation = values => {
       return `Calcs: (${estimatedTxFee
         .div(new BigNumber(values.gasPrice.toString()))
-        .div(10 ** 9)} GWEI * ${new BigNumber(
+        .div(10 ** 9)} WEI * ${new BigNumber(
         values.gasPrice.toString()
       )} GWEI) / 10**18`;
     };
