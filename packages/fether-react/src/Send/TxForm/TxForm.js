@@ -58,6 +58,7 @@ class Send extends Component {
 
   toggleDetails = () => {
     const { showDetails } = this.state;
+
     !this.isCancelled && this.setState({ showDetails: !showDetails });
   };
 
@@ -113,6 +114,22 @@ class Send extends Component {
       return `${renderFee()}\n${renderCalculation(values)}\n${renderTotalAmount(
         values
       )}`;
+    };
+
+    const showHideLabel = () => {
+      return (
+        <span className='details'>
+          <a onClick={() => this.toggleDetails()}>&uarr; Hide</a>
+        </span>
+      );
+    };
+
+    const showDetailsLabel = () => {
+      return (
+        <span className='details'>
+          <a onClick={() => this.toggleDetails()}>&darr; Details</a>
+        </span>
+      );
     };
 
     return (
@@ -179,30 +196,35 @@ class Send extends Component {
                           {estimatedTxFee &&
                             !estimatedTxFee.isZero() && (
                             <div>
-                              {showDetails && !isNaN(values.amount) ? (
+                              {valid && !isNaN(values.amount) ? (
                                 <div>
-                                  <span className='details'>
-                                    <a onClick={() => this.toggleDetails()}>
-                                        &uarr; Hide
-                                    </a>
-                                  </span>
-                                  <Field
-                                    as='textarea'
-                                    className='-sm-details'
-                                    disabled
-                                    label='Transaction Details (Estimate)'
-                                    name='txFeeEstimate'
-                                    render={FetherForm.Field}
-                                    placeholder={renderDetails(values)}
-                                  />
+                                  <div
+                                    className={`form_details_buttons ${
+                                      showDetails ? 'hide' : 'show'
+                                    }`}
+                                  >
+                                    {showDetails
+                                      ? showHideLabel()
+                                      : showDetailsLabel()}
+                                  </div>
+                                  <div
+                                    className={`form_details_text ${
+                                      showDetails ? 'hide' : 'show'
+                                    }`}
+                                    hidden={!showDetails}
+                                  >
+                                    <Field
+                                      as='textarea'
+                                      className='-sm-details'
+                                      disabled
+                                      label='Transaction Details (Estimate)'
+                                      name='txFeeEstimate'
+                                      render={FetherForm.Field}
+                                      placeholder={renderDetails(values)}
+                                    />
+                                  </div>
                                 </div>
-                              ) : (
-                                <span className='details'>
-                                  <a onClick={() => this.toggleDetails()}>
-                                      &darr; Details
-                                  </a>
-                                </span>
-                              )}
+                              ) : null}
                             </div>
                           )}
                           {values.to === values.from && (

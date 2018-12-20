@@ -117,6 +117,12 @@
       &::-webkit-input-placeholder {
         color: $black;
       }
+      &.hide {
+        display: none;
+      }
+      &.show {
+        display: block;
+      }
     }
 
     &.-sm {
@@ -137,10 +143,28 @@
   }
 }
 
-.details > a {
-  color: #444444;
-  font-size: 0.8rem;
-  font-weight: 400;
+.form_details_buttons {
+  .details > a {
+    color: #444444;
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+
+  .hide {
+    display: none;
+  }
+  .show {
+    display: block;
+  }
+}
+
+.form_details_text {
+  .hide {
+    display: none;
+  }
+  .show {
+    display: block;
+  }
 }
 
 input.form_field_amount[type='number'] {
