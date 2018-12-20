@@ -99,7 +99,7 @@ class Send extends Component {
         .div(new BigNumber(values.gasPrice.toString()))
         .div(10 ** 9)} WEI * ${new BigNumber(
         values.gasPrice.toString()
-      )} GWEI) / 10**18`;
+      )} GWEI)`;
     };
 
     const renderTotalAmount = values => {
