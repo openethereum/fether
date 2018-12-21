@@ -5,14 +5,13 @@
 
 import React from 'react';
 
-import feedback from '../assets/img/icons/feedback.svg';
-
 const feedbackUrl = 'https://github.com/paritytech/fether/issues/new';
+const openFeedbackLink = () => {
+  window.open(feedbackUrl, '_blank');
+};
 
 export const Feedback = () => (
-  <div className='feedback_icon'>
-    <a href={feedbackUrl} target='_blank'>
-      <img alt='Feedback' src={feedback} />
-    </a>
+  <div className='feedback' onClick={() => openFeedbackLink()}>
+    Feedback
   </div>
 );
