@@ -11,7 +11,7 @@ const openFeedbackLink = () => {
 };
 
 export const Feedback = () => (
-  <div className='feedback' onClick={() => openFeedbackLink()}>
+  <div className='feedback' onClick={openFeedbackLink}>
     Feedback
   </div>
 );
