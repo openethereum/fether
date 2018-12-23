@@ -9,8 +9,8 @@ import { accountsInfo$, withoutLoading } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
 import light from '@parity/light.js-react';
 
-import Feedback from '../../Feedback';
 import Health from '../../Health';
+import Feedback from './Feedback';
 
 @light({
   accountsInfo: () => accountsInfo$().pipe(withoutLoading())
