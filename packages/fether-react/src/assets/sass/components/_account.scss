@@ -2,16 +2,31 @@
   position: relative;
 }
 
+.menu-close {
+  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+  position: fixed; /* Sit on top of the page content */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  display: none; /* Hidden by default */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10; /* Stack over must be higher than z-index of .header-nav */
+  cursor: pointer;
+}
+
 .menu {
   background: $eggshell;
   border: 0px solid $eggshell;
   border-radius: 4px;
   box-shadow: 0 0.250rem 0.5rem rgba($black, 0.300);
-  padding: 5px 15px 5px 0px;
   position: absolute;
+  display: none; /* Hidden by default */
+  padding: 5px 15px 5px 0px;
+  top: 44px;
   right: 8px;
-  top: 14px;
-  z-index: 3;
+  z-index: 11;
 
   &:hover {
     border-color: $blue;
@@ -29,9 +44,7 @@
   padding: 0 0 0 0.925rem;
   line-height: 2;
   opacity: 0.8;
-  &.spacer {
-    border-bottom: 1px solid lightgray;
-  }
+
   &:hover {
     opacity: 0.625;
     background-color: transparent;

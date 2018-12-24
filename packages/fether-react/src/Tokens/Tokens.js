@@ -19,30 +19,23 @@ import withAccount from '../utils/withAccount';
   accountsInfo: accountsInfo$
 })
 class Tokens extends PureComponent {
-  isCancelled = false;
-
-  state = {
-    showMenu: false
-  };
-
   constructor (props) {
     super(props);
 
     this.menuRef = React.createRef();
-    this.menuIconMoreRef = React.createRef();
-    this.menuIconCloseRef = React.createRef();
+    this.menuCloseOverlayRef = React.createRef();
   }
 
   componentDidMount () {
-    document.addEventListener('mouseup', this.handleMenuBlur);
+    const menuCloseOverlayRef = this.menuCloseOverlayRef.current;
+
+    menuCloseOverlayRef.addEventListener('mouseup', this.handleCloseMenu);
   }
 
   componentWillUnmount () {
-    // Avoids encountering error `Can't call setState (or forceUpdate)
-    // on an unmounted component` when navigate
-    this.isCancelled = true;
+    const menuCloseOverlayRef = this.menuCloseOverlayRef.current;
 
-    document.removeEventListener('mouseup', this.handleMenuBlur);
+    menuCloseOverlayRef.addEventListener('mouseup', this.handleCloseMenu);
   }
 
   handleGoToBackup = () => {
@@ -53,38 +46,24 @@ class Tokens extends PureComponent {
     this.props.history.push(`/whitelist/${this.props.accountAddress}`);
   };
 
-  handleMenuBlur = event => {
-    const menuDiv = this.menuRef.current;
-    const menuIconClose = this.menuIconCloseRef.current;
-
-    // Hide the menu if the user clicked an element in the DOM other
-    // than the menu div or the close icon div
-    if (
-      menuDiv &&
-      menuIconClose &&
-      (!menuDiv.contains(event.target) || menuIconClose.contains(event.target))
-    ) {
-      menuDiv.style.display = 'none';
-    }
-  };
-
   handleOpenMenu = () => {
-    !this.isCancelled &&
-      this.setState({
-        showMenu: true
-      });
+    const menuRef = this.menuRef.current;
+    const menuCloseOverlayRef = this.menuCloseOverlayRef.current;
+
+    menuRef.style.display = 'block';
+    menuCloseOverlayRef.style.display = 'block';
   };
 
   handleCloseMenu = () => {
-    !this.isCancelled &&
-      this.setState({
-        showMenu: false
-      });
+    const menuRef = this.menuRef.current;
+    const menuCloseOverlayRef = this.menuCloseOverlayRef.current;
+
+    menuRef.style.display = 'none';
+    menuCloseOverlayRef.style.display = 'none';
   };
 
   render () {
     const { accountsInfo, accountAddress } = this.props;
-    const { showMenu } = this.state;
 
     // If the accountsInfo object is empty (i.e. no accounts), then we redirect
     // to the accounts page to create an account
@@ -94,16 +73,15 @@ class Tokens extends PureComponent {
 
     return (
       <div className='wrapper'>
-        {showMenu ? (
-          <div className='menu' ref={this.menuRef}>
-            <div className='menu-item spacer' onClick={this.handleGoToBackup}>
-              Backup Account
-            </div>
-            <div className='menu-item' onClick={this.handleGoToWhitelist}>
-              Add tokens
-            </div>
+        <div className='menu-close' ref={this.menuCloseOverlayRef} />
+        <div className='menu' ref={this.menuRef}>
+          <div className='menu-item' onClick={this.handleGoToBackup}>
+            Backup Account
           </div>
-        ) : null}
+          <div className='menu-item' onClick={this.handleGoToWhitelist}>
+            Add Tokens
+          </div>
+        </div>
         <AccountHeader
           address={accountAddress}
           copyAddress
@@ -118,23 +96,9 @@ class Tokens extends PureComponent {
             </Link>
           }
           right={
-            showMenu ? (
-              <a
-                className='icon -close'
-                onClick={() => this.handleCloseMenu()}
-                ref={this.menuIconCloseRef}
-              >
-                Menu
-              </a>
-            ) : (
-              <a
-                className='icon -more'
-                onClick={() => this.handleOpenMenu()}
-                ref={this.menuIconMoreRef}
-              >
-                Menu
-              </a>
-            )
+            <a className='icon -more' onClick={this.handleOpenMenu}>
+              Menu
+            </a>
           }
         />
 
