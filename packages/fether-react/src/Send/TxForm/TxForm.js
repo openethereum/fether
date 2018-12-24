@@ -69,7 +69,7 @@ class Send extends Component {
 
     if (token.address === 'ETH') {
       output = fromWei(
-        toWei(balance).minus(gasBn.mul(toWei(gasPriceBn, 'shannon')))
+        toWei(balance).minus(gasBn.multipliedBy(toWei(gasPriceBn, 'shannon')))
       );
       output = output.isNegative() ? new BigNumber(0) : output;
     } else {
@@ -140,7 +140,7 @@ class Send extends Component {
                             placeholder='0.00'
                             render={FetherForm.Field}
                             required
-                            type='number' // In ETH or coin
+                            type='number'
                           >
                             <button
                               type='button'
@@ -242,9 +242,9 @@ class Send extends Component {
       return { amount: 'Please enter a positive amount' };
     } else if (token.address === 'ETH' && toWei(values.amount).lt(1)) {
       return { amount: 'Please enter at least 1 Wei' };
-    } else if (token.address !== 'ETH' && amountBn.dp() > token.decimals) {
+    } else if (amountBn.dp() > token.decimals) {
       return {
-        amount: `Please enter a ${token.name} value of at least ${
+        amount: `Please enter a ${token.name} value of less than ${
           token.decimals
         } decimal places`
       };
@@ -276,6 +276,12 @@ class Send extends Component {
         return preValidation;
       }
 
+      // If the gas hasn't been calculated yet, then we don't show any errors,
+      // just wait a bit more
+      if (!values.gas) {
+        return;
+      }
+
       if (!ethBalance || isNaN(values.gas)) {
         throw new Error('No "ethBalance" or "gas" value.');
       }
@@ -283,7 +289,7 @@ class Send extends Component {
       // Verify that `gas + (eth amount if sending eth) <= ethBalance`
       if (
         values.gas
-          .mul(toWei(values.gasPrice, 'shannon'))
+          .multipliedBy(toWei(values.gasPrice, 'shannon'))
           .plus(token.address === 'ETH' ? toWei(values.amount) : 0)
           .gt(toWei(ethBalance))
       ) {
