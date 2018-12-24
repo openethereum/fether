@@ -23,6 +23,9 @@ import withAccount from '../../utils/withAccount.js';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
 import withTokens from '../../utils/withTokens';
 
+const DEFAULT_AMOUNT_FONT_SIZE = 3;
+const DEFAULT_AMOUNT_MAX_CHARS = 9;
+const AMOUNT_RESIZE_FONT_SIZE = 0.47 * DEFAULT_AMOUNT_FONT_SIZE; // Fits 1 Wei
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 
@@ -39,6 +42,7 @@ class Send extends Component {
   state = {
     maxSelected: false
   };
+
   handleSubmit = values => {
     const { accountAddress, history, sendStore, token } = this.props;
 
@@ -60,6 +64,23 @@ class Send extends Component {
       }
     }
   });
+
+  changeAmountFontSize = () => {
+    const amountElement = document.getElementById('amount');
+
+    if (!amountElement) {
+      return;
+    }
+
+    if (
+      amountElement.scrollWidth > amountElement.offsetWidth ||
+      amountElement.value.length > DEFAULT_AMOUNT_MAX_CHARS
+    ) {
+      amountElement.style.fontSize = `${AMOUNT_RESIZE_FONT_SIZE}rem`;
+    } else {
+      amountElement.style.fontSize = `${DEFAULT_AMOUNT_FONT_SIZE}rem`;
+    }
+  };
 
   calculateMax = (gas, gasPrice) => {
     const { token, balance } = this.props;
@@ -158,6 +179,12 @@ class Send extends Component {
                             </button>
                           </Field>
 
+                          <OnChange name='amount'>
+                            {(value, previous) => {
+                              this.changeAmountFontSize();
+                            }}
+                          </OnChange>
+
                           <Field
                             as='textarea'
                             className='-sm'
@@ -187,6 +214,8 @@ class Send extends Component {
                             {(value, previous) => {
                               if (this.state.maxSelected) {
                                 mutators.recalculateMax();
+                              } else {
+                                this.changeAmountFontSize();
                               }
                             }}
                           </OnChange>
