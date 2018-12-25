@@ -37,7 +37,7 @@
   z-index: 11;
 
   &:hover {
-    border: 1px solid $eggshell;
+    border: 0.5px solid $eggshell;
     box-shadow: 0 0.250rem 0.675rem rgba($black, 0.400);
     cursor: pointer;
   }
@@ -52,10 +52,10 @@
   font-weight: 500;
   padding: 0 0 0 0.925rem;
   line-height: 2;
-  opacity: 0.8;
+  opacity: 0.6;
 
   &:hover {
-    opacity: 0.625;
+    opacity: 1.0;
     background-color: transparent;
   }
 }
