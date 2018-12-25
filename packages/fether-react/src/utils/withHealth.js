@@ -96,7 +96,7 @@ const rpcs$ = isApiConnected$.pipe(
           const { currentBlock, highestBlock, startingBlock } = syncStatus;
           const percentage = currentBlock
             .minus(startingBlock)
-            .mul(100)
+            .multipliedBy(100)
             .div(highestBlock.minus(startingBlock));
 
           return {

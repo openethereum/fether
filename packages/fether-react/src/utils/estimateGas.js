@@ -68,7 +68,8 @@ const estimateGasForEth = memoize((txForEth, api) => {
  * estimateGas.
  */
 const addBuffer = estimated => {
-  const withBuffer = estimated.mul(GAS_MULT_FACTOR);
+  // Add a buffer to the estimated gas, and round the number
+  const withBuffer = estimated.multipliedBy(GAS_MULT_FACTOR).decimalPlaces(0);
   debug(`Estimated gas ${+estimated}, with buffer ${+withBuffer}.`);
   return withBuffer;
 };
@@ -81,7 +82,9 @@ export const txForErc20 = (tx, token) => {
   const output = {
     args: [
       tx.to,
-      new BigNumber(tx.amount).mul(new BigNumber(10).pow(token.decimals))
+      new BigNumber(tx.amount).multipliedBy(
+        new BigNumber(10).pow(token.decimals)
+      )
     ],
     options: {
       from: tx.from,
