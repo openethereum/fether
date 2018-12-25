@@ -3,6 +3,7 @@
 }
 
 .menu-close {
+  transition: background-color 1.0s ease;
   background-color: rgba(0,0,0,0.5); /* Black background with opacity */
   position: fixed; /* Sit on top of the page content */
   width: 100%; /* Full width (cover the whole page) */
@@ -14,6 +15,10 @@
   bottom: 0;
   z-index: 10; /* Stack over must be higher than z-index of .header-nav */
   cursor: pointer;
+}
+
+.menu-close:hover {
+  background-color: rgba(0,0,0,0.3);
 }
 
 .menu {
