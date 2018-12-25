@@ -22,6 +22,7 @@
 }
 
 .menu {
+  transition: border 0.05s linear;
   background: $eggshell;
   border: 0px solid $eggshell;
   border-radius: 4px;
@@ -36,7 +37,7 @@
   z-index: 11;
 
   &:hover {
-    border-color: $blue;
+    border: 1px solid $eggshell;
     box-shadow: 0 0.250rem 0.675rem rgba($black, 0.400);
     cursor: pointer;
   }
