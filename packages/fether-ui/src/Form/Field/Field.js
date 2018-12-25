@@ -21,13 +21,24 @@ export class Field extends React.Component {
     as: 'input'
   };
 
+  constructor (props) {
+    super(props);
+    this.inputRef = React.createRef();
+  }
+
+  componentDidMount () {
+    this.inputRef.current.focus();
+  }
+
   render () {
     const { as, children, input, label, meta, ...otherProps } = this.props;
 
-    const trigger = React.createElement(as, { id: input && input.name }, [
+    const trigger = React.createElement(as, {
+      id: input && input.name,
+      ref: this.inputRef,
       ...input,
       ...otherProps
-    ]);
+    });
 
     return (
       <div className='form_field'>
