@@ -23,6 +23,7 @@
   box-shadow: 0 0.250rem 0.5rem rgba($black, 0.300);
   position: absolute;
   display: none; /* Hidden by default */
+  overflow: auto;
   padding: 5px 15px 5px 0px;
   top: 44px;
   right: 8px;
