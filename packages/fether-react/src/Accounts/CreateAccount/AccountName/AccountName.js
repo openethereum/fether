@@ -106,6 +106,7 @@ class AccountName extends Component {
           label='Name'
           onChange={this.handleChangeName}
           onKeyPress={this.handleKeyPress}
+          onSubmit={() => history.push(`/accounts/new/${+currentStep + 1}`)}
           required
           type='text'
           value={name}

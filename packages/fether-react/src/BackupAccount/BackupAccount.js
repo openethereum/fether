@@ -30,11 +30,12 @@ class BackupAccount extends Component {
     this.setState({ password: value });
   };
 
-  handleSubmit = event => {
+  handleSubmit = e => {
     const { accountAddress, history } = this.props;
     const { password } = this.state;
 
-    event.preventDefault();
+    e && e.preventDefault();
+
     this.setState({ isLoading: true });
 
     backupAccount(accountAddress, password)
@@ -90,6 +91,7 @@ class BackupAccount extends Component {
             <FetherForm.Field
               label='Password'
               onChange={this.handlePasswordChange}
+              onSubmit={this.handleSubmit}
               required
               type='password'
               value={password}

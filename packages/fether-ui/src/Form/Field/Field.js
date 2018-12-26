@@ -12,6 +12,8 @@ export class Field extends React.Component {
   static propTypes = {
     as: PropTypes.any,
     children: PropTypes.node,
+    onSubmit: PropTypes.func,
+    noFocus: PropTypes.boolean,
     input: PropTypes.any,
     label: PropTypes.string,
     meta: PropTypes.object
@@ -27,15 +29,30 @@ export class Field extends React.Component {
   }
 
   componentDidMount () {
-    this.inputRef.current.focus();
+    const { noFocus } = this.props;
+    !noFocus && this.inputRef.current.focus();
   }
 
   render () {
-    const { as, children, input, label, meta, ...otherProps } = this.props;
+    const {
+      as,
+      children,
+      input,
+      label,
+      meta,
+      onSubmit,
+      ...otherProps
+    } = this.props;
 
     const trigger = React.createElement(as, {
       id: input && input.name,
       ref: this.inputRef,
+      onKeyDown: e => {
+        if (e.keyCode === 13) {
+          e.preventDefault();
+          onSubmit && onSubmit();
+        }
+      },
       ...input,
       ...otherProps
     });

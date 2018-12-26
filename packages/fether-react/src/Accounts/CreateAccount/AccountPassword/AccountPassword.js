@@ -25,11 +25,11 @@ class AccountPassword extends Component {
     this.setState({ password: value });
   };
 
-  handleSubmit = event => {
+  handleSubmit = e => {
     const { createAccountStore, history } = this.props;
     const { password } = this.state;
 
-    event.preventDefault();
+    e && e.preventDefault();
     this.setState({ isLoading: true });
 
     // Save to parity
@@ -76,6 +76,7 @@ class AccountPassword extends Component {
             <FetherForm.Field
               label='Password'
               onChange={this.handlePasswordChange}
+              onSubmit={this.handleSubmit}
               required
               type='password'
               value={password}
@@ -85,6 +86,8 @@ class AccountPassword extends Component {
               <FetherForm.Field
                 label='Confirm'
                 onChange={this.handleConfirmChange}
+                onSubmit={this.handleSubmit}
+                noFocus
                 required
                 type='password'
                 value={confirm}
