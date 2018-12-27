@@ -37,8 +37,14 @@ const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 @observer
 class Send extends Component {
   state = {
-    maxSelected: false
+    maxSelected: false,
+    form: {
+      amount: null,
+      gasPrice: '4',
+      to: null
+    }
   };
+
   handleSubmit = values => {
     const { accountAddress, history, sendStore, token } = this.props;
 
@@ -78,12 +84,46 @@ class Send extends Component {
     return output;
   };
 
+  onChangeAmount = fieldValue => {
+    const {
+      form: { amount, gasPrice, to }
+    } = this.state;
+
+    this.setState({ form: { amount: fieldValue, gasPrice, to } });
+
+    return fieldValue || amount;
+  };
+
+  onChangeGasPrice = fieldValue => {
+    const {
+      form: { amount, gasPrice, to }
+    } = this.state;
+
+    this.setState({ form: { amount, gasPrice: fieldValue, to } });
+
+    return fieldValue || gasPrice;
+  };
+
+  onChangeTo = fieldValue => {
+    const {
+      form: { amount, gasPrice, to }
+    } = this.state;
+
+    this.setState({ form: { amount, gasPrice, to: fieldValue } });
+
+    return fieldValue || to;
+  };
+
   recalculateMax = (args, state, { changeValue }) => {
     changeValue(state, 'amount', value => {
-      return this.calculateMax(
+      const max = this.calculateMax(
         state.formState.values.gas,
         state.formState.values.gasPrice
       );
+
+      this.onChangeAmount(max);
+
+      return max;
     });
   };
 
@@ -97,6 +137,10 @@ class Send extends Component {
       sendStore: { tx },
       token
     } = this.props;
+
+    const {
+      form: { amount, gasPrice, to }
+    } = this.state;
 
     return (
       <div>
@@ -117,7 +161,13 @@ class Send extends Component {
                 drawers={[
                   <Form
                     key='txForm'
-                    initialValues={{ from: accountAddress, gasPrice: 4, ...tx }}
+                    initialValues={{
+                      amount,
+                      from: accountAddress,
+                      gasPrice,
+                      to,
+                      ...tx
+                    }}
                     onSubmit={this.handleSubmit}
                     validate={this.validateForm}
                     decorators={[this.decorator]}
@@ -137,6 +187,7 @@ class Send extends Component {
                             label='Amount'
                             name='amount'
                             disabled={this.state.maxSelected}
+                            parse={this.onChangeAmount}
                             placeholder='0.00'
                             render={FetherForm.Field}
                             required
@@ -163,6 +214,7 @@ class Send extends Component {
                             className='-sm'
                             label='To'
                             name='to'
+                            parse={this.onChangeTo}
                             placeholder='0x...'
                             required
                             render={FetherForm.Field}
@@ -176,6 +228,7 @@ class Send extends Component {
                             max={MAX_GAS_PRICE}
                             min={MIN_GAS_PRICE}
                             name='gasPrice'
+                            parse={this.onChangeGasPrice}
                             render={FetherForm.Slider}
                             required
                             rightText='High'
