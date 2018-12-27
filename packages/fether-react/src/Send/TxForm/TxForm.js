@@ -68,13 +68,19 @@ class Send extends Component {
     field: /to|amount/, // when the value of these fields change...
     updates: {
       // ...set field "gas"
-      gas: (value, allValues) => {
+      gas: async (value, allValues) => {
         const { parityStore, token } = this.props;
 
-        !this.isCancelled && this.setState({ estimatedTxFee: ZERO });
+        (await !this.isCancelled) && this.setState({ estimatedTxFee: ZERO });
 
         if (this.preValidate(allValues) === true) {
-          return estimateGas(allValues, token, parityStore.api);
+          const newEstimatedTxFee = await estimateGas(
+            allValues,
+            token,
+            parityStore.api
+          );
+
+          return newEstimatedTxFee;
         } else {
           return null;
         }
@@ -376,7 +382,7 @@ class Send extends Component {
    * Estimate gas amount, and validate that the user has enough balance to make
    * the tx.
    */
-  validateForm = debounce(values => {
+  validateForm = debounce(async values => {
     if (!values) {
       return;
     }
@@ -421,7 +427,8 @@ class Send extends Component {
           ? { amount: 'ETH balance too low to pay for gas' }
           : { amount: "You don't have enough ETH balance" };
       } else {
-        !this.isCancelled && this.setState({ estimatedTxFee });
+        // `await` prevents error `Uncaught TypeError: Cannot read property 'resolve' of null at flush`
+        (await !this.isCancelled) && this.setState({ estimatedTxFee });
       }
     } catch (err) {
       console.error(err);
