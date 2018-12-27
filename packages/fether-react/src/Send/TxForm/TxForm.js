@@ -86,7 +86,7 @@ class Send extends Component {
 
   onChangeAmount = fieldValue => {
     const {
-      form: { amount, gasPrice, to }
+      form: { gasPrice, to }
     } = this.state;
 
     this.setState({ form: { amount: fieldValue, gasPrice, to } });
@@ -96,7 +96,7 @@ class Send extends Component {
 
   onChangeGasPrice = fieldValue => {
     const {
-      form: { amount, gasPrice, to }
+      form: { amount, to }
     } = this.state;
 
     this.setState({ form: { amount, gasPrice: fieldValue, to } });
@@ -106,7 +106,7 @@ class Send extends Component {
 
   onChangeTo = fieldValue => {
     const {
-      form: { amount, gasPrice, to }
+      form: { amount, gasPrice }
     } = this.state;
 
     this.setState({ form: { amount, gasPrice, to: fieldValue } });
