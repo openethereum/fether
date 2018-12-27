@@ -39,9 +39,9 @@ class Send extends Component {
   state = {
     maxSelected: false,
     form: {
-      amount: null,
+      amount: '',
       gasPrice: '4',
-      to: null
+      to: ''
     }
   };
 
@@ -89,11 +89,9 @@ class Send extends Component {
       form: { amount, gasPrice, to }
     } = this.state;
 
-    const newValue = fieldValue || amount;
+    this.setState({ form: { amount: fieldValue, gasPrice, to } });
 
-    this.setState({ form: { amount: newValue, gasPrice, to } });
-
-    return newValue;
+    return fieldValue;
   };
 
   onChangeGasPrice = fieldValue => {
@@ -101,11 +99,9 @@ class Send extends Component {
       form: { amount, gasPrice, to }
     } = this.state;
 
-    const newValue = fieldValue || gasPrice;
+    this.setState({ form: { amount, gasPrice: fieldValue, to } });
 
-    this.setState({ form: { amount, gasPrice: newValue, to } });
-
-    return fieldValue || gasPrice;
+    return fieldValue;
   };
 
   onChangeTo = fieldValue => {
@@ -113,11 +109,9 @@ class Send extends Component {
       form: { amount, gasPrice, to }
     } = this.state;
 
-    const newValue = fieldValue || to;
+    this.setState({ form: { amount, gasPrice, to: fieldValue } });
 
-    this.setState({ form: { amount, gasPrice, to: newValue } });
-
-    return newValue;
+    return fieldValue;
   };
 
   recalculateMax = (args, state, { changeValue }) => {
