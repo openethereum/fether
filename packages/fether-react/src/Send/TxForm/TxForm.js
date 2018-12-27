@@ -124,21 +124,26 @@ class Send extends Component {
     const renderFee = () => {
       return `Fee: ${estimatedTxFee
         .div(10 ** 18)
+        .toFixed(9)
         .toString()} ETH (Gas Limit * Gas Price)`;
     };
 
     const renderCalculation = values => {
-      return `Calcs: (${estimatedTxFee
-        .div(new BigNumber(values.gasPrice.toString()))
-        .div(10 ** 9)} WEI * ${new BigNumber(
-        values.gasPrice.toString()
-      )} GWEI)`;
+      const gasPriceBn = new BigNumber(values.gasPrice.toString());
+      const gasLimitBn = estimatedTxFee
+        .div(gasPriceBn)
+        .div(10 ** 9)
+        .toFixed(2)
+        .toString();
+
+      return `Calcs: (${gasLimitBn} WEI * ${gasPriceBn} GWEI)`;
     };
 
     const renderTotalAmount = values => {
       return `Total Amount: ${estimatedTxFee
         .plus(token.address === 'ETH' ? toWei(values.amount.toString()) : 0)
         .div(10 ** 18)
+        .toFixed(9)
         .toString()} ETH`;
     };
 
