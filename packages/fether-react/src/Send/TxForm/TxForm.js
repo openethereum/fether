@@ -156,7 +156,7 @@ class Send extends Component {
     const showHideLabel = () => {
       return (
         <span className='details'>
-          <a onClick={() => this.toggleDetails()}>&uarr; Hide</a>
+          <a onClick={this.toggleDetails}>&uarr; Hide</a>
         </span>
       );
     };
@@ -164,7 +164,7 @@ class Send extends Component {
     const showDetailsLabel = () => {
       return (
         <span className='details'>
-          <a onClick={() => this.toggleDetails()}>&darr; Details</a>
+          <a onClick={this.toggleDetails}>&darr; Details</a>
         </span>
       );
     };
