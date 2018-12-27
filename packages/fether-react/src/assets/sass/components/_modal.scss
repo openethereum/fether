@@ -1,0 +1,61 @@
+.modal-wrapper {
+  position: relative;
+}
+
+.modal-close {
+  transition: background-color 1.0s ease;
+  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+  position: fixed; /* Sit on top of the page content */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  display: none; /* Hidden by default */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10; /* Stack over must be higher than z-index of .header-nav */
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  background-color: rgba(0,0,0,0.3);
+}
+
+.modal {
+  transition: border 0.05s linear;
+  background: $eggshell;
+  border: 0px solid $eggshell;
+  border-radius: 4px;
+  box-shadow: 0 0.250rem 0.5rem rgba($black, 0.300);
+  position: absolute;
+  display: none; /* Hidden by default */
+  overflow: auto;
+  max-height: calc(100vh * 0.8);
+  padding: 5px 15px 5px 0px;
+  top: 44px;
+  right: 8px;
+  z-index: 11;
+
+  &:hover {
+    border: 0.5px solid $eggshell;
+    box-shadow: 0 0.250rem 0.675rem rgba($black, 0.400);
+    cursor: pointer;
+  }
+}
+
+.modal-item {
+  clear: both;
+  width: 100%;
+  display: block;
+  margin-right: 20px;
+  font-size: 1em;
+  font-weight: 500;
+  padding: 0 0 0 0.925rem;
+  line-height: 2;
+  opacity: 0.6;
+
+  &:hover {
+    opacity: 1.0;
+    background-color: transparent;
+  }
+}

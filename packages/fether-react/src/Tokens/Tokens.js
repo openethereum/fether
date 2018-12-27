@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { PureComponent } from 'react';
-import { AccountHeader } from 'fether-ui';
+import { AccountHeader, Modal } from 'fether-ui';
 import { accountsInfo$ } from '@parity/light.js';
 import light from '@parity/light.js-react';
 import { Link, Redirect, withRouter } from 'react-router-dom';
@@ -22,21 +22,18 @@ class Tokens extends PureComponent {
   constructor (props) {
     super(props);
 
-    this.menuRef = React.createRef();
-    this.menuCloseOverlayRef = React.createRef();
+    this.state = {
+      isModalOpen: false
+    };
   }
 
-  componentDidMount () {
-    const menuCloseOverlayRef = this.menuCloseOverlayRef.current;
+  handleOpenModal = () => {
+    this.setState({ isModalOpen: true });
+  };
 
-    menuCloseOverlayRef.addEventListener('mouseup', this.handleCloseMenu);
-  }
-
-  componentWillUnmount () {
-    const menuCloseOverlayRef = this.menuCloseOverlayRef.current;
-
-    menuCloseOverlayRef.addEventListener('mouseup', this.handleCloseMenu);
-  }
+  handleCloseModal = () => {
+    this.setState({ isModalOpen: false });
+  };
 
   handleGoToBackup = () => {
     this.props.history.push(`/backup/${this.props.accountAddress}`);
@@ -46,24 +43,9 @@ class Tokens extends PureComponent {
     this.props.history.push(`/whitelist/${this.props.accountAddress}`);
   };
 
-  handleOpenMenu = () => {
-    const menuRef = this.menuRef.current;
-    const menuCloseOverlayRef = this.menuCloseOverlayRef.current;
-
-    menuRef.style.display = 'block';
-    menuCloseOverlayRef.style.display = 'block';
-  };
-
-  handleCloseMenu = () => {
-    const menuRef = this.menuRef.current;
-    const menuCloseOverlayRef = this.menuCloseOverlayRef.current;
-
-    menuRef.style.display = 'none';
-    menuCloseOverlayRef.style.display = 'none';
-  };
-
   render () {
     const { accountsInfo, accountAddress } = this.props;
+    const { isModalOpen } = this.state;
 
     // If the accountsInfo object is empty (i.e. no accounts), then we redirect
     // to the accounts page to create an account
@@ -72,16 +54,15 @@ class Tokens extends PureComponent {
     }
 
     return (
-      <div className='wrapper'>
-        <div className='menu-close' ref={this.menuCloseOverlayRef} />
-        <div className='menu' ref={this.menuRef}>
-          <div className='menu-item' onClick={this.handleGoToBackup}>
+      <div>
+        <Modal open={isModalOpen} onClose={this.handleCloseModal}>
+          <div className='modal-item' onClick={this.handleGoToBackup}>
             Backup Account
           </div>
-          <div className='menu-item' onClick={this.handleGoToWhitelist}>
+          <div className='modal-item' onClick={this.handleGoToWhitelist}>
             Add Tokens
           </div>
-        </div>
+        </Modal>
         <AccountHeader
           address={accountAddress}
           copyAddress
@@ -96,7 +77,7 @@ class Tokens extends PureComponent {
             </Link>
           }
           right={
-            <a className='icon -more' onClick={this.handleOpenMenu}>
+            <a className='icon -more' onClick={this.handleOpenModal}>
               Menu
             </a>
           }
