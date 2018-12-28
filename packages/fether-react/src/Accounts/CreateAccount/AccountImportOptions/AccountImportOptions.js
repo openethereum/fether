@@ -71,9 +71,8 @@ class AccountImportOptions extends Component {
     this.setState({ isLoading: true });
 
     try {
-      const jsonAddress = `0x${JSON.parse(jsonString)[
-        'address'
-      ].toLowerCase()}`;
+      const json = JSON.parse(jsonString);
+      const jsonAddress = `0x${json['address'].toLowerCase()}`;
 
       if (this.hasExistingAddressForImport(jsonAddress)) {
         return;
