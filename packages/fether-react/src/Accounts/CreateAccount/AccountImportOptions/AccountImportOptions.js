@@ -5,8 +5,13 @@
 
 import React, { Component } from 'react';
 import { Card, Form as FetherForm } from 'fether-ui';
+import { accountsInfo$, withoutLoading } from '@parity/light.js';
+import light from '@parity/light.js-react';
 import { inject, observer } from 'mobx-react';
 
+@light({
+  accountsInfo: () => accountsInfo$().pipe(withoutLoading())
+})
 @inject('createAccountStore')
 @observer
 class AccountImportOptions extends Component {
@@ -50,11 +55,28 @@ class AccountImportOptions extends Component {
 
   handleChangeFile = async jsonString => {
     const {
+      accountsInfo,
       createAccountStore: { setJsonString }
     } = this.props;
 
     this.setState({ isLoading: true });
+
     try {
+      const jsonAddress = `0x${JSON.parse(jsonString)['address']}`;
+
+      const isExistingAddress = Object.keys(accountsInfo)
+        .map(address => address && address.toLowerCase())
+        .includes(jsonAddress);
+
+      if (isExistingAddress) {
+        this.setState({
+          isLoading: false,
+          error: `Account already loaded. Address ${jsonAddress} is already in the account list`
+        });
+
+        return;
+      }
+
       await setJsonString(jsonString);
       this.handleNextStep();
     } catch (error) {
