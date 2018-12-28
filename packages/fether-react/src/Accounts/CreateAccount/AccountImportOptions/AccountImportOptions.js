@@ -37,43 +37,45 @@ class AccountImportOptions extends Component {
   handleSubmitPhrase = async () => {
     const phrase = this.state.phrase.trim();
     const {
+      createAccountStore,
       createAccountStore: { setPhrase }
     } = this.props;
 
     this.setState({ isLoading: true, phrase });
+
     try {
       await setPhrase(phrase);
+
+      const addressForPhrase = createAccountStore.address.toLowerCase();
+
+      if (this.hasExistingAddressForImport(addressForPhrase)) {
+        return;
+      }
+
       this.handleNextStep();
-    } catch (e) {
+    } catch (error) {
       this.setState({
         isLoading: false,
         error:
           'The passphrase was not recognized. Please verify that you entered your passphrase correctly.'
       });
+      console.error(error);
     }
   };
 
   handleChangeFile = async jsonString => {
     const {
-      accountsInfo,
       createAccountStore: { setJsonString }
     } = this.props;
 
     this.setState({ isLoading: true });
 
     try {
-      const jsonAddress = `0x${JSON.parse(jsonString)['address']}`;
+      const jsonAddress = `0x${JSON.parse(jsonString)[
+        'address'
+      ].toLowerCase()}`;
 
-      const isExistingAddress = Object.keys(accountsInfo)
-        .map(address => address && address.toLowerCase())
-        .includes(jsonAddress);
-
-      if (isExistingAddress) {
-        this.setState({
-          isLoading: false,
-          error: `Account already loaded. Address ${jsonAddress} is already in the account list`
-        });
-
+      if (this.hasExistingAddressForImport(jsonAddress)) {
         return;
       }
 
@@ -87,6 +89,22 @@ class AccountImportOptions extends Component {
       });
       console.error(error);
     }
+  };
+
+  hasExistingAddressForImport = addressForImport => {
+    const { accountsInfo } = this.props;
+    const isExistingAddress = Object.keys(accountsInfo)
+      .map(address => address && address.toLowerCase())
+      .includes(addressForImport);
+
+    if (isExistingAddress) {
+      this.setState({
+        isLoading: false,
+        error: `Account already loaded. Address ${addressForImport} is already in the account list`
+      });
+    }
+
+    return isExistingAddress;
   };
 
   render () {
