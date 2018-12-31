@@ -5,13 +5,12 @@
 
 import React from 'react';
 
-const feedbackUrl = 'https://github.com/paritytech/fether/issues/new';
-const openFeedbackLink = () => {
-  window.open(feedbackUrl, '_blank');
-};
-
 export const Feedback = () => (
-  <div className='feedback' onClick={openFeedbackLink}>
+  <a
+    className='feedback'
+    href='https://github.com/paritytech/fether/issues/new'
+    target='_blank'
+  >
     Feedback
-  </div>
+  </a>
 );

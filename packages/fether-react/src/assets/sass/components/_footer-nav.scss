@@ -17,13 +17,14 @@
       font-size: 0.8em;
       font-weight: 500;
       border-radius: 5px 5px 0px 0px;
-      padding: 3px 8px 1px 8px;
+      padding: 3px 8px 3px 8px;
       box-shadow: 0.125rem 0.250rem 0.3rem 0 rgba($black, 0.3);
       transition: box-shadow ease 0.250s;
       &:hover {
         color: $white;
+        background: $grey;
         box-shadow: 0.125rem 0.275rem 0.3rem 0 rgba($black, 0.4);
-        cursor: pointer;
+        cursor: default;
       }
     }
   }
