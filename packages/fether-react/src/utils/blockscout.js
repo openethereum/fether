@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-const baseUrl = chainName => {
+const baseUrlForChain = chainName => {
   let baseUrl;
 
   let chainNameBlockscout = '';
@@ -29,10 +29,10 @@ const baseUrl = chainName => {
 
 // Tx URL
 const ethTxUrl = (chainName, transactionHash) =>
-  `${baseUrl(chainName)}/tx/${transactionHash}/internal_transactions`;
+  `${baseUrlForChain(chainName)}/tx/${transactionHash}/internal_transactions`;
 
 const tokenTxUrl = (chainName, transactionHash) =>
-  `${baseUrl(chainName)}/tx/${transactionHash}/token_transfers`;
+  `${baseUrlForChain(chainName)}/tx/${transactionHash}/token_transfers`;
 
 const blockscoutTxUrl = (chainName, transactionHash, tokenAddress) =>
   tokenAddress === 'ETH'
