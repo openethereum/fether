@@ -9,6 +9,8 @@
   .footer-feedback {
     align-self: flex-end; // override default alignment for individual flex item
     margin-right: 15px;
+    margin-bottom: 0px;
+    padding: 0px;
     border-radius: 4px;
 
     .feedback {
