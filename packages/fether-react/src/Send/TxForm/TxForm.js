@@ -22,6 +22,7 @@ import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import withAccount from '../../utils/withAccount.js';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
 import withTokens from '../../utils/withTokens';
+import TxDetails from '../TxDetails';
 
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
@@ -37,8 +38,7 @@ const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 @observer
 class Send extends Component {
   state = {
-    maxSelected: false,
-    showDetails: false
+    maxSelected: false
   };
 
   decorator = createDecorator({
@@ -107,62 +107,6 @@ class Send extends Component {
     });
   };
 
-  renderCalculation = values => {
-    const gasPriceBn = new BigNumber(values.gasPrice.toString());
-    const gasLimitBn = this.estimatedTxFee(values)
-      .div(gasPriceBn)
-      .div(10 ** 9)
-      .toFixed(0)
-      .toString();
-
-    return `Estimate amount of gas: ${gasLimitBn}`;
-  };
-
-  renderDetails = values => {
-    return `${this.renderCalculation(values)}\n${this.renderFee(
-      values
-    )}\n${this.renderTotalAmount(values)}`;
-  };
-
-  renderFee = values => {
-    return `Fee: ${this.estimatedTxFee(values)
-      .div(10 ** 18)
-      .toFixed(9)
-      .toString()} ETH (estimate * gas price)`;
-  };
-
-  renderTotalAmount = values => {
-    const { token } = this.props;
-
-    return `Total Amount: ${this.estimatedTxFee(values)
-      .plus(token.address === 'ETH' ? toWei(values.amount.toString()) : 0)
-      .div(10 ** 18)
-      .toFixed(10)
-      .toString()} ETH`;
-  };
-
-  showDetailsLabel = () => {
-    return (
-      <span className='details'>
-        <a onClick={this.toggleDetails}>&darr; Details</a>
-      </span>
-    );
-  };
-
-  showHideLabel = () => {
-    return (
-      <span className='details'>
-        <a onClick={this.toggleDetails}>&uarr; Hide</a>
-      </span>
-    );
-  };
-
-  toggleDetails = () => {
-    const { showDetails } = this.state;
-
-    this.setState({ showDetails: !showDetails });
-  };
-
   toggleMax = () => {
     this.setState({ maxSelected: !this.state.maxSelected });
   };
@@ -173,8 +117,6 @@ class Send extends Component {
       sendStore: { tx },
       token
     } = this.props;
-
-    const { showDetails } = this.state;
 
     return (
       <div>
@@ -261,39 +203,13 @@ class Send extends Component {
                             type='range' // In Gwei
                           />
 
-                          {this.isEstimatedTxFee(values) && (
-                            <div>
-                              {valid && !isNaN(values.amount) ? (
-                                <div>
-                                  <div
-                                    className={`form_details_buttons ${
-                                      showDetails ? 'hide' : 'show'
-                                    }`}
-                                  >
-                                    {showDetails
-                                      ? this.showHideLabel()
-                                      : this.showDetailsLabel()}
-                                  </div>
-                                  <div
-                                    className={`form_details_text ${
-                                      showDetails ? 'hide' : 'show'
-                                    }`}
-                                    hidden={!showDetails}
-                                  >
-                                    <Field
-                                      as='textarea'
-                                      className='-sm-details'
-                                      disabled
-                                      label='Transaction Details (Estimate)'
-                                      name='txFeeEstimate'
-                                      render={FetherForm.Field}
-                                      placeholder={this.renderDetails(values)}
-                                    />
-                                  </div>
-                                </div>
-                              ) : null}
-                            </div>
-                          )}
+                          <TxDetails
+                            estimatedTxFee={this.estimatedTxFee}
+                            isEstimatedTxFee={this.isEstimatedTxFee}
+                            token={token}
+                            valid={valid}
+                            values={values}
+                          />
 
                           <OnChange name='gasPrice'>
                             {(value, previous) => {

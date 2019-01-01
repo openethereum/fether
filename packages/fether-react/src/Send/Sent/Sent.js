@@ -144,6 +144,7 @@ class Sent extends Component {
             chainName === 'foundation' ? '' : `${chainName}.`
           }etherscan.io/tx/${txStatus.confirmed.transactionHash}`}
           target='_blank'
+          rel='noopener noreferrer'
         >
           <button className='button -tiny'>See it on Etherscan</button>
         </a>

@@ -112,17 +112,9 @@
     }
 
     &.-sm-details {
+      color: $dark-grey;
       font-size: 0.6rem;
-      height: 4.5rem;
-      &::-webkit-input-placeholder {
-        color: $black;
-      }
-      &.hide {
-        display: none;
-      }
-      &.show {
-        display: block;
-      }
+      height: 4.75rem;
     }
 
     &.-sm {
@@ -145,25 +137,9 @@
 
 .form_details_buttons {
   .details > a {
-    color: #444444;
+    color: $dark-grey;
     font-size: 0.8rem;
     font-weight: 400;
-  }
-
-  .hide {
-    display: none;
-  }
-  .show {
-    display: block;
-  }
-}
-
-.form_details_text {
-  .hide {
-    display: none;
-  }
-  .show {
-    display: block;
   }
 }
 
