@@ -331,7 +331,6 @@ class Send extends Component {
         return token.address !== 'ETH'
           ? { amount: 'ETH balance too low to pay for gas' }
           : { amount: "You don't have enough ETH balance" };
-      } else {
       }
     } catch (err) {
       console.error(err);
