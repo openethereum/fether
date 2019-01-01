@@ -25,7 +25,6 @@ import withTokens from '../../utils/withTokens';
 
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
-const ZERO = new BigNumber('0');
 
 @inject('parityStore', 'sendStore')
 @withTokens
@@ -37,31 +36,9 @@ const ZERO = new BigNumber('0');
 @withEthBalance // ETH balance
 @observer
 class Send extends Component {
-  isCancelled = false;
-
   state = {
-    estimatedTxFee: ZERO,
     maxSelected: false,
     showDetails: false
-  };
-
-  componentWillUnmount () {
-    // Avoids encountering error `Can't call setState (or forceUpdate)
-    // on an unmounted component` when navigate from 'Send Ether' to 'Send THIBCoin'
-    this.isCancelled = true;
-  }
-
-  handleSubmit = values => {
-    const { accountAddress, history, sendStore, token } = this.props;
-
-    sendStore.setTx(values);
-    history.push(`/send/${token.address}/from/${accountAddress}/signer`);
-  };
-
-  toggleDetails = () => {
-    const { showDetails } = this.state;
-
-    !this.isCancelled && this.setState({ showDetails: !showDetails });
   };
 
   decorator = createDecorator({
@@ -70,8 +47,6 @@ class Send extends Component {
       // ...set field "gas"
       gas: async (value, allValues) => {
         const { parityStore, token } = this.props;
-
-        (await !this.isCancelled) && this.setState({ estimatedTxFee: ZERO });
 
         if (this.preValidate(allValues) === true) {
           const newEstimatedTxFee = await estimateGas(
@@ -105,6 +80,24 @@ class Send extends Component {
     return output;
   };
 
+  estimatedTxFee = values =>
+    values.gas.multipliedBy(toWei(values.gasPrice, 'shannon'));
+
+  handleSubmit = values => {
+    const { accountAddress, history, sendStore, token } = this.props;
+
+    sendStore.setTx(values);
+    history.push(`/send/${token.address}/from/${accountAddress}/signer`);
+  };
+
+  isEstimatedTxFee = values => {
+    if (!values.gas || !values.gasPrice) {
+      return false;
+    }
+
+    return this.estimatedTxFee(values) && !this.estimatedTxFee(values).isZero();
+  };
+
   recalculateMax = (args, state, { changeValue }) => {
     changeValue(state, 'amount', value => {
       return this.calculateMax(
@@ -112,6 +105,62 @@ class Send extends Component {
         state.formState.values.gasPrice
       );
     });
+  };
+
+  renderCalculation = values => {
+    const gasPriceBn = new BigNumber(values.gasPrice.toString());
+    const gasLimitBn = this.estimatedTxFee(values)
+      .div(gasPriceBn)
+      .div(10 ** 9)
+      .toFixed(0)
+      .toString();
+
+    return `Estimate amount of gas: ${gasLimitBn}`;
+  };
+
+  renderDetails = values => {
+    return `${this.renderCalculation(values)}\n${this.renderFee(
+      values
+    )}\n${this.renderTotalAmount(values)}`;
+  };
+
+  renderFee = values => {
+    return `Fee: ${this.estimatedTxFee(values)
+      .div(10 ** 18)
+      .toFixed(9)
+      .toString()} ETH (estimate * gas price)`;
+  };
+
+  renderTotalAmount = values => {
+    const { token } = this.props;
+
+    return `Total Amount: ${this.estimatedTxFee(values)
+      .plus(token.address === 'ETH' ? toWei(values.amount.toString()) : 0)
+      .div(10 ** 18)
+      .toFixed(10)
+      .toString()} ETH`;
+  };
+
+  showDetailsLabel = () => {
+    return (
+      <span className='details'>
+        <a onClick={this.toggleDetails}>&darr; Details</a>
+      </span>
+    );
+  };
+
+  showHideLabel = () => {
+    return (
+      <span className='details'>
+        <a onClick={this.toggleDetails}>&uarr; Hide</a>
+      </span>
+    );
+  };
+
+  toggleDetails = () => {
+    const { showDetails } = this.state;
+
+    this.setState({ showDetails: !showDetails });
   };
 
   toggleMax = () => {
@@ -125,55 +174,7 @@ class Send extends Component {
       token
     } = this.props;
 
-    const { estimatedTxFee, showDetails } = this.state;
-
-    const renderFee = () => {
-      return `Fee: ${estimatedTxFee
-        .div(10 ** 18)
-        .toFixed(9)
-        .toString()} ETH (estimate * gas price)`;
-    };
-
-    const renderCalculation = values => {
-      const gasPriceBn = new BigNumber(values.gasPrice.toString());
-      const gasLimitBn = estimatedTxFee
-        .div(gasPriceBn)
-        .div(10 ** 9)
-        .toFixed(0)
-        .toString();
-
-      return `Estimate amount of gas: ${gasLimitBn}`;
-    };
-
-    const renderTotalAmount = values => {
-      return `Total Amount: ${estimatedTxFee
-        .plus(token.address === 'ETH' ? toWei(values.amount.toString()) : 0)
-        .div(10 ** 18)
-        .toFixed(10)
-        .toString()} ETH`;
-    };
-
-    const renderDetails = values => {
-      return `${renderCalculation(values)}\n${renderFee()}\n${renderTotalAmount(
-        values
-      )}`;
-    };
-
-    const showHideLabel = () => {
-      return (
-        <span className='details'>
-          <a onClick={this.toggleDetails}>&uarr; Hide</a>
-        </span>
-      );
-    };
-
-    const showDetailsLabel = () => {
-      return (
-        <span className='details'>
-          <a onClick={this.toggleDetails}>&darr; Details</a>
-        </span>
-      );
-    };
+    const { showDetails } = this.state;
 
     return (
       <div>
@@ -260,8 +261,7 @@ class Send extends Component {
                             type='range' // In Gwei
                           />
 
-                          {estimatedTxFee &&
-                            !estimatedTxFee.isZero() && (
+                          {this.isEstimatedTxFee(values) && (
                             <div>
                               {valid && !isNaN(values.amount) ? (
                                 <div>
@@ -271,8 +271,8 @@ class Send extends Component {
                                     }`}
                                   >
                                     {showDetails
-                                      ? showHideLabel()
-                                      : showDetailsLabel()}
+                                      ? this.showHideLabel()
+                                      : this.showDetailsLabel()}
                                   </div>
                                   <div
                                     className={`form_details_text ${
@@ -287,7 +287,7 @@ class Send extends Component {
                                       label='Transaction Details (Estimate)'
                                       name='txFeeEstimate'
                                       render={FetherForm.Field}
-                                      placeholder={renderDetails(values)}
+                                      placeholder={this.renderDetails(values)}
                                     />
                                   </div>
                                 </div>
@@ -382,15 +382,15 @@ class Send extends Component {
    * Estimate gas amount, and validate that the user has enough balance to make
    * the tx.
    */
-  validateForm = debounce(async values => {
+  validateForm = debounce(values => {
     if (!values) {
       return;
     }
 
     try {
       const { ethBalance, token } = this.props;
-
       const preValidation = this.preValidate(values);
+
       // preValidate return an error if a field isn't valid
       if (preValidation !== true) {
         return preValidation;
@@ -398,7 +398,7 @@ class Send extends Component {
 
       // If the gas hasn't been calculated yet, then we don't show any errors,
       // just wait a bit more
-      if (!values.gas) {
+      if (!this.isEstimatedTxFee(values)) {
         return;
       }
 
@@ -406,29 +406,16 @@ class Send extends Component {
         throw new Error('No "ethBalance" or "gas" value.');
       }
 
-      if (!values.gas) {
-        return;
-      }
-
-      const estimatedTxFee = values.gas.multipliedBy(
-        toWei(values.gasPrice, 'shannon')
-      );
-
       // Verify that `gas + (eth amount if sending eth) <= ethBalance`
       if (
-        estimatedTxFee
+        this.estimatedTxFee(values)
           .plus(token.address === 'ETH' ? toWei(values.amount) : 0)
           .gt(toWei(ethBalance))
       ) {
-        !this.isCancelled &&
-          this.setState({ estimatedTxFee: new BigNumber('0') });
-
         return token.address !== 'ETH'
           ? { amount: 'ETH balance too low to pay for gas' }
           : { amount: "You don't have enough ETH balance" };
       } else {
-        // `await` prevents error `Uncaught TypeError: Cannot read property 'resolve' of null at flush`
-        (await !this.isCancelled) && this.setState({ estimatedTxFee });
       }
     } catch (err) {
       console.error(err);
