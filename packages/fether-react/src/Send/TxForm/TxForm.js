@@ -131,7 +131,7 @@ class Send extends Component {
       return `Fee: ${estimatedTxFee
         .div(10 ** 18)
         .toFixed(9)
-        .toString()} ETH (Gas Limit * Gas Price)`;
+        .toString()} ETH (estimate * gas price)`;
     };
 
     const renderCalculation = values => {
@@ -139,22 +139,22 @@ class Send extends Component {
       const gasLimitBn = estimatedTxFee
         .div(gasPriceBn)
         .div(10 ** 9)
-        .toFixed(2)
+        .toFixed(0)
         .toString();
 
-      return `Calcs: (${gasLimitBn} WEI * ${gasPriceBn} GWEI)`;
+      return `Estimate amount of gas: ${gasLimitBn}`;
     };
 
     const renderTotalAmount = values => {
       return `Total Amount: ${estimatedTxFee
         .plus(token.address === 'ETH' ? toWei(values.amount.toString()) : 0)
         .div(10 ** 18)
-        .toFixed(9)
+        .toFixed(10)
         .toString()} ETH`;
     };
 
     const renderDetails = values => {
-      return `${renderFee()}\n${renderCalculation(values)}\n${renderTotalAmount(
+      return `${renderCalculation(values)}\n${renderFee()}\n${renderTotalAmount(
         values
       )}`;
     };
