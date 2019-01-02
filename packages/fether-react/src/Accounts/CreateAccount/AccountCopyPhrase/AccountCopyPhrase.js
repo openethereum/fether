@@ -6,7 +6,6 @@
 import React, { Component } from 'react';
 import { AccountCard } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
-import { Link } from 'react-router-dom';
 
 @inject('createAccountStore')
 @observer

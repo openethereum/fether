@@ -85,7 +85,6 @@ class AccountPassword extends Component {
               label='Password'
               autoFocus
               onChange={this.handlePasswordChange}
-              onSubmit={jsonString && this.handleSubmit}
               required
               type='password'
               value={password}
@@ -95,7 +94,6 @@ class AccountPassword extends Component {
               <FetherForm.Field
                 label='Confirm'
                 onChange={this.handleConfirmChange}
-                onSubmit={this.handleSubmit}
                 autoFocus={false}
                 required
                 type='password'
@@ -119,6 +117,7 @@ class AccountPassword extends Component {
               )}
               <button
                 className='button'
+                autoFocus
                 disabled={
                   !password ||
                   (!jsonString && confirm !== password) ||
