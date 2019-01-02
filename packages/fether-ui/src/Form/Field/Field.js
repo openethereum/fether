@@ -14,7 +14,6 @@ export const Field = ({
   label,
   meta,
   autoFocus,
-  onSubmit,
   ...otherProps
 }) => (
   <div className='form_field'>
