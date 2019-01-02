@@ -75,12 +75,8 @@ class TxDetails extends Component {
   };
 
   render () {
-    const { estimatedTxFee, valid, values } = this.props;
+    const { values } = this.props;
     const { showDetails } = this.state;
-
-    if (!valid || !estimatedTxFee(values)) {
-      return null;
-    }
 
     return (
       <div>

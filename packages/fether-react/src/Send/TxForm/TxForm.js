@@ -211,12 +211,14 @@ class Send extends Component {
                             type='range' // In Gwei
                           />
 
-                          <TxDetails
-                            estimatedTxFee={this.estimatedTxFee}
-                            token={token}
-                            valid={valid}
-                            values={values}
-                          />
+                          {valid && this.estimatedTxFee(values) ? (
+                            <TxDetails
+                              estimatedTxFee={this.estimatedTxFee}
+                              token={token}
+                              valid={valid}
+                              values={values}
+                            />
+                          ) : null}
 
                           <OnChange name='gasPrice'>
                             {(value, previous) => {
