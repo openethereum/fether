@@ -94,7 +94,6 @@ class AccountPassword extends Component {
               <FetherForm.Field
                 label='Confirm'
                 onChange={this.handleConfirmChange}
-                autoFocus={false}
                 required
                 type='password'
                 value={confirm}
