@@ -37,12 +37,6 @@ export const Field = ({
           {...input}
           {...otherProps}
           autoFocus={autoFocus}
-          onKeyDown={event => {
-            if (event.keyCode === 13) {
-              event.preventDefault();
-              onSubmit && onSubmit();
-            }
-          }}
         />
       }
     />
