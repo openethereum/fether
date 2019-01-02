@@ -37,6 +37,7 @@ class AccountsList extends Component {
     const { accountsInfo } = this.props;
 
     const accountsList = Object.keys(accountsInfo);
+    const accountsListLength = accountsList && accountsList.length;
 
     return (
       <div className='accounts-list'>
@@ -51,7 +52,7 @@ class AccountsList extends Component {
 
         <div className='window_content'>
           <div className='box -scroller'>
-            {accountsList.length ? (
+            {accountsListLength ? (
               <ul className='list'>
                 {accountsList.map(address => (
                   <li
@@ -90,7 +91,7 @@ class AccountsList extends Component {
             <Health />
           </div>
           <div className='footer-feedback'>
-            <Feedback />
+            <Feedback accountsListLength={accountsListLength} />
           </div>
         </nav>
       </div>

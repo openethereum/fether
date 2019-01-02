@@ -5,11 +5,12 @@
 
 import React from 'react';
 
-export const Feedback = () => (
+export const Feedback = ({ accountsListLength }) => (
   <a
     className='feedback'
     href='https://github.com/paritytech/fether/issues/new'
     target='_blank'
+    style={{ marginBottom: accountsListLength > 1 ? '0px' : '-10px' }}
   >
     Feedback
   </a>
