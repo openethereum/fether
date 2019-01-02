@@ -91,7 +91,6 @@ class BackupAccount extends Component {
             <FetherForm.Field
               label='Password'
               onChange={this.handlePasswordChange}
-              onSubmit={this.handleSubmit}
               autoFocus
               required
               type='password'
@@ -101,10 +100,18 @@ class BackupAccount extends Component {
             <p className='error'> {message} </p>
 
             <nav className='form-nav -space-around'>
-              <button className='button -cancel' onClick={history.goBack}>
+              <button
+                className='button -cancel'
+                onClick={history.goBack}
+                type='button'
+              >
                 Back
               </button>
-              <button className='button' disabled={!password || isLoading}>
+              <button
+                className='button'
+                disabled={!password || isLoading}
+                autoFocus
+              >
                 Confirm backup
               </button>
             </nav>

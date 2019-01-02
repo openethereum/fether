@@ -13,8 +13,6 @@ export const Field = ({
   input,
   label,
   meta,
-  autoFocus,
-  onSubmit,
   ...otherProps
 }) => (
   <div className='form_field'>
@@ -31,20 +29,7 @@ export const Field = ({
       }
       position='bottom center'
       size='mini'
-      trigger={
-        <T
-          id={input && input.name}
-          {...input}
-          {...otherProps}
-          autoFocus={autoFocus}
-          onKeyDown={event => {
-            if (event.keyCode === 13) {
-              event.preventDefault();
-              onSubmit && onSubmit();
-            }
-          }}
-        />
-      }
+      trigger={<T id={input && input.name} {...input} {...otherProps} />}
     />
     {children}
   </div>
