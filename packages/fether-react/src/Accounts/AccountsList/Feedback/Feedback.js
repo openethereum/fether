@@ -10,7 +10,7 @@ export const Feedback = ({ accountsListLength }) => (
     className='feedback'
     href='https://github.com/paritytech/fether/issues/new'
     target='_blank'
-    style={{ marginBottom: accountsListLength > 1 ? '0px' : '-10px' }}
+    style={{ marginBottom: accountsListLength > 1 ? '-2px' : '-10px' }}
   >
     Feedback
   </a>
