@@ -75,10 +75,10 @@ class TxDetails extends Component {
   };
 
   render () {
-    const { isEstimatedTxFee, valid, values } = this.props;
+    const { estimatedTxFee, valid, values } = this.props;
     const { showDetails } = this.state;
 
-    if (!valid || !isEstimatedTxFee(values) || isNaN(values.amount)) {
+    if (!valid || !estimatedTxFee(values)) {
       return null;
     }
 

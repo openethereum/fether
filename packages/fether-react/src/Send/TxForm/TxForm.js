@@ -47,18 +47,22 @@ class Send extends Component {
       // ...set field "gas"
       gas: async (value, allValues) => {
         const { parityStore, token } = this.props;
+        let newGasEstimate = null;
 
         if (this.preValidate(allValues) === true) {
-          const newEstimatedTxFee = await estimateGas(
-            allValues,
-            token,
-            parityStore.api
-          );
-
-          return newEstimatedTxFee;
-        } else {
-          return null;
+          try {
+            newGasEstimate = await estimateGas(
+              allValues,
+              token,
+              parityStore.api
+            );
+          } catch (error) {
+            console.error(error);
+            throw new Error('Unable to estimate gas');
+          }
         }
+
+        return newGasEstimate;
       }
     }
   });
@@ -80,22 +84,26 @@ class Send extends Component {
     return output;
   };
 
-  estimatedTxFee = values =>
-    values.gas.multipliedBy(toWei(values.gasPrice, 'shannon'));
+  estimatedTxFee = values => {
+    if (
+      !values.amount ||
+      !values.gas ||
+      !values.gasPrice ||
+      isNaN(values.amount) ||
+      isNaN(values.gas) ||
+      isNaN(values.gasPrice)
+    ) {
+      return null;
+    }
+
+    return values.gas.multipliedBy(toWei(values.gasPrice, 'shannon'));
+  };
 
   handleSubmit = values => {
     const { accountAddress, history, sendStore, token } = this.props;
 
     sendStore.setTx(values);
     history.push(`/send/${token.address}/from/${accountAddress}/signer`);
-  };
-
-  isEstimatedTxFee = values => {
-    if (!values.gas || !values.gasPrice) {
-      return false;
-    }
-
-    return this.estimatedTxFee(values) && !this.estimatedTxFee(values).isZero();
   };
 
   recalculateMax = (args, state, { changeValue }) => {
@@ -205,7 +213,6 @@ class Send extends Component {
 
                           <TxDetails
                             estimatedTxFee={this.estimatedTxFee}
-                            isEstimatedTxFee={this.isEstimatedTxFee}
                             token={token}
                             valid={valid}
                             values={values}
@@ -305,6 +312,11 @@ class Send extends Component {
 
     try {
       const { ethBalance, token } = this.props;
+
+      if (!ethBalance) {
+        throw new Error('No "ethBalance"');
+      }
+
       const preValidation = this.preValidate(values);
 
       // preValidate return an error if a field isn't valid
@@ -314,12 +326,8 @@ class Send extends Component {
 
       // If the gas hasn't been calculated yet, then we don't show any errors,
       // just wait a bit more
-      if (!this.isEstimatedTxFee(values)) {
+      if (!this.estimatedTxFee(values)) {
         return;
-      }
-
-      if (!ethBalance || isNaN(values.gas)) {
-        throw new Error('No "ethBalance" or "gas" value.');
       }
 
       // Verify that `gas + (eth amount if sending eth) <= ethBalance`
@@ -330,7 +338,7 @@ class Send extends Component {
       ) {
         return token.address !== 'ETH'
           ? { amount: 'ETH balance too low to pay for gas' }
-          : { amount: "You don't have enough ETH balance" };
+          : { amount: "You don't have enough ETH balance2" };
       }
     } catch (err) {
       console.error(err);
