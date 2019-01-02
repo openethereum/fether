@@ -25,11 +25,19 @@ class AccountPassword extends Component {
     this.setState({ password: value });
   };
 
-  handleSubmit = e => {
+  handleSubmit = event => {
     const { createAccountStore, history } = this.props;
-    const { password } = this.state;
+    const { confirm, password } = this.state;
 
-    e && e.preventDefault();
+    event && event.preventDefault();
+
+    if (!createAccountStore.jsonString && confirm !== password) {
+      this.setState({
+        error: 'Password confirmation does not match.'
+      });
+      return;
+    }
+
     this.setState({ isLoading: true });
 
     // Save to parity
@@ -75,8 +83,9 @@ class AccountPassword extends Component {
 
             <FetherForm.Field
               label='Password'
+              autoFocus
               onChange={this.handlePasswordChange}
-              onSubmit={this.handleSubmit}
+              onSubmit={jsonString && this.handleSubmit}
               required
               type='password'
               value={password}
@@ -87,7 +96,7 @@ class AccountPassword extends Component {
                 label='Confirm'
                 onChange={this.handleConfirmChange}
                 onSubmit={this.handleSubmit}
-                noFocus
+                autoFocus={false}
                 required
                 type='password'
                 value={confirm}

@@ -30,11 +30,11 @@ class BackupAccount extends Component {
     this.setState({ password: value });
   };
 
-  handleSubmit = e => {
+  handleSubmit = event => {
     const { accountAddress, history } = this.props;
     const { password } = this.state;
 
-    e && e.preventDefault();
+    event && event.preventDefault();
 
     this.setState({ isLoading: true });
 
@@ -92,6 +92,7 @@ class BackupAccount extends Component {
               label='Password'
               onChange={this.handlePasswordChange}
               onSubmit={this.handleSubmit}
+              autoFocus
               required
               type='password'
               value={password}

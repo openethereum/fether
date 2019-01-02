@@ -107,6 +107,7 @@ class AccountName extends Component {
           onChange={this.handleChangeName}
           onKeyPress={this.handleKeyPress}
           onSubmit={() => history.push(`/accounts/new/${+currentStep + 1}`)}
+          autoFocus
           required
           type='text'
           value={name}
