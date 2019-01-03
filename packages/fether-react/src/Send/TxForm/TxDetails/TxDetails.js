@@ -26,9 +26,9 @@ class TxDetails extends Component {
   };
 
   renderDetails = values => {
-    return `${this.renderCalculation(values)}\n`
-      .concat(`${this.renderFee(values)}\n`)
-      .concat(`${this.renderTotalAmount(values)}`);
+    return `${this.renderCalculation(values)}
+${this.renderFee(values)}
+${this.renderTotalAmount(values)}`;
   };
 
   renderFee = values => {
