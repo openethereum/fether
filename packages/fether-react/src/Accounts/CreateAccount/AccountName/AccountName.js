@@ -7,7 +7,6 @@ import React, { Component } from 'react';
 import { AccountCard, Card, Form as FetherForm } from 'fether-ui';
 import Blockies from 'react-blockies';
 import { inject, observer } from 'mobx-react';
-import { Link } from 'react-router-dom';
 
 import loading from '../../../assets/img/icons/loading.svg';
 
@@ -110,7 +109,11 @@ class AccountName extends Component {
         />
         <nav className='form-nav -space-around'>
           {currentStep > 1 && (
-            <button className='button -cancel' onClick={history.goBack}>
+            <button
+              className='button -cancel'
+              onClick={history.goBack}
+              type='button'
+            >
               Back
             </button>
           )}

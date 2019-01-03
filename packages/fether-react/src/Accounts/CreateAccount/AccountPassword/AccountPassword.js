@@ -94,7 +94,6 @@ class AccountPassword extends Component {
               <FetherForm.Field
                 label='Confirm'
                 onChange={this.handleConfirmChange}
-                autoFocus={false}
                 required
                 type='password'
                 value={confirm}
@@ -107,7 +106,11 @@ class AccountPassword extends Component {
 
             <nav className='form-nav -space-around'>
               {currentStep > 1 && (
-                <button className='button -cancel' onClick={history.goBack}>
+                <button
+                  className='button -cancel'
+                  onClick={history.goBack}
+                  type='button'
+                >
                   Back
                 </button>
               )}

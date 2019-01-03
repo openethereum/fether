@@ -131,13 +131,15 @@ class Send extends Component {
                     }) => (
                       <form className='send-form' onSubmit={handleSubmit}>
                         <fieldset className='form_fields'>
-                          <FetherForm.Field
+                          <Field
+                            autoFocus
                             className='form_field_amount'
                             formNoValidate
                             label='Amount'
                             name='amount'
                             disabled={this.state.maxSelected}
                             placeholder='0.00'
+                            render={FetherForm.Field}
                             required
                             type='number'
                           >
@@ -155,15 +157,16 @@ class Send extends Component {
                             >
                               Max
                             </button>
-                          </FetherForm.Field>
+                          </Field>
 
-                          <FetherForm.Field
+                          <Field
                             as='textarea'
                             className='-sm'
                             label='To'
                             name='to'
                             placeholder='0x...'
                             required
+                            render={FetherForm.Field}
                           />
 
                           <Field
