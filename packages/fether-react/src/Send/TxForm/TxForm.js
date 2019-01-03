@@ -22,7 +22,7 @@ import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import withAccount from '../../utils/withAccount.js';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
 import withTokens from '../../utils/withTokens';
-import TxDetails from '../TxDetails';
+import TxDetails from './TxDetails';
 
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
