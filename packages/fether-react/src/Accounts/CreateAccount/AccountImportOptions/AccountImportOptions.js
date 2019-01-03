@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { Card, Form as FetherForm } from 'fether-ui';
+import { addressShort, Card, Form as FetherForm } from 'fether-ui';
 import { accounts$, withoutLoading } from '@parity/light.js';
 import light from '@parity/light.js-react';
 import { inject, observer } from 'mobx-react';
@@ -99,7 +99,7 @@ class AccountImportOptions extends Component {
     if (isExistingAddress) {
       this.setState({
         isLoading: false,
-        error: `Account already loaded. Address ${addressForImport} is already in the account list`
+        error: `Account ${addressShort(addressForImport)} already listed`
       });
     }
 
