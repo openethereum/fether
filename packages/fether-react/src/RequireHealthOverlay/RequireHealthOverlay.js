@@ -62,7 +62,7 @@ class RequireHealthOverlay extends Component {
 
   render () {
     const { visible } = this.state;
-    const { fullscreen } = this.props;
+    // const { fullscreen } = this.props;
 
     return (
       <div className='alert-wrapper'>
