@@ -10,6 +10,7 @@ import { inject, observer } from 'mobx-react';
 import light from '@parity/light.js-react';
 
 import Health from '../../Health';
+import Feedback from './Feedback';
 
 @light({
   accountsInfo: () => accountsInfo$().pipe(withoutLoading())
@@ -36,6 +37,7 @@ class AccountsList extends Component {
     const { accountsInfo } = this.props;
 
     const accountsList = Object.keys(accountsInfo);
+    const accountsListLength = accountsList && accountsList.length;
 
     return (
       <div className='accounts-list'>
@@ -50,7 +52,7 @@ class AccountsList extends Component {
 
         <div className='window_content'>
           <div className='box -scroller'>
-            {accountsList.length ? (
+            {accountsListLength ? (
               <ul className='list'>
                 {accountsList.map(address => (
                   <li
@@ -87,6 +89,9 @@ class AccountsList extends Component {
         <nav className='footer-nav'>
           <div className='footer-nav_status'>
             <Health />
+          </div>
+          <div className='footer-feedback'>
+            <Feedback accountsListLength={accountsListLength} />
           </div>
         </nav>
       </div>
