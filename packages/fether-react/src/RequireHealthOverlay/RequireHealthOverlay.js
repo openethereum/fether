@@ -40,7 +40,12 @@ class RequireHealthOverlay extends Component {
   }
 
   componentDidUpdate () {
-    this.updateVisibility();
+    const visible = this.state.visible;
+
+    setTimeout(() => {
+      this.setState({ visible: !visible });
+    }, 10000);
+    // this.updateVisibility();
   }
 
   updateVisibility = () => {
@@ -59,22 +64,29 @@ class RequireHealthOverlay extends Component {
     const { visible } = this.state;
     const { fullscreen } = this.props;
 
-    return visible === true ? (
-      <div
-        className={['alert-screen', fullscreen ? '-full-screen' : ''].join(' ')}
-      >
-        <div className='alert-screen_content'>
-          <div className='alert-screen_image'>
-            <img alt='loading' src={loading} />
+    return (
+      <div className='alert-wrapper'>
+        {visible === true ? (
+          <div className='alert-screen'>
+            <div className='alert-screen_content'>
+              <div className='alert-screen_image'>
+                <img alt='loading' src={loading} />
+              </div>
+              <div className='alert-screen_text'>
+                <h1>
+                  BLAH1
+                  {this.renderTitle()}
+                </h1>
+                <p>
+                  BLAH2
+                  {this.renderDescription()}
+                </p>
+              </div>
+            </div>
           </div>
-          <div className='alert-screen_text'>
-            <h1>{this.renderTitle()}</h1>
-            <p>{this.renderDescription()}</p>
-          </div>
-        </div>
+        ) : null}
+        <div>{this.props.children}</div>
       </div>
-    ) : (
-      this.props.children
     );
   }
 
