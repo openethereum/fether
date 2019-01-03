@@ -61,9 +61,9 @@ class AccountRewritePhrase extends Component {
         </div>
 
         <FetherForm.Field
+          autoFocus
           as='textarea'
           label='Recovery phrase'
-          autoFocus
           onChange={this.handleChange}
           required
           value={value}

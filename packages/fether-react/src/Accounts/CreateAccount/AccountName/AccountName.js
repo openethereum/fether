@@ -100,9 +100,9 @@ class AccountName extends Component {
           <p>Please give this account a name:</p>
         </div>
         <FetherForm.Field
+          autoFocus
           label='Name'
           onChange={this.handleChangeName}
-          autoFocus
           required
           type='text'
           value={name}
