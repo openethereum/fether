@@ -6,11 +6,21 @@
 import React, { Component } from 'react';
 import { AccountCard } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
-import { Link } from 'react-router-dom';
 
 @inject('createAccountStore')
 @observer
 class AccountCopyPhrase extends Component {
+  handleSubmit = () => {
+    const {
+      history,
+      location: { pathname }
+    } = this.props;
+
+    const currentStep = pathname.slice(-1);
+
+    history.push(`/accounts/new/${+currentStep + 1}`);
+  };
+
   render () {
     const {
       createAccountStore: { address, name, bip39Phrase },
@@ -24,7 +34,7 @@ class AccountCopyPhrase extends Component {
         address={address}
         name={name}
         drawers={[
-          <div key='createAccount'>
+          <form key='createAccount' onSubmit={this.handleSubmit}>
             <div className='text'>
               <p>Please write your secret phrase on a piece of paper:</p>
             </div>
@@ -46,15 +56,19 @@ class AccountCopyPhrase extends Component {
             </div>
             <nav className='form-nav -space-around'>
               {currentStep > 1 && (
-                <button className='button -cancel' onClick={history.goBack}>
+                <button
+                  className='button -cancel'
+                  onClick={history.goBack}
+                  type='button'
+                >
                   Back
                 </button>
               )}
-              <Link to={`/accounts/new/${+currentStep + 1}`}>
-                <button className='button'>Next</button>
-              </Link>
+              <button autoFocus className='button'>
+                Next
+              </button>
             </nav>
-          </div>
+          </form>
         ]}
       />
     );

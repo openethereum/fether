@@ -21,7 +21,7 @@ class AccountRewritePhrase extends Component {
     this.setState({ value });
   };
 
-  handleNextStep = async () => {
+  handleSubmit = async () => {
     const {
       history,
       location: { pathname },
@@ -48,7 +48,7 @@ class AccountRewritePhrase extends Component {
     const { value } = this.state;
     const currentStep = pathname.slice(-1);
     const body = [
-      <div key='createAccount'>
+      <form key='createAccount' onSubmit={this.handleSubmit}>
         <div className='text -centered'>
           {isImport ? (
             <AccountImportOptions />
@@ -61,6 +61,7 @@ class AccountRewritePhrase extends Component {
         </div>
 
         <FetherForm.Field
+          autoFocus
           as='textarea'
           label='Recovery phrase'
           onChange={this.handleChange}
@@ -70,13 +71,17 @@ class AccountRewritePhrase extends Component {
 
         <nav className='form-nav -space-around'>
           {currentStep > 1 && (
-            <button className='button -cancel' onClick={history.goBack}>
+            <button
+              className='button -cancel'
+              onClick={history.goBack}
+              type='button'
+            >
               Back
             </button>
           )}
           {this.renderButton()}
         </nav>
-      </div>
+      </form>
     ];
 
     return isImport ? (
@@ -100,11 +105,7 @@ class AccountRewritePhrase extends Component {
     // been correctly written by the user.
     if (!isImport) {
       return (
-        <button
-          className='button'
-          disabled={value !== bip39Phrase}
-          onClick={this.handleNextStep}
-        >
+        <button className='button' disabled={value !== bip39Phrase}>
           Next
         </button>
       );
@@ -112,11 +113,7 @@ class AccountRewritePhrase extends Component {
 
     // If we are importing an existing account, the button goes to the next step
     return (
-      <button
-        className='button'
-        disabled={!value.length || isLoading}
-        onClick={this.handleNextStep}
-      >
+      <button className='button' disabled={!value.length || isLoading}>
         Next
       </button>
     );

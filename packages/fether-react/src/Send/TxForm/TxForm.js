@@ -132,6 +132,7 @@ class Send extends Component {
                       <form className='send-form' onSubmit={handleSubmit}>
                         <fieldset className='form_fields'>
                           <Field
+                            autoFocus
                             className='form_field_amount'
                             formNoValidate
                             label='Amount'
