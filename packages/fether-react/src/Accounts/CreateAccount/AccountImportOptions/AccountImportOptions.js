@@ -5,12 +5,12 @@
 
 import React, { Component } from 'react';
 import { Card, Form as FetherForm } from 'fether-ui';
-import { accountsInfo$, withoutLoading } from '@parity/light.js';
+import { accounts$, withoutLoading } from '@parity/light.js';
 import light from '@parity/light.js-react';
 import { inject, observer } from 'mobx-react';
 
 @light({
-  accountsInfo: () => accountsInfo$().pipe(withoutLoading())
+  accounts: () => accounts$().pipe(withoutLoading())
 })
 @inject('createAccountStore')
 @observer
@@ -91,8 +91,8 @@ class AccountImportOptions extends Component {
   };
 
   hasExistingAddressForImport = addressForImport => {
-    const { accountsInfo } = this.props;
-    const isExistingAddress = Object.keys(accountsInfo)
+    const { accounts } = this.props;
+    const isExistingAddress = accounts
       .map(address => address && address.toLowerCase())
       .includes(addressForImport);
 
