@@ -48,7 +48,7 @@ ${this.renderTotalAmount()}`;
       ),
       'ether'
     )
-      .toFixed(10)
+      .toFixed(18)
       .toString()} ETH`;
   };
 
