@@ -47,4 +47,14 @@ describe('removeTrailingZeros', () => {
     const valueWithTrailingZeros = '010.';
     expect(removeTrailingZeros(valueWithTrailingZeros)).toEqual('010.');
   });
+
+  test('does not change non-decimal values such as those with multiple decimal points', () => {
+    const valueWithTrailingZeros = '..';
+    expect(removeTrailingZeros(valueWithTrailingZeros)).toEqual('..');
+  });
+
+  test('does not change non-decimal values such as those with multiple decimal points', () => {
+    const valueWithTrailingZeros = '0.0.0';
+    expect(removeTrailingZeros(valueWithTrailingZeros)).toEqual('0.0.0');
+  });
 });

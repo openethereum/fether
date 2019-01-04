@@ -3,10 +3,12 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
+const isMultipleDecimalPoints = val => val.split('.').length > 2;
+
 // Remove trailing zeros from end of big number decimal string
 export const removeTrailingZeros = val => {
   // Early exit if non-decimal
-  if (val.indexOf('.') === -1) {
+  if (val.indexOf('.') === -1 || isMultipleDecimalPoints(val)) {
     return val;
   }
 
