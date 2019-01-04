@@ -52,6 +52,7 @@
     "start-electron": "cd packages/fether-electron && yarn start",
     "start-react": "cd packages/fether-react && yarn start",
     "start-ui": "cd packages/fether-ui && yarn start",
+    "taskbar": "cd packages/fether-electron && yarn taskbar",
     "test": "semistandard '**/*.{js,ts}' --parser babel-eslint && CI=true lerna run test --parallel"
   },
   "husky": {

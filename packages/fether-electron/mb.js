@@ -1,24 +1,26 @@
 const path = require('path');
 const menubar = require('menubar');
 
-const indexDir = 'file://' + path.join(__dirname, '/static/build/index.html');
-// const indexDir = 'file://' + path.join(__dirname, '/mb.html'); // testing only
-console.log(indexDir);
+const packagesDir = __dirname.substring(0, __dirname.lastIndexOf('/'));
+const indexHtmlFile =
+  'file://' + path.join(__dirname, '/static/build/index.html');
+const iconFile = path.join(
+  packagesDir,
+  '/fether-react/src/assets/img/logos/parity-icon.png'
+);
 
 const mb = menubar({
   dir: __dirname,
-  index: indexDir,
+  index: indexHtmlFile,
   showDockIcon: true,
-  tooltip: 'Fether'
+  icon: iconFile,
+  tooltip: 'Fether',
+  width: 352,
+  height: 464
 });
 
 mb.on('ready', () => {
   console.log('Fether is ready');
-  // your app code here
 
   mb.showWindow();
 });
-
-// mb.on('after-create-window', () => {
-//   mb.window.openDevTools();
-// });

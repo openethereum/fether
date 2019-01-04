@@ -30,12 +30,13 @@
   "scripts": {
     "prebuild": "copyfiles -u 2 \"../fether-react/build/**/*\" static/ && ./scripts/fixElectronBug.sh",
     "build": "electron-webpack",
-    "electron": "cross-env SKIP_PREFLIGHT_CHECK=true electron mb.js",
+    "electron": "cross-env SKIP_PREFLIGHT_CHECK=true electron dist/main/main.js",
     "prepackage": "./scripts/revertElectronBug.sh",
     "package": "electron-builder",
     "prerelease": "./scripts/revertElectronBug.sh",
     "release": "electron-builder",
     "start": "cross-env ELECTRON_START_URL=http://localhost:3000 electron-webpack dev --ws-origins all",
+    "taskbar": "cross-env SKIP_PREFLIGHT_CHECK=true electron mb.js",
     "test": "echo Skipped."
   },
   "dependencies": {
