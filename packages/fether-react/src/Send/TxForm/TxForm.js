@@ -215,7 +215,6 @@ class Send extends Component {
                             <TxDetails
                               estimatedTxFee={this.estimatedTxFee(values)}
                               token={token}
-                              valid={valid}
                               values={values}
                             />
                           ) : null}
