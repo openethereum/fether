@@ -170,6 +170,7 @@ class Send extends Component {
                           />
 
                           <Field
+                            autoFocus
                             className='form_field_amount'
                             formNoValidate
                             label='Amount'

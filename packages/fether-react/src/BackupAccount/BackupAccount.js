@@ -34,7 +34,8 @@ class BackupAccount extends Component {
     const { accountAddress, history } = this.props;
     const { password } = this.state;
 
-    event.preventDefault();
+    event && event.preventDefault();
+
     this.setState({ isLoading: true });
 
     backupAccount(accountAddress, password)
@@ -90,6 +91,7 @@ class BackupAccount extends Component {
             <FetherForm.Field
               label='Password'
               onChange={this.handlePasswordChange}
+              autoFocus
               required
               type='password'
               value={password}
@@ -98,10 +100,18 @@ class BackupAccount extends Component {
             <p className='error'> {message} </p>
 
             <nav className='form-nav -space-around'>
-              <button className='button -cancel' onClick={history.goBack}>
+              <button
+                className='button -cancel'
+                onClick={history.goBack}
+                type='button'
+              >
                 Back
               </button>
-              <button className='button' disabled={!password || isLoading}>
+              <button
+                className='button'
+                disabled={!password || isLoading}
+                autoFocus
+              >
                 Confirm backup
               </button>
             </nav>
