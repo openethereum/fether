@@ -114,8 +114,10 @@
     &.-sm-details {
       color: $dark-grey;
       font-size: 0.6rem;
+      width: 100%;
       height: 4.75rem;
       opacity: 1;
+      resize: none;
     }
 
     &.-sm {
@@ -136,8 +138,11 @@
   }
 }
 
-.form_details_buttons {
-  .details > a {
+.form-details-buttons {
+  position: absolute;
+  left: -7rem;
+
+  .toggle-details > a {
     color: $dark-grey;
     font-size: 0.8rem;
     font-weight: 400;

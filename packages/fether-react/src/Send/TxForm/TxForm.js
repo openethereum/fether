@@ -212,14 +212,6 @@ class Send extends Component {
                             type='range' // In Gwei
                           />
 
-                          {valid && this.estimatedTxFee(values) ? (
-                            <TxDetails
-                              estimatedTxFee={this.estimatedTxFee(values)}
-                              token={token}
-                              values={values}
-                            />
-                          ) : null}
-
                           <OnChange name='gasPrice'>
                             {(value, previous) => {
                               if (this.state.maxSelected) {
@@ -238,6 +230,14 @@ class Send extends Component {
                           )}
                         </fieldset>
                         <nav className='form-nav'>
+                          {valid && this.estimatedTxFee(values) ? (
+                            <TxDetails
+                              estimatedTxFee={this.estimatedTxFee(values)}
+                              token={token}
+                              values={values}
+                              validating={validating}
+                            />
+                          ) : null}
                           <button
                             disabled={!valid || validating}
                             className='button'

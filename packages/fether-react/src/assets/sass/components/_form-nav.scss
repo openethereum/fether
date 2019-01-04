@@ -11,3 +11,17 @@
     justify-content: space-around;
   }
 }
+
+.form-details-wrapper {
+  position: relative;
+}
+
+.form_field { /* extend .form_field class of react-final-form */
+  &.-details-value {
+    position: absolute;
+    background-color: $faint;
+    bottom: 2rem;
+    left: -7.75rem;
+    width: 19rem;
+  }
+}

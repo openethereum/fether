@@ -52,16 +52,16 @@ ${this.renderTotalAmount()}`;
 
   showDetailsAnchor = () => {
     return (
-      <span className='details'>
-        <a onClick={this.toggleDetails}>&darr; Details</a>
+      <span className='toggle-details'>
+        <a onClick={this.toggleDetails}>&uarr; Details</a>
       </span>
     );
   };
 
   showHideAnchor = () => {
     return (
-      <span className='details'>
-        <a onClick={this.toggleDetails}>&uarr; Hide</a>
+      <span className='toggle-details'>
+        <a onClick={this.toggleDetails}>&darr; Hide</a>
       </span>
     );
   };
@@ -76,11 +76,11 @@ ${this.renderTotalAmount()}`;
     const { showDetails } = this.state;
 
     return (
-      <div>
-        <div className='form_details_buttons'>
+      <div className='form-details-wrapper'>
+        <div className='form-details-buttons'>
           {showDetails ? this.showHideAnchor() : this.showDetailsAnchor()}
         </div>
-        <div className='form_field'>
+        <div className='form_field -details-value'>
           <div hidden={!showDetails}>
             <label htmlFor='txDetails'>Transaction Details (Estimate):</label>
             <textarea
