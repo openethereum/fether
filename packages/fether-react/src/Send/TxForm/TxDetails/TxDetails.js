@@ -6,6 +6,7 @@
 import React, { Component } from 'react';
 import BigNumber from 'bignumber.js';
 import { fromWei, toWei } from '@parity/api/lib/util/wei';
+import { removeTrailingZeros } from '../../../utils/removeTrailingZeros';
 
 class TxDetails extends Component {
   state = {
@@ -42,14 +43,16 @@ ${this.renderTotalAmount()}`;
   renderTotalAmount = () => {
     const { estimatedTxFee, token, values } = this.props;
 
-    return `Total Amount: ${fromWei(
-      estimatedTxFee.plus(
-        token.address === 'ETH' ? toWei(values.amount.toString()) : 0
-      ),
-      'ether'
-    )
-      .toFixed(18)
-      .toString()} ETH`;
+    return `Total Amount: ${removeTrailingZeros(
+      fromWei(
+        estimatedTxFee.plus(
+          token.address === 'ETH' ? toWei(values.amount.toString()) : 0
+        ),
+        'ether'
+      )
+        .toFixed(18)
+        .toString()
+    )} ETH`;
   };
 
   showDetailsAnchor = () => {
