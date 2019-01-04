@@ -213,7 +213,7 @@ class Send extends Component {
 
                           {valid && this.estimatedTxFee(values) ? (
                             <TxDetails
-                              estimatedTxFee={this.estimatedTxFee}
+                              estimatedTxFee={this.estimatedTxFee(values)}
                               token={token}
                               valid={valid}
                               values={values}

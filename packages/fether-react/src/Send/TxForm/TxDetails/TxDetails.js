@@ -12,11 +12,11 @@ class TxDetails extends Component {
     showDetails: false
   };
 
-  renderCalculation = values => {
-    const { estimatedTxFee } = this.props;
+  renderCalculation = () => {
+    const { estimatedTxFee, values } = this.props;
 
     const gasPriceBn = new BigNumber(values.gasPrice.toString());
-    const gasLimitBn = estimatedTxFee(values)
+    const gasLimitBn = estimatedTxFee
       .div(gasPriceBn)
       .div(10 ** 9)
       .toFixed(0)
@@ -25,25 +25,25 @@ class TxDetails extends Component {
     return `Estimate amount of gas: ${gasLimitBn}`;
   };
 
-  renderDetails = values => {
-    return `${this.renderCalculation(values)}
-${this.renderFee(values)}
-${this.renderTotalAmount(values)}`;
+  renderDetails = () => {
+    return `${this.renderCalculation()}
+${this.renderFee()}
+${this.renderTotalAmount()}`;
   };
 
-  renderFee = values => {
+  renderFee = () => {
     const { estimatedTxFee } = this.props;
 
-    return `Fee: ${fromWei(estimatedTxFee(values), 'ether')
+    return `Fee: ${fromWei(estimatedTxFee, 'ether')
       .toFixed(9)
       .toString()} ETH (estimate * gas price)`;
   };
 
-  renderTotalAmount = values => {
-    const { estimatedTxFee, token } = this.props;
+  renderTotalAmount = () => {
+    const { estimatedTxFee, token, values } = this.props;
 
     return `Total Amount: ${fromWei(
-      estimatedTxFee(values).plus(
+      estimatedTxFee.plus(
         token.address === 'ETH' ? toWei(values.amount.toString()) : 0
       ),
       'ether'
@@ -75,7 +75,6 @@ ${this.renderTotalAmount(values)}`;
   };
 
   render () {
-    const { values } = this.props;
     const { showDetails } = this.state;
 
     return (
@@ -90,7 +89,7 @@ ${this.renderTotalAmount(values)}`;
               className='-sm-details'
               id='txDetails'
               readOnly
-              value={this.renderDetails(values)}
+              value={this.renderDetails()}
             />
           </div>
         </div>
