@@ -128,7 +128,8 @@ In another console launch Fether:
 ```bash
 # Fether will connect to the running node
 $ cd /path/to/fether
-$ yarn; yarn build; yarn taskbar
+$ yarn; yarn build
+$ yarn taskbar
 ```
 
 ## Join the chat!
