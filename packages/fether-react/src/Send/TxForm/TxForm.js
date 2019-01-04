@@ -161,6 +161,7 @@ class Send extends Component {
                         <fieldset className='form_fields'>
                           <Field
                             as='textarea'
+                            autoFocus
                             className='-sm'
                             label='To'
                             name='to'
@@ -170,7 +171,6 @@ class Send extends Component {
                           />
 
                           <Field
-                            autoFocus
                             className='form_field_amount'
                             formNoValidate
                             label='Amount'
