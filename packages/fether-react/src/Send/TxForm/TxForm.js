@@ -23,9 +23,7 @@ import withAccount from '../../utils/withAccount.js';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
 import withTokens from '../../utils/withTokens';
 
-const DEFAULT_AMOUNT_FONT_SIZE = 3;
 const DEFAULT_AMOUNT_MAX_CHARS = 9;
-const AMOUNT_RESIZE_FONT_SIZE = 0.47 * DEFAULT_AMOUNT_FONT_SIZE; // Fits 1 Wei
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 
@@ -65,21 +63,14 @@ class Send extends Component {
     }
   });
 
-  changeAmountFontSize = () => {
-    const amountElement = document.getElementById('amount');
-
-    if (!amountElement) {
-      return;
+  changeAmountFontSize = values => {
+    if (!values.amount) {
+      return '-resize-font-default';
     }
 
-    if (
-      amountElement.scrollWidth > amountElement.offsetWidth ||
-      amountElement.value.length > DEFAULT_AMOUNT_MAX_CHARS
-    ) {
-      amountElement.style.fontSize = `${AMOUNT_RESIZE_FONT_SIZE}rem`;
-    } else {
-      amountElement.style.fontSize = `${DEFAULT_AMOUNT_FONT_SIZE}rem`;
-    }
+    return values.amount.toString().length > DEFAULT_AMOUNT_MAX_CHARS
+      ? '-resize-font-small' // Resize to fit an amount as small as one Wei
+      : '-resize-font-default';
   };
 
   calculateMax = (gas, gasPrice) => {
@@ -154,7 +145,9 @@ class Send extends Component {
                         <fieldset className='form_fields'>
                           <Field
                             autoFocus
-                            className='form_field_amount'
+                            className={`form_field_amount ${this.changeAmountFontSize(
+                              values
+                            )}`}
                             formNoValidate
                             label='Amount'
                             name='amount'
@@ -179,12 +172,6 @@ class Send extends Component {
                               Max
                             </button>
                           </Field>
-
-                          <OnChange name='amount'>
-                            {(value, previous) => {
-                              this.changeAmountFontSize();
-                            }}
-                          </OnChange>
 
                           <Field
                             as='textarea'
@@ -215,8 +202,6 @@ class Send extends Component {
                             {(value, previous) => {
                               if (this.state.maxSelected) {
                                 mutators.recalculateMax();
-                              } else {
-                                this.changeAmountFontSize();
                               }
                             }}
                           </OnChange>
