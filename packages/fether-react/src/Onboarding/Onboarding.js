@@ -53,14 +53,16 @@ class Onboarding extends Component {
         <Header title={<h1>Terms of Use</h1>} />
 
         <div className='window_content'>
-          <div className='box -padded'>
-            <FetherForm.Field
-              as={ReactMarkdown}
-              className='terms-and-conditions'
-              renderers={reactMarkdownOptions}
-              source={this.state.markdown}
-              label='Please read carefully'
-            />
+          <div className='box -padded-extra'>
+            <div className='terms-and-conditions-wrapper'>
+              <FetherForm.Field
+                as={ReactMarkdown}
+                className='terms-and-conditions'
+                renderers={reactMarkdownOptions}
+                source={this.state.markdown}
+                label='Please read carefully'
+              />
+            </div>
           </div>
         </div>
 
