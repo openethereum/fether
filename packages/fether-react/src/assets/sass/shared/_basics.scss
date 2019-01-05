@@ -3,6 +3,10 @@ html {
 }
 
 body {
+   /* Running taskbar app requires $eggshell background colour otherwise
+    * Onboarding component screen is shown with grey background
+    */
+  background-color: $eggshell;
   user-select: none;
   color: $black;
   font-family: $sans;
