@@ -24,6 +24,7 @@ import withBalance, { withEthBalance } from '../../utils/withBalance';
 import withTokens from '../../utils/withTokens';
 
 const DEFAULT_AMOUNT_MAX_CHARS = 9;
+const MEDIUM_AMOUNT_MAX_CHARS = 14;
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 
@@ -63,10 +64,18 @@ class Send extends Component {
     }
   });
 
-  changeAmountFontSize = amount =>
-    amount.toString().length > DEFAULT_AMOUNT_MAX_CHARS
-      ? '-resize-font-small' // Resize to fit an amount as small as one Wei
-      : '-resize-font-default';
+  changeAmountFontSize = amount => {
+    const amountLen = amount.toString().length;
+    if (amountLen > MEDIUM_AMOUNT_MAX_CHARS) {
+      return '-resize-font-small'; // Resize to fit an amount as small as one Wei
+    } else if (
+      MEDIUM_AMOUNT_MAX_CHARS >= amountLen &&
+      amountLen > DEFAULT_AMOUNT_MAX_CHARS
+    ) {
+      return '-resize-font-medium';
+    }
+    return '-resize-font-default';
+  };
 
   calculateMax = (gas, gasPrice) => {
     const { token, balance } = this.props;
