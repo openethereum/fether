@@ -63,15 +63,10 @@ class Send extends Component {
     }
   });
 
-  changeAmountFontSize = values => {
-    if (!values.amount) {
-      return '-resize-font-default';
-    }
-
-    return values.amount.toString().length > DEFAULT_AMOUNT_MAX_CHARS
+  changeAmountFontSize = amount =>
+    amount.toString().length > DEFAULT_AMOUNT_MAX_CHARS
       ? '-resize-font-small' // Resize to fit an amount as small as one Wei
       : '-resize-font-default';
-  };
 
   calculateMax = (gas, gasPrice) => {
     const { token, balance } = this.props;
@@ -145,9 +140,11 @@ class Send extends Component {
                         <fieldset className='form_fields'>
                           <Field
                             autoFocus
-                            className={`form_field_amount ${this.changeAmountFontSize(
-                              values
-                            )}`}
+                            className={`form_field_amount ${
+                              !values.amount
+                                ? '-resize-font-default'
+                                : this.changeAmountFontSize(values.amount)
+                            }`}
                             formNoValidate
                             label='Amount'
                             name='amount'
