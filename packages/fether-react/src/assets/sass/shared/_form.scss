@@ -132,11 +132,11 @@ input.form_field_amount[type='number'] {
   -webkit-appearance: none;
 
   &.-resize-font-default {
-    font-size: ms(6); /* 3rem */
+    font-size: ms(6);
   }
 
   &.-resize-font-small {
-    font-size: 1.41rem; /* 0.47 * default */
+    font-size: ms(2);
   }
 
   &::-webkit-inner-spin-button,
