@@ -6,7 +6,7 @@
 import { killParity } from '@parity/electron';
 import electron from 'electron';
 
-import FetherWindow from './fetherWindow';
+import FetherWindow from './app';
 
 const { app } = electron;
 
