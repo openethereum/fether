@@ -5,11 +5,8 @@
 
 import parityElectron from '@parity/electron';
 import electron from 'electron';
-import path from 'path';
-import url from 'url';
 
 import { productName } from '../../../electron-builder.json';
-import staticPath from '../utils/staticPath';
 import Pino from '../utils/pino';
 import addMenu from '../menu';
 import cli from '../cli';
@@ -47,14 +44,7 @@ class FetherApp {
 
     // Opens file:///path/to/build/index.html in prod mode, or whatever is
     // passed to ELECTRON_START_URL
-    this.fetherApp.window.loadURL(
-      process.env.ELECTRON_START_URL ||
-        url.format({
-          pathname: path.join(staticPath, 'build', 'index.html'),
-          protocol: 'file:',
-          slashes: true
-        })
-    );
+    this.fetherApp.window.loadURL(options.index);
 
     // Listen to messages from renderer process
     ipcMain.on('asynchronous-message', (...args) =>

@@ -3,12 +3,23 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
+import path from 'path';
+import url from 'url';
 import extend from 'extend';
+
+import staticPath from '../../utils/staticPath';
 
 const DEFAULT_OPTIONS = {
   height: 640,
   resizable: false,
-  width: 360
+  width: 360,
+  index:
+    process.env.ELECTRON_START_URL ||
+    url.format({
+      pathname: path.join(staticPath, 'build', 'index.html'),
+      protocol: 'file:',
+      slashes: true
+    })
 };
 
 const TASKBAR_OPTIONS = {};
