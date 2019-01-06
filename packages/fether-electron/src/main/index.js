@@ -7,6 +7,7 @@ import { killParity } from '@parity/electron';
 import electron from 'electron';
 
 import FetherApp from './app';
+import FetherAppOptions from './app/options';
 
 const { app } = electron;
 
@@ -18,8 +19,11 @@ if (!['darwin', 'win32'].includes(process.platform)) {
 
 const fetherAppInstance = new FetherApp();
 
+const fetherAppOptionsInstance = new FetherAppOptions();
+const options = fetherAppOptionsInstance.create();
+
 app.on('ready', () => {
-  fetherAppInstance.create.call(undefined);
+  fetherAppInstance.create(options);
 });
 
 app.on('window-all-closed', () => {
@@ -36,6 +40,6 @@ app.on('quit', killParity);
 
 app.on('activate', () => {
   if (fetherAppInstance.fetherApp.window === null) {
-    fetherAppInstance.create.call(undefined);
+    fetherAppInstance.create(options);
   }
 });

@@ -31,18 +31,13 @@ let hasCalledInitFetherApp = false;
 class FetherApp {
   fetherApp = {};
 
-  // Bound function that is bound to class instance
-  create = () => {
+  create = options => {
     if (hasCalledInitFetherApp) {
       throw new Error('Unable to initialise Fether app more than once');
     }
 
     pino.info(`Starting ${productName}...`);
-    this.fetherApp.window = new BrowserWindow({
-      height: 640,
-      resizable: false,
-      width: 360
-    });
+    this.fetherApp.window = new BrowserWindow(options);
 
     // Set options for @parity/electron
     parityElectron({
