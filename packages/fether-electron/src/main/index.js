@@ -18,9 +18,9 @@ if (!['darwin', 'win32'].includes(process.platform)) {
 
 const fetherAppInstance = new FetherApp();
 
-fetherAppInstance.create();
-
-app.on('ready', fetherAppInstance.create);
+app.on('ready', () => {
+  fetherAppInstance.create.call(undefined);
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -35,7 +35,7 @@ app.on('will-quit', killParity);
 app.on('quit', killParity);
 
 app.on('activate', () => {
-  if (fetherAppInstance.app.window === null) {
-    fetherAppInstance.create();
+  if (fetherAppInstance.fetherApp.window === null) {
+    fetherAppInstance.create.call(undefined);
   }
 });

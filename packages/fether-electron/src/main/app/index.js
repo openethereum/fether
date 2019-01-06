@@ -3,8 +3,6 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { FetherAppInstance } from './types';
-
 import parityElectron, {
   getParityPath,
   fetchParity,
@@ -30,12 +28,13 @@ const pino = Pino();
 
 let hasCalledInitFetherApp = false;
 
-class FetherApp implements FetherAppInstance {
-  fetherApp;
+class FetherApp {
+  fetherApp = {};
 
-  create (): void {
+  // Bound function that is bound to class instance
+  create = () => {
     if (hasCalledInitFetherApp) {
-      throw new Error('Unable to initialise Fether window more than once');
+      throw new Error('Unable to initialise Fether app more than once');
     }
 
     pino.info(`Starting ${productName}...`);
@@ -55,12 +54,13 @@ class FetherApp implements FetherAppInstance {
       .catch(() =>
         // Install parity if not present
         fetchParity(this.fetherApp.window, {
-          onProgress: progress =>
+          onProgress: progress => {
             // Notify the renderers on download progress
-            this.fetherApp.window.webContents.send(
+            return this.fetherApp.window.webContents.send(
               'parity-download-progress',
               progress
-            ),
+            );
+          },
           parityChannel: parity.channel
         })
       )
@@ -154,7 +154,7 @@ class FetherApp implements FetherAppInstance {
     this.fetherApp.window.on('closed', () => {
       this.fetherApp.window = null;
     });
-  }
+  };
 }
 
 export default FetherApp;
