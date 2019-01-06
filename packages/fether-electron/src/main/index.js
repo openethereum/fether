@@ -38,6 +38,9 @@ app.on('before-quit', killParity);
 app.on('will-quit', killParity);
 app.on('quit', killParity);
 
+// FIXME - determine how to trigger this to check that it works and doesn't create duplicate!
+// perhaps it should be `!hasVisibleWindows && !fetherAppInstance` instead
+// See https://electronjs.org/docs/api/app#event-activate-macos
 app.on('activate', (event, hasVisibleWindows) => {
   if (!hasVisibleWindows || fetherAppInstance.fetherApp.window === null) {
     fetherAppInstance.create(options);
