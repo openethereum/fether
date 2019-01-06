@@ -38,8 +38,8 @@ app.on('before-quit', killParity);
 app.on('will-quit', killParity);
 app.on('quit', killParity);
 
-app.on('activate', () => {
-  if (fetherAppInstance.fetherApp.window === null) {
+app.on('activate', (event, hasVisibleWindows) => {
+  if (!hasVisibleWindows || fetherAppInstance.fetherApp.window === null) {
     fetherAppInstance.create(options);
   }
 });
