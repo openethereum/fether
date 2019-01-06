@@ -36,23 +36,23 @@ class ParityEthereum {
       .then(async () => {
         // Do not run Parity Ethereum if the user ran Fether with --no-run-parity
         if (!cli.runParity) {
-          return;
+          return false;
         }
 
         // Do not run Parity Ethereum if it is already running
         if (await this.isRunning()) {
-          return;
+          return true;
         }
 
         // Run Parity Ethereum when installed
-        const parityEthereum = await this.run();
+        await this.run();
         pino.info('Running Parity Ethereum');
-        return parityEthereum;
+        return true;
       })
-      .then(() => {
+      .then(isRunning => {
         // Notify the renderers
-        fetherAppWindow.webContents.send('parity-running', true);
-        global.isParityRunning = true; // Send this variable to renderers via IPC
+        fetherAppWindow.webContents.send('parity-running', isRunning);
+        global.isParityRunning = isRunning; // Send this variable to renderers via IPC
       })
       .catch(handleError);
   };
