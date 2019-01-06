@@ -7,10 +7,10 @@ import parityElectron from '@parity/electron';
 import electron from 'electron';
 
 import { productName } from '../../../electron-builder.json';
-import Pino from '../utils/pino';
-import addMenu from '../menu';
-import cli from '../cli';
-import messages from '../messages';
+import Pino from './utils/pino';
+import addMenu from './menu';
+import cli from './cli';
+import messages from './messages';
 import ParityEthereum from './parityEthereum';
 
 const { BrowserWindow, ipcMain, session } = electron;

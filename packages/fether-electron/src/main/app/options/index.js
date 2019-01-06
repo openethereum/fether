@@ -7,7 +7,7 @@ import path from 'path';
 import url from 'url';
 import extend from 'extend';
 
-import staticPath from '../../utils/staticPath';
+import staticPath from '../utils/staticPath';
 
 const DEFAULT_OPTIONS = {
   height: 640,

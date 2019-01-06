@@ -12,9 +12,9 @@ import {
 import getRemainingArgs from 'commander-remaining-args';
 
 import { parity } from '../../../../package.json';
-import handleError from '../../utils/handleError';
-import cli from '../../cli';
-import Pino from '../../utils/pino';
+import handleError from '../utils/handleError';
+import cli from '../cli';
+import Pino from '../utils/pino';
 
 const pino = Pino();
 
