@@ -6,7 +6,7 @@
 import { killParity } from '@parity/electron';
 import electron from 'electron';
 
-import FetherWindow from './app';
+import FetherApp from './app';
 
 const { app } = electron;
 
@@ -16,11 +16,11 @@ if (!['darwin', 'win32'].includes(process.platform)) {
   app.disableHardwareAcceleration();
 }
 
-const fetherWindowInstance = new FetherWindow();
+const fetherAppInstance = new FetherApp();
 
-fetherWindowInstance.create();
+fetherAppInstance.create();
 
-app.on('ready', fetherWindowInstance.create);
+app.on('ready', fetherAppInstance.create);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -29,13 +29,13 @@ app.on('window-all-closed', () => {
   }
 });
 
-// Make sure parity stops when UI stops
+// Make sure Parity Ethereum stops when UI stops
 app.on('before-quit', killParity);
 app.on('will-quit', killParity);
 app.on('quit', killParity);
 
 app.on('activate', () => {
-  if (this.fetherWindow === null) {
-    fetherWindowInstance.create();
+  if (fetherAppInstance.app.window === null) {
+    fetherAppInstance.create();
   }
 });

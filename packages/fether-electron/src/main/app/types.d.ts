@@ -3,6 +3,6 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-export interface FetherWindowInstance {
+export interface FetherAppInstance {
   create: () => void;
 }
