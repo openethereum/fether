@@ -8,10 +8,6 @@ import BigNumber from 'bignumber.js';
 import { fromWei, toWei } from '@parity/api/lib/util/wei';
 
 class TxDetails extends Component {
-  state = {
-    showDetails: false
-  };
-
   renderCalculation = () => {
     const { estimatedTxFee, values } = this.props;
 
@@ -50,37 +46,12 @@ ${this.renderTotalAmount()}`;
     ).toString()} ETH`;
   };
 
-  showDetailsAnchor = () => {
-    return (
-      <span className='toggle-details'>
-        <a onClick={this.toggleDetails}>&uarr; Details</a>
-      </span>
-    );
-  };
-
-  showHideAnchor = () => {
-    return (
-      <span className='toggle-details'>
-        <a onClick={this.toggleDetails}>&darr; Hide</a>
-      </span>
-    );
-  };
-
-  toggleDetails = () => {
-    const { showDetails } = this.state;
-
-    this.setState({ showDetails: !showDetails });
-  };
-
   render () {
-    const { showDetails } = this.state;
+    const { showDetails } = this.props;
 
     return (
-      <div className='form-details-wrapper'>
-        <div className='form-details-buttons'>
-          {showDetails ? this.showHideAnchor() : this.showDetailsAnchor()}
-        </div>
-        <div className='form_field -details-value'>
+      <div>
+        <div className='form_field'>
           <div hidden={!showDetails}>
             <label htmlFor='txDetails'>Transaction Details (Estimate):</label>
             <textarea

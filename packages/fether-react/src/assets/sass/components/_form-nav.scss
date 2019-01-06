@@ -1,4 +1,5 @@
 .form-nav {
+  position: relative;
   padding-top: 0.5rem;
   display: flex;
   justify-content: center;
@@ -10,18 +11,15 @@
   &.-space-around {
     justify-content: space-around;
   }
-}
 
-.form-details-wrapper {
-  position: relative;
-}
-
-.form_field { /* extend .form_field class of react-final-form */
-  &.-details-value {
+  .form-details-buttons {
     position: absolute;
-    background-color: $faint;
-    bottom: 2rem;
-    left: -7.75rem;
-    width: 19rem;
+    left: 1rem;
+
+    .toggle-details > a {
+      color: $dark-grey;
+      font-size: 0.8rem;
+      font-weight: 400;
+    }
   }
 }

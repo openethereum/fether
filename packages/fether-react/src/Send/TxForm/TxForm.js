@@ -38,7 +38,8 @@ const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 @observer
 class Send extends Component {
   state = {
-    maxSelected: false
+    maxSelected: false,
+    showDetails: false
   };
 
   decorator = createDecorator({
@@ -119,12 +120,36 @@ class Send extends Component {
     this.setState({ maxSelected: !this.state.maxSelected });
   };
 
+  showDetailsAnchor = () => {
+    return (
+      <span className='toggle-details'>
+        <a onClick={this.toggleDetails}>&darr; Details</a>
+      </span>
+    );
+  };
+
+  showHideAnchor = () => {
+    return (
+      <span className='toggle-details'>
+        <a onClick={this.toggleDetails}>&uarr; Hide</a>
+      </span>
+    );
+  };
+
+  toggleDetails = () => {
+    const { showDetails } = this.state;
+
+    this.setState({ showDetails: !showDetails });
+  };
+
   render () {
     const {
       accountAddress,
       sendStore: { tx },
       token
     } = this.props;
+
+    const { showDetails } = this.state;
 
     return (
       <div>
@@ -212,6 +237,19 @@ class Send extends Component {
                             type='range' // In Gwei
                           />
 
+                          {/* eslint-disable */}
+                          {valid &&
+                          !validating &&
+                          this.estimatedTxFee(values) ? (
+                            <TxDetails
+                              estimatedTxFee={this.estimatedTxFee(values)}
+                              showDetails={showDetails}
+                              token={token}
+                              values={values}
+                            />
+                          ) : null}
+                          {/* eslint-enable */}
+
                           <OnChange name='gasPrice'>
                             {(value, previous) => {
                               if (this.state.maxSelected) {
@@ -230,14 +268,17 @@ class Send extends Component {
                           )}
                         </fieldset>
                         <nav className='form-nav'>
-                          {valid && this.estimatedTxFee(values) ? (
-                            <TxDetails
-                              estimatedTxFee={this.estimatedTxFee(values)}
-                              token={token}
-                              values={values}
-                              validating={validating}
-                            />
+                          {/* eslint-disable */}
+                          {valid &&
+                          !validating &&
+                          this.estimatedTxFee(values) ? (
+                            <div className="form-details-buttons">
+                              {showDetails
+                                ? this.showHideAnchor()
+                                : this.showDetailsAnchor()}
+                            </div>
                           ) : null}
+                          {/* eslint-enable */}
                           <button
                             disabled={!valid || validating}
                             className='button'

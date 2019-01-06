@@ -138,17 +138,6 @@
   }
 }
 
-.form-details-buttons {
-  position: absolute;
-  left: -7rem;
-
-  .toggle-details > a {
-    color: $dark-grey;
-    font-size: 0.8rem;
-    font-weight: 400;
-  }
-}
-
 input.form_field_amount[type='number'] {
   font-size: ms(6);
   line-height: ms(6) * 1.1;
