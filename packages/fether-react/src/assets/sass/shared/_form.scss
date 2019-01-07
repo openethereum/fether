@@ -139,12 +139,25 @@
 }
 
 input.form_field_amount[type='number'] {
-  font-size: ms(6);
   line-height: ms(6) * 1.1;
   font-weight: 200;
   width: 100%;
   text-align: center;
   -webkit-appearance: none;
+  -webkit-transition: font-size 0.5s;
+  transition: font-size 0.5s;
+
+  &.-resize-font-default {
+    font-size: ms(6);
+  }
+
+  &.-resize-font-medium {
+    font-size: ms(4);
+  }
+
+  &.-resize-font-small {
+    font-size: ms(2);
+  }
 
   &::-webkit-inner-spin-button,
   &::-webkit-outer-spin-button {
