@@ -41,7 +41,7 @@ const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 @withBalance // Balance of current token (can be ETH)
 @withEthBalance // ETH balance
 @observer
-class Send extends Component {
+class TxForm extends Component {
   state = {
     maxSelected: false,
     showDetails: false
@@ -412,4 +412,4 @@ class Send extends Component {
   }, 1000);
 }
 
-export default Send;
+export default TxForm;
