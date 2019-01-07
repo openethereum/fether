@@ -44,13 +44,6 @@ class Send extends Component {
     showDetails: false
   };
 
-  handleSubmit = values => {
-    const { accountAddress, history, sendStore, token } = this.props;
-
-    sendStore.setTx(values);
-    history.push(`/send/${token.address}/from/${accountAddress}/signer`);
-  };
-
   decorator = createDecorator({
     field: /to|amount/, // when the value of these fields change...
     updates: {
