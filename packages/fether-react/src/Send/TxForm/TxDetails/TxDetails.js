@@ -16,7 +16,7 @@ class TxDetails extends Component {
 ${this.renderFee()}
 ${this.renderTotalAmount()}`
       : `
-Transaction incomplete..`;
+Missing input fields...`;
   };
 
   renderCalculation = () => {
@@ -36,7 +36,7 @@ Transaction incomplete..`;
 
     return `Fee: ${fromWei(estimatedTxFee, 'ether')
       .toFixed(9)
-      .toString()} ETH (gas * gas price)`;
+      .toString()} ETH (gas limit * gas price)`;
   };
 
   renderTotalAmount = () => {
