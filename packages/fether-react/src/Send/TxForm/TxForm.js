@@ -237,18 +237,12 @@ class Send extends Component {
                             type='range' // In Gwei
                           />
 
-                          {/* eslint-disable */}
-                          {valid &&
-                          !validating &&
-                          this.estimatedTxFee(values) ? (
-                            <TxDetails
-                              estimatedTxFee={this.estimatedTxFee(values)}
-                              showDetails={showDetails}
-                              token={token}
-                              values={values}
-                            />
-                          ) : null}
-                          {/* eslint-enable */}
+                          <TxDetails
+                            estimatedTxFee={this.estimatedTxFee(values)}
+                            showDetails={showDetails}
+                            token={token}
+                            values={values}
+                          />
 
                           <OnChange name='gasPrice'>
                             {(value, previous) => {
@@ -268,17 +262,11 @@ class Send extends Component {
                           )}
                         </fieldset>
                         <nav className='form-nav'>
-                          {/* eslint-disable */}
-                          {valid &&
-                          !validating &&
-                          this.estimatedTxFee(values) ? (
-                            <div className="form-details-buttons">
-                              {showDetails
-                                ? this.showHideAnchor()
-                                : this.showDetailsAnchor()}
-                            </div>
-                          ) : null}
-                          {/* eslint-enable */}
+                          <div className='form-details-buttons'>
+                            {showDetails
+                              ? this.showHideAnchor()
+                              : this.showDetailsAnchor()}
+                          </div>
                           <button
                             disabled={!valid || validating}
                             className='button'
