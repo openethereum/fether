@@ -37,16 +37,16 @@ class FetherApp {
     this.fetherApp.app = electronApp;
     this.fetherApp.options = options;
 
-    if (this.fetherApp.options.withTaskbar) {
+    if (options.withTaskbar) {
       this.createWindow();
       this.loadTaskbar();
       this.finalise();
     } else {
-      this.fetherApp.window = new BrowserWindow(this.fetherApp.options);
+      this.fetherApp.window = new BrowserWindow(options);
 
       // Opens file:///path/to/build/index.html in prod mode, or whatever is
       // passed to ELECTRON_START_URL
-      this.fetherApp.window.loadURL(this.fetherApp.options.index);
+      this.fetherApp.window.loadURL(options.index);
       this.finalise();
     }
 
@@ -85,7 +85,7 @@ class FetherApp {
       (details, callback) => {
         if (!this.fetherApp.window) {
           // There might be a split second where the user closes the app, so
-          // this.fetherApp.window is null, but there is still a network request done.
+          // this.fether.window is null, but there is still a network request done.
           return;
         }
         details.requestHeaders.Origin = `parity://${
@@ -107,25 +107,29 @@ class FetherApp {
   };
 
   loadTaskbar = () => {
+    const { app, options } = this.fetherApp;
+
     pino.info('Configuring Fether taskbar...');
 
-    if (this.fetherApp.app.dock && !this.fetherApp.options.showDockIcon) {
-      this.fetherApp.app.dock.hide();
+    if (app.dock && !options.showDockIcon) {
+      app.dock.hide();
     }
 
-    const defaultClickEvent = this.fetherApp.options.showOnRightClick
+    const defaultClickEvent = options.showOnRightClick
       ? 'right-click'
       : 'click';
 
-    this.fetherApp.tray = new Tray(this.fetherApp.options.icon);
-    this.fetherApp.tray.on(defaultClickEvent, this.clickedTray);
-    this.fetherApp.tray.on('double-click', this.clickedTray);
-    this.fetherApp.tray.setToolTip(this.fetherApp.options.tooltip);
+    this.fetherApp.tray = new Tray(options.icon);
+    let { tray } = this.fetherApp;
+
+    tray.on(defaultClickEvent, this.clickedTray);
+    tray.on('double-click', this.clickedTray);
+    tray.setToolTip(options.tooltip);
 
     this.fetherApp.supportsTrayHighlightState = false;
 
     try {
-      this.fetherApp.tray.setHighlightMode('never');
+      tray.setHighlightMode('never');
       this.fetherApp.supportsTrayHighlightState = true;
     } catch (e) {
       console.error('Unable to set highlight mode: ', e);
@@ -133,33 +137,43 @@ class FetherApp {
   };
 
   createWindow = () => {
+    const { options } = this.fetherApp;
+
     pino.info('Creating Fether window');
 
     this.fetherApp.emit('create-window');
 
-    this.fetherApp.window = new BrowserWindow(this.fetherApp.options);
+    this.fetherApp.window = new BrowserWindow(options);
     this.fetherApp.positioner = new Positioner(this.fetherApp.window);
 
     this.fetherApp.window.on('blur', () => {
-      this.fetherApp.options.alwaysOnTop ? this.emitBlur() : this.hideWindow();
+      options.alwaysOnTop ? this.emitBlur() : this.hideWindow();
     });
 
-    if (this.fetherApp.options.showOnAllWorkspaces !== false) {
+    if (options.showOnAllWorkspaces !== false) {
       this.fetherApp.window.setVisibleOnAllWorkspaces(true);
     }
 
     this.fetherApp.window.on('close', this.windowClear);
 
-    this.fetherApp.window.loadURL(this.fetherApp.options.index);
+    this.fetherApp.window.loadURL(options.index);
 
     this.fetherApp.emit('after-create-window');
   };
 
   showWindow = trayPos => {
+    const {
+      cachedBounds,
+      options,
+      positioner,
+      supportsTrayHighlightState,
+      tray
+    } = this.fetherApp;
+
     pino.info('Showing Fether window');
 
-    if (this.fetherApp.supportsTrayHighlightState) {
-      this.fetherApp.tray.setHighlightMode('always');
+    if (supportsTrayHighlightState) {
+      tray.setHighlightMode('always');
     }
 
     if (!this.fetherApp.window) {
@@ -171,12 +185,12 @@ class FetherApp {
     if (trayPos && trayPos.x !== 0) {
       // Cache the bounds
       this.fetherApp.cachedBounds = trayPos;
-    } else if (this.fetherApp.cachedBounds) {
+    } else if (cachedBounds) {
       // Cached value will be used if showWindow is called without bounds data
-      trayPos = this.fetherApp.cachedBounds;
-    } else if (this.fetherApp.tray.getBounds) {
+      trayPos = cachedBounds;
+    } else if (tray.getBounds) {
       // Get the current tray bounds
-      trayPos = this.fetherApp.tray.getBounds();
+      trayPos = tray.getBounds();
     }
 
     // Default the window to the right if `trayPos` bounds are undefined or null.
@@ -184,26 +198,20 @@ class FetherApp {
 
     if (
       (trayPos === undefined || (trayPos && trayPos.x === 0)) &&
-      this.fetherApp.options.windowPosition &&
-      this.fetherApp.options.windowPosition.substr(0, 4) === 'tray'
+      options.windowPosition &&
+      options.windowPosition.substr(0, 4) === 'tray'
     ) {
       noBoundsPosition =
         process.platform === 'win32' ? 'bottomRight' : 'topRight';
     }
 
-    const position = this.fetherApp.positioner.calculate(
-      noBoundsPosition || this.fetherApp.options.windowPosition,
+    const position = positioner.calculate(
+      noBoundsPosition || options.windowPosition,
       trayPos
     );
 
-    const x =
-      this.fetherApp.options.x !== undefined
-        ? this.fetherApp.options.x
-        : position.x;
-    const y =
-      this.fetherApp.options.y !== undefined
-        ? this.fetherApp.options.y
-        : position.y;
+    const x = options.x ? options.x : position.x;
+    const y = options.y ? options.y : position.y;
 
     this.fetherApp.window.setPosition(x, y);
     this.fetherApp.window.show();
@@ -212,8 +220,10 @@ class FetherApp {
   };
 
   hideWindow = () => {
-    if (this.fetherApp.supportsTrayHighlightState) {
-      this.fetherApp.tray.setHighlightMode('never');
+    const { supportsTrayHighlightState, tray } = this.fetherApp;
+
+    if (supportsTrayHighlightState) {
+      tray.setHighlightMode('never');
     }
 
     if (!this.fetherApp.window) {
@@ -235,18 +245,20 @@ class FetherApp {
   };
 
   clickedTray = (e, bounds) => {
+    const { cachedBounds, window } = this.fetherApp;
+
     if (
       e.altKey ||
       e.shiftKey ||
       e.ctrlKey ||
       e.metaKey ||
-      (this.fetherApp.window && this.fetherApp.window.isVisible())
+      (window && window.isVisible())
     ) {
       return this.hideWindow();
     }
 
     // cachedBounds are needed for double-clicked event
-    this.fetherApp.cachedBounds = bounds || this.fetherApp.cachedBounds;
+    this.fetherApp.cachedBounds = bounds || cachedBounds;
     this.showWindow(this.fetherApp.cachedBounds);
   };
 }
