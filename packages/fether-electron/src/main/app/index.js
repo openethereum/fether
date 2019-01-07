@@ -28,14 +28,12 @@ class FetherApp {
       throw new Error('Unable to initialise Fether app more than once');
     }
 
-    pino.info(
-      `Starting ${productName} (${
-        options.withTaskbar ? 'with' : 'without'
-      } taskbar)...`
-    );
-
     this.fetherApp.app = electronApp;
     this.fetherApp.options = options;
+
+    this.addListeners();
+
+    this.fetherApp.emit('create-app');
 
     if (options.withTaskbar) {
       this.createWindow();
@@ -50,7 +48,7 @@ class FetherApp {
       this.finalise();
     }
 
-    this.fetherApp.emit('ready');
+    this.fetherApp.emit('after-create-app');
   };
 
   finalise = () => {
@@ -103,13 +101,15 @@ class FetherApp {
 
     this.fetherApp.window.on('closed', () => {
       this.fetherApp.window = null;
+
+      this.fetherApp.emit('closed-window');
     });
   };
 
   loadTaskbar = () => {
     const { app, options } = this.fetherApp;
 
-    pino.info('Configuring Fether taskbar...');
+    this.fetherApp.emit('load-taskbar');
 
     if (app.dock && !options.showDockIcon) {
       app.dock.hide();
@@ -138,8 +138,6 @@ class FetherApp {
 
   createWindow = () => {
     const { options } = this.fetherApp;
-
-    pino.info('Creating Fether window');
 
     this.fetherApp.emit('create-window');
 
@@ -170,8 +168,6 @@ class FetherApp {
       tray
     } = this.fetherApp;
 
-    pino.info('Showing Fether window');
-
     if (supportsTrayHighlightState) {
       tray.setHighlightMode('always');
     }
@@ -180,7 +176,7 @@ class FetherApp {
       this.createWindow();
     }
 
-    this.fetherApp.emit('show');
+    this.fetherApp.emit('show-window');
 
     if (trayPos && trayPos.x !== 0) {
       // Cache the bounds
@@ -216,7 +212,7 @@ class FetherApp {
     this.fetherApp.window.setPosition(x, y);
     this.fetherApp.window.show();
 
-    this.fetherApp.emit('after-show');
+    this.fetherApp.emit('after-show-window');
   };
 
   hideWindow = () => {
@@ -230,18 +226,18 @@ class FetherApp {
       return;
     }
 
-    this.fetherApp.emit('hide');
+    this.fetherApp.emit('hide-window');
     this.fetherApp.window.hide();
-    this.fetherApp.emit('after-hide');
+    this.fetherApp.emit('after-hide-window');
   };
 
   windowClear = () => {
     delete this.fetherApp.window;
-    this.fetherApp.emit('after-close');
+    this.fetherApp.emit('after-window-close');
   };
 
   emitBlur = () => {
-    this.fetherApp.emit('focus-lost');
+    this.fetherApp.emit('blur-window');
   };
 
   clickedTray = (e, bounds) => {
@@ -260,6 +256,60 @@ class FetherApp {
     // cachedBounds are needed for double-clicked event
     this.fetherApp.cachedBounds = bounds || cachedBounds;
     this.showWindow(this.fetherApp.cachedBounds);
+  };
+
+  addListeners = () => {
+    this.fetherApp.on('create-app', () => {
+      pino.info(
+        `Starting ${productName} (${
+          this.fetherApp.options.withTaskbar ? 'with' : 'without'
+        } taskbar)...`
+      );
+    });
+
+    this.fetherApp.on('after-create-app', () => {
+      pino.info(`Ready to use ${productName}`);
+    });
+
+    this.fetherApp.on('create-window', () => {
+      pino.info('Creating window');
+    });
+
+    this.fetherApp.on('after-create-window', () => {
+      pino.info('Finished creating window');
+    });
+
+    this.fetherApp.on('show-window', () => {
+      pino.info('Showing window');
+    });
+
+    this.fetherApp.on('after-show-window', () => {
+      pino.info('Finished showing window');
+    });
+
+    this.fetherApp.on('hide-window', () => {
+      pino.info('Hiding window on blur since not on top');
+    });
+
+    this.fetherApp.on('after-hide-window', () => {
+      pino.info('Finished hiding window');
+    });
+
+    this.fetherApp.on('blur-window', () => {
+      pino.info('Blur window since lost focus when on top');
+    });
+
+    this.fetherApp.on('after-closed-window', () => {
+      pino.info('Reset window since it was closed');
+    });
+
+    this.fetherApp.on('after-close-window', () => {
+      pino.info('Deleted window upon close');
+    });
+
+    this.fetherApp.on('load-taskbar', () => {
+      pino.info('Configuring taskbar for the window');
+    });
   };
 }
 
