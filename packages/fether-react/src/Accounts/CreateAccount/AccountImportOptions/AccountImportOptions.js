@@ -46,9 +46,7 @@ class AccountImportOptions extends Component {
     try {
       await setPhrase(phrase);
 
-      const addressForPhrase = createAccountStore.address.toLowerCase();
-
-      if (this.hasExistingAddressForImport(addressForPhrase)) {
+      if (this.hasExistingAddressForImport(createAccountStore.address)) {
         return;
       }
 
@@ -72,9 +70,8 @@ class AccountImportOptions extends Component {
 
     try {
       const json = JSON.parse(jsonString);
-      const jsonAddress = `0x${json['address'].toLowerCase()}`;
 
-      if (this.hasExistingAddressForImport(jsonAddress)) {
+      if (this.hasExistingAddressForImport(`0x${json['address']}`)) {
         return;
       }
 
@@ -94,7 +91,7 @@ class AccountImportOptions extends Component {
     const { accounts } = this.props;
     const isExistingAddress = accounts
       .map(address => address && address.toLowerCase())
-      .includes(addressForImport);
+      .includes(addressForImport.toLowerCase());
 
     if (isExistingAddress) {
       this.setState({
