@@ -57,7 +57,7 @@ Missing input fields...`;
       <div>
         <div className='form_field'>
           <div hidden={!showDetails}>
-            <label htmlFor='txDetails'>Transaction Details (estimation):</label>
+            <label htmlFor='txDetails'>Transaction Details:</label>
             <textarea
               className='-sm-details'
               id='txDetails'
