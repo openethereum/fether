@@ -33,6 +33,7 @@ Transaction incomplete..`;
 
   renderFee = () => {
     const { estimatedTxFee } = this.props;
+
     return `Fee: ${fromWei(estimatedTxFee, 'ether')
       .toFixed(9)
       .toString()} ETH (gas * gas price)`;
@@ -40,6 +41,7 @@ Transaction incomplete..`;
 
   renderTotalAmount = () => {
     const { estimatedTxFee, token, values } = this.props;
+
     return `Total Amount: ${fromWei(
       estimatedTxFee.plus(
         token.address === 'ETH' ? toWei(values.amount.toString()) : 0
