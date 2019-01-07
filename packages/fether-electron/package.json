@@ -45,7 +45,6 @@
     "electron-positioner": "^4.1.0",
     "extend": "^3.0.2",
     "fether-react": "^0.1.2",
-    "menubar": "^5.2.3",
     "pino": "^4.16.1",
     "pino-multi-stream": "^3.1.2",
     "source-map-support": "^0.5.6"
