@@ -6,12 +6,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { addressShort } from '../utils/addressShort';
+
 export const AddressShort = ({ address, as: T = 'span', ...otherProps }) => (
-  <T {...otherProps}>
-    {address.slice(0, 6)}
-    ..
-    {address.slice(-4)}
-  </T>
+  <T {...otherProps}>{addressShort(address)}</T>
 );
 
 AddressShort.propTypes = {
