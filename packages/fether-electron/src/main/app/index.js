@@ -42,6 +42,7 @@ class FetherApp {
       this.createWindow();
       this.loadTaskbar();
       this.finalise();
+      this.showWindow();
     } else {
       this.fetherApp.window = new BrowserWindow(options);
 
