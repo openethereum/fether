@@ -154,6 +154,7 @@ class Sent extends Component {
             token.address
           )}
           target='_blank'
+          rel='noopener noreferrer'
         >
           <button className='button -tiny'>See it on BlockScout</button>
         </a>
