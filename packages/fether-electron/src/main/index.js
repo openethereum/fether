@@ -6,10 +6,12 @@
 import { killParity } from '@parity/electron';
 import electron from 'electron';
 
+import Pino from './app/utils/pino';
 import FetherApp from './app';
 import FetherAppOptions from './app/options';
 
 const { app } = electron;
+const pino = Pino();
 
 // Disable gpu acceleration on linux
 // https://github.com/parity-js/fether/issues/85
@@ -17,13 +19,32 @@ if (!['darwin', 'win32'].includes(process.platform)) {
   app.disableHardwareAcceleration();
 }
 
-const fetherAppInstance = new FetherApp();
+const withTaskbar = process.env.TASKBAR !== 'false';
 
+const fetherAppInstance = new FetherApp();
 const fetherAppOptionsInstance = new FetherAppOptions();
-const options = fetherAppOptionsInstance.create();
+const options = fetherAppOptionsInstance.create(withTaskbar, {});
 
 app.on('ready', () => {
-  fetherAppInstance.create(options);
+  fetherAppInstance.create(app, options);
+});
+
+// Event triggered by clicking the Electron icon in the menu Dock
+// Reference: https://electronjs.org/docs/api/app#event-activate-macos
+app.on('activate', (event, hasVisibleWindows) => {
+  if (withTaskbar) {
+    pino.info(
+      'Detected Fether taskbar mode. Launching from application dock is not permitted.'
+    );
+    return;
+  }
+
+  if (hasVisibleWindows) {
+    pino.info('Existing Fether window detected.');
+    return;
+  }
+
+  fetherAppInstance.create(app, options);
 });
 
 app.on('window-all-closed', () => {
@@ -35,14 +56,10 @@ app.on('window-all-closed', () => {
 
 // Make sure Parity Ethereum stops when UI stops
 app.on('before-quit', killParity);
-app.on('will-quit', killParity);
-app.on('quit', killParity);
 
-// FIXME - determine how to trigger this to check that it works and doesn't create duplicate!
-// perhaps it should be `!hasVisibleWindows && !fetherAppInstance` instead
-// See https://electronjs.org/docs/api/app#event-activate-macos
-app.on('activate', (event, hasVisibleWindows) => {
-  if (!hasVisibleWindows || fetherAppInstance.fetherApp.window === null) {
-    fetherAppInstance.create(options);
-  }
+app.on('will-quit', killParity);
+
+app.on('quit', () => {
+  pino.info('Leaving Fether');
+  killParity();
 });

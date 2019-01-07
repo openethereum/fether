@@ -115,21 +115,10 @@ yarn start
 
 > Troubleshooting: If it hangs on a white screen in Electron even though it has compiled and has been syncing for a long time, then simply choose 'View > Reload' (CMD + R on macOS) from the Electron menu
 
-### Run as a taskbar app
-
-Separately launch Parity Ethereum node with the following flags:
+# Run without taskbar
 
 ```bash
-$ parity --chain kovan --light --ws-origins=file://*
-```
-
-In another console launch Fether:
-
-```bash
-# Fether will connect to the running node
-$ cd /path/to/fether
-$ yarn; yarn build
-$ yarn taskbar
+TASKBAR=false yarn start
 ```
 
 ## Join the chat!

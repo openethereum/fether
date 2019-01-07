@@ -36,13 +36,13 @@
     "prerelease": "./scripts/revertElectronBug.sh",
     "release": "electron-builder",
     "start": "cross-env ELECTRON_START_URL=http://localhost:3000 electron-webpack dev --ws-origins all",
-    "taskbar": "cross-env SKIP_PREFLIGHT_CHECK=true electron mb.js",
     "test": "echo Skipped."
   },
   "dependencies": {
     "@parity/electron": "^3.0.1",
     "commander": "^2.15.1",
     "commander-remaining-args": "^1.2.0",
+    "electron-positioner": "^4.1.0",
     "extend": "^3.0.2",
     "fether-react": "^0.1.2",
     "menubar": "^5.2.3",

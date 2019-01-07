@@ -12,16 +12,16 @@ const pino = Pino();
 /**
  * Handle all asynchronous messages from renderer to main.
  */
-export default async (mainWindow, event, action, ...args) => {
+export default async (fetherAppWindow, event, action, ...args) => {
   try {
     if (!action) {
       return;
     }
     switch (action) {
       case 'app-resize': {
-        const [width] = mainWindow.getContentSize();
+        const [width] = fetherAppWindow.getContentSize();
         const newHeight = args[0];
-        mainWindow.setContentSize(width, Math.round(newHeight) + 2);
+        fetherAppWindow.setContentSize(width, Math.round(newHeight) + 2);
         break;
       }
       case 'check-clock-sync': {

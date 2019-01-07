@@ -7,7 +7,7 @@ import electron from 'electron';
 
 const { app, Menu, shell } = electron;
 
-export default mainWindow => {
+export default fetherAppWindow => {
   // Create the Application's main menu
   // https://github.com/electron/electron/blob/master/docs/api/menu.md#examples
   const template = [
@@ -90,5 +90,5 @@ export default mainWindow => {
   const menu = Menu.buildFromTemplate(template);
 
   Menu.setApplicationMenu(menu);
-  mainWindow.setAutoHideMenuBar(true);
+  fetherAppWindow.setAutoHideMenuBar(true);
 };
