@@ -25,7 +25,10 @@ class FetherApp {
 
   create = (electronApp, options) => {
     if (hasCalledInitFetherApp) {
-      throw new Error('Unable to initialise Fether app more than once');
+      this.fetherApp.emit(
+        'error',
+        new Error('Unable to initialise Fether app more than once')
+      );
     }
 
     this.fetherApp.app = electronApp;
@@ -309,6 +312,10 @@ class FetherApp {
 
     this.fetherApp.on('load-taskbar', () => {
       pino.info('Configuring taskbar for the window');
+    });
+
+    this.fetherApp.on('error', error => {
+      console.error(error);
     });
   };
 }
