@@ -15,7 +15,8 @@ class TxDetails extends Component {
       ? `${this.renderCalculation()}
 ${this.renderFee()}
 ${this.renderTotalAmount()}`
-      : `Transaction incomplete`;
+      : `
+Transaction incomplete..`;
   };
 
   renderCalculation = () => {
