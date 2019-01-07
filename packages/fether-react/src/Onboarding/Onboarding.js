@@ -16,7 +16,7 @@ import termsAndConditions from './termsAndConditions.md';
  */
 const reactMarkdownOptions = {
   link: props => (
-    <a href={props.href} target='_blank'>
+    <a href={props.href} target='_blank' rel='noopener noreferrer'>
       {props.children}
     </a>
   )

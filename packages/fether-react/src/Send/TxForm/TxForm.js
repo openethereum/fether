@@ -22,6 +22,7 @@ import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import withAccount from '../../utils/withAccount.js';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
 import withTokens from '../../utils/withTokens';
+import TxDetails from './TxDetails';
 
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
@@ -37,26 +38,32 @@ const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 @observer
 class Send extends Component {
   state = {
-    maxSelected: false
-  };
-  handleSubmit = values => {
-    const { accountAddress, history, sendStore, token } = this.props;
-
-    sendStore.setTx(values);
-    history.push(`/send/${token.address}/from/${accountAddress}/signer`);
+    maxSelected: false,
+    showDetails: false
   };
 
   decorator = createDecorator({
     field: /to|amount/, // when the value of these fields change...
     updates: {
       // ...set field "gas"
-      gas: (value, allValues) => {
+      gas: async (value, allValues) => {
         const { parityStore, token } = this.props;
+        let newGasEstimate = null;
+
         if (this.preValidate(allValues) === true) {
-          return estimateGas(allValues, token, parityStore.api);
-        } else {
-          return null;
+          try {
+            newGasEstimate = await estimateGas(
+              allValues,
+              token,
+              parityStore.api
+            );
+          } catch (error) {
+            console.error(error);
+            throw new Error('Unable to estimate gas');
+          }
         }
+
+        return newGasEstimate;
       }
     }
   });
@@ -78,6 +85,28 @@ class Send extends Component {
     return output;
   };
 
+  estimatedTxFee = values => {
+    if (
+      !values.amount ||
+      !values.gas ||
+      !values.gasPrice ||
+      isNaN(values.amount) ||
+      isNaN(values.gas) ||
+      isNaN(values.gasPrice)
+    ) {
+      return null;
+    }
+
+    return values.gas.multipliedBy(toWei(values.gasPrice, 'shannon'));
+  };
+
+  handleSubmit = values => {
+    const { accountAddress, history, sendStore, token } = this.props;
+
+    sendStore.setTx(values);
+    history.push(`/send/${token.address}/from/${accountAddress}/signer`);
+  };
+
   recalculateMax = (args, state, { changeValue }) => {
     changeValue(state, 'amount', value => {
       return this.calculateMax(
@@ -91,12 +120,36 @@ class Send extends Component {
     this.setState({ maxSelected: !this.state.maxSelected });
   };
 
+  showDetailsAnchor = () => {
+    return (
+      <span className='toggle-details'>
+        <a onClick={this.toggleDetails}>&darr; Details</a>
+      </span>
+    );
+  };
+
+  showHideAnchor = () => {
+    return (
+      <span className='toggle-details'>
+        <a onClick={this.toggleDetails}>&uarr; Hide</a>
+      </span>
+    );
+  };
+
+  toggleDetails = () => {
+    const { showDetails } = this.state;
+
+    this.setState({ showDetails: !showDetails });
+  };
+
   render () {
     const {
       accountAddress,
       sendStore: { tx },
       token
     } = this.props;
+
+    const { showDetails } = this.state;
 
     return (
       <div>
@@ -132,6 +185,17 @@ class Send extends Component {
                       <form className='send-form' onSubmit={handleSubmit}>
                         <fieldset className='form_fields'>
                           <Field
+                            as='textarea'
+                            autoFocus
+                            className='-sm'
+                            label='To'
+                            name='to'
+                            placeholder='0x...'
+                            required
+                            render={FetherForm.Field}
+                          />
+
+                          <Field
                             className='form_field_amount'
                             formNoValidate
                             label='Amount'
@@ -159,16 +223,6 @@ class Send extends Component {
                           </Field>
 
                           <Field
-                            as='textarea'
-                            className='-sm'
-                            label='To'
-                            name='to'
-                            placeholder='0x...'
-                            required
-                            render={FetherForm.Field}
-                          />
-
-                          <Field
                             centerText={`${values.gasPrice} GWEI`}
                             className='-range'
                             label='Transaction Speed'
@@ -182,6 +236,19 @@ class Send extends Component {
                             step={0.5}
                             type='range' // In Gwei
                           />
+
+                          {/* eslint-disable */}
+                          {valid &&
+                          !validating &&
+                          this.estimatedTxFee(values) ? (
+                            <TxDetails
+                              estimatedTxFee={this.estimatedTxFee(values)}
+                              showDetails={showDetails}
+                              token={token}
+                              values={values}
+                            />
+                          ) : null}
+                          {/* eslint-enable */}
 
                           <OnChange name='gasPrice'>
                             {(value, previous) => {
@@ -201,6 +268,17 @@ class Send extends Component {
                           )}
                         </fieldset>
                         <nav className='form-nav'>
+                          {/* eslint-disable */}
+                          {valid &&
+                          !validating &&
+                          this.estimatedTxFee(values) ? (
+                            <div className="form-details-buttons">
+                              {showDetails
+                                ? this.showHideAnchor()
+                                : this.showDetailsAnchor()}
+                            </div>
+                          ) : null}
+                          {/* eslint-enable */}
                           <button
                             disabled={!valid || validating}
                             className='button'
@@ -224,6 +302,10 @@ class Send extends Component {
 
   preValidate = values => {
     const { balance, token } = this.props;
+
+    if (!values) {
+      return;
+    }
 
     if (!values.amount) {
       return { amount: 'Please enter a valid amount' };
@@ -267,10 +349,19 @@ class Send extends Component {
    * the tx.
    */
   validateForm = debounce(values => {
+    if (!values) {
+      return;
+    }
+
     try {
       const { ethBalance, token } = this.props;
 
+      if (!ethBalance) {
+        throw new Error('No "ethBalance"');
+      }
+
       const preValidation = this.preValidate(values);
+
       // preValidate return an error if a field isn't valid
       if (preValidation !== true) {
         return preValidation;
@@ -278,18 +369,13 @@ class Send extends Component {
 
       // If the gas hasn't been calculated yet, then we don't show any errors,
       // just wait a bit more
-      if (!values.gas) {
+      if (!this.estimatedTxFee(values)) {
         return;
-      }
-
-      if (!ethBalance || isNaN(values.gas)) {
-        throw new Error('No "ethBalance" or "gas" value.');
       }
 
       // Verify that `gas + (eth amount if sending eth) <= ethBalance`
       if (
-        values.gas
-          .multipliedBy(toWei(values.gasPrice, 'shannon'))
+        this.estimatedTxFee(values)
           .plus(token.address === 'ETH' ? toWei(values.amount) : 0)
           .gt(toWei(ethBalance))
       ) {
