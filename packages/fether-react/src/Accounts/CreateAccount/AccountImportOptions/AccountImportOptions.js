@@ -63,19 +63,19 @@ class AccountImportOptions extends Component {
 
   handleChangeFile = async jsonString => {
     const {
+      createAccountStore,
       createAccountStore: { setJsonString }
     } = this.props;
 
     this.setState({ isLoading: true });
 
     try {
-      const json = JSON.parse(jsonString);
+      await setJsonString(jsonString);
 
-      if (this.hasExistingAddressForImport(`0x${json['address']}`)) {
+      if (this.hasExistingAddressForImport(createAccountStore.address)) {
         return;
       }
 
-      await setJsonString(jsonString);
       this.handleNextStep();
     } catch (error) {
       this.setState({
