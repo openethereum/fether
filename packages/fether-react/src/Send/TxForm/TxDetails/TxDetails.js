@@ -28,7 +28,7 @@ Transaction incomplete..`;
       .toFixed(0)
       .toString();
 
-    return `Gas: ${gasLimitBn}`;
+    return `Gas Limit: ${gasLimitBn}`;
   };
 
   renderFee = () => {
