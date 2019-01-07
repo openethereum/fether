@@ -5,10 +5,10 @@
 
 import React, { Component } from 'react';
 import BigNumber from 'bignumber.js';
+import { Clickable, Form as FetherForm, Header } from 'fether-ui';
 import createDecorator from 'final-form-calculate';
 import debounce from 'debounce-promise';
 import { Field, Form } from 'react-final-form';
-import { Form as FetherForm, Header } from 'fether-ui';
 import { fromWei, toWei } from '@parity/api/lib/util/wei';
 import { inject, observer } from 'mobx-react';
 import { isAddress } from '@parity/api/lib/util/address';
@@ -138,7 +138,7 @@ class Send extends Component {
   showDetailsAnchor = () => {
     return (
       <span className='toggle-details'>
-        <a onClick={this.toggleDetails}>&darr; Details</a>
+        <Clickable onClick={this.toggleDetails}>&darr; Details</Clickable>
       </span>
     );
   };
@@ -146,7 +146,7 @@ class Send extends Component {
   showHideAnchor = () => {
     return (
       <span className='toggle-details'>
-        <a onClick={this.toggleDetails}>&uarr; Hide</a>
+        <Clickable onClick={this.toggleDetails}>&uarr; Hide</Clickable>
       </span>
     );
   };
