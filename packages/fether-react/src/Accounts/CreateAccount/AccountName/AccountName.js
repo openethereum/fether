@@ -32,7 +32,7 @@ class AccountName extends Component {
     } = this.props;
 
     const currentStep = pathname.slice(-1);
-    
+
     if (createAccountStore.noPrivateKey()) {
       // Save Signer account to Parity without asking for a password
       createAccountStore

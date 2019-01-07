@@ -46,7 +46,7 @@ class TxForm extends Component {
     maxSelected: false,
     showDetails: false
   };
- 
+
   decorator = createDecorator({
     field: /to|amount/, // when the value of these fields change...
     updates: {
