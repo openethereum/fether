@@ -19,8 +19,8 @@ const INDEX_HTML_PATH =
 // Icon path differs when started with `yarn electron` or `yarn start`
 const ICON_PATH =
   process.env.ELECTRON_START_ICON || process.env.SKIP_PREFLIGHT_CHECK
-    ? 'src/main/app/options/config/icons/parity-icon.png'
-    : path.join(__dirname, 'icons', 'parity-icon.png');
+    ? 'src/main/app/options/config/icons/parity-ethereum-fether-icon.png'
+    : path.join(__dirname, 'icons', 'parity-ethereum-fether-icon.png');
 
 const shouldUseDevTools = process.env.NODE_ENV !== 'production';
 
