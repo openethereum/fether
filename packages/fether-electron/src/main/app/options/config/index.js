@@ -24,14 +24,17 @@ const ICON_PATH =
 
 const shouldUseDevTools = process.env.NODE_ENV !== 'production';
 
+// API docs: https://electronjs.org/docs/api/browser-window
 const DEFAULT_OPTIONS = {
   frame: true,
   height: 640,
   index: INDEX_HTML_PATH,
   resizable: false,
   show: true,
+  tabbingIdentifier: 'parity',
   webPreferences: {
-    devTools: shouldUseDevTools // Security
+    devTools: shouldUseDevTools, // Security
+    enableRemoteModule: false
   },
   width: 360,
   withTaskbar: false
@@ -43,6 +46,7 @@ const windowPosition =
 const TASKBAR_OPTIONS = {
   dir: staticPath,
   frame: false,
+  hasShadow: true,
   height: 464,
   icon: ICON_PATH,
   show: false, // Run showWindow later when taskbar has loaded in FetherApp

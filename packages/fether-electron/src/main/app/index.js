@@ -40,22 +40,33 @@ class FetherApp {
 
     if (options.withTaskbar) {
       this.createWindow();
+      this.fetherApp.window.setProgressBar(0.4);
       this.loadTaskbar();
+      this.fetherApp.window.setProgressBar(0.6);
       this.finalise();
+      this.fetherApp.window.setProgressBar(0.8);
       this.showWindow();
+      this.fetherApp.window.setProgressBar(1.0);
     } else {
       this.fetherApp.window = new BrowserWindow(options);
+      this.fetherApp.window.setProgressBar(0.4);
 
       // Opens file:///path/to/build/index.html in prod mode, or whatever is
       // passed to ELECTRON_START_URL
       this.fetherApp.window.loadURL(options.index);
       this.finalise();
+      this.fetherApp.window.setProgressBar(1.0);
     }
+
+    this.fetherApp.window.setProgressBar(-1);
 
     this.fetherApp.emit('after-create-app');
   };
 
   finalise = () => {
+    // Security to prevent window contents from being captured by other apps
+    this.fetherApp.window.setContentProtection(true);
+
     // Set options for @parity/electron
     parityElectron({
       logger: namespace => log => Pino({ name: namespace }).info(log)
