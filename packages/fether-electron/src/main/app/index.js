@@ -106,7 +106,7 @@ class FetherApp {
     this.fetherApp.window.on('closed', () => {
       this.fetherApp.window = null;
 
-      this.fetherApp.emit('closed-window');
+      this.fetherApp.emit('after-closed-window');
     });
   };
 
@@ -237,7 +237,7 @@ class FetherApp {
 
   windowClear = () => {
     delete this.fetherApp.window;
-    this.fetherApp.emit('after-window-close');
+    this.fetherApp.emit('after-close-window');
   };
 
   emitBlur = () => {
@@ -271,10 +271,6 @@ class FetherApp {
       );
     });
 
-    this.fetherApp.on('after-create-app', () => {
-      pino.info(`Ready to use ${productName}`);
-    });
-
     this.fetherApp.on('create-window', () => {
       pino.info('Creating window');
     });
@@ -283,12 +279,20 @@ class FetherApp {
       pino.info('Finished creating window');
     });
 
+    this.fetherApp.on('load-taskbar', () => {
+      pino.info('Configuring taskbar for the window');
+    });
+
     this.fetherApp.on('show-window', () => {
       pino.info('Showing window');
     });
 
     this.fetherApp.on('after-show-window', () => {
       pino.info('Finished showing window');
+    });
+
+    this.fetherApp.on('after-create-app', () => {
+      pino.info(`Ready to use ${productName}`);
     });
 
     this.fetherApp.on('hide-window', () => {
@@ -303,16 +307,8 @@ class FetherApp {
       pino.info('Blur window since lost focus when on top');
     });
 
-    this.fetherApp.on('after-closed-window', () => {
-      pino.info('Reset window since it was closed');
-    });
-
     this.fetherApp.on('after-close-window', () => {
       pino.info('Deleted window upon close');
-    });
-
-    this.fetherApp.on('load-taskbar', () => {
-      pino.info('Configuring taskbar for the window');
     });
 
     this.fetherApp.on('error', error => {
