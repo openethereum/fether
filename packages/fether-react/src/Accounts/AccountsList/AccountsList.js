@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { AccountCard, Header } from 'fether-ui';
+import { AccountCard, Clickable, Header } from 'fether-ui';
 import { accountsInfo$, withoutLoading } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
 import light from '@parity/light.js-react';
@@ -44,9 +44,10 @@ class AccountsList extends Component {
         <Header
           title={<h1>Accounts</h1>}
           right={
-            <a className='icon -new' onClick={this.handleCreateAccount}>
-              New account
-            </a>
+            <Clickable
+              className='icon -new'
+              onClick={this.handleCreateAccount}
+            />
           }
         />
 

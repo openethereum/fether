@@ -5,10 +5,10 @@
 
 import React, { Component } from 'react';
 import BigNumber from 'bignumber.js';
+import { Clickable, Form as FetherForm, Header } from 'fether-ui';
 import createDecorator from 'final-form-calculate';
 import debounce from 'debounce-promise';
 import { Field, Form } from 'react-final-form';
-import { Form as FetherForm, Header } from 'fether-ui';
 import { fromWei, toWei } from '@parity/api/lib/util/wei';
 import { inject, observer } from 'mobx-react';
 import { isAddress } from '@parity/api/lib/util/address';
@@ -24,6 +24,8 @@ import withBalance, { withEthBalance } from '../../utils/withBalance';
 import withTokens from '../../utils/withTokens';
 import TxDetails from './TxDetails';
 
+const DEFAULT_AMOUNT_MAX_CHARS = 9;
+const MEDIUM_AMOUNT_MAX_CHARS = 14;
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 
@@ -67,6 +69,19 @@ class Send extends Component {
       }
     }
   });
+
+  changeAmountFontSize = amount => {
+    const amountLen = amount.toString().length;
+    if (amountLen > MEDIUM_AMOUNT_MAX_CHARS) {
+      return '-resize-font-small'; // Resize to fit an amount as small as one Wei
+    } else if (
+      MEDIUM_AMOUNT_MAX_CHARS >= amountLen &&
+      amountLen > DEFAULT_AMOUNT_MAX_CHARS
+    ) {
+      return '-resize-font-medium';
+    }
+    return '-resize-font-default';
+  };
 
   calculateMax = (gas, gasPrice) => {
     const { token, balance } = this.props;
@@ -123,7 +138,7 @@ class Send extends Component {
   showDetailsAnchor = () => {
     return (
       <span className='toggle-details'>
-        <a onClick={this.toggleDetails}>&darr; Details</a>
+        <Clickable onClick={this.toggleDetails}>&darr; Details</Clickable>
       </span>
     );
   };
@@ -131,7 +146,7 @@ class Send extends Component {
   showHideAnchor = () => {
     return (
       <span className='toggle-details'>
-        <a onClick={this.toggleDetails}>&uarr; Hide</a>
+        <Clickable onClick={this.toggleDetails}>&uarr; Hide</Clickable>
       </span>
     );
   };
@@ -196,11 +211,15 @@ class Send extends Component {
                           />
 
                           <Field
-                            className='form_field_amount'
+                            className={`form_field_amount ${
+                              !values.amount
+                                ? '-resize-font-default'
+                                : this.changeAmountFontSize(values.amount)
+                            }`}
+                            disabled={this.state.maxSelected}
                             formNoValidate
                             label='Amount'
                             name='amount'
-                            disabled={this.state.maxSelected}
                             placeholder='0.00'
                             render={FetherForm.Field}
                             required
@@ -237,18 +256,12 @@ class Send extends Component {
                             type='range' // In Gwei
                           />
 
-                          {/* eslint-disable */}
-                          {valid &&
-                          !validating &&
-                          this.estimatedTxFee(values) ? (
-                            <TxDetails
-                              estimatedTxFee={this.estimatedTxFee(values)}
-                              showDetails={showDetails}
-                              token={token}
-                              values={values}
-                            />
-                          ) : null}
-                          {/* eslint-enable */}
+                          <TxDetails
+                            estimatedTxFee={this.estimatedTxFee(values)}
+                            showDetails={showDetails}
+                            token={token}
+                            values={values}
+                          />
 
                           <OnChange name='gasPrice'>
                             {(value, previous) => {
@@ -268,17 +281,11 @@ class Send extends Component {
                           )}
                         </fieldset>
                         <nav className='form-nav'>
-                          {/* eslint-disable */}
-                          {valid &&
-                          !validating &&
-                          this.estimatedTxFee(values) ? (
-                            <div className="form-details-buttons">
-                              {showDetails
-                                ? this.showHideAnchor()
-                                : this.showDetailsAnchor()}
-                            </div>
-                          ) : null}
-                          {/* eslint-enable */}
+                          <div className='form-details-buttons'>
+                            {showDetails
+                              ? this.showHideAnchor()
+                              : this.showDetailsAnchor()}
+                          </div>
                           <button
                             disabled={!valid || validating}
                             className='button'

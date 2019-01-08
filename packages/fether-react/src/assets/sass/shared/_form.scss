@@ -21,10 +21,7 @@
     font-family: $mono;
     line-height: ms(0) * 1.3;
     opacity: 0.75;
-    margin: 0.25rem 0.5rem 0;
-    padding-bottom: 0.5rem;
-    padding-left: 0;
-    padding-right: 0;
+    padding: 0.5rem;
     overflow: hidden;
     word-wrap: break-word;
   }
@@ -139,12 +136,25 @@
 }
 
 input.form_field_amount[type='number'] {
-  font-size: ms(6);
   line-height: ms(6) * 1.1;
   font-weight: 200;
   width: 100%;
   text-align: center;
   -webkit-appearance: none;
+  -webkit-transition: font-size 0.5s;
+  transition: font-size 0.5s;
+
+  &.-resize-font-default {
+    font-size: ms(6);
+  }
+
+  &.-resize-font-medium {
+    font-size: ms(4);
+  }
+
+  &.-resize-font-small {
+    font-size: ms(2);
+  }
 
   &::-webkit-inner-spin-button,
   &::-webkit-outer-spin-button {

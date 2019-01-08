@@ -8,6 +8,7 @@ import { chainName$, withoutLoading } from '@parity/light.js';
 import debounce from 'lodash/debounce';
 import { Header } from 'fether-ui';
 import light from '@parity/light.js-react';
+import { Link } from 'react-router-dom';
 
 import Health from '../Health';
 import NewTokenItem from './NewTokenItem';
@@ -103,9 +104,9 @@ class Whitelist extends Component {
       <div>
         <Header
           left={
-            <a to='/tokens' className='icon -back' onClick={history.goBack}>
+            <Link to='/tokens' className='icon -back' onClick={history.goBack}>
               Close
-            </a>
+            </Link>
           }
           title={<h1>Search tokens</h1>}
         />
