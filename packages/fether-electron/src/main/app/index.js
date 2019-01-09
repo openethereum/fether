@@ -67,7 +67,76 @@ class FetherApp {
     this.fetherApp.emit('after-create-app');
 
     this.fetherApp.window.on('moved', () => {
-      this.saveWindowPosition();
+      const { previousWindowResolution } = this.fetherApp;
+      const currentWindowResolution = this.getWindowResolution();
+      console.log('previousWindowResolution: ', previousWindowResolution);
+      console.log('currentWindowResolution: ', currentWindowResolution);
+
+      // Update window resolution
+      if (
+        !previousWindowResolution ||
+        (previousWindowResolution &&
+          previousWindowResolution.x !== currentWindowResolution.x) ||
+        (previousWindowResolution &&
+          previousWindowResolution.y !== currentWindowResolution.y)
+      ) {
+        this.fetherApp.previousWindowResolution = currentWindowResolution;
+      }
+      // Get the latest position. The window may have been moved to a different
+      // screen with smaller resolution. We must move it to prevent cropping.
+      const position = this.fetherApp.window.getPosition();
+      console.log('position', this.fetherApp.window.getPosition());
+      const positionStruct = {
+        x: position[0],
+        y: position[1]
+      };
+
+      const fixedWindowPosition = this.fixWindowPosition(positionStruct);
+      console.log('fixedWindowPosition: ', fixedWindowPosition);
+
+      const newFixedPosition = {
+        x: fixedWindowPosition.x || positionStruct.x,
+        y: fixedWindowPosition.y || positionStruct.y
+      };
+
+      /**
+       * Only move it immediately back into the threshold of screen tray bounds
+       * if the window resolution reduced due to the Fether window changing onto a
+       * different screen. This will prevent it from being moved to a position
+       * where it is cropped.
+       * Do not do this all the time otherwise it will crash with
+       * a call stack exceeded if the user keeps trying to move it outside the window bounds
+       * and it would also prevent the user from moving it to a different screen at all.
+       */
+      if (
+        !previousWindowResolution ||
+        (previousWindowResolution &&
+          previousWindowResolution.x > currentWindowResolution.x) ||
+        (previousWindowResolution &&
+          previousWindowResolution.y > currentWindowResolution.y)
+      ) {
+        console.log('Different resolution detected');
+        // Move it to the fixed window x-coordinate position if that was fixed
+        if (fixedWindowPosition.x) {
+          this.fetherApp.window.setPosition(
+            fixedWindowPosition.x,
+            positionStruct.y,
+            true
+          );
+        }
+
+        // Move it to the fixed window x-coordinate position if that was fixed
+        if (fixedWindowPosition.y) {
+          this.fetherApp.window.setPosition(
+            positionStruct.x,
+            fixedWindowPosition.y,
+            true
+          );
+        }
+      }
+
+      console.log('setPosition', this.fetherApp.window.getPosition());
+      this.saveWindowPosition(newFixedPosition || positionStruct);
 
       this.fetherApp.emit('after-moved-window-position-saved');
     });
@@ -198,15 +267,12 @@ class FetherApp {
     this.fetherApp.emit('show-window');
 
     const calculatedWindowPosition = this.calculateWindowPosition(trayPos);
-    const trayHeight = Math.min(
+    this.fetherApp.trayDepth = Math.min(
       calculatedWindowPosition.x,
       calculatedWindowPosition.y
     );
     const loadedWindowPosition = this.loadWindowPosition();
-    const fixedWindowPosition = this.fixWindowPosition(
-      trayHeight,
-      loadedWindowPosition
-    );
+    const fixedWindowPosition = this.fixWindowPosition(loadedWindowPosition);
 
     /**
      * Since the user may change the taskbar tray to be on any side of the screen.
@@ -244,40 +310,44 @@ class FetherApp {
     this.fetherApp.emit('after-hide-window');
   };
 
-  fixWindowPosition = (trayHeight, loadedWindowPosition) => {
-    if (!loadedWindowPosition) {
+  // Changes the window position if its is moved out of a screen bounds threshold
+  fixWindowPosition = proposedWindowPosition => {
+    const { trayDepth } = this.fetherApp;
+    const { width: windowWidth, height: windowHeight } = this.fetherApp.options;
+
+    if (!proposedWindowPosition) {
       return;
     }
+
+    console.log('proposedWindowPosition: ', proposedWindowPosition);
 
     const newPosition = {
       x: undefined,
       y: undefined
     };
 
-    const windowResolution = {
-      x: this.fetherApp.positioner.calculate('bottomRight').x,
-      y: this.fetherApp.positioner.calculate('bottomRight').y
-    };
+    console.log('XX width, height: ', windowWidth, windowHeight);
+    console.log('trayDepth: ', trayDepth);
+    const offsetX = windowWidth + trayDepth;
+    const offsetY = windowHeight + trayDepth;
+    console.log('offsetX, offsetY', offsetX, offsetY);
 
-    /**
-     * Assume that the taskbar tray could have been on the any side of the screen with
-     * the tray hidden when they last moved the window and its position was saved.
-     * Restore the window so it would be fully visible and not obstructed by the tray
-     */
-    if (loadedWindowPosition.x < trayHeight) {
-      newPosition.x = trayHeight;
+    const currentWindowResolution = this.getWindowResolution();
+
+    if (proposedWindowPosition.x < trayDepth) {
+      newPosition.x = trayDepth;
     }
 
-    if (loadedWindowPosition.y < trayHeight) {
-      newPosition.y = trayHeight;
+    if (proposedWindowPosition.y < trayDepth) {
+      newPosition.y = trayDepth;
     }
 
-    if (loadedWindowPosition.y >= windowResolution.x - trayHeight) {
-      newPosition.x = windowResolution.x - trayHeight;
+    if (proposedWindowPosition.x >= currentWindowResolution.x - trayDepth) {
+      newPosition.x = currentWindowResolution.x - trayDepth;
     }
 
-    if (loadedWindowPosition.y >= windowResolution.y - trayHeight) {
-      newPosition.y = windowResolution.y - trayHeight;
+    if (proposedWindowPosition.y >= currentWindowResolution.y - trayDepth) {
+      newPosition.y = currentWindowResolution.y - trayDepth;
     }
 
     return newPosition;
@@ -331,6 +401,13 @@ class FetherApp {
     };
   };
 
+  getWindowResolution = () => {
+    return {
+      x: this.fetherApp.positioner.calculate('bottomRight').x,
+      y: this.fetherApp.positioner.calculate('bottomRight').y
+    };
+  };
+
   windowClear = () => {
     delete this.fetherApp.window;
     this.fetherApp.emit('after-close-window');
@@ -358,12 +435,10 @@ class FetherApp {
     this.showWindow(this.fetherApp.cachedBounds);
   };
 
-  saveWindowPosition = () => {
-    const position = this.fetherApp.window.getPosition();
-
+  saveWindowPosition = position => {
     settings.set('position', {
-      x: position[0],
-      y: position[1]
+      x: position.x,
+      y: position.y
     });
   };
 
