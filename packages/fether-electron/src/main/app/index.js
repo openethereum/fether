@@ -6,6 +6,7 @@
 import parityElectron from '@parity/electron';
 import electron, { Tray } from 'electron';
 import Positioner from 'electron-positioner';
+import settings from 'electron-settings';
 import events from 'events';
 
 import { productName } from '../../../electron-builder.json';
@@ -64,6 +65,12 @@ class FetherApp {
 
     this.fetherApp.window.setProgressBar(-1);
     this.fetherApp.emit('after-create-app');
+
+    this.fetherApp.window.on('moved', () => {
+      this.saveWindowPosition();
+
+      this.fetherApp.emit('after-moved-window-position-saved');
+    });
   };
 
   finalise = () => {
@@ -178,13 +185,7 @@ class FetherApp {
   };
 
   showWindow = trayPos => {
-    const {
-      cachedBounds,
-      options,
-      positioner,
-      supportsTrayHighlightState,
-      tray
-    } = this.fetherApp;
+    const { supportsTrayHighlightState, tray } = this.fetherApp;
 
     if (supportsTrayHighlightState) {
       tray.setHighlightMode('always');
@@ -195,6 +196,106 @@ class FetherApp {
     }
 
     this.fetherApp.emit('show-window');
+
+    const calculatedWindowPosition = this.calculateWindowPosition(trayPos);
+    const trayHeight = Math.min(
+      calculatedWindowPosition.x,
+      calculatedWindowPosition.y
+    );
+    const loadedWindowPosition = this.loadWindowPosition();
+    const fixedWindowPosition = this.fixWindowPosition(
+      trayHeight,
+      loadedWindowPosition
+    );
+
+    /**
+     * Since the user may change the taskbar tray to be on any side of the screen.
+     * If the user moved the window out of where the tray would be in the screen resolution bounds.
+     * Restore the window so it is fully visible adjacent to where the tray would be.
+     */
+    const x =
+      (fixedWindowPosition && fixedWindowPosition.x) ||
+      (loadedWindowPosition && loadedWindowPosition.x) ||
+      calculatedWindowPosition.x;
+    const y =
+      (fixedWindowPosition && fixedWindowPosition.y) ||
+      (loadedWindowPosition && loadedWindowPosition.y) ||
+      calculatedWindowPosition.y;
+
+    this.fetherApp.window.setPosition(x, y);
+    this.fetherApp.window.show();
+
+    this.fetherApp.emit('after-show-window');
+  };
+
+  hideWindow = () => {
+    const { supportsTrayHighlightState, tray } = this.fetherApp;
+
+    if (supportsTrayHighlightState) {
+      tray.setHighlightMode('never');
+    }
+
+    if (!this.fetherApp.window) {
+      return;
+    }
+
+    this.fetherApp.emit('hide-window');
+    this.fetherApp.window.hide();
+    this.fetherApp.emit('after-hide-window');
+  };
+
+  fixWindowPosition = (trayHeight, loadedWindowPosition) => {
+    if (!loadedWindowPosition) {
+      return;
+    }
+
+    const newPosition = {
+      x: undefined,
+      y: undefined
+    };
+
+    const windowResolution = {
+      x: this.fetherApp.positioner.calculate('bottomRight').x,
+      y: this.fetherApp.positioner.calculate('bottomRight').y
+    };
+
+    /**
+     * Assume that the taskbar tray could have been on the any side of the screen with
+     * the tray hidden when they last moved the window and its position was saved.
+     * Restore the window so it would be fully visible and not obstructed by the tray
+     */
+    if (loadedWindowPosition.x < trayHeight) {
+      newPosition.x = trayHeight;
+    }
+
+    if (loadedWindowPosition.y < trayHeight) {
+      newPosition.y = trayHeight;
+    }
+
+    if (loadedWindowPosition.y >= windowResolution.x - trayHeight) {
+      newPosition.x = windowResolution.x - trayHeight;
+    }
+
+    if (loadedWindowPosition.y >= windowResolution.y - trayHeight) {
+      newPosition.y = windowResolution.y - trayHeight;
+    }
+
+    return newPosition;
+  };
+
+  loadWindowPosition = () => {
+    if (!settings.has('position.x') && !settings.has('position.y')) {
+      return;
+    }
+
+    return {
+      x: settings.get('position.x'),
+      y: settings.get('position.y')
+    };
+  };
+
+  calculateWindowPosition = trayPos => {
+    const { cachedBounds, options, positioner, tray } = this.fetherApp;
 
     if (trayPos && trayPos.x !== 0) {
       // Cache the bounds
@@ -224,29 +325,10 @@ class FetherApp {
       trayPos
     );
 
-    const x = options.x ? options.x : position.x;
-    const y = options.y ? options.y : position.y;
-
-    this.fetherApp.window.setPosition(x, y);
-    this.fetherApp.window.show();
-
-    this.fetherApp.emit('after-show-window');
-  };
-
-  hideWindow = () => {
-    const { supportsTrayHighlightState, tray } = this.fetherApp;
-
-    if (supportsTrayHighlightState) {
-      tray.setHighlightMode('never');
-    }
-
-    if (!this.fetherApp.window) {
-      return;
-    }
-
-    this.fetherApp.emit('hide-window');
-    this.fetherApp.window.hide();
-    this.fetherApp.emit('after-hide-window');
+    return {
+      x: options.x ? options.x : position.x,
+      y: options.y ? options.y : position.y
+    };
   };
 
   windowClear = () => {
@@ -274,6 +356,15 @@ class FetherApp {
     // cachedBounds are needed for double-clicked event
     this.fetherApp.cachedBounds = bounds || cachedBounds;
     this.showWindow(this.fetherApp.cachedBounds);
+  };
+
+  saveWindowPosition = () => {
+    const position = this.fetherApp.window.getPosition();
+
+    settings.set('position', {
+      x: position[0],
+      y: position[1]
+    });
   };
 
   addListeners = () => {
@@ -319,6 +410,14 @@ class FetherApp {
 
     this.fetherApp.on('blur-window', () => {
       pino.info('Blur window since lost focus when on top');
+    });
+
+    this.fetherApp.on('after-moved-window-position-saved', () => {
+      pino.info(
+        `Saved position of window to (x: ${settings.get(
+          'position.x'
+        )}, y: ${settings.get('position.y')}) after move`
+      );
     });
 
     this.fetherApp.on('after-close-window', () => {
