@@ -12326,11 +12326,6 @@ pkg-up@2.0.0:
   dependencies:
     find-up "^2.1.0"
 
-pkill@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/pkill/-/pkill-2.0.0.tgz#7745bbbfe7c439353f48591d4165090d10b10370"
-  integrity sha1-d0W7v+fEOTU/SFkdQWUJDRCxA3A=
-
 please-upgrade-node@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/please-upgrade-node/-/please-upgrade-node-3.1.1.tgz#ed320051dfcc5024fae696712c8288993595e8ac"
