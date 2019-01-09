@@ -6,11 +6,16 @@
 import parityElectron from '@parity/electron';
 import electron, { Tray } from 'electron';
 import Positioner from 'electron-positioner';
-import settings from 'electron-settings';
 import events from 'events';
 
 import { productName } from '../../../electron-builder.json';
 import Pino from './utils/pino';
+import { getScreenResolution, shouldFixWindowPosition } from './utils/window';
+import {
+  getSavedWindowPosition,
+  hasSavedWindowPosition,
+  saveWindowPosition
+} from './settings';
 import addMenu from './menu';
 import cli from './cli';
 import messages from './messages';
@@ -67,21 +72,14 @@ class FetherApp {
     this.fetherApp.emit('after-create-app');
 
     this.fetherApp.window.on('moved', () => {
-      const { previousWindowResolution } = this.fetherApp;
-      const currentWindowResolution = this.getWindowResolution();
-      console.log('previousWindowResolution: ', previousWindowResolution);
-      console.log('currentWindowResolution: ', currentWindowResolution);
+      const { previousScreenResolution } = this.fetherApp;
+      const currentScreenResolution = this.calculateScreenResolution();
 
-      // Update window resolution
-      if (
-        !previousWindowResolution ||
-        (previousWindowResolution &&
-          previousWindowResolution.x !== currentWindowResolution.x) ||
-        (previousWindowResolution &&
-          previousWindowResolution.y !== currentWindowResolution.y)
-      ) {
-        this.fetherApp.previousWindowResolution = currentWindowResolution;
-      }
+      this.fetherApp.previousScreenResolution = getScreenResolution(
+        previousScreenResolution,
+        currentScreenResolution
+      );
+
       // Get the latest position. The window may have been moved to a different
       // screen with smaller resolution. We must move it to prevent cropping.
       const position = this.fetherApp.window.getPosition();
@@ -101,22 +99,19 @@ class FetherApp {
 
       /**
        * Only move it immediately back into the threshold of screen tray bounds
-       * if the window resolution reduced due to the Fether window changing onto a
-       * different screen. This will prevent it from being moved to a position
-       * where it is cropped.
-       * Do not do this all the time otherwise it will crash with
-       * a call stack exceeded if the user keeps trying to move it outside the window bounds
+       * if the screen resolution reduced to prevent it from being cropped.
+       * Do not call this all the time otherwise it will crash with
+       * a call stack exceeded if the user keeps trying to move it outside the screen bounds
        * and it would also prevent the user from moving it to a different screen at all.
        */
       if (
-        !previousWindowResolution ||
-        (previousWindowResolution &&
-          previousWindowResolution.x > currentWindowResolution.x) ||
-        (previousWindowResolution &&
-          previousWindowResolution.y > currentWindowResolution.y)
+        shouldFixWindowPosition(
+          previousScreenResolution,
+          currentScreenResolution
+        )
       ) {
         console.log('Different resolution detected');
-        // Move it to the fixed window x-coordinate position if that was fixed
+        // Move window to the fixed x-coordinate position if that required fixing
         if (fixedWindowPosition.x) {
           this.fetherApp.window.setPosition(
             fixedWindowPosition.x,
@@ -125,7 +120,7 @@ class FetherApp {
           );
         }
 
-        // Move it to the fixed window x-coordinate position if that was fixed
+        // Move window to the fixed y-coordinate position if that required fixing
         if (fixedWindowPosition.y) {
           this.fetherApp.window.setPosition(
             positionStruct.x,
@@ -136,7 +131,7 @@ class FetherApp {
       }
 
       console.log('setPosition', this.fetherApp.window.getPosition());
-      this.saveWindowPosition(newFixedPosition || positionStruct);
+      saveWindowPosition(newFixedPosition || positionStruct);
 
       this.fetherApp.emit('after-moved-window-position-saved');
     });
@@ -267,11 +262,16 @@ class FetherApp {
     this.fetherApp.emit('show-window');
 
     const calculatedWindowPosition = this.calculateWindowPosition(trayPos);
+
     this.fetherApp.trayDepth = Math.min(
       calculatedWindowPosition.x,
       calculatedWindowPosition.y
     );
-    const loadedWindowPosition = this.loadWindowPosition();
+
+    const loadedWindowPosition = hasSavedWindowPosition()
+      ? getSavedWindowPosition()
+      : undefined;
+
     const fixedWindowPosition = this.fixWindowPosition(loadedWindowPosition);
 
     /**
@@ -283,6 +283,7 @@ class FetherApp {
       (fixedWindowPosition && fixedWindowPosition.x) ||
       (loadedWindowPosition && loadedWindowPosition.x) ||
       calculatedWindowPosition.x;
+
     const y =
       (fixedWindowPosition && fixedWindowPosition.y) ||
       (loadedWindowPosition && loadedWindowPosition.y) ||
@@ -310,29 +311,27 @@ class FetherApp {
     this.fetherApp.emit('after-hide-window');
   };
 
-  // Changes the window position if its is moved out of a screen bounds threshold
+  /**
+   * Proposes a fixed window position that may be used if the window is moved
+   * out of the screen bounds threshold. If the window is moved across to a
+   * second monitor (without screen mirroring) then if the screen is hidden
+   * and then shown again (by pressing the Fether tray icon), since the
+   * coordinates of the window are outside the screen bounds the window
+   * will be restored into the users primary screen.
+   */
   fixWindowPosition = proposedWindowPosition => {
     const { trayDepth } = this.fetherApp;
-    const { width: windowWidth, height: windowHeight } = this.fetherApp.options;
 
     if (!proposedWindowPosition) {
       return;
     }
-
-    console.log('proposedWindowPosition: ', proposedWindowPosition);
 
     const newPosition = {
       x: undefined,
       y: undefined
     };
 
-    console.log('XX width, height: ', windowWidth, windowHeight);
-    console.log('trayDepth: ', trayDepth);
-    const offsetX = windowWidth + trayDepth;
-    const offsetY = windowHeight + trayDepth;
-    console.log('offsetX, offsetY', offsetX, offsetY);
-
-    const currentWindowResolution = this.getWindowResolution();
+    const currentScreenResolution = this.calculateScreenResolution();
 
     if (proposedWindowPosition.x < trayDepth) {
       newPosition.x = trayDepth;
@@ -342,26 +341,15 @@ class FetherApp {
       newPosition.y = trayDepth;
     }
 
-    if (proposedWindowPosition.x >= currentWindowResolution.x - trayDepth) {
-      newPosition.x = currentWindowResolution.x - trayDepth;
+    if (proposedWindowPosition.x >= currentScreenResolution.x - trayDepth) {
+      newPosition.x = currentScreenResolution.x - trayDepth;
     }
 
-    if (proposedWindowPosition.y >= currentWindowResolution.y - trayDepth) {
-      newPosition.y = currentWindowResolution.y - trayDepth;
+    if (proposedWindowPosition.y >= currentScreenResolution.y - trayDepth) {
+      newPosition.y = currentScreenResolution.y - trayDepth;
     }
 
     return newPosition;
-  };
-
-  loadWindowPosition = () => {
-    if (!settings.has('position.x') && !settings.has('position.y')) {
-      return;
-    }
-
-    return {
-      x: settings.get('position.x'),
-      y: settings.get('position.y')
-    };
   };
 
   calculateWindowPosition = trayPos => {
@@ -401,7 +389,7 @@ class FetherApp {
     };
   };
 
-  getWindowResolution = () => {
+  calculateScreenResolution = () => {
     return {
       x: this.fetherApp.positioner.calculate('bottomRight').x,
       y: this.fetherApp.positioner.calculate('bottomRight').y
@@ -433,13 +421,6 @@ class FetherApp {
     // cachedBounds are needed for double-clicked event
     this.fetherApp.cachedBounds = bounds || cachedBounds;
     this.showWindow(this.fetherApp.cachedBounds);
-  };
-
-  saveWindowPosition = position => {
-    settings.set('position', {
-      x: position.x,
-      y: position.y
-    });
   };
 
   addListeners = () => {
@@ -488,10 +469,11 @@ class FetherApp {
     });
 
     this.fetherApp.on('after-moved-window-position-saved', () => {
+      const position = getSavedWindowPosition();
       pino.info(
-        `Saved position of window to (x: ${settings.get(
-          'position.x'
-        )}, y: ${settings.get('position.y')}) after move`
+        `Saved window position to (x: ${position.x}, y: ${
+          position.y
+        }) after move`
       );
     });
 
