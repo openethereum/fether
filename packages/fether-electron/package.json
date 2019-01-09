@@ -36,9 +36,10 @@
     "prerelease": "./scripts/revertElectronBug.sh",
     "release": "electron-builder",
     "start": "cross-env ELECTRON_START_URL=http://localhost:3000 electron-webpack dev --ws-origins all",
-    "test": "echo Skipped."
+    "test": "ln -s ../../../node_modules/react-scripts node_modules/ && cross-env SKIP_PREFLIGHT_CHECK=true craco test; rm node_modules/react-scripts"
   },
   "dependencies": {
+    "@craco/craco": "^3.2.3",
     "@parity/electron": "^3.0.1",
     "commander": "^2.15.1",
     "commander-remaining-args": "^1.2.0",
