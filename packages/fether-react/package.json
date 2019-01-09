@@ -35,10 +35,10 @@
   },
   "dependencies": {
     "@craco/craco": "^3.2.3",
-    "@parity/api": "^3.0.11",
-    "@parity/contracts": "^3.0.11",
-    "@parity/light.js": "^3.0.11",
-    "@parity/light.js-react": "^3.0.11",
+    "@parity/api": "https://github.com/paritytech/js-libs.git#luke-81-electron-3",
+    "@parity/contracts": "https://github.com/paritytech/js-libs.git#luke-81-electron-3",
+    "@parity/light.js": "https://github.com/paritytech/js-libs.git#luke-81-electron-3",
+    "@parity/light.js-react": "https://github.com/paritytech/js-libs.git#luke-81-electron-3",
     "bignumber.js": "^8.0.1",
     "bip39": "^2.5.0",
     "debounce-promise": "^3.1.0",
@@ -64,10 +64,10 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "^2.1.1",
     "recompose": "^0.27.1",
-    "rxjs": "^6.2.0"
+    "rxjs": "^6.2.2"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-decorators": "^7.2.0",
+    "@babel/plugin-proposal-decorators": "^7.2.3",
     "capitalize": "^1.0.0",
     "node-sass": "^4.9.0",
     "node-sass-chokidar": "^1.2.2",
