@@ -26,6 +26,7 @@ const shouldUseDevTools = process.env.NODE_ENV !== 'production';
 
 // API docs: https://electronjs.org/docs/api/browser-window
 const DEFAULT_OPTIONS = {
+  alwaysOnTop: true,
   frame: true,
   height: 640,
   index: INDEX_HTML_PATH,
