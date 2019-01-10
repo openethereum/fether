@@ -81,7 +81,7 @@ $ /path/to/fether
 
 ### Dependencies
 
-Make sure you have at least `yarn` version 1.4.2 and [Node.js >=10.11.0](https://nodejs.org/en/)
+Make sure you have at least `yarn` version 1.4.2 and [Node.js >=10.10.0](https://nodejs.org/en/)
 
 ```bash
 yarn --version // Should be at least 1.4.2
