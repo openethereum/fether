@@ -7,9 +7,12 @@ import React, { Component } from 'react';
 import { chainName$, withoutLoading } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
 import light from '@parity/light.js-react';
+import { withProps } from 'recompose';
 
 import check from '../../assets/img/icons/check.svg';
 import loading from '../../assets/img/icons/loading.svg';
+import withTokens from '../../utils/withTokens';
+import { blockscoutTxUrl } from '../../utils/blockscout';
 
 // Number of confirmations to consider a transaction successful
 const MIN_CONFIRMATIONS = 6;
@@ -18,6 +21,10 @@ const MIN_CONFIRMATIONS = 6;
   chainName: () => chainName$().pipe(withoutLoading())
 })
 @inject('sendStore')
+@withTokens
+@withProps(({ match: { params: { tokenAddress } }, tokens }) => ({
+  token: tokens[tokenAddress]
+}))
 @observer
 class Sent extends Component {
   componentWillMount () {
@@ -134,18 +141,22 @@ class Sent extends Component {
   renderLink = () => {
     const {
       chainName,
-      sendStore: { confirmations, txStatus }
+      sendStore: { confirmations, txStatus },
+      token
     } = this.props;
 
     if (confirmations >= 0) {
       return (
         <a
-          href={`https://${
-            chainName === 'foundation' ? '' : `${chainName}.`
-          }etherscan.io/tx/${txStatus.confirmed.transactionHash}`}
+          href={blockscoutTxUrl(
+            chainName,
+            txStatus.confirmed.transactionHash,
+            token.address
+          )}
           target='_blank'
+          rel='noopener noreferrer'
         >
-          <button className='button -tiny'>See it on Etherscan</button>
+          <button className='button -tiny'>See it on BlockScout</button>
         </a>
       );
     }

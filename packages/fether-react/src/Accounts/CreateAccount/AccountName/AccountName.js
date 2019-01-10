@@ -7,7 +7,6 @@ import React, { Component } from 'react';
 import { AccountCard, Card, Form as FetherForm } from 'fether-ui';
 import Blockies from 'react-blockies';
 import { inject, observer } from 'mobx-react';
-import { Link } from 'react-router-dom';
 
 import loading from '../../../assets/img/icons/loading.svg';
 
@@ -25,15 +24,7 @@ class AccountName extends Component {
   handleChangeName = ({ target: { value } }) =>
     this.props.createAccountStore.setName(value);
 
-  render () {
-    const {
-      createAccountStore: { isImport }
-    } = this.props;
-
-    return isImport ? this.renderCardWhenImported() : this.renderCardWhenNew();
-  }
-
-  handleKeyPress = e => {
+  handleSubmit = () => {
     const {
       history,
       location: { pathname }
@@ -41,10 +32,16 @@ class AccountName extends Component {
 
     const currentStep = pathname.slice(-1);
 
-    if (e.key === 'Enter') {
-      history.push(`/accounts/new/${+currentStep + 1}`);
-    }
+    history.push(`/accounts/new/${+currentStep + 1}`);
   };
+
+  render () {
+    const {
+      createAccountStore: { isImport }
+    } = this.props;
+
+    return isImport ? this.renderCardWhenImported() : this.renderCardWhenNew();
+  }
 
   renderCardWhenImported = () => {
     const {
@@ -98,35 +95,37 @@ class AccountName extends Component {
     const currentStep = pathname.slice(-1);
 
     return (
-      <div key='createAccount'>
+      <form key='createAccount' onSubmit={this.handleSubmit}>
         <div className='text'>
           <p>Please give this account a name:</p>
         </div>
         <FetherForm.Field
+          autoFocus
           label='Name'
           onChange={this.handleChangeName}
-          onKeyPress={this.handleKeyPress}
           required
           type='text'
           value={name}
         />
         <nav className='form-nav -space-around'>
           {currentStep > 1 && (
-            <button className='button -cancel' onClick={history.goBack}>
+            <button
+              className='button -cancel'
+              onClick={history.goBack}
+              type='button'
+            >
               Back
             </button>
           )}
           {name && address ? (
-            <Link to={`/accounts/new/${+currentStep + 1}`}>
-              <button className='button'>Next</button>
-            </Link>
+            <button className='button'>Next</button>
           ) : (
             <button className='button' disabled>
               Next
             </button>
           )}
         </nav>
-      </div>
+      </form>
     );
   };
 }
