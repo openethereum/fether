@@ -24,10 +24,10 @@ export class CreateAccountStore {
   jsonString = null;
 
   @observable
-  parityPhrase = null; // 12-word seed phrase
+  parityPhrase = null; // 11 or 12-words seed phrase (Parity Signer used to generate a 11 words recovery phrase)
 
   @observable
-  bip39Phrase = null; // 12- to 24-word seed phrase
+  bip39Phrase = null; // 12 to 24-words seed phrase
 
   @observable
   address = null;
@@ -131,7 +131,7 @@ export class CreateAccountStore {
     const words = phrase.split(' ');
     const PARITY_WORDLIST = getParityWordlist();
     if (
-      words.length < 12 ||
+      words.length < 11 ||
       words.length > 24 ||
       !words.every(word => PARITY_WORDLIST.has(word))
     ) {
