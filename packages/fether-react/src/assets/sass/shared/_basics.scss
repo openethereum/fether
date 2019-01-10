@@ -31,3 +31,27 @@ a:visited {
     cursor: pointer;
   }
 }
+
+button,
+p,
+input[type='text'],
+input[type='number'],
+input[type='tel'],
+input[type='email'],
+input[type='password'],
+input[type='range'],
+textarea,
+.account,
+.account_avatar,
+.header-nav_left,
+.header-nav_right,
+.text {
+  -webkit-app-region: no-drag;
+}
+
+.footer-feedback,
+.header-nav_title,
+.status,
+.text {
+  -webkit-user-select: none;
+}
