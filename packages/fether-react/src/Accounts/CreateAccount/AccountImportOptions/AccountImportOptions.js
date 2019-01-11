@@ -4,11 +4,14 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { Card, Form as FetherForm } from 'fether-ui';
+import { addressShort, Card, Form as FetherForm } from 'fether-ui';
+import { accounts$, withoutLoading } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
 
 import Scanner from '../../../Scanner';
+import withAccountsInfo from '../../../utils/withAccountsInfo';
 
+@withAccountsInfo
 @inject('createAccountStore')
 @observer
 class AccountImportOptions extends Component {
@@ -35,30 +38,45 @@ class AccountImportOptions extends Component {
   handleSubmitPhrase = async () => {
     const phrase = this.state.phrase.trim();
     const {
+      createAccountStore,
       createAccountStore: { setPhrase }
     } = this.props;
 
     this.setState({ isLoading: true, phrase });
+
     try {
       await setPhrase(phrase);
+
+      if (this.hasExistingAddressForImport(createAccountStore.address)) {
+        return;
+      }
+
       this.handleNextStep();
-    } catch (e) {
+    } catch (error) {
       this.setState({
         isLoading: false,
         error:
           'The passphrase was not recognized. Please verify that you entered your passphrase correctly.'
       });
+      console.error(error);
     }
   };
 
   handleChangeFile = async jsonString => {
     const {
+      createAccountStore,
       createAccountStore: { setJsonString }
     } = this.props;
 
     this.setState({ isLoading: true });
+
     try {
       await setJsonString(jsonString);
+
+      if (this.hasExistingAddressForImport(createAccountStore.address)) {
+        return;
+      }
+
       this.handleNextStep();
     } catch (error) {
       this.setState({
@@ -75,6 +93,10 @@ class AccountImportOptions extends Component {
       createAccountStore: { setAddressOnly }
     } = this.props;
 
+    if (this.hasExistingAddressForImport(address)) {
+      return;
+    }
+
     await setAddressOnly(address);
 
     this.handleNextStep();
@@ -84,6 +106,22 @@ class AccountImportOptions extends Component {
     this.setState({
       importingFromSigner: true
     });
+  }
+
+  hasExistingAddressForImport = addressForImport => {
+    const { accountsInfo } = this.props;
+    const isExistingAddress = Object.keys(accountsInfo).some(key =>
+      key.toLowerCase() === addressForImport.toLowerCase()
+    )
+
+    if (isExistingAddress) {
+      this.setState({
+        isLoading: false,
+        error: `Account ${addressShort(addressForImport)} already listed`
+      });
+    }
+
+    return isExistingAddress;
   };
 
   render () {

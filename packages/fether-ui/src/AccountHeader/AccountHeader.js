@@ -7,6 +7,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Avatar } from '../AccountCard/Avatar';
+import { Clickable } from '../Clickable';
 import { ClickToCopy } from '../ClickToCopy';
 import { Header } from '../Header';
 
@@ -15,7 +16,7 @@ const NormalContainer = ({ children }) => (
 );
 const CopyContainer = ({ address, children, ...otherProps }) => (
   <ClickToCopy label='Copy address' textToCopy={address} {...otherProps}>
-    <a className='account -header'>{children}</a>
+    <Clickable className='account -header'>{children}</Clickable>
   </ClickToCopy>
 );
 

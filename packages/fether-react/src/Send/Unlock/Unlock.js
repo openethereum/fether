@@ -69,18 +69,18 @@ class Unlock extends Component {
                 drawers={[
                   <div key='txForm'>
                     <FetherForm.Field
-                      className='form_field_value'
-                      disabled
-                      defaultValue={`${tx.amount} ${token.symbol}`}
-                      label='Amount'
-                    />
-
-                    <FetherForm.Field
                       as='textarea'
                       className='form_field_value'
                       disabled
                       defaultValue={tx.to}
                       label='To'
+                    />
+
+                    <FetherForm.Field
+                      className='form_field_value'
+                      disabled
+                      defaultValue={`${tx.amount} ${token.symbol}`}
+                      label='Amount'
                     />
                   </div>,
                   <Form
