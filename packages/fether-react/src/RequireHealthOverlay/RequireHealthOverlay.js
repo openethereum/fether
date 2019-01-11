@@ -6,7 +6,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Modal as HealthModal } from 'fether-ui';
+import { HealthModal } from 'fether-ui';
 import withHealth, { STATUS } from '../utils/withHealth';
 import loading from '../assets/img/icons/loading.svg';
 
@@ -66,65 +66,19 @@ class RequireHealthOverlay extends Component {
 
   render () {
     const { visible } = this.state;
-    const { children, fullscreen } = this.props;
+    const { children, fullscreen, health } = this.props;
 
     return (
       <HealthModal
         children={children}
-        description={this.renderDescription()}
         fullscreen={fullscreen}
+        health={health}
         loading={loading}
-        title={this.renderTitle()}
+        healthStatusModes={STATUS}
         visible={visible}
       />
     );
   }
-
-  renderTitle = () => {
-    const {
-      health: { status }
-    } = this.props;
-
-    switch (status) {
-      case STATUS.CLOCKNOTSYNC:
-        return 'Your clock is not sync';
-      case STATUS.DOWNLOADING:
-        return 'Downloading Parity...';
-      case STATUS.NOINTERNET:
-        return 'No Internet connection';
-      case STATUS.NOPEERS:
-        return 'Bad connectivity';
-      case STATUS.LAUNCHING:
-        return 'Connecting to the node...';
-      case STATUS.SYNCING:
-        return 'Syncing...';
-      default:
-        return '';
-    }
-  };
-
-  renderDescription = () => {
-    const {
-      health: { status, payload }
-    } = this.props;
-
-    switch (status) {
-      case STATUS.CLOCKNOTSYNC:
-        return `Mac: System Preferences -> Date & Time -> Uncheck and recheck "Set date and time automatically"
-        Windows: Control Panel -> "Clock, Language, and Region" -> "Date and Time" -> Uncheck and recheck "Set date and time automatically"`;
-      case STATUS.SYNCING:
-      case STATUS.DOWNLOADING:
-        return payload && payload.percentage && payload.percentage.gt(0)
-          ? `${payload.percentage.toFixed(0)}%`
-          : '';
-      case STATUS.NOINTERNET:
-        return 'Please connect to the Internet';
-      case STATUS.NOPEERS:
-        return 'Getting some more peers...';
-      default:
-        return '';
-    }
-  };
 }
 
 export default RequireHealthOverlay;

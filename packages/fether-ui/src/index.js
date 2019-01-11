@@ -9,6 +9,7 @@ export * from './AddressShort';
 export * from './Card';
 export * from './Form';
 export * from './Header';
+export * from './HealthModal';
 export * from './Modal';
 export * from './Placeholder';
 export * from './TokenCard';
