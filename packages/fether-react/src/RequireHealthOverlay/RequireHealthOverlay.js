@@ -9,20 +9,25 @@ import PropTypes from 'prop-types';
 import withHealth, { STATUS } from '../utils/withHealth';
 import loading from '../assets/img/icons/loading.svg';
 
-import { Button, Header, Image, Modal } from 'semantic-ui-react';
+import { Header, Image, Modal } from 'semantic-ui-react';
 
-const MyModal = ({ description, title, visible }) => (
+const MyModal = ({ description, fullscreen, title, visible }) => (
   <Modal
-    className='alert-modal-wrapper'
-    // change to {visible}
-    open
+    className={`alert-screen-wrapper ${fullscreen ? '-full-screen' : ''}`}
+    open={visible}
   >
-    <div className='alert-modal'>
-      <Modal.Content image className='alert-modal-content'>
-        <Image wrapped alt='loading' size='medium' src={loading} />
-        <Modal.Description>
-          <Header>{'Hello' || title}</Header>
-          <p>{'Bad Connection' || description}</p>
+    <div className='alert-screen'>
+      <Modal.Content image className='alert-screen-content'>
+        <Image
+          wrapped
+          alt='loading'
+          size='medium'
+          src={loading}
+          className='alert-screen_image'
+        />
+        <Modal.Description className='alert-screen_text'>
+          <Header>{title}</Header>
+          <p>{description}</p>
         </Modal.Description>
       </Modal.Content>
     </div>
@@ -85,38 +90,16 @@ class RequireHealthOverlay extends Component {
 
   render () {
     const { visible } = this.state;
-    // const { fullscreen } = this.props;
+    const { fullscreen } = this.props;
 
     return (
       <div className='alert-wrapper'>
-        {/* <div className={['alert-screen', fullscreen ? '-full-screen' : ''].join('')}> */}
-
-        {/* {visible === true ? (
-          <div className='alert-screen'>
-            <div className='alert-screen_content'>
-              <div className='alert-screen_image'>
-                <img alt='loading' src={loading} />
-              </div>
-              <div className='alert-screen_text'>
-                <h1>
-                  BLAH1
-                  {this.renderTitle()}
-                </h1>
-                <p>
-                  BLAH2
-                  {this.renderDescription()}
-                </p>
-              </div>
-            </div>
-          </div>
-        ) : null} */}
-
         <MyModal
           description={this.renderDescription()}
+          fullscreen={fullscreen}
           title={this.renderTitle()}
           visible={visible}
         />
-
         <div>{this.props.children}</div>
       </div>
     );
