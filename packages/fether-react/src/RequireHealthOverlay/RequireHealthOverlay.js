@@ -11,27 +11,30 @@ import loading from '../assets/img/icons/loading.svg';
 
 import { Header, Image, Modal } from 'semantic-ui-react';
 
-const MyModal = ({ description, fullscreen, title, visible }) => (
-  <Modal
-    className={`alert-screen-wrapper ${fullscreen ? '-full-screen' : ''}`}
-    open={visible}
-  >
-    <div className='alert-screen'>
-      <Modal.Content image className='alert-screen-content'>
-        <Image
-          wrapped
-          alt='loading'
-          size='medium'
-          src={loading}
-          className='alert-screen_image'
-        />
-        <Modal.Description className='alert-screen_text'>
-          <Header>{title}</Header>
-          <p>{description}</p>
-        </Modal.Description>
-      </Modal.Content>
-    </div>
-  </Modal>
+const HealthModal = ({ children, description, fullscreen, title, visible }) => (
+  <div className='alert-wrapper'>
+    <Modal
+      className={`alert-screen-wrapper ${fullscreen ? '-full-screen' : ''}`}
+      open={visible}
+    >
+      <div className='alert-screen'>
+        <Modal.Content image className='alert-screen-content'>
+          <Image
+            wrapped
+            alt='loading'
+            size='medium'
+            src={loading}
+            className='alert-screen_image'
+          />
+          <Modal.Description className='alert-screen_text'>
+            <Header>{title}</Header>
+            <p>{description}</p>
+          </Modal.Description>
+        </Modal.Content>
+      </div>
+    </Modal>
+    <div>{children}</div>
+  </div>
 );
 
 function statusMatches (status, require) {
@@ -90,18 +93,16 @@ class RequireHealthOverlay extends Component {
 
   render () {
     const { visible } = this.state;
-    const { fullscreen } = this.props;
+    const { children, fullscreen } = this.props;
 
     return (
-      <div className='alert-wrapper'>
-        <MyModal
-          description={this.renderDescription()}
-          fullscreen={fullscreen}
-          title={this.renderTitle()}
-          visible={visible}
-        />
-        <div>{this.props.children}</div>
-      </div>
+      <HealthModal
+        children={children}
+        description={this.renderDescription()}
+        fullscreen={fullscreen}
+        title={this.renderTitle()}
+        visible={visible}
+      />
     );
   }
 
