@@ -45,6 +45,7 @@ class RequireHealthOverlay extends Component {
     setTimeout(() => {
       this.setState({ visible: !visible });
     }, 10000);
+
     // this.updateVisibility();
   }
 
@@ -66,6 +67,7 @@ class RequireHealthOverlay extends Component {
 
     return (
       <div className='alert-wrapper'>
+        {/* <div className={['alert-screen', fullscreen ? '-full-screen' : ''].join('')}> */}
         {visible === true ? (
           <div className='alert-screen'>
             <div className='alert-screen_content'>
