@@ -33,7 +33,7 @@ class AccountName extends Component {
 
     const currentStep = pathname.slice(-1);
 
-    if (createAccountStore.noPrivateKey()) {
+    if (createAccountStore.noPrivateKey) {
       // Save Signer account to Parity without asking for a password
       createAccountStore
         .saveAccountToParity()
@@ -70,7 +70,7 @@ class AccountName extends Component {
     return (
       <AccountCard
         address={address}
-        type={noPrivateKey() ? 'signer' : 'node'}
+        type={noPrivateKey ? 'signer' : 'node'}
         drawers={[this.renderDrawer()]}
         name={name || '(no name)'}
       />

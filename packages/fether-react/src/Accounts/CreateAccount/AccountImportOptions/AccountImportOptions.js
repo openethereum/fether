@@ -98,7 +98,7 @@ class AccountImportOptions extends Component {
       return;
     }
 
-    await importFromSigner({address, chainId});
+    await importFromSigner({ address, chainId });
 
     this.handleNextStep();
   };
@@ -112,8 +112,11 @@ class AccountImportOptions extends Component {
   hasExistingAddressForImport = (addressForImport, chainId) => {
     const { accountsInfo } = this.props;
     const isExistingAddress = Object.keys(accountsInfo).some(
-      key => key.toLowerCase() === addressForImport.toLowerCase()
-        && (!accountsInfo[key].chainId || !chainId || accountsInfo[key].chainId === chainId)
+      key =>
+        key.toLowerCase() === addressForImport.toLowerCase() &&
+        (!accountsInfo[key].chainId ||
+          !chainId ||
+          accountsInfo[key].chainId === chainId)
     );
 
     if (isExistingAddress) {

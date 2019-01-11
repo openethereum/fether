@@ -3,13 +3,13 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { action, observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 
 import bip39 from 'bip39';
 import hdkey from 'ethereumjs-wallet/hdkey';
 
-import LS_PREFIX from './utils/lsPrefix';
 import localForage from 'localforage';
+import LS_PREFIX from './utils/lsPrefix';
 
 import Debug from '../utils/debug';
 import parityStore from './parityStore';
@@ -76,7 +76,7 @@ export class CreateAccountStore {
   saveAccountToParity = async password => {
     debug('Saving account to Parity.');
 
-    if (this.noPrivateKey()) {
+    if (this.noPrivateKey) {
       // Store new Signer account in local storage
       // If the address of the account to add doesn't already exist, add it
       const accounts =
@@ -87,7 +87,11 @@ export class CreateAccountStore {
             existingAddress.toLowerCase() === this.address.toLowerCase()
         )
       ) {
-        accounts.push({ address: this.address, name: this.name, chainId: this.signerChainId });
+        accounts.push({
+          address: this.address,
+          name: this.name,
+          chainId: this.signerChainId
+        });
       }
       await localForage.setItem(SIGNER_ACCOUNTS_LS_KEY, accounts);
     } else {
@@ -196,16 +200,17 @@ export class CreateAccountStore {
   };
 
   @action
-  importFromSigner = async ({address, chainId}) => {
+  importFromSigner = async ({ address, chainId }) => {
     await this.clear();
     this.address = address;
     this.signerChainId = chainId;
   };
 
   // Returns true for Signer account imports
-  // @computed get
-  noPrivateKey = () =>
-    !this.jsonString && !this.parityPhrase && !this.bip39Phrase;
+  @computed
+  get noPrivateKey () {
+    return !this.jsonString && !this.parityPhrase && !this.bip39Phrase;
+  }
 }
 
 export default new CreateAccountStore();

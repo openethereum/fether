@@ -38,8 +38,10 @@ class AccountsList extends Component {
   render () {
     const { accountsInfo, chainId } = this.props;
 
-    const accountsList = Object.keys(accountsInfo).filter(key =>
-      !accountsInfo[key].chainId || accountsInfo[key].chainId === parseInt(chainId, 10)
+    const accountsList = Object.keys(accountsInfo).filter(
+      key =>
+        !accountsInfo[key].chainId ||
+        accountsInfo[key].chainId === parseInt(chainId, 10)
     );
     const accountsListLength = accountsList && accountsList.length;
 
