@@ -39,6 +39,8 @@ export class CreateAccountStore {
   @observable
   name = ''; // Account name
 
+  signerChainId = null;
+
   @action
   setIsImport = isImport => {
     this.isImport = isImport;
@@ -85,7 +87,7 @@ export class CreateAccountStore {
             existingAddress.toLowerCase() === this.address.toLowerCase()
         )
       ) {
-        accounts.push({ address: this.address, name: this.name });
+        accounts.push({ address: this.address, name: this.name, chainId: this.signerChainId });
       }
       await localForage.setItem(SIGNER_ACCOUNTS_LS_KEY, accounts);
     } else {
@@ -194,9 +196,10 @@ export class CreateAccountStore {
   };
 
   @action
-  setAddressOnly = async address => {
+  importFromSigner = async ({address, chainId}) => {
     await this.clear();
     this.address = address;
+    this.signerChainId = chainId;
   };
 
   // Returns true for Signer account imports
