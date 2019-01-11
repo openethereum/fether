@@ -15,6 +15,10 @@ import getParityWordlist from './utils/getParityWordlist';
 const debug = Debug('createAccountStore');
 
 const DERIVATION_PATH = "m/44'/60'/0'/0/0";
+const MIN_PARITY_SIGNER_RECOVERY_WORDS = 11;
+const MAX_PARITY_SIGNER_RECOVERY_WORDS = 24;
+const ETHEREUM_ADDRESS_LENGTH = 40;
+const JSON_VERSION = 3;
 
 export class CreateAccountStore {
   @observable
@@ -131,8 +135,8 @@ export class CreateAccountStore {
     const words = phrase.split(' ');
     const PARITY_WORDLIST = getParityWordlist();
     if (
-      words.length < 11 ||
-      words.length > 24 ||
+      words.length < MIN_PARITY_SIGNER_RECOVERY_WORDS ||
+      words.length > MAX_PARITY_SIGNER_RECOVERY_WORDS ||
       !words.every(word => PARITY_WORDLIST.has(word))
     ) {
       throw new Error('Not a Parity phrase');
@@ -156,7 +160,11 @@ export class CreateAccountStore {
 
     const json = JSON.parse(jsonString);
 
-    if (!json || json.address.length !== 40 || json.version !== 3) {
+    if (
+      !json ||
+      json.address.length !== ETHEREUM_ADDRESS_LENGTH ||
+      json.version !== JSON_VERSION
+    ) {
       throw new Error('File is not valid json');
     }
 
