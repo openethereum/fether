@@ -41,7 +41,7 @@ export const AccountHeader = ({
                 address={address}
                 scale={2}
                 type={type}
-                style={{ display: 'inline-block' }}
+                style={{ display: 'inline-block', marginRight: '5px' }}
               />
               {name} <br />
               <span className='account_address'>{address}</span>
