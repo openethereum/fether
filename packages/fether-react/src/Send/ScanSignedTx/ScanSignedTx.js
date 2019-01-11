@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { Header } from 'fether-ui';
+import { Card, Header } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 import { Link, Redirect } from 'react-router-dom';
 import Scanner from '../../Scanner';
@@ -63,10 +63,12 @@ class ScanSignedTx extends Component {
         <RequireHealth require='sync'>
           <div className='window_content'>
             <div className='box -padded'>
-              <Scanner
-                onScan={this.onScanSignedTx}
-                label='Please show the QR code of the signed transaction on the webcam.'
-              />
+              <Card className='-centered'>
+                <Scanner
+                  onScan={this.onScanSignedTx}
+                  label='Please show the QR code of the signed transaction on the webcam'
+                />
+              </Card>
 
               <nav className='form-nav -binary'>
                 <button

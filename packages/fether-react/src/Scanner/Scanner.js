@@ -77,6 +77,7 @@ export default class Scanner extends React.PureComponent {
         ) : (
           <div>
             <p>{label}</p>
+            <br />
             <QrSigner scan onScan={onScan} size={size} />
           </div>
         )}

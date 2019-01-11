@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { Header } from 'fether-ui';
+import { Card, Header } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 import { Link, Redirect } from 'react-router-dom';
 import QrSigner from '@parity/qr-signer';
@@ -57,13 +57,18 @@ class TxQrCode extends Component {
         <RequireHealth require='sync'>
           <div className='window_content'>
             <div className='box -padded'>
-              Please scan the QR code of the transaction on Parity Signer
-              <QrSigner
-                scan={false}
-                onScan={() => {}}
-                account={address}
-                rlp={getRlp()}
-              />
+              <Card className='-centered'>
+                <p>
+                  Please scan the QR code of the transaction on Parity Signer
+                </p>
+                <br />
+                <QrSigner
+                  scan={false}
+                  onScan={() => {}}
+                  account={address}
+                  rlp={getRlp()}
+                />
+              </Card>
               <nav className='form-nav -binary'>
                 <button
                   className='button -cancel'

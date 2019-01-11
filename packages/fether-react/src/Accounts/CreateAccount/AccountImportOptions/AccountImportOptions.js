@@ -5,7 +5,6 @@
 
 import React, { Component } from 'react';
 import { addressShort, Card, Form as FetherForm } from 'fether-ui';
-import { accounts$, withoutLoading } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
 
 import Scanner from '../../../Scanner';
@@ -106,13 +105,13 @@ class AccountImportOptions extends Component {
     this.setState({
       importingFromSigner: true
     });
-  }
+  };
 
   hasExistingAddressForImport = addressForImport => {
     const { accountsInfo } = this.props;
-    const isExistingAddress = Object.keys(accountsInfo).some(key =>
-      key.toLowerCase() === addressForImport.toLowerCase()
-    )
+    const isExistingAddress = Object.keys(accountsInfo).some(
+      key => key.toLowerCase() === addressForImport.toLowerCase()
+    );
 
     if (isExistingAddress) {
       this.setState({

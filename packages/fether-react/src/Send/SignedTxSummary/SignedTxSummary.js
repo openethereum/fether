@@ -26,9 +26,6 @@ import withTokens from '../../utils/withTokens';
 @withEthBalance // ETH balance
 @observer
 class SignedTxSummary extends Component {
-  state = {
-    maxSelected: false
-  };
   handleSubmit = values => {
     const {
       account: { address },
@@ -78,13 +75,7 @@ class SignedTxSummary extends Component {
                       ...tx
                     }}
                     onSubmit={this.handleSubmit}
-                    render={({
-                      handleSubmit,
-                      valid,
-                      validating,
-                      values,
-                      form: { mutators }
-                    }) => (
+                    render={({ handleSubmit, values }) => (
                       <form className='send-form' onSubmit={handleSubmit}>
                         <fieldset className='form_fields'>
                           <Field
