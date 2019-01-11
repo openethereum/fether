@@ -33,24 +33,28 @@ a:visited {
 }
 
 button,
-p,
 input[type='text'],
 input[type='number'],
 input[type='tel'],
 input[type='email'],
 input[type='password'],
 input[type='range'],
+p,
 textarea,
-.account,
-.account_avatar,
-.header-nav_left,
-.header-nav_right,
+.account.-header, /* i.e. account name/address in header that is clickable */
+.account_avatar, /* i.e. on create a new account page */
+.box.-card, /* i.e. account button */
+.form-details-buttons, /* i.e. show/hide transaction details button */
+.feedback,
+.footer-feedback, /* i.e. feedback button in header */
+.header-nav_left, /* i.e. back button in header */
+.header-nav_right, /* i.e. menu */
 .text {
   -webkit-app-region: no-drag;
 }
 
-.footer-feedback,
-.header-nav_title,
+h1, /* i.e. Send Ether title */
+.account.-header,
 .status,
 .text {
   -webkit-user-select: none;
