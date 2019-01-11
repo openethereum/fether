@@ -6,36 +6,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import { Modal as HealthModal } from 'fether-ui';
 import withHealth, { STATUS } from '../utils/withHealth';
 import loading from '../assets/img/icons/loading.svg';
-
-import { Header, Image, Modal } from 'semantic-ui-react';
-
-const HealthModal = ({ children, description, fullscreen, title, visible }) => (
-  <div className='alert-wrapper'>
-    <Modal
-      className={`alert-screen-wrapper ${fullscreen ? '-full-screen' : ''}`}
-      open={visible}
-    >
-      <div className='alert-screen'>
-        <Modal.Content image className='alert-screen-content'>
-          <Image
-            wrapped
-            alt='loading'
-            size='medium'
-            src={loading}
-            className='alert-screen_image'
-          />
-          <Modal.Description className='alert-screen_text'>
-            <Header>{title}</Header>
-            <p>{description}</p>
-          </Modal.Description>
-        </Modal.Content>
-      </div>
-    </Modal>
-    <div>{children}</div>
-  </div>
-);
 
 function statusMatches (status, require) {
   switch (require) {
@@ -100,6 +73,7 @@ class RequireHealthOverlay extends Component {
         children={children}
         description={this.renderDescription()}
         fullscreen={fullscreen}
+        loading={loading}
         title={this.renderTitle()}
         visible={visible}
       />
