@@ -9,6 +9,26 @@ import PropTypes from 'prop-types';
 import withHealth, { STATUS } from '../utils/withHealth';
 import loading from '../assets/img/icons/loading.svg';
 
+import { Button, Header, Image, Modal } from 'semantic-ui-react';
+
+const MyModal = ({ description, title, visible }) => (
+  <Modal
+    className='alert-modal-wrapper'
+    // change to {visible}
+    open
+  >
+    <div className='alert-modal'>
+      <Modal.Content image className='alert-modal-content'>
+        <Image wrapped alt='loading' size='medium' src={loading} />
+        <Modal.Description>
+          <Header>{'Hello' || title}</Header>
+          <p>{'Bad Connection' || description}</p>
+        </Modal.Description>
+      </Modal.Content>
+    </div>
+  </Modal>
+);
+
 function statusMatches (status, require) {
   switch (require) {
     case 'connected':
@@ -40,11 +60,13 @@ class RequireHealthOverlay extends Component {
   }
 
   componentDidUpdate () {
-    const visible = this.state.visible;
+    const { visible } = this.state;
+
+    console.log('visible: ', visible);
 
     setTimeout(() => {
       this.setState({ visible: !visible });
-    }, 10000);
+    }, 7000);
 
     // this.updateVisibility();
   }
@@ -68,7 +90,8 @@ class RequireHealthOverlay extends Component {
     return (
       <div className='alert-wrapper'>
         {/* <div className={['alert-screen', fullscreen ? '-full-screen' : ''].join('')}> */}
-        {visible === true ? (
+
+        {/* {visible === true ? (
           <div className='alert-screen'>
             <div className='alert-screen_content'>
               <div className='alert-screen_image'>
@@ -86,7 +109,14 @@ class RequireHealthOverlay extends Component {
               </div>
             </div>
           </div>
-        ) : null}
+        ) : null} */}
+
+        <MyModal
+          description={this.renderDescription()}
+          title={this.renderTitle()}
+          visible={visible}
+        />
+
         <div>{this.props.children}</div>
       </div>
     );
