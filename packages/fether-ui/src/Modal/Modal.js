@@ -5,11 +5,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Header as SUIHeader,
-  Image as SUIImage,
-  Modal as SUIModal
-} from 'semantic-ui-react';
+import { Image as SUIImage, Modal as SUIModal } from 'semantic-ui-react';
 
 export const Modal = ({
   children,
@@ -23,7 +19,7 @@ export const Modal = ({
 }) => (
   <div className='alert-wrapper'>
     <SUIModal
-      className='alert-screen-wrapper' // {`alert-screen-wrapper ${fullscreen ? '-full-screen' : ''}`}
+      className={`alert-screen-wrapper ${fullscreen ? '-full-screen' : ''}`}
       open={visible}
     >
       <div className='alert-screen'>
@@ -36,7 +32,6 @@ export const Modal = ({
             className='alert-screen_image'
           />
           <SUIModal.Description className='alert-screen_text'>
-            {/* <SUIHeader>{title}</SUIHeader> */}
             <h1>{title}</h1>
             <p>{description}</p>
             <p>{link || null}</p>
@@ -45,7 +40,7 @@ export const Modal = ({
         </SUIModal.Content>
       </div>
     </SUIModal>
-    <div>{children || 'hello world'}</div>
+    <div>{children}</div>
   </div>
 );
 

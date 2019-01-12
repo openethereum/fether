@@ -39,8 +39,6 @@ class HealthModal extends Component {
       healthStatusModes: STATUS
     } = this.props;
 
-    return 'Your clock is not sync';
-
     switch (status) {
       case STATUS.CLOCKNOTSYNC:
         return 'Your clock is not sync';
@@ -64,8 +62,6 @@ class HealthModal extends Component {
       health: { status, payload },
       healthStatusModes: STATUS
     } = this.props;
-
-    return 'Please connect to the Internet';
 
     switch (status) {
       case STATUS.CLOCKNOTSYNC:

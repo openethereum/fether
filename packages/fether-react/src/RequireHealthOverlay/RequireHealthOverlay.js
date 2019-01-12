@@ -41,14 +41,6 @@ class RequireHealthOverlay extends Component {
   }
 
   componentDidUpdate () {
-    // const { visible } = this.state;
-
-    // console.log('visible: ', visible);
-
-    // setTimeout(() => {
-    //   this.setState({ visible: !visible });
-    // }, 6000);
-
     this.updateVisibility();
   }
 
@@ -68,15 +60,13 @@ class RequireHealthOverlay extends Component {
     const { visible } = this.state;
     const { children, fullscreen, health } = this.props;
 
-    console.log('RequireHealthOverlay: ', fullscreen, health, visible);
-
     return (
       <HealthModal
         children={children}
         fullscreen={fullscreen}
         health={health}
-        loading={loading}
         healthStatusModes={STATUS}
+        loading={loading}
         visible={visible}
       />
     );

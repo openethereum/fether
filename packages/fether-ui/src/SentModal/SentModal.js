@@ -20,8 +20,6 @@ class SentModal extends Component {
   };
 
   render () {
-    console.log('rendering Modal from SendModal');
-
     return (
       <Modal
         description={this.renderDescription()}
@@ -41,7 +39,7 @@ class SentModal extends Component {
     } = this.props;
 
     if (!txStatus) {
-      return 'TESTING TESTING...'; // return '';
+      return '';
     }
 
     if (confirmations >= MIN_CONFIRMATIONS) {
@@ -83,7 +81,7 @@ class SentModal extends Component {
     } = this.props;
 
     if (!txStatus) {
-      return 'TESTING ... TESTING 2'; // return '';
+      return '';
     }
 
     if (txStatus.confirmed) {
@@ -110,9 +108,9 @@ class SentModal extends Component {
       sendStore: { confirmations }
     } = this.props;
 
-    // if (confirmations < MIN_CONFIRMATIONS) {
-    //   return;
-    // }
+    if (confirmations < MIN_CONFIRMATIONS) {
+      return;
+    }
 
     return (
       <nav className='form-nav'>
