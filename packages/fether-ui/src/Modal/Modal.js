@@ -15,7 +15,9 @@ export const Modal = ({
   children,
   description,
   fullscreen,
+  link,
   loading,
+  navigateTo,
   title,
   visible
 }) => (
@@ -36,11 +38,13 @@ export const Modal = ({
           <SUIModal.Description className='alert-screen_text'>
             <SUIHeader>{title}</SUIHeader>
             <p>{description}</p>
+            <p>{link || null}</p>
           </SUIModal.Description>
+          {navigateTo || null}
         </SUIModal.Content>
       </div>
     </SUIModal>
-    <div>{children}</div>
+    <div>{children || 'hello world'}</div>
   </div>
 );
 
@@ -48,7 +52,9 @@ Modal.propTypes = {
   children: PropTypes.node,
   description: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   fullscreen: PropTypes.bool,
-  loading: PropTypes.bool,
+  link: PropTypes.node,
+  loading: PropTypes.any.isRequired,
+  navigateTo: PropTypes.node,
   title: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   visible: PropTypes.bool
 };

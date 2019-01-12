@@ -12,4 +12,5 @@ export * from './Header';
 export * from './HealthModal';
 export * from './Modal';
 export * from './Placeholder';
+export * from './SentModal';
 export * from './TokenCard';

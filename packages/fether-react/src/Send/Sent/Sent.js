@@ -8,6 +8,7 @@ import { chainName$, withoutLoading } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
 import light from '@parity/light.js-react';
 import { withProps } from 'recompose';
+import { SentModal } from 'fether-ui';
 
 import check from '../../assets/img/icons/check.svg';
 import loading from '../../assets/img/icons/loading.svg';
@@ -28,10 +29,10 @@ const MIN_CONFIRMATIONS = 6;
 @observer
 class Sent extends Component {
   componentWillMount () {
-    // If we refresh on this page, return to homepage
-    if (!this.props.sendStore.txStatus) {
-      this.handleGoToHomepage();
-    }
+    // // If we refresh on this page, return to homepage
+    // if (!this.props.sendStore.txStatus) {
+    //   this.handleGoToHomepage();
+    // }
   }
 
   handleGoToHomepage = () => {
@@ -41,127 +42,25 @@ class Sent extends Component {
   };
 
   render () {
-    const {
-      sendStore: { confirmations }
-    } = this.props;
+    const { chainName, sendStore, token } = this.props;
+
+    console.log('Sent.js');
 
     return (
       <div className='window_content'>
-        <div className='alert-screen'>
-          <div className='alert-screen_content'>
-            <div className='alert-screen_image'>
-              <img alt='loading' src={this.renderIcon()} />
-            </div>
-            <div className='alert-screen_text'>
-              <h1>{this.renderTitle()}</h1>
-              <p>{this.renderDescription()}</p>
-              <p>{this.renderLink()}</p>
-            </div>
-            {confirmations >= MIN_CONFIRMATIONS && (
-              <nav className='form-nav'>
-                <button
-                  className='button'
-                  disabled={confirmations < 6}
-                  onClick={this.handleGoToHomepage}
-                >
-                  Go back
-                </button>
-              </nav>
-            )}
-          </div>
-        </div>
+        <SentModal
+          blockscoutTxUrl={blockscoutTxUrl}
+          chainName={chainName}
+          check={check}
+          handleGoToHomepage={this.handleGoToHomepage()}
+          loading={loading}
+          minConfirmations={MIN_CONFIRMATIONS}
+          sendStore={sendStore}
+          token={token}
+        />
       </div>
     );
   }
-
-  renderDescription = () => {
-    const {
-      sendStore: { confirmations, txStatus }
-    } = this.props;
-
-    if (!txStatus) {
-      return '';
-    }
-
-    if (confirmations >= MIN_CONFIRMATIONS) {
-      return null;
-    }
-
-    if (confirmations > 0) {
-      return `Waiting ${confirmations}/${MIN_CONFIRMATIONS} confirmations`;
-    }
-
-    if (txStatus.confirmed) {
-      return 'Waiting for confirmations...';
-    }
-
-    if (txStatus.failed) {
-      return JSON.stringify(txStatus.failed);
-    }
-
-    return null;
-  };
-
-  renderIcon = () => {
-    const {
-      sendStore: { confirmations }
-    } = this.props;
-    if (confirmations >= MIN_CONFIRMATIONS) {
-      return check;
-    }
-    return loading;
-  };
-
-  renderTitle = () => {
-    const {
-      sendStore: { confirmations, txStatus }
-    } = this.props;
-
-    if (!txStatus) {
-      return '';
-    }
-
-    if (txStatus.confirmed) {
-      return (
-        <span>
-          {confirmations >= MIN_CONFIRMATIONS
-            ? 'Transaction confirmed'
-            : 'Submitted'}
-        </span>
-      );
-    }
-
-    if (txStatus.failed) {
-      return 'Error';
-    }
-
-    return 'Sending your transaction...';
-  };
-
-  renderLink = () => {
-    const {
-      chainName,
-      sendStore: { confirmations, txStatus },
-      token
-    } = this.props;
-
-    if (confirmations >= 0) {
-      return (
-        <a
-          href={blockscoutTxUrl(
-            chainName,
-            txStatus.confirmed.transactionHash,
-            token.address
-          )}
-          target='_blank'
-        >
-          <button className='button -tiny'>See it on BlockScout</button>
-        </a>
-      );
-    }
-
-    return null;
-  };
 }
 
 export default Sent;

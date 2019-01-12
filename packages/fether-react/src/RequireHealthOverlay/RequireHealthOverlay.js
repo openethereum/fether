@@ -41,15 +41,15 @@ class RequireHealthOverlay extends Component {
   }
 
   componentDidUpdate () {
-    const { visible } = this.state;
+    // const { visible } = this.state;
 
-    console.log('visible: ', visible);
+    // console.log('visible: ', visible);
 
-    setTimeout(() => {
-      this.setState({ visible: !visible });
-    }, 7000);
+    // setTimeout(() => {
+    //   this.setState({ visible: !visible });
+    // }, 1000);
 
-    // this.updateVisibility();
+    this.updateVisibility();
   }
 
   updateVisibility = () => {

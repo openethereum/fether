@@ -12,9 +12,9 @@ class HealthModal extends Component {
   static propTypes = {
     children: PropTypes.node,
     fullscreen: PropTypes.bool,
-    health: PropTypes.node,
-    healthStatusModes: PropTypes.node,
-    loading: PropTypes.bool,
+    health: PropTypes.object,
+    healthStatusModes: PropTypes.object,
+    loading: PropTypes.any.isRequired,
     visible: PropTypes.bool
   };
 
@@ -39,6 +39,8 @@ class HealthModal extends Component {
       healthStatusModes: STATUS
     } = this.props;
 
+    return 'Your clock is not sync';
+
     switch (status) {
       case STATUS.CLOCKNOTSYNC:
         return 'Your clock is not sync';
@@ -62,6 +64,8 @@ class HealthModal extends Component {
       health: { status, payload },
       healthStatusModes: STATUS
     } = this.props;
+
+    return 'Please connect to the Internet';
 
     switch (status) {
       case STATUS.CLOCKNOTSYNC:
