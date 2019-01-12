@@ -23,7 +23,7 @@ export const Modal = ({
 }) => (
   <div className='alert-wrapper'>
     <SUIModal
-      className={`alert-screen-wrapper ${fullscreen ? '-full-screen' : ''}`}
+      className='alert-screen-wrapper' // {`alert-screen-wrapper ${fullscreen ? '-full-screen' : ''}`}
       open={visible}
     >
       <div className='alert-screen'>
@@ -36,7 +36,8 @@ export const Modal = ({
             className='alert-screen_image'
           />
           <SUIModal.Description className='alert-screen_text'>
-            <SUIHeader>{title}</SUIHeader>
+            {/* <SUIHeader>{title}</SUIHeader> */}
+            <h1>{title}</h1>
             <p>{description}</p>
             <p>{link || null}</p>
           </SUIModal.Description>

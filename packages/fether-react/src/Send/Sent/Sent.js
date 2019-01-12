@@ -44,15 +44,13 @@ class Sent extends Component {
   render () {
     const { chainName, sendStore, token } = this.props;
 
-    console.log('Sent.js');
-
     return (
       <div className='window_content'>
         <SentModal
           blockscoutTxUrl={blockscoutTxUrl}
           chainName={chainName}
           check={check}
-          handleGoToHomepage={this.handleGoToHomepage()}
+          handleGoToHomepage={this.handleGoToHomepage}
           loading={loading}
           minConfirmations={MIN_CONFIRMATIONS}
           sendStore={sendStore}

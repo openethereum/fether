@@ -1,7 +1,7 @@
 {
   "name": "fether-react",
   "description": "Fether Wallet",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "private": true,
   "author": "Parity Team <admin@parity.io>",
   "maintainers": [
@@ -44,7 +44,7 @@
     "debounce-promise": "^3.1.0",
     "debug": "^4.1.0",
     "ethereumjs-wallet": "^0.6.2",
-    "fether-ui": "^0.1.2",
+    "fether-ui": "^0.2.0",
     "file-saver": "^2.0.0",
     "final-form": "^4.8.3",
     "final-form-calculate": "^1.2.1",

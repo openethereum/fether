@@ -27,9 +27,17 @@ class AccountPassword extends Component {
 
   handleSubmit = event => {
     const { createAccountStore, history } = this.props;
-    const { password } = this.state;
+    const { confirm, password } = this.state;
 
-    event.preventDefault();
+    event && event.preventDefault();
+
+    if (!createAccountStore.jsonString && confirm !== password) {
+      this.setState({
+        error: 'Password confirmation does not match.'
+      });
+      return;
+    }
+
     this.setState({ isLoading: true });
 
     // Save to parity
@@ -74,6 +82,7 @@ class AccountPassword extends Component {
             </div>
 
             <FetherForm.Field
+              autoFocus
               label='Password'
               onChange={this.handlePasswordChange}
               required
@@ -97,11 +106,16 @@ class AccountPassword extends Component {
 
             <nav className='form-nav -space-around'>
               {currentStep > 1 && (
-                <button className='button -cancel' onClick={history.goBack}>
+                <button
+                  className='button -cancel'
+                  onClick={history.goBack}
+                  type='button'
+                >
                   Back
                 </button>
               )}
               <button
+                autoFocus
                 className='button'
                 disabled={
                   !password ||

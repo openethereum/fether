@@ -27,7 +27,7 @@ class SentModal extends Component {
         description={this.renderDescription()}
         fullscreen
         loading={this.renderIcon()}
-        // navigateTo={this.renderGoHomepage}
+        navigateTo={this.renderGoHomepage()}
         title={this.renderTitle()}
         visible
       />
@@ -41,7 +41,7 @@ class SentModal extends Component {
     } = this.props;
 
     if (!txStatus) {
-      return 'Waiting for confirmations...';
+      return 'TESTING TESTING...'; // return '';
     }
 
     if (confirmations >= MIN_CONFIRMATIONS) {
@@ -83,7 +83,7 @@ class SentModal extends Component {
     } = this.props;
 
     if (!txStatus) {
-      return 'Transaction confirmed';
+      return 'TESTING ... TESTING 2'; // return '';
     }
 
     if (txStatus.confirmed) {
@@ -103,29 +103,29 @@ class SentModal extends Component {
     return 'Sending your transaction...';
   };
 
-  // renderGoHomepage = () => {
-  //   const {
-  //     handleGoToHomepage,
-  //     minConfirmations: MIN_CONFIRMATIONS,
-  //     sendStore: { confirmations }
-  //   } = this.props;
+  renderGoHomepage = () => {
+    const {
+      handleGoToHomepage,
+      minConfirmations: MIN_CONFIRMATIONS,
+      sendStore: { confirmations }
+    } = this.props;
 
-  //   if (confirmations < MIN_CONFIRMATIONS) {
-  //     return;
-  //   }
+    // if (confirmations < MIN_CONFIRMATIONS) {
+    //   return;
+    // }
 
-  //   return (
-  //     <nav className='form-nav'>
-  //       <button
-  //         className='button'
-  //         disabled={confirmations < 6}
-  //         onClick={handleGoToHomepage}
-  //       >
-  //         Go back
-  //       </button>
-  //     </nav>
-  //   );
-  // };
+    return (
+      <nav className='form-nav'>
+        <button
+          className='button'
+          disabled={confirmations < 6}
+          onClick={handleGoToHomepage}
+        >
+          Go back
+        </button>
+      </nav>
+    );
+  };
 
   renderLink = () => {
     const {
@@ -135,22 +135,23 @@ class SentModal extends Component {
       token
     } = this.props;
 
-    if (confirmations < 0) {
-      return;
+    if (confirmations >= 0) {
+      return (
+        <a
+          href={blockscoutTxUrl(
+            chainName,
+            txStatus.confirmed.transactionHash,
+            token.address
+          )}
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          <button className='button -tiny'>See it on BlockScout</button>
+        </a>
+      );
     }
 
-    return (
-      <a
-        href={blockscoutTxUrl(
-          chainName,
-          txStatus.confirmed.transactionHash,
-          token.address
-        )}
-        target='_blank'
-      >
-        <button className='button -tiny'>See it on BlockScout</button>
-      </a>
-    );
+    return null;
   };
 }
 
