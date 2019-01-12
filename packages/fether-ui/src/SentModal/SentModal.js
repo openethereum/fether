@@ -68,9 +68,11 @@ class SentModal extends Component {
       minConfirmations: MIN_CONFIRMATIONS,
       sendStore: { confirmations }
     } = this.props;
+
     if (confirmations >= MIN_CONFIRMATIONS) {
       return check;
     }
+
     return loading;
   };
 
