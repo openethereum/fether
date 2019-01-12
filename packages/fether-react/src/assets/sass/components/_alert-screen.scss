@@ -11,7 +11,7 @@
   height: auto;
   overflow: hidden;
   position: absolute;
-  z-index: 2;
+  z-index: 2000; /* Above form validation error tooltip */
 
   &.-full-screen {
     top: 0;
@@ -19,9 +19,7 @@
 }
 
 .alert-screen {
-  // FIXME - need 5rem for 'Sent' vs 7rem for 'RequireHealthOverlay'
-  // for it to be halfway down the screen
-  margin-top: 7rem;
+  margin-top: 5rem;
   display: flex;
   align-items: center;
   justify-content: center;

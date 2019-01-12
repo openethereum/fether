@@ -28,8 +28,7 @@ function statusMatches (status, require) {
 @withHealth
 class RequireHealthOverlay extends Component {
   static propTypes = {
-    require: PropTypes.oneOf(['connected', 'sync']),
-    fullscreen: PropTypes.bool
+    require: PropTypes.oneOf(['connected', 'sync'])
   };
 
   state = {
@@ -58,12 +57,11 @@ class RequireHealthOverlay extends Component {
 
   render () {
     const { visible } = this.state;
-    const { children, fullscreen, health } = this.props;
+    const { children, health } = this.props;
 
     return (
       <HealthModal
         children={children}
-        fullscreen={fullscreen}
         health={health}
         healthStatusModes={STATUS}
         loading={loading}

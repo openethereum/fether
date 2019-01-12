@@ -61,7 +61,7 @@ class App extends Component {
         <div className='content'>
           <div className='window'>
             {/* Don't display child components requiring RPCs if API is not yet set */}
-            <RequireHealth require='connected' fullscreen>
+            <RequireHealth require='connected'>
               <Router>
                 <Switch>
                   {/* The next line is the homepage */}
