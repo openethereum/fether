@@ -4,7 +4,6 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { PureComponent } from 'react';
-import { Button as SUIButton } from 'semantic-ui-react';
 import { AccountHeader, MenuPopup } from 'fether-ui';
 import { accountsInfo$ } from '@parity/light.js';
 import light from '@parity/light.js-react';
