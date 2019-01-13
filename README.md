@@ -115,6 +115,8 @@ yarn start
 
 > Troubleshooting: If it hangs on a white screen in Electron even though it has compiled and has been syncing for a long time, then simply choose 'View > Reload' (CMD + R on macOS) from the Electron menu
 
+> Developer Tools: Open developer tools automatically by running `DEBUG=true yarn start` when not in the production environment
+
 # Run without taskbar
 
 ```bash

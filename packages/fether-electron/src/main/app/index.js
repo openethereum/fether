@@ -24,6 +24,8 @@ import ParityEthereum from './parityEthereum';
 const { BrowserWindow, ipcMain, session } = electron;
 const pino = Pino();
 
+const withDebug = process.env.DEBUG === 'true';
+
 let hasCalledInitFetherApp = false;
 
 class FetherApp {
@@ -63,6 +65,8 @@ class FetherApp {
       // Opens file:///path/to/build/index.html in prod mode, or whatever is
       // passed to ELECTRON_START_URL
       this.fetherApp.window.loadURL(options.index);
+
+      this.debugSetup();
 
       this.finalise();
       this.fetherApp.window.setProgressBar(1.0);
@@ -132,6 +136,13 @@ class FetherApp {
 
       this.fetherApp.emit('after-moved-window-position-saved');
     });
+  };
+
+  // Enable with `DEBUG=true yarn start` and access Developer Tools
+  debugSetup = () => {
+    if (withDebug && this.fetherApp.options.webPreferences.devTools) {
+      this.fetherApp.window.webContents.openDevTools();
+    }
   };
 
   finalise = () => {
@@ -241,6 +252,8 @@ class FetherApp {
     this.fetherApp.window.on('close', this.windowClear);
 
     this.fetherApp.window.loadURL(options.index);
+
+    this.debugSetup();
 
     this.fetherApp.emit('after-create-window');
   };
