@@ -47,6 +47,7 @@
     "electron-settings": "^3.2.0",
     "extend": "^3.0.2",
     "fether-react": "^0.2.0",
+    "parse-url": "^5.0.1",
     "pino": "^4.16.1",
     "pino-multi-stream": "^3.1.2",
     "source-map-support": "^0.5.6"

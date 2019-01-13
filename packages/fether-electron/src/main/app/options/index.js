@@ -5,7 +5,7 @@
 
 import extend from 'extend';
 
-import { DEFAULT_OPTIONS, TASKBAR_OPTIONS } from './config';
+import { DEFAULT_OPTIONS, SECURITY_OPTIONS, TASKBAR_OPTIONS } from './config';
 
 let hasCalledInitFetherAppOptions = false;
 
@@ -18,14 +18,21 @@ class FetherAppOptions {
     }
 
     // Allow user to get/set options prior or to pass custom options
+    // Security options should be extended last
     this.options = withTaskbar
       ? extend(
         this.options,
         DEFAULT_OPTIONS,
         TASKBAR_OPTIONS,
-        customOptions || {}
+        customOptions || {},
+        SECURITY_OPTIONS
       )
-      : extend(this.options, DEFAULT_OPTIONS, customOptions || {});
+      : extend(
+        this.options,
+        DEFAULT_OPTIONS,
+        customOptions || {},
+        SECURITY_OPTIONS
+      );
 
     return this.options;
   };

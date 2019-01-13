@@ -8,6 +8,9 @@ import url from 'url';
 
 import staticPath from '../../utils/staticPath';
 
+// https://electronjs.org/docs/tutorial/security#electron-security-warnings
+process.env.ELECTRON_ENABLE_SECURITY_WARNINGS = true;
+
 const INDEX_HTML_PATH =
   process.env.ELECTRON_START_URL ||
   url.format({
@@ -33,10 +36,6 @@ const DEFAULT_OPTIONS = {
   resizable: false,
   show: true,
   tabbingIdentifier: 'parity',
-  webPreferences: {
-    devTools: shouldUseDevTools, // Security
-    enableRemoteModule: false
-  },
   width: 360,
   withTaskbar: false
 };
@@ -58,4 +57,41 @@ const TASKBAR_OPTIONS = {
   withTaskbar: true
 };
 
-export { DEFAULT_OPTIONS, TASKBAR_OPTIONS };
+const SECURITY_OPTIONS = {
+  webPreferences: {
+    /**
+     * Potential security risk options set explicitly even when default is favourable.
+     * Reference: https://electronjs.org/docs/tutorial/security
+     */
+    devTools: shouldUseDevTools,
+    /**
+     * `nodeIntegration` when enabled allows the software to use Electron's APIs
+     * and gain access to Node.js and requires the user to sanitise user inputs
+     * to reduce the possible XSS attack surface.
+     */
+    // nodeIntegration: true, // FIXME - should be disabled but causes error
+    nodeIntegrationInWorker: false,
+    sandbox: false,
+    enableRemoteModule: false,
+    webSecurity: true,
+    allowRunningInsecureContent: false,
+    plugins: false,
+    experimentalFeatures: false,
+    // contextIsolation: true, // FIXME - should be enabled but causes error
+    nativeWindowOpen: true,
+    /**
+     * `webviewTag` when enabled allows content to be embedded into the
+     * Electron app and to be run as a separate process when Electron handles
+     * new browser windows. It is important to reduce privileges
+     * to try and prevent attackers from controlling the new browser windows
+     * with the `window.open` command and passing a WebView tag
+     * (see `webView`) to enable `nodeIntegration`.
+     */
+    webviewTag: false,
+    safeDialogs: true,
+    safeDialogsMessage: 'Electron consecutive dialog protection was triggered',
+    navigateOnDragDrop: false
+  }
+};
+
+export { DEFAULT_OPTIONS, SECURITY_OPTIONS, TASKBAR_OPTIONS };

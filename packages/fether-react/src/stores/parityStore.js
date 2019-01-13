@@ -15,6 +15,7 @@ import Debug from '../utils/debug';
 import LS_PREFIX from './utils/lsPrefix';
 
 const debug = Debug('parityStore');
+
 const electron = isElectron() ? window.require('electron') : null;
 
 const LS_KEY = `${LS_PREFIX}::secureToken`;
