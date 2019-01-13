@@ -2,29 +2,36 @@
   /* Override SUI popup styles so popup does not appear above menu icon */
   background: $white !important;
   bottom: auto !important;
-  line-height: 2rem !important;
+  line-height: 1.9rem !important;
   max-width: 205px !important; /* Allow space between items and scrollbar */
   max-height: 220px;
-  padding: 0.5rem 0.7rem !important;
+  padding: 0px !important; /* Allow menu items to take up full width*/
   top: 3px !important;
 
   .popup-screen {
+    margin-top: 5px;
+    margin-bottom: 5px;
     max-height: 195px;
     overflow-y: auto;
   }
 
   .popup-screen_item {
+    background: $white;
     color: $dark-grey;
     font-size: 1em;
     font-weight: 500;
-    margin-right: 5px;
-    padding-left: 5px;
+    padding-left: 15px;
     padding-right: 15px;
+    transition: background-color 0.4s;
+    transition: opacity 1s;
+    -webkit-transition: background-color 0.4s;
+    -webkit-transition: opacity 1s;
 
     &:hover {
-      background-color: $chrome;
-      color: $black;
+      background-color: $grey;
+      color: #fff !important;
       cursor: pointer;
+      opacity: 0.5;
     }
   }
 }
