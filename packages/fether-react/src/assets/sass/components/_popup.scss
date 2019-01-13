@@ -1,32 +1,30 @@
 .popup-menu-account {
-  max-height: 220px;
-
   /* Override SUI popup styles so popup does not appear above menu icon */
-  top: 3px !important;
+  background: $white !important;
   bottom: auto !important;
   line-height: 2rem !important;
   max-width: 205px !important; /* Allow space between items and scrollbar */
-  background: $white !important;
+  max-height: 220px;
   padding: 0.5rem 0.7rem !important;
-
-  .button {
-    color: $black;
-    background-color: $white !important;
-    border-color: $black;
-
-    &:hover {
-      color: $white;
-      background-color: $black !important;
-      border-color: $black;
-    }
-  }
+  top: 3px !important;
 
   .popup-screen {
-    overflow-y: auto;
     max-height: 195px;
+    overflow-y: auto;
   }
 
-  .popup-screen_button {
-    margin-left: 4px; /* Fit menu items with short names on same line */
+  .popup-screen_item {
+    color: $dark-grey;
+    font-size: 1em;
+    font-weight: 500;
+    margin-right: 5px;
+    padding-left: 5px;
+    padding-right: 15px;
+
+    &:hover {
+      background-color: $chrome;
+      color: $black;
+      cursor: pointer;
+    }
   }
 }

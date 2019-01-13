@@ -5,7 +5,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button as SUIButton, Popup as SUIPopup } from 'semantic-ui-react';
+import { Popup as SUIPopup } from 'semantic-ui-react';
 
 export const MenuPopup = ({
   basic,
@@ -40,13 +40,13 @@ export const MenuPopup = ({
       <SUIPopup.Content>
         {menuItems &&
           menuItems.map(item => (
-            <SUIButton
-              className='popup-screen_button'
+            <div
+              className='popup-screen_item'
               key={item.name}
               onClick={() => handleGoToLink(item.url)}
             >
               {item.name}
-            </SUIButton>
+            </div>
           ))}
       </SUIPopup.Content>
     </div>
