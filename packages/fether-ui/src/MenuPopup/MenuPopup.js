@@ -26,7 +26,6 @@ export const MenuPopup = ({
     basic={basic || true} // toggles popup arrow
     className={className}
     context={context} // element to bind the popup to or use position
-    handleGoToLink={handleGoToLink}
     horizontalOffset={horizontalOffset || 0}
     hoverable={hoverable}
     keepInViewPort
