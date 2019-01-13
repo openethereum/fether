@@ -69,6 +69,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.2.0",
+    "babel-plugin-styled-components": "^1.10.0",
     "capitalize": "^1.0.0",
     "node-sass": "^4.9.0",
     "node-sass-chokidar": "^1.2.2",
