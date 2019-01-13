@@ -19,16 +19,13 @@ import withAccount from '../utils/withAccount';
   accountsInfo: accountsInfo$
 })
 class Tokens extends PureComponent {
-  constructor (props) {
-    super(props);
-
-    this.state = {
-      isMenuOpen: false
-    };
-  }
+  state = {
+    isMenuOpen: false
+  };
 
   handleToggleMenu = () => {
     const { isMenuOpen } = this.state;
+
     this.setState({ isMenuOpen: !isMenuOpen });
   };
 
