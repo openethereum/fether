@@ -1,0 +1,32 @@
+.popup-menu-account {
+  max-height: 220px;
+
+  /* Override SUI popup styles so popup does not appear above menu icon */
+  top: 3px !important;
+  bottom: auto !important;
+  line-height: 2rem !important;
+  max-width: 205px !important; /* Allow space between items and scrollbar */
+  background: $white !important;
+  padding: 0.5rem 0.7rem !important;
+
+  .button {
+    color: $black;
+    background-color: $white !important;
+    border-color: $black;
+
+    &:hover {
+      color: $white;
+      background-color: $black !important;
+      border-color: $black;
+    }
+  }
+
+  .popup-screen {
+    overflow-y: auto;
+    max-height: 195px;
+  }
+
+  .popup-screen_button {
+    margin-left: 4px; /* Fit menu items with short names on same line */
+  }
+}

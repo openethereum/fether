@@ -4,7 +4,8 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { PureComponent } from 'react';
-import { AccountHeader } from 'fether-ui';
+import { Button as SUIButton } from 'semantic-ui-react';
+import { AccountHeader, MenuPopup } from 'fether-ui';
 import { accountsInfo$ } from '@parity/light.js';
 import light from '@parity/light.js-react';
 import { Link, Redirect, withRouter } from 'react-router-dom';
@@ -19,16 +20,43 @@ import withAccount from '../utils/withAccount';
   accountsInfo: accountsInfo$
 })
 class Tokens extends PureComponent {
-  handleGoToBackup = () => {
-    this.props.history.push(`/backup/${this.props.accountAddress}`);
+  constructor (props) {
+    super(props);
+
+    this.state = {
+      isMenuOpen: false
+    };
+  }
+
+  handleToggleMenu = () => {
+    const { isMenuOpen } = this.state;
+    this.setState({ isMenuOpen: !isMenuOpen });
   };
 
-  handleGoToWhitelist = () => {
-    this.props.history.push(`/whitelist/${this.props.accountAddress}`);
+  handleMenuRef = menuNode => this.setState({ menuNode });
+
+  handleGoToLink = url => {
+    this.props.history.push(url);
+  };
+
+  menuItems = () => {
+    const { accountAddress } = this.props;
+
+    return [
+      {
+        name: 'Backup Account',
+        url: `/backup/${accountAddress}`
+      },
+      {
+        name: 'Add tokens',
+        url: `/whitelist/${accountAddress}`
+      }
+    ];
   };
 
   render () {
     const { accountsInfo, accountAddress } = this.props;
+    const { isMenuOpen, menuNode } = this.state;
 
     // If the accountsInfo object is empty (i.e. no accounts), then we redirect
     // to the accounts page to create an account
@@ -38,6 +66,17 @@ class Tokens extends PureComponent {
 
     return (
       <div>
+        <MenuPopup
+          className='popup-menu-account'
+          context={menuNode}
+          handleGoToLink={this.handleGoToLink}
+          horizontalOffset={1}
+          hoverable
+          menuItems={this.menuItems()}
+          onClose={this.handleToggleMenu}
+          open={isMenuOpen}
+          size='small'
+        />
         <AccountHeader
           address={accountAddress}
           copyAddress
@@ -51,6 +90,15 @@ class Tokens extends PureComponent {
               Back
             </Link>
           }
+          right={
+            <a
+              className='icon -menu'
+              ref={this.handleMenuRef}
+              onClick={this.handleToggleMenu}
+            >
+              Menu
+            </a>
+          }
         />
 
         <TokensList />
@@ -58,14 +106,6 @@ class Tokens extends PureComponent {
         <nav className='footer-nav'>
           <div className='footer-nav_status'>
             <Health />
-          </div>
-          <div className='footer-nav_icons'>
-            <button className='button -tiny' onClick={this.handleGoToBackup}>
-              Backup Account
-            </button>
-            <button className='button -tiny' onClick={this.handleGoToWhitelist}>
-              Add tokens
-            </button>
           </div>
         </nav>
       </div>
