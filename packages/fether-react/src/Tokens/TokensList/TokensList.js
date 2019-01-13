@@ -4,6 +4,8 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
+
+import DivWindowContent from '../../assets/theme/shared/styledComponents/DivWindowContent';
 import RequireHealth from '../../RequireHealthOverlay';
 import TokenBalance from './TokenBalance';
 import withTokens from '../../utils/withTokens';
@@ -18,7 +20,7 @@ class TokensList extends Component {
 
     return (
       <RequireHealth require='sync'>
-        <div className='window_content'>
+        <DivWindowContent>
           <div className='box -scroller'>
             <ul className='list -padded'>
               {shownArray.map((
@@ -31,7 +33,7 @@ class TokensList extends Component {
               ))}
             </ul>
           </div>
-        </div>
+        </DivWindowContent>
       </RequireHealth>
     );
   }

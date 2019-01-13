@@ -10,6 +10,7 @@ import { inject, observer } from 'mobx-react';
 import light from '@parity/light.js-react';
 import { Link, Route } from 'react-router-dom';
 
+import DivWindowContent from '../../assets/theme/shared/styledComponents/DivWindowContent';
 import AccountCopyPhrase from './AccountCopyPhrase';
 import AccountImportOptions from './AccountImportOptions';
 import AccountRewritePhrase from './AccountRewritePhrase';
@@ -81,7 +82,7 @@ class CreateAccount extends Component {
           }
         />
 
-        <div className='window_content'>
+        <DivWindowContent>
           <div className='box -padded'>
             {Steps.map((StepComponent, index) => (
               <Route
@@ -91,7 +92,7 @@ class CreateAccount extends Component {
               />
             ))}
           </div>
-        </div>
+        </DivWindowContent>
 
         <nav className='footer-nav'>
           {step > 1 ? (

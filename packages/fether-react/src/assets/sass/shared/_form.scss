@@ -103,20 +103,6 @@
     font-family: $mono;
     font-size: ms(-1);
 
-    &.-xs-inline {
-      display: inline-flex;
-      height: 2.5rem;
-    }
-
-    &.-sm-details {
-      color: $dark-grey;
-      font-size: 0.6rem;
-      width: 100%;
-      height: 4.75rem;
-      opacity: 1;
-      resize: none;
-    }
-
     &.-sm {
       height: 3.5rem;
     }

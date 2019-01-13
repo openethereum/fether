@@ -10,6 +10,7 @@ import { inject, observer } from 'mobx-react';
 import { Link, Redirect } from 'react-router-dom';
 import { withProps } from 'recompose';
 
+import DivWindowContent from '../../assets/theme/shared/styledComponents/DivWindowContent';
 import RequireHealth from '../../RequireHealthOverlay';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import withAccount from '../../utils/withAccount.js';
@@ -60,7 +61,7 @@ class Signer extends Component {
         />
 
         <RequireHealth require='sync'>
-          <div className='window_content'>
+          <DivWindowContent>
             <div className='box -padded'>
               <TokenBalance
                 drawers={[
@@ -123,7 +124,7 @@ class Signer extends Component {
                 token={token}
               />
             </div>
-          </div>
+          </DivWindowContent>
         </RequireHealth>
       </div>
     );

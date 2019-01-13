@@ -8,6 +8,7 @@ import { Form as FetherForm, Header } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 import ReactMarkdown from 'react-markdown';
 
+import DivWindowContent from '../assets/theme/shared/styledComponents/DivWindowContent';
 import Health from '../Health';
 import termsAndConditions from './termsAndConditions.md';
 
@@ -52,7 +53,7 @@ class Onboarding extends Component {
       <div>
         <Header title={<h1>Terms of Use</h1>} />
 
-        <div className='window_content'>
+        <DivWindowContent>
           <div className='box -padded'>
             <FetherForm.Field
               as={ReactMarkdown}
@@ -62,7 +63,7 @@ class Onboarding extends Component {
               label='Please read carefully'
             />
           </div>
-        </div>
+        </DivWindowContent>
 
         <nav className='footer-nav'>
           <div className='footer-nav_status'>

@@ -10,6 +10,7 @@ import { Header } from 'fether-ui';
 import light from '@parity/light.js-react';
 import { Link } from 'react-router-dom';
 
+import DivWindowContent from '../assets/theme/shared/styledComponents/DivWindowContent';
 import Health from '../Health';
 import NewTokenItem from './NewTokenItem';
 import withAccount from '../utils/withAccount';
@@ -111,7 +112,7 @@ class Whitelist extends Component {
           title={<h1>Search tokens</h1>}
         />
 
-        <div className='window_content'>
+        <DivWindowContent>
           <div className='box -padded'>
             <div className='search-form'>
               <input
@@ -136,7 +137,7 @@ class Whitelist extends Component {
               ))}
             </ul>
           </div>
-        </div>
+        </DivWindowContent>
 
         <nav className='footer-nav'>
           <div className='footer-nav_status'>

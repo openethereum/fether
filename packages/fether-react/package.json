@@ -64,7 +64,8 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "^2.1.1",
     "recompose": "^0.27.1",
-    "rxjs": "^6.2.0"
+    "rxjs": "^6.2.0",
+    "styled-components": "^4.1.2"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.2.0",

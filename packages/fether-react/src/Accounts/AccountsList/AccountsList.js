@@ -9,6 +9,7 @@ import { accountsInfo$, withoutLoading } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
 import light from '@parity/light.js-react';
 
+import DivWindowContent from '../../assets/theme/shared/styledComponents/DivWindowContent';
 import Health from '../../Health';
 import Feedback from './Feedback';
 
@@ -40,7 +41,7 @@ class AccountsList extends Component {
     const accountsListLength = accountsList && accountsList.length;
 
     return (
-      <div className='accounts-list'>
+      <DivWindowContent>
         <Header
           title={<h1>Accounts</h1>}
           right={
@@ -95,7 +96,7 @@ class AccountsList extends Component {
             <Feedback accountsListLength={accountsListLength} />
           </div>
         </nav>
-      </div>
+      </DivWindowContent>
     );
   }
 }

@@ -15,7 +15,9 @@ import { isAddress } from '@parity/api/lib/util/address';
 import { Link } from 'react-router-dom';
 import { OnChange } from 'react-final-form-listeners';
 import { withProps } from 'recompose';
+import styled from 'styled-components';
 
+import DivWindowContent from '../../assets/theme/shared/styledComponents/DivWindowContent';
 import { estimateGas } from '../../utils/estimateGas';
 import RequireHealth from '../../RequireHealthOverlay';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
@@ -23,11 +25,16 @@ import withAccount from '../../utils/withAccount.js';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
 import withTokens from '../../utils/withTokens';
 import TxDetails from './TxDetails';
+import { AnchorTxDetailsStyles } from './style';
 
 const DEFAULT_AMOUNT_MAX_CHARS = 9;
 const MEDIUM_AMOUNT_MAX_CHARS = 14;
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
+
+const AnchorTxDetails = styled.span`
+  ${AnchorTxDetailsStyles};
+`;
 
 @inject('parityStore', 'sendStore')
 @withTokens
@@ -137,17 +144,17 @@ class Send extends Component {
 
   showDetailsAnchor = () => {
     return (
-      <span className='toggle-details'>
+      <AnchorTxDetails onClick={this.toggleDetails}>
         <Clickable onClick={this.toggleDetails}>&darr; Details</Clickable>
-      </span>
+      </AnchorTxDetails>
     );
   };
 
   showHideAnchor = () => {
     return (
-      <span className='toggle-details'>
+      <AnchorTxDetails onClick={this.toggleDetails}>
         <Clickable onClick={this.toggleDetails}>&uarr; Hide</Clickable>
-      </span>
+      </AnchorTxDetails>
     );
   };
 
@@ -178,7 +185,7 @@ class Send extends Component {
         />
 
         <RequireHealth require='sync'>
-          <div className='window_content'>
+          <DivWindowContent>
             <div className='box -padded'>
               <TokenBalance
                 decimals={6}
@@ -301,7 +308,7 @@ class Send extends Component {
                 token={token}
               />
             </div>
-          </div>
+          </DivWindowContent>
         </RequireHealth>
       </div>
     );

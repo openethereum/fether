@@ -14,6 +14,7 @@ import {
 import { inject, observer } from 'mobx-react';
 import isElectron from 'is-electron';
 import ReactResizeDetector from 'react-resize-detector';
+import styled, { ThemeProvider } from 'styled-components';
 
 import Accounts from '../Accounts';
 import BackupAccount from '../BackupAccount';
@@ -22,6 +23,17 @@ import RequireHealth from '../RequireHealthOverlay';
 import Send from '../Send';
 import Tokens from '../Tokens';
 import Whitelist from '../Whitelist';
+
+import { fetherTheme, GlobalStyle } from '../assets/theme/globalStyle';
+import { DivContentStyles, DivWindowStyles } from './style';
+
+const DivContent = styled.div`
+  ${DivContentStyles};
+`;
+
+const DivWindow = styled.div`
+  ${DivWindowStyles};
+`;
 
 // Use MemoryRouter for production viewing in file:// protocol
 // https://github.com/facebook/create-react-app/issues/3591
@@ -58,35 +70,43 @@ class App extends Component {
 
     return (
       <ReactResizeDetector handleHeight onResize={this.handleResize}>
-        <div className='content'>
-          <div className='window'>
-            {/* Don't display child components requiring RPCs if API is not yet set */}
-            <RequireHealth require='connected' fullscreen>
-              <Router>
-                <Switch>
-                  {/* The next line is the homepage */}
-                  <Redirect exact from='/' to='/accounts' />
-                  <Route path='/accounts' component={Accounts} />
-                  <Route path='/onboarding' component={Onboarding} />
-                  <Route path='/tokens/:accountAddress' component={Tokens} />
-                  <Route
-                    path='/whitelist/:accountAddress'
-                    component={Whitelist}
-                  />
-                  <Route
-                    path='/backup/:accountAddress'
-                    component={BackupAccount}
-                  />
-                  <Route
-                    path='/send/:tokenAddress/from/:accountAddress'
-                    component={Send}
-                  />
-                  <Redirect from='*' to='/' />
-                </Switch>
-              </Router>
-            </RequireHealth>
+        <ThemeProvider theme={fetherTheme}>
+          <div>
+            <GlobalStyle theme={fetherTheme} />
+            <DivContent>
+              <DivWindow>
+                {/* Don't display child components requiring RPCs if API is not yet set */}
+                <RequireHealth require='connected' fullscreen>
+                  <Router>
+                    <Switch>
+                      {/* The next line is the homepage */}
+                      <Redirect exact from='/' to='/accounts' />
+                      <Route path='/accounts' component={Accounts} />
+                      <Route path='/onboarding' component={Onboarding} />
+                      <Route
+                        path='/tokens/:accountAddress'
+                        component={Tokens}
+                      />
+                      <Route
+                        path='/whitelist/:accountAddress'
+                        component={Whitelist}
+                      />
+                      <Route
+                        path='/backup/:accountAddress'
+                        component={BackupAccount}
+                      />
+                      <Route
+                        path='/send/:tokenAddress/from/:accountAddress'
+                        component={Send}
+                      />
+                      <Redirect from='*' to='/' />
+                    </Switch>
+                  </Router>
+                </RequireHealth>
+              </DivWindow>
+            </DivContent>
           </div>
-        </div>
+        </ThemeProvider>
       </ReactResizeDetector>
     );
   }

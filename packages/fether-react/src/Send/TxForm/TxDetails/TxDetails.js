@@ -6,6 +6,25 @@
 import React, { Component } from 'react';
 import BigNumber from 'bignumber.js';
 import { fromWei, toWei } from '@parity/api/lib/util/wei';
+import styled from 'styled-components';
+
+import {
+  DivTxFormStyles,
+  LabelTextareaTxDetailsStyles,
+  TextareaTxDetailsStyles
+} from './style';
+
+const DivTxForm = styled.div`
+  ${DivTxFormStyles};
+`;
+
+const LabelTextareaTxDetails = styled.label`
+  ${LabelTextareaTxDetailsStyles};
+`;
+
+const TextareaTxDetails = styled.textarea`
+  ${TextareaTxDetailsStyles};
+`;
 
 class TxDetails extends Component {
   renderDetails = () => {
@@ -55,17 +74,16 @@ Missing input fields...`;
 
     return (
       <div>
-        <div className='form_field'>
-          <div hidden={!showDetails}>
-            <label htmlFor='txDetails'>Transaction Details:</label>
-            <textarea
-              className='-sm-details'
-              id='txDetails'
-              readOnly
-              value={this.renderDetails()}
-            />
-          </div>
-        </div>
+        <DivTxForm hidden={!showDetails}>
+          <LabelTextareaTxDetails htmlFor='txDetails'>
+            Transaction Details:
+          </LabelTextareaTxDetails>
+          <TextareaTxDetails
+            id='txDetails'
+            readOnly
+            value={this.renderDetails()}
+          />
+        </DivTxForm>
       </div>
     );
   }

@@ -11,6 +11,7 @@ import { withProps } from 'recompose';
 
 import check from '../../assets/img/icons/check.svg';
 import loading from '../../assets/img/icons/loading.svg';
+import DivWindowContent from '../../assets/theme/shared/styledComponents/DivWindowContent';
 import withTokens from '../../utils/withTokens';
 import { blockscoutTxUrl } from '../../utils/blockscout';
 
@@ -46,7 +47,7 @@ class Sent extends Component {
     } = this.props;
 
     return (
-      <div className='window_content'>
+      <DivWindowContent>
         <div className='alert-screen'>
           <div className='alert-screen_content'>
             <div className='alert-screen_image'>
@@ -70,7 +71,7 @@ class Sent extends Component {
             )}
           </div>
         </div>
-      </div>
+      </DivWindowContent>
     );
   }
 
