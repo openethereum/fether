@@ -83,14 +83,13 @@ class FetherApp {
       // Get the latest position. The window may have been moved to a different
       // screen with smaller resolution. We must move it to prevent cropping.
       const position = this.fetherApp.window.getPosition();
-      console.log('position', this.fetherApp.window.getPosition());
+
       const positionStruct = {
         x: position[0],
         y: position[1]
       };
 
       const fixedWindowPosition = this.fixWindowPosition(positionStruct);
-      console.log('fixedWindowPosition: ', fixedWindowPosition);
 
       const newFixedPosition = {
         x: fixedWindowPosition.x || positionStruct.x,
@@ -110,7 +109,6 @@ class FetherApp {
           currentScreenResolution
         )
       ) {
-        console.log('Different resolution detected');
         // Move window to the fixed x-coordinate position if that required fixing
         if (fixedWindowPosition.x) {
           this.fetherApp.window.setPosition(
@@ -130,7 +128,6 @@ class FetherApp {
         }
       }
 
-      console.log('setPosition', this.fetherApp.window.getPosition());
       saveWindowPosition(newFixedPosition || positionStruct);
 
       this.fetherApp.emit('after-moved-window-position-saved');
