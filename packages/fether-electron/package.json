@@ -39,7 +39,7 @@
     "test": "echo Skipped."
   },
   "dependencies": {
-    "@parity/electron": "https://github.com/paritytech/js-libs.git#luke-81-electron-4",
+    "@parity/electron": "^3.0.1",
     "commander": "^2.15.1",
     "commander-remaining-args": "^1.2.0",
     "fether-react": "^0.2.0",
