@@ -90,7 +90,7 @@ class AccountRewritePhrase extends Component {
       <AccountCard
         address={address}
         name={address && !name ? '(no name)' : name}
-        drawers={[body]}
+        drawers={body}
       />
     );
   }
