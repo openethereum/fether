@@ -61,7 +61,8 @@ class Tokens extends PureComponent {
     }
 
     return (
-      <div>
+      <div className='tokens'>
+        <div className={isMenuOpen ? 'popup-underlay' : ''} />
         <MenuPopup
           className='popup-menu-account'
           context={menuNode}
