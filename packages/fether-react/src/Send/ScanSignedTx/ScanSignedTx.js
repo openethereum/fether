@@ -22,6 +22,10 @@ import withTokens from '../../utils/withTokens';
 }))
 @observer
 class ScanSignedTx extends Component {
+  state = {
+    error: null
+  };
+
   onScanSignedTx = signature => {
     const {
       account: { address: accountAddress },
@@ -30,11 +34,16 @@ class ScanSignedTx extends Component {
       token
     } = this.props;
 
-    signRaw('0x' + signature);
-
-    history.push(
-      `/send/${token.address}/from/${accountAddress}/signedtxsummary`
-    );
+    try {
+      signRaw('0x' + signature);
+      history.push(
+        `/send/${token.address}/from/${accountAddress}/signedtxsummary`
+      );
+    } catch (e) {
+      this.setState({
+        error: "The QR code doesn't seem to be a valid transaction."
+      });
+    }
   };
 
   render () {
@@ -44,6 +53,7 @@ class ScanSignedTx extends Component {
       sendStore: { tx },
       token
     } = this.props;
+    const { error } = this.state;
 
     if (!Object.keys(tx).length || !token) {
       return <Redirect to='/' />;
@@ -68,6 +78,8 @@ class ScanSignedTx extends Component {
                   onScan={this.onScanSignedTx}
                   label='Please show the QR code of the signed transaction on the webcam'
                 />
+
+                {error && <p className='text -standard'>{error}</p>}
 
                 <nav className='form-nav -space-around'>
                   <button

@@ -92,6 +92,11 @@ class AccountImportOptions extends Component {
       createAccountStore: { importFromSigner }
     } = this.props;
 
+    if (!address || !chainIdString) {
+      this.setState({ error: 'Invalid QR code.' });
+      return;
+    }
+
     const chainId = parseInt(chainIdString);
 
     if (this.hasExistingAddressForImport(address, chainId)) {

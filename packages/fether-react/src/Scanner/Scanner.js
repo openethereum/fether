@@ -52,6 +52,10 @@ export default class Scanner extends React.PureComponent {
           case 'OverconstrainedError':
             errorMessage = 'No webcam found on the device.';
             break;
+          case 'NotReadableError':
+            errorMessage =
+              'Webcam hardware error. Try restarting your computer';
+            break;
           default:
             errorMessage = 'Unknown error.';
         }
