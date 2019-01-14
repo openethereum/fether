@@ -16,12 +16,16 @@ const WithAccount = compose(
   withAccountsInfo,
   light({
     transactionCount: props =>
-      transactionCountOf$(props.router.accountAddress).pipe(withoutLoading())
+      transactionCountOf$(props.match.params.accountAddress).pipe(
+        withoutLoading()
+      )
   }),
   mapProps(
     ({
       transactionCount,
-      router: { accountAddress },
+      match: {
+        params: { accountAddress }
+      },
       accountsInfo,
       ...otherProps
     }) => ({
