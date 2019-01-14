@@ -1861,15 +1861,6 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.0.tgz#50c1e2260ac0ed9439a181de3725a0168d59c48a"
   integrity sha512-LAQ1d4OPfSJ/BMbI2DuizmYrrkD9JMaTdi2hQTlI53lQ4kRQPyZQRS4CYQ7O66bnBBnP/oYdRxbk++X0xuFU6A==
 
-"@parity/abi@^3.0.11", "@parity/abi@^3.0.13":
-  version "3.0.13"
-  resolved "https://registry.yarnpkg.com/@parity/abi/-/abi-3.0.13.tgz#66740b4365f781995bcc7644eb0c740af1ad5dce"
-  integrity sha512-S+YbPgGJbNKStm9LUPNTZiwDJk2dfAyzs9RPzzR4EXS1/KVm9I0OtZJgMed/Z+zgnU0XwD3/APw9iv6EL071qA==
-  dependencies:
-    bignumber.js "^8.0.1"
-    js-sha3 "0.7.0"
-    utf8 "^3.0.0"
-
 "@parity/abi@^3.0.25":
   version "3.0.25"
   resolved "https://registry.yarnpkg.com/@parity/abi/-/abi-3.0.25.tgz#450d5ded7413efb7543ff45aa9fa95abca697e20"
@@ -1879,22 +1870,14 @@
     js-sha3 "0.7.0"
     utf8 "^3.0.0"
 
-"@parity/api@^3.0.13":
-  version "3.0.13"
-  resolved "https://registry.yarnpkg.com/@parity/api/-/api-3.0.13.tgz#bf9f7fe05c398f30451df8410499c47c20bb516f"
-  integrity sha512-NnlXiA3DKQdGiwGIwM9lcIouxLkaCg+0CT6jufNFD+G1gLQ75raBTB46mpTjq4txbjyqgMLWNGiWiievHJ9P+w==
+"@parity/abi@^3.0.26":
+  version "3.0.26"
+  resolved "https://registry.yarnpkg.com/@parity/abi/-/abi-3.0.26.tgz#90442a9fc9f85d1a1fd5caa32f67d056f4ece797"
+  integrity sha512-noVhbW4yFdmgKqCtsE42YY5gT0gI+aC28IdB0IjgsPrGI4M5FDGzFBO4YmDJrhS/dWgjD2Q0oDEe/MbL9C6rQA==
   dependencies:
-    "@parity/abi" "^3.0.13"
     bignumber.js "^8.0.1"
-    blockies "0.0.2"
-    es6-error "4.0.2"
-    es6-promise "^4.1.1"
-    eventemitter3 "^3.1.0"
-    isomorphic-fetch "^2.2.1"
-    js-sha3 "0.5.5"
-    lodash "^4.17.11"
-    store "^2.0.12"
-    websocket "^1.0.25"
+    js-sha3 "0.7.0"
+    utf8 "^3.0.0"
 
 "@parity/api@^3.0.25":
   version "3.0.25"
@@ -1913,13 +1896,30 @@
     store "^2.0.12"
     websocket "^1.0.25"
 
-"@parity/contracts@^3.0.11":
-  version "3.0.13"
-  resolved "https://registry.yarnpkg.com/@parity/contracts/-/contracts-3.0.13.tgz#68345e9fe71fbdcda68e22f16ee2f94295b60995"
-  integrity sha512-aGLu39/loC/9P+5HyRlJNdB+Vn6lZM+qSJmBYyIWqhzN9TxweAAB50TNYohJTELESWb+2B/vWXVtNvfFwVXjnw==
+"@parity/api@^3.0.26":
+  version "3.0.26"
+  resolved "https://registry.yarnpkg.com/@parity/api/-/api-3.0.26.tgz#7a0161ac64d951e86a5ffeced693365bf53bc745"
+  integrity sha512-dgsJ3JhK4i2TftBwBWm2cq5uhpHfaBWnCEnyFKjBjt5315tkiOae/x7T513Bt94gAzIHKdQr3PTE9J40ww/bAA==
   dependencies:
-    "@parity/abi" "^3.0.13"
-    "@parity/api" "^3.0.13"
+    "@parity/abi" "^3.0.26"
+    bignumber.js "^8.0.1"
+    blockies "0.0.2"
+    es6-error "4.0.2"
+    es6-promise "^4.1.1"
+    eventemitter3 "^3.1.0"
+    isomorphic-fetch "^2.2.1"
+    js-sha3 "0.5.5"
+    lodash "^4.17.11"
+    store "^2.0.12"
+    websocket "^1.0.25"
+
+"@parity/contracts@^3.0.25":
+  version "3.0.26"
+  resolved "https://registry.yarnpkg.com/@parity/contracts/-/contracts-3.0.26.tgz#f1230b663cd0b32e3994befa4af501ed86382760"
+  integrity sha512-NA8QhnxkwwSCrrYVnzCxi46o1ZsxyOxsnFysfJx9lOGftHdhmWZSmVCUZZsa2Io9jciLZXcUS9fv7rNF8SIoyw==
+  dependencies:
+    "@parity/abi" "^3.0.26"
+    "@parity/api" "^3.0.26"
     bignumber.js "^8.0.1"
 
 "@parity/electron@^3.0.1":
@@ -1941,10 +1941,10 @@
   resolved "https://registry.yarnpkg.com/@parity/erc681/-/erc681-0.1.1.tgz#0ade5233751011c15d5e75bd2bb583a9ba450a5e"
   integrity sha512-OGDAWbAcm4mh+wzw6uBYxw0OJtqJ+39W3pOXl0W93d2p/cH7ppfvunwf7irEPw0FPiAIuR/F77nU1zMKNhm8Dg==
 
-"@parity/light.js-react@^3.0.11":
-  version "3.0.13"
-  resolved "https://registry.yarnpkg.com/@parity/light.js-react/-/light.js-react-3.0.13.tgz#e37dd1d743308a019a343be63a9cf2abe3898eda"
-  integrity sha512-HRcJRlbb/BwnvJdCb2gNfifyiQRRxv4C6quGFTAce4iq8SoAWuh6DvQJ1vKJ8D182mepYlu4BTT2l7EkOPjmEA==
+"@parity/light.js-react@^3.0.25":
+  version "3.0.26"
+  resolved "https://registry.yarnpkg.com/@parity/light.js-react/-/light.js-react-3.0.26.tgz#2ad2a8f86d2dac077c9a4b64c116d20125039b13"
+  integrity sha512-vjxH2yS0iveDqpcmRCopNktMgH53OoqVlEuBNywId3PTAxMPxbpvkszQ+8bxyJ8izqRRBSuKwkU4cRT6Ad4cLw==
   dependencies:
     recompose "^0.30.0"
     symbol-observable "^1.2.0"
@@ -1961,14 +1961,14 @@
     debug "^4.1.0"
     memoizee "^0.4.12"
 
-"@parity/qr-signer@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@parity/qr-signer/-/qr-signer-0.3.1.tgz#00a983c7311a3d14701fae0b95f014e8a2a77618"
-  integrity sha512-OhggRIP6k9ZXJlXoye3auGbGyDVr0s3lv2vyBtAzwEItTur0JtkDnz4Z6GuPBbP5MnYuokPQ2TNWwE8q54BQ6A==
+"@parity/qr-signer@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@parity/qr-signer/-/qr-signer-0.3.2.tgz#ad2ea95627c5fddb73f31a6950f8cf23c350c89f"
+  integrity sha512-6VMBzxkB2KecC8ZucAEy1DQ+4ZhcHwlffkMitbunn1Xw1duPXZ0b/suwDFBNZ3e9pRE3ErdxSUs2QKkIxDgt8w==
   dependencies:
     "@parity/erc681" "0.1.1"
-    qrcode-generator "1.4.0"
-    react-qr-reader "2.1.0"
+    qrcode-generator "1.4.1"
+    react-qr-reader "2.1.2"
 
 "@posthtml/esm@^1.0.0":
   version "1.0.0"
@@ -10292,7 +10292,7 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
-jsqr@^1.0.1:
+jsqr@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/jsqr/-/jsqr-1.1.1.tgz#a0d7f95e6c3b0bec913dfef2ca64a877f28ed05f"
   integrity sha512-FVoMU2ncTyjaOqN/vwvDnZ7jaAVvFzM3LK3vG3jvQZFWJQlAwJ1XTCOgAEKo+4Rkd6ydMXTTvqGV/4w5VunmTw==
@@ -13559,10 +13559,10 @@ q@^1.1.2, q@^1.4.1, q@^1.5.1:
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
   integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
 
-qrcode-generator@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/qrcode-generator/-/qrcode-generator-1.4.0.tgz#23521ae5d13658adb745a38f19e00c00f9b8488c"
-  integrity sha512-sjjYaKTviJVps3xlnaDBx4xGEqVL0f6bRCd0Q2pPwCUzbrMZ5dXYOJAT7DqXGqXpb1p+vPV3nc122fAsAj6wug==
+qrcode-generator@1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/qrcode-generator/-/qrcode-generator-1.4.1.tgz#bfb6760e05d12c39df8acd60a0d459bdb2fa0756"
+  integrity sha512-KOdSAyFBPf0/5Z3mra4JfSbjrDlUn2J3YH8Rm33tRGbptxP4vhogLWysvkQp8mp5ix9u80Wfr4vxHXTeR9o0Ug==
 
 qs@6.5.1:
   version "6.5.1"
@@ -13786,14 +13786,14 @@ react-markdown@^3.3.4:
     unist-util-visit "^1.3.0"
     xtend "^4.0.1"
 
-react-qr-reader@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/react-qr-reader/-/react-qr-reader-2.1.0.tgz#f429c196675a710926da1cc9057223b79358da75"
-  integrity sha512-B/1xHv1IAnZqUSR0l0JEJnam4zll1aNgPRVau+Gw8pAFcTAsYXu44JzN/hW1gUdI7BHAP9klYj7tEy4mwOvqtQ==
+react-qr-reader@2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/react-qr-reader/-/react-qr-reader-2.1.2.tgz#ff3d7d377d3ffbd9d78a0947ca04221c2f180e15"
+  integrity sha512-SyRrRRRS7XcIyX8x6tb+mgcMqYZw6Admf4vlnUO/Z21nJklf6WILmP4jstd1W5tNlonvuC/S8R8/doIuZBgVjA==
   dependencies:
-    jsqr "^1.0.1"
+    jsqr "^1.1.1"
     prop-types "^15.5.8"
-    webrtc-adapter "^6.1.1"
+    webrtc-adapter "^6.4.0"
 
 react-resize-detector@^3.0.1:
   version "3.0.1"
@@ -17019,7 +17019,7 @@ webpack@^4.7.0:
     watchpack "^1.5.0"
     webpack-sources "^1.0.1"
 
-webrtc-adapter@^6.1.1:
+webrtc-adapter@^6.4.0:
   version "6.4.8"
   resolved "https://registry.yarnpkg.com/webrtc-adapter/-/webrtc-adapter-6.4.8.tgz#eeca3f0d5b40c0e629b865ef2a936a0b658274de"
   integrity sha512-YM8yl545c/JhYcjGHgaCoA7jRK/KZuMwEDFeP2AcP0Auv5awEd+gZE0hXy9z7Ed3p9HvAXp8jdbe+4ESb1zxAw==
