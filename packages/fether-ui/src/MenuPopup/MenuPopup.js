@@ -27,7 +27,7 @@ export const MenuPopup = ({
     className={className}
     context={context} // element to bind the popup to or use position
     horizontalOffset={horizontalOffset || 0}
-    hoverable={hoverable}
+    hoverable={hoverable} // toggle autoclose
     keepInViewPort
     on={on || 'click'}
     onClose={(event, data) => onClose()}

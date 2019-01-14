@@ -67,7 +67,6 @@ class Tokens extends PureComponent {
           context={menuNode}
           handleGoToLink={this.handleGoToLink}
           horizontalOffset={1}
-          hoverable
           menuItems={this.menuItems()}
           onClose={this.handleToggleMenu}
           open={isMenuOpen}
