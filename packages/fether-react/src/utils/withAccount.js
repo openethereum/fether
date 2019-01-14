@@ -11,39 +11,33 @@ import light from '@parity/light.js-react';
 import { transactionCountOf$, withoutLoading } from '@parity/light.js';
 import withAccountsInfo from '../utils/withAccountsInfo';
 
-const AccountAddressFromRouter = withRouter(props =>
-  props.children(props.match.params.accountAddress)
+const WithAccount = compose(
+  withRouter,
+  withAccountsInfo,
+  light({
+    transactionCount: props =>
+      transactionCountOf$(props.router.accountAddress).pipe(withoutLoading())
+  }),
+  mapProps(
+    ({
+      transactionCount,
+      router: { accountAddress },
+      accountsInfo,
+      ...otherProps
+    }) => ({
+      account: {
+        address: accountAddress,
+        name: accountsInfo[accountAddress].name,
+        type: accountsInfo[accountAddress].type,
+        transactionCount
+      },
+      ...otherProps
+    })
+  )
+)(props => props.children(props.account));
+
+export default Component => initialProps => (
+  <WithAccount>
+    {account => <Component {...initialProps} account={account} />}
+  </WithAccount>
 );
-
-// We do not want to pass the router props nor the accountsInfo props, both
-// used internally, down to the component returned by withAccount.
-export default Component =>
-  withAccountsInfo(({ accountsInfo, ...initialProps }) => {
-    return (
-      <AccountAddressFromRouter>
-        {accountAddress => {
-          const DecoratedComponent = compose(
-            light({
-              transactionCount: () =>
-                transactionCountOf$(accountAddress).pipe(withoutLoading())
-            }),
-            mapProps(({ transactionCount, account, ...otherProps }) => ({
-              account: { transactionCount, ...account },
-              ...otherProps
-            }))
-          )(Component);
-
-          return (
-            <DecoratedComponent
-              account={{
-                address: accountAddress,
-                name: accountsInfo[accountAddress].name,
-                type: accountsInfo[accountAddress].type
-              }}
-              {...initialProps}
-            />
-          );
-        }}
-      </AccountAddressFromRouter>
-    );
-  });
