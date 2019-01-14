@@ -87,7 +87,7 @@ class Tokens extends PureComponent {
           }
           right={
             <a
-              className='icon -new'
+              className='icon -menu'
               ref={this.handleMenuRef}
               onClick={this.handleToggleMenu}
             >
