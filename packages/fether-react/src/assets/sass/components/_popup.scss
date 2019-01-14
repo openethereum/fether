@@ -17,21 +17,15 @@
 
   .popup-screen_item {
     background: $white;
-    color: $dark-grey;
-    font-size: 1em;
+    color: rgba($black, 0.675);
     font-weight: 500;
     padding-left: 15px;
     padding-right: 15px;
-    transition: background-color 0.4s;
-    transition: opacity 1s;
-    -webkit-transition: background-color 0.4s;
-    -webkit-transition: opacity 1s;
 
     &:hover {
-      background-color: $grey;
-      color: #fff !important;
+      background: rgba($faint, 0.5);
+      color: $black;
       cursor: pointer;
-      opacity: 0.5;
     }
   }
 }
