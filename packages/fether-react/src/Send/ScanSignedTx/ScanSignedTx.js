@@ -68,17 +68,17 @@ class ScanSignedTx extends Component {
                   onScan={this.onScanSignedTx}
                   label='Please show the QR code of the signed transaction on the webcam'
                 />
-              </Card>
 
-              <nav className='form-nav -binary'>
-                <button
-                  className='button -cancel'
-                  onClick={history.goBack}
-                  type='button'
-                >
-                  Back
-                </button>
-              </nav>
+                <nav className='form-nav -space-around'>
+                  <button
+                    className='button -cancel'
+                    onClick={history.goBack}
+                    type='button'
+                  >
+                    Back
+                  </button>
+                </nav>
+              </Card>
             </div>
           </div>
         </RequireHealth>

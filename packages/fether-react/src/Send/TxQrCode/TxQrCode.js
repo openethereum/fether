@@ -68,23 +68,23 @@ class TxQrCode extends Component {
                   account={address}
                   rlp={getRlp()}
                 />
-              </Card>
-              <nav className='form-nav -binary'>
-                <button
-                  className='button -cancel'
-                  onClick={history.goBack}
-                  type='button'
-                >
-                  Back
-                </button>
+                <nav className='form-nav -space-around'>
+                  <button
+                    className='button -cancel'
+                    onClick={history.goBack}
+                    type='button'
+                  >
+                    Back
+                  </button>
 
-                <button
-                  className='button -submit'
-                  onClick={this.handleNextStep}
-                >
-                  Next step
-                </button>
-              </nav>
+                  <button
+                    className='button -submit'
+                    onClick={this.handleNextStep}
+                  >
+                    Next step
+                  </button>
+                </nav>
+              </Card>
             </div>
           </div>
         </RequireHealth>
