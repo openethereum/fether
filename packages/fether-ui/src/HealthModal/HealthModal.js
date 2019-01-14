@@ -11,6 +11,7 @@ import { Modal } from '../Modal';
 class HealthModal extends Component {
   static propTypes = {
     children: PropTypes.node,
+    fullscreen: PropTypes.bool,
     health: PropTypes.object,
     healthStatusModes: PropTypes.object,
     loading: PropTypes.any.isRequired,
@@ -18,13 +19,13 @@ class HealthModal extends Component {
   };
 
   render () {
-    const { children, loading, visible } = this.props;
+    const { children, fullscreen, loading, visible } = this.props;
 
     return (
       <Modal
         children={children}
         description={this.renderDescription()}
-        fullscreen
+        fullscreen={fullscreen}
         loading={loading}
         title={this.renderTitle()}
         visible={visible}
