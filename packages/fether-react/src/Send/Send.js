@@ -5,13 +5,14 @@
 
 import React, { Component } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import withAccount from '../utils/withAccount.js';
 
+import ScanSignedTx from './ScanSignedTx';
 import Sent from './Sent';
-import Signer from './Signer';
+import SignedTxSummary from './SignedTxSummary';
 import TxForm from './TxForm';
+import TxQrCode from './TxQrCode';
+import Unlock from './Unlock';
 
-@withAccount
 class Send extends Component {
   render () {
     const {
@@ -20,7 +21,10 @@ class Send extends Component {
     return (
       <Switch>
         <Route exact path={`${path}`} component={TxForm} />
-        <Route path={`${path}/signer`} component={Signer} />
+        <Route path={`${path}/unlock`} component={Unlock} />
+        <Route path={`${path}/txqrcode`} component={TxQrCode} />
+        <Route path={`${path}/scansignedtx`} component={ScanSignedTx} />
+        <Route path={`${path}/signedtxsummary`} component={SignedTxSummary} />
         <Route path={`${path}/sent`} component={Sent} />
         <Redirect to='/' />
       </Switch>

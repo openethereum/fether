@@ -12,10 +12,8 @@ import { Link } from 'react-router-dom';
 
 import Health from '../Health';
 import NewTokenItem from './NewTokenItem';
-import withAccount from '../utils/withAccount';
 import withTokens from '../utils/withTokens';
 
-@withAccount
 @withTokens
 @light({
   chainName: () => chainName$().pipe(withoutLoading())

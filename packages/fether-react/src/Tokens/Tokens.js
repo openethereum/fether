@@ -5,9 +5,7 @@
 
 import React, { PureComponent } from 'react';
 import { AccountHeader, MenuPopup } from 'fether-ui';
-import { accountsInfo$ } from '@parity/light.js';
-import light from '@parity/light.js-react';
-import { Link, Redirect, withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import Health from '../Health';
 import TokensList from './TokensList';
@@ -15,9 +13,6 @@ import withAccount from '../utils/withAccount';
 
 @withRouter
 @withAccount
-@light({
-  accountsInfo: accountsInfo$
-})
 class Tokens extends PureComponent {
   state = {
     isMenuOpen: false
@@ -35,30 +30,43 @@ class Tokens extends PureComponent {
     this.props.history.push(url);
   };
 
-  menuItems = () => {
-    const { accountAddress } = this.props;
+  isParitySignerAccount = () => {
+    const {
+      account: { type }
+    } = this.props;
 
-    return [
-      {
-        name: 'Backup Account',
-        url: `/backup/${accountAddress}`
-      },
+    return type === 'signer';
+  };
+
+  menuItems = () => {
+    const {
+      account: { address }
+    } = this.props;
+
+    const backupAccountItem = {
+      name: 'Backup Account',
+      url: `/backup/${address}`
+    };
+
+    let menuItems = [
       {
         name: 'Add tokens',
-        url: `/whitelist/${accountAddress}`
+        url: `/whitelist/${address}`
       }
     ];
+
+    if (this.isParitySignerAccount() === false) {
+      menuItems = [backupAccountItem, ...menuItems];
+    }
+
+    return menuItems;
   };
 
   render () {
-    const { accountsInfo, accountAddress } = this.props;
+    const {
+      account: { address, name, type }
+    } = this.props;
     const { isMenuOpen, menuNode } = this.state;
-
-    // If the accountsInfo object is empty (i.e. no accounts), then we redirect
-    // to the accounts page to create an account
-    if (accountsInfo && !Object.keys(accountsInfo).length) {
-      return <Redirect to='/accounts/new' />;
-    }
 
     return (
       <div className='tokens'>
@@ -74,13 +82,10 @@ class Tokens extends PureComponent {
           size='small'
         />
         <AccountHeader
-          address={accountAddress}
+          address={address}
           copyAddress
-          name={
-            accountsInfo &&
-            accountsInfo[accountAddress] &&
-            accountsInfo[accountAddress].name
-          }
+          name={name}
+          type={type}
           left={
             <Link to='/accounts' className='icon -back'>
               Back
