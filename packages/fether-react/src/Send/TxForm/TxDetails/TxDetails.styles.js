@@ -3,10 +3,10 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { SlideLeftIn } from '../../../assets/theme/shared/animations/SlideLeftIn.styles';
 
-const animationRuleSlideLeftIn = css`
+const DivTxForm = styled.div`
   animation-name: ${SlideLeftIn}; /* required */
   animation-duration: 0.25s; /* required */
   animation-timing-function: ease-in;
@@ -15,10 +15,6 @@ const animationRuleSlideLeftIn = css`
   animation-direction: normal;
   animation-fill-mode: normal;
   animation-play-state: playing;
-`;
-
-const DivTxForm = styled.div`
-  ${animationRuleSlideLeftIn};
   border-radius: 0.25rem;
   background: rgba(${props => props.theme.faint}, 0.25);
   margin: 0.5rem 0;
