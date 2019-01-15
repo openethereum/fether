@@ -12,7 +12,8 @@ class HealthModal extends Component {
   static propTypes = {
     children: PropTypes.node,
     fullscreen: PropTypes.bool,
-    health: PropTypes.object,
+    healthPercentage: PropTypes.object,
+    healthStatus: PropTypes.string,
     healthStatusModes: PropTypes.object,
     loading: PropTypes.any.isRequired,
     visible: PropTypes.bool
@@ -34,12 +35,9 @@ class HealthModal extends Component {
   }
 
   renderTitle = () => {
-    const {
-      health: { status },
-      healthStatusModes: STATUS
-    } = this.props;
+    const { healthStatus, healthStatusModes: STATUS } = this.props;
 
-    switch (status) {
+    switch (healthStatus) {
       case STATUS.CLOCKNOTSYNC:
         return 'Your clock is not in sync';
       case STATUS.DOWNLOADING:
@@ -59,18 +57,19 @@ class HealthModal extends Component {
 
   renderDescription = () => {
     const {
-      health: { status, payload },
+      healthPercentage,
+      healthStatus,
       healthStatusModes: STATUS
     } = this.props;
 
-    switch (status) {
+    switch (healthStatus) {
       case STATUS.CLOCKNOTSYNC:
         return `Mac: System Preferences -> Date & Time -> Uncheck and recheck "Set date and time automatically"
         Windows: Control Panel -> "Clock, Language, and Region" -> "Date and Time" -> Uncheck and recheck "Set date and time automatically"`;
       case STATUS.SYNCING:
       case STATUS.DOWNLOADING:
-        return payload && payload.percentage && payload.percentage.gt(0)
-          ? `${payload.percentage.toFixed(0)}%`
+        return healthPercentage && healthPercentage.gt(0)
+          ? `${healthPercentage.toFixed(0)}%`
           : '';
       case STATUS.NOINTERNET:
         return 'Please connect to the Internet';

@@ -58,13 +58,18 @@ class RequireHealthOverlay extends Component {
 
   render () {
     const { visible } = this.state;
-    const { children, fullscreen, health } = this.props;
+    const {
+      children,
+      fullscreen,
+      health: { status, payload }
+    } = this.props;
 
     return (
       <HealthModal
         children={children}
         fullscreen={fullscreen}
-        health={health}
+        healthPercentage={payload && payload.percentage}
+        healthStatus={status}
         healthStatusModes={STATUS}
         loading={loading}
         visible={visible}
