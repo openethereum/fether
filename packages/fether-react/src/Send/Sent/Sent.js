@@ -11,7 +11,7 @@ import { withProps } from 'recompose';
 
 import check from '../../assets/img/icons/check.svg';
 import loading from '../../assets/img/icons/loading.svg';
-import DivWindowContent from '../../assets/theme/shared/styledComponents/DivWindowContent';
+import { DivWindowContent } from '../../assets/theme/shared/styledComponents/DivWindowContent.styles';
 import withTokens from '../../utils/withTokens';
 import { blockscoutTxUrl } from '../../utils/blockscout';
 

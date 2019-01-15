@@ -17,7 +17,7 @@ import { OnChange } from 'react-final-form-listeners';
 import { withProps } from 'recompose';
 import styled from 'styled-components';
 
-import DivWindowContent from '../../assets/theme/shared/styledComponents/DivWindowContent';
+import { DivWindowContent } from '../../assets/theme/shared/styledComponents/DivWindowContent.styles';
 import { estimateGas } from '../../utils/estimateGas';
 import RequireHealth from '../../RequireHealthOverlay';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';

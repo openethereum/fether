@@ -10,7 +10,7 @@ import { inject, observer } from 'mobx-react';
 import light from '@parity/light.js-react';
 import { Link, Route } from 'react-router-dom';
 
-import DivWindowContent from '../../assets/theme/shared/styledComponents/DivWindowContent';
+import { DivWindowContent } from '../../assets/theme/shared/styledComponents/DivWindowContent.styles';
 import AccountCopyPhrase from './AccountCopyPhrase';
 import AccountImportOptions from './AccountImportOptions';
 import AccountRewritePhrase from './AccountRewritePhrase';

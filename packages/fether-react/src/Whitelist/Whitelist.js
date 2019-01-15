@@ -10,7 +10,7 @@ import { Header } from 'fether-ui';
 import light from '@parity/light.js-react';
 import { Link } from 'react-router-dom';
 
-import DivWindowContent from '../assets/theme/shared/styledComponents/DivWindowContent';
+import { DivWindowContent } from '../assets/theme/shared/styledComponents/DivWindowContent.styles';
 import Health from '../Health';
 import NewTokenItem from './NewTokenItem';
 import withAccount from '../utils/withAccount';

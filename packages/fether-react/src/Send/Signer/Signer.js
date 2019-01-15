@@ -10,7 +10,7 @@ import { inject, observer } from 'mobx-react';
 import { Link, Redirect } from 'react-router-dom';
 import { withProps } from 'recompose';
 
-import DivWindowContent from '../../assets/theme/shared/styledComponents/DivWindowContent';
+import { DivWindowContent } from '../../assets/theme/shared/styledComponents/DivWindowContent.styles';
 import RequireHealth from '../../RequireHealthOverlay';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import withAccount from '../../utils/withAccount.js';

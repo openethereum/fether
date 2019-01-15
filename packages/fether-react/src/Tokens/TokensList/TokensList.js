@@ -5,7 +5,7 @@
 
 import React, { Component } from 'react';
 
-import DivWindowContent from '../../assets/theme/shared/styledComponents/DivWindowContent';
+import { DivWindowContent } from '../../assets/theme/shared/styledComponents/DivWindowContent.styles';
 import RequireHealth from '../../RequireHealthOverlay';
 import TokenBalance from './TokenBalance';
 import withTokens from '../../utils/withTokens';

@@ -8,7 +8,7 @@ import { Form as FetherForm, Header } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 import ReactMarkdown from 'react-markdown';
 
-import DivWindowContent from '../assets/theme/shared/styledComponents/DivWindowContent';
+import { DivWindowContent } from '../assets/theme/shared/styledComponents/DivWindowContent.styles';
 import Health from '../Health';
 import termsAndConditions from './termsAndConditions.md';
 

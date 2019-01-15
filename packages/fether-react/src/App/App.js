@@ -14,7 +14,7 @@ import {
 import { inject, observer } from 'mobx-react';
 import isElectron from 'is-electron';
 import ReactResizeDetector from 'react-resize-detector';
-import styled, { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 
 import Accounts from '../Accounts';
 import BackupAccount from '../BackupAccount';
@@ -25,15 +25,7 @@ import Tokens from '../Tokens';
 import Whitelist from '../Whitelist';
 
 import { fetherTheme, GlobalStyle } from '../assets/theme/globalStyle';
-import { DivContentStyles, DivWindowStyles } from './style';
-
-const DivContent = styled.div`
-  ${DivContentStyles};
-`;
-
-const DivWindow = styled.div`
-  ${DivWindowStyles};
-`;
+import { DivContent, DivWindow } from './App.styles';
 
 // Use MemoryRouter for production viewing in file:// protocol
 // https://github.com/facebook/create-react-app/issues/3591
