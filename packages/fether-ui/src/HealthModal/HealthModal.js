@@ -13,7 +13,7 @@ class HealthModal extends Component {
     children: PropTypes.node,
     fullscreen: PropTypes.bool,
     healthPercentage: PropTypes.object,
-    healthStatus: PropTypes.string,
+    healthStatus: PropTypes.symbol,
     healthStatusModes: PropTypes.object,
     loading: PropTypes.any.isRequired,
     visible: PropTypes.bool
