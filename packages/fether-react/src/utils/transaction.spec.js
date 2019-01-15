@@ -9,7 +9,7 @@ import abi from '@parity/contracts/lib/abi/eip20';
 import BigNumber from 'bignumber.js';
 import lightJs from '@parity/light.js';
 
-import { estimateGas, contractForToken } from './estimateGas';
+import { estimateGas, contractForToken } from './transaction';
 import * as mock from './testHelpers/mock';
 
 jest.mock('@parity/light.js', () => ({

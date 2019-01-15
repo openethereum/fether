@@ -5,18 +5,43 @@
 
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { compose, mapProps } from 'recompose';
+import light from '@parity/light.js-react';
 
-const AccountAddressFromRouter = withRouter(props =>
-  props.children(props.match.params.accountAddress)
+import { transactionCountOf$, withoutLoading } from '@parity/light.js';
+import withAccountsInfo from '../utils/withAccountsInfo';
+
+const WithAccount = compose(
+  withRouter,
+  withAccountsInfo,
+  light({
+    transactionCount: props =>
+      transactionCountOf$(props.match.params.accountAddress).pipe(
+        withoutLoading()
+      )
+  }),
+  mapProps(
+    ({
+      transactionCount,
+      match: {
+        params: { accountAddress }
+      },
+      accountsInfo,
+      ...otherProps
+    }) => ({
+      account: {
+        address: accountAddress,
+        name: accountsInfo[accountAddress].name,
+        type: accountsInfo[accountAddress].type,
+        transactionCount
+      },
+      ...otherProps
+    })
+  )
+)(props => props.children(props.account));
+
+export default Component => initialProps => (
+  <WithAccount>
+    {account => <Component {...initialProps} account={account} />}
+  </WithAccount>
 );
-
-// We don't want to pass the router props to the returned component
-export default Component => initialProps => {
-  return (
-    <AccountAddressFromRouter>
-      {accountAddress => (
-        <Component accountAddress={accountAddress} {...initialProps} />
-      )}
-    </AccountAddressFromRouter>
-  );
-};
