@@ -4,9 +4,9 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React from 'react';
-import Blockies from 'react-blockies';
 import PropTypes from 'prop-types';
 
+import { Avatar } from '../AccountCard/Avatar';
 import { Clickable } from '../Clickable';
 import { ClickToCopy } from '../ClickToCopy';
 import { Header } from '../Header';
@@ -24,6 +24,7 @@ export const AccountHeader = ({
   address,
   copyAddress,
   name,
+  type,
   ...otherProps
 }) => {
   const Container = copyAddress ? CopyContainer : NormalContainer;
@@ -33,9 +34,15 @@ export const AccountHeader = ({
       <Header
         title={
           address &&
-          name && (
+          name &&
+          type && (
             <Container address={address}>
-              <Blockies seed={address.toLowerCase()} scale={2} size={8} />{' '}
+              <Avatar
+                address={address}
+                scale={2}
+                type={type}
+                style={{ display: 'inline-block', marginRight: '5px' }}
+              />
               {name} <br />
               <span className='account_address'>{address}</span>
             </Container>

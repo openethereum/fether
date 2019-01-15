@@ -6,8 +6,6 @@
 import React, { Component } from 'react';
 import { AccountHeader, Card, Form as FetherForm } from 'fether-ui';
 import { observer } from 'mobx-react';
-import { accountsInfo$ } from '@parity/light.js';
-import light from '@parity/light.js-react';
 import { Link, withRouter } from 'react-router-dom';
 
 import backupAccount from '../utils/backupAccount';
@@ -15,9 +13,6 @@ import withAccount from '../utils/withAccount';
 
 @withRouter
 @withAccount
-@light({
-  accountsInfo: accountsInfo$
-})
 @observer
 class BackupAccount extends Component {
   state = {
@@ -31,14 +26,17 @@ class BackupAccount extends Component {
   };
 
   handleSubmit = event => {
-    const { accountAddress, history } = this.props;
+    const {
+      account: { address },
+      history
+    } = this.props;
     const { password } = this.state;
 
     event && event.preventDefault();
 
     this.setState({ isLoading: true });
 
-    backupAccount(accountAddress, password)
+    backupAccount(address, password)
       .then(res => {
         /*
           FIXME: this timeout is a placeholder for after the backup file is saved.
@@ -58,23 +56,18 @@ class BackupAccount extends Component {
 
   render () {
     const {
-      accountsInfo,
-      history,
-      location: { pathname }
+      account: { name, address, type },
+      history
     } = this.props;
     const { isLoading, message, password } = this.state;
-    const accountAddress = pathname.slice(-42);
 
     return (
       <div>
         <AccountHeader
-          address={accountAddress}
+          address={address}
           copyAddress
-          name={
-            accountsInfo &&
-            accountsInfo[accountAddress] &&
-            accountsInfo[accountAddress].name
-          }
+          name={name}
+          type={type}
           left={
             <Link to='/accounts' className='icon -back'>
               Back

@@ -12,10 +12,16 @@ import { Card } from '../Card';
 import { Information } from './Information';
 import { Name } from './Name';
 
-export const AccountCard = ({ address, name, shortAddress, ...otherProps }) => (
+export const AccountCard = ({
+  address,
+  name,
+  type,
+  shortAddress,
+  ...otherProps
+}) => (
   <Card {...otherProps}>
     <div className='account'>
-      <Avatar address={address} />
+      <Avatar address={address} type={type} />
       <Information>
         <Name name={name} />
         <Address address={address} short={shortAddress} />

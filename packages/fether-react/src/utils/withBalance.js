@@ -13,9 +13,9 @@ import { map } from 'rxjs/operators';
 import withProps from 'recompose/withProps';
 
 export const withErc20Balance = light({
-  erc20Balance: ({ token, accountAddress }) =>
+  erc20Balance: ({ token, account: { address } }) =>
     makeContract(token.address, abi)
-      .balanceOf$(accountAddress)
+      .balanceOf$(address)
       .pipe(
         withoutLoading(),
         map(value => value && value.div(10 ** token.decimals))
@@ -23,18 +23,21 @@ export const withErc20Balance = light({
 });
 
 export const withEthBalance = light({
-  ethBalance: ({ accountAddress }) =>
-    balanceOf$(accountAddress).pipe(
+  ethBalance: ({ account: { address } }) =>
+    balanceOf$(address).pipe(
       withoutLoading(),
       map(value => value && fromWei(value))
     )
 });
 
 /**
- * A HOC on light.js to get the current balance. The inner component needs to
- * have a `token` field and a `accountAddress` field in its props.
+ * A HOC on light.js to get the current balance of the account.
+ *
+ * The component needs to receive a `token` prop as well as an
+ * `account: {address}` prop (i.e. needs to be decorated with withAccount).
  *
  * @example
+ * @withAccount
  * @withBalance
  * class MyComponent extends React.Component{
  *

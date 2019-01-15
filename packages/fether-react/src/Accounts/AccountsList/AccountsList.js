@@ -5,17 +5,19 @@
 
 import React, { Component } from 'react';
 import { AccountCard, Clickable, Header } from 'fether-ui';
-import { accountsInfo$, withoutLoading } from '@parity/light.js';
+import { chainId$, withoutLoading } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
 import light from '@parity/light.js-react';
 
 import Health from '../../Health';
 import Feedback from './Feedback';
+import withAccountsInfo from '../../utils/withAccountsInfo';
 
-@light({
-  accountsInfo: () => accountsInfo$().pipe(withoutLoading())
-})
+@withAccountsInfo
 @inject('createAccountStore', 'parityStore')
+@light({
+  chainId: () => chainId$().pipe(withoutLoading())
+})
 @observer
 class AccountsList extends Component {
   handleClick = ({
@@ -34,9 +36,13 @@ class AccountsList extends Component {
   };
 
   render () {
-    const { accountsInfo } = this.props;
+    const { accountsInfo, chainId } = this.props;
 
-    const accountsList = Object.keys(accountsInfo);
+    const accountsList = Object.keys(accountsInfo).filter(
+      key =>
+        !accountsInfo[key].chainId ||
+        accountsInfo[key].chainId === parseInt(chainId, 10)
+    );
     const accountsListLength = accountsList && accountsList.length;
 
     return (
@@ -64,13 +70,8 @@ class AccountsList extends Component {
                     <AccountCard
                       address={address}
                       className='-clickable'
-                      name={
-                        accountsInfo &&
-                        accountsInfo[address] &&
-                        (accountsInfo[address].name
-                          ? accountsInfo[address].name
-                          : '(No name)')
-                      }
+                      type={accountsInfo[address].type}
+                      name={accountsInfo[address].name || '(no name)'}
                       shortAddress
                     />
                   </li>
