@@ -22,7 +22,7 @@ export const Modal = ({
       className={`alert-screen-wrapper ${fullscreen ? '-full-screen' : ''}`}
       open={visible}
     >
-      <div className='alert-screen'>
+      <div className={`alert-screen ${fullscreen ? '-full-screen' : ''}`}>
         <SUIModal.Content image className='alert-screen-content'>
           <SUIImage
             wrapped

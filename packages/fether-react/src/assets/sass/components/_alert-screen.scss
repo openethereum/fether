@@ -19,10 +19,14 @@
 }
 
 .alert-screen {
-  margin-top: 5rem;
+  margin-top: 3.4rem;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &.-full-screen {
+    margin-top: 5rem;
+  }
 }
 
 .alert-screen-content {
