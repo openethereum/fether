@@ -13,10 +13,12 @@ class SentModal extends Component {
     blockscoutTxUrl: PropTypes.func,
     chainName: PropTypes.string,
     check: PropTypes.any.isRequired,
+    confirmationsCount: PropTypes.number,
+    confirmationsMinimum: PropTypes.number,
     handleGoHomepage: PropTypes.func,
     loading: PropTypes.any.isRequired,
-    minConfirmations: PropTypes.number,
-    token: PropTypes.object
+    token: PropTypes.object,
+    txStatus: PropTypes.object
   };
 
   render () {
@@ -24,6 +26,7 @@ class SentModal extends Component {
       <Modal
         description={this.renderDescription()}
         fullscreen
+        link={this.renderLink()}
         loading={this.renderIcon()}
         navigateTo={this.renderGoHomepage()}
         title={this.renderTitle()}
@@ -34,20 +37,21 @@ class SentModal extends Component {
 
   renderDescription = () => {
     const {
-      minConfirmations: MIN_CONFIRMATIONS,
-      sendStore: { confirmations, txStatus }
+      confirmationsCount,
+      confirmationsMinimum: MIN_CONFIRMATIONS,
+      txStatus
     } = this.props;
 
     if (!txStatus) {
       return '';
     }
 
-    if (confirmations >= MIN_CONFIRMATIONS) {
+    if (confirmationsCount >= MIN_CONFIRMATIONS) {
       return null;
     }
 
-    if (confirmations > 0) {
-      return `Waiting ${confirmations}/${MIN_CONFIRMATIONS} confirmations`;
+    if (confirmationsCount > 0) {
+      return `Waiting ${confirmationsCount}/${MIN_CONFIRMATIONS} confirmations`;
     }
 
     if (txStatus.confirmed) {
@@ -64,12 +68,12 @@ class SentModal extends Component {
   renderIcon = () => {
     const {
       check,
-      loading,
-      minConfirmations: MIN_CONFIRMATIONS,
-      sendStore: { confirmations }
+      confirmationsCount,
+      confirmationsMinimum: MIN_CONFIRMATIONS,
+      loading
     } = this.props;
 
-    if (confirmations >= MIN_CONFIRMATIONS) {
+    if (confirmationsCount >= MIN_CONFIRMATIONS) {
       return check;
     }
 
@@ -78,8 +82,9 @@ class SentModal extends Component {
 
   renderTitle = () => {
     const {
-      minConfirmations: MIN_CONFIRMATIONS,
-      sendStore: { confirmations, txStatus }
+      confirmationsCount,
+      confirmationsMinimum: MIN_CONFIRMATIONS,
+      txStatus
     } = this.props;
 
     if (!txStatus) {
@@ -89,7 +94,7 @@ class SentModal extends Component {
     if (txStatus.confirmed) {
       return (
         <span>
-          {confirmations >= MIN_CONFIRMATIONS
+          {confirmationsCount >= MIN_CONFIRMATIONS
             ? 'Transaction confirmed'
             : 'Submitted'}
         </span>
@@ -105,12 +110,12 @@ class SentModal extends Component {
 
   renderGoHomepage = () => {
     const {
-      handleGoToHomepage,
-      minConfirmations: MIN_CONFIRMATIONS,
-      sendStore: { confirmations }
+      confirmationsCount,
+      confirmationsMinimum: MIN_CONFIRMATIONS,
+      handleGoToHomepage
     } = this.props;
 
-    if (confirmations < MIN_CONFIRMATIONS) {
+    if (confirmationsCount < MIN_CONFIRMATIONS) {
       return;
     }
 
@@ -118,7 +123,7 @@ class SentModal extends Component {
       <nav className='form-nav'>
         <button
           className='button'
-          disabled={confirmations < 6}
+          disabled={confirmationsCount < MIN_CONFIRMATIONS}
           onClick={handleGoToHomepage}
         >
           Go back
@@ -131,11 +136,12 @@ class SentModal extends Component {
     const {
       blockscoutTxUrl,
       chainName,
-      sendStore: { confirmations, txStatus },
+      confirmationsCount,
+      txStatus,
       token
     } = this.props;
 
-    if (confirmations >= 0) {
+    if (confirmationsCount >= 0) {
       return (
         <a
           href={blockscoutTxUrl(

@@ -48,13 +48,14 @@ class Sent extends Component {
       <div className='window_content'>
         <SentModal
           blockscoutTxUrl={blockscoutTxUrl}
+          confirmationsCount={sendStore.confirmations}
+          confirmationsMinimum={MIN_CONFIRMATIONS}
           chainName={chainName}
           check={check}
           handleGoToHomepage={this.handleGoToHomepage}
           loading={loading}
-          minConfirmations={MIN_CONFIRMATIONS}
-          sendStore={sendStore}
           token={token}
+          txStatus={sendStore.txStatus}
         />
       </div>
     );
