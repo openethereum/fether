@@ -3,12 +3,12 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { css } from 'styled-components';
+import styled from 'styled-components';
 
-const AnchorTxDetailsStyles = css`
+const AnchorTxDetails = styled.span`
   color: ${props => props.theme.darkGrey};
   font-size: 0.8rem;
   font-weight: 400;
 `;
 
-export { AnchorTxDetailsStyles };
+export { AnchorTxDetails };

@@ -15,7 +15,6 @@ import { isAddress } from '@parity/api/lib/util/address';
 import { Link } from 'react-router-dom';
 import { OnChange } from 'react-final-form-listeners';
 import { withProps } from 'recompose';
-import styled from 'styled-components';
 
 import { DivWindowContent } from '../../assets/theme/shared/styledComponents/DivWindowContent.styles';
 import { estimateGas } from '../../utils/estimateGas';
@@ -25,16 +24,12 @@ import withAccount from '../../utils/withAccount.js';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
 import withTokens from '../../utils/withTokens';
 import TxDetails from './TxDetails';
-import { AnchorTxDetailsStyles } from './style';
+import { AnchorTxDetails } from './TxForm.styles';
 
 const DEFAULT_AMOUNT_MAX_CHARS = 9;
 const MEDIUM_AMOUNT_MAX_CHARS = 14;
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
-
-const AnchorTxDetails = styled.span`
-  ${AnchorTxDetailsStyles};
-`;
 
 @inject('parityStore', 'sendStore')
 @withTokens
