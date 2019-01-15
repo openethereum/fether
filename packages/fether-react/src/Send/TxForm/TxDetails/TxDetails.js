@@ -6,25 +6,12 @@
 import React, { Component } from 'react';
 import BigNumber from 'bignumber.js';
 import { fromWei, toWei } from '@parity/api/lib/util/wei';
-import styled from 'styled-components';
 
 import {
-  DivTxFormStyles,
-  LabelTextareaTxDetailsStyles,
-  TextareaTxDetailsStyles
-} from './style';
-
-const DivTxForm = styled.div`
-  ${DivTxFormStyles};
-`;
-
-const LabelTextareaTxDetails = styled.label`
-  ${LabelTextareaTxDetailsStyles};
-`;
-
-const TextareaTxDetails = styled.textarea`
-  ${TextareaTxDetailsStyles};
-`;
+  DivTxForm,
+  LabelTextareaTxDetails,
+  TextareaTxDetails
+} from './TxDetails.styles';
 
 class TxDetails extends Component {
   renderDetails = () => {

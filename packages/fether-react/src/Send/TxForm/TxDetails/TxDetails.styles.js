@@ -3,8 +3,8 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { css } from 'styled-components';
-import SlideLeftIn from '../../../assets/theme/shared/animations/SlideLeftIn';
+import styled, { css } from 'styled-components';
+import { SlideLeftIn } from '../../../assets/theme/shared/animations/SlideLeftIn.styles';
 
 const animationRuleSlideLeftIn = css`
   animation-name: ${SlideLeftIn}; /* required */
@@ -17,7 +17,7 @@ const animationRuleSlideLeftIn = css`
   animation-play-state: playing;
 `;
 
-const DivTxFormStyles = css`
+const DivTxForm = styled.div`
   ${animationRuleSlideLeftIn};
   border-radius: 0.25rem;
   background: rgba(${props => props.theme.faint}, 0.25);
@@ -25,7 +25,7 @@ const DivTxFormStyles = css`
   position: relative;
 `;
 
-const LabelTextareaTxDetailsStyles = css`
+const LabelTextareaTxDetails = styled.label`
   color: ${props => props.theme.black};
   display: block;
   font-size: 0.7rem;
@@ -34,7 +34,7 @@ const LabelTextareaTxDetailsStyles = css`
   padding: 0.5rem 0.5rem 0;
 `;
 
-const TextareaTxDetailsStyles = css`
+const TextareaTxDetails = styled.textarea`
   background: transparent;
   border: 0;
   color: ${props => props.theme.darkGrey};
@@ -52,8 +52,4 @@ const TextareaTxDetailsStyles = css`
   word-wrap: break-word;
 `;
 
-export {
-  DivTxFormStyles,
-  LabelTextareaTxDetailsStyles,
-  TextareaTxDetailsStyles
-};
+export { DivTxForm, LabelTextareaTxDetails, TextareaTxDetails };
