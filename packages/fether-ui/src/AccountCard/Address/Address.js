@@ -9,15 +9,15 @@ import PropTypes from 'prop-types';
 import { AddressShort } from '../../AddressShort';
 import { Placeholder } from '../../Placeholder';
 
-export const Address = ({ address, screen, short, ...otherProps }) => (
+export const Address = ({ address, screen, shortAddress, ...otherProps }) => (
   <div
     className={`account_address ${
-      screen === 'unlock' && !short ? '-narrow' : ''
+      screen === 'unlock' && !shortAddress ? '-narrow' : ''
     }`}
     {...otherProps}
   >
     {address ? (
-      short ? (
+      shortAddress ? (
         <AddressShort address={address} />
       ) : (
         address
@@ -29,11 +29,11 @@ export const Address = ({ address, screen, short, ...otherProps }) => (
 );
 
 Address.defaultProps = {
-  short: false
+  shortAddress: false
 };
 
 Address.propTypes = {
   name: PropTypes.string,
   screen: PropTypes.string,
-  short: PropTypes.bool
+  shortAddress: PropTypes.bool
 };

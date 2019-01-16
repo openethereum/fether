@@ -22,9 +22,9 @@ const CopyContainer = ({ address, children, ...otherProps }) => (
 const CardContents = ({ address, name, screen, shortAddress, type }) => (
   <div className='account'>
     <Avatar address={address} type={type} />
-    <Information>
+    <Information screen={screen} shortAddress={shortAddress}>
       <Name name={name} screen={screen} />
-      <Address address={address} screen={screen} short={shortAddress} />
+      <Address address={address} screen={screen} shortAddress={shortAddress} />
     </Information>
   </div>
 );

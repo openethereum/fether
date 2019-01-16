@@ -124,6 +124,7 @@ class Unlock extends Component {
                   />
                 ]}
                 onClick={null}
+                screen='unlock'
                 token={token}
               />
             </div>

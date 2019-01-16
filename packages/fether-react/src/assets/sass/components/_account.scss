@@ -29,6 +29,10 @@
     padding-left: 0.325rem;
     overflow: hidden;
     flex-grow: 1;
+
+    &.-narrow {
+      padding-left: 0rem;
+    }
   }
 
   .account_change_blockies {
