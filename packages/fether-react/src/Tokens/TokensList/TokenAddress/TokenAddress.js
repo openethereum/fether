@@ -6,17 +6,15 @@
 import React, { Component } from 'react';
 import { inject } from 'mobx-react';
 import PropTypes from 'prop-types';
-import { TokenCard } from 'fether-ui';
+import { AccountCard } from 'fether-ui';
 import { withRouter } from 'react-router-dom';
 
 import withAccount from '../../../utils/withAccount';
-import withBalance from '../../../utils/withBalance';
 
 @withRouter
 @withAccount
-@withBalance
 @inject('sendStore')
-class TokenBalance extends Component {
+class TokenAddress extends Component {
   static propTypes = {
     token: PropTypes.object
   };
@@ -38,8 +36,21 @@ class TokenBalance extends Component {
   };
 
   render () {
-    return <TokenCard onClick={this.handleClick} {...this.props} />;
+    const {
+      account: { address, name, type }
+    } = this.props;
+
+    return (
+      <AccountCard
+        address={address}
+        name={name}
+        type={type}
+        onClick={this.handleClick}
+        shortAddress
+        {...this.props}
+      />
+    );
   }
 }
 
-export default TokenBalance;
+export default TokenAddress;

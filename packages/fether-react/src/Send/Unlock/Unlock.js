@@ -11,7 +11,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { withProps } from 'recompose';
 
 import RequireHealth from '../../RequireHealthOverlay';
-import TokenBalance from '../../Tokens/TokensList/TokenBalance';
+import TokenAddress from '../../Tokens/TokensList/TokenAddress';
 import withAccount from '../../utils/withAccount.js';
 import withTokens from '../../utils/withTokens';
 
@@ -65,7 +65,7 @@ class Unlock extends Component {
         <RequireHealth require='sync'>
           <div className='window_content'>
             <div className='box -padded'>
-              <TokenBalance
+              <TokenAddress
                 drawers={[
                   <div key='txForm'>
                     <FetherForm.Field
