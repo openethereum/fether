@@ -6,7 +6,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Address } from '../AccountCard/Address';
 import { Avatar } from '../AccountCard/Avatar';
+import { Information } from '../AccountCard/Information';
+import { Name } from '../AccountCard/Name';
 import { Clickable } from '../Clickable';
 import { ClickToCopy } from '../ClickToCopy';
 import { Header } from '../Header';
@@ -32,22 +35,21 @@ export const AccountHeader = ({
   return (
     <div>
       <Header
+        screen='tokens'
         title={
           address &&
           name &&
           type && (
-            <Container address={address}>
-              <Avatar
-                address={address}
-                scale={2}
-                type={type}
-                style={{ display: 'inline-block', marginRight: '5px' }}
-              />
-              {name} <br />
-              <span className='account_address'>{address}</span>
+            <Container address={address} className='account -header-container'>
+              <Avatar address={address} scale={4} type={type} />
+              <Information>
+                <Name name={name} />
+                <Address address={address} short />
+              </Information>
             </Container>
           )
         }
+        titleOffset='left'
         {...otherProps}
       />
     </div>

@@ -57,7 +57,9 @@ class SignedTxSummary extends Component {
               Close
             </Link>
           }
+          screen='signed-tx-summary'
           title={token && <h1>Send {token.name}</h1>}
+          titleOffset='left'
         />
 
         <RequireHealth require='sync'>

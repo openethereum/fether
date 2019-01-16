@@ -106,7 +106,9 @@ class Whitelist extends Component {
               Close
             </Link>
           }
+          screen='whitelist'
           title={<h1>Search tokens</h1>}
+          titleOffset='left'
         />
 
         <div className='window_content'>

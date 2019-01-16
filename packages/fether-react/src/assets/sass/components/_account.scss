@@ -2,9 +2,12 @@
   display: flex;
 
   &.-header {
-    .account_address {
-      font-size: 0.7rem;
-    }
+    display: flex !important;
+    align-items: center;
+  }
+
+  &.-header-container {
+    display: flex;
   }
 
   .account_avatar {
@@ -41,6 +44,14 @@
     color: $black;
     font-weight: 500;
     margin-bottom: 0.1rem;
+
+    /* Information component when used with components
+     * in the header requires more bottom margin than
+     * where it is used in the AccountList componet
+     */
+    &.-header {
+      margin-bottom: 0.3rem;
+    }
   }
 
   .account_address {

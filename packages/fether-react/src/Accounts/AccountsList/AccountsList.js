@@ -48,13 +48,15 @@ class AccountsList extends Component {
     return (
       <div className='accounts-list'>
         <Header
-          title={<h1>Accounts</h1>}
           right={
             <Clickable
               className='icon -new'
               onClick={this.handleCreateAccount}
             />
           }
+          screen='accounts'
+          title={<h1>Accounts</h1>}
+          titleOffset='right'
         />
 
         <div className='window_content'>
@@ -72,6 +74,7 @@ class AccountsList extends Component {
                       className='-clickable'
                       type={accountsInfo[address].type}
                       name={accountsInfo[address].name || '(no name)'}
+                      screen='accounts'
                       shortAddress
                     />
                   </li>

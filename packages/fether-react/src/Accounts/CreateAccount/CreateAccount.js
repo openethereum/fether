@@ -74,9 +74,11 @@ class CreateAccount extends Component {
               </Link>
             )
           }
+          screen='create-account'
           title={
             <h1>{isImport ? 'Import account' : 'Create a new account'}</h1>
           }
+          titleOffset='left'
         />
 
         <div className='window_content'>
