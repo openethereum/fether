@@ -185,12 +185,14 @@ class TxForm extends Component {
     return (
       <div>
         <Header
+          screen='txform'
           left={
             <Link to={`/tokens/${address}`} className='icon -back'>
               Close
             </Link>
           }
           title={token && <h1>Send {token.name}</h1>}
+          titleOffset='left'
         />
 
         <RequireHealth require='sync'>

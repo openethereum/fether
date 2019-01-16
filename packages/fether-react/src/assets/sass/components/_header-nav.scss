@@ -1,28 +1,60 @@
 .header-nav {
+  // Reference: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Aligning_Items_in_a_Flex_Container
   display: flex;
-  justify-content: space-between;
-  padding: 1rem 0.5rem;
-  position: relative;
-  overflow: hidden;
+  flex-direction: row;
   height: 3.5rem;
 
   .header-nav_left,
   .header-nav_right {
-    display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+  }
+
+  .header-nav_left {
+    padding-left: 0.5rem;
+  }
+
+  .header-nav_right {
+    padding-right: 0.5rem;
   }
 
   .header-nav_title {
+    flex: 1; // https://stackoverflow.com/a/35270047/3208553
     z-index: 2;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    padding: 1rem 0.5rem;
-    text-align: center;
+
+    /**
+     * Postfix is component to apply these styles to.
+     * Explicit list so easy to change incase header
+     * modified on a specific page
+     */
+    &.-header-accounts,
+    &.-header-create-account,
+    &.-header-onboarding,
+    &.-header-scan-signed-tx,
+    &.-header-signed-tx-summary,
+    &.-header-tx-qr-code,
+    &.-header-txform,
+    &.-header-unlock,
+    &.-header-whitelist, {
+      justify-content: center;
+      align-items: center;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+
+      /* Offset from right when only button on left */
+      &.-offset-left {
+        padding-right: 2rem;
+      }
+
+      /* Offset from left when only button on right */
+      &.-offset-right {
+        padding-left: 2rem;
+      }
+    }
+
+    &.-header-tokens {
+      padding-left: 0.5rem;
+    }
 
     a,
     a:link,
