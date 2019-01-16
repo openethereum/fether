@@ -46,7 +46,6 @@ class TokenAddress extends Component {
         name={name}
         type={type}
         onClick={this.handleClick}
-        shortAddress
         {...this.props}
       />
     );
