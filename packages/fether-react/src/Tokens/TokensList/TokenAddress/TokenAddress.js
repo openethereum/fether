@@ -46,6 +46,7 @@ class TokenAddress extends Component {
         name={name}
         type={type}
         onClick={this.handleClick}
+        screen='unlock'
         {...this.props}
       />
     );

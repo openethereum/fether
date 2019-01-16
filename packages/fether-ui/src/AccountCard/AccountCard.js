@@ -16,6 +16,7 @@ export const AccountCard = ({
   address,
   name,
   type,
+  screen,
   shortAddress,
   ...otherProps
 }) => (
@@ -23,8 +24,8 @@ export const AccountCard = ({
     <div className='account'>
       <Avatar address={address} type={type} />
       <Information>
-        <Name name={name} />
-        <Address address={address} short={shortAddress} />
+        <Name name={name} screen={screen} />
+        <Address address={address} screen={screen} short={shortAddress} />
       </Information>
     </div>
   </Card>
@@ -38,5 +39,6 @@ AccountCard.Name = Name;
 AccountCard.propTypes = {
   address: PropTypes.string,
   name: PropTypes.string,
+  screen: PropTypes.string,
   shortAddress: PropTypes.bool
 };

@@ -8,12 +8,16 @@ import PropTypes from 'prop-types';
 
 import { Placeholder } from '../../Placeholder';
 
-export const Name = ({ name, ...otherProps }) => (
-  <div className='account_name' {...otherProps}>
+export const Name = ({ name, screen, ...otherProps }) => (
+  <div
+    className={`account_name ${screen === 'unlock' ? '-narrow' : ''}`}
+    {...otherProps}
+  >
     {name || <Placeholder height={18} width={100} />}
   </div>
 );
 
 Name.propTypes = {
-  name: PropTypes.string
+  name: PropTypes.string,
+  screen: PropTypes.string
 };
