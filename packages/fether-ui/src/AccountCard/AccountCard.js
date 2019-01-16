@@ -5,6 +5,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Clickable, ClickToCopy } from 'fether-ui';
 
 import { Address } from './Address';
 import { Avatar } from './Avatar';
@@ -12,8 +13,25 @@ import { Card } from '../Card';
 import { Information } from './Information';
 import { Name } from './Name';
 
+const CopyContainer = ({ address, children, ...otherProps }) => (
+  <ClickToCopy label='Copy address' textToCopy={address} {...otherProps}>
+    <Clickable>{children}</Clickable>
+  </ClickToCopy>
+);
+
+const CardContents = ({ address, name, screen, shortAddress, type }) => (
+  <div className='account'>
+    <Avatar address={address} type={type} />
+    <Information>
+      <Name name={name} screen={screen} />
+      <Address address={address} screen={screen} short={shortAddress} />
+    </Information>
+  </div>
+);
+
 export const AccountCard = ({
   address,
+  copyAddress,
   name,
   type,
   screen,
@@ -21,13 +39,25 @@ export const AccountCard = ({
   ...otherProps
 }) => (
   <Card {...otherProps}>
-    <div className='account'>
-      <Avatar address={address} type={type} />
-      <Information>
-        <Name name={name} screen={screen} />
-        <Address address={address} screen={screen} short={shortAddress} />
-      </Information>
-    </div>
+    {copyAddress ? (
+      <CopyContainer address={address}>
+        <CardContents
+          address={address}
+          name={name}
+          screen={screen}
+          shortAddress={shortAddress}
+          type={type}
+        />
+      </CopyContainer>
+    ) : (
+      <CardContents
+        address={address}
+        name={name}
+        screen={screen}
+        shortAddress={shortAddress}
+        type={type}
+      />
+    )}
   </Card>
 );
 
@@ -38,6 +68,7 @@ AccountCard.Name = Name;
 
 AccountCard.propTypes = {
   address: PropTypes.string,
+  copyAddress: PropTypes.bool,
   name: PropTypes.string,
   screen: PropTypes.string,
   shortAddress: PropTypes.bool

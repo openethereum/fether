@@ -66,6 +66,7 @@ class Unlock extends Component {
           <div className='window_content'>
             <div className='box -padded'>
               <TokenAddress
+                copyAddress
                 drawers={[
                   <div key='txForm'>
                     <FetherForm.Field

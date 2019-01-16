@@ -16,6 +16,7 @@ import withAccount from '../../../utils/withAccount';
 @inject('sendStore')
 class TokenAddress extends Component {
   static propTypes = {
+    copyAddress: PropTypes.bool,
     token: PropTypes.object
   };
 
@@ -37,12 +38,14 @@ class TokenAddress extends Component {
 
   render () {
     const {
-      account: { address, name, type }
+      account: { address, name, type },
+      copyAddress
     } = this.props;
 
     return (
       <AccountCard
         address={address}
+        copyAddress={copyAddress}
         name={name}
         type={type}
         onClick={this.handleClick}
