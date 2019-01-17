@@ -7,20 +7,22 @@ import React, { Component } from 'react';
 import BigNumber from 'bignumber.js';
 import { Clickable, Form as FetherForm, Header } from 'fether-ui';
 import createDecorator from 'final-form-calculate';
+import { chainId$, withoutLoading } from '@parity/light.js';
 import debounce from 'debounce-promise';
 import { Field, Form } from 'react-final-form';
 import { fromWei, toWei } from '@parity/api/lib/util/wei';
 import { inject, observer } from 'mobx-react';
 import { isAddress } from '@parity/api/lib/util/address';
+import light from '@parity/light.js-react';
 import { Link } from 'react-router-dom';
 import { OnChange } from 'react-final-form-listeners';
 import { withProps } from 'recompose';
 
 import { DivWindowContent } from '../../assets/theme/shared/styledComponents/DivWindowContent.styles';
-import { estimateGas } from '../../utils/estimateGas';
+import { estimateGas } from '../../utils/transaction';
 import RequireHealth from '../../RequireHealthOverlay';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
-import withAccount from '../../utils/withAccount.js';
+import withAccount from '../../utils/withAccount';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
 import withTokens from '../../utils/withTokens';
 import TxDetails from './TxDetails';
@@ -37,10 +39,13 @@ const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
   token: tokens[tokenAddress]
 }))
 @withAccount
+@light({
+  chainId: () => chainId$().pipe(withoutLoading())
+})
 @withBalance // Balance of current token (can be ETH)
 @withEthBalance // ETH balance
 @observer
-class Send extends Component {
+class TxForm extends Component {
   state = {
     maxSelected: false,
     showDetails: false
@@ -118,10 +123,21 @@ class Send extends Component {
   };
 
   handleSubmit = values => {
-    const { accountAddress, history, sendStore, token } = this.props;
+    const {
+      account: { address, type, transactionCount },
+      chainId,
+      history,
+      sendStore,
+      token
+    } = this.props;
 
-    sendStore.setTx(values);
-    history.push(`/send/${token.address}/from/${accountAddress}/signer`);
+    sendStore.setTx({ ...values, chainId, token, transactionCount });
+
+    if (type === 'signer') {
+      history.push(`/send/${token.address}/from/${address}/txqrcode`);
+    } else {
+      history.push(`/send/${token.address}/from/${address}/unlock`);
+    }
   };
 
   recalculateMax = (args, state, { changeValue }) => {
@@ -161,7 +177,7 @@ class Send extends Component {
 
   render () {
     const {
-      accountAddress,
+      account: { address, type },
       sendStore: { tx },
       token
     } = this.props;
@@ -172,7 +188,7 @@ class Send extends Component {
       <div>
         <Header
           left={
-            <Link to={`/tokens/${accountAddress}`} className='icon -back'>
+            <Link to={`/tokens/${address}`} className='icon -back'>
               Close
             </Link>
           }
@@ -187,7 +203,7 @@ class Send extends Component {
                 drawers={[
                   <Form
                     key='txForm'
-                    initialValues={{ from: accountAddress, gasPrice: 4, ...tx }}
+                    initialValues={{ from: address, gasPrice: 4, ...tx }}
                     onSubmit={this.handleSubmit}
                     validate={this.validateForm}
                     decorators={[this.decorator]}
@@ -292,7 +308,11 @@ class Send extends Component {
                             disabled={!valid || validating}
                             className='button'
                           >
-                            {validating ? 'Checking...' : 'Send'}
+                            {validating
+                              ? 'Checking...'
+                              : type === 'signer'
+                                ? 'Scan'
+                                : 'Send'}
                           </button>
                         </nav>
                       </form>
@@ -401,4 +421,4 @@ class Send extends Component {
   }, 1000);
 }
 
-export default Send;
+export default TxForm;

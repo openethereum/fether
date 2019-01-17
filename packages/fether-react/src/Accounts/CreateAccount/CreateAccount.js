@@ -4,10 +4,8 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { accountsInfo$ } from '@parity/light.js';
 import { Header } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
-import light from '@parity/light.js-react';
 import { Link, Route } from 'react-router-dom';
 
 import { DivWindowContent } from '../../assets/theme/shared/styledComponents/DivWindowContent.styles';
@@ -17,9 +15,10 @@ import AccountRewritePhrase from './AccountRewritePhrase';
 import AccountName from './AccountName';
 import AccountPassword from './AccountPassword';
 import Health from '../../Health';
+import withAccountsInfo from '../../utils/withAccountsInfo';
 
-@light({ accountsInfo: accountsInfo$ })
 @inject('createAccountStore')
+@withAccountsInfo
 @observer
 class CreateAccount extends Component {
   constructor (props) {
@@ -46,7 +45,6 @@ class CreateAccount extends Component {
     } = this.props;
     createAccountStore.clear();
     createAccountStore.setIsImport(!createAccountStore.isImport);
-
     // If we were further in the account creation, go back to step 1
     if (step > 1) {
       history.push('/accounts/new/1');

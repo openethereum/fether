@@ -157,7 +157,7 @@ class Sent extends Component {
           target='_blank'
           rel='noopener noreferrer'
         >
-          <button className='button -tiny'>See it on BlockScout</button>
+          See it on BlockScout
         </a>
       );
     }

@@ -4,14 +4,18 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import abi from '@parity/contracts/lib/abi/eip20';
+import Abi from '@parity/abi';
+import Token from '@parity/abi/lib/token';
+import { eip20 } from '@parity/contracts/lib/abi';
 import BigNumber from 'bignumber.js';
 import { makeContract } from '@parity/light.js';
 import memoize from 'lodash/memoize';
 import { toWei } from '@parity/api/lib/util/wei';
 
 import Debug from './debug';
+import EthereumTx from 'ethereumjs-tx';
 
-const debug = Debug('estimateGas');
+const debug = Debug('transaction');
 const GAS_MULT_FACTOR = 1.25; // Since estimateGas is not always accurate, we add a 25% factor for buffer.
 
 export const contractForToken = memoize(tokenAddress =>
@@ -115,4 +119,91 @@ export const txForEth = tx => {
     output.gas = tx.gas;
   }
   return output;
+};
+
+/**
+ * This.tx is a user-friendly tx object. This function converts it to an
+ * EthereumTx object.
+ */
+const getEthereumTx = tx => {
+  const { amount, chainId, gas, gasPrice, to, token, transactionCount } = tx;
+
+  const txParams = {
+    nonce: '0x' + transactionCount.toNumber().toString(16),
+    gasLimit: '0x' + gas.toNumber().toString(16),
+    gasPrice,
+    chainId
+  };
+
+  if (token.address === 'ETH') {
+    txParams.to = to;
+    txParams.value = parseFloat(amount) * Math.pow(10, 18);
+  } else {
+    txParams.to = token.address;
+    txParams.data =
+      '0x' +
+      new Abi(eip20).functions.find(f => f._name === 'transfer').encodeCall([
+        new Token('address', to),
+        new Token(
+          'uint',
+          '0x' +
+            new BigNumber(amount)
+              .multipliedBy(new BigNumber(10).pow(token.decimals))
+              .toNumber()
+              .toString(16)
+        )
+      ]);
+  }
+
+  return new EthereumTx(txParams);
+};
+
+/*
+ * Sign the given this.tx with the given signature.
+ *
+ * ethereumjs-tx does not support EIP155-compliant signatures (https://git.io/fh3SG)
+ * This is a workaround from https://git.io/fh3S8
+ */
+export const signTransactionWithSignature = (thisTx, signature) => {
+  const tx = getEthereumTx(thisTx);
+
+  const sigBuf = Buffer.from(signature.substr(2), 'hex');
+
+  // Mimicking the way tx.sign() works
+  let v = sigBuf[64] + 27;
+
+  if (tx._chainId > 0) {
+    v += tx._chainId * 2 + 8;
+  }
+
+  tx.r = sigBuf.slice(0, 32);
+  tx.s = sigBuf.slice(32, 64);
+  tx.v = Buffer.from([v]);
+
+  return tx.serialize();
+};
+
+/*
+ * Return the RLP of the given this.tx.
+ *
+ * From https://git.io/fh3Sd
+ */
+export const transactionToRlp = thisTx => {
+  const tx = getEthereumTx(thisTx);
+
+  const { v, r, s } = tx;
+
+  // Poor man's serialize without signature.
+  tx.v = Buffer.from([tx._chainId]);
+  tx.r = Buffer.from([0]);
+  tx.s = Buffer.from([0]);
+
+  const rlp = '0x' + tx.serialize().toString('hex');
+
+  // Restore previous values
+  tx.v = v;
+  tx.r = r;
+  tx.s = s;
+
+  return rlp;
 };
