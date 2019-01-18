@@ -56,7 +56,6 @@ class AccountsList extends Component {
           }
           screen='accounts'
           title={<h1>Accounts</h1>}
-          titleOffset='right'
         />
 
         <div className='window_content'>

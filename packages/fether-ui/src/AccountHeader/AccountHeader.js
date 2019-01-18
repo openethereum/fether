@@ -49,7 +49,6 @@ export const AccountHeader = ({
             </Container>
           )
         }
-        titleOffset='left'
         {...otherProps}
       />
     </div>

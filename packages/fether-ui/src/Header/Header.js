@@ -8,12 +8,10 @@ import PropTypes from 'prop-types';
 
 import { Placeholder } from '../Placeholder';
 
-export const Header = ({ left, right, screen, title, titleOffset }) => (
+export const Header = ({ left, right, screen, title }) => (
   <div className='header-nav'>
     <div className='header-nav header-nav_left'>{left}</div>
-    <div
-      className={`header-nav header-nav_title -header-${screen} -offset-${titleOffset}`}
-    >
+    <div className={`header-nav header-nav_title -header-${screen}`}>
       {title || <Placeholder height={24} width={150} />}
     </div>
     <div className='header-nav header-nav_right'>{right}</div>
@@ -24,6 +22,5 @@ Header.propTypes = {
   left: PropTypes.node,
   right: PropTypes.node,
   screen: PropTypes.string,
-  title: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-  titleOffset: PropTypes.string
+  title: PropTypes.oneOfType([PropTypes.node, PropTypes.string])
 };

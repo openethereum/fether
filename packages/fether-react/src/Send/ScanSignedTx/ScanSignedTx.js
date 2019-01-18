@@ -67,9 +67,7 @@ class ScanSignedTx extends Component {
               Close
             </Link>
           }
-          screen='scan-signed-tx'
           title={token && <h1>Send {token.name}</h1>}
-          titleOffset='left'
         />
 
         <RequireHealth require='sync'>
