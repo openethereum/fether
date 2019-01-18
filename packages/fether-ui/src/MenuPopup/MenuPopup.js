@@ -8,34 +8,13 @@ import PropTypes from 'prop-types';
 import { Popup as SUIPopup } from 'semantic-ui-react';
 
 export const MenuPopup = ({
-  basic,
-  className,
-  context,
   handleGoToLink,
-  horizontalOffset,
-  hoverable,
   menuItems,
-  on,
   onClose,
   open,
-  position,
-  size,
-  verticalOffset
+  ...otherProps
 }) => (
-  <SUIPopup
-    basic={basic} // toggles popup arrow
-    className={className}
-    context={context} // element to bind the popup to or use position
-    horizontalOffset={horizontalOffset}
-    hoverable={hoverable} // toggle autoclose
-    keepInViewPort
-    on={on}
-    onClose={(event, data) => onClose()}
-    open={open}
-    position={position}
-    size={size}
-    verticalOffset={verticalOffset}
-  >
+  <SUIPopup onClose={(event, data) => onClose()} open={open} {...otherProps}>
     <div className='popup-screen'>
       <SUIPopup.Content>
         {menuItems &&
@@ -63,12 +42,12 @@ MenuPopup.defaultProps = {
 };
 
 MenuPopup.propTypes = {
-  basic: PropTypes.bool,
+  basic: PropTypes.bool, // toggles popup arrow
   className: PropTypes.string,
-  context: PropTypes.any,
+  context: PropTypes.any, // element to bind the popup to or use position
   handleGoToLink: PropTypes.func,
   horizontalOffset: PropTypes.number,
-  hoverable: PropTypes.bool,
+  hoverable: PropTypes.bool, // toggle autoclose
   menuItems: PropTypes.array.isRequired,
   on: PropTypes.string,
   onClose: PropTypes.func.isRequired,
