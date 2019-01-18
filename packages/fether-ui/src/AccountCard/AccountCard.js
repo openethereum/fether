@@ -19,12 +19,12 @@ const CopyContainer = ({ address, children, ...otherProps }) => (
   </ClickToCopy>
 );
 
-const CardContents = ({ address, name, screen, shortAddress, type }) => (
+const CardContents = ({ address, name, shortAddress, type }) => (
   <div className='account'>
     <Avatar address={address} type={type} />
-    <Information screen={screen} shortAddress={shortAddress}>
-      <Name name={name} screen={screen} />
-      <Address address={address} screen={screen} shortAddress={shortAddress} />
+    <Information>
+      <Name name={name} />
+      <Address address={address} shortAddress={shortAddress} />
     </Information>
   </div>
 );
@@ -34,7 +34,6 @@ export const AccountCard = ({
   copyAddress,
   name,
   type,
-  screen,
   shortAddress,
   ...otherProps
 }) => (
@@ -44,7 +43,6 @@ export const AccountCard = ({
         <CardContents
           address={address}
           name={name}
-          screen={screen}
           shortAddress={shortAddress}
           type={type}
         />
@@ -53,7 +51,6 @@ export const AccountCard = ({
       <CardContents
         address={address}
         name={name}
-        screen={screen}
         shortAddress={shortAddress}
         type={type}
       />
@@ -70,6 +67,5 @@ AccountCard.propTypes = {
   address: PropTypes.string,
   copyAddress: PropTypes.bool,
   name: PropTypes.string,
-  screen: PropTypes.string,
   shortAddress: PropTypes.bool
 };

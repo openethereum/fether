@@ -17,6 +17,7 @@ import withAccount from '../../../utils/withAccount';
 class TokenAddress extends Component {
   static propTypes = {
     copyAddress: PropTypes.bool,
+    shortAddress: PropTypes.bool,
     token: PropTypes.object
   };
 
@@ -39,7 +40,8 @@ class TokenAddress extends Component {
   render () {
     const {
       account: { address, name, type },
-      copyAddress
+      copyAddress,
+      shortAddress
     } = this.props;
 
     return (
@@ -49,7 +51,7 @@ class TokenAddress extends Component {
         name={name}
         type={type}
         onClick={this.handleClick}
-        screen='unlock'
+        shortAddress={shortAddress}
         {...this.props}
       />
     );
