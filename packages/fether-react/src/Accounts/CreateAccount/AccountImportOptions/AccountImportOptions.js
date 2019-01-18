@@ -213,7 +213,7 @@ class AccountImportOptions extends Component {
         <p>{error}</p>
         <nav className='form-nav -space-around'>
           {currentStep > 1 && (
-            <button className='button -cancel' onClick={history.goBack}>
+            <button className='button -back' onClick={history.goBack}>
               Back
             </button>
           )}
