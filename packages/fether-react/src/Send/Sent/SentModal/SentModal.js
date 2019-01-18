@@ -6,7 +6,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Modal } from '../Modal';
+import { Modal } from 'fether-ui';
+
+// Number of confirmations to consider a transaction successful
+const MIN_CONFIRMATIONS = 6;
 
 class SentModal extends Component {
   static propTypes = {
@@ -14,7 +17,6 @@ class SentModal extends Component {
     chainName: PropTypes.string,
     check: PropTypes.any.isRequired,
     confirmationsCount: PropTypes.number,
-    confirmationsMinimum: PropTypes.number,
     handleGoHomepage: PropTypes.func,
     loading: PropTypes.any.isRequired,
     token: PropTypes.object,
@@ -36,11 +38,7 @@ class SentModal extends Component {
   }
 
   renderDescription = () => {
-    const {
-      confirmationsCount,
-      confirmationsMinimum: MIN_CONFIRMATIONS,
-      txStatus
-    } = this.props;
+    const { confirmationsCount, txStatus } = this.props;
 
     if (!txStatus) {
       return '';
@@ -66,12 +64,7 @@ class SentModal extends Component {
   };
 
   renderIcon = () => {
-    const {
-      check,
-      confirmationsCount,
-      confirmationsMinimum: MIN_CONFIRMATIONS,
-      loading
-    } = this.props;
+    const { check, confirmationsCount, loading } = this.props;
 
     if (confirmationsCount >= MIN_CONFIRMATIONS) {
       return check;
@@ -81,11 +74,7 @@ class SentModal extends Component {
   };
 
   renderTitle = () => {
-    const {
-      confirmationsCount,
-      confirmationsMinimum: MIN_CONFIRMATIONS,
-      txStatus
-    } = this.props;
+    const { confirmationsCount, txStatus } = this.props;
 
     if (!txStatus) {
       return '';
@@ -109,11 +98,7 @@ class SentModal extends Component {
   };
 
   renderGoHomepage = () => {
-    const {
-      confirmationsCount,
-      confirmationsMinimum: MIN_CONFIRMATIONS,
-      handleGoToHomepage
-    } = this.props;
+    const { confirmationsCount, handleGoToHomepage } = this.props;
 
     if (confirmationsCount < MIN_CONFIRMATIONS) {
       return;

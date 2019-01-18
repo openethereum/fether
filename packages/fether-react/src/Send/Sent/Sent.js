@@ -8,15 +8,12 @@ import { chainName$, withoutLoading } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
 import light from '@parity/light.js-react';
 import { withProps } from 'recompose';
-import { SentModal } from 'fether-ui';
 
 import check from '../../assets/img/icons/check.svg';
 import loading from '../../assets/img/icons/loading.svg';
 import withTokens from '../../utils/withTokens';
 import { blockscoutTxUrl } from '../../utils/blockscout';
-
-// Number of confirmations to consider a transaction successful
-const MIN_CONFIRMATIONS = 6;
+import { SentModal } from './SentModal';
 
 @light({
   chainName: () => chainName$().pipe(withoutLoading())
@@ -49,7 +46,6 @@ class Sent extends Component {
         <SentModal
           blockscoutTxUrl={blockscoutTxUrl}
           confirmationsCount={sendStore.confirmations}
-          confirmationsMinimum={MIN_CONFIRMATIONS}
           chainName={chainName}
           check={check}
           handleGoToHomepage={this.handleGoToHomepage}
