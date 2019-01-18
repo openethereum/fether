@@ -83,7 +83,7 @@ class ScanSignedTx extends Component {
 
                 <nav className='form-nav -space-around'>
                   <button
-                    className='button -cancel'
+                    className='button -back'
                     onClick={history.goBack}
                     type='button'
                   >
