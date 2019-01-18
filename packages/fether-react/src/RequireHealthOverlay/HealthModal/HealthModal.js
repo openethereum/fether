@@ -24,13 +24,14 @@ class HealthModal extends Component {
 
     return (
       <Modal
-        children={children}
         description={this.renderDescription()}
         fullscreen={fullscreen}
         loading={loading}
         title={this.renderTitle()}
         visible={visible}
-      />
+      >
+        {children}
+      </Modal>
     );
   }
 

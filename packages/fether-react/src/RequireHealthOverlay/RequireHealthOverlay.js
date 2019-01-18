@@ -66,13 +66,14 @@ class RequireHealthOverlay extends Component {
 
     return (
       <HealthModal
-        children={children}
         fullscreen={fullscreen}
         healthPercentage={payload && payload.percentage}
         healthStatus={status}
         loading={loading}
         visible={visible}
-      />
+      >
+        {children}
+      </HealthModal>
     );
   }
 }
