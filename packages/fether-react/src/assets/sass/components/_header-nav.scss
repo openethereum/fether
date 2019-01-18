@@ -8,6 +8,7 @@
   .header-nav_right {
     flex-direction: column;
     justify-content: center;
+    width: 2.3rem;
   }
 
   .header-nav_left {
@@ -19,40 +20,13 @@
   }
 
   .header-nav_title {
+    align-items: center;
     flex: 1; // https://stackoverflow.com/a/35270047/3208553
+    justify-content: center;
     z-index: 2;
 
-    /**
-     * Postfix is component to apply these styles to.
-     * Explicit list so easy to change incase header
-     * modified on a specific page
-     */
-    &.-header-accounts,
-    &.-header-create-account,
-    &.-header-onboarding,
-    &.-header-scan-signed-tx,
-    &.-header-signed-tx-summary,
-    &.-header-tx-qr-code,
-    &.-header-txform,
-    &.-header-unlock,
-    &.-header-whitelist, {
-      justify-content: center;
-      align-items: center;
-      padding-top: 1rem;
-      padding-bottom: 1rem;
-
-      /* Offset from right when only button on left */
-      &.-offset-left {
-        padding-right: 2rem;
-      }
-
-      /* Offset from left when only button on right */
-      &.-offset-right {
-        padding-left: 2rem;
-      }
-    }
-
     &.-header-tokens {
+      flex: 0;
       padding-left: 0.5rem;
     }
 

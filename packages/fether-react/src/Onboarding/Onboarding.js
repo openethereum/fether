@@ -50,7 +50,7 @@ class Onboarding extends Component {
   render () {
     return (
       <div>
-        <Header screen='onboarding' title={<h1>Terms of Use</h1>} />
+        <Header title={<h1>Terms of Use</h1>} />
 
         <div className='window_content'>
           <div className='box -padded'>
