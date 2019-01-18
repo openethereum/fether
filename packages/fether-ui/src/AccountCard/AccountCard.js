@@ -14,7 +14,11 @@ import { Information } from './Information';
 import { Name } from './Name';
 
 const CopyContainer = ({ address, children, ...otherProps }) => (
-  <ClickToCopy label='Copy address' textToCopy={address} {...otherProps}>
+  <ClickToCopy
+    label='Click to copy address'
+    textToCopy={address}
+    {...otherProps}
+  >
     <Clickable>{children}</Clickable>
   </ClickToCopy>
 );
