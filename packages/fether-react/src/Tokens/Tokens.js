@@ -14,18 +14,6 @@ import withAccount from '../utils/withAccount';
 @withRouter
 @withAccount
 class Tokens extends PureComponent {
-  state = {
-    isMenuOpen: false
-  };
-
-  handleToggleMenu = () => {
-    const { isMenuOpen } = this.state;
-
-    this.setState({ isMenuOpen: !isMenuOpen });
-  };
-
-  handleMenuRef = menuNode => this.setState({ menuNode });
-
   handleGoToLink = url => {
     this.props.history.push(url);
   };
@@ -66,21 +54,9 @@ class Tokens extends PureComponent {
     const {
       account: { address, name, type }
     } = this.props;
-    const { isMenuOpen, menuNode } = this.state;
 
     return (
       <div className='tokens'>
-        <div className={isMenuOpen ? 'popup-underlay' : ''} />
-        <MenuPopup
-          className='popup-menu-account'
-          context={menuNode}
-          horizontalOffset={1}
-          menuItems={this.menuItems()}
-          onClose={this.handleToggleMenu}
-          onItemClick={this.handleGoToLink}
-          open={isMenuOpen}
-          size='small'
-        />
         <AccountHeader
           address={address}
           copyAddress
@@ -92,13 +68,14 @@ class Tokens extends PureComponent {
             </Link>
           }
           right={
-            <a
-              className='icon -menu'
-              ref={this.handleMenuRef}
-              onClick={this.handleToggleMenu}
-            >
-              Menu
-            </a>
+            <MenuPopup
+              className='popup-menu-account'
+              horizontalOffset={1}
+              menuItems={this.menuItems()}
+              onItemClick={this.handleGoToLink}
+              size='small'
+              trigger={<a className='icon -menu'>Menu</a>}
+            />
           }
         />
 
