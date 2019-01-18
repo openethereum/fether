@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { PureComponent } from 'react';
-import { AccountHeader, MenuPopup } from 'fether-ui';
+import { AccountHeader, Clickable, MenuPopup } from 'fether-ui';
 import { Link, withRouter } from 'react-router-dom';
 
 import Health from '../Health';
@@ -74,7 +74,7 @@ class Tokens extends PureComponent {
               menuItems={this.menuItems()}
               onItemClick={this.handleGoToLink}
               size='small'
-              trigger={<a className='icon -menu'>Menu</a>}
+              trigger={<Clickable className='icon -menu' />}
             />
           }
         />
