@@ -23,18 +23,18 @@ export const MenuPopup = ({
   verticalOffset
 }) => (
   <SUIPopup
-    basic={basic || true} // toggles popup arrow
+    basic={basic} // toggles popup arrow
     className={className}
     context={context} // element to bind the popup to or use position
-    horizontalOffset={horizontalOffset || 0}
+    horizontalOffset={horizontalOffset}
     hoverable={hoverable} // toggle autoclose
     keepInViewPort
-    on={on || 'click'}
+    on={on}
     onClose={(event, data) => onClose()}
     open={open}
-    position={position || 'top right'}
-    size={size || 'large'}
-    verticalOffset={verticalOffset || 0}
+    position={position}
+    size={size}
+    verticalOffset={verticalOffset}
   >
     <div className='popup-screen'>
       <SUIPopup.Content>
@@ -52,6 +52,15 @@ export const MenuPopup = ({
     </div>
   </SUIPopup>
 );
+
+MenuPopup.defaultProps = {
+  basic: true,
+  horizontalOffset: 0,
+  on: 'click',
+  position: 'top right',
+  size: 'large',
+  verticalOffset: 0
+};
 
 MenuPopup.propTypes = {
   basic: PropTypes.bool,
