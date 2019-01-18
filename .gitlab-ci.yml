@@ -10,7 +10,10 @@ variables:
   CARGOFLAGS: ''
 
 cache:
-  untracked: true
+  path:
+    - node_modules/
+    - packages/*/node_modules/
+
 
 .branches: &branches
   only:
@@ -55,6 +58,7 @@ osx-build:
   stage: build
   <<: *branches
   script:
+    - rm -rf packages/fether-electron/dist
     - curl -o- -L https://yarnpkg.com/install.sh | bash
     - export PATH=$HOME/.yarn/bin:$PATH
     - yarn install
