@@ -74,10 +74,10 @@ class Tokens extends PureComponent {
         <MenuPopup
           className='popup-menu-account'
           context={menuNode}
-          handleGoToLink={this.handleGoToLink}
           horizontalOffset={1}
           menuItems={this.menuItems()}
           onClose={this.handleToggleMenu}
+          onItemClick={this.handleGoToLink}
           open={isMenuOpen}
           size='small'
         />

@@ -8,9 +8,9 @@ import PropTypes from 'prop-types';
 import { Popup as SUIPopup } from 'semantic-ui-react';
 
 export const MenuPopup = ({
-  handleGoToLink,
   menuItems,
   onClose,
+  onItemClick,
   open,
   ...otherProps
 }) => (
@@ -22,7 +22,7 @@ export const MenuPopup = ({
             <div
               className='popup-screen_item'
               key={item.name}
-              onClick={() => handleGoToLink(item.url)}
+              onClick={() => onItemClick(item.url)}
             >
               {item.name}
             </div>
@@ -45,12 +45,12 @@ MenuPopup.propTypes = {
   basic: PropTypes.bool, // toggles popup arrow
   className: PropTypes.string,
   context: PropTypes.any, // element to bind the popup to or use position
-  handleGoToLink: PropTypes.func,
   horizontalOffset: PropTypes.number,
   hoverable: PropTypes.bool, // toggle autoclose
   menuItems: PropTypes.array.isRequired,
   on: PropTypes.string,
   onClose: PropTypes.func.isRequired,
+  onItemClick: PropTypes.func,
   open: PropTypes.bool.isRequired,
   position: PropTypes.string,
   size: PropTypes.string,
