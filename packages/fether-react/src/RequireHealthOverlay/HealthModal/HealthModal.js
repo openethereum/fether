@@ -5,8 +5,9 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Modal } from 'fether-ui';
 
-import { Modal } from '../Modal';
+import { STATUS } from '../../utils/withHealth';
 
 class HealthModal extends Component {
   static propTypes = {
@@ -14,7 +15,6 @@ class HealthModal extends Component {
     fullscreen: PropTypes.bool,
     healthPercentage: PropTypes.object,
     healthStatus: PropTypes.symbol,
-    healthStatusModes: PropTypes.object,
     loading: PropTypes.any.isRequired,
     visible: PropTypes.bool
   };
@@ -35,7 +35,7 @@ class HealthModal extends Component {
   }
 
   renderTitle = () => {
-    const { healthStatus, healthStatusModes: STATUS } = this.props;
+    const { healthStatus } = this.props;
 
     switch (healthStatus) {
       case STATUS.CLOCKNOTSYNC:
@@ -56,11 +56,7 @@ class HealthModal extends Component {
   };
 
   renderDescription = () => {
-    const {
-      healthPercentage,
-      healthStatus,
-      healthStatusModes: STATUS
-    } = this.props;
+    const { healthPercentage, healthStatus } = this.props;
 
     switch (healthStatus) {
       case STATUS.CLOCKNOTSYNC:

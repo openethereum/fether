@@ -5,7 +5,6 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import { Modal } from 'fether-ui';
 
 // Number of confirmations to consider a transaction successful

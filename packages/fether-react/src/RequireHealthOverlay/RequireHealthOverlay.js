@@ -6,9 +6,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { HealthModal } from 'fether-ui';
 import withHealth, { STATUS } from '../utils/withHealth';
 import loading from '../assets/img/icons/loading.svg';
+import { HealthModal } from './HealthModal';
 
 function statusMatches (status, require) {
   switch (require) {
@@ -70,7 +70,6 @@ class RequireHealthOverlay extends Component {
         fullscreen={fullscreen}
         healthPercentage={payload && payload.percentage}
         healthStatus={status}
-        healthStatusModes={STATUS}
         loading={loading}
         visible={visible}
       />
