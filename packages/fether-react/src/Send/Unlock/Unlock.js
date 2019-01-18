@@ -97,6 +97,7 @@ class Unlock extends Component {
                         </div>
 
                         <Field
+                          autoFocus
                           label='Password'
                           name='password'
                           render={FetherForm.Field}
