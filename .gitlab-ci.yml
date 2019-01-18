@@ -10,7 +10,7 @@ variables:
   CARGOFLAGS: ''
 
 cache:
-  path:
+  paths:
     - node_modules/
     - packages/*/node_modules/
 
