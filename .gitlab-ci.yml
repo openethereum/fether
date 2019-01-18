@@ -10,7 +10,10 @@ variables:
   CARGOFLAGS: ''
 
 cache:
-  untracked: true
+  key: "${CI_JOB_NAME}"
+  paths:
+    - node_modules/
+    - packages/*/node_modules/
 
 .branches: &branches
   only:
