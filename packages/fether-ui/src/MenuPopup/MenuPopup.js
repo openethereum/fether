@@ -7,7 +7,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Popup as SUIPopup } from 'semantic-ui-react';
 
-export const MenuPopup = ({ menuItems, onItemClick, ...otherProps }) => (
+export const MenuPopup = ({ menuItems, ...otherProps }) => (
   <SUIPopup {...otherProps}>
     <div className='popup-screen'>
       <SUIPopup.Content>
@@ -16,7 +16,7 @@ export const MenuPopup = ({ menuItems, onItemClick, ...otherProps }) => (
             <div
               className='popup-screen_item'
               key={item.name}
-              onClick={() => onItemClick(item.url)}
+              onClick={() => item.onClick()}
             >
               {item.name}
             </div>
@@ -39,7 +39,6 @@ MenuPopup.propTypes = {
   horizontalOffset: PropTypes.number,
   menuItems: PropTypes.array.isRequired,
   on: PropTypes.string,
-  onItemClick: PropTypes.func,
   size: PropTypes.string,
   trigger: PropTypes.node
 };

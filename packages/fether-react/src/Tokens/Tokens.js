@@ -14,10 +14,6 @@ import withAccount from '../utils/withAccount';
 @withRouter
 @withAccount
 class Tokens extends PureComponent {
-  handleGoToLink = url => {
-    this.props.history.push(url);
-  };
-
   isParitySignerAccount = () => {
     const {
       account: { type }
@@ -28,18 +24,19 @@ class Tokens extends PureComponent {
 
   menuItems = () => {
     const {
-      account: { address }
+      account: { address },
+      history
     } = this.props;
 
     const backupAccountItem = {
       name: 'Backup Account',
-      url: `/backup/${address}`
+      onClick: () => history.push(`/backup/${address}`)
     };
 
     let menuItems = [
       {
-        name: 'Add tokens',
-        url: `/whitelist/${address}`
+        name: 'Add Tokens',
+        onClick: () => history.push(`/whitelist/${address}`)
       }
     ];
 
@@ -72,7 +69,6 @@ class Tokens extends PureComponent {
               className='popup-menu-account'
               horizontalOffset={1}
               menuItems={this.menuItems()}
-              onItemClick={this.handleGoToLink}
               size='small'
               trigger={<Clickable className='icon -menu' />}
             />
