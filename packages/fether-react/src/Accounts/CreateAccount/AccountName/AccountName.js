@@ -97,7 +97,7 @@ class AccountName extends Component {
             )}
           </div>
           <div className='account_change_blockies'>
-            <button className='button -cancel' onClick={generateNewAccount}>
+            <button className='button -back' onClick={generateNewAccount}>
               Generate another icon
             </button>
           </div>
@@ -132,7 +132,7 @@ class AccountName extends Component {
         <nav className='form-nav -space-around'>
           {currentStep > 1 && (
             <button
-              className='button -cancel'
+              className='button -back'
               onClick={history.goBack}
               type='button'
             >
