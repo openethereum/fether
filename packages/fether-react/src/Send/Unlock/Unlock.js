@@ -96,6 +96,7 @@ class Unlock extends Component {
                         </div>
 
                         <Field
+                          autoFocus
                           label='Password'
                           name='password'
                           render={FetherForm.Field}
@@ -105,11 +106,11 @@ class Unlock extends Component {
 
                         <nav className='form-nav -binary'>
                           <button
-                            className='button -cancel'
+                            className='button -back'
                             onClick={history.goBack}
                             type='button'
                           >
-                            Cancel
+                            Back
                           </button>
 
                           <button

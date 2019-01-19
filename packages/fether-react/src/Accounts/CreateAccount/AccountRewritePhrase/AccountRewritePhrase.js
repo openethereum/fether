@@ -72,7 +72,7 @@ class AccountRewritePhrase extends Component {
         <nav className='form-nav -space-around'>
           {currentStep > 1 && (
             <button
-              className='button -cancel'
+              className='button -back'
               onClick={history.goBack}
               type='button'
             >
