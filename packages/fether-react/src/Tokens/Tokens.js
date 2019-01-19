@@ -41,7 +41,7 @@ class Tokens extends PureComponent {
     ];
 
     if (this.isParitySignerAccount() === false) {
-      menuItems = [backupAccountItem, ...menuItems];
+      menuItems.unshift(backupAccountItem);
     }
 
     return menuItems;
