@@ -22,15 +22,18 @@ import withTokens from '../../utils/withTokens';
   token: tokens[tokenAddress]
 }))
 @observer
-class Signer extends Component {
+class Unlock extends Component {
   handleAccept = values => {
-    const { accountAddress, history, sendStore, token } = this.props;
+    const {
+      account: { address },
+      history,
+      sendStore,
+      token
+    } = this.props;
 
     return sendStore
-      .send(token, values.password)
-      .then(() =>
-        history.push(`/send/${token.address}/from/${accountAddress}/sent`)
-      )
+      .send(values.password)
+      .then(() => history.push(`/send/${token.address}/from/${address}/sent`))
       .catch(error => ({
         password: error.text
       }));
@@ -38,7 +41,7 @@ class Signer extends Component {
 
   render () {
     const {
-      accountAddress,
+      account: { address },
       history,
       sendStore: { tx },
       token
@@ -52,7 +55,7 @@ class Signer extends Component {
       <div>
         <Header
           left={
-            <Link to={`/tokens/${accountAddress}`} className='icon -back'>
+            <Link to={`/tokens/${address}`} className='icon -back'>
               Close
             </Link>
           }
@@ -92,6 +95,7 @@ class Signer extends Component {
                         </div>
 
                         <Field
+                          autoFocus
                           label='Password'
                           name='password'
                           render={FetherForm.Field}
@@ -101,11 +105,11 @@ class Signer extends Component {
 
                         <nav className='form-nav -binary'>
                           <button
-                            className='button -cancel'
+                            className='button -back'
                             onClick={history.goBack}
                             type='button'
                           >
-                            Cancel
+                            Back
                           </button>
 
                           <button
@@ -130,4 +134,4 @@ class Signer extends Component {
   }
 }
 
-export default Signer;
+export default Unlock;

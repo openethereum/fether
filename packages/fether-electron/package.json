@@ -1,7 +1,7 @@
 {
   "name": "fether",
   "description": "Fether Wallet",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "author": "Parity Team <admin@parity.io>",
   "maintainers": [
@@ -25,7 +25,7 @@
   ],
   "homepage": "https://github.com/paritytech/fether",
   "parity": {
-    "channel": "beta"
+    "channel": "stable"
   },
   "scripts": {
     "prebuild": "copyfiles -u 2 \"../fether-react/build/**/*\" static/ && ./scripts/fixElectronBug.sh",
@@ -42,7 +42,7 @@
     "@parity/electron": "^3.0.1",
     "commander": "^2.15.1",
     "commander-remaining-args": "^1.2.0",
-    "fether-react": "^0.2.0",
+    "fether-react": "^0.3.0",
     "menubar": "^5.2.3",
     "pino": "^4.16.1",
     "pino-multi-stream": "^3.1.2",

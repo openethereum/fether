@@ -22,12 +22,17 @@ class TokenBalance extends Component {
   };
 
   handleClick = () => {
-    const { accountAddress, history, sendStore, token } = this.props;
+    const {
+      account: { address },
+      history,
+      sendStore,
+      token
+    } = this.props;
     if (!token.address) {
       return;
     }
     sendStore.clear();
-    history.push(`/send/${token.address}/from/${accountAddress}`);
+    history.push(`/send/${token.address}/from/${address}`);
   };
 
   render () {

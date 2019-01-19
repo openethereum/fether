@@ -5,20 +5,20 @@
 
 import React, { Component } from 'react';
 import { addressShort, Card, Form as FetherForm } from 'fether-ui';
-import { accounts$, withoutLoading } from '@parity/light.js';
-import light from '@parity/light.js-react';
 import { inject, observer } from 'mobx-react';
 
-@light({
-  accounts: () => accounts$().pipe(withoutLoading())
-})
+import Scanner from '../../../Scanner';
+import withAccountsInfo from '../../../utils/withAccountsInfo';
+
+@withAccountsInfo
 @inject('createAccountStore')
 @observer
 class AccountImportOptions extends Component {
   state = {
     error: '',
     isLoading: false,
-    phrase: ''
+    phrase: '',
+    importingFromSigner: false
   };
 
   handleNextStep = async () => {
@@ -87,11 +87,42 @@ class AccountImportOptions extends Component {
     }
   };
 
-  hasExistingAddressForImport = addressForImport => {
-    const { accounts } = this.props;
-    const isExistingAddress = accounts
-      .map(address => address && address.toLowerCase())
-      .includes(addressForImport.toLowerCase());
+  handleSignerImported = async ({ address, chainId: chainIdString }) => {
+    const {
+      createAccountStore: { importFromSigner }
+    } = this.props;
+
+    if (!address || !chainIdString) {
+      this.setState({ error: 'Invalid QR code.' });
+      return;
+    }
+
+    const chainId = parseInt(chainIdString);
+
+    if (this.hasExistingAddressForImport(address, chainId)) {
+      return;
+    }
+
+    await importFromSigner({ address, chainId });
+
+    this.handleNextStep();
+  };
+
+  handleSignerImport = () => {
+    this.setState({
+      importingFromSigner: true
+    });
+  };
+
+  hasExistingAddressForImport = (addressForImport, chainId) => {
+    const { accountsInfo } = this.props;
+    const isExistingAddress = Object.keys(accountsInfo).some(
+      key =>
+        key.toLowerCase() === addressForImport.toLowerCase() &&
+        (!accountsInfo[key].chainId ||
+          !chainId ||
+          accountsInfo[key].chainId === chainId)
+    );
 
     if (isExistingAddress) {
       this.setState({
@@ -108,51 +139,81 @@ class AccountImportOptions extends Component {
       history,
       location: { pathname }
     } = this.props;
-    const { error, phrase } = this.state;
+    const { error, importingFromSigner, phrase } = this.state;
     const currentStep = pathname.slice(-1);
 
     const jsonCard = (
-      <div key='createAccount'>
-        <div className='text -centered'>
-          <p> Recover from JSON Keyfile </p>
+      <Card>
+        <div key='createAccount'>
+          <div className='text -centered'>
+            <p>Recover from JSON Keyfile</p>
 
-          <FetherForm.InputFile
-            label='JSON Backup Keyfile'
-            onChangeFile={this.handleChangeFile}
-            required
-          />
+            <FetherForm.InputFile
+              label='JSON Backup Keyfile'
+              onChangeFile={this.handleChangeFile}
+              required
+            />
+          </div>
         </div>
-      </div>
+      </Card>
+    );
+
+    const signerCard = (
+      <Card>
+        <div key='createAccount'>
+          <div className='text -centered'>
+            <p>Recover from Parity Signer</p>
+
+            {importingFromSigner ? (
+              <Scanner
+                onScan={this.handleSignerImported}
+                label='Please show the QR code of the account on the webcam.'
+              />
+            ) : (
+              <button
+                className='button -footer'
+                onClick={this.handleSignerImport}
+              >
+                Scan QR code
+              </button>
+            )}
+          </div>
+        </div>
+      </Card>
     );
 
     const phraseCard = (
-      <div key='importBackup'>
-        <div className='text -centered'>
-          <p>Recover from Seed Phrase</p>
+      <Card>
+        <div key='importBackup'>
+          <div className='text -centered'>
+            <p>Recover from Seed Phrase</p>
 
-          <FetherForm.Field
-            as='textarea'
-            label='Recovery phrase'
-            onChange={this.handlePhraseChange}
-            required
-            phrase={phrase}
-          />
+            <FetherForm.Field
+              as='textarea'
+              label='Recovery phrase'
+              onChange={this.handlePhraseChange}
+              required
+              phrase={phrase}
+            />
 
-          {this.renderButton()}
+            {this.renderButton()}
+          </div>
         </div>
-      </div>
+      </Card>
     );
 
     return (
       <div className='center-md'>
-        <Card> {jsonCard} </Card>
+        {!importingFromSigner && jsonCard}
         <br />
-        <Card> {phraseCard} </Card>
+        {signerCard}
+        <br />
+        {!importingFromSigner && phraseCard}
         <br />
         <p>{error}</p>
         <nav className='form-nav -space-around'>
           {currentStep > 1 && (
-            <button className='button -cancel' onClick={history.goBack}>
+            <button className='button -back' onClick={history.goBack}>
               Back
             </button>
           )}
