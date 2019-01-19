@@ -20,14 +20,17 @@
   }
 
   .header-nav_title {
-    align-items: center;
-    flex: 1; // https://stackoverflow.com/a/35270047/3208553
+    align-items: center; /* vertical alignment of titles */
+    /**
+     * Push the the area for the right button to the right
+     * https://stackoverflow.com/a/35270047/3208553
+     */
+    flex-grow: 1;
     justify-content: center;
     z-index: 2;
 
     &.-header-tokens {
-      flex: 0;
-      padding-left: 0.5rem;
+      justify-content: left; /* account info horizontal alignment */
     }
 
     a,
