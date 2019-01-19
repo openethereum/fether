@@ -33,7 +33,7 @@ class Tokens extends PureComponent {
       onClick: () => history.push(`/backup/${address}`)
     };
 
-    let menuItems = [
+    const menuItems = [
       {
         name: 'Add Tokens',
         onClick: () => history.push(`/whitelist/${address}`)
