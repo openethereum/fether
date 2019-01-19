@@ -16,7 +16,7 @@ export const MenuPopup = ({ menuItems, ...otherProps }) => (
             <div
               className='popup-screen_item'
               key={item.name}
-              onClick={() => item.onClick()}
+              onClick={() => item.onClick}
             >
               {item.name}
             </div>
