@@ -29,7 +29,7 @@ class AccountPassword extends Component {
     const { createAccountStore, history } = this.props;
     const { confirm, password } = this.state;
 
-    event && event.preventDefault();
+    event.preventDefault();
 
     if (!createAccountStore.jsonString && confirm !== password) {
       this.setState({
@@ -107,7 +107,7 @@ class AccountPassword extends Component {
             <nav className='form-nav -space-around'>
               {currentStep > 1 && (
                 <button
-                  className='button -cancel'
+                  className='button -back'
                   onClick={history.goBack}
                   type='button'
                 >

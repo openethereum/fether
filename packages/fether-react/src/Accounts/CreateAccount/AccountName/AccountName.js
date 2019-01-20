@@ -26,13 +26,32 @@ class AccountName extends Component {
 
   handleSubmit = () => {
     const {
+      createAccountStore,
       history,
       location: { pathname }
     } = this.props;
 
     const currentStep = pathname.slice(-1);
 
-    history.push(`/accounts/new/${+currentStep + 1}`);
+    if (createAccountStore.noPrivateKey) {
+      // Save Signer account to Parity without asking for a password
+      createAccountStore
+        .saveAccountToParity()
+        .then(res => {
+          createAccountStore.clear();
+          history.push('/accounts');
+        })
+        .catch(err => {
+          console.error(err);
+
+          this.setState({
+            error: err.text
+          });
+        });
+    } else {
+      // Ask for a password otherwise
+      history.push(`/accounts/new/${+currentStep + 1}`);
+    }
   };
 
   render () {
@@ -45,12 +64,13 @@ class AccountName extends Component {
 
   renderCardWhenImported = () => {
     const {
-      createAccountStore: { address, name }
+      createAccountStore: { address, name, noPrivateKey }
     } = this.props;
 
     return (
       <AccountCard
         address={address}
+        type={noPrivateKey ? 'signer' : 'node'}
         drawers={[this.renderDrawer()]}
         name={name || '(no name)'}
       />
@@ -77,7 +97,7 @@ class AccountName extends Component {
             )}
           </div>
           <div className='account_change_blockies'>
-            <button className='button -cancel' onClick={generateNewAccount}>
+            <button className='button -back' onClick={generateNewAccount}>
               Generate another icon
             </button>
           </div>
@@ -89,6 +109,7 @@ class AccountName extends Component {
   renderDrawer = () => {
     const {
       createAccountStore: { address, name },
+      error,
       history,
       location: { pathname }
     } = this.props;
@@ -107,10 +128,11 @@ class AccountName extends Component {
           type='text'
           value={name}
         />
+        {error && <p>{error}</p>}
         <nav className='form-nav -space-around'>
           {currentStep > 1 && (
             <button
-              className='button -cancel'
+              className='button -back'
               onClick={history.goBack}
               type='button'
             >

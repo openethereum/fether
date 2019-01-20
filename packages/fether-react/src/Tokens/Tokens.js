@@ -4,10 +4,8 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { PureComponent } from 'react';
-import { AccountHeader } from 'fether-ui';
-import { accountsInfo$ } from '@parity/light.js';
-import light from '@parity/light.js-react';
-import { Link, Redirect, withRouter } from 'react-router-dom';
+import { AccountHeader, Clickable, MenuPopup } from 'fether-ui';
+import { Link, withRouter } from 'react-router-dom';
 
 import Health from '../Health';
 import TokensList from './TokensList';
@@ -15,41 +13,65 @@ import withAccount from '../utils/withAccount';
 
 @withRouter
 @withAccount
-@light({
-  accountsInfo: accountsInfo$
-})
 class Tokens extends PureComponent {
-  handleGoToBackup = () => {
-    this.props.history.push(`/backup/${this.props.accountAddress}`);
+  isParitySignerAccount = () => {
+    const {
+      account: { type }
+    } = this.props;
+
+    return type === 'signer';
   };
 
-  handleGoToWhitelist = () => {
-    this.props.history.push(`/whitelist/${this.props.accountAddress}`);
+  menuItems = () => {
+    const {
+      account: { address },
+      history
+    } = this.props;
+
+    const backupAccountItem = {
+      name: 'Backup Account',
+      onClick: () => history.push(`/backup/${address}`)
+    };
+
+    const menuItems = [
+      {
+        name: 'Add Tokens',
+        onClick: () => history.push(`/whitelist/${address}`)
+      }
+    ];
+
+    if (this.isParitySignerAccount() === false) {
+      menuItems.unshift(backupAccountItem);
+    }
+
+    return menuItems;
   };
 
   render () {
-    const { accountsInfo, accountAddress } = this.props;
-
-    // If the accountsInfo object is empty (i.e. no accounts), then we redirect
-    // to the accounts page to create an account
-    if (accountsInfo && !Object.keys(accountsInfo).length) {
-      return <Redirect to='/accounts/new' />;
-    }
+    const {
+      account: { address, name, type }
+    } = this.props;
 
     return (
-      <div>
+      <div className='tokens'>
         <AccountHeader
-          address={accountAddress}
+          address={address}
           copyAddress
-          name={
-            accountsInfo &&
-            accountsInfo[accountAddress] &&
-            accountsInfo[accountAddress].name
-          }
+          name={name}
+          type={type}
           left={
             <Link to='/accounts' className='icon -back'>
               Back
             </Link>
+          }
+          right={
+            <MenuPopup
+              className='popup-menu-account'
+              horizontalOffset={1}
+              menuItems={this.menuItems()}
+              size='small'
+              trigger={<Clickable className='icon -menu' />}
+            />
           }
         />
 
@@ -58,14 +80,6 @@ class Tokens extends PureComponent {
         <nav className='footer-nav'>
           <div className='footer-nav_status'>
             <Health />
-          </div>
-          <div className='footer-nav_icons'>
-            <button className='button -tiny' onClick={this.handleGoToBackup}>
-              Backup Account
-            </button>
-            <button className='button -tiny' onClick={this.handleGoToWhitelist}>
-              Add tokens
-            </button>
           </div>
         </nav>
       </div>
