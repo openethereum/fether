@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import { withProps } from 'recompose';
 
 import RequireHealth from '../../RequireHealthOverlay';
-import TokenBalance from '../../Tokens/TokensList/TokenBalance';
+import TokenAddress from '../../Tokens/TokensList/TokenAddress';
 import withAccount from '../../utils/withAccount';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
 import withTokens from '../../utils/withTokens';
@@ -63,7 +63,8 @@ class SignedTxSummary extends Component {
         <RequireHealth require='sync'>
           <div className='window_content'>
             <div className='box -padded'>
-              <TokenBalance
+              <TokenAddress
+                copyAddress
                 decimals={6}
                 drawers={[
                   <Form
@@ -113,6 +114,7 @@ class SignedTxSummary extends Component {
                   />
                 ]}
                 onClick={null} // To disable cursor:pointer on card // TODO Can this be done better?
+                shortAddress={false}
                 token={token}
               />
             </div>
