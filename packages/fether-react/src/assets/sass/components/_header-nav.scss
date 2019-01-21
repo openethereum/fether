@@ -53,6 +53,7 @@
     margin: -0.175rem 0 -0.175rem;
     padding: 0.25rem 0.5rem 0.175rem;
     border-radius: 0.25rem;
+
     &:hover {
       background: rgba($faint, 0.5);
       color: $black;
@@ -66,6 +67,7 @@
       background-position: center center;
       background-repeat: no-repeat;
       opacity: 0.675;
+
       &:hover {
         opacity: 1;
       }
@@ -88,6 +90,10 @@
 
       &.-new {
         background-image: url('./assets/img/icons/plus.svg');
+      }
+
+      &.-menu {
+        background-image: url('./assets/img/icons/menu.svg');
       }
     }
   }
