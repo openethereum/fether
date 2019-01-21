@@ -54,7 +54,6 @@ class AccountsList extends Component {
               onClick={this.handleCreateAccount}
             />
           }
-          screen='accounts'
           title={<h1>Accounts</h1>}
         />
 

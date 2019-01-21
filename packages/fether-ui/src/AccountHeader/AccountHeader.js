@@ -35,7 +35,6 @@ export const AccountHeader = ({
   return (
     <div>
       <Header
-        screen='tokens'
         title={
           address &&
           name &&

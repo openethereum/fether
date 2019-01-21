@@ -1,9 +1,9 @@
 .account {
-  display: flex;
+  display: flex !important;
 
   &.-header {
-    display: flex !important;
-    align-items: center;
+    justify-content: center;
+    width: 16rem;
   }
 
   .account_avatar {
@@ -25,7 +25,6 @@
   }
 
   .account_information {
-    width: 14rem; /* click to copy area stretched */
     padding-left: 0.325rem; /* gap from avatar */
   }
 
