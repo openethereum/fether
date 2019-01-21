@@ -12,5 +12,6 @@ export * from './ClickToCopy';
 export * from './Form';
 export * from './Header';
 export * from './Placeholder';
+export * from './MenuPopup';
 export * from './TokenCard';
 export * from './utils';
