@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import parityElectron from '@parity/electron';
-import electron, { Tray } from 'electron';
+import electron, { screen, Tray } from 'electron';
 import Positioner from 'electron-positioner';
 import events from 'events';
 
@@ -76,65 +76,7 @@ class FetherApp {
     this.fetherApp.emit('after-create-app');
 
     this.fetherApp.window.on('moved', () => {
-      const { previousScreenResolution } = this.fetherApp;
-      const currentScreenResolution = this.calculateScreenResolution();
-
-      this.fetherApp.previousScreenResolution = getScreenResolution(
-        previousScreenResolution,
-        currentScreenResolution
-      );
-
-      // Get the latest position. The window may have been moved to a different
-      // screen with smaller resolution. We must move it to prevent cropping.
-      const position = this.fetherApp.window.getPosition();
-
-      const positionStruct = {
-        x: position[0],
-        y: position[1]
-      };
-
-      const fixedWindowPosition = this.fixWindowPosition(positionStruct);
-
-      const newFixedPosition = {
-        x: fixedWindowPosition.x || positionStruct.x,
-        y: fixedWindowPosition.y || positionStruct.y
-      };
-
-      /**
-       * Only move it immediately back into the threshold of screen tray bounds
-       * if the screen resolution reduced to prevent it from being cropped.
-       * Do not call this all the time otherwise it will crash with
-       * a call stack exceeded if the user keeps trying to move it outside the screen bounds
-       * and it would also prevent the user from moving it to a different screen at all.
-       */
-      if (
-        shouldFixWindowPosition(
-          previousScreenResolution,
-          currentScreenResolution
-        )
-      ) {
-        // Move window to the fixed x-coordinate position if that required fixing
-        if (fixedWindowPosition.x) {
-          this.fetherApp.window.setPosition(
-            fixedWindowPosition.x,
-            positionStruct.y,
-            true
-          );
-        }
-
-        // Move window to the fixed y-coordinate position if that required fixing
-        if (fixedWindowPosition.y) {
-          this.fetherApp.window.setPosition(
-            positionStruct.x,
-            fixedWindowPosition.y,
-            true
-          );
-        }
-      }
-
-      saveWindowPosition(newFixedPosition || positionStruct);
-
-      this.fetherApp.emit('after-moved-window-position-saved');
+      this.processMoved();
     });
   };
 
@@ -201,6 +143,105 @@ class FetherApp {
 
       this.fetherApp.emit('after-closed-window');
     });
+
+    // Reference: http://robmayhew.com/listening-for-events-from-windows-in-electron-tutorial/
+
+    // Hook WM_SYSCOMMAND
+    this.fetherApp.window.hookWindowMessage(
+      Number.parseInt('0x0112'),
+      (wParam, lParam) => {
+        let eventName = null;
+
+        if (wParam.readUInt32LE(0) == 0xf060) {
+          // SC_CLOSE
+          eventName = 'close';
+        } else if (wParam.readUInt32LE(0) == 0xf030) {
+          // SC_MAXIMIZE
+          eventName = 'maximize';
+        } else if (wParam.readUInt32LE(0) == 0xf020) {
+          // SC_MINIMIZE
+          eventName = 'minimize';
+        } else if (wParam.readUInt32LE(0) == 0xf120) {
+          // SC_RESTORE
+          eventName = 'restored';
+        }
+
+        if (eventName !== null) {
+          console.log('WINDOWS ' + eventName);
+        }
+      }
+    );
+
+    // WM_EXITSIZEMOVE
+    this.fetherApp.window.hookWindowMessage(
+      Number.parseInt('0x0232'),
+      (wParam, lParam) => {
+        console.log('Winodws move or resize complete');
+        this.processMoved();
+      }
+    );
+  };
+
+  processMoved = () => {
+    const { previousScreenResolution } = this.fetherApp;
+    const currentScreenResolution = this.calculateScreenResolution();
+
+    this.fetherApp.previousScreenResolution = getScreenResolution(
+      previousScreenResolution,
+      currentScreenResolution
+    );
+
+    // Get the latest position. The window may have been moved to a different
+    // screen with smaller resolution. We must move it to prevent cropping.
+    const position = this.fetherApp.window.getPosition();
+
+    const positionStruct = {
+      x: position[0],
+      y: position[1]
+    };
+
+    const fixedWindowPosition = this.fixWindowPosition(positionStruct);
+
+    const newFixedPosition = {
+      x: fixedWindowPosition.x || positionStruct.x,
+      y: fixedWindowPosition.y || positionStruct.y
+    };
+
+    /**
+     * Only move it immediately back into the threshold of screen tray bounds
+     * if the screen resolution reduced to prevent it from being cropped.
+     * Do not call this all the time otherwise it will crash with
+     * a call stack exceeded if the user keeps trying to move it outside the screen bounds
+     * and it would also prevent the user from moving it to a different screen at all.
+     */
+    if (
+      shouldFixWindowPosition(previousScreenResolution, currentScreenResolution)
+    ) {
+      // Move window to the fixed x-coordinate position if that required fixing
+      if (fixedWindowPosition.x) {
+        this.fetherApp.window.setPosition(
+          fixedWindowPosition.x,
+          positionStruct.y,
+          true
+        );
+      }
+
+      // Move window to the fixed y-coordinate position if that required fixing
+      if (fixedWindowPosition.y) {
+        this.fetherApp.window.setPosition(
+          positionStruct.x,
+          fixedWindowPosition.y,
+          true
+        );
+      }
+    }
+
+    console.log('newFixedPosition - ', newFixedPosition);
+    console.log('positionStruct - ', positionStruct);
+
+    saveWindowPosition(newFixedPosition || positionStruct);
+
+    this.fetherApp.emit('after-moved-window-position-saved');
   };
 
   loadTaskbar = () => {
@@ -273,10 +314,82 @@ class FetherApp {
 
     const calculatedWindowPosition = this.calculateWindowPosition(trayPos);
 
-    this.fetherApp.trayDepth = Math.min(
-      calculatedWindowPosition.x,
-      calculatedWindowPosition.y
+    console.log('calculatedWindowPosition: ', calculatedWindowPosition);
+
+    const currentScreenResolution = this.calculateScreenResolution();
+
+    // https://ourcodeworld.com/articles/read/285/how-to-get-the-screen-width-and-height-in-electron-framework
+    //
+    // workAreaSize - dimensions (width and height) of screen without taskbar height
+    // scaleFactor - float value scale factor of screen (1 is default without zoom)
+    // rotation - if screen orientation is different to 0 (normal)
+
+    const mainScreen = screen.getPrimaryDisplay();
+    const allScreens = screen.getAllDisplays();
+
+    console.log('screen mainScreen, allScreens', mainScreen, allScreens);
+
+    const mainScreenDimensions = mainScreen.size;
+
+    console.log(
+      'mainScreen dimensions: ',
+      mainScreenDimensions.width,
+      mainScreenDimensions.height
     );
+
+    const mainScreenScaleFactor = mainScreen.scaleFactor;
+    const mainScreenWorkAreaSize = mainScreen.workAreaSize;
+    const mainScreenRotation = mainScreen.rotation;
+
+    console.log('mainScreen scaleFactor: ', mainScreenScaleFactor);
+    console.log('mainScreen workAreaSize: ', mainScreenWorkAreaSize);
+    console.log('mainScreen rotation: ', mainScreenRotation);
+
+    // console.log('getMaximumSize', this.fetherApp.window.getMaximumSize());
+    // console.log('getContentSize', this.fetherApp.window.getContentSize());
+    // console.log('getContentBounds', this.fetherApp.window.getContentBounds());
+    // console.log('getBounds', this.fetherApp.window.getBounds());
+
+    console.log('1aa', calculatedWindowPosition.x);
+    console.log('2aa', calculatedWindowPosition.y);
+    console.log('3aa', currentScreenResolution.x);
+    console.log('4aa', currentScreenResolution.y);
+    console.log('5aa', this.fetherApp.window.getSize()[0]);
+    console.log('6aa', this.fetherApp.window.getSize()[1]);
+
+    // Depth depends on resolution. Add minimum incase calculations are
+    // wrong, for example on a VM with a scaled or resized virtual screen
+    // where the VM window screen resolution calculated is actually
+    // the width/height of the VM window relative to the host machine screen,
+    // rather than the resolution being used in the VM screen.
+    let platformDepth = 40; // 'win32'
+    if (process.platform === 'darwin') {
+      platformDepth = 23;
+    }
+
+    // Tray could be on top, bottom, left, or right side of screen
+    this.fetherApp.trayDepth = Math.min(
+      platformDepth,
+      calculatedWindowPosition.x, // Left tray
+      calculatedWindowPosition.y, // Top tray
+      currentScreenResolution.x -
+        calculatedWindowPosition.x +
+        this.fetherApp.window.getSize()[0], // Right tray
+      currentScreenResolution.y -
+        calculatedWindowPosition.y +
+        this.fetherApp.window.getSize()[1] // Bottom tray
+    );
+    // Note: It is calculating the trayDeth incorrectly based
+    // on the most recent position, instead of the initial position!
+    // Consider storing smallest value in electron-settings.
+    // Consider doing Math.min(this.fetherApp.trayDepth, ...) to
+    // see if trayDepth already defined upon initial load adjacent
+    // to the tray (not subsequent position)
+    // this.fetherApp.trayDepth = Math.min(
+    //   calculatedWindowPosition.x,
+    //   calculatedWindowPosition.y
+    // );
+    console.log('trayDepth setup: ', this.fetherApp.trayDepth);
 
     const loadedWindowPosition = hasSavedWindowPosition()
       ? getSavedWindowPosition()
@@ -343,6 +456,9 @@ class FetherApp {
 
     const currentScreenResolution = this.calculateScreenResolution();
 
+    console.log('currentScreenResolution: ', currentScreenResolution);
+    console.log('trayDepth: ', trayDepth);
+
     if (proposedWindowPosition.x < trayDepth) {
       newPosition.x = trayDepth;
     }
@@ -375,9 +491,12 @@ class FetherApp {
       // Get the current tray bounds
       trayPos = tray.getBounds();
     }
+    console.log('tray.getBounds()', tray.getBounds());
 
     // Default the window to the right if `trayPos` bounds are undefined or null.
     let noBoundsPosition = null;
+
+    console.log('platform: ', process.platform);
 
     if (
       (trayPos === undefined || (trayPos && trayPos.x === 0)) &&
@@ -480,6 +599,7 @@ class FetherApp {
 
     this.fetherApp.on('after-moved-window-position-saved', () => {
       const position = getSavedWindowPosition();
+
       pino.info(
         `Saved window position to (x: ${position.x}, y: ${
           position.y
