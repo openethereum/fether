@@ -545,8 +545,9 @@ class FetherApp {
   };
 
   clickedTray = (e, bounds) => {
-    console.log('clickedTray', window.isVisible());
     const { cachedBounds, window } = this.fetherApp;
+
+    console.log('clickedTray', window.isVisible());
 
     if (
       e.altKey ||
