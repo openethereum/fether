@@ -34,7 +34,7 @@ const shouldFixWindowPosition = (
   currentScreenResolution
 ) => {
   console.log(
-    'previous, current: ',
+    'Window position (previous, current): ',
     previousScreenResolution,
     currentScreenResolution
   );
