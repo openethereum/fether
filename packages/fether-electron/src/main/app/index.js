@@ -124,6 +124,13 @@ class FetherApp {
     addMenu(this.fetherApp.window);
     pino.info('Finished configuring Electron menu');
 
+    this.fetherApp.window.webContents.debugger.on(
+      'message',
+      (event, method, params) => {
+        console.log('MESSAGE: ', event, method, params);
+      }
+    );
+
     // WS calls have Origin `file://` by default, which is not trusted.
     // We override Origin header on all WS connections with an authorized one.
     session.defaultSession.webRequest.onBeforeSendHeaders(
@@ -155,10 +162,38 @@ class FetherApp {
       this.fetherApp.emit('after-closed-window');
     });
 
-    // Reference: http://robmayhew.com/listening-for-events-from-windows-in-electron-tutorial/
-
     if (process.platform !== 'darwin') {
-      // Hook WM_SYSCOMMAND
+      /**
+       * Hook WM_SYSKEYUP
+       *
+       * Open the Fether Electron menu when the Fether window is active
+       * and the user enters a keyboard combination of both the ALT and 'm' keys
+       *
+       * Reference: https://docs.microsoft.com/en-gb/windows/desktop/inputdev/wm-syskeyup
+       */
+      this.fetherApp.window.hookWindowMessage(
+        Number.parseInt('0x0105'),
+        (wParam, lParam) => {
+          // Reference: https://nodejs.org/api/buffer.html
+          if (wParam && wParam.readUInt32LE(0) === 77) {
+            let { tray } = this.fetherApp;
+            tray.setContextMenu(getMenu());
+            tray.displayBalloon({
+              title: 'Fether Menu',
+              content: 'Press ALT-M in the Fether window to open the menu'
+            });
+            tray.popUpContextMenu();
+          }
+        }
+      );
+
+      /**
+       * Hook WM_SYSCOMMAND
+       *
+       * Detect events on Windows
+       *
+       * Credit: http://robmayhew.com/listening-for-events-from-windows-in-electron-tutorial/
+       */
       this.fetherApp.window.hookWindowMessage(
         Number.parseInt('0x0112'),
         (wParam, lParam) => {
@@ -179,25 +214,33 @@ class FetherApp {
           }
 
           if (eventName !== null) {
-            console.log('WINDOWS ' + eventName);
+            console.log('Detected event ' + eventName);
           }
         }
       );
 
-      // WM_EXITSIZEMOVE
+      /**
+       * Hook WM_EXITSIZEMOVE
+       *
+       * Detect event on Windows when Fether window was moved
+       * or resized
+       */
       this.fetherApp.window.hookWindowMessage(
         Number.parseInt('0x0232'),
         (wParam, lParam) => {
-          console.log('Windows move or resize complete');
+          console.log('Detected completion of move or resize event');
 
-          console.log('resize event (Windows)');
+          // Move Fether window back up into view if it was a resize event
+          // that causes the bottom to be cropped
           this.moveWindowUp();
+          // Try again after a delay incase Fether window resize occurs
+          // x seconds after navigating to a new page.
           setTimeout(() => {
-            console.log('resize Windows DELAYED');
             this.moveWindowUp();
           }, 5000);
 
-          this.processMoved(); // save position
+          // Save Fether window position to Electron settings
+          this.processMoved();
         }
       );
     }
@@ -212,7 +255,7 @@ class FetherApp {
    * automatically move the window upward so it is viewable to the user
    */
   moveWindowUp = () => {
-    console.log('window resized moving back up into view');
+    console.log('Fether window resized. Moving it back up into view');
     const position = this.fetherApp.window.getPosition();
 
     const positionStruct = {
@@ -226,11 +269,6 @@ class FetherApp {
     const windowHeight = this.fetherApp.window.getSize()[1];
     const maxWindowY = currentScreenResolution.y - windowHeight - taskbarDepth;
     const adjustY = positionStruct.y - maxWindowY;
-    console.log('positionStruct: ', positionStruct);
-    console.log('currentScreenResolution: ', currentScreenResolution);
-    console.log('windowHeight: ', windowHeight);
-    console.log('maxWindowY: ', maxWindowY);
-    console.log('adjustY: ', adjustY);
 
     if (adjustY > 0) {
       this.fetherApp.emit('moved-window-up-into-view');
@@ -292,9 +330,6 @@ class FetherApp {
       }
     }
 
-    console.log('newFixedPosition - ', newFixedPosition);
-    console.log('positionStruct - ', positionStruct);
-
     saveWindowPosition(newFixedPosition || positionStruct);
 
     this.fetherApp.emit('after-moved-window-position-saved');
@@ -320,12 +355,26 @@ class FetherApp {
     if (process.platform === 'win32') {
       // Set context menu for tray icon
       tray.setContextMenu(getMenu());
-      tray.displayBalloon({ title: 'Right-click to view menu' });
-      tray.popUpContextMenu();
+      tray.displayBalloon({
+        title: 'Fether Menu',
+        content: 'Press ALT-M in the Fether window to open the menu'
+      });
     }
 
     tray.on(defaultClickEvent, this.clickedTray);
     tray.on('double-click', this.clickedTray);
+    tray.on('right-click', () => {
+      // Below does not work on Windows as intended
+      if (process.platform === 'win32') {
+        console.log('Detected right click on Windows');
+        tray.setContextMenu(getMenu());
+        tray.displayBalloon({
+          title: 'Fether Menu',
+          content: 'Press ALT-M in the Fether window to open the menu'
+        });
+        tray.popUpContextMenu();
+      }
+    });
     tray.setToolTip(options.tooltip);
 
     this.fetherApp.supportsTrayHighlightState = false;
