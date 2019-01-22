@@ -16,7 +16,7 @@ import {
   hasSavedWindowPosition,
   saveWindowPosition
 } from './settings';
-import addMenu from './menu';
+import { addMenu } from './menu';
 import cli from './cli';
 import messages from './messages';
 import ParityEthereum from './parityEthereum';
@@ -233,7 +233,7 @@ class FetherApp {
     console.log('adjustY: ', adjustY);
 
     if (adjustY > 0) {
-      console.log('moved window up');
+      this.fetherApp.emit('moved-window-up-into-view');
       this.fetherApp.window.setPosition(positionStruct.x, maxWindowY);
     }
   };
@@ -545,6 +545,7 @@ class FetherApp {
   };
 
   clickedTray = (e, bounds) => {
+    console.log('clickedTray', window.isVisible());
     const { cachedBounds, window } = this.fetherApp;
 
     if (
@@ -554,11 +555,13 @@ class FetherApp {
       e.metaKey ||
       (window && window.isVisible())
     ) {
+      console.log('called this.hideWindow()');
       return this.hideWindow();
     }
 
     // cachedBounds are needed for double-clicked event
     this.fetherApp.cachedBounds = bounds || cachedBounds;
+    console.log('this.fetherApp.cachedBounds: ', this.fetherApp.cachedBounds);
     this.showWindow(this.fetherApp.cachedBounds);
   };
 
@@ -615,6 +618,10 @@ class FetherApp {
           position.y
         }) after move`
       );
+    });
+
+    this.fetherApp.on('moved-window-up-into-view', () => {
+      pino.info('Moved window up into view');
     });
 
     this.fetherApp.on('after-close-window', () => {
