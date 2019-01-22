@@ -124,13 +124,6 @@ class FetherApp {
     addMenu(this.fetherApp.window);
     pino.info('Finished configuring Electron menu');
 
-    this.fetherApp.window.webContents.debugger.on(
-      'message',
-      (event, method, params) => {
-        console.log('MESSAGE: ', event, method, params);
-      }
-    );
-
     // WS calls have Origin `file://` by default, which is not trusted.
     // We override Origin header on all WS connections with an authorized one.
     session.defaultSession.webRequest.onBeforeSendHeaders(
