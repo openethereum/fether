@@ -105,15 +105,22 @@ class TxForm extends Component {
     return output;
   };
 
-  estimatedTxFee = values => {
+  isEstimatedTxFee = values => {
     if (
-      !values.amount ||
-      !values.gas ||
-      !values.gasPrice ||
-      isNaN(values.amount) ||
-      isNaN(values.gas) ||
-      isNaN(values.gasPrice)
+      values.amount &&
+      values.gas &&
+      values.gasPrice &&
+      !isNaN(values.amount) &&
+      !isNaN(values.gas) &&
+      !isNaN(values.gasPrice)
     ) {
+      return true;
+    }
+
+    return false;
+  };
+  estimatedTxFee = values => {
+    if (!this.isEstimatedTxFee(values)) {
       return null;
     }
 
@@ -303,10 +310,14 @@ class TxForm extends Component {
                               : this.showDetailsAnchor()}
                           </div>
                           <button
-                            disabled={!valid || validating}
+                            disabled={
+                              !valid ||
+                              validating ||
+                              !this.isEstimatedTxFee(values)
+                            }
                             className='button'
                           >
-                            {validating
+                            {validating || !this.isEstimatedTxFee(values)
                               ? 'Checking...'
                               : type === 'signer'
                                 ? 'Scan'
@@ -396,7 +407,7 @@ class TxForm extends Component {
 
       // If the gas hasn't been calculated yet, then we don't show any errors,
       // just wait a bit more
-      if (!this.estimatedTxFee(values)) {
+      if (!this.isEstimatedTxFee(values)) {
         return;
       }
 
