@@ -16,7 +16,7 @@ import {
   hasSavedWindowPosition,
   saveWindowPosition
 } from './settings';
-import { addMenu } from './menu';
+import { addMenu, getMenu } from './menu';
 import cli from './cli';
 import messages from './messages';
 import ParityEthereum from './parityEthereum';
@@ -315,6 +315,14 @@ class FetherApp {
 
     this.fetherApp.tray = new Tray(options.icon);
     let { tray } = this.fetherApp;
+
+    // Note: See https://github.com/RocketChat/Rocket.Chat.Electron/issues/44
+    if (process.platform === 'win32') {
+      // Set context menu for tray icon
+      tray.setContextMenu(getMenu());
+      tray.displayBalloon({ title: 'Right-click to view menu' });
+      tray.popUpContextMenu();
+    }
 
     tray.on(defaultClickEvent, this.clickedTray);
     tray.on('double-click', this.clickedTray);

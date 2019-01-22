@@ -8,11 +8,15 @@ import { template } from './template';
 
 const { Menu } = electron;
 
-const addMenu = fetherAppWindow => {
-  const menu = Menu.buildFromTemplate(template);
+const menu = Menu.buildFromTemplate(template);
 
+const getMenu = () => {
+  return menu;
+};
+
+const addMenu = fetherAppWindow => {
   Menu.setApplicationMenu(menu);
   fetherAppWindow.setAutoHideMenuBar(true);
 };
 
-export { addMenu };
+export { addMenu, getMenu };
