@@ -155,6 +155,10 @@ class FetherApp {
       this.fetherApp.emit('after-closed-window');
     });
 
+    this.addWindowsListeners();
+  };
+
+  addWindowsListeners = () => {
     if (process.platform !== 'darwin') {
       /**
        * Hook WM_SYSKEYUP
