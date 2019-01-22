@@ -75,8 +75,19 @@ class FetherApp {
     this.fetherApp.window.setProgressBar(-1);
     this.fetherApp.emit('after-create-app');
 
+    // macOS (not Windows)
     this.fetherApp.window.on('moved', () => {
       this.processMoved();
+    });
+
+    // macOS (not Windows)
+    this.fetherApp.window.on('resize', () => {
+      console.log('resize event');
+      this.moveWindowUp();
+      setTimeout(() => {
+        console.log('resize general DELAYED');
+        this.moveWindowUp();
+      }, 5000);
     });
   };
 
@@ -146,45 +157,90 @@ class FetherApp {
 
     // Reference: http://robmayhew.com/listening-for-events-from-windows-in-electron-tutorial/
 
-    // Hook WM_SYSCOMMAND
-    this.fetherApp.window.hookWindowMessage(
-      Number.parseInt('0x0112'),
-      (wParam, lParam) => {
-        let eventName = null;
+    if (process.platform !== 'darwin') {
+      // Hook WM_SYSCOMMAND
+      this.fetherApp.window.hookWindowMessage(
+        Number.parseInt('0x0112'),
+        (wParam, lParam) => {
+          let eventName = null;
 
-        if (wParam.readUInt32LE(0) == 0xf060) {
-          // SC_CLOSE
-          eventName = 'close';
-        } else if (wParam.readUInt32LE(0) == 0xf030) {
-          // SC_MAXIMIZE
-          eventName = 'maximize';
-        } else if (wParam.readUInt32LE(0) == 0xf020) {
-          // SC_MINIMIZE
-          eventName = 'minimize';
-        } else if (wParam.readUInt32LE(0) == 0xf120) {
-          // SC_RESTORE
-          eventName = 'restored';
+          if (wParam.readUInt32LE(0) === 0xf060) {
+            // SC_CLOSE
+            eventName = 'close';
+          } else if (wParam.readUInt32LE(0) === 0xf030) {
+            // SC_MAXIMIZE
+            eventName = 'maximize';
+          } else if (wParam.readUInt32LE(0) === 0xf020) {
+            // SC_MINIMIZE
+            eventName = 'minimize';
+          } else if (wParam.readUInt32LE(0) === 0xf120) {
+            // SC_RESTORE
+            eventName = 'restored';
+          }
+
+          if (eventName !== null) {
+            console.log('WINDOWS ' + eventName);
+          }
         }
+      );
 
-        if (eventName !== null) {
-          console.log('WINDOWS ' + eventName);
+      // WM_EXITSIZEMOVE
+      this.fetherApp.window.hookWindowMessage(
+        Number.parseInt('0x0232'),
+        (wParam, lParam) => {
+          console.log('Windows move or resize complete');
+
+          console.log('resize event (Windows)');
+          this.moveWindowUp();
+          setTimeout(() => {
+            console.log('resize Windows DELAYED');
+            this.moveWindowUp();
+          }, 5000);
+
+          this.processMoved(); // save position
         }
-      }
-    );
+      );
+    }
+  };
 
-    // WM_EXITSIZEMOVE
-    this.fetherApp.window.hookWindowMessage(
-      Number.parseInt('0x0232'),
-      (wParam, lParam) => {
-        console.log('Winodws move or resize complete');
-        this.processMoved();
-      }
-    );
+  /**
+   * If the Fether window is restored on a page with a small window height
+   * and the window is positioned close to the bottom of the screen, then
+   * we do not want it to crop the bottom of the window when the user navigates
+   * to a page with a larger window height. So if the user navigates to a page
+   * with a larger window height that causes it to be cropped, then we will
+   * automatically move the window upward so it is viewable to the user
+   */
+  moveWindowUp = () => {
+    console.log('window resized moving back up into view');
+    const position = this.fetherApp.window.getPosition();
+
+    const positionStruct = {
+      x: position[0],
+      y: position[1]
+    };
+
+    const taskbarDepth = this.taskbarDepth || 40; // Default incase resizes on load
+
+    const currentScreenResolution = this.getScreenResolution();
+    const windowHeight = this.fetherApp.window.getSize()[1];
+    const maxWindowY = currentScreenResolution.y - windowHeight - taskbarDepth;
+    const adjustY = positionStruct.y - maxWindowY;
+    console.log('positionStruct: ', positionStruct);
+    console.log('currentScreenResolution: ', currentScreenResolution);
+    console.log('windowHeight: ', windowHeight);
+    console.log('maxWindowY: ', maxWindowY);
+    console.log('adjustY: ', adjustY);
+
+    if (adjustY > 0) {
+      console.log('moved window up');
+      this.fetherApp.window.setPosition(positionStruct.x, maxWindowY);
+    }
   };
 
   processMoved = () => {
     const { previousScreenResolution } = this.fetherApp;
-    const currentScreenResolution = this.calculateScreenResolution();
+    const currentScreenResolution = this.getScreenResolution();
 
     this.fetherApp.previousScreenResolution = getScreenResolution(
       previousScreenResolution,
@@ -316,79 +372,18 @@ class FetherApp {
 
     console.log('calculatedWindowPosition: ', calculatedWindowPosition);
 
-    const currentScreenResolution = this.calculateScreenResolution();
-
-    // https://ourcodeworld.com/articles/read/285/how-to-get-the-screen-width-and-height-in-electron-framework
-    //
-    // workAreaSize - dimensions (width and height) of screen without taskbar height
-    // scaleFactor - float value scale factor of screen (1 is default without zoom)
-    // rotation - if screen orientation is different to 0 (normal)
-
     const mainScreen = screen.getPrimaryDisplay();
-    const allScreens = screen.getAllDisplays();
-
-    console.log('screen mainScreen, allScreens', mainScreen, allScreens);
+    // const allScreens = screen.getAllDisplays();
 
     const mainScreenDimensions = mainScreen.size;
-
-    console.log(
-      'mainScreen dimensions: ',
-      mainScreenDimensions.width,
-      mainScreenDimensions.height
-    );
-
-    const mainScreenScaleFactor = mainScreen.scaleFactor;
     const mainScreenWorkAreaSize = mainScreen.workAreaSize;
-    const mainScreenRotation = mainScreen.rotation;
 
-    console.log('mainScreen scaleFactor: ', mainScreenScaleFactor);
-    console.log('mainScreen workAreaSize: ', mainScreenWorkAreaSize);
-    console.log('mainScreen rotation: ', mainScreenRotation);
-
-    // console.log('getMaximumSize', this.fetherApp.window.getMaximumSize());
-    // console.log('getContentSize', this.fetherApp.window.getContentSize());
-    // console.log('getContentBounds', this.fetherApp.window.getContentBounds());
-    // console.log('getBounds', this.fetherApp.window.getBounds());
-
-    console.log('1aa', calculatedWindowPosition.x);
-    console.log('2aa', calculatedWindowPosition.y);
-    console.log('3aa', currentScreenResolution.x);
-    console.log('4aa', currentScreenResolution.y);
-    console.log('5aa', this.fetherApp.window.getSize()[0]);
-    console.log('6aa', this.fetherApp.window.getSize()[1]);
-
-    // Depth depends on resolution. Add minimum incase calculations are
-    // wrong, for example on a VM with a scaled or resized virtual screen
-    // where the VM window screen resolution calculated is actually
-    // the width/height of the VM window relative to the host machine screen,
-    // rather than the resolution being used in the VM screen.
-    let platformDepth = 40; // 'win32'
-    if (process.platform === 'darwin') {
-      platformDepth = 23;
-    }
-
-    // Tray could be on top, bottom, left, or right side of screen
-    this.fetherApp.trayDepth = Math.min(
-      platformDepth,
-      calculatedWindowPosition.x, // Left tray
-      calculatedWindowPosition.y, // Top tray
-      currentScreenResolution.x -
-        calculatedWindowPosition.x +
-        this.fetherApp.window.getSize()[0], // Right tray
-      currentScreenResolution.y -
-        calculatedWindowPosition.y +
-        this.fetherApp.window.getSize()[1] // Bottom tray
+    // workAreaSize does not include the taskbar depth
+    this.fetherApp.trayDepth = Math.max(
+      mainScreenDimensions.width - mainScreenWorkAreaSize.width,
+      mainScreenDimensions.height - mainScreenWorkAreaSize.height
     );
-    // Note: It is calculating the trayDeth incorrectly based
-    // on the most recent position, instead of the initial position!
-    // Consider storing smallest value in electron-settings.
-    // Consider doing Math.min(this.fetherApp.trayDepth, ...) to
-    // see if trayDepth already defined upon initial load adjacent
-    // to the tray (not subsequent position)
-    // this.fetherApp.trayDepth = Math.min(
-    //   calculatedWindowPosition.x,
-    //   calculatedWindowPosition.y
-    // );
+
     console.log('trayDepth setup: ', this.fetherApp.trayDepth);
 
     const loadedWindowPosition = hasSavedWindowPosition()
@@ -454,10 +449,15 @@ class FetherApp {
       y: undefined
     };
 
-    const currentScreenResolution = this.calculateScreenResolution();
+    const currentScreenResolution = this.getScreenResolution();
 
     console.log('currentScreenResolution: ', currentScreenResolution);
     console.log('trayDepth: ', trayDepth);
+
+    const windowWidth = this.fetherApp.window.getSize()[0];
+    const windowHeight = this.fetherApp.window.getSize()[1];
+
+    console.log('window dimensions: ', windowWidth, windowHeight);
 
     if (proposedWindowPosition.x < trayDepth) {
       newPosition.x = trayDepth;
@@ -467,12 +467,18 @@ class FetherApp {
       newPosition.y = trayDepth;
     }
 
-    if (proposedWindowPosition.x >= currentScreenResolution.x - trayDepth) {
-      newPosition.x = currentScreenResolution.x - trayDepth;
+    if (
+      proposedWindowPosition.x >=
+      currentScreenResolution.x - windowWidth - trayDepth
+    ) {
+      newPosition.x = currentScreenResolution.x - windowWidth - trayDepth;
     }
 
-    if (proposedWindowPosition.y >= currentScreenResolution.y - trayDepth) {
-      newPosition.y = currentScreenResolution.y - trayDepth;
+    if (
+      proposedWindowPosition.y >=
+      currentScreenResolution.y - windowHeight - trayDepth
+    ) {
+      newPosition.y = currentScreenResolution.y - windowHeight - trayDepth;
     }
 
     return newPosition;
@@ -518,10 +524,14 @@ class FetherApp {
     };
   };
 
-  calculateScreenResolution = () => {
+  // https://ourcodeworld.com/articles/read/285/how-to-get-the-screen-width-and-height-in-electron-framework
+  getScreenResolution = () => {
+    const mainScreen = screen.getPrimaryDisplay();
+    const mainScreenDimensions = mainScreen.size;
+
     return {
-      x: this.fetherApp.positioner.calculate('bottomRight').x,
-      y: this.fetherApp.positioner.calculate('bottomRight').y
+      x: mainScreenDimensions.width,
+      y: mainScreenDimensions.height
     };
   };
 
