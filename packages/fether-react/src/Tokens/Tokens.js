@@ -81,11 +81,10 @@ class Tokens extends PureComponent {
           right={
             <MenuPopup
               className='popup-menu-account'
-              handleMenuClose={this.handleMenuClose}
-              handleMenuOpen={this.handleMenuOpen}
               horizontalOffset={1}
-              isMenuOpen={isMenuOpen}
               menuItems={this.menuItems()}
+              onClose={this.handleMenuClose}
+              onOpen={this.handleMenuOpen}
               size='small'
               trigger={<Clickable className='icon -menu' />}
             />
