@@ -82,10 +82,9 @@ class FetherApp {
 
     // macOS (not Windows)
     this.fetherApp.window.on('resize', () => {
-      console.log('resize event');
+      console.log('Detected resize event');
       this.moveWindowUp();
       setTimeout(() => {
-        console.log('resize general DELAYED');
         this.moveWindowUp();
       }, 5000);
     });
@@ -360,8 +359,8 @@ class FetherApp {
 
     tray.on(defaultClickEvent, this.clickedTray);
     tray.on('double-click', this.clickedTray);
+    // Right click event handler does not work on Windows as intended
     tray.on('right-click', () => {
-      // Below does not work on Windows as intended
       if (process.platform === 'win32') {
         console.log('Detected right click on Windows');
         tray.setContextMenu(getMenu());
@@ -424,8 +423,6 @@ class FetherApp {
 
     const calculatedWindowPosition = this.calculateWindowPosition(trayPos);
 
-    console.log('calculatedWindowPosition: ', calculatedWindowPosition);
-
     const mainScreen = screen.getPrimaryDisplay();
     // const allScreens = screen.getAllDisplays();
 
@@ -437,8 +434,6 @@ class FetherApp {
       mainScreenDimensions.width - mainScreenWorkAreaSize.width,
       mainScreenDimensions.height - mainScreenWorkAreaSize.height
     );
-
-    console.log('trayDepth setup: ', this.fetherApp.trayDepth);
 
     const loadedWindowPosition = hasSavedWindowPosition()
       ? getSavedWindowPosition()
@@ -505,13 +500,8 @@ class FetherApp {
 
     const currentScreenResolution = this.getScreenResolution();
 
-    console.log('currentScreenResolution: ', currentScreenResolution);
-    console.log('trayDepth: ', trayDepth);
-
     const windowWidth = this.fetherApp.window.getSize()[0];
     const windowHeight = this.fetherApp.window.getSize()[1];
-
-    console.log('window dimensions: ', windowWidth, windowHeight);
 
     if (proposedWindowPosition.x < trayDepth) {
       newPosition.x = trayDepth;
@@ -551,12 +541,9 @@ class FetherApp {
       // Get the current tray bounds
       trayPos = tray.getBounds();
     }
-    console.log('tray.getBounds()', tray.getBounds());
 
     // Default the window to the right if `trayPos` bounds are undefined or null.
     let noBoundsPosition = null;
-
-    console.log('platform: ', process.platform);
 
     if (
       (trayPos === undefined || (trayPos && trayPos.x === 0)) &&
@@ -601,8 +588,6 @@ class FetherApp {
   clickedTray = (e, bounds) => {
     const { cachedBounds, window } = this.fetherApp;
 
-    console.log('clickedTray', window.isVisible());
-
     if (
       e.altKey ||
       e.shiftKey ||
@@ -610,13 +595,11 @@ class FetherApp {
       e.metaKey ||
       (window && window.isVisible())
     ) {
-      console.log('called this.hideWindow()');
       return this.hideWindow();
     }
 
     // cachedBounds are needed for double-clicked event
     this.fetherApp.cachedBounds = bounds || cachedBounds;
-    console.log('this.fetherApp.cachedBounds: ', this.fetherApp.cachedBounds);
     this.showWindow(this.fetherApp.cachedBounds);
   };
 
