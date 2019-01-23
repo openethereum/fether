@@ -13,13 +13,16 @@ import FetherAppOptions from './app/options';
 const { app } = electron;
 const pino = Pino();
 
+let withTaskbar = process.env.TASKBAR !== 'false';
+
 // Disable gpu acceleration on linux
 // https://github.com/parity-js/fether/issues/85
 if (!['darwin', 'win32'].includes(process.platform)) {
   app.disableHardwareAcceleration();
-}
 
-const withTaskbar = process.env.TASKBAR !== 'false';
+  // Disable taskbar on Linux (since not supported by Gnome 3)
+  withTaskbar = false;
+}
 
 const fetherAppInstance = new FetherApp();
 const fetherAppOptionsInstance = new FetherAppOptions();
