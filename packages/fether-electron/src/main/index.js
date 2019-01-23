@@ -19,8 +19,10 @@ let withTaskbar = process.env.TASKBAR !== 'false';
 // https://github.com/parity-js/fether/issues/85
 if (!['darwin', 'win32'].includes(process.platform)) {
   app.disableHardwareAcceleration();
+}
 
-  // Disable taskbar on Linux (since not supported by Gnome 3)
+if (process.platform !== 'darwin') {
+  // Disable taskbar on Windows or Linux (since not supported by Gnome 3)
   withTaskbar = false;
 }
 

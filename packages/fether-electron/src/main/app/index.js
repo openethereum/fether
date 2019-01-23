@@ -3,6 +3,7 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
+import path from 'path';
 import parityElectron from '@parity/electron';
 import electron, { screen, Tray } from 'electron';
 import Positioner from 'electron-positioner';
@@ -61,6 +62,34 @@ class FetherApp {
     } else {
       this.fetherApp.window = new BrowserWindow(options);
       this.fetherApp.window.setProgressBar(0.4);
+
+      if (process.platform === 'win32') {
+        this.fetherApp.window.setThumbnailToolTip(
+          'Press ALT to open Fether menu'
+        );
+
+        const ICON_PATH =
+          process.env.ELECTRON_START_ICON || process.env.SKIP_PREFLIGHT_CHECK
+            ? 'src/main/app/options/config/icons/parity-ethereum-fether-icon.png'
+            : path.join(
+              __dirname,
+              'options',
+              'config',
+              'icons',
+              'parity-ethereum-fether-icon.png'
+            );
+
+        this.fetherApp.window.setAppDetails({
+          appId: '1234',
+          appIconPath: ICON_PATH
+        });
+      }
+
+      if (process.platform !== 'darwin') {
+        // Showing the Fether menu bar in the frame causes Feedback button to be cropped
+        this.fetherApp.window.setAutoHideMenuBar(true); // ALT shows menu bar
+        this.fetherApp.window.setMenuBarVisibility(false);
+      }
 
       // Opens file:///path/to/build/index.html in prod mode, or whatever is
       // passed to ELECTRON_START_URL
