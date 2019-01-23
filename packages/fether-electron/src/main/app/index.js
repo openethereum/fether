@@ -285,7 +285,9 @@ class FetherApp {
    * automatically move the window upward so it is viewable to the user
    */
   moveWindowUp = () => {
-    console.log('Fether window resized. Moving it back up into view');
+    console.log(
+      'Fether window resized. Moving it back up into view if required'
+    );
     const position = this.fetherApp.window.getPosition();
 
     const positionStruct = {
