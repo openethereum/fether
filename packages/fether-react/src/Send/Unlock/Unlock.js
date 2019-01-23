@@ -35,7 +35,10 @@ class Unlock extends Component {
       .send(values.password)
       .then(() => history.push(`/send/${token.address}/from/${address}/sent`))
       .catch(error => ({
-        password: error.text
+        password:
+          error.text === 'Method not found'
+            ? "Please enable the 'personal' api in the --ws-apis launch flag of Parity Ethereum."
+            : error.text
       }));
   };
 

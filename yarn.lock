@@ -1861,30 +1861,21 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.0.tgz#50c1e2260ac0ed9439a181de3725a0168d59c48a"
   integrity sha512-LAQ1d4OPfSJ/BMbI2DuizmYrrkD9JMaTdi2hQTlI53lQ4kRQPyZQRS4CYQ7O66bnBBnP/oYdRxbk++X0xuFU6A==
 
-"@parity/abi@^3.0.25":
-  version "3.0.25"
-  resolved "https://registry.yarnpkg.com/@parity/abi/-/abi-3.0.25.tgz#450d5ded7413efb7543ff45aa9fa95abca697e20"
-  integrity sha512-JudCBvnk+7GU2oD+EnXkT3zkzh8TvZLcB0ZmXaZ1Vbn5uIJioLpVFnJ61j2whE0Kc5MqiyoAZJGAEPEMbCCrSw==
+"@parity/abi@^4.0.0", "@parity/abi@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@parity/abi/-/abi-4.0.2.tgz#09b2a42576976d06962e5ea467f555989ec7f438"
+  integrity sha512-k0wBxz1tlwm61ncvNiaoWHHe0Bu9c9qKlUZLsRw3F5EOsFwKuQ1S5Etr5nHbjEJISrVwxdD2dNk1ZUervRswsw==
   dependencies:
     bignumber.js "^8.0.1"
     js-sha3 "0.7.0"
     utf8 "^3.0.0"
 
-"@parity/abi@^3.0.26":
-  version "3.0.26"
-  resolved "https://registry.yarnpkg.com/@parity/abi/-/abi-3.0.26.tgz#90442a9fc9f85d1a1fd5caa32f67d056f4ece797"
-  integrity sha512-noVhbW4yFdmgKqCtsE42YY5gT0gI+aC28IdB0IjgsPrGI4M5FDGzFBO4YmDJrhS/dWgjD2Q0oDEe/MbL9C6rQA==
+"@parity/api@^4.0.0", "@parity/api@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@parity/api/-/api-4.0.2.tgz#1547f50bb44442788fc73985f45d4447d7f51fa4"
+  integrity sha512-n7BuQr6zTo/c74By5Js0yuXGIIrNeCn9bdhKqEwM287QOJCDP+jDyj4I/8X6Ezwfb2A6N6/MND7UGb4flSXYDw==
   dependencies:
-    bignumber.js "^8.0.1"
-    js-sha3 "0.7.0"
-    utf8 "^3.0.0"
-
-"@parity/api@^3.0.25":
-  version "3.0.25"
-  resolved "https://registry.yarnpkg.com/@parity/api/-/api-3.0.25.tgz#f0e5736d4ec0b1cb0bcd9690954a521675b4700b"
-  integrity sha512-LkAC/PQrJJz9jmxOb8rxCY8A1w0DBiyMJDSdjRC5XQcVzeyT8UZxNmqF4Q/C9GYIk35STwKKoq8IiZJK8kKVRA==
-  dependencies:
-    "@parity/abi" "^3.0.25"
+    "@parity/abi" "^4.0.2"
     bignumber.js "^8.0.1"
     blockies "0.0.2"
     es6-error "4.0.2"
@@ -1896,66 +1887,49 @@
     store "^2.0.12"
     websocket "^1.0.25"
 
-"@parity/api@^3.0.26":
-  version "3.0.26"
-  resolved "https://registry.yarnpkg.com/@parity/api/-/api-3.0.26.tgz#7a0161ac64d951e86a5ffeced693365bf53bc745"
-  integrity sha512-dgsJ3JhK4i2TftBwBWm2cq5uhpHfaBWnCEnyFKjBjt5315tkiOae/x7T513Bt94gAzIHKdQr3PTE9J40ww/bAA==
+"@parity/contracts@^4.0.0":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@parity/contracts/-/contracts-4.0.2.tgz#b1ed3f52a3d552212929fd1d16db806b0a5b7b33"
+  integrity sha512-7QxjX2HE2qom+jXSd0MeAdQrY8O+XYQQxN8Vj9/CXipd5NE9BKzthXDOS2iHtO4kKa++b5mZPOQ+I1O6KMTQnQ==
   dependencies:
-    "@parity/abi" "^3.0.26"
-    bignumber.js "^8.0.1"
-    blockies "0.0.2"
-    es6-error "4.0.2"
-    es6-promise "^4.1.1"
-    eventemitter3 "^3.1.0"
-    isomorphic-fetch "^2.2.1"
-    js-sha3 "0.5.5"
-    lodash "^4.17.11"
-    store "^2.0.12"
-    websocket "^1.0.25"
-
-"@parity/contracts@^3.0.25":
-  version "3.0.26"
-  resolved "https://registry.yarnpkg.com/@parity/contracts/-/contracts-3.0.26.tgz#f1230b663cd0b32e3994befa4af501ed86382760"
-  integrity sha512-NA8QhnxkwwSCrrYVnzCxi46o1ZsxyOxsnFysfJx9lOGftHdhmWZSmVCUZZsa2Io9jciLZXcUS9fv7rNF8SIoyw==
-  dependencies:
-    "@parity/abi" "^3.0.26"
-    "@parity/api" "^3.0.26"
+    "@parity/abi" "^4.0.2"
+    "@parity/api" "^4.0.2"
     bignumber.js "^8.0.1"
 
-"@parity/electron@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@parity/electron/-/electron-3.0.1.tgz#78b87a6e8c3e981cf9dde9a543450cfdf4c08fcd"
-  integrity sha512-ri3qBmXQI8DVqbLusbDHhVjADj2xHetUWcJc5idXOyJgk2rMojW6I7ZEdSXp32vTV7C3TR2GQu2wJQS/QiSLgg==
+"@parity/electron@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@parity/electron/-/electron-4.0.0.tgz#d9e9ea7e2069a0b33431d72759924ef57064c370"
+  integrity sha512-v+CqnFMnTUJ9f7AsJ0s3ArFkgGVATn4CExET1A0LzCh2Ofq1x+qMnpnzZeWd7bNdxioy28c2T7qIDjAMlNgq2A==
   dependencies:
-    async-retry "^1.2.1"
+    async-retry "^1.2.3"
     axios "^0.18.0"
     checksum "^0.1.1"
-    command-exists "^1.2.6"
-    debug "^3.1.0"
-    electron-dl "^1.11.0"
+    command-exists "^1.2.8"
+    debug "^4.1.1"
+    electron-dl "^1.12.0"
     promise-any "^0.2.0"
-    sntp "^3.0.1"
+    sntp "^3.0.2"
 
 "@parity/erc681@0.1.1":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@parity/erc681/-/erc681-0.1.1.tgz#0ade5233751011c15d5e75bd2bb583a9ba450a5e"
   integrity sha512-OGDAWbAcm4mh+wzw6uBYxw0OJtqJ+39W3pOXl0W93d2p/cH7ppfvunwf7irEPw0FPiAIuR/F77nU1zMKNhm8Dg==
 
-"@parity/light.js-react@^3.0.25":
-  version "3.0.26"
-  resolved "https://registry.yarnpkg.com/@parity/light.js-react/-/light.js-react-3.0.26.tgz#2ad2a8f86d2dac077c9a4b64c116d20125039b13"
-  integrity sha512-vjxH2yS0iveDqpcmRCopNktMgH53OoqVlEuBNywId3PTAxMPxbpvkszQ+8bxyJ8izqRRBSuKwkU4cRT6Ad4cLw==
+"@parity/light.js-react@^4.0.0":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@parity/light.js-react/-/light.js-react-4.0.2.tgz#02ff572d5526e8a9cabb7677835cfc1a6ba11064"
+  integrity sha512-yMwkO+3zKaJmfuTUn6Dv/oCpVL9OOtdhIRdHYMRgKIqM/jHdrkgIqBOyYXPaHxzUWRmxW33ghUtJIVEE4jbJ6Q==
   dependencies:
     recompose "^0.30.0"
     symbol-observable "^1.2.0"
 
-"@parity/light.js@^3.0.25":
-  version "3.0.25"
-  resolved "https://registry.yarnpkg.com/@parity/light.js/-/light.js-3.0.25.tgz#f6e284edba0166bf5445bf7c07c87534253cb7c9"
-  integrity sha512-REJA2gTuJE+PlOaOXx8cB9CEBx4ZmOhzzp9I77gZDNG86RzgQrbIz7jOGfm7Q16V1WLOUonQhlGPfBEzPp0Ubw==
+"@parity/light.js@^4.0.0":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@parity/light.js/-/light.js-4.0.2.tgz#3a3bc81aebe807c081415ec3837890bac42d75e0"
+  integrity sha512-QY4rAmAuWIuGt6yIvcTbcZYbBFczNH9Q9+bGfPP6maiLMoPqVUeNSb9Rnv5Vy0RAVzDw6daqWPeTTtrivV5Nug==
   dependencies:
-    "@parity/abi" "^3.0.25"
-    "@parity/api" "^3.0.25"
+    "@parity/abi" "^4.0.2"
+    "@parity/api" "^4.0.2"
     async-retry "^1.2.3"
     bignumber.js "^8.0.1"
     debug "^4.1.0"
@@ -2858,13 +2832,6 @@ async-limiter@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.0.tgz#78faed8c3d074ab81f22b4e985d79e8738f720f8"
   integrity sha512-jp/uFnooOiO+L211eZOoSyzpOITMXx1rBITauYykG3BRYPu8h0UcxsPNB04RR5vo4Tyz3+ay17tR6JVf9qzYWg==
-
-async-retry@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/async-retry/-/async-retry-1.2.1.tgz#308c6c4e1d91e63397a4676290334ae9bda7bcb1"
-  integrity sha512-FadV8UDcyZDjzb6eV7MCJj0bfrNjwKw7/X0QHPFCbYP6T20FXgZCYXpJKlQC8RxEQP1E6Xs8pNHdh3bcrZAuAw==
-  dependencies:
-    retry "0.10.1"
 
 async-retry@^1.2.3:
   version "1.2.3"
@@ -4941,10 +4908,10 @@ combined-stream@^1.0.6, combined-stream@~1.0.6:
   dependencies:
     delayed-stream "~1.0.0"
 
-command-exists@^1.2.6:
-  version "1.2.7"
-  resolved "https://registry.yarnpkg.com/command-exists/-/command-exists-1.2.7.tgz#16828f0c3ff2b0c58805861ef211b64fc15692a8"
-  integrity sha512-doWDvhXCcW5LK0cIUWrOQ8oMFXJv3lEQCkJpGVjM8v9SV0uhqYXB943538tEA2CiaWqSyuYUGAm5ezDwEx9xlw==
+command-exists@^1.2.8:
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/command-exists/-/command-exists-1.2.8.tgz#715acefdd1223b9c9b37110a149c6392c2852291"
+  integrity sha512-PM54PkseWbiiD/mMsbvW351/u+dafwTJ0ye2qB60G1aGQP9j3xK2gmMDc+R34L3nDtx4qMCitXT75mkbkGJDLw==
 
 command-join@^2.0.0:
   version "2.0.0"
@@ -5857,6 +5824,13 @@ debug@^4.1.0:
   dependencies:
     ms "^2.1.1"
 
+debug@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
+  integrity sha512-pYAIzeRo8J6KPEaJ0VWOh5Pzkbw/RetuzehGM7QRRX5he4fPHx2rdKMB256ehJCkX+XRQm16eZLqLNS8RSZXZw==
+  dependencies:
+    ms "^2.1.1"
+
 decamelize-keys@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/decamelize-keys/-/decamelize-keys-1.1.0.tgz#d171a87933252807eb3cb61dc1c1445d078df2d9"
@@ -6330,7 +6304,7 @@ electron-devtools-installer@^2.2.4:
     rimraf "^2.5.2"
     semver "^5.3.0"
 
-electron-dl@^1.11.0:
+electron-dl@^1.12.0:
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/electron-dl/-/electron-dl-1.12.0.tgz#328c7f12d3e458ed4ddc773d8ffc28d59ab35d2e"
   integrity sha512-UMc2CL45Ybpvu66LDPYzwmDRmYK4Ivz+wdnTM0eXcNMztvQwhixAk2UPme1c7McqG8bAlKEkQpZn3epmQy4EWg==
@@ -8460,6 +8434,11 @@ hoek@5.x.x:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-5.0.3.tgz#b71d40d943d0a95da01956b547f83c4a5b4a34ac"
   integrity sha512-Bmr56pxML1c9kU+NS51SMFkiVQAb+9uFfXwyqR2tn4w2FPvmPt65eZ9aCcEfRXd9G74HkZnILC6p967pED4aiw==
+
+hoek@6.x.x:
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/hoek/-/hoek-6.1.2.tgz#99e6d070561839de74ee427b61aa476bd6bddfd6"
+  integrity sha512-6qhh/wahGYZHFSFw12tBbJw5fsAhhwrrG/y3Cs0YMTv2WzMnL0oLPnQJjv1QJvEfylRSOFuP+xCu+tdx0tD16Q==
 
 hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
   version "2.5.5"
@@ -14583,11 +14562,6 @@ ret@~0.1.10:
   resolved "https://registry.yarnpkg.com/ret/-/ret-0.1.15.tgz#b8a4825d5bdb1fc3f6f53c2bc33f81388681c7bc"
   integrity sha512-TTlYpa+OL+vMMNG24xSlQGEJ3B/RzEfUlLct7b5G/ytav+wPrplCpVMFuwzXbkecJrb6IYo1iFb0S9v37754mg==
 
-retry@0.10.1:
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/retry/-/retry-0.10.1.tgz#e76388d217992c252750241d3d3956fed98d8ff4"
-  integrity sha1-52OI0heZLCUnUCQdPTlW/tmNj/Q=
-
 retry@0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/retry/-/retry-0.12.0.tgz#1b42a6266a21f07421d1b0b54b7dc167b01c013b"
@@ -15171,14 +15145,14 @@ sntp@1.x.x:
   dependencies:
     hoek "2.x.x"
 
-sntp@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/sntp/-/sntp-3.0.1.tgz#1aa9088d3eb844ea8c0980fce1877884d4117d09"
-  integrity sha512-k2SIWd9c1dBRDLalpr2Ioc64bPxTpmUwSsQi+w7CLdizUIvGrbUZloEHw5I6VeqCKNWjL9p7n+LdtD5XQXJMbw==
+sntp@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/sntp/-/sntp-3.0.2.tgz#3f0b5de6115681dce82a9478691f0e5c552de5a3"
+  integrity sha512-MCAPpBPFjNp1fwDVCLSRuWuH9gONtb2R+lS1esC6Mp8lP6jy60FVUtP/Qr0jBvcWAVbhzx06y1b6ptXiy32dug==
   dependencies:
     boom "7.x.x"
     bounce "1.x.x"
-    hoek "5.x.x"
+    hoek "6.x.x"
     teamwork "3.x.x"
 
 sockjs-client@1.1.4:

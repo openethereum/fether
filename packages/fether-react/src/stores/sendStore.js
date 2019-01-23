@@ -14,7 +14,6 @@ import {
   signTransactionWithSignature
 } from '../utils/transaction';
 import Debug from '../utils/debug';
-import parityStore from './parityStore';
 
 const debug = Debug('sendStore');
 
@@ -27,14 +26,6 @@ export class SendStore {
 
   listenForConfirmations = () => {
     this.subscription = blockNumber$().subscribe(this.setBlockNumber);
-  };
-
-  acceptRequest = (requestId, password) => {
-    // Since we accepted this request, we also start to listen to blockNumber,
-    // to calculate the number of confirmations
-    this.listenForConfirmations();
-
-    return parityStore.api.signer.confirmRequest(requestId, null, password);
   };
 
   /**
@@ -68,23 +59,15 @@ export class SendStore {
       token.address === 'ETH' ? txForEth(this.tx) : txForErc20(this.tx, token);
     const send$ =
       token.address === 'ETH'
-        ? post$(tx)
-        : contractForToken(token.address).transfer$(...tx.args, tx.options);
+        ? post$(tx, { passphrase: password })
+        : contractForToken(token.address).transfer$(...tx.args, {
+          ...tx.options,
+          passphrase: password
+        });
 
     debug('Sending tx.', tx);
 
-    return new Promise((resolve, reject) => {
-      send$.subscribe(txStatus => {
-        this.setTxStatus(txStatus);
-        // When we arrive to the `requested` stage, we accept the request
-        if (txStatus.requested) {
-          this.acceptRequest(txStatus.requested, password)
-            .then(resolve)
-            .catch(reject);
-        }
-        debug('Tx status updated.', txStatus);
-      }, reject);
-    });
+    return this.handleSendObservable(send$);
   };
 
   /**
@@ -93,17 +76,26 @@ export class SendStore {
   sendRaw = () => {
     debug('Sending raw tx.', this.tx.rawSigned);
 
-    return new Promise((resolve, reject) => {
-      postRaw$(this.tx.rawSigned).subscribe(txStatus => {
+    return this.handleSendObservable(postRaw$(this.tx.rawSigned));
+  };
+
+  /**
+   * Handle the values emitted by a post$ observable
+   *
+   * @param send$ - An observable returned by post$()
+   * @return - A promise that resolves once the tx is sent
+   */
+  handleSendObservable = send$ =>
+    new Promise((resolve, reject) => {
+      send$.subscribe(txStatus => {
         this.setTxStatus(txStatus);
-        if (txStatus.signed) {
+        if (txStatus.sent) {
           this.listenForConfirmations();
           resolve();
         }
         debug('Tx status updated.', txStatus);
       }, reject);
     });
-  };
 
   /**
    * Get the RLP of an (unsigned) transaction.

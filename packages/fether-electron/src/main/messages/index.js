@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { checkClockSync, signerNewToken } from '@parity/electron';
+import { checkClockSync } from '@parity/electron';
 
 import Pino from '../utils/pino';
 
@@ -28,12 +28,6 @@ export default async (mainWindow, event, action, ...args) => {
         checkClockSync().then(t => {
           event.sender.send('check-clock-sync-reply', t);
         });
-        break;
-      }
-      case 'signer-new-token': {
-        const token = await signerNewToken();
-        // Send back the token to the renderer process
-        event.sender.send('signer-new-token-reply', token);
         break;
       }
       default:

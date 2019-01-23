@@ -8,16 +8,12 @@ import Api from '@parity/api';
 import isElectron from 'is-electron';
 import light from '@parity/light.js';
 import { distinctUntilChanged, map } from 'rxjs/operators';
-import store from 'store';
 import { timer } from 'rxjs';
 
 import Debug from '../utils/debug';
-import LS_PREFIX from './utils/lsPrefix';
 
 const debug = Debug('parityStore');
 const electron = isElectron() ? window.require('electron') : null;
-
-const LS_KEY = `${LS_PREFIX}::secureToken`;
 
 export class ParityStore {
   // TODO This is not working
@@ -32,16 +28,8 @@ export class ParityStore {
   @observable
   isParityRunning = false;
 
-  @observable
-  token = null;
-
   constructor () {
-    // Retrieve token from localStorage
-    const token = store.get(LS_KEY);
-    if (token) {
-      debug('Got token from localStorage.');
-      this.setToken(token);
-    }
+    this.connectToApi();
 
     if (!electron) {
       debug(
@@ -73,35 +61,13 @@ export class ParityStore {
     }
 
     debug(`Connecting to ${provider}.`);
-    const api = new Api(
-      new Api.Provider.Ws(
-        provider,
-        this.token.replace(/[^a-zA-Z0-9]/g, '') // Sanitize token
-      )
-    );
+    const api = new Api(new Api.Provider.Ws(provider));
 
     // Initialize the light.js lib
     light.setApi(api);
 
     // Also set api as member for React Components to use it if needed
     this.api = api;
-  };
-
-  requestNewToken = () => {
-    const { ipcRenderer } = electron;
-
-    // Request new token from Electron
-    debug('Requesting new token.');
-    ipcRenderer.send('asynchronous-message', 'signer-new-token');
-    ipcRenderer.once('signer-new-token-reply', (_, token) => {
-      if (!token) {
-        return;
-      }
-      // If `parity signer new-token` has successfully given us a token back,
-      // then we submit it
-      debug('Successfully received new token.');
-      this.setToken(token);
-    });
   };
 
   @action
@@ -111,29 +77,7 @@ export class ParityStore {
     }
 
     this.isParityRunning = isParityRunning;
-
-    // Request new token if parity's running but we still don't have a token
-    if (isParityRunning && !this.token) {
-      this.requestNewToken();
-    }
   };
-
-  @action
-  setToken = token => {
-    if (token === this.token) {
-      return;
-    }
-
-    this.token = token;
-
-    // If we receive a new token, then we try to connect to the Api with this
-    // new token
-    this.connectToApi();
-
-    this.updateLS();
-  };
-
-  updateLS = () => store.set(LS_KEY, this.token);
 }
 
 export default new ParityStore();

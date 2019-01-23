@@ -84,7 +84,10 @@ function createWindow () {
           '--ws-interface',
           cli.wsInterface,
           '--ws-port',
-          cli.wsPort
+          cli.wsPort,
+          // personal api is needed by js-libs https://git.io/fhVVy
+          '--ws-apis',
+          'web3,eth,pubsub,net,parity,parity_pubsub,rpc,personal'
         ],
         onParityError: err => handleError(err, 'An error occured with Parity.')
       });
