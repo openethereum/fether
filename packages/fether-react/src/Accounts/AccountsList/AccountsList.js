@@ -60,9 +60,10 @@ class AccountsList extends Component {
         <div className='window_content'>
           <div className='box -scroller'>
             {accountsListLength ? (
-              <ul className='list'>
+              <section className='cards'>
                 {accountsList.map(address => (
-                  <li
+                  <div
+                    className='card'
                     key={address}
                     data-address={address} // Using data- to avoid creating a new item Component
                     onClick={this.handleClick}
@@ -75,9 +76,9 @@ class AccountsList extends Component {
                       screen='accounts'
                       shortAddress
                     />
-                  </li>
+                  </div>
                 ))}
-              </ul>
+              </section>
             ) : (
               <p className='create-hint'>
                 Nothing here yet!

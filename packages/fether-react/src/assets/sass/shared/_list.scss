@@ -1,9 +1,12 @@
-.list {
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card {
+  flex-basis: calc(50% - 0em); /* width */
+  flex-grow: 0;
+  flex-shrink: 1;
   padding: 0.5rem;
-  & > li {
-    margin-bottom: 0.5rem;
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
 }
