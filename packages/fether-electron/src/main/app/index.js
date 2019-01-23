@@ -63,32 +63,37 @@ class FetherApp {
       this.fetherApp.window = new BrowserWindow(options);
       this.fetherApp.window.setProgressBar(0.4);
 
-      if (process.platform === 'win32') {
-        this.fetherApp.window.setThumbnailToolTip(
-          'Press ALT to open Fether menu'
-        );
+      // // FIXME - Note that this block does not appear to work
+      // if (process.platform === 'win32') {
+      //   this.fetherApp.window.setThumbnailToolTip(
+      //     'Press ALT to open Fether menu'
+      //   );
 
-        const ICON_PATH =
-          process.env.ELECTRON_START_ICON || process.env.SKIP_PREFLIGHT_CHECK
-            ? 'src/main/app/options/config/icons/parity-ethereum-fether-icon.png'
-            : path.join(
-              __dirname,
-              'options',
-              'config',
-              'icons',
-              'parity-ethereum-fether-icon.png'
-            );
+      //   const ICON_PATH =
+      //     process.env.ELECTRON_START_ICON || process.env.SKIP_PREFLIGHT_CHECK
+      //       ? 'src/main/app/options/config/icons/parity-ethereum-fether-icon.png'
+      //       : path.join(
+      //         __dirname,
+      //         'options',
+      //         'config',
+      //         'icons',
+      //         'parity-ethereum-fether-icon.png'
+      //       );
 
-        this.fetherApp.window.setAppDetails({
-          appId: '1234',
-          appIconPath: ICON_PATH
-        });
-      }
+      //   this.fetherApp.window.setAppDetails({
+      //     appId: '1234',
+      //     appIconPath: ICON_PATH
+      //   });
+      // }
 
       if (process.platform !== 'darwin') {
-        // Showing the Fether menu bar in the frame causes Feedback button to be cropped
-        this.fetherApp.window.setAutoHideMenuBar(false); // ALT shows menu bar
-        this.fetherApp.window.setMenuBarVisibility(true);
+        /**
+         * Showing the Fether menu bar in the frame on Windows causes the
+         * Feedback button to be cropped, so do not show it by default. The
+         * user will need to be informed that pressing ALT displays the Fether menu
+         */
+        this.fetherApp.window.setAutoHideMenuBar(true); // ALT shows menu bar
+        this.fetherApp.window.setMenuBarVisibility(false);
       }
 
       // Opens file:///path/to/build/index.html in prod mode, or whatever is
