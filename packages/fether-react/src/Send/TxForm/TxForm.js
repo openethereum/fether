@@ -66,7 +66,7 @@ class TxForm extends Component {
             );
           } catch (error) {
             console.error(error);
-            throw new Error('Unable to estimate gas');
+            return new BigNumber(-1);
           }
         }
 
@@ -119,6 +119,7 @@ class TxForm extends Component {
 
     return false;
   };
+
   estimatedTxFee = values => {
     if (!this.isEstimatedTxFee(values)) {
       return null;
@@ -399,6 +400,10 @@ class TxForm extends Component {
       // preValidate return an error if a field isn't valid
       if (preValidation !== true) {
         return preValidation;
+      }
+
+      if (values.gas && values.gas.toString() === '-1') {
+        return { gasPrice: 'Unable to estimate gas...' };
       }
 
       // If the gas hasn't been calculated yet, then we don't show any errors,
