@@ -75,13 +75,13 @@ export class SendStore {
 
     return new Promise((resolve, reject) => {
       send$.subscribe(txStatus => {
+        this.setTxStatus(txStatus);
         // When we arrive to the `requested` stage, we accept the request
         if (txStatus.requested) {
           this.acceptRequest(txStatus.requested, password)
             .then(resolve)
             .catch(reject);
         }
-        this.setTxStatus(txStatus);
         debug('Tx status updated.', txStatus);
       }, reject);
     });
@@ -95,11 +95,11 @@ export class SendStore {
 
     return new Promise((resolve, reject) => {
       postRaw$(this.tx.rawSigned).subscribe(txStatus => {
+        this.setTxStatus(txStatus);
         if (txStatus.signed) {
           this.listenForConfirmations();
           resolve();
         }
-        this.setTxStatus(txStatus);
         debug('Tx status updated.', txStatus);
       }, reject);
     });
