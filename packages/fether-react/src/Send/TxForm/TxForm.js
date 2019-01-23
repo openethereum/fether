@@ -310,14 +310,10 @@ class TxForm extends Component {
                               : this.showDetailsAnchor()}
                           </div>
                           <button
-                            disabled={
-                              !valid ||
-                              validating ||
-                              !this.isEstimatedTxFee(values)
-                            }
+                            disabled={!valid || validating}
                             className='button'
                           >
-                            {validating || !this.isEstimatedTxFee(values)
+                            {validating
                               ? 'Checking...'
                               : type === 'signer'
                                 ? 'Scan'
@@ -408,7 +404,7 @@ class TxForm extends Component {
       // If the gas hasn't been calculated yet, then we don't show any errors,
       // just wait a bit more
       if (!this.isEstimatedTxFee(values)) {
-        return;
+        return { gasPrice: 'Estimating gas...' };
       }
 
       // Verify that `gas + (eth amount if sending eth) <= ethBalance`
