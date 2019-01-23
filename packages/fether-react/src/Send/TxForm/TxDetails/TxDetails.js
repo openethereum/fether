@@ -17,7 +17,9 @@ class TxDetails extends Component {
       !values.amount ||
       !token.address
     ) {
-      return `Missing input fields...`;
+      // Keep line break so message is centered
+      return `
+Missing input fields...`;
     }
 
     return `${this.renderCalculation()}
