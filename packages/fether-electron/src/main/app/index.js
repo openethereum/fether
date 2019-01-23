@@ -87,8 +87,8 @@ class FetherApp {
 
       if (process.platform !== 'darwin') {
         // Showing the Fether menu bar in the frame causes Feedback button to be cropped
-        this.fetherApp.window.setAutoHideMenuBar(true); // ALT shows menu bar
-        this.fetherApp.window.setMenuBarVisibility(false);
+        this.fetherApp.window.setAutoHideMenuBar(false); // ALT shows menu bar
+        this.fetherApp.window.setMenuBarVisibility(true);
       }
 
       // Opens file:///path/to/build/index.html in prod mode, or whatever is

@@ -7,21 +7,11 @@ import React from 'react';
 
 export const Feedback = ({ accountsListLength }) => (
   <a
-    className={`feedback ${process.platform === 'win32' ? '-windows' : ''}`}
+    className='feedback'
     href='https://github.com/paritytech/fether/issues/new'
     rel='noopener noreferrer'
     target='_blank'
-    // On Windows when Fether menu is show the Feedback button is pushed down out of view
-    style={{
-      marginBottom:
-        accountsListLength > 1
-          ? process.platform === 'win32'
-            ? '18px'
-            : '-2px'
-          : process.platform === 'win32'
-            ? '15px'
-            : '-10px'
-    }}
+    style={{ marginBottom: accountsListLength > 1 ? '-2px' : '-10px' }}
   >
     Feedback
   </a>
