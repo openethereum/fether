@@ -145,7 +145,7 @@ class Sent extends Component {
       token
     } = this.props;
 
-    if (txStatus.confirmed) {
+    if (txStatus && txStatus.confirmed) {
       return (
         <a
           href={blockscoutTxUrl(
