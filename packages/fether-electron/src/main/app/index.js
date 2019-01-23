@@ -158,7 +158,7 @@ class FetherApp {
   };
 
   addWindowsListeners = () => {
-    if (process.platform !== 'darwin') {
+    if (process.platform === 'win32') {
       /**
        * Hook WM_SYSKEYUP
        *
