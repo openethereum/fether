@@ -13,7 +13,11 @@ export const Name = ({ name, screen, ...otherProps }) => (
     className={`account_name ${screen !== 'accounts' ? '-header' : ''}`}
     {...otherProps}
   >
-    {name || <Placeholder height={18} width={100} />}
+    {(screen === 'accounts'
+      ? `${name.substring(0, 8)}...`
+      : name.length > 25
+        ? `${name.substring(0, 25)}...`
+        : name) || <Placeholder height={18} width={100} />}
   </div>
 );
 
