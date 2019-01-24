@@ -22,7 +22,8 @@ if (!['darwin', 'win32'].includes(process.platform)) {
 }
 
 if (process.platform !== 'darwin') {
-  // Disable taskbar on Windows or Linux (since not supported by Gnome 3)
+  // Disable taskbar mode on Windows since ALT-M menu items do not trigger
+  // Disable taskbar mode on Linux since not supported by Gnome 3
   withTaskbar = false;
 }
 

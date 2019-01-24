@@ -122,6 +122,17 @@ class FetherApp {
     this.fetherApp.tray = new Tray(options.icon);
   };
 
+  showTrayBalloon = () => {
+    let { tray } = this.fetherApp;
+
+    tray.displayBalloon({
+      title: 'Fether Menu',
+      content: `Press ALT ${
+        options.withTaskbar ? '-M' : ''
+      } in the Fether window to toggle the menu`
+    });
+  };
+
   finalise = () => {
     // Security to prevent window contents from being captured by other apps
     this.fetherApp.window.setContentProtection(true);
@@ -183,8 +194,6 @@ class FetherApp {
   };
 
   addWindowsListeners = () => {
-    const { options } = this.fetherApp;
-
     if (process.platform === 'win32') {
       /**
        * Hook WM_SYSKEYUP
@@ -201,12 +210,7 @@ class FetherApp {
           if (wParam && wParam.readUInt32LE(0) === 77) {
             let { tray } = this.fetherApp;
             tray.setContextMenu(getMenu());
-            tray.displayBalloon({
-              title: 'Fether Menu',
-              content: `Press ALT ${
-                options.withTaskbar ? '-M' : ''
-              } in the Fether window to toggle the menu`
-            });
+            this.showTrayBalloon();
             tray.popUpContextMenu();
           }
         }
@@ -379,10 +383,7 @@ class FetherApp {
     if (process.platform === 'win32') {
       // Set context menu for tray icon
       tray.setContextMenu(getMenu());
-      tray.displayBalloon({
-        title: 'Fether Menu',
-        content: 'Press ALT-M in the Fether window to open the menu'
-      });
+      this.showTrayBalloon();
     }
 
     tray.on(defaultClickEvent, this.clickedTray);
@@ -392,10 +393,7 @@ class FetherApp {
       if (process.platform === 'win32') {
         console.log('Detected right click on Windows');
         tray.setContextMenu(getMenu());
-        tray.displayBalloon({
-          title: 'Fether Menu',
-          content: 'Press ALT-M in the Fether window to open the menu'
-        });
+        this.showTrayBalloon();
         tray.popUpContextMenu();
       }
     });
