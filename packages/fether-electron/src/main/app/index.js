@@ -234,12 +234,14 @@ class FetherApp {
           } else if (wParam.readUInt32LE(0) === 0xf030) {
             // SC_MAXIMIZE
             eventName = 'maximize';
+            this.showTrayBalloon();
           } else if (wParam.readUInt32LE(0) === 0xf020) {
             // SC_MINIMIZE
             eventName = 'minimize';
           } else if (wParam.readUInt32LE(0) === 0xf120) {
             // SC_RESTORE
             eventName = 'restored';
+            this.showTrayBalloon();
           }
 
           if (eventName !== null) {
