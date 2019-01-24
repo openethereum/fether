@@ -123,6 +123,10 @@ yarn start
 TASKBAR=false yarn start
 ```
 
+> macOS: Taskbar mode is enabled by default
+> Windows: Taskbar mode is disabled by default and not supported
+> Linux: Taskbar mode is disabled by default due to lack of support from Gnome 3
+
 ## Join the chat!
 
 Get in touch with us on Gitter:
