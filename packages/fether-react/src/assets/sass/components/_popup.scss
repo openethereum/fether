@@ -1,3 +1,15 @@
+.popup-underlay {
+  background: transparent;
+  bottom: 0;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 1899; /* Under the menu popup */
+}
+
 .popup-menu-account {
   /* Override SUI popup styles so popup does not appear above menu icon */
   background: $white !important;
