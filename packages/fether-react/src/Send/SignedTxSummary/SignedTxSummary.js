@@ -80,7 +80,8 @@ class SignedTxSummary extends Component {
                         <fieldset className='form_fields'>
                           <Field
                             as='textarea'
-                            className='-sm'
+                            className='form_field_value'
+                            defaultValue={tx.to}
                             disabled
                             label='To'
                             name='to'
@@ -88,12 +89,12 @@ class SignedTxSummary extends Component {
                           />
 
                           <Field
-                            className='form_field_amount'
+                            className='form_field_value'
+                            defaultValue={`${tx.amount} ${token.symbol}`}
                             disabled
                             label='Amount'
                             name='amount'
                             render={FetherForm.Field}
-                            type='number'
                           />
 
                           {values.to === values.from && (
