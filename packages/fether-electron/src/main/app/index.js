@@ -123,7 +123,7 @@ class FetherApp {
   };
 
   showTrayBalloon = () => {
-    let { tray } = this.fetherApp;
+    let { options, tray } = this.fetherApp;
 
     tray.displayBalloon({
       title: 'Fether Menu',
