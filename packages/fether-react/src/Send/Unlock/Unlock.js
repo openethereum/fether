@@ -124,9 +124,7 @@ class Unlock extends Component {
                     )}
                   />
                 ]}
-                onClick={null}
                 shortAddress={false}
-                token={token}
               />
             </div>
           </div>

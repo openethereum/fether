@@ -73,6 +73,7 @@ AccountCard.Name = Name;
 AccountCard.propTypes = {
   address: PropTypes.string,
   copyAddress: PropTypes.bool,
+  drawers: PropTypes.arrayOf(PropTypes.node),
   name: PropTypes.string,
   screen: PropTypes.string,
   shortAddress: PropTypes.bool

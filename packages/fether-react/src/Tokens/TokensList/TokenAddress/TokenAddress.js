@@ -17,30 +17,15 @@ import withAccount from '../../../utils/withAccount';
 class TokenAddress extends Component {
   static propTypes = {
     copyAddress: PropTypes.bool,
-    shortAddress: PropTypes.bool,
-    token: PropTypes.object
-  };
-
-  handleClick = () => {
-    const {
-      account: { address },
-      history,
-      sendStore,
-      token
-    } = this.props;
-
-    if (!token.address) {
-      return;
-    }
-
-    sendStore.clear();
-    history.push(`/send/${token.address}/from/${address}`);
+    drawers: PropTypes.arrayOf(PropTypes.node),
+    shortAddress: PropTypes.bool
   };
 
   render () {
     const {
       account: { address, name, type },
       copyAddress,
+      drawers,
       shortAddress
     } = this.props;
 
@@ -48,8 +33,8 @@ class TokenAddress extends Component {
       <AccountCard
         address={address}
         copyAddress={copyAddress}
+        drawers={drawers}
         name={name}
-        onClick={this.handleClick}
         shortAddress={shortAddress}
         type={type}
       />

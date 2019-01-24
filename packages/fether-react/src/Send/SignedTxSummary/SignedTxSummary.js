@@ -65,7 +65,6 @@ class SignedTxSummary extends Component {
             <div className='box -padded'>
               <TokenAddress
                 copyAddress
-                decimals={6}
                 drawers={[
                   <Form
                     key='txForm'
@@ -80,21 +79,21 @@ class SignedTxSummary extends Component {
                       <form className='send-form' onSubmit={handleSubmit}>
                         <fieldset className='form_fields'>
                           <Field
-                            className='form_field_amount'
-                            disabled
-                            label='Amount'
-                            name='amount'
-                            render={FetherForm.Field}
-                            type='number'
-                          />
-
-                          <Field
                             as='textarea'
                             className='-sm'
                             disabled
                             label='To'
                             name='to'
                             render={FetherForm.Field}
+                          />
+
+                          <Field
+                            className='form_field_amount'
+                            disabled
+                            label='Amount'
+                            name='amount'
+                            render={FetherForm.Field}
+                            type='number'
                           />
 
                           {values.to === values.from && (
@@ -113,9 +112,7 @@ class SignedTxSummary extends Component {
                     )}
                   />
                 ]}
-                onClick={null} // To disable cursor:pointer on card // TODO Can this be done better?
                 shortAddress={false}
-                token={token}
               />
             </div>
           </div>

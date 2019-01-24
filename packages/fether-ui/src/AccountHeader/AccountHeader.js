@@ -17,6 +17,7 @@ import { Header } from '../Header';
 const NormalContainer = ({ children }) => (
   <h1 className='account -header'>{children}</h1>
 );
+
 const CopyContainer = ({ address, children, ...otherProps }) => (
   <ClickToCopy label='Copy address' textToCopy={address} {...otherProps}>
     <Clickable className='account -header'>{children}</Clickable>
@@ -43,7 +44,7 @@ export const AccountHeader = ({
               <Avatar address={address} scale={4} type={type} />
               <Information>
                 <Name name={name} />
-                <Address address={address} short />
+                <Address address={address} shortAddress />
               </Information>
             </Container>
           )
