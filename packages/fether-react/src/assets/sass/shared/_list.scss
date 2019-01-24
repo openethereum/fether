@@ -1,9 +1,14 @@
-.list {
+.cards {
+  display: flex;
+  flex-wrap: wrap;
   padding: 0.5rem;
-  & > li {
-    margin-bottom: 0.5rem;
-    &:last-child {
-      margin-bottom: 0;
-    }
+}
+
+.card {
+  flex: 0 1 100%;
+  margin-bottom: 0.5rem;
+
+  &:last-child {
+    margin-bottom: 0;
   }
 }
