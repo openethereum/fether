@@ -43,7 +43,7 @@ export const AccountHeader = ({
             <Container address={address} className='account'>
               <Avatar address={address} scale={4} type={type} />
               <Information>
-                <Name name={name} />
+                <Name name={name} screen='account' />
                 <Address address={address} shortAddress />
               </Information>
             </Container>
