@@ -24,11 +24,15 @@ const ICON_PATH =
 
 const shouldUseDevTools = process.env.NODE_ENV !== 'production';
 
+const windowPosition =
+  process.platform === 'win32' ? 'trayBottomCenter' : 'trayCenter';
+
 // API docs: https://electronjs.org/docs/api/browser-window
 const DEFAULT_OPTIONS = {
   alwaysOnTop: true,
   frame: true,
   height: 640,
+  icon: ICON_PATH,
   index: INDEX_HTML_PATH,
   resizable: false,
   show: true,
@@ -38,22 +42,18 @@ const DEFAULT_OPTIONS = {
     enableRemoteModule: false
   },
   width: 360,
+  windowPosition: windowPosition, // Required
   withTaskbar: false
 };
-
-const windowPosition =
-  process.platform === 'win32' ? 'trayBottomCenter' : 'trayCenter';
 
 const TASKBAR_OPTIONS = {
   dir: staticPath,
   frame: false,
   hasShadow: true,
   height: 464,
-  icon: ICON_PATH,
   show: false, // Run showWindow later when taskbar has loaded in FetherApp
   showDockIcon: true,
   tooltip: 'Parity Fether',
-  windowPosition: windowPosition, // Required
   width: 352,
   withTaskbar: true
 };

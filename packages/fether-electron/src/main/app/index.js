@@ -3,7 +3,6 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import path from 'path';
 import parityElectron from '@parity/electron';
 import electron, { screen, Tray } from 'electron';
 import Positioner from 'electron-positioner';
@@ -51,40 +50,16 @@ class FetherApp {
       this.createWindow();
       this.fetherApp.window.setProgressBar(0.4);
 
+      this.createPositioner();
+      this.createTray();
       this.loadTaskbar();
       this.fetherApp.window.setProgressBar(0.6);
 
       this.finalise();
       this.fetherApp.window.setProgressBar(0.8);
-
-      this.showWindow();
-      this.fetherApp.window.setProgressBar(1.0);
     } else {
       this.fetherApp.window = new BrowserWindow(options);
       this.fetherApp.window.setProgressBar(0.4);
-
-      // // FIXME - Note that this block does not appear to work
-      // if (process.platform === 'win32') {
-      //   this.fetherApp.window.setThumbnailToolTip(
-      //     'Press ALT to open Fether menu'
-      //   );
-
-      //   const ICON_PATH =
-      //     process.env.ELECTRON_START_ICON || process.env.SKIP_PREFLIGHT_CHECK
-      //       ? 'src/main/app/options/config/icons/parity-ethereum-fether-icon.png'
-      //       : path.join(
-      //         __dirname,
-      //         'options',
-      //         'config',
-      //         'icons',
-      //         'parity-ethereum-fether-icon.png'
-      //       );
-
-      //   this.fetherApp.window.setAppDetails({
-      //     appId: '1234',
-      //     appIconPath: ICON_PATH
-      //   });
-      // }
 
       if (process.platform !== 'darwin') {
         /**
@@ -100,11 +75,17 @@ class FetherApp {
       // passed to ELECTRON_START_URL
       this.fetherApp.window.loadURL(options.index);
 
+      this.createPositioner();
+      this.createTray();
+
       this.debugSetup();
 
       this.finalise();
-      this.fetherApp.window.setProgressBar(1.0);
+      this.fetherApp.window.setProgressBar(0.8);
     }
+
+    this.showWindow(undefined);
+    this.fetherApp.window.setProgressBar(1.0);
 
     this.fetherApp.window.setProgressBar(-1);
     this.fetherApp.emit('after-create-app');
@@ -129,6 +110,16 @@ class FetherApp {
     if (withDebug && this.fetherApp.options.webPreferences.devTools) {
       this.fetherApp.window.webContents.openDevTools();
     }
+  };
+
+  createPositioner = () => {
+    this.fetherApp.positioner = new Positioner(this.fetherApp.window);
+  };
+
+  createTray = () => {
+    let { options } = this.fetherApp;
+
+    this.fetherApp.tray = new Tray(options.icon);
   };
 
   finalise = () => {
@@ -192,6 +183,8 @@ class FetherApp {
   };
 
   addWindowsListeners = () => {
+    const { options } = this.fetherApp;
+
     if (process.platform === 'win32') {
       /**
        * Hook WM_SYSKEYUP
@@ -210,7 +203,9 @@ class FetherApp {
             tray.setContextMenu(getMenu());
             tray.displayBalloon({
               title: 'Fether Menu',
-              content: 'Press ALT-M in the Fether window to open the menu'
+              content: `Press ALT ${
+                options.withTaskbar ? '-M' : ''
+              } in the Fether window to toggle the menu`
             });
             tray.popUpContextMenu();
           }
@@ -295,11 +290,11 @@ class FetherApp {
       y: position[1]
     };
 
-    const taskbarDepth = this.taskbarDepth || 40; // Default incase resizes on load
+    const trayDepth = this.fetherApp.trayDepth || 40; // Default incase resizes on load
 
     const currentScreenResolution = this.getScreenResolution();
     const windowHeight = this.fetherApp.window.getSize()[1];
-    const maxWindowY = currentScreenResolution.y - windowHeight - taskbarDepth;
+    const maxWindowY = currentScreenResolution.y - windowHeight - trayDepth;
     const adjustY = positionStruct.y - maxWindowY;
 
     if (adjustY > 0) {
@@ -368,7 +363,7 @@ class FetherApp {
   };
 
   loadTaskbar = () => {
-    const { app, options } = this.fetherApp;
+    const { app, options, tray } = this.fetherApp;
 
     this.fetherApp.emit('load-taskbar');
 
@@ -379,9 +374,6 @@ class FetherApp {
     const defaultClickEvent = options.showOnRightClick
       ? 'right-click'
       : 'click';
-
-    this.fetherApp.tray = new Tray(options.icon);
-    let { tray } = this.fetherApp;
 
     // Note: See https://github.com/RocketChat/Rocket.Chat.Electron/issues/44
     if (process.platform === 'win32') {
@@ -425,7 +417,6 @@ class FetherApp {
     this.fetherApp.emit('create-window');
 
     this.fetherApp.window = new BrowserWindow(options);
-    this.fetherApp.positioner = new Positioner(this.fetherApp.window);
 
     this.fetherApp.window.on('blur', () => {
       options.alwaysOnTop ? this.emitBlur() : this.hideWindow();
@@ -459,6 +450,8 @@ class FetherApp {
 
     const calculatedWindowPosition = this.calculateWindowPosition(trayPos);
 
+    console.log('Calculated window position: ', calculatedWindowPosition);
+
     const mainScreen = screen.getPrimaryDisplay();
     // const allScreens = screen.getAllDisplays();
 
@@ -471,11 +464,20 @@ class FetherApp {
       mainScreenDimensions.height - mainScreenWorkAreaSize.height
     );
 
+    console.log(
+      'Previously saved window position exists: ',
+      hasSavedWindowPosition()
+    );
+
     const loadedWindowPosition = hasSavedWindowPosition()
       ? getSavedWindowPosition()
       : undefined;
 
+    console.log('Loaded window position: ', loadedWindowPosition);
+
     const fixedWindowPosition = this.fixWindowPosition(loadedWindowPosition);
+
+    console.log('Fixed window position: ', fixedWindowPosition);
 
     /**
      * Since the user may change the taskbar tray to be on any side of the screen.
