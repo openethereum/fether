@@ -38,6 +38,7 @@ export const AccountCard = ({
   copyAddress,
   name,
   type,
+  screen,
   shortAddress,
   ...otherProps
 }) => (
@@ -72,5 +73,6 @@ AccountCard.propTypes = {
   copyAddress: PropTypes.bool,
   drawers: PropTypes.arrayOf(PropTypes.node),
   name: PropTypes.string,
+  screen: PropTypes.string,
   shortAddress: PropTypes.bool
 };

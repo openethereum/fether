@@ -72,6 +72,7 @@ class AccountsList extends Component {
                       className='-clickable'
                       type={accountsInfo[address].type}
                       name={accountsInfo[address].name || '(no name)'}
+                      screen='accounts'
                       shortAddress
                     />
                   </li>
