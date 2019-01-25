@@ -35,7 +35,7 @@ const DEFAULT_OPTIONS = {
   icon: ICON_PATH,
   index: INDEX_HTML_PATH,
   resizable: false,
-  show: true,
+  show: false,
   tabbingIdentifier: 'parity',
   webPreferences: {
     devTools: shouldUseDevTools, // Security

@@ -7,6 +7,7 @@ import parityElectron from '@parity/electron';
 import electron, { screen, Tray } from 'electron';
 import Positioner from 'electron-positioner';
 import events from 'events';
+import debounce from 'lodash/debounce';
 
 import { productName } from '../../../electron-builder.json';
 import Pino from './utils/pino';
@@ -42,67 +43,32 @@ class FetherApp {
     this.fetherApp.app = electronApp;
     this.fetherApp.options = options;
 
-    this.addListeners();
+    this.setupAppListeners();
 
     this.fetherApp.emit('create-app');
 
+    this.createWindow();
+    this.fetherApp.window.setProgressBar(0.4);
+
+    this.createPositioner();
+    this.createTray();
+    this.setupRequestListeners();
+    this.setupWindowListeners();
+
     if (options.withTaskbar) {
-      this.createWindow();
-      this.fetherApp.window.setProgressBar(0.4);
-
-      this.createPositioner();
-      this.createTray();
       this.loadTaskbar();
-      this.fetherApp.window.setProgressBar(0.6);
-
-      this.finalise();
-      this.fetherApp.window.setProgressBar(0.8);
-    } else {
-      this.fetherApp.window = new BrowserWindow(options);
-      this.fetherApp.window.setProgressBar(0.4);
-
-      if (process.platform !== 'darwin') {
-        /**
-         * Showing the Fether menu bar in the frame on Windows causes the
-         * Feedback button to be cropped, so do not show it by default. The
-         * user will need to be informed that pressing ALT displays the Fether menu
-         */
-        this.fetherApp.window.setAutoHideMenuBar(true); // ALT shows menu bar
-        this.fetherApp.window.setMenuBarVisibility(false);
-      }
-
-      // Opens file:///path/to/build/index.html in prod mode, or whatever is
-      // passed to ELECTRON_START_URL
-      this.fetherApp.window.loadURL(options.index);
-
-      this.createPositioner();
-      this.createTray();
-
-      this.debugSetup();
-
-      this.finalise();
-      this.fetherApp.window.setProgressBar(0.8);
     }
+    this.fetherApp.window.setProgressBar(0.6);
+
+    this.debugSetup();
+    this.finalise();
+    this.fetherApp.window.setProgressBar(0.8);
 
     this.showWindow(undefined);
     this.fetherApp.window.setProgressBar(1.0);
 
     this.fetherApp.window.setProgressBar(-1);
     this.fetherApp.emit('after-create-app');
-
-    // macOS (not Windows)
-    this.fetherApp.window.on('moved', () => {
-      this.processMoved();
-    });
-
-    // macOS (not Windows)
-    this.fetherApp.window.on('resize', () => {
-      console.log('Detected resize event');
-      this.moveWindowUp();
-      setTimeout(() => {
-        this.moveWindowUp();
-      }, 5000);
-    });
   };
 
   // Enable with `DEBUG=true yarn start` and access Developer Tools
@@ -150,14 +116,16 @@ class FetherApp {
     global.wsInterface = cli.wsInterface;
     global.wsPort = cli.wsPort;
 
+    // Add application menu
+    addMenu(this.fetherApp.window);
+    pino.info('Finished configuring Electron menu');
+  };
+
+  setupRequestListeners = () => {
     // Listen to messages from renderer process
     ipcMain.on('asynchronous-message', (...args) => {
       return messages(this.fetherApp.window, ...args);
     });
-
-    // Add application menu
-    addMenu(this.fetherApp.window);
-    pino.info('Finished configuring Electron menu');
 
     // WS calls have Origin `file://` by default, which is not trusted.
     // We override Origin header on all WS connections with an authorized one.
@@ -177,11 +145,58 @@ class FetherApp {
         callback({ requestHeaders: details.requestHeaders }); // eslint-disable-line
       }
     );
+  };
 
+  setupWindowListeners = () => {
     // Open external links in browser
     this.fetherApp.window.webContents.on('new-window', (event, url) => {
       event.preventDefault();
       electron.shell.openExternal(url);
+    });
+
+    // Linux (unchecked on others)
+    this.fetherApp.window.on('move', () => {
+      /**
+       * On Linux using this with debouncing is the closest equivalent
+       * to using 'moved' (not supported on Linux) with debouncing
+       */
+      debounce(() => {
+        this.processMoved();
+      }, 5000);
+    });
+
+    // macOS (not Windows or Linux)
+    this.fetherApp.window.on('moved', () => {
+      /**
+       * On macOS save the position in the 'moved' event since if
+       * we run it just in 'close' instead, then if the Fether app
+       * crashes after they've moved the Fether window then it won't run
+       * 'close' and it won't save the window position.
+       *
+       * On Windows we use the equivalent WM_EXITSIZEMOVE that detects
+       * the equivalent of 'moved'
+       *
+       * On Linux the closest equivalent to achieving 'moved' is debouncing
+       * on the 'move' event. It also works in 'close' even when app crashes
+       */
+      this.processMoved();
+    });
+
+    // macOS and Linux (not Windows)
+    this.fetherApp.window.on('resize', () => {
+      console.log('Detected resize event');
+      this.moveWindowUp();
+      setTimeout(() => {
+        this.moveWindowUp();
+      }, 5000);
+    });
+
+    this.fetherApp.window.on('blur', () => {
+      this.fetherApp.options.alwaysOnTop ? this.emitBlur() : this.hideWindow();
+    });
+
+    this.fetherApp.window.on('close', () => {
+      this.onClose();
     });
 
     this.fetherApp.window.on('closed', () => {
@@ -190,10 +205,10 @@ class FetherApp {
       this.fetherApp.emit('after-closed-window');
     });
 
-    this.addWindowsListeners();
+    this.addWin32Listeners();
   };
 
-  addWindowsListeners = () => {
+  addWin32Listeners = () => {
     if (process.platform === 'win32') {
       /**
        * Hook WM_SYSKEYUP
@@ -231,6 +246,7 @@ class FetherApp {
           if (wParam.readUInt32LE(0) === 0xf060) {
             // SC_CLOSE
             eventName = 'close';
+            this.onClose();
           } else if (wParam.readUInt32LE(0) === 0xf030) {
             // SC_MAXIMIZE
             eventName = 'maximize';
@@ -418,19 +434,24 @@ class FetherApp {
 
     this.fetherApp.window = new BrowserWindow(options);
 
-    this.fetherApp.window.on('blur', () => {
-      options.alwaysOnTop ? this.emitBlur() : this.hideWindow();
-    });
-
     if (options.showOnAllWorkspaces !== false) {
       this.fetherApp.window.setVisibleOnAllWorkspaces(true);
     }
 
-    this.fetherApp.window.on('close', this.windowClear);
+    if (process.platform !== 'darwin') {
+      /**
+       * Toggle the Fether menu bar in the frame on Windows. Note that
+       * if not shown by default then when it is shown it causes cropping of the bottom
+       * of the window when menu open/close toggled. The user will need to be informed
+       * that pressing ALT displays the Fether menu
+       */
+      this.fetherApp.window.setAutoHideMenuBar(true); // ALT shows menu bar
+      this.fetherApp.window.setMenuBarVisibility(false);
+    }
 
+    // Opens file:///path/to/build/index.html in prod mode, or whatever is
+    // passed to ELECTRON_START_URL
     this.fetherApp.window.loadURL(options.index);
-
-    this.debugSetup();
 
     this.fetherApp.emit('after-create-window');
   };
@@ -623,6 +644,11 @@ class FetherApp {
     this.fetherApp.emit('blur-window');
   };
 
+  onClose = () => {
+    this.processMoved();
+    this.windowClear();
+  };
+
   clickedTray = (e, bounds) => {
     const { cachedBounds, window } = this.fetherApp;
 
@@ -641,7 +667,7 @@ class FetherApp {
     this.showWindow(this.fetherApp.cachedBounds);
   };
 
-  addListeners = () => {
+  setupAppListeners = () => {
     this.fetherApp.on('create-app', () => {
       pino.info(
         `Starting ${productName} (${
