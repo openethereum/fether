@@ -253,7 +253,7 @@ class FetherApp {
           } else if (wParam.readUInt32LE(0) === 0xf020) {
             // SC_MINIMIZE
             eventName = 'minimize';
-            this.onClose();
+            this.saveWindowPosition();
           } else if (wParam.readUInt32LE(0) === 0xf120) {
             // SC_RESTORE
             eventName = 'restored';
