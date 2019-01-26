@@ -160,7 +160,7 @@ class FetherApp {
        */
       debounce(() => {
         this.saveWindowPosition();
-      }, 5000);
+      }, 1000);
     });
 
     // macOS (not Windows or Linux)
