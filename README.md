@@ -133,7 +133,7 @@ Taskbar mode is `true` by default.
   * Fether window may be toggled open/closed by clicking the Fether tray icon, but not the Fether dock icon
   * Fether window does not have a frame (i.e. no close/minimise icons)
 * Disabled `false`
-  * Fether window may be toggled opened by clicking the Fether dock icon
+  * Fether window may be toggled open by clicking the Fether dock icon
   * Fether window has a frame (with close/minimise icons)
 * Always
   * Fether menu shown in the tray by default
@@ -148,11 +148,23 @@ Taskbar mode is `true` by default.
   that says "Click to toggle Fether window" and then clicking the tooltip.
   * Fether window does not have a frame (i.e. no close/minimise icons)
 * Disabled `false`
-  * Fether window may be toggled opened by clicking the Fether dock icon
+  * Fether window may be toggled open by clicking the Fether dock icon
   * Fether window has a frame (with close/minimise icons)
 * Always
   * Fether menu is not shown in the tray by default. Show the Fether menu in the tray by clicking
   the Fether window and then holding down the ALT key to reveal it.
+  * Fether window position is saved upon move, minimising, and close so it is restored in the same position.
+
+### Windows
+
+Taskbar mode is always `false` since the Fether menu does not appear without a frame on the Fether window.
+
+* Disabled `false`
+  * Fether window may be toggled open/minimise by clicking the Fether dock icon
+  * Fether window has a frame (with close/minimise icons).
+* Always
+  * Fether menu is shown in the Fether window by clicking the Fether window and then holding down the ALT key to reveal it.
+  * Fether tray icon does nothing
   * Fether window position is saved upon move, minimising, and close so it is restored in the same position.
 
 ## Join the chat!
