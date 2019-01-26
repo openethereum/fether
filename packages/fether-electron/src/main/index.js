@@ -21,9 +21,7 @@ if (!['darwin', 'win32'].includes(process.platform)) {
   app.disableHardwareAcceleration();
 }
 
-if (process.platform !== 'darwin') {
-  // Disable taskbar mode on Windows since ALT-M menu items do not trigger
-  // Disable taskbar mode on Linux since not supported by Gnome 3
+if (process.platform === 'win32') {
   withTaskbar = false;
 }
 

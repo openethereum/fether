@@ -17,7 +17,7 @@ import {
   hasSavedWindowPosition,
   saveWindowPosition
 } from './settings';
-import { addMenu, getMenu } from './menu';
+import { addMenu } from './menu';
 import cli from './cli';
 import messages from './messages';
 import ParityEthereum from './parityEthereum';
@@ -89,13 +89,11 @@ class FetherApp {
   };
 
   showTrayBalloon = () => {
-    let { options, tray } = this.fetherApp;
+    let { tray } = this.fetherApp;
 
     tray.displayBalloon({
       title: 'Fether Menu',
-      content: `Press ALT ${
-        options.withTaskbar ? '-M' : ''
-      } in the Fether window to toggle the menu`
+      content: `Press ALT in the Fether window to toggle the menu`
     });
   };
 
@@ -161,7 +159,7 @@ class FetherApp {
        * to using 'moved' (not supported on Linux) with debouncing
        */
       debounce(() => {
-        this.processMoved();
+        this.saveWindowPosition();
       }, 5000);
     });
 
@@ -179,7 +177,7 @@ class FetherApp {
        * On Linux the closest equivalent to achieving 'moved' is debouncing
        * on the 'move' event. It also works in 'close' even when app crashes
        */
-      this.processMoved();
+      this.saveWindowPosition();
     });
 
     // macOS and Linux (not Windows)
@@ -222,11 +220,12 @@ class FetherApp {
         Number.parseInt('0x0105'),
         (wParam, lParam) => {
           // Reference: https://nodejs.org/api/buffer.html
-          if (wParam && wParam.readUInt32LE(0) === 77) {
-            let { tray } = this.fetherApp;
-            tray.setContextMenu(getMenu());
+          /**
+           * Detect when user presses ALT+keyCode.
+           * i.e. Use `wParam && wParam.readUInt32LE(0) === 77` to detect ALT+m
+           */
+          if (wParam) {
             this.showTrayBalloon();
-            tray.popUpContextMenu();
           }
         }
       );
@@ -254,6 +253,7 @@ class FetherApp {
           } else if (wParam.readUInt32LE(0) === 0xf020) {
             // SC_MINIMIZE
             eventName = 'minimize';
+            this.onClose();
           } else if (wParam.readUInt32LE(0) === 0xf120) {
             // SC_RESTORE
             eventName = 'restored';
@@ -287,7 +287,7 @@ class FetherApp {
           }, 5000);
 
           // Save Fether window position to Electron settings
-          this.processMoved();
+          this.saveWindowPosition();
         }
       );
     }
@@ -325,7 +325,7 @@ class FetherApp {
     }
   };
 
-  processMoved = () => {
+  saveWindowPosition = () => {
     const { previousScreenResolution } = this.fetherApp;
     const currentScreenResolution = this.getScreenResolution();
 
@@ -399,8 +399,6 @@ class FetherApp {
 
     // Note: See https://github.com/RocketChat/Rocket.Chat.Electron/issues/44
     if (process.platform === 'win32') {
-      // Set context menu for tray icon
-      tray.setContextMenu(getMenu());
       this.showTrayBalloon();
     }
 
@@ -410,9 +408,7 @@ class FetherApp {
     tray.on('right-click', () => {
       if (process.platform === 'win32') {
         console.log('Detected right click on Windows');
-        tray.setContextMenu(getMenu());
         this.showTrayBalloon();
-        tray.popUpContextMenu();
       }
     });
     tray.setToolTip(options.tooltip);
@@ -524,13 +520,15 @@ class FetherApp {
   hideWindow = () => {
     const { supportsTrayHighlightState, tray } = this.fetherApp;
 
+    if (!this.fetherApp.window) {
+      return;
+    }
+
     if (supportsTrayHighlightState) {
       tray.setHighlightMode('never');
     }
 
-    if (!this.fetherApp.window) {
-      return;
-    }
+    this.saveWindowPosition(); // Save window position when hide, particularly necessary on Linux
 
     this.fetherApp.emit('hide-window');
     this.fetherApp.window.hide();
@@ -645,7 +643,7 @@ class FetherApp {
   };
 
   onClose = () => {
-    this.processMoved();
+    this.saveWindowPosition();
     this.windowClear();
   };
 

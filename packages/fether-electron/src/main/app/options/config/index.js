@@ -53,7 +53,9 @@ const TASKBAR_OPTIONS = {
   height: 464,
   show: false, // Run showWindow later when taskbar has loaded in FetherApp
   showDockIcon: true,
-  tooltip: 'Parity Fether',
+  // On Linux the user must click the tray icon and then click the tooltip
+  // to toggle the Fether window open/close
+  tooltip: 'Click to toggle Fether window',
   width: 352,
   withTaskbar: true
 };
