@@ -302,6 +302,10 @@ class FetherApp {
    * automatically move the window upward so it is viewable to the user
    */
   moveWindowUp = () => {
+    if (!this.fetherApp.window) {
+      return;
+    }
+
     console.log(
       'Fether window resized. Moving it back up into view if required'
     );
@@ -326,6 +330,10 @@ class FetherApp {
   };
 
   saveWindowPosition = () => {
+    if (!this.fetherApp.window) {
+      return;
+    }
+
     const { previousScreenResolution } = this.fetherApp;
     const currentScreenResolution = this.getScreenResolution();
 
@@ -634,6 +642,11 @@ class FetherApp {
   };
 
   windowClear = () => {
+    // Remove relevant events when window object deleted
+    const events = ['close', 'move', 'moved', 'resize'];
+    for (let event in events) {
+      this.fetherApp.window.removeAllListeners(event);
+    }
     delete this.fetherApp.window;
     this.fetherApp.emit('after-close-window');
   };
