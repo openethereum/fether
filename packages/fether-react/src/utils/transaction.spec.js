@@ -40,7 +40,7 @@ describe('estimateGas', () => {
 
   test('should call estimateGasForErc20 with token', () => {
     expect(estimateGas(mock.tx, mock.erc20, mock.api)).resolves.toEqual(
-      new BigNumber(153.75)
+      new BigNumber(154)
     );
   });
 
