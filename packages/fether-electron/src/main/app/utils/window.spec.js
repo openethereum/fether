@@ -7,6 +7,10 @@
 
 import { getScreenResolution, shouldFixWindowPosition } from './window';
 
+jest.mock('./pino', () => () => ({
+  info: () => {}
+}));
+
 let smallScreenResolution, largeScreenResolution;
 
 describe('window resolution', () => {
