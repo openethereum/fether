@@ -31,7 +31,7 @@
     "start": "npm-run-all -p start-*",
     "start-css": "npm run build-css -- --watch --recursive",
     "start-js": "cross-env SKIP_PREFLIGHT_CHECK=true BROWSER=none craco start --react-scripts ../../node_modules/react-scripts",
-    "test": "ln -s ../../../node_modules/react-scripts node_modules/ && cross-env SKIP_PREFLIGHT_CHECK=true craco test; rm node_modules/react-scripts"
+    "test": "jest --all --color --coverage"
   },
   "dependencies": {
     "@craco/craco": "^3.2.3",
@@ -72,7 +72,9 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.2.0",
+    "babel-jest": "^24.0.0",
     "capitalize": "^1.0.0",
+    "jest": "^24.0.0",
     "node-sass": "^4.9.0",
     "node-sass-chokidar": "^1.2.2",
     "npm-run-all": "^4.1.2"
