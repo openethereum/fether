@@ -420,15 +420,7 @@ class FetherApp {
       }
     });
     tray.setToolTip(options.tooltip);
-
-    this.fetherApp.supportsTrayHighlightState = false;
-
-    try {
-      tray.setHighlightMode('never');
-      this.fetherApp.supportsTrayHighlightState = true;
-    } catch (e) {
-      console.error('Unable to set highlight mode: ', e);
-    }
+    tray.setHighlightMode('never');
   };
 
   createWindow = () => {
@@ -461,12 +453,6 @@ class FetherApp {
   };
 
   showWindow = trayPos => {
-    const { supportsTrayHighlightState, tray } = this.fetherApp;
-
-    if (supportsTrayHighlightState) {
-      tray.setHighlightMode('always');
-    }
-
     if (!this.fetherApp.window) {
       this.createWindow();
     }
@@ -526,14 +512,8 @@ class FetherApp {
   };
 
   hideWindow = () => {
-    const { supportsTrayHighlightState, tray } = this.fetherApp;
-
     if (!this.fetherApp.window) {
       return;
-    }
-
-    if (supportsTrayHighlightState) {
-      tray.setHighlightMode('never');
     }
 
     this.saveWindowPosition(); // Save window position when hide, particularly necessary on Linux
