@@ -1,5 +1,6 @@
 {
   "appId": "io.parity.fether",
+  "copyright": "Copyright 2015-2018 Parity Technologies (UK) Ltd.",
   "linux": {
     "category": "Utility",
     "target": ["AppImage", "snap", "deb", "tar.xz"]
