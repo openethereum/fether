@@ -39,13 +39,11 @@
     "test": "ln -s ../../../node_modules/react-scripts node_modules/ && cross-env SKIP_PREFLIGHT_CHECK=true craco test; rm node_modules/react-scripts"
   },
   "dependencies": {
-    "@craco/craco": "^3.2.3",
     "@parity/electron": "^3.0.1",
     "commander": "^2.15.1",
     "commander-remaining-args": "^1.2.0",
     "electron-positioner": "^4.1.0",
     "electron-settings": "^3.2.0",
-    "extend": "^3.0.2",
     "fether-react": "^0.3.0",
     "pino": "^4.16.1",
     "pino-multi-stream": "^3.1.2",
