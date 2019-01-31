@@ -182,7 +182,7 @@ class FetherApp {
 
     // macOS and Linux (not Windows)
     this.fetherApp.window.on('resize', () => {
-      console.log('Detected resize event');
+      pino.info('Detected resize event');
       this.moveWindowUp();
       setTimeout(() => {
         this.moveWindowUp();
@@ -261,7 +261,7 @@ class FetherApp {
           }
 
           if (eventName !== null) {
-            console.log('Detected event ' + eventName);
+            pino.info('Detected event:', eventName);
           }
         }
       );
@@ -275,11 +275,12 @@ class FetherApp {
       this.fetherApp.window.hookWindowMessage(
         Number.parseInt('0x0232'),
         (wParam, lParam) => {
-          console.log('Detected completion of move or resize event');
+          pino.info('Detected completion of move or resize event');
 
           // Move Fether window back up into view if it was a resize event
           // that causes the bottom to be cropped
           this.moveWindowUp();
+
           // Try again after a delay incase Fether window resize occurs
           // x seconds after navigating to a new page.
           setTimeout(() => {
@@ -306,18 +307,14 @@ class FetherApp {
       return;
     }
 
-    console.log(
-      'Fether window resized. Moving it back up into view if required'
-    );
-    const position = this.fetherApp.window.getPosition();
+    pino.info('Fether window resized. Moving it back up into view if required');
 
+    const position = this.fetherApp.window.getPosition();
     const positionStruct = {
       x: position[0],
       y: position[1]
     };
-
     const trayDepth = this.fetherApp.trayDepth || 40; // Default incase resizes on load
-
     const currentScreenResolution = this.getScreenResolution();
     const windowHeight = this.fetherApp.window.getSize()[1];
     const maxWindowY = currentScreenResolution.y - windowHeight - trayDepth;
@@ -415,7 +412,7 @@ class FetherApp {
     // Right click event handler does not work on Windows as intended
     tray.on('right-click', () => {
       if (process.platform === 'win32') {
-        console.log('Detected right click on Windows');
+        pino.info('Detected right click on Windows');
         this.showTrayBalloon();
       }
     });
@@ -461,11 +458,10 @@ class FetherApp {
 
     const calculatedWindowPosition = this.calculateWindowPosition(trayPos);
 
-    console.log('Calculated window position: ', calculatedWindowPosition);
+    pino.info('Calculated window position: ', calculatedWindowPosition);
 
     const mainScreen = screen.getPrimaryDisplay();
     // const allScreens = screen.getAllDisplays();
-
     const mainScreenDimensions = mainScreen.size;
     const mainScreenWorkAreaSize = mainScreen.workAreaSize;
 
@@ -475,7 +471,7 @@ class FetherApp {
       mainScreenDimensions.height - mainScreenWorkAreaSize.height
     );
 
-    console.log(
+    pino.info(
       'Previously saved window position exists: ',
       hasSavedWindowPosition()
     );
@@ -484,11 +480,11 @@ class FetherApp {
       ? getSavedWindowPosition()
       : undefined;
 
-    console.log('Loaded window position: ', loadedWindowPosition);
+    pino.info('Loaded window position: ', loadedWindowPosition);
 
     const fixedWindowPosition = this.fixWindowPosition(loadedWindowPosition);
 
-    console.log('Fixed window position: ', fixedWindowPosition);
+    pino.info('Fixed window position: ', fixedWindowPosition);
 
     /**
      * Since the user may change the taskbar tray to be on any side of the screen.

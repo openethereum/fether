@@ -3,6 +3,9 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
+import Pino from './pino';
+const pino = Pino();
+
 /**
  * Returns the latest window resolution if it differs from the previous resolution.
  * Note that the previous window resolution may be undefined if being changed in settings.
@@ -33,7 +36,7 @@ const shouldFixWindowPosition = (
   previousScreenResolution,
   currentScreenResolution
 ) => {
-  console.log(
+  pino.info(
     'Window position (previous, current): ',
     previousScreenResolution,
     currentScreenResolution
