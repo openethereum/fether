@@ -6,15 +6,24 @@
 /* eslint-env jest */
 
 import BigNumber from 'bignumber.js';
+import { toWei } from '@parity/api/lib/util/wei';
+
+const SECRET_PHRASE = 'foo';
+const ADDRESS_FROM = '0x456';
+const ADDRESS_TO = '0x123';
+const GAS_PRICE = 4; // in Gwei
+const GAS_ESTIMATE = 456;
+const GAS_ESTIMATE_CONTRACT_TX = 123;
+const AMOUNT = 0.01;
 
 export const api = {
   eth: {
-    estimateGas: jest.fn(() => Promise.resolve(new BigNumber(456)))
+    estimateGas: jest.fn(() => Promise.resolve(new BigNumber(GAS_ESTIMATE)))
   },
   parity: {
-    generateSecretPhrase: jest.fn(() => Promise.resolve('foo')),
+    generateSecretPhrase: jest.fn(() => Promise.resolve(SECRET_PHRASE)),
     newAccountFromPhrase: jest.fn(() => Promise.resolve()),
-    phraseToAddress: jest.fn(() => Promise.resolve('0x123')),
+    phraseToAddress: jest.fn(() => Promise.resolve(ADDRESS_TO)),
     setAccountName: jest.fn(() => Promise.resolve()),
     setAccountMeta: jest.fn(() => Promise.resolve())
   },
@@ -24,7 +33,7 @@ export const api = {
 };
 
 export const erc20 = {
-  address: 'foo',
+  address: 'THIBCoin',
   decimals: 18
 };
 
@@ -36,7 +45,8 @@ export const makeContract = {
   contractObject: {
     instance: {
       transfer: {
-        estimateGas: () => Promise.resolve(new BigNumber(123))
+        estimateGas: () =>
+          Promise.resolve(new BigNumber(GAS_ESTIMATE_CONTRACT_TX))
       }
     }
   },
@@ -50,9 +60,32 @@ export const post$ = {
   })
 };
 
-export const tx = {
-  amount: 0.01, // In Ether or in token
-  from: '0x456',
-  gasPrice: 4, // in Gwei
-  to: '0x123'
+export const txEth = {
+  amount: AMOUNT, // In Ether
+  from: ADDRESS_FROM,
+  gasPrice: GAS_PRICE,
+  to: ADDRESS_TO,
+  token: eth
+};
+
+const txErc20Base = {
+  amount: AMOUNT, // In token
+  from: ADDRESS_FROM,
+  gasPrice: GAS_PRICE,
+  to: ADDRESS_TO,
+  token: erc20
+};
+
+export const txErc20 = {
+  ...txErc20Base,
+  args: [
+    txErc20Base.to,
+    new BigNumber(txErc20Base.amount).multipliedBy(
+      new BigNumber(10).pow(txErc20Base.token.decimals)
+    )
+  ],
+  options: {
+    from: txErc20Base.from,
+    gasPrice: toWei(txErc20Base.gasPrice, 'shannon') // shannon == gwei
+  }
 };

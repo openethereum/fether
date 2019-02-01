@@ -39,13 +39,13 @@ describe('estimateGas', () => {
   });
 
   test('should call estimateGasForErc20 with token', () => {
-    expect(estimateGas(mock.tx, mock.erc20, mock.api)).resolves.toEqual(
-      new BigNumber(153.75)
+    expect(estimateGas(mock.txErc20, mock.erc20, mock.api)).resolves.toEqual(
+      new BigNumber(154)
     );
   });
 
   test('should call estimateGasForEth with token', () => {
-    expect(estimateGas(mock.tx, mock.eth, mock.api)).resolves.toEqual(
+    expect(estimateGas(mock.txEth, mock.eth, mock.api)).resolves.toEqual(
       new BigNumber(570)
     );
   });
