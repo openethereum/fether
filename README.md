@@ -117,7 +117,7 @@ yarn start
 
 > Developer Tools: Open developer tools automatically by running `DEBUG=true yarn start` when not in the production environment
 
-# Run without taskbar
+# Run without taskbar mode (no tray icon)
 
 ```bash
 TASKBAR=false yarn start

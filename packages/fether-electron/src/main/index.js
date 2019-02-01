@@ -7,13 +7,15 @@ import { killParity } from '@parity/electron';
 import electron from 'electron';
 
 import Pino from './app/utils/pino';
-import FetherApp from './app';
+import createFetherApp from './app';
 import fetherAppOptions from './app/options';
 
 const { app } = electron;
 const pino = Pino();
 
 let withTaskbar = process.env.TASKBAR !== 'false';
+
+pino.info('Platform detected: ', process.platform);
 
 // Disable gpu acceleration on linux
 // https://github.com/parity-js/fether/issues/85
@@ -28,7 +30,7 @@ if (process.platform === 'win32') {
 const options = fetherAppOptions(withTaskbar, {});
 
 app.on('ready', () => {
-  return new FetherApp(app, options);
+  return createFetherApp(app, options);
 });
 
 // Event triggered by clicking the Electron icon in the menu Dock
@@ -46,7 +48,7 @@ app.on('activate', (event, hasVisibleWindows) => {
     return;
   }
 
-  return new FetherApp(app, options);
+  return createFetherApp(app, options);
 });
 
 app.on('window-all-closed', () => {

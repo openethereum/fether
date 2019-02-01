@@ -10,7 +10,7 @@ const pino = Pino();
  * Returns the latest window resolution if it differs from the previous resolution.
  * Note that the previous window resolution may be undefined if being changed in settings.
  */
-const getScreenResolution = (
+const getChangedScreenResolution = (
   previousScreenResolution,
   currentScreenResolution
 ) => {
@@ -37,7 +37,7 @@ const shouldFixWindowPosition = (
   currentScreenResolution
 ) => {
   pino.info(
-    'Window position (previous, current): ',
+    'Window resolution (previous, current): ',
     previousScreenResolution,
     currentScreenResolution
   );
@@ -53,4 +53,4 @@ const shouldFixWindowPosition = (
   return false;
 };
 
-export { getScreenResolution, shouldFixWindowPosition };
+export { getChangedScreenResolution, shouldFixWindowPosition };

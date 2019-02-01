@@ -5,7 +5,7 @@
 
 /* eslint-env jest */
 
-import { getScreenResolution, shouldFixWindowPosition } from './window';
+import { getChangedScreenResolution, shouldFixWindowPosition } from './window';
 
 jest.mock('./pino', () => () => ({
   info: () => {}
@@ -29,7 +29,7 @@ describe('window resolution', () => {
   test('should return previous resolution if it was defined and current resolution is the same', () => {
     const previousScreenResolution = largeScreenResolution;
     const currentScreenResolution = largeScreenResolution;
-    const screenResolution = getScreenResolution(
+    const screenResolution = getChangedScreenResolution(
       previousScreenResolution,
       currentScreenResolution
     );
@@ -39,7 +39,7 @@ describe('window resolution', () => {
   test('should return current resolution if either its x or y coordinate differs in the previous resolution', () => {
     const previousScreenResolution = largeScreenResolution;
     const currentScreenResolution = smallScreenResolution;
-    const screenResolution = getScreenResolution(
+    const screenResolution = getChangedScreenResolution(
       previousScreenResolution,
       currentScreenResolution
     );
