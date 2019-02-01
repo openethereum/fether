@@ -51,11 +51,11 @@ class FetherApp {
     this.fetherApp.window.setProgressBar(0.4);
 
     this.createPositioner();
-    this.createTray();
     this.setupRequestListeners();
     this.setupWindowListeners();
 
     if (options.withTaskbar) {
+      this.createTray();
       this.loadTaskbar();
     }
     this.fetherApp.window.setProgressBar(0.6);
@@ -578,7 +578,7 @@ class FetherApp {
     } else if (cachedBounds) {
       // Cached value will be used if showWindow is called without bounds data
       trayPos = cachedBounds;
-    } else if (tray.getBounds) {
+    } else if (tray && tray.getBounds) {
       // Get the current tray bounds
       trayPos = tray.getBounds();
     }
