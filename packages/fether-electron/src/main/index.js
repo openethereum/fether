@@ -25,11 +25,10 @@ if (process.platform === 'win32') {
   withTaskbar = false;
 }
 
-const fetherAppInstance = new FetherApp();
 const options = fetherAppOptions(withTaskbar, {});
 
 app.on('ready', () => {
-  fetherAppInstance.create(app, options);
+  return new FetherApp(app, options);
 });
 
 // Event triggered by clicking the Electron icon in the menu Dock
@@ -47,7 +46,7 @@ app.on('activate', (event, hasVisibleWindows) => {
     return;
   }
 
-  fetherAppInstance.create(app, options);
+  return new FetherApp(app, options);
 });
 
 app.on('window-all-closed', () => {

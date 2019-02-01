@@ -32,7 +32,7 @@ let hasCalledInitFetherApp = false;
 class FetherApp {
   fetherApp = new events.EventEmitter();
 
-  create = (electronApp, options) => {
+  constructor (electronApp, options) {
     if (hasCalledInitFetherApp) {
       this.fetherApp.emit(
         'error',
@@ -69,7 +69,7 @@ class FetherApp {
 
     this.fetherApp.window.setProgressBar(-1);
     this.fetherApp.emit('after-create-app');
-  };
+  }
 
   // Enable with `DEBUG=true yarn start` and access Developer Tools
   debugSetup = () => {
