@@ -8,7 +8,7 @@ import electron from 'electron';
 
 import Pino from './app/utils/pino';
 import FetherApp from './app';
-import FetherAppOptions from './app/options';
+import fetherAppOptions from './app/options';
 
 const { app } = electron;
 const pino = Pino();
@@ -26,8 +26,7 @@ if (process.platform === 'win32') {
 }
 
 const fetherAppInstance = new FetherApp();
-const fetherAppOptionsInstance = new FetherAppOptions();
-const options = fetherAppOptionsInstance.create(withTaskbar, {});
+const options = fetherAppOptions(withTaskbar, {});
 
 app.on('ready', () => {
   fetherAppInstance.create(app, options);

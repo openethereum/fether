@@ -5,36 +5,7 @@
 
 import { DEFAULT_OPTIONS, TASKBAR_OPTIONS } from './config';
 
-let hasCalledInitFetherAppOptions = false;
-
-class FetherAppOptions {
-  options = {};
-
-  create = (withTaskbar, customOptions) => {
-    if (hasCalledInitFetherAppOptions) {
-      throw new Error('Unable to initialise Fether app options more than once');
-    }
-
-    // Allow user to get/set options prior or to pass custom options
-    this.options = withTaskbar
-      ? Object.assign(
-        this.options,
-        DEFAULT_OPTIONS,
-        TASKBAR_OPTIONS,
-        customOptions || {}
-      )
-      : Object.assign(this.options, DEFAULT_OPTIONS, customOptions || {});
-
-    return this.options;
-  };
-
-  get = opt => {
-    return this.options[opt];
-  };
-
-  set = (opt, val) => {
-    this.options[opt] = val;
-  };
-}
-
-export default FetherAppOptions;
+export default (withTaskbar, customOptions) =>
+  withTaskbar
+    ? Object.assign({}, DEFAULT_OPTIONS, TASKBAR_OPTIONS, customOptions || {})
+    : Object.assign({}, DEFAULT_OPTIONS, customOptions || {});
