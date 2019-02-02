@@ -17,7 +17,10 @@ const INDEX_HTML_PATH =
   });
 
 // Icon path differs when started with `yarn electron` or `yarn start`
-const ICON_PATH = path.join(staticPath, 'assets', 'icons', 'icon.png');
+const ICON_PATH =
+  process.platform === 'win32'
+    ? path.join(staticPath, 'assets', 'icons', 'win', 'icon.ico')
+    : path.join(staticPath, 'assets', 'icons', 'icon.png');
 
 const shouldUseDevTools = process.env.NODE_ENV !== 'production';
 const shouldUseFrame = process.platform === 'win32';
