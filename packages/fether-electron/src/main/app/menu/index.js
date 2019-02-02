@@ -11,7 +11,7 @@ const { Menu } = electron;
 const menu = Menu.buildFromTemplate(template);
 
 const getMenu = () => {
-  return menu;
+  return Menu.getApplicationMenu();
 };
 
 const addMenu = fetherAppWindow => {
