@@ -27,11 +27,11 @@ import {
   showWindow,
   moveWindowUp,
   processSaveWindowPosition,
-  setupWindowListeners,
-  setupWin32Listeners,
   hideWindow,
   windowClear,
-  onWindowClose
+  onWindowClose,
+  setupWindowListeners,
+  setupWin32Listeners
 } from './methods';
 
 let hasCalledInitFetherApp = false;
@@ -73,11 +73,11 @@ FetherApp.prototype.fixWindowPosition = fixWindowPosition;
 FetherApp.prototype.showWindow = showWindow;
 FetherApp.prototype.moveWindowUp = moveWindowUp;
 FetherApp.prototype.processSaveWindowPosition = processSaveWindowPosition;
-FetherApp.prototype.setupWindowListeners = setupWindowListeners;
-FetherApp.prototype.setupWin32Listeners = setupWin32Listeners;
 FetherApp.prototype.hideWindow = hideWindow;
 FetherApp.prototype.windowClear = windowClear;
 FetherApp.prototype.onWindowClose = onWindowClose;
+FetherApp.prototype.setupWindowListeners = setupWindowListeners;
+FetherApp.prototype.setupWin32Listeners = setupWin32Listeners;
 
 const createFetherApp = (app, options) => {
   const fetherApp = new FetherApp(app, options);

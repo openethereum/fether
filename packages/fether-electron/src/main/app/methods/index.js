@@ -24,11 +24,11 @@ import fixWindowPosition from './fixWindowPosition';
 import showWindow from './showWindow';
 import moveWindowUp from './moveWindowUp';
 import processSaveWindowPosition from './processSaveWindowPosition';
-import setupWindowListeners from './setupWindowListeners';
-import setupWin32Listeners from './setupWin32Listeners';
 import hideWindow from './hideWindow';
 import windowClear from './windowClear';
 import onWindowClose from './onWindowClose';
+import setupWindowListeners from './setupWindowListeners';
+import setupWin32Listeners from './setupWin32Listeners';
 
 export {
   setupAppListeners,
@@ -52,9 +52,9 @@ export {
   showWindow,
   moveWindowUp,
   processSaveWindowPosition,
-  setupWindowListeners,
-  setupWin32Listeners,
   hideWindow,
   windowClear,
-  onWindowClose
+  onWindowClose,
+  setupWindowListeners,
+  setupWin32Listeners
 };
