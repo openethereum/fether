@@ -13,7 +13,7 @@ function loadTray () {
   if (options.withTaskbar) {
     this.fetherApp.emit('load-tray');
 
-    if (app.dock && !options.showDockIcon) {
+    if (process.platform === 'darwin' && app.dock && !options.showDockIcon) {
       app.dock.hide();
     }
 

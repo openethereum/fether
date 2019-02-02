@@ -23,10 +23,6 @@ if (!['darwin', 'win32'].includes(process.platform)) {
   app.disableHardwareAcceleration();
 }
 
-if (process.platform === 'win32') {
-  withTaskbar = false;
-}
-
 const options = fetherAppOptions(withTaskbar, {});
 
 app.on('ready', () => {

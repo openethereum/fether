@@ -20,6 +20,7 @@ const INDEX_HTML_PATH =
 const ICON_PATH = path.join(staticPath, 'assets', 'icons', 'icon.png');
 
 const shouldUseDevTools = process.env.NODE_ENV !== 'production';
+const shouldUseFrame = process.platform === 'win32';
 
 const windowPosition =
   process.platform === 'win32' ? 'trayBottomCenter' : 'trayCenter';
@@ -27,12 +28,15 @@ const windowPosition =
 // API docs: https://electronjs.org/docs/api/browser-window
 const DEFAULT_OPTIONS = {
   alwaysOnTop: true,
+  dir: staticPath,
   frame: true,
   height: 640,
+  hasShadow: true,
   icon: ICON_PATH,
   index: INDEX_HTML_PATH,
   resizable: false,
-  show: false,
+  show: false, // Run showWindow later
+  showDockIcon: true, // macOS usage only
   tabbingIdentifier: 'parity',
   webPreferences: {
     devTools: shouldUseDevTools, // Security
@@ -44,12 +48,8 @@ const DEFAULT_OPTIONS = {
 };
 
 const TASKBAR_OPTIONS = {
-  dir: staticPath,
-  frame: false,
-  hasShadow: true,
+  frame: shouldUseFrame,
   height: 464,
-  show: false, // Run showWindow later when tray has loaded in FetherApp
-  showDockIcon: true,
   // On Linux the user must click the tray icon and then click the tooltip
   // to toggle the Fether window open/close
   tooltip: 'Click to toggle Fether window',
