@@ -18,7 +18,6 @@ import ReactResizeDetector from 'react-resize-detector';
 import Accounts from '../Accounts';
 import BackupAccount from '../BackupAccount';
 import Onboarding from '../Onboarding';
-import RequireHealthOverlay from '../RequireHealthOverlay';
 import Send from '../Send';
 import Tokens from '../Tokens';
 import Whitelist from '../Whitelist';
@@ -61,30 +60,28 @@ class App extends Component {
         <div className='content'>
           <div className='window'>
             {/* Don't display child components requiring RPCs if API is not yet set */}
-            <RequireHealthOverlay require='connected' fullscreen>
-              <Router>
-                <Switch>
-                  {/* The next line is the homepage */}
-                  <Redirect exact from='/' to='/accounts' />
-                  <Route path='/accounts' component={Accounts} />
-                  <Route path='/onboarding' component={Onboarding} />
-                  <Route path='/tokens/:accountAddress' component={Tokens} />
-                  <Route
-                    path='/whitelist/:accountAddress'
-                    component={Whitelist}
-                  />
-                  <Route
-                    path='/backup/:accountAddress'
-                    component={BackupAccount}
-                  />
-                  <Route
-                    path='/send/:tokenAddress/from/:accountAddress'
-                    component={Send}
-                  />
-                  <Redirect from='*' to='/' />
-                </Switch>
-              </Router>
-            </RequireHealthOverlay>
+            <Router>
+              <Switch>
+                {/* The next line is the homepage */}
+                <Redirect exact from='/' to='/accounts' />
+                <Route path='/accounts' component={Accounts} />
+                <Route path='/onboarding' component={Onboarding} />
+                <Route path='/tokens/:accountAddress' component={Tokens} />
+                <Route
+                  path='/whitelist/:accountAddress'
+                  component={Whitelist}
+                />
+                <Route
+                  path='/backup/:accountAddress'
+                  component={BackupAccount}
+                />
+                <Route
+                  path='/send/:tokenAddress/from/:accountAddress'
+                  component={Send}
+                />
+                <Redirect from='*' to='/' />
+              </Switch>
+            </Router>
           </div>
         </div>
       </ReactResizeDetector>
