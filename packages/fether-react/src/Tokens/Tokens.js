@@ -14,6 +14,18 @@ import withAccount from '../utils/withAccount';
 @withRouter
 @withAccount
 class Tokens extends PureComponent {
+  state = {
+    isMenuOpen: false
+  };
+
+  handleMenuClose = () => {
+    this.setState({ isMenuOpen: false });
+  };
+
+  handleMenuOpen = () => {
+    this.setState({ isMenuOpen: true });
+  };
+
   isParitySignerAccount = () => {
     const {
       account: { type }
@@ -51,9 +63,11 @@ class Tokens extends PureComponent {
     const {
       account: { address, name, type }
     } = this.props;
+    const { isMenuOpen } = this.state;
 
     return (
       <div className='tokens'>
+        <div className={isMenuOpen ? 'popup-underlay' : ''} />
         <AccountHeader
           address={address}
           copyAddress
@@ -69,6 +83,8 @@ class Tokens extends PureComponent {
               className='popup-menu-account'
               horizontalOffset={1}
               menuItems={this.menuItems()}
+              onClose={this.handleMenuClose}
+              onOpen={this.handleMenuOpen}
               size='small'
               trigger={<Clickable className='icon -menu' />}
             />

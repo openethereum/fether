@@ -141,11 +141,11 @@ class Sent extends Component {
   renderLink = () => {
     const {
       chainName,
-      sendStore: { confirmations, txStatus },
+      sendStore: { txStatus },
       token
     } = this.props;
 
-    if (confirmations >= 0) {
+    if (txStatus && txStatus.confirmed) {
       return (
         <a
           href={blockscoutTxUrl(

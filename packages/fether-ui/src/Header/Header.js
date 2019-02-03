@@ -10,11 +10,11 @@ import { Placeholder } from '../Placeholder';
 
 export const Header = ({ left, right, title }) => (
   <div className='header-nav'>
-    <div className='header-nav_left'>{left}</div>
-    <div className='header-nav_title'>
+    <div className='header-nav header-nav_left'>{left}</div>
+    <div className='header-nav header-nav_title'>
       {title || <Placeholder height={24} width={150} />}
     </div>
-    <div className='header-nav_right'>{right}</div>
+    <div className='header-nav header-nav_right'>{right}</div>
   </div>
 );
 
