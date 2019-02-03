@@ -3,7 +3,18 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
+import path from './path';
+
+import staticPath from '../utils/staticPath';
 import Pino from '../utils/pino';
+
+const iconBalloonPath = path.join(
+  staticPath,
+  'assets',
+  'icons',
+  'win',
+  'iconBalloon.png'
+);
 
 const pino = Pino();
 
@@ -13,8 +24,9 @@ function showTrayBalloon () {
   pino.info('Showing Tray Balloon');
 
   tray.displayBalloon({
-    title: 'Fether Menu',
-    content: `Press ALT in the Fether window to toggle the menu`
+    content: `Press ALT in the Fether window to toggle the menu`,
+    icon: iconBalloonPath,
+    title: 'Fether Menu'
   });
 }
 
