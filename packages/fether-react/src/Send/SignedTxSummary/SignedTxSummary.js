@@ -85,7 +85,6 @@ class SignedTxSummary extends Component {
                             disabled
                             label='To'
                             name='to'
-                            render={FetherForm.Field}
                           />
 
                           <FetherForm.Field
@@ -94,7 +93,6 @@ class SignedTxSummary extends Component {
                             disabled
                             label='Amount'
                             name='amount'
-                            render={FetherForm.Field}
                           />
 
                           {values.to === values.from && (
