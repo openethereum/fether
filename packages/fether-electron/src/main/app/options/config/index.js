@@ -17,15 +17,28 @@ const INDEX_HTML_PATH =
   });
 
 // Icon path differs when started with `yarn electron` or `yarn start`
-const ICON_PATH =
-  process.platform === 'win32'
-    ? path.join(staticPath, 'assets', 'icons', 'win', 'icon.ico')
-    : path.join(staticPath, 'assets', 'icons', 'iconTemplate.png');
+let iconPath = path.join(staticPath, 'assets', 'icons', 'icon.png');
+let iconDockPath = '';
 
-const ICON_DOCK_PATH =
-  process.platform === 'darwin'
-    ? path.join(staticPath, 'assets', 'icons', 'iconDock.png')
-    : '';
+if (process.platform === 'win32') {
+  iconPath = path.join(staticPath, 'assets', 'icons', 'win', 'icon.ico');
+} else if (process.platform === 'darwin') {
+  // https://github.com/electron/electron/blob/master/docs/api/native-image.md#template-image
+  iconPath = path.join(
+    staticPath,
+    'assets',
+    'icons',
+    'mac',
+    'iconTemplate.png'
+  );
+  iconDockPath = path.join(
+    staticPath,
+    'assets',
+    'icons',
+    'mac',
+    'iconDock.png'
+  );
+}
 
 const shouldUseDevTools = process.env.NODE_ENV !== 'production';
 const shouldUseFrame = process.platform === 'win32';
@@ -40,8 +53,8 @@ const DEFAULT_OPTIONS = {
   frame: true,
   height: 640,
   hasShadow: true,
-  icon: ICON_PATH,
-  iconDock: ICON_DOCK_PATH,
+  icon: iconPath,
+  iconDock: iconDockPath,
   index: INDEX_HTML_PATH,
   resizable: false,
   show: false, // Run showWindow later
