@@ -18,7 +18,7 @@ import ReactResizeDetector from 'react-resize-detector';
 import Accounts from '../Accounts';
 import BackupAccount from '../BackupAccount';
 import Onboarding from '../Onboarding';
-import RequireHealth from '../RequireHealthOverlay';
+import RequireHealthOverlay from '../RequireHealthOverlay';
 import Send from '../Send';
 import Tokens from '../Tokens';
 import Whitelist from '../Whitelist';
@@ -61,7 +61,7 @@ class App extends Component {
         <div className='content'>
           <div className='window'>
             {/* Don't display child components requiring RPCs if API is not yet set */}
-            <RequireHealth require='connected' fullscreen>
+            <RequireHealthOverlay require='connected' fullscreen>
               <Router>
                 <Switch>
                   {/* The next line is the homepage */}
@@ -84,7 +84,7 @@ class App extends Component {
                   <Redirect from='*' to='/' />
                 </Switch>
               </Router>
-            </RequireHealth>
+            </RequireHealthOverlay>
           </div>
         </div>
       </ReactResizeDetector>

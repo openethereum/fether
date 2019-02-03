@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import RequireHealth from '../../RequireHealthOverlay';
+import RequireHealthOverlay from '../../RequireHealthOverlay';
 import TokenBalance from './TokenBalance';
 import withTokens from '../../utils/withTokens';
 
@@ -17,7 +17,7 @@ class TokensList extends Component {
     const shownArray = tokensArray.length ? tokensArray : [{}];
 
     return (
-      <RequireHealth require='sync'>
+      <RequireHealthOverlay require='sync'>
         <div className='window_content'>
           <div className='box -scroller'>
             <ul className='list -padded'>
@@ -32,7 +32,7 @@ class TokensList extends Component {
             </ul>
           </div>
         </div>
-      </RequireHealth>
+      </RequireHealthOverlay>
     );
   }
 }

@@ -19,7 +19,7 @@ import { OnChange } from 'react-final-form-listeners';
 import { withProps } from 'recompose';
 
 import { estimateGas } from '../../utils/transaction';
-import RequireHealth from '../../RequireHealthOverlay';
+import RequireHealthOverlay from '../../RequireHealthOverlay';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import TxDetails from './TxDetails';
 import withAccount from '../../utils/withAccount';
@@ -193,7 +193,7 @@ class TxForm extends Component {
           title={token && <h1>Send {token.name}</h1>}
         />
 
-        <RequireHealth require='sync'>
+        <RequireHealthOverlay require='sync'>
           <div className='window_content'>
             <div className='box -padded'>
               <TokenBalance
@@ -322,7 +322,7 @@ class TxForm extends Component {
               />
             </div>
           </div>
-        </RequireHealth>
+        </RequireHealthOverlay>
       </div>
     );
   }
