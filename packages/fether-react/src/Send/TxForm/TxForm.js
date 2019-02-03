@@ -403,13 +403,13 @@ class TxForm extends Component {
       }
 
       if (values.gas && values.gas.toString() === '-1') {
-        return { gasPrice: 'Unable to estimate gas...' };
+        return { amount: 'Unable to estimate gas...' };
       }
 
       // If the gas hasn't been calculated yet, then we don't show any errors,
       // just wait a bit more
       if (!this.isEstimatedTxFee(values)) {
-        return { gasPrice: 'Estimating gas...' };
+        return { amount: 'Estimating gas...' };
       }
 
       // Verify that `gas + (eth amount if sending eth) <= ethBalance`
