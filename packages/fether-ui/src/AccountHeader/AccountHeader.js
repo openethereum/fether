@@ -35,12 +35,11 @@ export const AccountHeader = ({
   return (
     <div>
       <Header
-        screen='tokens'
         title={
           address &&
           name &&
           type && (
-            <Container address={address} className='account -header-container'>
+            <Container address={address} className='account'>
               <Avatar address={address} scale={4} type={type} />
               <Information>
                 <Name name={name} />

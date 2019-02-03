@@ -125,7 +125,7 @@ class SentModal extends Component {
       token
     } = this.props;
 
-    if (confirmationsCount >= 0) {
+    if (txStatus && txStatus.confirmed && confirmationsCount >= 0) {
       return (
         <a
           href={blockscoutTxUrl(

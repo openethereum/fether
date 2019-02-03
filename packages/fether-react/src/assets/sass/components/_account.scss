@@ -1,14 +1,9 @@
 .account {
-  display: flex;
+  display: flex !important;
 
   &.-header {
-    display: flex !important;
-    align-items: center;
-  }
-
-  &.-header-container {
-    display: flex;
-    padding-left: 0.5rem;
+    justify-content: center;
+    width: 16rem;
   }
 
   .account_avatar {
@@ -30,9 +25,7 @@
   }
 
   .account_information {
-    padding-left: 0.325rem;
-    overflow: hidden;
-    flex-grow: 1;
+    padding-left: 0.325rem; /* gap from avatar */
   }
 
   .account_change_blockies {
@@ -46,9 +39,10 @@
     font-weight: 500;
     margin-bottom: 0.1rem;
 
-    /* Information component when used with components
+    /**
+     * Information component when used with components
      * in the header requires more bottom margin than
-     * where it is used in the AccountList componet
+     * where it is used in the AccountList component
      */
     &.-header {
       margin-top: 0.2rem;
