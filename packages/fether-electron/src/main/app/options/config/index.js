@@ -20,7 +20,7 @@ const INDEX_HTML_PATH =
 const ICON_PATH =
   process.platform === 'win32'
     ? path.join(staticPath, 'assets', 'icons', 'win', 'icon.ico')
-    : path.join(staticPath, 'assets', 'icons', 'icon.png');
+    : path.join(staticPath, 'assets', 'icons', 'iconTemplate.png');
 
 const ICON_DOCK_PATH =
   process.platform === 'darwin'
