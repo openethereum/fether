@@ -6,10 +6,14 @@
 import { Tray } from 'electron';
 
 function createTray () {
-  let { options } = this.fetherApp;
+  let { app, options } = this.fetherApp;
 
   if (options.withTaskbar) {
     this.fetherApp.tray = new Tray(options.icon);
+
+    if (process.platform === 'darwin' && app.dock) {
+      app.dock.setIcon(options.iconDock);
+    }
   }
 }
 

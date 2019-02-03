@@ -22,6 +22,11 @@ const ICON_PATH =
     ? path.join(staticPath, 'assets', 'icons', 'win', 'icon.ico')
     : path.join(staticPath, 'assets', 'icons', 'icon.png');
 
+const ICON_DOCK_PATH =
+  process.platform === 'darwin'
+    ? path.join(staticPath, 'assets', 'icons', 'iconDock.png')
+    : '';
+
 const shouldUseDevTools = process.env.NODE_ENV !== 'production';
 const shouldUseFrame = process.platform === 'win32';
 
@@ -36,6 +41,7 @@ const DEFAULT_OPTIONS = {
   height: 640,
   hasShadow: true,
   icon: ICON_PATH,
+  iconDock: ICON_DOCK_PATH,
   index: INDEX_HTML_PATH,
   resizable: false,
   show: false, // Run showWindow later
