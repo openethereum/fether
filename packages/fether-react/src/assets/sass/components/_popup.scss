@@ -19,6 +19,7 @@
   max-height: 220px;
   padding: 0px !important; /* Allow menu items to take up full width*/
   top: 3px !important;
+  z-index: 3000 !important; /* Above the alert screen modal */
 
   .popup-screen {
     margin-top: 5px;
