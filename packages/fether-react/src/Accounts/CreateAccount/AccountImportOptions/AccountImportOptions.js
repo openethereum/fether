@@ -9,6 +9,11 @@ import { inject, observer } from 'mobx-react';
 
 import Scanner from '../../../Scanner';
 import withAccountsInfo from '../../../utils/withAccountsInfo';
+import getBip39Wordlist from '../../../stores/utils/getBip39Wordlist';
+import getParityWordlist from '../../../stores/utils/getParityWordlist';
+
+const BIP39_WORDLIST = getBip39Wordlist();
+const PARITY_WORDLIST = getParityWordlist();
 
 @withAccountsInfo
 @inject('createAccountStore')
@@ -31,6 +36,29 @@ class AccountImportOptions extends Component {
   };
 
   handlePhraseChange = ({ target: { value: phrase } }) => {
+    const words = phrase.split(' ');
+    const lastVal = words.slice(-1);
+    const isWordEnded = lastVal.join() === '';
+
+    let lastWord;
+    if (isWordEnded) {
+      lastWord = words.slice(-2)[0];
+    }
+
+    if (
+      lastWord &&
+      !BIP39_WORDLIST.has(lastWord) &&
+      !PARITY_WORDLIST.has(lastWord)
+    ) {
+      this.setState({
+        error: `${lastWord} is not a valid BIP39 or Parity word`
+      });
+    } else {
+      this.setState({
+        error: null
+      });
+    }
+
     this.setState({ phrase });
   };
 
