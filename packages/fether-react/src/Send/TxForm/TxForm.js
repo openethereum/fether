@@ -111,7 +111,7 @@ class TxForm extends Component {
       values.gas &&
       values.gasPrice &&
       !isNaN(values.amount) &&
-      !isNaN(values.gas) &&
+      !values.gas.isNaN() &&
       !isNaN(values.gasPrice)
     ) {
       return true;
@@ -402,7 +402,7 @@ class TxForm extends Component {
         return preValidation;
       }
 
-      if (values.gas && values.gas.toString() === '-1') {
+      if (values.gas && values.gas.eq(-1)) {
         return { amount: 'Unable to estimate gas...' };
       }
 
