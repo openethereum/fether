@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { Form } from 'react-final-form';
+import { Field, Form } from 'react-final-form';
 import { Form as FetherForm, Header } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
@@ -78,21 +78,23 @@ class SignedTxSummary extends Component {
                     render={({ handleSubmit, values }) => (
                       <form className='send-form' onSubmit={handleSubmit}>
                         <fieldset className='form_fields'>
-                          <FetherForm.Field
+                          <Field
                             as='textarea'
                             className='form_field_value'
-                            defaultValue={tx.to}
+                            value={tx.to}
                             disabled
                             label='To'
                             name='to'
+                            render={FetherForm.Field}
                           />
 
-                          <FetherForm.Field
+                          <Field
                             className='form_field_value'
-                            defaultValue={`${tx.amount} ${token.symbol}`}
+                            value={`${tx.amount} ${token.symbol}`}
                             disabled
                             label='Amount'
                             name='amount'
+                            render={FetherForm.Field}
                           />
 
                           {values.to === values.from && (
