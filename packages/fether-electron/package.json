@@ -36,7 +36,7 @@
     "prerelease": "./scripts/revertElectronBug.sh",
     "release": "electron-builder",
     "start": "cross-env ELECTRON_START_URL=http://localhost:3000 electron-webpack dev --ws-origins all",
-    "test": "ln -sf ../../node_modules/react-scripts node_modules/ && cross-env SKIP_PREFLIGHT_CHECK=true craco test"
+    "test": "jest --all --color --coverage"
   },
   "dependencies": {
     "@parity/electron": "^4.0.0",
