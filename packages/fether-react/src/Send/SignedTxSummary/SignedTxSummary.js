@@ -71,7 +71,7 @@ class SignedTxSummary extends Component {
                     initialValues={{
                       from: address,
                       to: tx.to,
-                      amount: tx.amount,
+                      amount: `${tx.amount} ${token.symbol}`,
                       ...tx
                     }}
                     onSubmit={this.handleSubmit}
@@ -81,7 +81,6 @@ class SignedTxSummary extends Component {
                           <Field
                             as='textarea'
                             className='form_field_value'
-                            value={tx.to}
                             disabled
                             label='To'
                             name='to'
@@ -90,7 +89,6 @@ class SignedTxSummary extends Component {
 
                           <Field
                             className='form_field_value'
-                            value={`${tx.amount} ${token.symbol}`}
                             disabled
                             label='Amount'
                             name='amount'
