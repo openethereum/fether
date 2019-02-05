@@ -14,9 +14,8 @@ const getMenu = () => {
   return Menu.getApplicationMenu();
 };
 
-const addMenu = fetherAppWindow => {
+const addMenu = () => {
   Menu.setApplicationMenu(menu);
-  fetherAppWindow.setAutoHideMenuBar(true);
 };
 
 export { addMenu, getMenu };
