@@ -84,7 +84,7 @@ class FetherApp extends EventEmitter {
   loadTray = () => loadTray(this);
   moveWindowUp = () => moveWindowUp(this);
   onTrayClick = (e, bounds) => onTrayClick(this, e, bounds);
-  onWindowClose = () => onWindowClose();
+  onWindowClose = () => onWindowClose(this);
   processSaveWinPosition = () => processSaveWinPosition(this);
   setupAppListeners = () => setupAppListeners(this);
   setupDebug = () => setupDebug(this);

@@ -33,7 +33,7 @@ function setupWinListeners (fetherApp) {
      * to using 'moved' (not supported on Linux) with debouncing
      */
     debounce(() => {
-      processSaveWinPosition();
+      processSaveWinPosition(fetherApp);
     }, 1000);
   });
 
@@ -51,25 +51,25 @@ function setupWinListeners (fetherApp) {
      * On Linux the closest equivalent to achieving 'moved' is debouncing
      * on the 'move' event. It also works in 'close' even when app crashes
      */
-    processSaveWinPosition();
+    processSaveWinPosition(fetherApp);
   });
 
   // macOS and Linux (not Windows)
   win.on('resize', () => {
     pino.info('Detected resize event');
 
-    moveWindowUp();
+    moveWindowUp(fetherApp);
     setTimeout(() => {
-      moveWindowUp();
+      moveWindowUp(fetherApp);
     }, 5000);
   });
 
   win.on('blur', () => {
-    options.alwaysOnTop ? fetherApp.emit('blur-window') : hideWindow();
+    options.alwaysOnTop ? fetherApp.emit('blur-window') : hideWindow(fetherApp);
   });
 
   win.on('close', () => {
-    onWindowClose();
+    onWindowClose(fetherApp);
   });
 
   win.on('closed', () => {

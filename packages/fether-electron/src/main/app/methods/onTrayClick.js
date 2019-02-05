@@ -8,13 +8,13 @@ function onTrayClick (fetherApp, e, bounds) {
   const { altKey, ctrlKey, metaKey, shiftKey } = e;
 
   if (altKey || shiftKey || ctrlKey || metaKey || (win && win.isVisible())) {
-    return hideWindow();
+    return hideWindow(fetherApp);
   }
 
   // cachedBounds are needed for double-clicked event
   const newCacheBounds = bounds || cachedBounds;
   fetherApp.cachedBounds = newCacheBounds;
-  fetherApp.showWindow(newCacheBounds);
+  fetherApp.showWindow(fetherApp, newCacheBounds);
 }
 
 export default onTrayClick;

@@ -34,7 +34,7 @@ function processSaveWinPosition (fetherApp) {
 
   const positionStruct = { x: position[0], y: position[1] };
 
-  const fixedWinPosition = fixWinPosition(positionStruct);
+  const fixedWinPosition = fixWinPosition(fetherApp, positionStruct);
 
   const newFixedPosition = {
     x: fixedWinPosition.x || positionStruct.x,

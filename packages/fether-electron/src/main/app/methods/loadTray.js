@@ -23,7 +23,7 @@ function loadTray (fetherApp) {
 
     // Note: See https://github.com/RocketChat/Rocket.Chat.Electron/issues/44
     if (process.platform === 'win32') {
-      showTrayBalloon();
+      showTrayBalloon(fetherApp);
     }
 
     tray.on(defaultClickEvent, () => onTrayClick(fetherApp));
@@ -32,7 +32,7 @@ function loadTray (fetherApp) {
     tray.on('right-click', () => {
       if (process.platform === 'win32') {
         pino.info('Detected right click on Windows');
-        showTrayBalloon();
+        showTrayBalloon(fetherApp);
       }
     });
     tray.setToolTip(options.tooltip);

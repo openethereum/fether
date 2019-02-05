@@ -15,12 +15,12 @@ function showWindow (fetherApp, trayPos) {
   const { calculateWinPosition, createWindow, fixWinPosition, win } = fetherApp;
 
   if (!win) {
-    createWindow();
+    createWindow(fetherApp);
   }
 
   fetherApp.emit('show-window');
 
-  const calculatedWinPosition = calculateWinPosition(trayPos);
+  const calculatedWinPosition = calculateWinPosition(fetherApp, trayPos);
 
   pino.info('Calculated window position: ', calculatedWinPosition);
 
@@ -46,7 +46,7 @@ function showWindow (fetherApp, trayPos) {
 
   pino.info('Loaded window position: ', loadedWindowPosition);
 
-  const fixedWinPosition = fixWinPosition(loadedWindowPosition);
+  const fixedWinPosition = fixWinPosition(fetherApp, loadedWindowPosition);
 
   pino.info('Fixed window position: ', fixedWinPosition);
 

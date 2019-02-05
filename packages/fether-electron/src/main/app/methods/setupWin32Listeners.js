@@ -31,7 +31,7 @@ function setupWin32Listeners (fetherApp) {
        * Reference: https://nodejs.org/api/buffer.html
        */
       if (wParam) {
-        showTrayBalloon();
+        showTrayBalloon(fetherApp);
       }
     });
 
@@ -47,19 +47,19 @@ function setupWin32Listeners (fetherApp) {
       if (wParam.readUInt32LE(0) === 0xf060) {
         // SC_CLOSE
         eventName = 'close';
-        onWindowClose();
+        onWindowClose(fetherApp);
       } else if (wParam.readUInt32LE(0) === 0xf030) {
         // SC_MAXIMIZE
         eventName = 'maximize';
-        showTrayBalloon();
+        showTrayBalloon(fetherApp);
       } else if (wParam.readUInt32LE(0) === 0xf020) {
         // SC_MINIMIZE
         eventName = 'minimize';
-        processSaveWinPosition();
+        processSaveWinPosition(fetherApp);
       } else if (wParam.readUInt32LE(0) === 0xf120) {
         // SC_RESTORE
         eventName = 'restored';
-        showTrayBalloon();
+        showTrayBalloon(fetherApp);
       }
 
       if (eventName !== null) {
@@ -77,16 +77,16 @@ function setupWin32Listeners (fetherApp) {
 
       // Move Fether window back up into view if it was a resize event
       // that causes the bottom to be cropped
-      moveWindowUp();
+      moveWindowUp(fetherApp);
 
       // Try again after a delay incase Fether window resize occurs
       // x seconds after navigating to a new page.
       setTimeout(() => {
-        moveWindowUp();
+        moveWindowUp(fetherApp);
       }, 5000);
 
       // Save Fether window position to Electron settings
-      processSaveWinPosition();
+      processSaveWinPosition(fetherApp);
     });
   }
 }

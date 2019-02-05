@@ -10,7 +10,7 @@ function hideWindow (fetherApp) {
     return;
   }
 
-  processSaveWinPosition(); // Save window position when hide, particularly necessary on Linux
+  processSaveWinPosition(fetherApp); // Save window position when hide, particularly necessary on Linux
   fetherApp.emit('hide-window');
   win.hide();
   fetherApp.emit('after-hide-window');

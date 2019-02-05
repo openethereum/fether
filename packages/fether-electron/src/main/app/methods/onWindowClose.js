@@ -6,8 +6,8 @@
 function onWindowClose (fetherApp) {
   const { processSaveWinPosition, windowClear } = fetherApp;
 
-  processSaveWinPosition();
-  windowClear();
+  processSaveWinPosition(fetherApp);
+  windowClear(fetherApp);
 }
 
 export default onWindowClose;
