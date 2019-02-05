@@ -52,11 +52,11 @@ class FetherApp {
 
     this.setupAppListeners();
     this.createWindow();
-    this.updateProgress(0.4, undefined); // eslint-disable-line
+    this.updateProgress(0.4, undefined);
     this.createPositioner();
     this.setupRequestListeners();
     this.createTray();
-    this.updateProgress(0.6, undefined); // eslint-disable-line
+    this.updateProgress(0.6, undefined);
     this.loadTray();
     this.setupDebug();
     this.setupSecurity();
@@ -64,12 +64,12 @@ class FetherApp {
     this.setupParityEthereum();
     this.setupGlobals();
     this.setupMenu();
-    this.updateProgress(0.8, undefined); // eslint-disable-line
+    this.updateProgress(0.8, undefined);
     this.showWindow(undefined);
-    this.updateProgress(1.0, undefined); // eslint-disable-line
+    this.updateProgress(1.0, undefined);
     this.setupWindowListeners();
     this.setupWin32Listeners();
-    this.updateProgress(-1, "after-create-app"); // eslint-disable-line
+    this.updateProgress(-1, 'after-create-app');
   }
 
   calculateWindowPosition = () => calculateWindowPosition(this);
