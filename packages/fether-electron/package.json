@@ -41,7 +41,7 @@
   "dependencies": {
     "@parity/electron": "^4.0.0",
     "ansi-styles": "^3.2.1",
-    "commander": "^2.19.0",
+    "commander": "^2.15.1",
     "commander-remaining-args": "^1.2.0",
     "electron-positioner": "^4.1.0",
     "electron-settings": "^3.2.0",
