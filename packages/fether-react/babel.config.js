@@ -6,9 +6,5 @@ module.exports = {
     '@babel/plugin-transform-modules-commonjs',
     '@babel/plugin-transform-runtime'
   ],
-  presets: [
-    '@babel/preset-env',
-    '@babel/preset-react',
-    ['@babel/preset-stage-0', { decoratorsLegacy: true }]
-  ]
+  presets: ['@babel/preset-env', '@babel/preset-react']
 };
