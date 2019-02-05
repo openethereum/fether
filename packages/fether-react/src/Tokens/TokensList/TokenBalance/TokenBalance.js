@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { TokenCard } from 'fether-ui';
 import { withRouter } from 'react-router-dom';
 
-import withAccount from '../../../utils/withAccount.js';
+import withAccount from '../../../utils/withAccount';
 import withBalance from '../../../utils/withBalance';
 
 @withRouter
@@ -28,9 +28,11 @@ class TokenBalance extends Component {
       sendStore,
       token
     } = this.props;
+
     if (!token.address) {
       return;
     }
+
     sendStore.clear();
     history.push(`/send/${token.address}/from/${address}`);
   };

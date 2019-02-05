@@ -8,6 +8,7 @@ export * from './AccountHeader';
 export * from './AddressShort';
 export * from './Card';
 export * from './Clickable';
+export * from './ClickToCopy';
 export * from './Form';
 export * from './Header';
 export * from './Placeholder';

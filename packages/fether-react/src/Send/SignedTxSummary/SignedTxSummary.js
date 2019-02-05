@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import { withProps } from 'recompose';
 
 import RequireHealth from '../../RequireHealthOverlay';
-import TokenBalance from '../../Tokens/TokensList/TokenBalance';
+import TokenAddress from '../../Tokens/TokensList/TokenAddress';
 import withAccount from '../../utils/withAccount';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
 import withTokens from '../../utils/withTokens';
@@ -63,15 +63,15 @@ class SignedTxSummary extends Component {
         <RequireHealth require='sync'>
           <div className='window_content'>
             <div className='box -padded'>
-              <TokenBalance
-                decimals={6}
+              <TokenAddress
+                copyAddress
                 drawers={[
                   <Form
                     key='txForm'
                     initialValues={{
                       from: address,
                       to: tx.to,
-                      amount: tx.amount,
+                      amount: `${tx.amount} ${token.symbol}`,
                       ...tx
                     }}
                     onSubmit={this.handleSubmit}
@@ -79,20 +79,19 @@ class SignedTxSummary extends Component {
                       <form className='send-form' onSubmit={handleSubmit}>
                         <fieldset className='form_fields'>
                           <Field
-                            className='form_field_amount'
-                            disabled
-                            label='Amount'
-                            name='amount'
-                            render={FetherForm.Field}
-                            type='number'
-                          />
-
-                          <Field
                             as='textarea'
-                            className='-sm'
+                            className='form_field_value'
                             disabled
                             label='To'
                             name='to'
+                            render={FetherForm.Field}
+                          />
+
+                          <Field
+                            className='form_field_value'
+                            disabled
+                            label='Amount'
+                            name='amount'
                             render={FetherForm.Field}
                           />
 
@@ -112,8 +111,7 @@ class SignedTxSummary extends Component {
                     )}
                   />
                 ]}
-                onClick={null} // To disable cursor:pointer on card // TODO Can this be done better?
-                token={token}
+                shortAddress={false}
               />
             </div>
           </div>

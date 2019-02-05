@@ -10,7 +10,7 @@ import { Placeholder } from '../../Placeholder';
 
 export const Name = ({ name, screen, ...otherProps }) => (
   <div
-    className={`account_name ${screen !== 'accounts' ? '-header' : ''}`}
+    className={`account_name ${screen === 'account' ? '-header' : ''}`}
     {...otherProps}
   >
     {name || <Placeholder height={18} width={100} />}
