@@ -31,7 +31,8 @@ function setupWin32Listeners (fetherApp) {
        * Reference: https://nodejs.org/api/buffer.html
        */
       if (wParam) {
-        showTrayBalloon(fetherApp);
+        pino.info('Detected ALT key pressed to toggle the Fether menu');
+        // showTrayBalloon(fetherApp);
       }
     });
 
