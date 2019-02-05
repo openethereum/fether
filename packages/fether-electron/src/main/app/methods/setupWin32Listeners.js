@@ -8,8 +8,6 @@ import Pino from '../utils/pino';
 const pino = Pino();
 
 function setupWin32Listeners (thatFA) {
-  const { fetherApp } = thatFA;
-
   if (process.platform === 'win32') {
     /**
      * Hook WM_SYSKEYUP
@@ -19,7 +17,7 @@ function setupWin32Listeners (thatFA) {
      *
      * Reference: https://docs.microsoft.com/en-gb/windows/desktop/inputdev/wm-syskeyup
      */
-    fetherApp.window.hookWindowMessage(
+    thatFA.window.hookWindowMessage(
       Number.parseInt('0x0105'),
       (wParam, lParam) => {
         // Reference: https://nodejs.org/api/buffer.html
@@ -40,7 +38,7 @@ function setupWin32Listeners (thatFA) {
      *
      * Credit: http://robmayhew.com/listening-for-events-from-windows-in-electron-tutorial/
      */
-    fetherApp.window.hookWindowMessage(
+    thatFA.window.hookWindowMessage(
       Number.parseInt('0x0112'),
       (wParam, lParam) => {
         let eventName = null;
@@ -75,7 +73,7 @@ function setupWin32Listeners (thatFA) {
      * Detect event on Windows when Fether window was moved
      * or resized
      */
-    fetherApp.window.hookWindowMessage(
+    thatFA.window.hookWindowMessage(
       Number.parseInt('0x0232'),
       (wParam, lParam) => {
         pino.info('Detected completion of move or resize event');

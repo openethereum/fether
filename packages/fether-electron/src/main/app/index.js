@@ -47,64 +47,60 @@ class FetherApp {
       );
     }
 
-    this.fetherApp.app = electronApp;
-    this.fetherApp.options = options;
+    this.app = electronApp;
+    this.options = options;
 
-    // Context of fetherApp passed to each method
-    this.fetherApp.setupAppListeners = setupAppListeners(this);
-    this.fetherApp.createWindow = createWindow(this);
-    this.fetherApp.updateProgress = updateProgress(this);
-    this.fetherApp.createPositioner = createPositioner(this);
-    this.fetherApp.setupRequestListeners = setupRequestListeners(this);
-    this.fetherApp.createTray = createTray(this);
-    this.fetherApp.loadTray = loadTray(this);
-    this.fetherApp.showTrayBalloon = showTrayBalloon(this);
-    this.fetherApp.setupDebug = setupDebug(this);
-    this.fetherApp.setupSecurity = setupSecurity(this);
-    this.fetherApp.setupLogger = setupLogger();
-    this.fetherApp.setupParityEthereum = setupParityEthereum(this);
-    this.fetherApp.setupGlobals = setupGlobals();
-    this.fetherApp.setupMenu = setupMenu(this);
-    this.fetherApp.getScreenResolution = getScreenResolution(this);
-    this.fetherApp.calculateWindowPosition = calculateWindowPosition(this);
-    this.fetherApp.getScreenResolution = getScreenResolution();
-    this.fetherApp.onTrayClick = onTrayClick(this);
-    this.fetherApp.fixWindowPosition = fixWindowPosition(this);
-    this.fetherApp.getScreenResolution = getScreenResolution(this);
-    this.fetherApp.showWindow = showWindow(this);
-    this.fetherApp.moveWindowUp = moveWindowUp(this);
-    this.fetherApp.processSaveWindowPosition = processSaveWindowPosition(this);
-    this.fetherApp.hideWindow = hideWindow(this);
-    this.fetherApp.windowClear = windowClear(this);
-    this.fetherApp.onWindowClose = onWindowClose();
-    this.fetherApp.setupWindowListeners = setupWindowListeners(this);
-    this.fetherApp.setupWin32Listeners = setupWin32Listeners(this);
-
-    const { fetherApp } = this;
-
-    fetherApp.setupAppListeners.apply(fetherApp);
-    fetherApp.createWindow.apply(fetherApp);
-    fetherApp.updateProgress.apply(fetherApp, [0.4]); // eslint-disable-line
-    fetherApp.createPositioner.apply(fetherApp);
-    fetherApp.setupRequestListeners.apply(fetherApp);
-    fetherApp.createTray.apply(fetherApp);
-    fetherApp.updateProgress.apply(fetherApp, [0.6]); // eslint-disable-line
-    fetherApp.loadTray.apply(fetherApp);
-    fetherApp.setupDebug.apply(fetherApp);
-    fetherApp.setupSecurity.apply(fetherApp);
-    fetherApp.setupLogger.apply();
-    fetherApp.setupParityEthereum.apply(fetherApp);
-    fetherApp.setupGlobals.apply();
-    fetherApp.setupMenu.apply(fetherApp);
-    fetherApp.updateProgress.apply(fetherApp, [0.8]); // eslint-disable-line
-    fetherApp.showWindow.apply(fetherApp, undefined);
-    fetherApp.updateProgress.apply(fetherApp, [1.0]); // eslint-disable-line
-    fetherApp.setupWindowListeners.apply(fetherApp);
-    fetherApp.setupWin32Listeners.apply(fetherApp);
-    fetherApp.updateProgress.apply(fetherApp, [-1, "after-create-app"]); // eslint-disable-line
+    this.setupAppListeners();
+    this.createWindow();
+    this.updateProgress(0.4, undefined); // eslint-disable-line
+    this.createPositioner();
+    this.setupRequestListeners();
+    this.createTray();
+    this.updateProgress(0.6, undefined); // eslint-disable-line
+    this.loadTray();
+    this.setupDebug();
+    this.setupSecurity();
+    this.setupLogger.apply();
+    this.setupParityEthereum();
+    this.setupGlobals();
+    this.setupMenu();
+    this.updateProgress(0.8, undefined); // eslint-disable-line
+    this.showWindow(undefined);
+    this.updateProgress(1.0, undefined); // eslint-disable-line
+    this.setupWindowListeners();
+    this.setupWin32Listeners();
+    this.updateProgress(-1, "after-create-app"); // eslint-disable-line
   }
-}
 
-const fetherApp = new FetherApp(app, options);
+  setupAppListeners = () => setupAppListeners(this);
+  createWindow = () => createWindow(this);
+  updateProgress = (percentage, eventListenerName) =>
+    updateProgress(this, percentage, eventListenerName);
+  createPositioner = () => createPositioner(this);
+  setupRequestListeners = () => setupRequestListeners(this);
+  createTray = () => createTray(this);
+  loadTray = () => loadTray(this);
+  showTrayBalloon = () => showTrayBalloon(this);
+  setupDebug = () => setupDebug(this);
+  setupSecurity = () => setupSecurity(this);
+  setupLogger = () => setupLogger();
+  setupParityEthereum = () => setupParityEthereum(this);
+  setupGlobals = () => setupGlobals();
+  setupMenu = () => setupMenu(this);
+  getScreenResolution = () => getScreenResolution(this);
+  calculateWindowPosition = () => calculateWindowPosition(this);
+  getScreenResolution = () => getScreenResolution();
+  onTrayClick = (e, bounds) => onTrayClick(this, e, bounds);
+  fixWindowPosition = positionStruct => fixWindowPosition(this, positionStruct);
+  getScreenResolution = () => getScreenResolution(this);
+  showWindow = trayPos => showWindow(this, trayPos);
+  moveWindowUp = () => moveWindowUp(this);
+  processSaveWindowPosition = () => processSaveWindowPosition(this);
+  hideWindow = () => hideWindow(this);
+  windowClear = () => windowClear(this);
+  onWindowClose = () => onWindowClose();
+  setupWindowListeners = () => setupWindowListeners(this);
+  setupWin32Listeners = () => setupWin32Listeners(this);
+}
 
 export default FetherApp;

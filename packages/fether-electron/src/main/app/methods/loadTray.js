@@ -8,9 +8,7 @@ import Pino from '../utils/pino';
 const pino = Pino();
 
 function loadTray (thatFA) {
-  const { fetherApp } = thatFA;
-
-  const { app, options, tray } = fetherApp;
+  const { fetherApp, app, options, tray } = thatFA;
 
   if (options.withTaskbar) {
     fetherApp.emit('load-tray');
@@ -28,8 +26,8 @@ function loadTray (thatFA) {
       thatFA.showTrayBalloon();
     }
 
-    tray.on(defaultClickEvent, () => thatFA.onTrayClick(fetherApp));
-    tray.on('double-click', () => thatFA.onTrayClick(fetherApp));
+    tray.on(defaultClickEvent, () => thatFA.onTrayClick(thatFA));
+    tray.on('double-click', () => thatFA.onTrayClick(thatFA));
     // Right click event handler does not work on Windows as intended
     tray.on('right-click', () => {
       if (process.platform === 'win32') {

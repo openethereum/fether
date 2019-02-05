@@ -7,7 +7,7 @@ import { killParity } from '@parity/electron';
 import electron from 'electron';
 
 import Pino from './app/utils/pino';
-import createFetherApp from './app';
+import FetherApp from './app';
 import fetherAppOptions from './app/options';
 
 const { app } = electron;
@@ -26,7 +26,7 @@ if (!['darwin', 'win32'].includes(process.platform)) {
 const options = fetherAppOptions(withTaskbar, {});
 
 app.on('ready', () => {
-  return createFetherApp(app, options);
+  return new FetherApp(app, options);
 });
 
 // Event triggered by clicking the Electron icon in the menu Dock
@@ -44,7 +44,7 @@ app.on('activate', (event, hasVisibleWindows) => {
     return;
   }
 
-  return createFetherApp(app, options);
+  return new FetherApp(app, options);
 });
 
 app.on('window-all-closed', () => {

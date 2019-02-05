@@ -14,13 +14,13 @@ function setupWindowListeners (thatFA) {
   const { fetherApp } = thatFA;
 
   // Open external links in browser
-  fetherApp.window.webContents.on('new-window', (event, url) => {
+  thatFA.window.webContents.on('new-window', (event, url) => {
     event.preventDefault();
     electron.shell.openExternal(url);
   });
 
   // Linux (unchecked on others)
-  fetherApp.window.on('move', () => {
+  thatFA.window.on('move', () => {
     /**
      * On Linux using this with debouncing is the closest equivalent
      * to using 'moved' (not supported on Linux) with debouncing
@@ -31,7 +31,7 @@ function setupWindowListeners (thatFA) {
   });
 
   // macOS (not Windows or Linux)
-  fetherApp.window.on('moved', () => {
+  thatFA.window.on('moved', () => {
     /**
      * On macOS save the position in the 'moved' event since if
      * we run it just in 'close' instead, then if the Fether app
@@ -48,7 +48,7 @@ function setupWindowListeners (thatFA) {
   });
 
   // macOS and Linux (not Windows)
-  fetherApp.window.on('resize', () => {
+  thatFA.window.on('resize', () => {
     pino.info('Detected resize event');
     thatFA.moveWindowUp();
     setTimeout(() => {
@@ -56,18 +56,18 @@ function setupWindowListeners (thatFA) {
     }, 5000);
   });
 
-  fetherApp.window.on('blur', () => {
-    fetherApp.options.alwaysOnTop
+  thatFA.window.on('blur', () => {
+    thatFA.options.alwaysOnTop
       ? fetherApp.emit('blur-window')
       : thatFA.hideWindow();
   });
 
-  fetherApp.window.on('close', () => {
+  thatFA.window.on('close', () => {
     thatFA.onWindowClose();
   });
 
-  fetherApp.window.on('closed', () => {
-    fetherApp.window = null;
+  thatFA.window.on('closed', () => {
+    thatFA.window = null;
 
     fetherApp.emit('after-closed-window');
   });

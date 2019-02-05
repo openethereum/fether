@@ -6,9 +6,7 @@
 import Positioner from 'electron-positioner';
 
 function createPositioner (thatFA) {
-  const { fetherApp } = thatFA;
-
-  fetherApp.positioner = new Positioner(fetherApp.window);
+  thatFA.positioner = new Positioner(thatFA.window);
 }
 
 export default createPositioner;

@@ -14,7 +14,7 @@ const pino = Pino();
 function showWindow (thatFA, trayPos) {
   const { fetherApp } = thatFA;
 
-  if (!fetherApp.window) {
+  if (!thatFA.window) {
     thatFA.createWindow();
   }
 
@@ -30,7 +30,7 @@ function showWindow (thatFA, trayPos) {
   const mainScreenWorkAreaSize = mainScreen.workAreaSize;
 
   // workAreaSize does not include the tray depth
-  fetherApp.trayDepth = Math.max(
+  thatFA.trayDepth = Math.max(
     mainScreenDimensions.width - mainScreenWorkAreaSize.width,
     mainScreenDimensions.height - mainScreenWorkAreaSize.height
   );
@@ -65,8 +65,8 @@ function showWindow (thatFA, trayPos) {
     (loadedWindowPosition && loadedWindowPosition.y) ||
     calculatedWindowPosition.y;
 
-  fetherApp.window.setPosition(x, y);
-  fetherApp.window.show();
+  thatFA.window.setPosition(x, y);
+  thatFA.window.show();
 
   fetherApp.emit('after-show-window');
 }

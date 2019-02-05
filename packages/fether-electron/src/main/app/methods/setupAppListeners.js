@@ -10,53 +10,51 @@ import Pino from '../utils/pino';
 const pino = Pino();
 
 function setupAppListeners (thatFA) {
-  const { fetherApp } = thatFA;
-
-  fetherApp.on('create-app', () => {
+  thatFA.fetherApp.on('create-app', () => {
     pino.info(
       `Starting ${productName} (${
-        fetherApp.options.withTaskbar ? 'with' : 'without'
+        thatFA.options.withTaskbar ? 'with' : 'without'
       } tray icon)...`
     );
   });
 
-  fetherApp.on('create-window', () => {
+  thatFA.fetherApp.on('create-window', () => {
     pino.info('Creating window');
   });
 
-  fetherApp.on('after-create-window', () => {
+  thatFA.fetherApp.on('after-create-window', () => {
     pino.info('Finished creating window');
   });
 
-  fetherApp.on('load-tray', () => {
+  thatFA.fetherApp.on('load-tray', () => {
     pino.info('Configuring taskbar mode for the window');
   });
 
-  fetherApp.on('show-window', () => {
+  thatFA.fetherApp.on('show-window', () => {
     pino.info('Showing window');
   });
 
-  fetherApp.on('after-show-window', () => {
+  thatFA.fetherApp.on('after-show-window', () => {
     pino.info('Finished showing window');
   });
 
-  fetherApp.on('after-create-app', () => {
+  thatFA.fetherApp.on('after-create-app', () => {
     pino.info(`Ready to use ${productName}`);
   });
 
-  fetherApp.on('hide-window', () => {
+  thatFA.fetherApp.on('hide-window', () => {
     pino.info('Hiding window on blur since not on top');
   });
 
-  fetherApp.on('after-hide-window', () => {
+  thatFA.fetherApp.on('after-hide-window', () => {
     pino.info('Finished hiding window');
   });
 
-  fetherApp.on('blur-window', () => {
+  thatFA.fetherApp.on('blur-window', () => {
     pino.info('Blur window since lost focus when on top');
   });
 
-  fetherApp.on('after-moved-window-position-saved', () => {
+  thatFA.fetherApp.on('after-moved-window-position-saved', () => {
     const position = getSavedWindowPosition();
 
     pino.info(
@@ -64,15 +62,15 @@ function setupAppListeners (thatFA) {
     );
   });
 
-  fetherApp.on('moved-window-up-into-view', () => {
+  thatFA.fetherApp.on('moved-window-up-into-view', () => {
     pino.info('Moved window up into view');
   });
 
-  fetherApp.on('after-close-window', () => {
+  thatFA.fetherApp.on('after-close-window', () => {
     pino.info('Deleted window upon close');
   });
 
-  fetherApp.on('error', error => {
+  thatFA.fetherApp.on('error', error => {
     console.error(error);
   });
 }

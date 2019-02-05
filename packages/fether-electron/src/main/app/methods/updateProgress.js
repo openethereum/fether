@@ -10,7 +10,7 @@ function updateProgress (thatFA, percentage, eventListenerName) {
   const { fetherApp } = thatFA;
 
   if (percentage) {
-    fetherApp.window.setProgressBar(percentage);
+    thatFA.window.setProgressBar(percentage);
   }
 
   if (eventListenerName) {

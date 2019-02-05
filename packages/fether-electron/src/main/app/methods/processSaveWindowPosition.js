@@ -12,21 +12,20 @@ import { saveWindowPosition } from '../settings';
 function processSaveWindowPosition (thatFA) {
   const { fetherApp } = thatFA;
 
-  if (!fetherApp.window) {
+  if (!thatFA.window) {
     return;
   }
 
-  const { previousScreenResolution } = fetherApp;
   const currentScreenResolution = thatFA.getScreenResolution();
 
-  fetherApp.previousScreenResolution = getChangedScreenResolution(
-    previousScreenResolution,
+  thatFA.previousScreenResolution = getChangedScreenResolution(
+    thatFA.previousScreenResolution,
     currentScreenResolution
   );
 
   // Get the latest position. The window may have been moved to a different
   // screen with smaller resolution. We must move it to prevent cropping.
-  const position = fetherApp.window.getPosition();
+  const position = thatFA.window.getPosition();
 
   const positionStruct = {
     x: position[0],
@@ -48,24 +47,19 @@ function processSaveWindowPosition (thatFA) {
    * and it would also prevent the user from moving it to a different screen at all.
    */
   if (
-    shouldFixWindowPosition(previousScreenResolution, currentScreenResolution)
+    shouldFixWindowPosition(
+      thatFA.previousScreenResolution,
+      currentScreenResolution
+    )
   ) {
     // Move window to the fixed x-coordinate position if that required fixing
     if (fixedWindowPosition.x) {
-      fetherApp.window.setPosition(
-        fixedWindowPosition.x,
-        positionStruct.y,
-        true
-      );
+      thatFA.window.setPosition(fixedWindowPosition.x, positionStruct.y, true);
     }
 
     // Move window to the fixed y-coordinate position if that required fixing
     if (fixedWindowPosition.y) {
-      fetherApp.window.setPosition(
-        positionStruct.x,
-        fixedWindowPosition.y,
-        true
-      );
+      thatFA.window.setPosition(positionStruct.x, fixedWindowPosition.y, true);
     }
   }
 

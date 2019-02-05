@@ -12,9 +12,7 @@
  * will be restored into the users primary screen.
  */
 function fixWindowPosition (thatFA, proposedWindowPosition) {
-  const { fetherApp } = thatFA;
-
-  const { trayDepth } = fetherApp;
+  const { trayDepth } = thatFA;
 
   if (!proposedWindowPosition) {
     return;
@@ -27,8 +25,8 @@ function fixWindowPosition (thatFA, proposedWindowPosition) {
 
   const currentScreenResolution = thatFA.getScreenResolution();
 
-  const windowWidth = fetherApp.window.getSize()[0];
-  const windowHeight = fetherApp.window.getSize()[1];
+  const windowWidth = thatFA.window.getSize()[0];
+  const windowHeight = thatFA.window.getSize()[1];
 
   if (proposedWindowPosition.x < trayDepth) {
     newPosition.x = trayDepth;

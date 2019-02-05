@@ -9,10 +9,8 @@ import Pino from '../utils/pino';
 const pino = Pino();
 
 function setupMenu (thatFA) {
-  const { fetherApp } = thatFA;
-
   // Add application menu
-  addMenu(fetherApp.window);
+  addMenu(thatFA.window);
   pino.info('Finished configuring Electron menu');
 }
 

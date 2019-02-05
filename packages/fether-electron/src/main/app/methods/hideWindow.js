@@ -6,14 +6,14 @@
 function hideWindow (thatFA) {
   const { fetherApp } = thatFA;
 
-  if (!fetherApp.window) {
+  if (!thatFA.window) {
     return;
   }
 
   thatFA.processSaveWindowPosition(); // Save window position when hide, particularly necessary on Linux
 
   fetherApp.emit('hide-window');
-  fetherApp.window.hide();
+  thatFA.window.hide();
   fetherApp.emit('after-hide-window');
 }
 

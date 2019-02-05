@@ -6,12 +6,10 @@
 import { Tray } from 'electron';
 
 function createTray (thatFA) {
-  const { fetherApp } = thatFA;
-
-  let { app, options } = fetherApp;
+  const { app, options } = thatFA;
 
   if (options.withTaskbar) {
-    fetherApp.tray = new Tray(options.icon);
+    thatFA.tray = new Tray(options.icon);
 
     if (process.platform === 'darwin' && app.dock) {
       app.dock.setIcon(options.iconDock);
