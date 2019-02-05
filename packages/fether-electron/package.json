@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "@parity/electron": "^4.0.0",
+    "ansi-styles": "^3.2.1",
     "commander": "^2.15.1",
     "commander-remaining-args": "^1.2.0",
     "fether-react": "^0.3.0",
