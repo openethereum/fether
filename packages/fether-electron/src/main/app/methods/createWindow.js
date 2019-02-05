@@ -25,8 +25,8 @@ function createWindow (fetherApp) {
      * If not shown by default then when shown it crops the bottom
      * of the window when menu open/close toggled.
      */
-    fetherApp.win.setAutoHideMenuBar(true); // Pressing ALT shows menu bar
-    fetherApp.win.setMenuBarVisibility(false);
+    fetherApp.win.setAutoHideMenuBar(false); // Pressing ALT shows menu bar
+    fetherApp.win.setMenuBarVisibility(true);
   }
 
   // Opens file:///path/to/build/index.html in prod mode, or whatever is

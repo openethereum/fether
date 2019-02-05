@@ -144,15 +144,14 @@ Taskbar mode is `true` by default.
 Taskbar mode is `true` by default.
 
 * Enabled `true`
-  * Fether window may be toggled minimise/restore by clicking the Fether tray icon to reveal a tooltip
-  that says "Click to toggle Fether window" and then clicking the tooltip.
-  * Fether window does not have a frame (i.e. no close/minimise icons)
+  * Fether window may be toggled minimise/restore by clicking the Fether tray icon to reveal a tooltip that says "Click to toggle Fether window" and then clicking the tooltip.
+  * Fether window may not have a frame (i.e. no close/minimise icons) if `frame: false` in packages/fether-electron/src/main/app/options/config/index.js
 * Disabled `false`
   * Fether window may be toggled open by clicking the Fether dock icon
   * Fether window has a frame (with close/minimise icons)
 * Always
-  * Fether menu is not shown in the tray by default. Show the Fether menu in the tray by clicking
-  the Fether window and then holding down the ALT key to reveal it.
+  * Fether menu may not be not shown in the tray by default depending on whether `setMenuBarVisibility` has been set. Show the Fether menu in the tray by clicking the Fether window and then holding down the ALT key to reveal it.
+  * Fether menu may be configured to automatically hide by setting `setAutoHideMenuBar`
   * Fether window position is saved upon move, minimising, and close so it is restored in the same position.
 
 ### Windows
@@ -164,6 +163,7 @@ Taskbar mode is always `false` since the Fether menu does not appear without a f
   * Fether window has a frame (with close/minimise icons).
 * Always
   * Fether menu is shown in the Fether window by clicking the Fether window and then holding down the ALT key to reveal it.
+  * Fether menu may be configured to automatically hide by setting `setAutoHideMenuBar`
   * Fether tray icon does nothing
   * Fether window position is saved upon move, minimising, and close so it is restored in the same position.
 
