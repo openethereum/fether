@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import path from './path';
+import path from 'path';
 
 import staticPath from '../utils/staticPath';
 import Pino from '../utils/pino';
