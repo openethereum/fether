@@ -6,32 +6,32 @@
 import events from 'events';
 
 import {
-  setupAppListeners,
-  createWindow,
-  updateProgress,
-  createPositioner,
-  setupRequestListeners,
-  createTray,
-  loadTray,
-  showTrayBalloon,
-  setupDebug,
-  setupSecurity,
-  setupLogger,
-  setupParityEthereum,
-  setupGlobals,
-  setupMenu,
-  getScreenResolution,
   calculateWindowPosition,
-  onTrayClick,
+  createPositioner,
+  createTray,
+  createWindow,
   fixWindowPosition,
-  showWindow,
-  moveWindowUp,
-  processSaveWindowPosition,
+  getScreenResolution,
   hideWindow,
-  windowClear,
+  loadTray,
+  moveWindowUp,
+  onTrayClick,
   onWindowClose,
+  processSaveWindowPosition,
+  setupAppListeners,
+  setupDebug,
+  setupGlobals,
+  setupLogger,
+  setupMenu,
+  setupParityEthereum,
+  setupRequestListeners,
+  setupSecurity,
   setupWindowListeners,
-  setupWin32Listeners
+  setupWin32Listeners,
+  showTrayBalloon,
+  showWindow,
+  updateProgress,
+  windowClear
 } from './methods';
 
 let hasCalledInitFetherApp = false;
@@ -72,35 +72,33 @@ class FetherApp {
     this.updateProgress(-1, "after-create-app"); // eslint-disable-line
   }
 
-  setupAppListeners = () => setupAppListeners(this);
-  createWindow = () => createWindow(this);
-  updateProgress = (percentage, eventListenerName) =>
-    updateProgress(this, percentage, eventListenerName);
-  createPositioner = () => createPositioner(this);
-  setupRequestListeners = () => setupRequestListeners(this);
-  createTray = () => createTray(this);
-  loadTray = () => loadTray(this);
-  showTrayBalloon = () => showTrayBalloon(this);
-  setupDebug = () => setupDebug(this);
-  setupSecurity = () => setupSecurity(this);
-  setupLogger = () => setupLogger();
-  setupParityEthereum = () => setupParityEthereum(this);
-  setupGlobals = () => setupGlobals();
-  setupMenu = () => setupMenu(this);
-  getScreenResolution = () => getScreenResolution(this);
   calculateWindowPosition = () => calculateWindowPosition(this);
-  getScreenResolution = () => getScreenResolution();
-  onTrayClick = (e, bounds) => onTrayClick(this, e, bounds);
+  createPositioner = () => createPositioner(this);
+  createTray = () => createTray(this);
+  createWindow = () => createWindow(this);
   fixWindowPosition = positionStruct => fixWindowPosition(this, positionStruct);
-  getScreenResolution = () => getScreenResolution(this);
-  showWindow = trayPos => showWindow(this, trayPos);
-  moveWindowUp = () => moveWindowUp(this);
-  processSaveWindowPosition = () => processSaveWindowPosition(this);
+  getScreenResolution = () => getScreenResolution();
   hideWindow = () => hideWindow(this);
-  windowClear = () => windowClear(this);
+  loadTray = () => loadTray(this);
+  moveWindowUp = () => moveWindowUp(this);
+  onTrayClick = (e, bounds) => onTrayClick(this, e, bounds);
   onWindowClose = () => onWindowClose();
+  processSaveWindowPosition = () => processSaveWindowPosition(this);
+  setupAppListeners = () => setupAppListeners(this);
+  setupDebug = () => setupDebug(this);
+  setupGlobals = () => setupGlobals();
+  setupLogger = () => setupLogger();
+  setupMenu = () => setupMenu(this);
+  setupParityEthereum = () => setupParityEthereum(this);
+  setupRequestListeners = () => setupRequestListeners(this);
+  setupSecurity = () => setupSecurity(this);
   setupWindowListeners = () => setupWindowListeners(this);
   setupWin32Listeners = () => setupWin32Listeners(this);
+  showTrayBalloon = () => showTrayBalloon(this);
+  showWindow = trayPos => showWindow(this, trayPos);
+  updateProgress = (percentage, eventListenerName) =>
+    updateProgress(this, percentage, eventListenerName);
+  windowClear = () => windowClear(this);
 }
 
 export default FetherApp;

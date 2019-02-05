@@ -3,8 +3,8 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { killParity } from '@parity/electron';
 import electron from 'electron';
+import { killParity } from '@parity/electron';
 
 import Pino from './app/utils/pino';
 import FetherApp from './app';

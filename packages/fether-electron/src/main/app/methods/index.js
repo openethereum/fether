@@ -3,58 +3,58 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import setupAppListeners from './setupAppListeners';
-import createWindow from './createWindow';
-import updateProgress from './updateProgress';
-import createPositioner from './createPositioner';
-import setupRequestListeners from './setupRequestListeners';
-import createTray from './createTray';
-import loadTray from './loadTray';
-import showTrayBalloon from './showTrayBalloon';
-import setupDebug from './setupDebug';
-import setupSecurity from './setupSecurity';
-import setupLogger from './setupLogger';
-import setupParityEthereum from './setupParityEthereum';
-import setupGlobals from './setupGlobals';
-import setupMenu from './setupMenu';
-import getScreenResolution from './getScreenResolution';
 import calculateWindowPosition from './calculateWindowPosition';
-import onTrayClick from './onTrayClick';
+import createPositioner from './createPositioner';
+import createTray from './createTray';
+import createWindow from './createWindow';
 import fixWindowPosition from './fixWindowPosition';
-import showWindow from './showWindow';
-import moveWindowUp from './moveWindowUp';
-import processSaveWindowPosition from './processSaveWindowPosition';
+import getScreenResolution from './getScreenResolution';
 import hideWindow from './hideWindow';
-import windowClear from './windowClear';
+import loadTray from './loadTray';
+import moveWindowUp from './moveWindowUp';
+import onTrayClick from './onTrayClick';
 import onWindowClose from './onWindowClose';
+import processSaveWindowPosition from './processSaveWindowPosition';
+import setupAppListeners from './setupAppListeners';
+import setupDebug from './setupDebug';
+import setupGlobals from './setupGlobals';
+import setupLogger from './setupLogger';
+import setupMenu from './setupMenu';
+import setupParityEthereum from './setupParityEthereum';
+import setupRequestListeners from './setupRequestListeners';
+import setupSecurity from './setupSecurity';
 import setupWindowListeners from './setupWindowListeners';
 import setupWin32Listeners from './setupWin32Listeners';
+import showTrayBalloon from './showTrayBalloon';
+import showWindow from './showWindow';
+import updateProgress from './updateProgress';
+import windowClear from './windowClear';
 
 export {
-  setupAppListeners,
-  createWindow,
-  updateProgress,
-  createPositioner,
-  setupRequestListeners,
-  createTray,
-  loadTray,
-  showTrayBalloon,
-  setupDebug,
-  setupSecurity,
-  setupLogger,
-  setupParityEthereum,
-  setupGlobals,
-  setupMenu,
-  getScreenResolution,
   calculateWindowPosition,
-  onTrayClick,
+  createPositioner,
+  createTray,
+  createWindow,
   fixWindowPosition,
-  showWindow,
-  moveWindowUp,
-  processSaveWindowPosition,
+  getScreenResolution,
   hideWindow,
-  windowClear,
+  loadTray,
+  moveWindowUp,
+  onTrayClick,
   onWindowClose,
+  processSaveWindowPosition,
+  setupAppListeners,
+  setupDebug,
+  setupGlobals,
+  setupLogger,
+  setupMenu,
+  setupRequestListeners,
+  setupParityEthereum,
+  setupSecurity,
   setupWindowListeners,
-  setupWin32Listeners
+  setupWin32Listeners,
+  showTrayBalloon,
+  showWindow,
+  updateProgress,
+  windowClear
 };
