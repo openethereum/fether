@@ -41,21 +41,21 @@
   "dependencies": {
     "@parity/electron": "^4.0.0",
     "ansi-styles": "^3.2.1",
-    "commander": "^2.15.1",
+    "commander": "^2.19.0",
     "commander-remaining-args": "^1.2.0",
     "electron-positioner": "^4.1.0",
     "electron-settings": "^3.2.0",
     "fether-react": "^0.3.0",
     "pino": "^4.16.1",
     "pino-multi-stream": "^3.1.2",
-    "source-map-support": "^0.5.6"
+    "source-map-support": "^0.5.10"
   },
   "devDependencies": {
-    "copyfiles": "^2.0.0",
+    "copyfiles": "^2.1.0",
     "cross-env": "^5.2.0",
     "electron": "^4.0.1",
-    "electron-builder": "^20.29.0",
-    "electron-webpack": "^2.1.2",
-    "webpack": "^4.7.0"
+    "electron-builder": "^20.38.5",
+    "electron-webpack": "^2.6.1",
+    "webpack": "^4.29.1"
   }
 }
