@@ -21,7 +21,7 @@ const pino = Pino();
 let hasCalledInitParityEthereum = false;
 
 class ParityEthereum {
-  setup = fetherAppWindow => {
+  constructor (fetherAppWindow) {
     if (hasCalledInitParityEthereum) {
       throw new Error('Unable to initialise Parity Ethereum more than once');
     }
@@ -55,7 +55,7 @@ class ParityEthereum {
         global.isParityRunning = isRunning; // Send this variable to renderers via IPC
       })
       .catch(handleError);
-  };
+  }
 
   install = fetherAppWindow => {
     return fetchParity(fetherAppWindow, {
