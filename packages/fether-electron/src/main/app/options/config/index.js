@@ -62,7 +62,7 @@ const DEFAULT_OPTIONS = {
   tabbingIdentifier: 'parity',
   webPreferences: {
     devTools: shouldUseDevTools, // Security
-    enableRemoteModule: false
+    enableRemoteModule: true // Remote is required in fether-react parityStore.js
   },
   width: 360,
   windowPosition: windowPosition, // Required

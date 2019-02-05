@@ -43,6 +43,9 @@ export class ParityStore {
       this.setToken(token);
     }
 
+    // FIXME - consider moving to start of this constructor block since
+    // if `setToken` method is called then `connectToApi` is called, which
+    // requires `electron` to be defined
     if (!electron) {
       debug(
         'Not in Electron, ParityStore will only have limited capabilities.'
