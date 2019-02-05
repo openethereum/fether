@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 function hideWindow (fetherApp) {
-  const { emit, processSaveWinPosition, win } = fetherApp;
+  const { processSaveWinPosition, win } = fetherApp;
 
   if (!win) {
     return;

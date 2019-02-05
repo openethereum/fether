@@ -12,13 +12,7 @@ import Pino from '../utils/pino';
 const pino = Pino();
 
 function showWindow (fetherApp, trayPos) {
-  const {
-    calculateWinPosition,
-    createWindow,
-    emit,
-    fixWinPosition,
-    win
-  } = fetherApp;
+  const { calculateWinPosition, createWindow, fixWinPosition, win } = fetherApp;
 
   if (!win) {
     createWindow();

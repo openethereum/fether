@@ -12,7 +12,6 @@ const pino = Pino();
 
 function setupWinListeners (fetherApp) {
   const {
-    emit,
     hideWindow,
     moveWindowUp,
     onWindowClose,

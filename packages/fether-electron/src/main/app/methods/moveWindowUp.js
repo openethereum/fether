@@ -16,7 +16,7 @@ const pino = Pino();
  * automatically move the window upward so it is viewable to the user
  */
 function moveWindowUp (fetherApp) {
-  const { emit, getScreenResolution, win } = fetherApp;
+  const { getScreenResolution, win } = fetherApp;
 
   if (!win) {
     return;

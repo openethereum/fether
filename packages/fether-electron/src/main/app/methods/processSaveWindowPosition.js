@@ -11,7 +11,6 @@ import { saveWindowPosition } from '../settings';
 
 function processSaveWinPosition (fetherApp) {
   const {
-    emit,
     fixWinPosition,
     getScreenResolution,
     previousScreenResolution,
