@@ -8,7 +8,7 @@ import Pino from '../utils/pino';
 const pino = Pino();
 
 function loadTray (fetherApp) {
-  const { app, options, tray } = fetherApp;
+  const { app, onTrayClick, options, showTrayBalloon, tray } = fetherApp;
 
   if (options.withTaskbar) {
     fetherApp.emit('load-tray');
@@ -23,16 +23,16 @@ function loadTray (fetherApp) {
 
     // Note: See https://github.com/RocketChat/Rocket.Chat.Electron/issues/44
     if (process.platform === 'win32') {
-      fetherApp.showTrayBalloon();
+      showTrayBalloon();
     }
 
-    tray.on(defaultClickEvent, () => fetherApp.onTrayClick(fetherApp));
-    tray.on('double-click', () => fetherApp.onTrayClick(fetherApp));
+    tray.on(defaultClickEvent, () => onTrayClick(fetherApp));
+    tray.on('double-click', () => onTrayClick(fetherApp));
     // Right click event handler does not work on Windows as intended
     tray.on('right-click', () => {
       if (process.platform === 'win32') {
         pino.info('Detected right click on Windows');
-        fetherApp.showTrayBalloon();
+        showTrayBalloon();
       }
     });
     tray.setToolTip(options.tooltip);

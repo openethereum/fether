@@ -6,18 +6,18 @@
 import EventEmitter from 'events';
 
 import {
-  calculateWindowPosition,
+  calculateWinPosition,
   createPositioner,
   createTray,
   createWindow,
-  fixWindowPosition,
+  fixWinPosition,
   getScreenResolution,
   hideWindow,
   loadTray,
   moveWindowUp,
   onTrayClick,
   onWindowClose,
-  processSaveWindowPosition,
+  processSaveWinPosition,
   setupAppListeners,
   setupDebug,
   setupGlobals,
@@ -26,7 +26,7 @@ import {
   setupParityEthereum,
   setupRequestListeners,
   setupSecurity,
-  setupWindowListeners,
+  setupWinListeners,
   setupWin32Listeners,
   showTrayBalloon,
   showWindow,
@@ -69,23 +69,23 @@ class FetherApp extends EventEmitter {
     this.updateProgress(0.8, undefined);
     this.showWindow(undefined);
     this.updateProgress(1.0, undefined);
-    this.setupWindowListeners();
+    this.setupWinListeners();
     this.setupWin32Listeners();
     this.updateProgress(-1, 'after-create-app');
   }
 
-  calculateWindowPosition = () => calculateWindowPosition(this);
+  calculateWinPosition = () => calculateWinPosition(this);
   createPositioner = () => createPositioner(this);
   createTray = () => createTray(this);
   createWindow = () => createWindow(this);
-  fixWindowPosition = positionStruct => fixWindowPosition(this, positionStruct);
+  fixWinPosition = positionStruct => fixWinPosition(this, positionStruct);
   getScreenResolution = () => getScreenResolution();
   hideWindow = () => hideWindow(this);
   loadTray = () => loadTray(this);
   moveWindowUp = () => moveWindowUp(this);
   onTrayClick = (e, bounds) => onTrayClick(this, e, bounds);
   onWindowClose = () => onWindowClose();
-  processSaveWindowPosition = () => processSaveWindowPosition(this);
+  processSaveWinPosition = () => processSaveWinPosition(this);
   setupAppListeners = () => setupAppListeners(this);
   setupDebug = () => setupDebug(this);
   setupGlobals = () => setupGlobals();
@@ -94,7 +94,7 @@ class FetherApp extends EventEmitter {
   setupParityEthereum = () => setupParityEthereum(this);
   setupRequestListeners = () => setupRequestListeners(this);
   setupSecurity = () => setupSecurity(this);
-  setupWindowListeners = () => setupWindowListeners(this);
+  setupWinListeners = () => setupWinListeners(this);
   setupWin32Listeners = () => setupWin32Listeners(this);
   showTrayBalloon = () => showTrayBalloon(this);
   showWindow = trayPos => showWindow(this, trayPos);

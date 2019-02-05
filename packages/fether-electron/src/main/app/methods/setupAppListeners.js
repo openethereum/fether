@@ -55,11 +55,9 @@ function setupAppListeners (fetherApp) {
   });
 
   fetherApp.on('after-moved-window-position-saved', () => {
-    const position = getSavedWindowPosition();
+    const pos = getSavedWindowPosition();
 
-    pino.info(
-      `Saved window position to (x: ${position.x}, y: ${position.y}) after move`
-    );
+    pino.info(`Saved window position after move (x: ${pos.x}, y: ${pos.y})`);
   });
 
   fetherApp.on('moved-window-up-into-view', () => {

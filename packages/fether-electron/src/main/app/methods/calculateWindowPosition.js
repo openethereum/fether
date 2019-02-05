@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-function calculateWindowPosition (fetherApp, trayPos) {
+function calculateWinPosition (fetherApp, trayPos) {
   const { cachedBounds, options, positioner, tray } = fetherApp;
 
   if (trayPos && trayPos.x !== 0) {
@@ -40,4 +40,4 @@ function calculateWindowPosition (fetherApp, trayPos) {
   };
 }
 
-export default calculateWindowPosition;
+export default calculateWinPosition;

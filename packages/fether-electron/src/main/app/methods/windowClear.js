@@ -4,13 +4,15 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 function windowClear (fetherApp) {
-  if (fetherApp.window) {
+  const { emit, win } = fetherApp;
+
+  if (win) {
     // Remove relevant events when window object deleted
     const events = ['close', 'move', 'moved', 'resize'];
     for (let event in events) {
-      fetherApp.window.removeAllListeners(event);
+      win.removeAllListeners(event);
     }
-    delete fetherApp.window;
+    delete fetherApp.win;
   }
 
   fetherApp.emit('after-close-window');

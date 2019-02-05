@@ -12,25 +12,33 @@ import Pino from '../utils/pino';
 const pino = Pino();
 
 function showWindow (fetherApp, trayPos) {
-  if (!fetherApp.window) {
-    fetherApp.createWindow();
+  const {
+    calculateWinPosition,
+    createWindow,
+    emit,
+    fixWinPosition,
+    win
+  } = fetherApp;
+
+  if (!win) {
+    createWindow();
   }
 
   fetherApp.emit('show-window');
 
-  const calculatedWindowPosition = fetherApp.calculateWindowPosition(trayPos);
+  const calculatedWinPosition = calculateWinPosition(trayPos);
 
-  pino.info('Calculated window position: ', calculatedWindowPosition);
+  pino.info('Calculated window position: ', calculatedWinPosition);
 
   const mainScreen = screen.getPrimaryDisplay();
   // const allScreens = screen.getAllDisplays();
-  const mainScreenDimensions = mainScreen.size;
+  const mainScreenDims = mainScreen.size;
   const mainScreenWorkAreaSize = mainScreen.workAreaSize;
 
   // workAreaSize does not include the tray depth
   fetherApp.trayDepth = Math.max(
-    mainScreenDimensions.width - mainScreenWorkAreaSize.width,
-    mainScreenDimensions.height - mainScreenWorkAreaSize.height
+    mainScreenDims.width - mainScreenWorkAreaSize.width,
+    mainScreenDims.height - mainScreenWorkAreaSize.height
   );
 
   pino.info(
@@ -44,9 +52,9 @@ function showWindow (fetherApp, trayPos) {
 
   pino.info('Loaded window position: ', loadedWindowPosition);
 
-  const fixedWindowPosition = fetherApp.fixWindowPosition(loadedWindowPosition);
+  const fixedWinPosition = fixWinPosition(loadedWindowPosition);
 
-  pino.info('Fixed window position: ', fixedWindowPosition);
+  pino.info('Fixed window position: ', fixedWinPosition);
 
   /**
    * Since the user may change the tray to be on any side of the screen.
@@ -54,17 +62,17 @@ function showWindow (fetherApp, trayPos) {
    * Restore the window so it is fully visible adjacent to where the tray would be.
    */
   const x =
-    (fixedWindowPosition && fixedWindowPosition.x) ||
+    (fixedWinPosition && fixedWinPosition.x) ||
     (loadedWindowPosition && loadedWindowPosition.x) ||
-    calculatedWindowPosition.x;
+    calculatedWinPosition.x;
 
   const y =
-    (fixedWindowPosition && fixedWindowPosition.y) ||
+    (fixedWinPosition && fixedWinPosition.y) ||
     (loadedWindowPosition && loadedWindowPosition.y) ||
-    calculatedWindowPosition.y;
+    calculatedWinPosition.y;
 
-  fetherApp.window.setPosition(x, y);
-  fetherApp.window.show();
+  win.setPosition(x, y);
+  win.show();
 
   fetherApp.emit('after-show-window');
 }

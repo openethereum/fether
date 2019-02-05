@@ -5,7 +5,7 @@
 
 function setupSecurity (fetherApp) {
   // Security to prevent window contents from being captured by other apps
-  fetherApp.window.setContentProtection(true);
+  fetherApp.win.setContentProtection(true);
 }
 
 export default setupSecurity;

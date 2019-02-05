@@ -8,90 +8,86 @@ import Pino from '../utils/pino';
 const pino = Pino();
 
 function setupWin32Listeners (fetherApp) {
+  const {
+    moveWindowUp,
+    onWindowClose,
+    processSaveWinPosition,
+    showTrayBalloon,
+    win
+  } = fetherApp;
+
   if (process.platform === 'win32') {
     /**
      * Hook WM_SYSKEYUP
      *
      * Open the Fether Electron menu when the Fether window is active
-     * and the user enters a keyboard combination of both the ALT and 'm' keys
-     *
+     * and the user enters a keyboard ALT key or both ALT and another key together.
      * Reference: https://docs.microsoft.com/en-gb/windows/desktop/inputdev/wm-syskeyup
      */
-    fetherApp.window.hookWindowMessage(
-      Number.parseInt('0x0105'),
-      (wParam, lParam) => {
-        // Reference: https://nodejs.org/api/buffer.html
-        /**
-         * Detect when user presses ALT+keyCode.
-         * i.e. Use `wParam && wParam.readUInt32LE(0) === 77` to detect ALT+m
-         */
-        if (wParam) {
-          fetherApp.showTrayBalloon();
-        }
+    win.hookWindowMessage(Number.parseInt('0x0105'), (wParam, lParam) => {
+      /**
+       * Detect when user presses ALT+keyCode.
+       * i.e. Use `wParam && wParam.readUInt32LE(0) === 77` to detect ALT+m.
+       * Reference: https://nodejs.org/api/buffer.html
+       */
+      if (wParam) {
+        showTrayBalloon();
       }
-    );
+    });
 
     /**
      * Hook WM_SYSCOMMAND
      *
      * Detect events on Windows
-     *
      * Credit: http://robmayhew.com/listening-for-events-from-windows-in-electron-tutorial/
      */
-    fetherApp.window.hookWindowMessage(
-      Number.parseInt('0x0112'),
-      (wParam, lParam) => {
-        let eventName = null;
+    win.hookWindowMessage(Number.parseInt('0x0112'), (wParam, lParam) => {
+      let eventName = null;
 
-        if (wParam.readUInt32LE(0) === 0xf060) {
-          // SC_CLOSE
-          eventName = 'close';
-          fetherApp.onWindowClose();
-        } else if (wParam.readUInt32LE(0) === 0xf030) {
-          // SC_MAXIMIZE
-          eventName = 'maximize';
-          fetherApp.showTrayBalloon();
-        } else if (wParam.readUInt32LE(0) === 0xf020) {
-          // SC_MINIMIZE
-          eventName = 'minimize';
-          fetherApp.processSaveWindowPosition();
-        } else if (wParam.readUInt32LE(0) === 0xf120) {
-          // SC_RESTORE
-          eventName = 'restored';
-          fetherApp.showTrayBalloon();
-        }
-
-        if (eventName !== null) {
-          pino.info('Detected event:', eventName);
-        }
+      if (wParam.readUInt32LE(0) === 0xf060) {
+        // SC_CLOSE
+        eventName = 'close';
+        onWindowClose();
+      } else if (wParam.readUInt32LE(0) === 0xf030) {
+        // SC_MAXIMIZE
+        eventName = 'maximize';
+        showTrayBalloon();
+      } else if (wParam.readUInt32LE(0) === 0xf020) {
+        // SC_MINIMIZE
+        eventName = 'minimize';
+        processSaveWinPosition();
+      } else if (wParam.readUInt32LE(0) === 0xf120) {
+        // SC_RESTORE
+        eventName = 'restored';
+        showTrayBalloon();
       }
-    );
+
+      if (eventName !== null) {
+        pino.info('Detected event:', eventName);
+      }
+    });
 
     /**
      * Hook WM_EXITSIZEMOVE
      *
-     * Detect event on Windows when Fether window was moved
-     * or resized
+     * Detect event on Windows when Fether window was moved or resized
      */
-    fetherApp.window.hookWindowMessage(
-      Number.parseInt('0x0232'),
-      (wParam, lParam) => {
-        pino.info('Detected completion of move or resize event');
+    win.hookWindowMessage(Number.parseInt('0x0232'), (wParam, lParam) => {
+      pino.info('Detected completion of move or resize event');
 
-        // Move Fether window back up into view if it was a resize event
-        // that causes the bottom to be cropped
-        fetherApp.moveWindowUp();
+      // Move Fether window back up into view if it was a resize event
+      // that causes the bottom to be cropped
+      moveWindowUp();
 
-        // Try again after a delay incase Fether window resize occurs
-        // x seconds after navigating to a new page.
-        setTimeout(() => {
-          fetherApp.moveWindowUp();
-        }, 5000);
+      // Try again after a delay incase Fether window resize occurs
+      // x seconds after navigating to a new page.
+      setTimeout(() => {
+        moveWindowUp();
+      }, 5000);
 
-        // Save Fether window position to Electron settings
-        fetherApp.processSaveWindowPosition();
-      }
-    );
+      // Save Fether window position to Electron settings
+      processSaveWinPosition();
+    });
   }
 }
 

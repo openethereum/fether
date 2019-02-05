@@ -9,9 +9,11 @@ import messages from '../messages';
 const { ipcMain, session } = electron;
 
 function setupRequestListeners (fetherApp) {
+  const { win } = fetherApp;
+
   // Listen to messages from renderer process
   ipcMain.on('asynchronous-message', (...args) => {
-    return messages(fetherApp.window, ...args);
+    return messages(win, ...args);
   });
 
   // WS calls have Origin `file://` by default, which is not trusted.
@@ -21,14 +23,12 @@ function setupRequestListeners (fetherApp) {
       urls: ['ws://*/*', 'wss://*/*']
     },
     (details, callback) => {
-      if (!fetherApp.window) {
+      if (!win) {
         // There might be a split second where the user closes the app, so
         // this.fether.window is null, but there is still a network request done.
         return;
       }
-      details.requestHeaders.Origin = `parity://${
-        fetherApp.window.id
-      }.ui.parity`;
+      details.requestHeaders.Origin = `parity://${win.id}.ui.parity`;
       callback({ requestHeaders: details.requestHeaders }); // eslint-disable-line
     }
   );

@@ -10,26 +10,36 @@ import Pino from '../utils/pino';
 
 const pino = Pino();
 
-function setupWindowListeners (fetherApp) {
+function setupWinListeners (fetherApp) {
+  const {
+    emit,
+    hideWindow,
+    moveWindowUp,
+    onWindowClose,
+    options,
+    processSaveWinPosition,
+    win
+  } = fetherApp;
+
   // Open external links in browser
-  fetherApp.window.webContents.on('new-window', (event, url) => {
+  win.webContents.on('new-window', (event, url) => {
     event.preventDefault();
     electron.shell.openExternal(url);
   });
 
   // Linux (unchecked on others)
-  fetherApp.window.on('move', () => {
+  win.on('move', () => {
     /**
      * On Linux using this with debouncing is the closest equivalent
      * to using 'moved' (not supported on Linux) with debouncing
      */
     debounce(() => {
-      fetherApp.processSaveWindowPosition();
+      processSaveWinPosition();
     }, 1000);
   });
 
   // macOS (not Windows or Linux)
-  fetherApp.window.on('moved', () => {
+  win.on('moved', () => {
     /**
      * On macOS save the position in the 'moved' event since if
      * we run it just in 'close' instead, then if the Fether app
@@ -42,33 +52,32 @@ function setupWindowListeners (fetherApp) {
      * On Linux the closest equivalent to achieving 'moved' is debouncing
      * on the 'move' event. It also works in 'close' even when app crashes
      */
-    fetherApp.processSaveWindowPosition();
+    processSaveWinPosition();
   });
 
   // macOS and Linux (not Windows)
-  fetherApp.window.on('resize', () => {
+  win.on('resize', () => {
     pino.info('Detected resize event');
-    fetherApp.moveWindowUp();
+
+    moveWindowUp();
     setTimeout(() => {
-      fetherApp.moveWindowUp();
+      moveWindowUp();
     }, 5000);
   });
 
-  fetherApp.window.on('blur', () => {
-    fetherApp.options.alwaysOnTop
-      ? fetherApp.emit('blur-window')
-      : fetherApp.hideWindow();
+  win.on('blur', () => {
+    options.alwaysOnTop ? fetherApp.emit('blur-window') : hideWindow();
   });
 
-  fetherApp.window.on('close', () => {
-    fetherApp.onWindowClose();
+  win.on('close', () => {
+    onWindowClose();
   });
 
-  fetherApp.window.on('closed', () => {
-    fetherApp.window = null;
+  win.on('closed', () => {
+    fetherApp.win = null;
 
     fetherApp.emit('after-closed-window');
   });
 }
 
-export default setupWindowListeners;
+export default setupWinListeners;

@@ -4,21 +4,17 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 function onTrayClick (fetherApp, e, bounds) {
-  const { cachedBounds } = fetherApp;
+  const { cachedBounds, hideWindow, win } = fetherApp;
+  const { altKey, ctrlKey, metaKey, shiftKey } = e;
 
-  if (
-    e.altKey ||
-    e.shiftKey ||
-    e.ctrlKey ||
-    e.metaKey ||
-    (fetherApp.window && fetherApp.window.isVisible())
-  ) {
-    return fetherApp.hideWindow();
+  if (altKey || shiftKey || ctrlKey || metaKey || (win && win.isVisible())) {
+    return hideWindow();
   }
 
   // cachedBounds are needed for double-clicked event
-  fetherApp.cachedBounds = bounds || cachedBounds;
-  fetherApp.showWindow(fetherApp.cachedBounds);
+  const newCacheBounds = bounds || cachedBounds;
+  fetherApp.cachedBounds = newCacheBounds;
+  fetherApp.showWindow(newCacheBounds);
 }
 
 export default onTrayClick;

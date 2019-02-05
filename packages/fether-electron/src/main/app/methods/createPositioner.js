@@ -6,7 +6,7 @@
 import Positioner from 'electron-positioner';
 
 function createPositioner (fetherApp) {
-  fetherApp.positioner = new Positioner(fetherApp.window);
+  fetherApp.positioner = new Positioner(fetherApp.win);
 }
 
 export default createPositioner;

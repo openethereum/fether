@@ -6,9 +6,10 @@
 const withDebug = process.env.DEBUG === 'true';
 
 function setupDebug (fetherApp) {
+  const { options, win } = fetherApp;
   // Enable with `DEBUG=true yarn start` and access Developer Tools
-  if (withDebug && fetherApp.options.webPreferences.devTools) {
-    fetherApp.window.webContents.openDevTools();
+  if (withDebug && options.webPreferences.devTools) {
+    win.webContents.openDevTools();
   }
 }
 

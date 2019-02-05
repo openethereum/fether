@@ -11,22 +11,17 @@
  * coordinates of the window are outside the screen bounds the window
  * will be restored into the users primary screen.
  */
-function fixWindowPosition (fetherApp, proposedWindowPosition) {
-  const { trayDepth } = fetherApp;
+function fixWinPosition (fetherApp, proposedWindowPosition) {
+  const { trayDepth, win } = fetherApp;
 
   if (!proposedWindowPosition) {
     return;
   }
 
-  const newPosition = {
-    x: undefined,
-    y: undefined
-  };
-
-  const currentScreenResolution = fetherApp.getScreenResolution();
-
-  const windowWidth = fetherApp.window.getSize()[0];
-  const windowHeight = fetherApp.window.getSize()[1];
+  const newPosition = { x: undefined, y: undefined };
+  const resolution = fetherApp.getScreenResolution();
+  const winWidth = win.getSize()[0];
+  const winHeight = win.getSize()[1];
 
   if (proposedWindowPosition.x < trayDepth) {
     newPosition.x = trayDepth;
@@ -36,21 +31,15 @@ function fixWindowPosition (fetherApp, proposedWindowPosition) {
     newPosition.y = trayDepth;
   }
 
-  if (
-    proposedWindowPosition.x >=
-    currentScreenResolution.x - windowWidth - trayDepth
-  ) {
-    newPosition.x = currentScreenResolution.x - windowWidth - trayDepth;
+  if (proposedWindowPosition.x >= resolution.x - winWidth - trayDepth) {
+    newPosition.x = resolution.x - winWidth - trayDepth;
   }
 
-  if (
-    proposedWindowPosition.y >=
-    currentScreenResolution.y - windowHeight - trayDepth
-  ) {
-    newPosition.y = currentScreenResolution.y - windowHeight - trayDepth;
+  if (proposedWindowPosition.y >= resolution.y - winHeight - trayDepth) {
+    newPosition.y = resolution.y - winHeight - trayDepth;
   }
 
   return newPosition;
 }
 
-export default fixWindowPosition;
+export default fixWinPosition;

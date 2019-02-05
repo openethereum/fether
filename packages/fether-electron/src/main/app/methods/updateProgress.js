@@ -7,8 +7,10 @@
 // (i.e. 0.1 is 10%, 1.0 is 100%, -1 hides progress bar).
 // Optionally emit event
 function updateProgress (fetherApp, percentage, eventListenerName) {
+  const { emit, win } = fetherApp;
+
   if (percentage) {
-    fetherApp.window.setProgressBar(percentage);
+    win.setProgressBar(percentage);
   }
 
   if (eventListenerName) {
