@@ -60,7 +60,7 @@ class FetherApp extends EventEmitter {
     this.loadTray();
     this.setupDebug();
     this.setupSecurity();
-    this.setupLogger.apply();
+    this.setupLogger();
     this.setupParityEthereum();
     this.setupGlobals();
     this.setupMenu();
