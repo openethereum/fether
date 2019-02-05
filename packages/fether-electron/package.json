@@ -36,7 +36,7 @@
     "prerelease": "./scripts/revertElectronBug.sh",
     "release": "electron-builder",
     "start": "cross-env ELECTRON_START_URL=http://localhost:3000 electron-webpack dev --ws-origins all",
-    "test": "jest --all --color --coverage"
+    "test": "ln -sf ../../node_modules/react-scripts node_modules/ && cross-env SKIP_PREFLIGHT_CHECK=true craco test"
   },
   "dependencies": {
     "@parity/electron": "^4.0.0",
@@ -51,17 +51,11 @@
     "source-map-support": "^0.5.10"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
-    "@babel/plugin-proposal-class-properties": "^7.3.0",
-    "@babel/preset-env": "^7.3.1",
-    "babel-jest": "^24.0.0",
     "copyfiles": "^2.1.0",
     "cross-env": "^5.2.0",
     "electron": "^4.0.1",
     "electron-builder": "^20.38.5",
     "electron-webpack": "^2.6.1",
-    "jest": "^24.0.0",
     "webpack": "^4.29.1"
   }
 }

@@ -31,10 +31,9 @@
     "start": "npm-run-all -p start-*",
     "start-css": "npm run build-css -- --watch --recursive",
     "start-js": "cross-env SKIP_PREFLIGHT_CHECK=true BROWSER=none craco start --react-scripts ../../node_modules/react-scripts",
-    "test": "jest --all --color --coverage"
+    "test": "ln -sf ../../node_modules/react-scripts node_modules/ && cross-env SKIP_PREFLIGHT_CHECK=true craco test"
   },
   "dependencies": {
-    "@babel/runtime": "^7.3.1",
     "@craco/craco": "^3.3.1",
     "@parity/abi": "^3.0.27",
     "@parity/api": "^3.0.27",
@@ -72,15 +71,7 @@
     "rxjs": "^6.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
-    "@babel/plugin-transform-modules-commonjs": "^7.2.0",
-    "@babel/plugin-transform-runtime": "^7.2.0",
-    "@babel/plugin-proposal-pipeline-operator": "^7.3.0",
     "@babel/plugin-proposal-decorators": "^7.2.0",
-    "@babel/plugin-proposal-class-properties": "^7.3.0",
-    "@babel/preset-env": "^7.3.1",
-    "babel-jest": "^24.0.0",
     "capitalize": "^1.0.0",
     "jest": "^24.0.0",
     "node-sass": "^4.11.0",
