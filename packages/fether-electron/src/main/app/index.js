@@ -37,8 +37,6 @@ import {
 let hasCalledInitFetherApp = false;
 
 class FetherApp extends EventEmitter {
-  // fetherApp = new events.EventEmitter();
-
   constructor (electronApp, options) {
     super();
 
