@@ -7,16 +7,18 @@ import electron from 'electron';
 
 const { BrowserWindow } = electron;
 
-function createWindow () {
-  const { options } = this.fetherApp;
+function createWindow (thatFA) {
+  const { fetherApp } = thatFA;
 
-  this.fetherApp.emit('create-app');
-  this.fetherApp.emit('create-window');
+  const { options } = fetherApp;
 
-  this.fetherApp.window = new BrowserWindow(options);
+  fetherApp.emit('create-app');
+  fetherApp.emit('create-window');
+
+  fetherApp.window = new BrowserWindow(options);
 
   if (options.showOnAllWorkspaces !== false) {
-    this.fetherApp.window.setVisibleOnAllWorkspaces(true);
+    fetherApp.window.setVisibleOnAllWorkspaces(true);
   }
 
   if (process.platform !== 'darwin') {
@@ -26,15 +28,15 @@ function createWindow () {
      * of the window when menu open/close toggled. The user will need to be informed
      * that pressing ALT displays the Fether menu
      */
-    this.fetherApp.window.setAutoHideMenuBar(true); // ALT shows menu bar
-    this.fetherApp.window.setMenuBarVisibility(false);
+    fetherApp.window.setAutoHideMenuBar(true); // ALT shows menu bar
+    fetherApp.window.setMenuBarVisibility(false);
   }
 
   // Opens file:///path/to/build/index.html in prod mode, or whatever is
   // passed to ELECTRON_START_URL
-  this.fetherApp.window.loadURL(options.index);
+  fetherApp.window.loadURL(options.index);
 
-  this.fetherApp.emit('after-create-window');
+  fetherApp.emit('after-create-window');
 }
 
 export default createWindow;

@@ -5,10 +5,12 @@
 
 import ParityEthereum from '../parityEthereum';
 
-function setupParityEthereum () {
+function setupParityEthereum (thatFA) {
+  const { fetherApp } = thatFA;
+
   // Download, install, and run Parity Ethereum if not running and requested
   const parityEthereumInstance = new ParityEthereum();
-  parityEthereumInstance.setup(this.fetherApp.window);
+  parityEthereumInstance.setup(fetherApp.window);
 }
 
 export default setupParityEthereum;

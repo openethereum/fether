@@ -8,10 +8,12 @@ import electron from 'electron';
 import messages from '../messages';
 const { ipcMain, session } = electron;
 
-function setupRequestListeners () {
+function setupRequestListeners (thatFA) {
+  const { fetherApp } = thatFA;
+
   // Listen to messages from renderer process
   ipcMain.on('asynchronous-message', (...args) => {
-    return messages(this.fetherApp.window, ...args);
+    return messages(fetherApp.window, ...args);
   });
 
   // WS calls have Origin `file://` by default, which is not trusted.
@@ -21,13 +23,13 @@ function setupRequestListeners () {
       urls: ['ws://*/*', 'wss://*/*']
     },
     (details, callback) => {
-      if (!this.fetherApp.window) {
+      if (!fetherApp.window) {
         // There might be a split second where the user closes the app, so
         // this.fether.window is null, but there is still a network request done.
         return;
       }
       details.requestHeaders.Origin = `parity://${
-        this.fetherApp.window.id
+        fetherApp.window.id
       }.ui.parity`;
       callback({ requestHeaders: details.requestHeaders }); // eslint-disable-line
     }

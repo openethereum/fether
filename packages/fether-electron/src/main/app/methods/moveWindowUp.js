@@ -15,27 +15,29 @@ const pino = Pino();
  * with a larger window height that causes it to be cropped, then we will
  * automatically move the window upward so it is viewable to the user
  */
-function moveWindowUp () {
-  if (!this.fetherApp.window) {
+function moveWindowUp (thatFA) {
+  const { fetherApp } = thatFA;
+
+  if (!fetherApp.window) {
     return;
   }
 
   pino.info('Fether window resized. Moving it back up into view if required');
 
-  const position = this.fetherApp.window.getPosition();
+  const position = fetherApp.window.getPosition();
   const positionStruct = {
     x: position[0],
     y: position[1]
   };
-  const trayDepth = this.fetherApp.trayDepth || 40; // Default incase resizes on load
-  const currentScreenResolution = this.getScreenResolution();
-  const windowHeight = this.fetherApp.window.getSize()[1];
+  const trayDepth = fetherApp.trayDepth || 40; // Default incase resizes on load
+  const currentScreenResolution = thatFA.getScreenResolution();
+  const windowHeight = fetherApp.window.getSize()[1];
   const maxWindowY = currentScreenResolution.y - windowHeight - trayDepth;
   const adjustY = positionStruct.y - maxWindowY;
 
   if (adjustY > 0) {
-    this.fetherApp.emit('moved-window-up-into-view');
-    this.fetherApp.window.setPosition(positionStruct.x, maxWindowY);
+    fetherApp.emit('moved-window-up-into-view');
+    fetherApp.window.setPosition(positionStruct.x, maxWindowY);
   }
 }
 

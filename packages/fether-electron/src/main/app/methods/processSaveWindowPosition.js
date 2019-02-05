@@ -9,29 +9,31 @@ import {
 } from '../utils/window';
 import { saveWindowPosition } from '../settings';
 
-function processSaveWindowPosition () {
-  if (!this.fetherApp.window) {
+function processSaveWindowPosition (thatFA) {
+  const { fetherApp } = thatFA;
+
+  if (!fetherApp.window) {
     return;
   }
 
-  const { previousScreenResolution } = this.fetherApp;
-  const currentScreenResolution = this.getScreenResolution();
+  const { previousScreenResolution } = fetherApp;
+  const currentScreenResolution = thatFA.getScreenResolution();
 
-  this.fetherApp.previousScreenResolution = getChangedScreenResolution(
+  fetherApp.previousScreenResolution = getChangedScreenResolution(
     previousScreenResolution,
     currentScreenResolution
   );
 
   // Get the latest position. The window may have been moved to a different
   // screen with smaller resolution. We must move it to prevent cropping.
-  const position = this.fetherApp.window.getPosition();
+  const position = fetherApp.window.getPosition();
 
   const positionStruct = {
     x: position[0],
     y: position[1]
   };
 
-  const fixedWindowPosition = this.fixWindowPosition(positionStruct);
+  const fixedWindowPosition = thatFA.fixWindowPosition(positionStruct);
 
   const newFixedPosition = {
     x: fixedWindowPosition.x || positionStruct.x,
@@ -50,7 +52,7 @@ function processSaveWindowPosition () {
   ) {
     // Move window to the fixed x-coordinate position if that required fixing
     if (fixedWindowPosition.x) {
-      this.fetherApp.window.setPosition(
+      fetherApp.window.setPosition(
         fixedWindowPosition.x,
         positionStruct.y,
         true
@@ -59,7 +61,7 @@ function processSaveWindowPosition () {
 
     // Move window to the fixed y-coordinate position if that required fixing
     if (fixedWindowPosition.y) {
-      this.fetherApp.window.setPosition(
+      fetherApp.window.setPosition(
         positionStruct.x,
         fixedWindowPosition.y,
         true
@@ -69,7 +71,7 @@ function processSaveWindowPosition () {
 
   saveWindowPosition(newFixedPosition || positionStruct);
 
-  this.fetherApp.emit('after-moved-window-position-saved');
+  fetherApp.emit('after-moved-window-position-saved');
 }
 
 export default processSaveWindowPosition;

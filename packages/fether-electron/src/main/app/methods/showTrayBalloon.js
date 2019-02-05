@@ -18,8 +18,10 @@ const iconBalloonPath = path.join(
 
 const pino = Pino();
 
-function showTrayBalloon () {
-  let { tray } = this.fetherApp;
+function showTrayBalloon (thatFA) {
+  const { fetherApp } = thatFA;
+
+  let { tray } = fetherApp;
 
   pino.info('Showing Tray Balloon');
 

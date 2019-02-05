@@ -3,9 +3,9 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-function onWindowClose () {
-  this.processSaveWindowPosition();
-  this.windowClear();
+function onWindowClose (thatFA) {
+  thatFA.processSaveWindowPosition();
+  thatFA.windowClear();
 }
 
 export default onWindowClose;

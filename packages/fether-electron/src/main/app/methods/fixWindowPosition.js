@@ -11,8 +11,10 @@
  * coordinates of the window are outside the screen bounds the window
  * will be restored into the users primary screen.
  */
-function fixWindowPosition (proposedWindowPosition) {
-  const { trayDepth } = this.fetherApp;
+function fixWindowPosition (thatFA, proposedWindowPosition) {
+  const { fetherApp } = thatFA;
+
+  const { trayDepth } = fetherApp;
 
   if (!proposedWindowPosition) {
     return;
@@ -23,10 +25,10 @@ function fixWindowPosition (proposedWindowPosition) {
     y: undefined
   };
 
-  const currentScreenResolution = this.getScreenResolution();
+  const currentScreenResolution = thatFA.getScreenResolution();
 
-  const windowWidth = this.fetherApp.window.getSize()[0];
-  const windowHeight = this.fetherApp.window.getSize()[1];
+  const windowWidth = fetherApp.window.getSize()[0];
+  const windowHeight = fetherApp.window.getSize()[1];
 
   if (proposedWindowPosition.x < trayDepth) {
     newPosition.x = trayDepth;
