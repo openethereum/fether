@@ -3,9 +3,9 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-function setupSecurity (thatFA) {
+function setupSecurity (fetherApp) {
   // Security to prevent window contents from being captured by other apps
-  thatFA.window.setContentProtection(true);
+  fetherApp.window.setContentProtection(true);
 }
 
 export default setupSecurity;

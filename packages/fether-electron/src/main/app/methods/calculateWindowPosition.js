@@ -3,12 +3,12 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-function calculateWindowPosition (thatFA, trayPos) {
-  const { cachedBounds, options, positioner, tray } = thatFA;
+function calculateWindowPosition (fetherApp, trayPos) {
+  const { cachedBounds, options, positioner, tray } = fetherApp;
 
   if (trayPos && trayPos.x !== 0) {
     // Cache the bounds
-    thatFA.cachedBounds = trayPos;
+    fetherApp.cachedBounds = trayPos;
   } else if (cachedBounds) {
     // Cached value will be used if showWindow is called without bounds data
     trayPos = cachedBounds;

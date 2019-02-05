@@ -6,11 +6,9 @@
 // Optionally update the progress bar shown on the Dock icon
 // (i.e. 0.1 is 10%, 1.0 is 100%, -1 hides progress bar).
 // Optionally emit event
-function updateProgress (thatFA, percentage, eventListenerName) {
-  const { fetherApp } = thatFA;
-
+function updateProgress (fetherApp, percentage, eventListenerName) {
   if (percentage) {
-    thatFA.window.setProgressBar(percentage);
+    fetherApp.window.setProgressBar(percentage);
   }
 
   if (eventListenerName) {

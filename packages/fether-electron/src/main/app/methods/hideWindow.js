@@ -3,17 +3,15 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-function hideWindow (thatFA) {
-  const { fetherApp } = thatFA;
-
-  if (!thatFA.window) {
+function hideWindow (fetherApp) {
+  if (!fetherApp.window) {
     return;
   }
 
-  thatFA.processSaveWindowPosition(); // Save window position when hide, particularly necessary on Linux
+  fetherApp.processSaveWindowPosition(); // Save window position when hide, particularly necessary on Linux
 
   fetherApp.emit('hide-window');
-  thatFA.window.hide();
+  fetherApp.window.hide();
   fetherApp.emit('after-hide-window');
 }
 

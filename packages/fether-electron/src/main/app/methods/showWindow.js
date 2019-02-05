@@ -11,16 +11,14 @@ import Pino from '../utils/pino';
 
 const pino = Pino();
 
-function showWindow (thatFA, trayPos) {
-  const { fetherApp } = thatFA;
-
-  if (!thatFA.window) {
-    thatFA.createWindow();
+function showWindow (fetherApp, trayPos) {
+  if (!fetherApp.window) {
+    fetherApp.createWindow();
   }
 
   fetherApp.emit('show-window');
 
-  const calculatedWindowPosition = thatFA.calculateWindowPosition(trayPos);
+  const calculatedWindowPosition = fetherApp.calculateWindowPosition(trayPos);
 
   pino.info('Calculated window position: ', calculatedWindowPosition);
 
@@ -30,7 +28,7 @@ function showWindow (thatFA, trayPos) {
   const mainScreenWorkAreaSize = mainScreen.workAreaSize;
 
   // workAreaSize does not include the tray depth
-  thatFA.trayDepth = Math.max(
+  fetherApp.trayDepth = Math.max(
     mainScreenDimensions.width - mainScreenWorkAreaSize.width,
     mainScreenDimensions.height - mainScreenWorkAreaSize.height
   );
@@ -46,7 +44,7 @@ function showWindow (thatFA, trayPos) {
 
   pino.info('Loaded window position: ', loadedWindowPosition);
 
-  const fixedWindowPosition = thatFA.fixWindowPosition(loadedWindowPosition);
+  const fixedWindowPosition = fetherApp.fixWindowPosition(loadedWindowPosition);
 
   pino.info('Fixed window position: ', fixedWindowPosition);
 
@@ -65,8 +63,8 @@ function showWindow (thatFA, trayPos) {
     (loadedWindowPosition && loadedWindowPosition.y) ||
     calculatedWindowPosition.y;
 
-  thatFA.window.setPosition(x, y);
-  thatFA.window.show();
+  fetherApp.window.setPosition(x, y);
+  fetherApp.window.show();
 
   fetherApp.emit('after-show-window');
 }

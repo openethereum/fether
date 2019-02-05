@@ -10,28 +10,26 @@ import Pino from '../utils/pino';
 
 const pino = Pino();
 
-function setupWindowListeners (thatFA) {
-  const { fetherApp } = thatFA;
-
+function setupWindowListeners (fetherApp) {
   // Open external links in browser
-  thatFA.window.webContents.on('new-window', (event, url) => {
+  fetherApp.window.webContents.on('new-window', (event, url) => {
     event.preventDefault();
     electron.shell.openExternal(url);
   });
 
   // Linux (unchecked on others)
-  thatFA.window.on('move', () => {
+  fetherApp.window.on('move', () => {
     /**
      * On Linux using this with debouncing is the closest equivalent
      * to using 'moved' (not supported on Linux) with debouncing
      */
     debounce(() => {
-      thatFA.processSaveWindowPosition();
+      fetherApp.processSaveWindowPosition();
     }, 1000);
   });
 
   // macOS (not Windows or Linux)
-  thatFA.window.on('moved', () => {
+  fetherApp.window.on('moved', () => {
     /**
      * On macOS save the position in the 'moved' event since if
      * we run it just in 'close' instead, then if the Fether app
@@ -44,30 +42,30 @@ function setupWindowListeners (thatFA) {
      * On Linux the closest equivalent to achieving 'moved' is debouncing
      * on the 'move' event. It also works in 'close' even when app crashes
      */
-    thatFA.processSaveWindowPosition();
+    fetherApp.processSaveWindowPosition();
   });
 
   // macOS and Linux (not Windows)
-  thatFA.window.on('resize', () => {
+  fetherApp.window.on('resize', () => {
     pino.info('Detected resize event');
-    thatFA.moveWindowUp();
+    fetherApp.moveWindowUp();
     setTimeout(() => {
-      thatFA.moveWindowUp();
+      fetherApp.moveWindowUp();
     }, 5000);
   });
 
-  thatFA.window.on('blur', () => {
-    thatFA.options.alwaysOnTop
+  fetherApp.window.on('blur', () => {
+    fetherApp.options.alwaysOnTop
       ? fetherApp.emit('blur-window')
-      : thatFA.hideWindow();
+      : fetherApp.hideWindow();
   });
 
-  thatFA.window.on('close', () => {
-    thatFA.onWindowClose();
+  fetherApp.window.on('close', () => {
+    fetherApp.onWindowClose();
   });
 
-  thatFA.window.on('closed', () => {
-    thatFA.window = null;
+  fetherApp.window.on('closed', () => {
+    fetherApp.window = null;
 
     fetherApp.emit('after-closed-window');
   });

@@ -5,8 +5,8 @@
 
 import Positioner from 'electron-positioner';
 
-function createPositioner (thatFA) {
-  thatFA.positioner = new Positioner(thatFA.window);
+function createPositioner (fetherApp) {
+  fetherApp.positioner = new Positioner(fetherApp.window);
 }
 
 export default createPositioner;

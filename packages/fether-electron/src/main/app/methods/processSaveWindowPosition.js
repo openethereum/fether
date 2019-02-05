@@ -9,30 +9,28 @@ import {
 } from '../utils/window';
 import { saveWindowPosition } from '../settings';
 
-function processSaveWindowPosition (thatFA) {
-  const { fetherApp } = thatFA;
-
-  if (!thatFA.window) {
+function processSaveWindowPosition (fetherApp) {
+  if (!fetherApp.window) {
     return;
   }
 
-  const currentScreenResolution = thatFA.getScreenResolution();
+  const currentScreenResolution = fetherApp.getScreenResolution();
 
-  thatFA.previousScreenResolution = getChangedScreenResolution(
-    thatFA.previousScreenResolution,
+  fetherApp.previousScreenResolution = getChangedScreenResolution(
+    fetherApp.previousScreenResolution,
     currentScreenResolution
   );
 
   // Get the latest position. The window may have been moved to a different
   // screen with smaller resolution. We must move it to prevent cropping.
-  const position = thatFA.window.getPosition();
+  const position = fetherApp.window.getPosition();
 
   const positionStruct = {
     x: position[0],
     y: position[1]
   };
 
-  const fixedWindowPosition = thatFA.fixWindowPosition(positionStruct);
+  const fixedWindowPosition = fetherApp.fixWindowPosition(positionStruct);
 
   const newFixedPosition = {
     x: fixedWindowPosition.x || positionStruct.x,
@@ -48,18 +46,26 @@ function processSaveWindowPosition (thatFA) {
    */
   if (
     shouldFixWindowPosition(
-      thatFA.previousScreenResolution,
+      fetherApp.previousScreenResolution,
       currentScreenResolution
     )
   ) {
     // Move window to the fixed x-coordinate position if that required fixing
     if (fixedWindowPosition.x) {
-      thatFA.window.setPosition(fixedWindowPosition.x, positionStruct.y, true);
+      fetherApp.window.setPosition(
+        fixedWindowPosition.x,
+        positionStruct.y,
+        true
+      );
     }
 
     // Move window to the fixed y-coordinate position if that required fixing
     if (fixedWindowPosition.y) {
-      thatFA.window.setPosition(positionStruct.x, fixedWindowPosition.y, true);
+      fetherApp.window.setPosition(
+        positionStruct.x,
+        fixedWindowPosition.y,
+        true
+      );
     }
   }
 

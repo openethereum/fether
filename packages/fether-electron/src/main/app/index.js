@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import events from 'events';
+import EventEmitter from 'events';
 
 import {
   calculateWindowPosition,
@@ -36,12 +36,14 @@ import {
 
 let hasCalledInitFetherApp = false;
 
-class FetherApp {
-  fetherApp = new events.EventEmitter();
+class FetherApp extends EventEmitter {
+  // fetherApp = new events.EventEmitter();
 
   constructor (electronApp, options) {
+    super();
+
     if (hasCalledInitFetherApp) {
-      this.fetherApp.emit(
+      this.emit(
         'error',
         new Error('Unable to initialise Fether app more than once')
       );
