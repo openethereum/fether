@@ -23,7 +23,7 @@ function setupRequestListeners (fetherApp) {
       urls: ['ws://*/*', 'wss://*/*']
     },
     (details, callback) => {
-      if (!win) {
+      if (!win || !win.id) {
         // There might be a split second where the user closes the app, so
         // this.fether.window is null, but there is still a network request done.
         return;
