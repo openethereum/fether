@@ -47,27 +47,38 @@ class FetherApp extends EventEmitter {
       );
     }
 
+    /**
+     * After the Fether instance and fetherApp.win has been created.
+     * If the user then chooses from the Fether Menu "Window > Close"
+     * it runs windowClear, which deletes fetherApp.win and associated
+     * listeners since the 'close' event also occurs when the user exits.
+     * If the user then clicks the tray icon to re-open the Fether window,
+     * it will run the onTrayClick method, which calls fetherApp.showWindow
+     * and if fetherApp.win does not exist, it runs showWindow and createWindow
+     * to restore create fetherApp.win again and associated listeners. However we
+     * do not need to run all the fetherApp methods again like we did on the
+     * when fetherApp.win was first created (i.e. createTray, loadTray,
+     * setupDebug, setupSecurity, setupLogger, setupParityEthereum, setupGlobals)
+     */
     this.app = electronApp;
     this.options = options;
 
-    this.setupAppListeners();
     this.createWindow();
     this.updateProgress(0.4, undefined);
-    this.createPositioner();
-    this.setupRequestListeners();
+
+    // These methods are called only once when Fether instance is created
+    // (i.e. not called again when the Fether window closed and re-opened)
     this.createTray();
-    this.updateProgress(0.6, undefined);
     this.loadTray();
     this.setupDebug();
     this.setupSecurity();
     this.setupLogger();
     this.setupParityEthereum();
     this.setupGlobals();
+
     this.updateProgress(0.8, undefined);
     this.showWindow(undefined);
     this.updateProgress(1.0, undefined);
-    this.setupWinListeners();
-    this.setupWin32Listeners();
     this.updateProgress(-1, 'after-create-app');
   }
 

@@ -12,7 +12,14 @@ import Pino from '../utils/pino';
 const pino = Pino();
 
 function showWindow (fetherApp, trayPos) {
-  const { calculateWinPosition, createWindow, fixWinPosition, win } = fetherApp;
+  const {
+    calculateWinPosition,
+    createWindow,
+    fixWinPosition,
+    setupWinListeners,
+    setupWin32Listeners,
+    win
+  } = fetherApp;
 
   if (!win) {
     createWindow(fetherApp);
@@ -65,8 +72,11 @@ function showWindow (fetherApp, trayPos) {
     (loadedWindowPosition && loadedWindowPosition.y) ||
     calculatedWinPosition.y;
 
-  win.setPosition(x, y);
-  win.show();
+  fetherApp.win.setPosition(x, y);
+  fetherApp.win.show();
+
+  setupWinListeners(fetherApp);
+  setupWin32Listeners(fetherApp);
 
   fetherApp.emit('after-show-window');
 }

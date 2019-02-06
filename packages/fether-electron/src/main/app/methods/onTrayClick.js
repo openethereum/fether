@@ -7,7 +7,7 @@ function onTrayClick (fetherApp, e, bounds) {
   const { cachedBounds, hideWindow, win } = fetherApp;
   const { altKey, ctrlKey, metaKey, shiftKey } = e;
 
-  if (altKey || shiftKey || ctrlKey || metaKey || (win && win.isVisible())) {
+  if ((win && win.isVisible()) || altKey || shiftKey || ctrlKey || metaKey) {
     return hideWindow(fetherApp);
   }
 
