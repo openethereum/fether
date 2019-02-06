@@ -41,7 +41,7 @@ if (process.platform === 'win32') {
 }
 
 const shouldUseDevTools = process.env.NODE_ENV !== 'production';
-const shouldUseFrame = process.platform !== 'darwin';
+const shouldUseFrame = process.platform === 'win32';
 
 const windowPosition =
   process.platform === 'win32' ? 'trayBottomCenter' : 'trayCenter';

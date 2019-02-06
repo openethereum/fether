@@ -63,7 +63,6 @@ class FetherApp extends EventEmitter {
     this.setupLogger();
     this.setupParityEthereum();
     this.setupGlobals();
-    this.setupMenu();
     this.updateProgress(0.8, undefined);
     this.showWindow(undefined);
     this.updateProgress(1.0, undefined);

@@ -8,7 +8,7 @@ import electron from 'electron';
 const { BrowserWindow } = electron;
 
 function createWindow (fetherApp) {
-  const { options } = fetherApp;
+  const { options, setupMenu } = fetherApp;
 
   fetherApp.emit('create-app');
   fetherApp.emit('create-window');
@@ -18,6 +18,8 @@ function createWindow (fetherApp) {
   if (options.showOnAllWorkspaces !== false) {
     fetherApp.win.setVisibleOnAllWorkspaces(true);
   }
+
+  setupMenu(fetherApp);
 
   // Opens file:///path/to/build/index.html in prod mode, or whatever is
   // passed to ELECTRON_START_URL
