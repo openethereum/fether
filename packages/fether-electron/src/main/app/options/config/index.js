@@ -40,7 +40,6 @@ if (process.platform === 'win32') {
   );
 }
 
-const shouldUseDevTools = process.env.NODE_ENV !== 'production';
 const shouldUseFrame = process.platform === 'win32';
 
 const windowPosition =
@@ -61,7 +60,7 @@ const DEFAULT_OPTIONS = {
   showDockIcon: true, // macOS usage only
   tabbingIdentifier: 'parity',
   webPreferences: {
-    devTools: shouldUseDevTools, // Security
+    devTools: true,
     enableRemoteModule: true // Remote is required in fether-react parityStore.js
   },
   width: 360,
