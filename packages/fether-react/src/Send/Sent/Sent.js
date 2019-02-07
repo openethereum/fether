@@ -4,16 +4,21 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { chainName$, withoutLoading } from '@parity/light.js';
+import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
+import { chainName$, withoutLoading } from '@parity/light.js';
 import light from '@parity/light.js-react';
 import { withProps } from 'recompose';
+import { Modal } from 'fether-ui';
 
 import RequireHealthOverlay from '../../RequireHealthOverlay';
 import check from '../../assets/img/icons/check.svg';
 import loading from '../../assets/img/icons/loading.svg';
 import withTokens from '../../utils/withTokens';
-import { SentModal } from './SentModal';
+import { blockscoutTxUrl } from '../../utils/blockscout';
+
+// Number of confirmations to consider a transaction successful
+const MIN_CONFIRMATIONS = 6;
 
 @light({
   chainName: () => chainName$().pipe(withoutLoading())
@@ -25,6 +30,12 @@ import { SentModal } from './SentModal';
 }))
 @observer
 class Sent extends Component {
+  static propTypes = {
+    chainName: PropTypes.string,
+    sendStore: PropTypes.object,
+    token: PropTypes.object
+  };
+
   componentWillMount () {
     // If we refresh on this page, return to homepage
     if (!this.props.sendStore.txStatus) {
@@ -39,24 +50,136 @@ class Sent extends Component {
   };
 
   render () {
-    const { chainName, sendStore, token } = this.props;
-
     return (
       <RequireHealthOverlay require='connected' fullscreen>
         <div className='window_content'>
-          <SentModal
-            confirmationsCount={sendStore.confirmations}
-            chainName={chainName}
-            check={check}
-            handleGoToHomepage={this.handleGoToHomepage}
-            loading={loading}
-            token={token}
-            txStatus={sendStore.txStatus}
+          <Modal
+            description={this.renderDescription()}
+            fullscreen
+            link={this.renderLink()}
+            loading={this.renderIcon()}
+            navigateTo={this.renderGoHomepage()}
+            title={this.renderTitle()}
+            visible
           />
         </div>
       </RequireHealthOverlay>
     );
   }
+
+  renderDescription = () => {
+    const {
+      sendStore: { confirmations, txStatus }
+    } = this.props;
+
+    if (!txStatus) {
+      return '';
+    }
+
+    if (confirmations >= MIN_CONFIRMATIONS) {
+      return null;
+    }
+
+    if (confirmations > 0) {
+      return `Waiting ${confirmations}/${MIN_CONFIRMATIONS} confirmations`;
+    }
+
+    if (txStatus.confirmed) {
+      return 'Waiting for confirmations...';
+    }
+
+    if (txStatus.failed) {
+      return JSON.stringify(txStatus.failed);
+    }
+
+    return null;
+  };
+
+  renderIcon = () => {
+    const {
+      sendStore: { confirmations }
+    } = this.props;
+
+    if (confirmations >= MIN_CONFIRMATIONS) {
+      return check;
+    }
+
+    return loading;
+  };
+
+  renderTitle = () => {
+    const {
+      sendStore: { confirmations, txStatus }
+    } = this.props;
+
+    if (!txStatus) {
+      return '';
+    }
+
+    if (txStatus.confirmed) {
+      return (
+        <span>
+          {confirmations >= MIN_CONFIRMATIONS
+            ? 'Transaction confirmed'
+            : 'Submitted'}
+        </span>
+      );
+    }
+
+    if (txStatus.failed) {
+      return 'Error';
+    }
+
+    return 'Sending your transaction...';
+  };
+
+  renderGoHomepage = () => {
+    const {
+      sendStore: { confirmations }
+    } = this.props;
+
+    if (confirmations < MIN_CONFIRMATIONS) {
+      return;
+    }
+
+    return (
+      <nav className='form-nav'>
+        <button
+          className='button'
+          disabled={confirmations < MIN_CONFIRMATIONS}
+          onClick={this.handleGoToHomepage}
+        >
+          Go back
+        </button>
+      </nav>
+    );
+  };
+
+  renderLink = () => {
+    const {
+      chainName,
+      sendStore: { confirmations, txStatus },
+      token
+    } = this.props;
+
+    if (txStatus && txStatus.confirmed && confirmations >= 0) {
+      return (
+        <a
+          href={blockscoutTxUrl(
+            chainName,
+            txStatus.confirmed.transactionHash,
+            token.address
+          )}
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          <button className='button -tiny'>See it on BlockScout</button>
+        </a>
+      );
+    }
+
+    return null;
+  };
 }
 
 export default Sent;
