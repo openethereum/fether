@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 
 import { chainName$, isLoading } from '@parity/light.js';
 import light from '@parity/light.js-react';
-import withHealth, { STATUS } from '../utils/withHealth';
+import withHealth from '../utils/withHealth';
 
 @light({
   chainName: chainName$
@@ -34,15 +34,12 @@ class Health extends Component {
     const {
       health: { status }
     } = this.props;
-    switch (status) {
-      case STATUS.GOOD:
-        return '-good';
-      case STATUS.DOWNLOADING:
-      case STATUS.LAUNCHING:
-      case STATUS.SYNCING:
-        return '-syncing';
-      default:
-        return '-bad';
+    if (status.good) {
+      return '-good';
+    } else if (status.downloading || status.launching || status.syncing) {
+      return '-syncing';
+    } else {
+      return '-bad';
     }
   };
 
@@ -54,29 +51,28 @@ class Health extends Component {
 
     const chainNameAppend = isLoading(chainName) ? '' : ` (${chainName})`;
 
-    switch (status) {
-      case STATUS.NO_NODE_CONNECTED_AND_NO_INTERNET:
-        return 'No internet. No nodes connected';
-      case STATUS.DOWNLOADING:
-        return `Downloading Parity Ethereum... (${payload.percentage}%)`;
-      case STATUS.LAUNCHING:
-        return 'Launching the node...';
-      case STATUS.NODE_CONNECTED_AND_NO_INTERNET:
-        return 'No internet. Connected to node.';
-      case STATUS.NO_CLOCK_SYNC:
-        return 'Clock of host not in sync';
-      case STATUS.NO_PEERS:
-        return 'No peer node connections';
-      case STATUS.SYNCING:
-        return `Syncing...${
-          payload && payload.percentage && payload.percentage.gt(0)
-            ? ` (${payload.percentage.toFixed(0)}%)`
-            : ''
-        }${chainNameAppend}`;
-      case STATUS.GOOD:
-        return `Synced${chainNameAppend}`;
-      default:
-        return JSON.stringify(payload); // Just in case payload is an object
+    if (!status.nodeConnected && !status.internet) {
+      return 'No internet. No nodes connected';
+    } else if (status.downloading) {
+      return `Downloading Parity Ethereum... (${payload.syncPercentage}%)`;
+    } else if (status.launching) {
+      return 'Launching the node...';
+    } else if (status.nodeConnected && !status.internet) {
+      return 'No internet. Connected to node';
+    } else if (!status.clockSync) {
+      return 'Clock of host not in sync';
+    } else if (!status.peers) {
+      return 'No peer node connections';
+    } else if (status.syncing) {
+      return `Syncing...${
+        payload && payload.syncPercentage && payload.syncPercentage.gt(0)
+          ? ` (${payload.syncPercentage.toFixed(0)}%)`
+          : ''
+      }${chainNameAppend}`;
+    } else if (status.good) {
+      return `Synced${chainNameAppend}`;
+    } else {
+      return JSON.stringify(payload); // Just in case payload is an object
     }
   };
 }

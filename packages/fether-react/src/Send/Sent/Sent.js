@@ -51,7 +51,7 @@ class Sent extends Component {
 
   render () {
     return (
-      <RequireHealthOverlay require='connected' fullscreen>
+      <RequireHealthOverlay require='node-internet' fullscreen>
         <div className='window_content'>
           <Modal
             description={this.renderDescription()}

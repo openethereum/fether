@@ -64,7 +64,7 @@ class CreateAccount extends Component {
     const Steps = this.getSteps(isImport);
 
     return (
-      <RequireHealthOverlay require='connected-offline'>
+      <RequireHealthOverlay require='node'>
         <div>
           <Header
             left={

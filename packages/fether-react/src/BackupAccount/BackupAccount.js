@@ -63,7 +63,7 @@ class BackupAccount extends Component {
     const { isLoading, message, password } = this.state;
 
     return (
-      <RequireHealthOverlay require='connected-offline'>
+      <RequireHealthOverlay require='node'>
         <div>
           <AccountHeader
             address={address}

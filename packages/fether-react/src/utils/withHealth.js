@@ -24,21 +24,6 @@ import parityStore from '../stores/parityStore';
 
 const electron = isElectron() ? window.require('electron') : null;
 
-// List here all possible states of our health store. Each state can have a
-// payload.
-export const STATUS = {
-  NO_NODE_CONNECTED_AND_NO_INTERNET: Symbol(
-    'NO_NODE_CONNECTED_AND_NO_INTERNET'
-  ),
-  NO_CLOCK_SYNC: Symbol('NO_CLOCK_SYNC'), // Local clock is not sync
-  DOWNLOADING: Symbol('DOWNLOADING'), // Currently downloading Parity
-  LAUNCHING: Symbol('LAUNCHING'), // Parity is being launched (only happens at startup)
-  NODE_CONNECTED_AND_NO_INTERNET: Symbol('NODE_CONNECTED_AND_NO_INTERNET'),
-  NO_PEERS: Symbol('NO_PEERS'), // Not connected to any peers
-  SYNCING: Symbol('SYNCING'), // Obvious
-  GOOD: Symbol('GOOD') // Everything's fine
-};
-
 const isApiConnected$ = parityStore.isApiConnected$;
 
 const isParityRunning$ = Observable.create(observer => {
@@ -98,7 +83,7 @@ const rpcs$ = isApiConnected$.pipe(
             }
 
             const { currentBlock, highestBlock, startingBlock } = syncStatus;
-            const percentage = currentBlock
+            const syncPercentage = currentBlock
               .minus(startingBlock)
               .multipliedBy(100)
               .div(highestBlock.minus(startingBlock));
@@ -108,7 +93,7 @@ const rpcs$ = isApiConnected$.pipe(
               syncPayload: {
                 currentBlock,
                 highestBlock,
-                percentage,
+                syncPercentage,
                 startingBlock
               }
             };
@@ -142,93 +127,39 @@ export default compose(
         ]) => {
           const isDownloading =
             online && downloadProgress > 0 && !isParityRunning;
-          const isNoInternetAndNoNodeConnected =
-            !online && !isDownloading && !isApiConnected && !isParityRunning;
-          const isNoInternetAndNodeConnected =
-            !online && !isDownloading && isApiConnected && isParityRunning;
+          const isNodeConnected =
+            !isDownloading && isApiConnected && isParityRunning;
           const isNoPeers = peerCount === undefined || peerCount.lte(1);
+          const isGood =
+            isSync && !isNoPeers && isClockSync && isNodeConnected && online;
+          let payload;
 
-          // No connection to the internet and not connected to node
-          if (isNoInternetAndNoNodeConnected) {
-            return {
-              ...props,
-              health: {
-                status: STATUS.NO_NODE_CONNECTED_AND_NO_INTERNET
-              }
-            };
-          }
+          // Status - list of all states of health store
+          let status = {
+            internet: online, // Internet connection
+            nodeConnected: isNodeConnected, // Connected to local Parity Ethereum node
+            clockSync: isClockSync, // Local clock is not synchronised
+            downloading: isDownloading, // Currently downloading Parity Ethereum
+            launching: !isApiConnected, // Launching Parity Ethereum only upon startup
+            peers: !isNoPeers, // Connecion to peer nodes
+            syncing: !isSync, // Synchronising blocks
+            good: isGood // Synchronised and no issues
+          };
 
-          // Parity is being downloaded
+          // Payload - optional payload of a state
           if (isDownloading) {
-            return {
-              ...props,
-              health: {
-                status: STATUS.DOWNLOADING,
-                payload: {
-                  percentage: new BigNumber(Math.round(downloadProgress * 100))
-                }
-              }
+            payload = {
+              syncPercentage: new BigNumber(Math.round(downloadProgress * 100))
             };
+          } else if (!isSync) {
+            payload = syncPayload;
           }
 
-          // Parity is being launched
-          if (!isApiConnected) {
-            return {
-              ...props,
-              health: {
-                status: STATUS.LAUNCHING
-              }
-            };
-          }
-
-          // At this point we have a successful connection to parity
-
-          // No connection to the internet and but connected to node
-          if (isNoInternetAndNodeConnected) {
-            return {
-              ...props,
-              health: {
-                status: STATUS.NODE_CONNECTED_AND_NO_INTERNET
-              }
-            };
-          }
-
-          // Clock is not synchronized
-          if (!isClockSync) {
-            return {
-              ...props,
-              health: {
-                status: STATUS.NO_CLOCK_SYNC
-              }
-            };
-          }
-
-          // Not enough peers
-          if (isNoPeers) {
-            return {
-              ...props,
-              health: {
-                status: STATUS.NO_PEERS
-              }
-            };
-          }
-
-          // Syncing blocks
-          if (!isSync) {
-            return {
-              ...props,
-              health: {
-                status: STATUS.SYNCING,
-                payload: syncPayload
-              }
-            };
-          }
-
-          // Everything's OK
           return {
             ...props,
             health: {
-              status: STATUS.GOOD
+              status: status,
+              payload: payload
             }
           };
         }

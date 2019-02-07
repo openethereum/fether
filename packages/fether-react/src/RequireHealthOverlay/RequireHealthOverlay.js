@@ -6,36 +6,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import withHealth, { STATUS } from '../utils/withHealth';
+import withHealth from '../utils/withHealth';
 import loading from '../assets/img/icons/loading.svg';
 import { HealthModal } from './HealthModal';
 
 function statusMatches (status, require) {
-  const isSync = status === STATUS.GOOD;
-
-  const isNodeConnectedWithInternet =
-    status !== STATUS.DOWNLOADING &&
-    status !== STATUS.LAUNCHING &&
-    status !== STATUS.NO_NODE_CONNECTED_AND_NO_INTERNET &&
-    status !== STATUS.NODE_CONNECTED_AND_NO_INTERNET;
-
-  const isNodeConnectedNoInternet =
-    isSync ||
-    status === STATUS.NODE_CONNECTED_AND_NO_INTERNET ||
-    status === STATUS.NO_CLOCK_SYNC ||
-    status === STATUS.NO_PEERS ||
-    status === STATUS.SYNCING;
-
   switch (require) {
-    case 'connected-offline':
-      return isNodeConnectedNoInternet;
-    case 'connected':
-      return isNodeConnectedWithInternet;
+    // Connection to a node and internet connection are both required
+    case 'node-internet':
+      return status.nodeConnected && status.internet;
+    // Connection to a node is required but internet is not necessary
+    case 'node':
+      return status.nodeConnected;
+    // Synchronised connection with no issues is required
     case 'sync':
-      return isSync;
+      return status.good;
     default:
       throw new Error(
-        `Status '${status}' must be one of 'connected-offline|connected|sync'.`
+        `Status '${status}' must be one of 'node-internet|node|sync'.`
       );
   }
 }
@@ -43,7 +31,7 @@ function statusMatches (status, require) {
 @withHealth
 class RequireHealthOverlay extends Component {
   static propTypes = {
-    require: PropTypes.oneOf(['connected-offline', 'connected', 'sync']),
+    require: PropTypes.oneOf(['node-internet', 'node', 'sync']),
     fullscreen: PropTypes.bool
   };
 
@@ -82,9 +70,9 @@ class RequireHealthOverlay extends Component {
     return (
       <HealthModal
         fullscreen={fullscreen}
-        healthPercentage={payload && payload.percentage}
-        healthStatus={status}
         loading={loading}
+        payload={payload}
+        status={status}
         visible={visible}
       >
         {children}

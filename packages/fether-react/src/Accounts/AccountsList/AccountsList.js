@@ -47,7 +47,7 @@ class AccountsList extends Component {
     const accountsListLength = accountsList && accountsList.length;
 
     return (
-      <RequireHealthOverlay require='connected-offline'>
+      <RequireHealthOverlay require='node'>
         <div className='accounts-list'>
           <Header
             right={
