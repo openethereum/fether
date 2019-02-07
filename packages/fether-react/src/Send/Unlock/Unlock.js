@@ -11,7 +11,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { withProps } from 'recompose';
 
 import RequireHealthOverlay from '../../RequireHealthOverlay';
-import TokenBalance from '../../Tokens/TokensList/TokenBalance';
+import TokenAddress from '../../Tokens/TokensList/TokenAddress';
 import withAccount from '../../utils/withAccount.js';
 import withTokens from '../../utils/withTokens';
 
@@ -65,7 +65,8 @@ class Unlock extends Component {
         <RequireHealthOverlay require='sync'>
           <div className='window_content'>
             <div className='box -padded'>
-              <TokenBalance
+              <TokenAddress
+                copyAddress
                 drawers={[
                   <div key='txForm'>
                     <FetherForm.Field
@@ -123,8 +124,7 @@ class Unlock extends Component {
                     )}
                   />
                 ]}
-                onClick={null}
-                token={token}
+                shortAddress={false}
               />
             </div>
           </div>

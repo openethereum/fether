@@ -43,7 +43,7 @@ export class ClickToCopy extends PureComponent {
 
     return (
       <Popup
-        content={copied ? 'Copied.' : 'Click to copy'}
+        content={copied ? 'Copied' : label}
         inverted
         onClose={this.handleResetCopied}
         position='bottom center'
