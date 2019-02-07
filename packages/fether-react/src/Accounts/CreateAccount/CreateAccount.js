@@ -8,7 +8,6 @@ import { Header } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 import { Link, Route } from 'react-router-dom';
 
-import RequireHealthOverlay from '../../RequireHealthOverlay';
 import AccountCopyPhrase from './AccountCopyPhrase';
 import AccountImportOptions from './AccountImportOptions';
 import AccountRewritePhrase from './AccountRewritePhrase';
@@ -64,68 +63,66 @@ class CreateAccount extends Component {
     const Steps = this.getSteps(isImport);
 
     return (
-      <RequireHealthOverlay require='node'>
-        <div>
-          <Header
-            left={
-              // Show back button if we already have some accounts, so we can go back to AccountsList
-              accountsInfo &&
-              Object.keys(accountsInfo).length > 0 && (
-                <Link className='icon -back' to='/accounts'>
-                  Back
-                </Link>
-              )
-            }
-            title={
-              <h1>{isImport ? 'Import account' : 'Create a new account'}</h1>
-            }
-          />
+      <div>
+        <Header
+          left={
+            // Show back button if we already have some accounts, so we can go back to AccountsList
+            accountsInfo &&
+            Object.keys(accountsInfo).length > 0 && (
+              <Link className='icon -back' to='/accounts'>
+                Back
+              </Link>
+            )
+          }
+          title={
+            <h1>{isImport ? 'Import account' : 'Create a new account'}</h1>
+          }
+        />
 
-          <div className='window_content'>
-            <div className='box -padded'>
-              {Steps.map((StepComponent, index) => (
-                <Route
-                  component={StepComponent}
-                  key={`Step${index + 1}`}
-                  path={`/accounts/new/${index + 1}`}
-                />
-              ))}
-            </div>
+        <div className='window_content'>
+          <div className='box -padded'>
+            {Steps.map((StepComponent, index) => (
+              <Route
+                component={StepComponent}
+                key={`Step${index + 1}`}
+                path={`/accounts/new/${index + 1}`}
+              />
+            ))}
           </div>
-
-          <nav className='footer-nav'>
-            {step > 1 ? (
-              <div className='footer-nav_status'>
-                <Health />
-              </div>
-            ) : (
-              <div className='footer-nav_option'>
-                {isImport ? (
-                  <p>
-                    Need to create an account?
-                    <button
-                      className='button -footer'
-                      onClick={this.handleToggleCreateImport}
-                    >
-                      New account
-                    </button>
-                  </p>
-                ) : (
-                  <p>
-                    Already have an account?
-                    <button
-                      className='button -footer'
-                      onClick={this.handleToggleCreateImport}
-                    >
-                      Import account
-                    </button>
-                  </p>
-                )}
-              </div>
-            )}
-          </nav>
         </div>
-      </RequireHealthOverlay>
+
+        <nav className='footer-nav'>
+          {step > 1 ? (
+            <div className='footer-nav_status'>
+              <Health />
+            </div>
+          ) : (
+            <div className='footer-nav_option'>
+              {isImport ? (
+                <p>
+                  Need to create an account?
+                  <button
+                    className='button -footer'
+                    onClick={this.handleToggleCreateImport}
+                  >
+                    New account
+                  </button>
+                </p>
+              ) : (
+                <p>
+                  Already have an account?
+                  <button
+                    className='button -footer'
+                    onClick={this.handleToggleCreateImport}
+                  >
+                    Import account
+                  </button>
+                </p>
+              )}
+            </div>
+          )}
+        </nav>
+      </div>
     );
   }
 }

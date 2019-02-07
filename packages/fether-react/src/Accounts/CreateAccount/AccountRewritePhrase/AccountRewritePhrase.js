@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import { AccountCard, Card, Form as FetherForm } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 
+import RequireHealthOverlay from '../../../RequireHealthOverlay';
 import AccountImportOptions from '../AccountImportOptions';
 
 @inject('createAccountStore')
@@ -84,14 +85,18 @@ class AccountRewritePhrase extends Component {
       </form>
     ];
 
-    return isImport ? (
-      <Card>{body}</Card>
-    ) : (
-      <AccountCard
-        address={address}
-        name={address && !name ? '(no name)' : name}
-        drawers={body}
-      />
+    return (
+      <RequireHealthOverlay require='node'>
+        {isImport ? (
+          <Card>{body}</Card>
+        ) : (
+          <AccountCard
+            address={address}
+            name={address && !name ? '(no name)' : name}
+            drawers={body}
+          />
+        )}
+      </RequireHealthOverlay>
     );
   }
 
