@@ -9,6 +9,7 @@ import { inject, observer } from 'mobx-react';
 import light from '@parity/light.js-react';
 import { withProps } from 'recompose';
 
+import RequireHealthOverlay from '../../RequireHealthOverlay';
 import check from '../../assets/img/icons/check.svg';
 import loading from '../../assets/img/icons/loading.svg';
 import withTokens from '../../utils/withTokens';
@@ -42,18 +43,20 @@ class Sent extends Component {
     const { chainName, sendStore, token } = this.props;
 
     return (
-      <div className='window_content'>
-        <SentModal
-          blockscoutTxUrl={blockscoutTxUrl}
-          confirmationsCount={sendStore.confirmations}
-          chainName={chainName}
-          check={check}
-          handleGoToHomepage={this.handleGoToHomepage}
-          loading={loading}
-          token={token}
-          txStatus={sendStore.txStatus}
-        />
-      </div>
+      <RequireHealthOverlay require='connected' fullscreen>
+        <div className='window_content'>
+          <SentModal
+            blockscoutTxUrl={blockscoutTxUrl}
+            confirmationsCount={sendStore.confirmations}
+            chainName={chainName}
+            check={check}
+            handleGoToHomepage={this.handleGoToHomepage}
+            loading={loading}
+            token={token}
+            txStatus={sendStore.txStatus}
+          />
+        </div>
+      </RequireHealthOverlay>
     );
   }
 }

@@ -39,16 +39,18 @@ class HealthModal extends Component {
     const { healthStatus } = this.props;
 
     switch (healthStatus) {
-      case STATUS.CLOCKNOTSYNC:
-        return 'Your clock is not in sync';
+      case STATUS.NO_NODE_CONNECTED_AND_NO_INTERNET:
+        return 'No internet. No nodes connected';
       case STATUS.DOWNLOADING:
-        return 'Downloading Parity...';
-      case STATUS.NOINTERNET:
-        return 'No Internet connection';
-      case STATUS.NOPEERS:
-        return 'Bad connectivity';
+        return 'Downloading Parity Ethereum...';
       case STATUS.LAUNCHING:
-        return 'Connecting to the node...';
+        return 'Launching the node...';
+      case STATUS.NODE_CONNECTED_AND_NO_INTERNET:
+        return 'No internet. Connected to node';
+      case STATUS.NO_CLOCK_SYNC:
+        return 'Clock of host not in sync';
+      case STATUS.NO_PEERS:
+        return 'No peer node connections';
       case STATUS.SYNCING:
         return 'Syncing...';
       default:
@@ -60,7 +62,7 @@ class HealthModal extends Component {
     const { healthPercentage, healthStatus } = this.props;
 
     switch (healthStatus) {
-      case STATUS.CLOCKNOTSYNC:
+      case STATUS.NO_CLOCK_SYNC:
         return `Mac: System Preferences -> Date & Time -> Uncheck and recheck "Set date and time automatically"
         Windows: Control Panel -> "Clock, Language, and Region" -> "Date and Time" -> Uncheck and recheck "Set date and time automatically"`;
       case STATUS.SYNCING:
@@ -68,9 +70,10 @@ class HealthModal extends Component {
         return healthPercentage && healthPercentage.gt(0)
           ? `${healthPercentage.toFixed(0)}%`
           : '';
-      case STATUS.NOINTERNET:
+      case STATUS.NO_NODE_CONNECTED_AND_NO_INTERNET:
+      case STATUS.NODE_CONNECTED_AND_NO_INTERNET:
         return 'Please connect to the Internet';
-      case STATUS.NOPEERS:
+      case STATUS.NO_PEERS:
         return 'Getting some more peers...';
       default:
         return '';

@@ -27,13 +27,16 @@ const electron = isElectron() ? window.require('electron') : null;
 // List here all possible states of our health store. Each state can have a
 // payload.
 export const STATUS = {
-  CLOCKNOTSYNC: Symbol('CLOCKNOTSYNC'), // Local clock is not sync
+  NO_NODE_CONNECTED_AND_NO_INTERNET: Symbol(
+    'NO_NODE_CONNECTED_AND_NO_INTERNET'
+  ),
+  NO_CLOCK_SYNC: Symbol('NO_CLOCK_SYNC'), // Local clock is not sync
   DOWNLOADING: Symbol('DOWNLOADING'), // Currently downloading Parity
-  GOOD: Symbol('GOOD'), // Everything's fine
-  NOINTERNET: Symbol('NOINTERNET'), // No Internet connection
-  NOPEERS: Symbol('NOPEERS'), // Not connected to any peers
   LAUNCHING: Symbol('LAUNCHING'), // Parity is being launched (only happens at startup)
-  SYNCING: Symbol('SYNCING') // Obvious
+  NODE_CONNECTED_AND_NO_INTERNET: Symbol('NODE_CONNECTED_AND_NO_INTERNET'),
+  NO_PEERS: Symbol('NO_PEERS'), // Not connected to any peers
+  SYNCING: Symbol('SYNCING'), // Obvious
+  GOOD: Symbol('GOOD') // Everything's fine
 };
 
 const isApiConnected$ = parityStore.isApiConnected$;
@@ -137,18 +140,26 @@ export default compose(
           ],
           [{ isSync, syncPayload }, peerCount]
         ]) => {
-          // No connexion to the internet
-          if (!online) {
+          const isDownloading =
+            online && downloadProgress > 0 && !isParityRunning;
+          const isNoInternetAndNoNodeConnected =
+            !online && !isDownloading && !isApiConnected && !isParityRunning;
+          const isNoInternetAndNodeConnected =
+            !online && !isDownloading && isApiConnected && isParityRunning;
+          const isNoPeers = peerCount === undefined || peerCount.lte(1);
+
+          // No connection to the internet and not connected to node
+          if (isNoInternetAndNoNodeConnected) {
             return {
               ...props,
               health: {
-                status: STATUS.NOINTERNET
+                status: STATUS.NO_NODE_CONNECTED_AND_NO_INTERNET
               }
             };
           }
 
           // Parity is being downloaded
-          if (downloadProgress > 0 && !isParityRunning) {
+          if (isDownloading) {
             return {
               ...props,
               health: {
@@ -172,22 +183,32 @@ export default compose(
 
           // At this point we have a successful connection to parity
 
+          // No connection to the internet and but connected to node
+          if (isNoInternetAndNodeConnected) {
+            return {
+              ...props,
+              health: {
+                status: STATUS.NODE_CONNECTED_AND_NO_INTERNET
+              }
+            };
+          }
+
           // Clock is not synchronized
           if (!isClockSync) {
             return {
               ...props,
               health: {
-                status: STATUS.CLOCKNOTSYNC
+                status: STATUS.NO_CLOCK_SYNC
               }
             };
           }
 
           // Not enough peers
-          if (peerCount === undefined || peerCount.lte(1)) {
+          if (isNoPeers) {
             return {
               ...props,
               health: {
-                status: STATUS.NOPEERS
+                status: STATUS.NO_PEERS
               }
             };
           }

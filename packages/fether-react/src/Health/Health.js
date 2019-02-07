@@ -55,24 +55,26 @@ class Health extends Component {
     const chainNameAppend = isLoading(chainName) ? '' : ` (${chainName})`;
 
     switch (status) {
-      case STATUS.CLOCKNOTSYNC:
-        return 'Clock not sync';
+      case STATUS.NO_NODE_CONNECTED_AND_NO_INTERNET:
+        return 'No internet. No nodes connected';
       case STATUS.DOWNLOADING:
-        return `Downloading... (${payload.percentage}%)`;
-      case STATUS.GOOD:
-        return `Synced${chainNameAppend}`;
-      case STATUS.NOINTERNET:
-        return 'No Internet connection';
-      case STATUS.NOPEERS:
-        return 'Not connected to any peer';
+        return `Downloading Parity Ethereum... (${payload.percentage}%)`;
       case STATUS.LAUNCHING:
         return 'Launching the node...';
+      case STATUS.NODE_CONNECTED_AND_NO_INTERNET:
+        return 'No internet. Connected to node.';
+      case STATUS.NO_CLOCK_SYNC:
+        return 'Clock of host not in sync';
+      case STATUS.NO_PEERS:
+        return 'No peer node connections';
       case STATUS.SYNCING:
         return `Syncing...${
           payload && payload.percentage && payload.percentage.gt(0)
             ? ` (${payload.percentage.toFixed(0)}%)`
             : ''
         }${chainNameAppend}`;
+      case STATUS.GOOD:
+        return `Synced${chainNameAppend}`;
       default:
         return JSON.stringify(payload); // Just in case payload is an object
     }

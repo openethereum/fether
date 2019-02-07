@@ -11,24 +11,39 @@ import loading from '../assets/img/icons/loading.svg';
 import { HealthModal } from './HealthModal';
 
 function statusMatches (status, require) {
+  const isSync = status === STATUS.GOOD;
+
+  const isNodeConnectedWithInternet =
+    status !== STATUS.DOWNLOADING &&
+    status !== STATUS.LAUNCHING &&
+    status !== STATUS.NO_NODE_CONNECTED_AND_NO_INTERNET &&
+    status !== STATUS.NODE_CONNECTED_AND_NO_INTERNET;
+
+  const isNodeConnectedNoInternet =
+    isSync ||
+    status === STATUS.NODE_CONNECTED_AND_NO_INTERNET ||
+    status === STATUS.NO_CLOCK_SYNC ||
+    status === STATUS.NO_PEERS ||
+    status === STATUS.SYNCING;
+
   switch (require) {
+    case 'connected-offline':
+      return isNodeConnectedNoInternet;
     case 'connected':
-      return (
-        status !== STATUS.NOINTERNET &&
-        status !== STATUS.DOWNLOADING &&
-        status !== STATUS.LAUNCHING
-      );
+      return isNodeConnectedWithInternet;
     case 'sync':
-      return status === STATUS.GOOD;
+      return isSync;
     default:
-      throw new Error(`Status '${status}' must be one of 'connected|sync'.`);
+      throw new Error(
+        `Status '${status}' must be one of 'connected-offline|connected|sync'.`
+      );
   }
 }
 
 @withHealth
 class RequireHealthOverlay extends Component {
   static propTypes = {
-    require: PropTypes.oneOf(['connected', 'sync']),
+    require: PropTypes.oneOf(['connected-offline', 'connected', 'sync']),
     fullscreen: PropTypes.bool
   };
 
