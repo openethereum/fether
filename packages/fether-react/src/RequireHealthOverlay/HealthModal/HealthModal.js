@@ -74,8 +74,11 @@ class HealthModal extends Component {
       return 'Searching for peers';
     } else if (status.syncing) {
       return `Syncing...${
-        payload && payload.syncPercentage && payload.syncPercentage.gt(0)
-          ? ` (${payload.syncPercentage.toFixed(0)}%)`
+        payload &&
+        payload.downloading &&
+        payload.downloading.syncPercentage &&
+        payload.downloading.syncPercentage.gt(0)
+          ? ` (${payload.downloading.syncPercentage.toFixed(0)}%)`
           : ''
       }${chainNameAppend}`;
     } else {

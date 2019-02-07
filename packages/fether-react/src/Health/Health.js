@@ -54,7 +54,9 @@ class Health extends Component {
     if (!status.nodeConnected && !status.internet) {
       return 'No internet. No nodes connected';
     } else if (status.downloading) {
-      return `Downloading Parity Ethereum... (${payload.syncPercentage}%)`;
+      return `Downloading Parity Ethereum... (${
+        payload.downloading.syncPercentage
+      }%)`;
     } else if (status.launching) {
       return 'Launching the node...';
     } else if (status.nodeConnected && !status.internet) {
@@ -65,14 +67,17 @@ class Health extends Component {
       return 'No peer node connections';
     } else if (status.syncing) {
       return `Syncing...${
-        payload && payload.syncPercentage && payload.syncPercentage.gt(0)
-          ? ` (${payload.syncPercentage.toFixed(0)}%)`
+        payload &&
+        payload.downloading &&
+        payload.downloading.syncPercentage &&
+        payload.downloading.syncPercentage.gt(0)
+          ? ` (${payload.downloading.syncPercentage.toFixed(0)}%)`
           : ''
       }${chainNameAppend}`;
     } else if (status.good) {
       return `Synced${chainNameAppend}`;
     } else {
-      return JSON.stringify(payload); // Just in case payload is an object
+      return JSON.stringify(payload) || ''; // Just in case payload is an object
     }
   };
 }

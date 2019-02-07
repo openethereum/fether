@@ -132,7 +132,6 @@ export default compose(
           const isNoPeers = peerCount === undefined || peerCount.lte(1);
           const isGood =
             isSync && !isNoPeers && isClockSync && isNodeConnected && online;
-          let payload;
 
           // Status - list of all states of health store
           let status = {
@@ -147,19 +146,18 @@ export default compose(
           };
 
           // Payload - optional payload of a state
-          if (isDownloading) {
-            payload = {
+          let payload = {
+            downloading: {
               syncPercentage: new BigNumber(Math.round(downloadProgress * 100))
-            };
-          } else if (!isSync) {
-            payload = syncPayload;
-          }
+            },
+            syncing: syncPayload
+          };
 
           return {
             ...props,
             health: {
-              status: status,
-              payload: payload
+              status,
+              payload
             }
           };
         }
