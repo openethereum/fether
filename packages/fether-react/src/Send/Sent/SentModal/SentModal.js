@@ -7,12 +7,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Modal } from 'fether-ui';
 
+import { blockscoutTxUrl } from '../../../utils/blockscout';
+
 // Number of confirmations to consider a transaction successful
 const MIN_CONFIRMATIONS = 6;
 
 class SentModal extends Component {
   static propTypes = {
-    blockscoutTxUrl: PropTypes.func,
     chainName: PropTypes.string,
     check: PropTypes.any.isRequired,
     confirmationsCount: PropTypes.number,
@@ -117,13 +118,7 @@ class SentModal extends Component {
   };
 
   renderLink = () => {
-    const {
-      blockscoutTxUrl,
-      chainName,
-      confirmationsCount,
-      txStatus,
-      token
-    } = this.props;
+    const { chainName, confirmationsCount, txStatus, token } = this.props;
 
     if (txStatus && txStatus.confirmed && confirmationsCount >= 0) {
       return (

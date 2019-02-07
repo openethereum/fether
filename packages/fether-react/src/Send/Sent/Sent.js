@@ -13,7 +13,6 @@ import RequireHealthOverlay from '../../RequireHealthOverlay';
 import check from '../../assets/img/icons/check.svg';
 import loading from '../../assets/img/icons/loading.svg';
 import withTokens from '../../utils/withTokens';
-import { blockscoutTxUrl } from '../../utils/blockscout';
 import { SentModal } from './SentModal';
 
 @light({
@@ -46,7 +45,6 @@ class Sent extends Component {
       <RequireHealthOverlay require='connected' fullscreen>
         <div className='window_content'>
           <SentModal
-            blockscoutTxUrl={blockscoutTxUrl}
             confirmationsCount={sendStore.confirmations}
             chainName={chainName}
             check={check}
