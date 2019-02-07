@@ -52,7 +52,6 @@ class HealthModal extends Component {
     } else if (status.nodeConnected && !status.internet) {
       return 'No internet. Connected to node';
     } else if (status.downloading) {
-    } else if (status.downloading) {
       return 'Downloading Parity Ethereum...';
     } else if (status.launching) {
       return 'Launching the node...';
@@ -77,6 +76,10 @@ class HealthModal extends Component {
 
     if (!status.internet) {
       return 'Please connect to the Internet';
+    } else if (status.downloading) {
+      return `Downloading Parity Ethereum... (${
+        payload.downloading.syncPercentage
+      }%)`;
     } else if (!status.clockSync) {
       return `Mac: System Preferences -> Date & Time -> Uncheck and recheck "Set date and time automatically"
       Windows: Control Panel -> "Clock, Language, and Region" -> "Date and Time" -> Uncheck and recheck "Set date and time automatically"`;
@@ -85,10 +88,10 @@ class HealthModal extends Component {
     } else if (status.syncing) {
       return `Syncing...${
         payload &&
-        payload.downloading &&
-        payload.downloading.syncPercentage &&
-        payload.downloading.syncPercentage.gt(0)
-          ? ` (${payload.downloading.syncPercentage.toFixed(0)}%)`
+        payload.syncing &&
+        payload.syncing.syncPercentage &&
+        payload.syncing.syncPercentage.gt(0)
+          ? ` (${payload.syncing.syncPercentage.toFixed(0)}%)`
           : ''
       }${chainNameAppend}`;
     } else {

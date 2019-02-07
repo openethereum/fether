@@ -70,10 +70,10 @@ class Health extends Component {
     } else if (status.syncing) {
       return `Syncing...${
         payload &&
-        payload.downloading &&
-        payload.downloading.syncPercentage &&
-        payload.downloading.syncPercentage.gt(0)
-          ? ` (${payload.downloading.syncPercentage.toFixed(0)}%)`
+        payload.syncing &&
+        payload.syncing.syncPercentage &&
+        payload.syncing.syncPercentage.gt(0)
+          ? ` (${payload.syncing.syncPercentage.toFixed(0)}%)`
           : ''
       }${chainNameAppend}`;
     } else if (status.good) {
