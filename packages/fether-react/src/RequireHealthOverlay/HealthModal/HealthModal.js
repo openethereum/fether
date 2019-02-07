@@ -5,7 +5,7 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { chainName$, isLoading } from '@parity/light.js';
+import { chainName$, withoutLoading } from '@parity/light.js';
 import light from '@parity/light.js-react';
 import { Modal } from 'fether-ui';
 
@@ -13,11 +13,12 @@ import withHealth from '../../utils/withHealth';
 import loading from '../../assets/img/icons/loading.svg';
 
 @light({
-  chainName: chainName$
+  chainName: () => chainName$().pipe(withoutLoading())
 })
 @withHealth
 class HealthModal extends Component {
   static propTypes = {
+    chainName: PropTypes.string,
     children: PropTypes.node,
     fullscreen: PropTypes.bool,
     health: PropTypes.object,
@@ -72,8 +73,6 @@ class HealthModal extends Component {
       health: { payload, status }
     } = this.props;
 
-    const chainNameAppend = isLoading(chainName) ? '' : ` (${chainName})`;
-
     if (!status.internet) {
       return 'Please connect to the Internet';
     } else if (status.downloading) {
@@ -93,7 +92,7 @@ class HealthModal extends Component {
         payload.syncing.syncPercentage.gt(0)
           ? ` (${payload.syncing.syncPercentage.toFixed(0)}%)`
           : ''
-      }${chainNameAppend}`;
+      } ${chainName}`;
     } else {
       return '';
     }
