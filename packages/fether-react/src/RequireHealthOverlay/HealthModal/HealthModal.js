@@ -9,21 +9,23 @@ import { chainName$, isLoading } from '@parity/light.js';
 import light from '@parity/light.js-react';
 import { Modal } from 'fether-ui';
 
+import withHealth from '../../utils/withHealth';
+import loading from '../../assets/img/icons/loading.svg';
+
 @light({
   chainName: chainName$
 })
+@withHealth
 class HealthModal extends Component {
   static propTypes = {
     children: PropTypes.node,
     fullscreen: PropTypes.bool,
-    loading: PropTypes.any.isRequired,
-    payload: PropTypes.object,
-    status: PropTypes.object,
+    health: PropTypes.object,
     visible: PropTypes.bool
   };
 
   render () {
-    const { children, fullscreen, loading, visible } = this.props;
+    const { children, fullscreen, visible } = this.props;
 
     return (
       <Modal
@@ -39,7 +41,9 @@ class HealthModal extends Component {
   }
 
   renderTitle = () => {
-    const { status } = this.props;
+    const {
+      health: { status }
+    } = this.props;
 
     if (!status.nodeConnected && !status.internet) {
       return 'No internet. No node connected';
@@ -61,7 +65,10 @@ class HealthModal extends Component {
   };
 
   renderDescription = () => {
-    const { chainName, payload, status } = this.props;
+    const {
+      chainName,
+      health: { payload, status }
+    } = this.props;
 
     const chainNameAppend = isLoading(chainName) ? '' : ` (${chainName})`;
 

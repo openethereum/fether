@@ -7,7 +7,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import withHealth from '../utils/withHealth';
-import loading from '../assets/img/icons/loading.svg';
 import { HealthModal } from './HealthModal';
 
 function statusMatches (status, require) {
@@ -31,6 +30,7 @@ function statusMatches (status, require) {
 @withHealth
 class RequireHealthOverlay extends Component {
   static propTypes = {
+    health: PropTypes.object,
     require: PropTypes.oneOf(['node-internet', 'node', 'sync']),
     fullscreen: PropTypes.bool
   };
@@ -48,7 +48,12 @@ class RequireHealthOverlay extends Component {
   }
 
   updateVisibility = () => {
-    if (statusMatches(this.props.health.status, this.props.require)) {
+    const {
+      health: { status },
+      require
+    } = this.props;
+
+    if (statusMatches(status, require)) {
       if (this.state.visible !== false) {
         this.setState({ visible: false });
       }
@@ -61,20 +66,10 @@ class RequireHealthOverlay extends Component {
 
   render () {
     const { visible } = this.state;
-    const {
-      children,
-      fullscreen,
-      health: { status, payload }
-    } = this.props;
+    const { children, fullscreen } = this.props;
 
     return (
-      <HealthModal
-        fullscreen={fullscreen}
-        loading={loading}
-        payload={payload}
-        status={status}
-        visible={visible}
-      >
+      <HealthModal fullscreen={fullscreen} visible={visible}>
         {children}
       </HealthModal>
     );
