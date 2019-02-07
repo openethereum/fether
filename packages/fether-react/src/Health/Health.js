@@ -53,18 +53,20 @@ class Health extends Component {
 
     if (!status.nodeConnected && !status.internet) {
       return 'No internet. No node connected';
+    } else if (!status.nodeConnected && status.internet) {
+      return 'Connecting to node...';
+    } else if (status.nodeConnected && !status.internet) {
+      return 'No internet. Connected to node';
     } else if (status.downloading) {
       return `Downloading Parity Ethereum... (${
         payload.downloading.syncPercentage
       }%)`;
     } else if (status.launching) {
       return 'Launching the node...';
-    } else if (status.nodeConnected && !status.internet) {
-      return 'No internet. Connected to node';
     } else if (!status.clockSync) {
       return 'Clock of host not in sync';
     } else if (!status.peers) {
-      return 'No peer node connections';
+      return 'Connecting to peers...';
     } else if (status.syncing) {
       return `Syncing...${
         payload &&
