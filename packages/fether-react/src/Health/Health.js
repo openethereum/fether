@@ -52,7 +52,7 @@ class Health extends Component {
     const chainNameAppend = isLoading(chainName) ? '' : ` (${chainName})`;
 
     if (!status.nodeConnected && !status.internet) {
-      return 'No internet. No nodes connected';
+      return 'No internet. No node connected';
     } else if (status.downloading) {
       return `Downloading Parity Ethereum... (${
         payload.downloading.syncPercentage

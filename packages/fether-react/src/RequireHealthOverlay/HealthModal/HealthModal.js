@@ -42,7 +42,7 @@ class HealthModal extends Component {
     const { status } = this.props;
 
     if (!status.nodeConnected && !status.internet) {
-      return 'No internet. No nodes connected';
+      return 'No internet. No node connected';
     } else if (status.downloading) {
       return 'Downloading Parity Ethereum...';
     } else if (status.launching) {
