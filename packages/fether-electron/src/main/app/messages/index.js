@@ -21,7 +21,14 @@ export default async (fetherAppWindow, event, action, ...args) => {
       case 'app-resize': {
         const [width] = fetherAppWindow.getContentSize();
         const newHeight = args[0];
-        fetherAppWindow.setContentSize(width, Math.round(newHeight) + 2);
+        const feedbackButtonHeight = 20;
+        const resizeHeight = newHeight + 2;
+        const height =
+          process.platform === 'win32' && fetherAppWindow.isMenuBarVisible()
+            ? resizeHeight + feedbackButtonHeight
+            : resizeHeight;
+
+        fetherAppWindow.setContentSize(width, height);
         break;
       }
       case 'check-clock-sync': {
