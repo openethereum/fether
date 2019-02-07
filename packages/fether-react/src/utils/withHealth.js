@@ -134,7 +134,7 @@ export default compose(
             isSync && !isNoPeers && isClockSync && isNodeConnected && online;
 
           // Status - list of all states of health store
-          let status = {
+          const status = {
             internet: online, // Internet connection
             nodeConnected: isNodeConnected, // Connected to local Parity Ethereum node
             clockSync: isClockSync, // Local clock is not synchronised
@@ -146,7 +146,7 @@ export default compose(
           };
 
           // Payload - optional payload of a state
-          let payload = {
+          const payload = {
             downloading: {
               syncPercentage: new BigNumber(Math.round(downloadProgress * 100))
             },
