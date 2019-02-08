@@ -8,14 +8,22 @@ import PropTypes from 'prop-types';
 import { chainName$, withoutLoading } from '@parity/light.js';
 import light from '@parity/light.js-react';
 import { Modal } from 'fether-ui';
+import { of } from 'rxjs';
 
 import withHealth from '../../utils/withHealth';
 import loading from '../../assets/img/icons/loading.svg';
 
-@light({
-  chainName: () => chainName$().pipe(withoutLoading())
-})
 @withHealth
+@light({
+  chainName: ({
+    health: {
+      status: { nodeConnected }
+    }
+  }) => {
+    // Only call chainName$ if we're connected to the node
+    return nodeConnected ? chainName$().pipe(withoutLoading()) : of('');
+  }
+})
 class HealthModal extends Component {
   static propTypes = {
     chainName: PropTypes.string,
