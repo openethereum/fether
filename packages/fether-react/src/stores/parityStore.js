@@ -35,6 +35,9 @@ export class ParityStore {
   @observable
   token = null;
 
+  @observable
+  api = undefined;
+
   constructor () {
     // Retrieve token from localStorage
     const token = store.get(LS_KEY);
