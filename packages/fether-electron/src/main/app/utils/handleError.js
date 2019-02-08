@@ -5,7 +5,7 @@
 
 import { app, dialog, shell } from 'electron';
 
-import { bugs, name, parity } from '../../../package.json';
+import { bugs, name, parity } from '../../../../package.json';
 import Pino from './pino';
 
 const logFile = `${app.getPath('userData')}/${name}.log`;
