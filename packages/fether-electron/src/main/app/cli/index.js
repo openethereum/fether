@@ -5,8 +5,8 @@
 
 import cli from 'commander';
 
-const { productName } = require('../../../electron-builder.json');
-const { version } = require('../../../package.json');
+const { productName } = require('../../../../electron-builder.json');
+const { version } = require('../../../../package.json');
 
 /**
  * Process.argv arguments length is different in electron mode and in packaged

@@ -31,7 +31,7 @@
     "start": "npm-run-all -p start-*",
     "start-css": "npm run build-css -- --watch --recursive",
     "start-js": "cross-env SKIP_PREFLIGHT_CHECK=true BROWSER=none craco start --react-scripts ../../node_modules/react-scripts",
-    "test": "ln -s ../../../node_modules/react-scripts node_modules/ && cross-env SKIP_PREFLIGHT_CHECK=true craco test; rm node_modules/react-scripts"
+    "test": "ln -s ../../../node_modules/react-scripts node_modules/ && cross-env SKIP_PREFLIGHT_CHECK=true craco test; EXIT_CODE=$?; rm node_modules/react-scripts; exit $EXIT_CODE"
   },
   "dependencies": {
     "@craco/craco": "^3.3.1",

@@ -87,7 +87,7 @@ class RequireHealthOverlay extends Component {
       case STATUS.CLOCKNOTSYNC:
         return 'Your clock is not sync';
       case STATUS.DOWNLOADING:
-        return 'Downloading Parity...';
+        return 'Downloading Parity Ethereum...';
       case STATUS.NOINTERNET:
         return 'No Internet connection';
       case STATUS.NOPEERS:
