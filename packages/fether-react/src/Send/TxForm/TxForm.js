@@ -129,22 +129,6 @@ class TxForm extends Component {
       token
     } = this.props;
 
-    if (!chainId) {
-      throw new Error('chaindId is required for an EthereumTx');
-    }
-
-    if (!address) {
-      throw new Error('address of an account is required');
-    }
-
-    if (!transactionCount) {
-      throw new Error('transactionCount is required for an EthereumTx');
-    }
-
-    if (!token || !token.address || !token.decimals) {
-      throw new Error('token information is required for an EthereumTx');
-    }
-
     sendStore.setTx({ ...values, chainId, token, transactionCount });
 
     if (type === 'signer') {
@@ -397,7 +381,28 @@ class TxForm extends Component {
     }
 
     try {
-      const { ethBalance, token } = this.props;
+      const {
+        account: { address, transactionCount },
+        chainId,
+        ethBalance,
+        token
+      } = this.props;
+
+      if (!chainId) {
+        throw new Error('chaindId is required for an EthereumTx');
+      }
+
+      if (!address) {
+        throw new Error('address of an account is required');
+      }
+
+      if (!transactionCount) {
+        throw new Error('transactionCount is required for an EthereumTx');
+      }
+
+      if (!token || !token.address || !token.decimals) {
+        throw new Error('token information is required for an EthereumTx');
+      }
 
       if (!ethBalance) {
         throw new Error('No "ethBalance"');
