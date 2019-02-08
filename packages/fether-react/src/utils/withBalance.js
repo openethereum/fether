@@ -18,7 +18,7 @@ export const withErc20Balance = light({
       .balanceOf$(address)
       .pipe(
         withoutLoading(),
-        startWith(undefined),
+        startWith(undefined), // This will allow showing the component immediately, so no blank screen
         map(value => value && value.div(10 ** token.decimals))
       )
 });
@@ -27,7 +27,7 @@ export const withEthBalance = light({
   ethBalance: ({ account: { address } }) =>
     balanceOf$(address).pipe(
       withoutLoading(),
-      startWith(undefined),
+      startWith(undefined), // This will allow showing the component immediately, so no blank screen
       map(value => value && fromWei(value))
     )
 });

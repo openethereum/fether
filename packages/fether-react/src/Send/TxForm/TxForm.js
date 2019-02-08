@@ -46,12 +46,12 @@ const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
   chainId: () =>
     chainId$().pipe(
       withoutLoading(),
-      startWith(undefined)
+      startWith(undefined) // This will allow showing the component immediately, so no blank screen
     ),
   transactionCount: ({ account: { address } }) =>
     transactionCountOf$(address).pipe(
       withoutLoading(),
-      startWith(undefined)
+      startWith(undefined) // This will allow showing the component immediately, so no blank screen
     )
 })
 @withBalance // Balance of current token (can be ETH)
