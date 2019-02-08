@@ -1,16 +1,35 @@
-.alert-screen {
-  position: absolute;
+.alert-wrapper {
+  position: relative;
+}
+
+.alert-screen-wrapper {
+  background: $chrome;
   top: 3rem;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: -2px;
   height: auto;
-  background: $chrome;
-  z-index: 1;
+  overflow: hidden;
+  position: absolute;
+  z-index: 2000; /* Above form validation error tooltip */
 
+  &.-full-screen {
+    top: 0;
+  }
+}
+
+.alert-screen {
+  margin-top: 3.4rem;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &.-full-screen {
+    margin-top: 5rem;
+  }
+}
+
+.alert-screen-content {
 
   .alert-screen_image {
     display: flex;
@@ -21,10 +40,6 @@
       width: 2rem;
       height: auto;
     }
-  }
-
-  &.-full-screen {
-    top: 0;
   }
 
   .alert-screen_text {

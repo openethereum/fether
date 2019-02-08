@@ -10,7 +10,7 @@ import { Link, Redirect } from 'react-router-dom';
 import Scanner from '../../Scanner';
 import { withProps } from 'recompose';
 
-import RequireHealth from '../../RequireHealthOverlay';
+import RequireHealthOverlay from '../../RequireHealthOverlay';
 import withAccount from '../../utils/withAccount.js';
 import withTokens from '../../utils/withTokens';
 
@@ -70,7 +70,7 @@ class ScanSignedTx extends Component {
           title={token && <h1>Send {token.name}</h1>}
         />
 
-        <RequireHealth require='sync'>
+        <RequireHealthOverlay require='sync'>
           <div className='window_content'>
             <div className='box -padded'>
               <Card className='-centered'>
@@ -93,7 +93,7 @@ class ScanSignedTx extends Component {
               </Card>
             </div>
           </div>
-        </RequireHealth>
+        </RequireHealthOverlay>
       </div>
     );
   }

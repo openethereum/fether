@@ -8,7 +8,7 @@ import fs from 'fs';
 import { multistream } from 'pino-multi-stream';
 import Pino from 'pino';
 
-import { name } from '../../../package.json';
+import { name } from '../../../../package.json';
 
 // Pino by default outputs JSON. We prettify that.
 const pretty = Pino.pretty();

@@ -8,6 +8,7 @@ import { AccountHeader, Card, Form as FetherForm } from 'fether-ui';
 import { observer } from 'mobx-react';
 import { Link, withRouter } from 'react-router-dom';
 
+import RequireHealthOverlay from '../RequireHealthOverlay';
 import backupAccount from '../utils/backupAccount';
 import withAccount from '../utils/withAccount';
 
@@ -62,55 +63,57 @@ class BackupAccount extends Component {
     const { isLoading, message, password } = this.state;
 
     return (
-      <div>
-        <AccountHeader
-          address={address}
-          copyAddress
-          name={name}
-          type={type}
-          left={
-            <Link to='/accounts' className='icon -back'>
-              Back
-            </Link>
-          }
-        />
-        <br />
-        <Card className='-space-around'>
-          <form key='backupAccount' onSubmit={this.handleSubmit}>
-            <div className='text'>
-              <p>Unlock your account to encrypt the JSON keystore file:</p>
-            </div>
-
-            <FetherForm.Field
-              label='Password'
-              onChange={this.handlePasswordChange}
-              autoFocus
-              required
-              type='password'
-              value={password}
-            />
-
-            <p className='error'> {message} </p>
-
-            <nav className='form-nav -space-around'>
-              <button
-                className='button -back'
-                onClick={history.goBack}
-                type='button'
-              >
+      <RequireHealthOverlay require='node'>
+        <div>
+          <AccountHeader
+            address={address}
+            copyAddress
+            name={name}
+            type={type}
+            left={
+              <Link to='/accounts' className='icon -back'>
                 Back
-              </button>
-              <button
-                className='button'
-                disabled={!password || isLoading}
+              </Link>
+            }
+          />
+          <br />
+          <Card className='-space-around'>
+            <form key='backupAccount' onSubmit={this.handleSubmit}>
+              <div className='text'>
+                <p>Unlock your account to encrypt the JSON keystore file:</p>
+              </div>
+
+              <FetherForm.Field
+                label='Password'
+                onChange={this.handlePasswordChange}
                 autoFocus
-              >
-                Confirm backup
-              </button>
-            </nav>
-          </form>
-        </Card>
-      </div>
+                required
+                type='password'
+                value={password}
+              />
+
+              <p className='error'> {message} </p>
+
+              <nav className='form-nav -space-around'>
+                <button
+                  className='button -back'
+                  onClick={history.goBack}
+                  type='button'
+                >
+                  Back
+                </button>
+                <button
+                  className='button'
+                  disabled={!password || isLoading}
+                  autoFocus
+                >
+                  Confirm backup
+                </button>
+              </nav>
+            </form>
+          </Card>
+        </div>
+      </RequireHealthOverlay>
     );
   }
 }
