@@ -7,6 +7,8 @@ import React, { Component } from 'react';
 import { AccountCard, Form as FetherForm } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 
+import RequireHealthOverlay from '../../../RequireHealthOverlay';
+
 @inject('createAccountStore')
 @observer
 class AccountPassword extends Component {
@@ -67,68 +69,70 @@ class AccountPassword extends Component {
     const currentStep = pathname.slice(-1);
 
     return (
-      <AccountCard
-        address={address}
-        name={name}
-        drawers={[
-          <form key='createAccount' onSubmit={this.handleSubmit}>
-            <div className='text'>
-              <p>
-                {' '}
-                {jsonString
-                  ? 'Unlock your account to decrypt your JSON keystore file: '
-                  : 'Secure your account with a password:'}
-              </p>
-            </div>
+      <RequireHealthOverlay require='node'>
+        <AccountCard
+          address={address}
+          name={name}
+          drawers={[
+            <form key='createAccount' onSubmit={this.handleSubmit}>
+              <div className='text'>
+                <p>
+                  {' '}
+                  {jsonString
+                    ? 'Unlock your account to decrypt your JSON keystore file: '
+                    : 'Secure your account with a password:'}
+                </p>
+              </div>
 
-            <FetherForm.Field
-              autoFocus
-              label='Password'
-              onChange={this.handlePasswordChange}
-              required
-              type='password'
-              value={password}
-            />
-
-            {!jsonString && (
               <FetherForm.Field
-                label='Confirm'
-                onChange={this.handleConfirmChange}
+                autoFocus
+                label='Password'
+                onChange={this.handlePasswordChange}
                 required
                 type='password'
-                value={confirm}
+                value={password}
               />
-            )}
 
-            <p>
-              {error && error + ' Please check your password and try again.'}
-            </p>
-
-            <nav className='form-nav -space-around'>
-              {currentStep > 1 && (
-                <button
-                  className='button -back'
-                  onClick={history.goBack}
-                  type='button'
-                >
-                  Back
-                </button>
+              {!jsonString && (
+                <FetherForm.Field
+                  label='Confirm'
+                  onChange={this.handleConfirmChange}
+                  required
+                  type='password'
+                  value={confirm}
+                />
               )}
-              <button
-                autoFocus
-                className='button'
-                disabled={
-                  !password ||
-                  (!jsonString && confirm !== password) ||
-                  isLoading
-                }
-              >
-                Confirm account {isImport ? `${'import'}` : `${'creation'}`}
-              </button>
-            </nav>
-          </form>
-        ]}
-      />
+
+              <p>
+                {error && error + ' Please check your password and try again.'}
+              </p>
+
+              <nav className='form-nav -space-around'>
+                {currentStep > 1 && (
+                  <button
+                    className='button -back'
+                    onClick={history.goBack}
+                    type='button'
+                  >
+                    Back
+                  </button>
+                )}
+                <button
+                  autoFocus
+                  className='button'
+                  disabled={
+                    !password ||
+                    (!jsonString && confirm !== password) ||
+                    isLoading
+                  }
+                >
+                  Confirm account {isImport ? `${'import'}` : `${'creation'}`}
+                </button>
+              </nav>
+            </form>
+          ]}
+        />
+      </RequireHealthOverlay>
     );
   }
 }

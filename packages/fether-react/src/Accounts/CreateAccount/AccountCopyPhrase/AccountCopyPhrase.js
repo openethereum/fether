@@ -7,6 +7,8 @@ import React, { Component } from 'react';
 import { AccountCard } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 
+import RequireHealthOverlay from '../../../RequireHealthOverlay';
+
 @inject('createAccountStore')
 @observer
 class AccountCopyPhrase extends Component {
@@ -30,47 +32,49 @@ class AccountCopyPhrase extends Component {
     const currentStep = pathname.slice(-1);
 
     return (
-      <AccountCard
-        address={address}
-        name={name}
-        drawers={[
-          <form key='createAccount' onSubmit={this.handleSubmit}>
-            <div className='text'>
-              <p>Please write your secret phrase on a piece of paper:</p>
-            </div>
-            <div className='text -code'>{bip39Phrase}</div>
-            <div className='text'>
-              <div className='text -tiny'>
-                Keep it secure and secret.
-                <ul className='-bulleted'>
-                  <li>
-                    If you lose your secret phrase, your wallet cannot be
-                    recovered.
-                  </li>
-                  <li>
-                    If someone gets hold of your secret phrase, they will be
-                    able to drain your account.
-                  </li>
-                </ul>
+      <RequireHealthOverlay require='node'>
+        <AccountCard
+          address={address}
+          name={name}
+          drawers={[
+            <form key='createAccount' onSubmit={this.handleSubmit}>
+              <div className='text'>
+                <p>Please write your secret phrase on a piece of paper:</p>
               </div>
-            </div>
-            <nav className='form-nav -space-around'>
-              {currentStep > 1 && (
-                <button
-                  className='button -back'
-                  onClick={history.goBack}
-                  type='button'
-                >
-                  Back
+              <div className='text -code'>{bip39Phrase}</div>
+              <div className='text'>
+                <div className='text -tiny'>
+                  Keep it secure and secret.
+                  <ul className='-bulleted'>
+                    <li>
+                      If you lose your secret phrase, your wallet cannot be
+                      recovered.
+                    </li>
+                    <li>
+                      If someone gets hold of your secret phrase, they will be
+                      able to drain your account.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <nav className='form-nav -space-around'>
+                {currentStep > 1 && (
+                  <button
+                    className='button -back'
+                    onClick={history.goBack}
+                    type='button'
+                  >
+                    Back
+                  </button>
+                )}
+                <button autoFocus className='button'>
+                  Next
                 </button>
-              )}
-              <button autoFocus className='button'>
-                Next
-              </button>
-            </nav>
-          </form>
-        ]}
-      />
+              </nav>
+            </form>
+          ]}
+        />
+      </RequireHealthOverlay>
     );
   }
 }

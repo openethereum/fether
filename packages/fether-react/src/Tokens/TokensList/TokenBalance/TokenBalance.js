@@ -18,8 +18,17 @@ import withBalance from '../../../utils/withBalance';
 @inject('sendStore')
 class TokenBalance extends Component {
   static propTypes = {
+    hideLoadingAccountTokensModal: PropTypes.func,
     token: PropTypes.object
   };
+
+  componentDidMount () {
+    const { hideLoadingAccountTokensModal } = this.props;
+
+    if (hideLoadingAccountTokensModal) {
+      hideLoadingAccountTokensModal();
+    }
+  }
 
   handleClick = () => {
     const {

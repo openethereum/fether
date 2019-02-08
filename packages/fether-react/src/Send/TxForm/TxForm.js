@@ -19,7 +19,7 @@ import { OnChange } from 'react-final-form-listeners';
 import { withProps } from 'recompose';
 
 import { estimateGas } from '../../utils/transaction';
-import RequireHealth from '../../RequireHealthOverlay';
+import RequireHealthOverlay from '../../RequireHealthOverlay';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import TxDetails from './TxDetails';
 import withAccount from '../../utils/withAccount';
@@ -193,7 +193,7 @@ class TxForm extends Component {
           title={token && <h1>Send {token.name}</h1>}
         />
 
-        <RequireHealth require='sync'>
+        <RequireHealthOverlay require='sync'>
           <div className='window_content'>
             <div className='box -padded'>
               <TokenBalance
@@ -322,7 +322,7 @@ class TxForm extends Component {
               />
             </div>
           </div>
-        </RequireHealth>
+        </RequireHealthOverlay>
       </div>
     );
   }
@@ -381,7 +381,28 @@ class TxForm extends Component {
     }
 
     try {
-      const { ethBalance, token } = this.props;
+      const {
+        account: { address, transactionCount },
+        chainId,
+        ethBalance,
+        token
+      } = this.props;
+
+      if (!chainId) {
+        throw new Error('chaindId is required for an EthereumTx');
+      }
+
+      if (!address) {
+        throw new Error('address of an account is required');
+      }
+
+      if (!transactionCount) {
+        throw new Error('transactionCount is required for an EthereumTx');
+      }
+
+      if (!token || !token.address || !token.decimals) {
+        throw new Error('token information is required for an EthereumTx');
+      }
 
       if (!ethBalance) {
         throw new Error('No "ethBalance"');

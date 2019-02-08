@@ -10,6 +10,7 @@ import { Header } from 'fether-ui';
 import light from '@parity/light.js-react';
 import { Link } from 'react-router-dom';
 
+import RequireHealthOverlay from '../RequireHealthOverlay';
 import Health from '../Health';
 import NewTokenItem from './NewTokenItem';
 import withTokens from '../utils/withTokens';
@@ -99,49 +100,55 @@ class Whitelist extends Component {
     const displayedTokens = search ? matches : this.props.tokensArrayWithoutEth;
 
     return (
-      <div>
-        <Header
-          left={
-            <Link to='/tokens' className='icon -back' onClick={history.goBack}>
-              Close
-            </Link>
-          }
-          title={<h1>Search tokens</h1>}
-        />
-
-        <div className='window_content'>
-          <div className='box -padded'>
-            <div className='search-form'>
-              <input
-                onChange={this.handleSearch}
-                placeholder='Find token by name or symbol'
-                value={search}
-                type='text'
-              />
-              <button
-                onClick={this.handleClear}
-                className='button -icon -clear'
-                disabled={!search.length}
+      <RequireHealthOverlay require='sync'>
+        <div>
+          <Header
+            left={
+              <Link
+                to='/tokens'
+                className='icon -back'
+                onClick={history.goBack}
               >
-                Clear
-              </button>
+                Close
+              </Link>
+            }
+            title={<h1>Search tokens</h1>}
+          />
+
+          <div className='window_content'>
+            <div className='box -padded'>
+              <div className='search-form'>
+                <input
+                  onChange={this.handleSearch}
+                  placeholder='Find token by name or symbol'
+                  value={search}
+                  type='text'
+                />
+                <button
+                  onClick={this.handleClear}
+                  className='button -icon -clear'
+                  disabled={!search.length}
+                >
+                  Clear
+                </button>
+              </div>
+            </div>
+            <div className='box -scroller'>
+              <ul className='list -tokens'>
+                {displayedTokens.map(token => (
+                  <NewTokenItem key={token.address} token={token} />
+                ))}
+              </ul>
             </div>
           </div>
-          <div className='box -scroller'>
-            <ul className='list -tokens'>
-              {displayedTokens.map(token => (
-                <NewTokenItem key={token.address} token={token} />
-              ))}
-            </ul>
-          </div>
-        </div>
 
-        <nav className='footer-nav'>
-          <div className='footer-nav_status'>
-            <Health />
-          </div>
-        </nav>
-      </div>
+          <nav className='footer-nav'>
+            <div className='footer-nav_status'>
+              <Health />
+            </div>
+          </nav>
+        </div>
+      </RequireHealthOverlay>
     );
   }
 }

@@ -6,6 +6,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose, mapProps } from 'recompose';
+import { startWith } from 'rxjs/operators';
 import light from '@parity/light.js-react';
 
 import { transactionCountOf$, withoutLoading } from '@parity/light.js';
@@ -17,6 +18,7 @@ const WithAccount = compose(
   light({
     transactionCount: props =>
       transactionCountOf$(props.match.params.accountAddress).pipe(
+        startWith(undefined),
         withoutLoading()
       )
   }),
