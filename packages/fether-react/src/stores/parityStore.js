@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { action, observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 import Api from '@parity/api';
 import isElectron from 'is-electron';
 import light from '@parity/light.js';
@@ -20,6 +20,9 @@ const electron = isElectron() ? window.require('electron') : null;
 const LS_KEY = `${LS_PREFIX}::secureToken`;
 
 export class ParityStore {
+  @observable
+  api = undefined;
+
   // TODO This is not working
   // api.on('connected', () => ...);
   // api.on('disconnected', () => ...);
@@ -63,6 +66,7 @@ export class ParityStore {
     });
   }
 
+  @action
   connectToApi = () => {
     // Get the provider, optionally from --ws-interface and --ws-port flags
     const [defaultInterface, defaultPort] = ['127.0.0.1', '8546'];
@@ -89,6 +93,11 @@ export class ParityStore {
     // Also set api as member for React Components to use it if needed
     this.api = api;
   };
+
+  @computed
+  get isReady () {
+    return !!this.api;
+  }
 
   requestNewToken = () => {
     const { ipcRenderer } = electron;
