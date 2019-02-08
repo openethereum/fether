@@ -22,14 +22,6 @@ class TokenBalance extends Component {
     token: PropTypes.object
   };
 
-  componentDidMount () {
-    const { hideLoadingAccountTokensModal } = this.props;
-
-    if (hideLoadingAccountTokensModal) {
-      hideLoadingAccountTokensModal();
-    }
-  }
-
   handleClick = () => {
     const {
       account: { address },

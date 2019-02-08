@@ -9,7 +9,7 @@ import branch from 'recompose/branch';
 import compose from 'recompose/compose';
 import { fromWei } from '@parity/api/lib/util/wei';
 import light from '@parity/light.js-react';
-import { map } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import withProps from 'recompose/withProps';
 
 export const withErc20Balance = light({
@@ -18,6 +18,7 @@ export const withErc20Balance = light({
       .balanceOf$(address)
       .pipe(
         withoutLoading(),
+        startWith(undefined),
         map(value => value && value.div(10 ** token.decimals))
       )
 });
@@ -26,6 +27,7 @@ export const withEthBalance = light({
   ethBalance: ({ account: { address } }) =>
     balanceOf$(address).pipe(
       withoutLoading(),
+      startWith(undefined),
       map(value => value && fromWei(value))
     )
 });
