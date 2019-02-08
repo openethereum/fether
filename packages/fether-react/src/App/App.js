@@ -16,13 +16,14 @@ import isElectron from 'is-electron';
 import { Modal } from 'fether-ui';
 import ReactResizeDetector from 'react-resize-detector';
 
-import Onboarding from '../Onboarding';
+import loading from '../assets/img/icons/loading.svg';
 
 // Lazy load the following components, because they require light.js to be set
 // before being defined. So we only load them once we have done `setApi()` from
 // light.js (inside parityStore).
 const Accounts = React.lazy(() => import('../Accounts'));
 const BackupAccount = React.lazy(() => import('../BackupAccount'));
+const Onboarding = React.lazy(() => import('../Onboarding'));
 const Send = React.lazy(() => import('../Send'));
 const Tokens = React.lazy(() => import('../Tokens'));
 const Whitelist = React.lazy(() => import('../Whitelist'));
@@ -53,17 +54,19 @@ class App extends Component {
       onboardingStore: { isFirstRun }
     } = this.props;
 
-    if (isFirstRun) {
-      return (
-        <div className='window'>
-          <Onboarding />
-        </div>
-      );
-    }
-
     // Don't display child components requiring RPCs if API is not yet set
     if (!isReady) {
       return this.renderLoadingModal();
+    }
+
+    if (isFirstRun) {
+      return (
+        <Suspense fallback={this.renderLoadingModal()}>
+          <div className='window'>
+            <Onboarding />
+          </div>
+        </Suspense>
+      );
     }
 
     return (
@@ -113,6 +116,7 @@ class App extends Component {
     <Modal
       description='Please wait a few instants'
       fullscreen
+      loading={loading}
       title='Initialising...'
       visible
     />
