@@ -4,17 +4,16 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import electron from 'electron';
-import { template } from './template';
+import { getTemplate } from './template';
 
 const { Menu } = electron;
-
-const menu = Menu.buildFromTemplate(template);
 
 const getMenu = () => {
   return Menu.getApplicationMenu();
 };
 
-const addMenu = () => {
+const addMenu = fetherApp => {
+  const menu = Menu.buildFromTemplate(getTemplate(fetherApp));
   Menu.setApplicationMenu(menu);
 };
 

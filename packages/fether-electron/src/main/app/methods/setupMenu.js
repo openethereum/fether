@@ -10,7 +10,7 @@ const pino = Pino();
 
 function setupMenu (fetherApp) {
   // Add Fether menu
-  addMenu();
+  addMenu(fetherApp);
 
   /**
    * Toggle the Fether menu bar in the frame.
