@@ -136,11 +136,12 @@ class TxForm extends Component {
 
   handleSubmit = values => {
     const {
-      account: { address, type, transactionCount },
+      account: { address, type },
       chainId,
       history,
       sendStore,
-      token
+      token,
+      transactionCount
     } = this.props;
 
     sendStore.setTx({ ...values, chainId, token, transactionCount });
@@ -396,9 +397,10 @@ class TxForm extends Component {
 
     try {
       const {
-        account: { address, transactionCount },
+        account: { address },
         chainId,
         ethBalance,
+        transactionCount,
         token
       } = this.props;
 
