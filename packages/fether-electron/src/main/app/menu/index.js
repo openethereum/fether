@@ -8,13 +8,45 @@ import { getTemplate } from './template';
 
 const { Menu } = electron;
 
-const getMenu = () => {
-  return Menu.getApplicationMenu();
-};
+let hasCalledInitParityEthereum = false;
 
-const addMenu = fetherApp => {
-  const menu = Menu.buildFromTemplate(getTemplate(fetherApp));
-  Menu.setApplicationMenu(menu);
-};
+class FetherMenu {
+  constructor () {
+    if (hasCalledInitParityEthereum) {
+      throw new Error('Unable to initialise Fether menu more than once');
+    }
+  }
 
-export { addMenu, getMenu };
+  getMenu = () => {
+    return Menu.getApplicationMenu();
+  };
+
+  getMenuTemplate = fetherApp => {
+    return getTemplate(fetherApp);
+  };
+
+  getDefaultBuiltMenuTemplate = fetherApp => {
+    return Menu.buildFromTemplate(this.getMenuTemplate(fetherApp));
+  };
+
+  createCustomBuiltMenuTemplate = customMenuTemplate => {
+    return Menu.buildFromTemplate(customMenuTemplate);
+  };
+
+  setMenu = (fetherApp, customBuiltMenuTemplate) => {
+    const defaultBuiltMenuTemplate = this.getDefaultBuiltMenuTemplate(
+      fetherApp
+    );
+    Menu.setApplicationMenu(
+      customBuiltMenuTemplate || defaultBuiltMenuTemplate
+    );
+  };
+
+  updateMenu = fetherApp => {
+    const newMenu = this.getMenuTemplate(fetherApp);
+    const customBuiltMenuTemplate = this.createCustomBuiltMenuTemplate(newMenu);
+    this.setMenu(fetherApp, customBuiltMenuTemplate);
+  };
+}
+
+export default FetherMenu;

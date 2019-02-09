@@ -3,14 +3,15 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { addMenu } from '../menu';
+import FetherMenu from '../menu';
 import Pino from '../utils/pino';
 
 const pino = Pino();
 
 function setupMenu (fetherApp) {
   // Add Fether menu
-  addMenu(fetherApp);
+  fetherApp.menu = new FetherMenu();
+  fetherApp.menu.setMenu(fetherApp, undefined);
 
   /**
    * Toggle the Fether menu bar in the frame.

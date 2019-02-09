@@ -8,22 +8,34 @@ import settings from 'electron-settings';
 
 const { app, shell } = electron;
 
+const getIsAlwaysOnTop = fetherApp => {
+  if (settings.has('always-on-top')) {
+    fetherApp.win.setAlwaysOnTop(settings.get('always-on-top'));
+  }
+
+  return settings.has('always-on-top')
+    ? settings.get('always-on-top')
+    : fetherApp.win.isAlwaysOnTop();
+};
+
 // Create the Application's main menu
 // https://github.com/electron/electron/blob/master/docs/api/menu.md#examples
 export const getTemplate = fetherApp => {
-  const menuItemAlwaysOnTop = {
-    label: 'Toggle Always On Top',
-    click () {
-      const isAlwaysOnTop = settings.has('always-on-top')
-        ? settings.get('always-on-top')
-        : fetherApp.win.isAlwaysOnTop();
+  const labelAlwaysOnTop = 'Always On Top';
+  const labelBlurOnClick = 'Blur On Click';
 
+  const menuItemAlwaysOnTop = {
+    label: getIsAlwaysOnTop(fetherApp) ? labelBlurOnClick : labelAlwaysOnTop,
+    click () {
+      const isAlwaysOnTop = getIsAlwaysOnTop(fetherApp);
       fetherApp.win.setAlwaysOnTop(!isAlwaysOnTop);
       settings.set('always-on-top', !isAlwaysOnTop);
 
       if (isAlwaysOnTop) {
         fetherApp.win.moveTop();
       }
+
+      fetherApp.menu.updateMenu(fetherApp);
     }
   };
 
@@ -54,7 +66,7 @@ export const getTemplate = fetherApp => {
     },
     {
       role: 'window',
-      submenu: [{ role: 'minimize' }, menuItemAlwaysOnTop, { role: 'close' }]
+      submenu: [{ role: 'minimize' }, { role: 'close' }, menuItemAlwaysOnTop]
     },
     {
       role: 'help',
