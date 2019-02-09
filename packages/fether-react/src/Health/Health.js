@@ -13,9 +13,9 @@ import withHealth from '../utils/withHealth';
 @branch(
   ({
     health: {
-      status: { nodeConnected, syncing }
+      status: { good, syncing }
     }
-  }) => nodeConnected || syncing,
+  }) => good || syncing,
   // Only call light.js chainName$ if we're syncing or good
   light({
     chainName: () => chainName$().pipe(withoutLoading())
