@@ -127,21 +127,20 @@ export default compose(
         ]) => {
           const isDownloading =
             online && downloadProgress > 0 && !isParityRunning;
-          const isNodeConnected =
-            !isDownloading && isApiConnected && isParityRunning;
-          const isNoPeers = peerCount === undefined || peerCount.lte(1);
+          const isNoPeers =
+            isApiConnected && (peerCount === undefined || peerCount.lte(1));
           const isGood =
-            isSync && !isNoPeers && isClockSync && isNodeConnected && online;
+            isSync && !isNoPeers && isClockSync && isApiConnected && online;
 
           // Status - list of all states of health store
           const status = {
             internet: online, // Internet connection
-            nodeConnected: isNodeConnected, // Connected to local Parity Ethereum node
+            nodeConnected: isApiConnected, // Connected to local Parity Ethereum node
             clockSync: isClockSync, // Local clock is not synchronised
             downloading: isDownloading, // Currently downloading Parity Ethereum
             launching: !isApiConnected, // Launching Parity Ethereum only upon startup
             peers: !isNoPeers, // Connecion to peer nodes
-            syncing: !isSync, // Synchronising blocks
+            syncing: isApiConnected && !isSync, // Synchronising blocks
             good: isGood // Synchronised and no issues
           };
 

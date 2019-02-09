@@ -61,9 +61,18 @@ class App extends Component {
     // an API first, otherwise it will throw an error.
     // We set parityStore.api right after we set the API for light.js, so we
     // verify here that parityStore.api is defined, and if not we don't render
-    // the children.
+    // the children, just a <RequireHealthOverlay />.
     if (!api) {
-      return <RequireHealthOverlay fullscreen require='node' />;
+      return (
+        <ReactResizeDetector handleHeight onResize={this.handleResize}>
+          <RequireHealthOverlay fullscreen require='node'>
+            {/* Adding these components to have minimum height on window */}
+            <div className='content'>
+              <div className='window' />
+            </div>
+          </RequireHealthOverlay>
+        </ReactResizeDetector>
+      );
     }
 
     return (
