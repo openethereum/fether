@@ -58,7 +58,7 @@ class Health extends Component {
     } = this.props;
 
     if (status.downloading) {
-      return `Downloading Parity Ethereum... (${
+      return `Downloading Parity Ethereum (${
         payload.downloading.syncPercentage
       }%)`;
     } else if (status.launching) {
