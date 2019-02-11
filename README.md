@@ -81,7 +81,7 @@ $ /path/to/fether
 
 ### Dependencies
 
-Make sure you have at least `yarn` version 1.4.2 and [Node.js >=8.12.0](https://nodejs.org/en/)
+Make sure you have at least `yarn` version 1.4.2 and [Node.js >=10.10.0](https://nodejs.org/en/)
 
 ```bash
 yarn --version // Should be at least 1.4.2
@@ -113,7 +113,59 @@ yarn package
 yarn start
 ```
 
-> Troubleshooting: If it hangs on a white screen in Electron even though it has compiled and has been syncing for a long time, then simply choose 'View > Reload' (CMD + R on macOS) from the Electron menu
+> Troubleshooting: If it hangs on a white screen in Electron even though it has compiled and has been syncing for a long time, then simply choose 'View > Reload' (CMD + R on macOS) from the Fether/Electron menu. If the Fether menu is not shown in the tray, then by clicking the Fether window and then holding down the ALT key to reveal it.
+
+> Developer Tools: Open developer tools automatically by running `DEBUG=true yarn start` when not in the production environment
+
+# Run without taskbar mode (no tray icon)
+
+```bash
+TASKBAR=false yarn start
+```
+
+# Usage of taskbar mode
+
+### macOS
+
+Taskbar mode is `true` by default.
+
+* Enabled `true`
+  * Fether window may be toggled open/closed by clicking the Fether tray icon, but not the Fether dock icon
+  * Fether window does not have a frame (i.e. no close/minimise icons)
+* Disabled `false`
+  * Fether window may be toggled open by clicking the Fether dock icon
+  * Fether window has a frame (with close/minimise icons)
+* Always
+  * Fether menu shown in the tray by default
+  * Fether window position is saved upon move, minimising, and close so it is restored in the same position.
+
+### Linux
+
+Taskbar mode is `true` by default.
+
+* Enabled `true`
+  * Fether window may be toggled minimise/restore by clicking the Fether tray icon to reveal a tooltip that says "Click to toggle Fether window" and then clicking the tooltip.
+  * Fether window may not have a frame (i.e. no close/minimise icons) if `frame: false` in packages/fether-electron/src/main/app/options/config/index.js
+* Disabled `false`
+  * Fether window may be toggled open by clicking the Fether dock icon
+  * Fether window has a frame (with close/minimise icons)
+* Always
+  * Fether menu may not be not shown in the tray by default depending on whether `setMenuBarVisibility` has been set. Show the Fether menu in the tray by clicking the Fether window and then holding down the ALT key to reveal it.
+  * Fether menu may be configured to automatically hide by setting `setAutoHideMenuBar`
+  * Fether window position is saved upon move, minimising, and close so it is restored in the same position.
+
+### Windows
+
+Taskbar mode is always `false` since the Fether menu does not appear without a frame on the Fether window.
+
+* Disabled `false`
+  * Fether window may be toggled open/minimise by clicking the Fether dock icon
+  * Fether window has a frame (with close/minimise icons).
+* Always
+  * Fether menu is shown in the Fether window by clicking the Fether window and then holding down the ALT key to reveal it.
+  * Fether menu may be configured to automatically hide by setting `setAutoHideMenuBar`
+  * Fether tray icon does nothing
+  * Fether window position is saved upon move, minimising, and close so it is restored in the same position.
 
 ## Join the chat!
 

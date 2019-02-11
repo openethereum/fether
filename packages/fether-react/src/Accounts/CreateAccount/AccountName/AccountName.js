@@ -8,6 +8,7 @@ import { AccountCard, Card, Form as FetherForm } from 'fether-ui';
 import Blockies from 'react-blockies';
 import { inject, observer } from 'mobx-react';
 
+import RequireHealthOverlay from '../../../RequireHealthOverlay';
 import loading from '../../../assets/img/icons/loading.svg';
 
 @inject('createAccountStore')
@@ -59,7 +60,11 @@ class AccountName extends Component {
       createAccountStore: { isImport }
     } = this.props;
 
-    return isImport ? this.renderCardWhenImported() : this.renderCardWhenNew();
+    return (
+      <RequireHealthOverlay require='node'>
+        {isImport ? this.renderCardWhenImported() : this.renderCardWhenNew()}
+      </RequireHealthOverlay>
+    );
   }
 
   renderCardWhenImported = () => {

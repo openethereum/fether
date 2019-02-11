@@ -9,18 +9,31 @@ import { fromWei, toWei } from '@parity/api/lib/util/wei';
 
 class TxDetails extends Component {
   renderDetails = () => {
-    const { estimatedTxFee } = this.props;
+    const { estimatedTxFee, token, values } = this.props;
 
-    return estimatedTxFee
-      ? `${this.renderCalculation()}
-${this.renderFee()}
-${this.renderTotalAmount()}`
-      : `
+    if (
+      !estimatedTxFee ||
+      !values.gasPrice ||
+      !values.amount ||
+      !token.address
+    ) {
+      // Keep line break so message is centered
+      return `
 Missing input fields...`;
+    }
+
+    return `${this.renderCalculation()}
+${this.renderFee()}
+${this.renderTotalAmount()}`;
   };
 
   renderCalculation = () => {
     const { estimatedTxFee, values } = this.props;
+
+    if (!estimatedTxFee || !values.gasPrice) {
+      return;
+    }
+
     const gasPriceBn = new BigNumber(values.gasPrice.toString());
     const gasLimitBn = estimatedTxFee
       .div(gasPriceBn)
@@ -34,6 +47,10 @@ Missing input fields...`;
   renderFee = () => {
     const { estimatedTxFee } = this.props;
 
+    if (!estimatedTxFee) {
+      return;
+    }
+
     return `Fee: ${fromWei(estimatedTxFee, 'ether')
       .toFixed(9)
       .toString()} ETH (gas limit * gas price)`;
@@ -41,6 +58,10 @@ Missing input fields...`;
 
   renderTotalAmount = () => {
     const { estimatedTxFee, token, values } = this.props;
+
+    if (!estimatedTxFee || !values.amount || !token.address) {
+      return;
+    }
 
     return `Total Amount: ${fromWei(
       estimatedTxFee.plus(

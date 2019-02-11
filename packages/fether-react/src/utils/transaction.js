@@ -142,17 +142,19 @@ const getEthereumTx = tx => {
     txParams.to = token.address;
     txParams.data =
       '0x' +
-      new Abi(eip20).functions.find(f => f._name === 'transfer').encodeCall([
-        new Token('address', to),
-        new Token(
-          'uint',
-          '0x' +
-            new BigNumber(amount)
-              .multipliedBy(new BigNumber(10).pow(token.decimals))
-              .toNumber()
-              .toString(16)
-        )
-      ]);
+      new Abi(eip20).functions
+        .find(f => f._name === 'transfer')
+        .encodeCall([
+          new Token('address', to),
+          new Token(
+            'uint',
+            '0x' +
+              new BigNumber(amount)
+                .multipliedBy(new BigNumber(10).pow(token.decimals))
+                .toNumber()
+                .toString(16)
+          )
+        ]);
   }
 
   return new EthereumTx(txParams);

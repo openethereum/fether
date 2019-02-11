@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import { addressShort, Card, Form as FetherForm } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 
+import RequireHealthOverlay from '../../../RequireHealthOverlay';
 import Scanner from '../../../Scanner';
 import withAccountsInfo from '../../../utils/withAccountsInfo';
 import getBip39Wordlist from '../../../stores/utils/getBip39Wordlist';
@@ -231,22 +232,24 @@ class AccountImportOptions extends Component {
     );
 
     return (
-      <div className='center-md'>
-        {!importingFromSigner && jsonCard}
-        <br />
-        {signerCard}
-        <br />
-        {!importingFromSigner && phraseCard}
-        <br />
-        <p>{error}</p>
-        <nav className='form-nav -space-around'>
-          {currentStep > 1 && (
-            <button className='button -back' onClick={history.goBack}>
-              Back
-            </button>
-          )}
-        </nav>
-      </div>
+      <RequireHealthOverlay require='node'>
+        <div className='center-md'>
+          {!importingFromSigner && jsonCard}
+          <br />
+          {signerCard}
+          <br />
+          {!importingFromSigner && phraseCard}
+          <br />
+          <p>{error}</p>
+          <nav className='form-nav -space-around'>
+            {currentStep > 1 && (
+              <button className='button -back' onClick={history.goBack}>
+                Back
+              </button>
+            )}
+          </nav>
+        </div>
+      </RequireHealthOverlay>
     );
   }
 

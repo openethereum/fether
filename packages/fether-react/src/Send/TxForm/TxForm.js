@@ -19,7 +19,7 @@ import { OnChange } from 'react-final-form-listeners';
 import { withProps } from 'recompose';
 
 import { estimateGas } from '../../utils/transaction';
-import RequireHealth from '../../RequireHealthOverlay';
+import RequireHealthOverlay from '../../RequireHealthOverlay';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import TxDetails from './TxDetails';
 import withAccount from '../../utils/withAccount';
@@ -66,7 +66,7 @@ class TxForm extends Component {
             );
           } catch (error) {
             console.error(error);
-            throw new Error('Unable to estimate gas');
+            return new BigNumber(-1);
           }
         }
 
@@ -105,15 +105,23 @@ class TxForm extends Component {
     return output;
   };
 
-  estimatedTxFee = values => {
+  isEstimatedTxFee = values => {
     if (
-      !values.amount ||
-      !values.gas ||
-      !values.gasPrice ||
-      isNaN(values.amount) ||
-      isNaN(values.gas) ||
-      isNaN(values.gasPrice)
+      values.amount &&
+      values.gas &&
+      values.gasPrice &&
+      !isNaN(values.amount) &&
+      !values.gas.isNaN() &&
+      !isNaN(values.gasPrice)
     ) {
+      return true;
+    }
+
+    return false;
+  };
+
+  estimatedTxFee = values => {
+    if (!this.isEstimatedTxFee(values)) {
       return null;
     }
 
@@ -193,7 +201,7 @@ class TxForm extends Component {
           title={token && <h1>Send {token.name}</h1>}
         />
 
-        <RequireHealth require='sync'>
+        <RequireHealthOverlay require='sync'>
           <div className='window_content'>
             <div className='box -padded'>
               <TokenBalance
@@ -322,7 +330,7 @@ class TxForm extends Component {
               />
             </div>
           </div>
-        </RequireHealth>
+        </RequireHealthOverlay>
       </div>
     );
   }
@@ -381,7 +389,28 @@ class TxForm extends Component {
     }
 
     try {
-      const { ethBalance, token } = this.props;
+      const {
+        account: { address, transactionCount },
+        chainId,
+        ethBalance,
+        token
+      } = this.props;
+
+      if (!chainId) {
+        throw new Error('chaindId is required for an EthereumTx');
+      }
+
+      if (!address) {
+        throw new Error('address of an account is required');
+      }
+
+      if (!transactionCount) {
+        throw new Error('transactionCount is required for an EthereumTx');
+      }
+
+      if (!token || !token.address || !token.decimals) {
+        throw new Error('token information is required for an EthereumTx');
+      }
 
       if (!ethBalance) {
         throw new Error('No "ethBalance"');
@@ -394,10 +423,14 @@ class TxForm extends Component {
         return preValidation;
       }
 
+      if (values.gas && values.gas.eq(-1)) {
+        return { amount: 'Unable to estimate gas...' };
+      }
+
       // If the gas hasn't been calculated yet, then we don't show any errors,
       // just wait a bit more
-      if (!this.estimatedTxFee(values)) {
-        return;
+      if (!this.isEstimatedTxFee(values)) {
+        return { amount: 'Estimating gas...' };
       }
 
       // Verify that `gas + (eth amount if sending eth) <= ethBalance`
