@@ -32,9 +32,8 @@ export default async (fetherAppWindow, event, action, ...args) => {
           process.platform === 'win32' && fetherAppWindow.isMenuBarVisible()
             ? resizeHeight + feedbackButtonHeight
             : resizeHeight;
-        const resizeWithAnimation = true;
 
-        fetherAppWindow.setContentSize(width, height, resizeWithAnimation);
+        fetherAppWindow.setContentSize(width, height);
         break;
       }
       case 'check-clock-sync': {
