@@ -37,22 +37,34 @@ class AccountImportOptions extends Component {
   };
 
   handlePhraseChange = ({ target: { value: phrase } }) => {
+    // FIXME: repeated logic in AccountRewritePhrase handleChange()
     const words = phrase.split(' ');
     const lastVal = words.slice(-1);
     const isWordEnded = lastVal.join() === '';
 
     let lastWord;
     if (isWordEnded) {
-      lastWord = words.slice(-2)[0];
+      lastWord = words[words.length - 2];
     }
 
+    // Case: word doesn't exist in either wordlist (i.e. self-generated)
     if (
+      isWordEnded &&
       lastWord &&
       !BIP39_WORDLIST.has(lastWord) &&
       !PARITY_WORDLIST.has(lastWord)
     ) {
+      // Handle through customer support
+      let error = (
+        <div>
+          <p
+          >{`${lastWord} is not a valid BIP39 or Parity word. If you wish to recover your account with a self-generated phrase, please`}</p>
+          <button class='button'> Contact Us </button>
+        </div>
+      );
+
       this.setState({
-        error: `${lastWord} is not a valid BIP39 or Parity word`
+        error
       });
     } else {
       this.setState({
@@ -66,8 +78,7 @@ class AccountImportOptions extends Component {
   handleSubmitPhrase = async () => {
     const phrase = this.state.phrase.trim();
     const {
-      createAccountStore,
-      createAccountStore: { setPhrase }
+      createAccountStore: { address, setPhrase }
     } = this.props;
 
     this.setState({ isLoading: true, phrase });
@@ -75,7 +86,7 @@ class AccountImportOptions extends Component {
     try {
       await setPhrase(phrase);
 
-      if (this.hasExistingAddressForImport(createAccountStore.address)) {
+      if (this.hasExistingAddressForImport(address)) {
         return;
       }
 
@@ -92,8 +103,7 @@ class AccountImportOptions extends Component {
 
   handleChangeFile = async jsonString => {
     const {
-      createAccountStore,
-      createAccountStore: { setJsonString }
+      createAccountStore: { address, setJsonString }
     } = this.props;
 
     this.setState({ isLoading: true });
@@ -101,7 +111,7 @@ class AccountImportOptions extends Component {
     try {
       await setJsonString(jsonString);
 
-      if (this.hasExistingAddressForImport(createAccountStore.address)) {
+      if (this.hasExistingAddressForImport(address)) {
         return;
       }
 

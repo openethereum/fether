@@ -25,29 +25,6 @@ class AccountRewritePhrase extends Component {
   };
 
   handleChange = ({ target: { value } }) => {
-    const words = value.split(' ');
-    const lastVal = words.slice(-1);
-    const isWordEnded = lastVal.join() === '';
-
-    let lastWord;
-    if (isWordEnded) {
-      lastWord = words.slice(-2)[0];
-    }
-
-    if (
-      lastWord &&
-      !BIP39_WORDLIST.has(lastWord) &&
-      !PARITY_WORDLIST.has(lastWord)
-    ) {
-      this.setState({
-        error: `${lastWord} is not a valid BIP39 or Parity word`
-      });
-    } else {
-      this.setState({
-        error: null
-      });
-    }
-
     this.setState({ value });
   };
 

@@ -49,6 +49,10 @@ class Tokens extends PureComponent {
       {
         name: 'Add Tokens',
         onClick: () => history.push(`/whitelist/${address}`)
+      },
+      {
+        name: 'View Recovery Phrase',
+        onClick: () => console.log('view phrase!')
       }
     ];
 
