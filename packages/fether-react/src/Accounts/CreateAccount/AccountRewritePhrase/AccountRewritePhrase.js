@@ -9,11 +9,6 @@ import { inject, observer } from 'mobx-react';
 
 import RequireHealthOverlay from '../../../RequireHealthOverlay';
 import AccountImportOptions from '../AccountImportOptions';
-import getBip39Wordlist from '../../../stores/utils/getBip39Wordlist';
-import getParityWordlist from '../../../stores/utils/getParityWordlist';
-
-const BIP39_WORDLIST = getBip39Wordlist();
-const PARITY_WORDLIST = getParityWordlist();
 
 @inject('createAccountStore')
 @observer
@@ -30,14 +25,39 @@ class AccountRewritePhrase extends Component {
 
   handleSubmit = async () => {
     const {
+      createAccountStore: { isImport, setPhrase },
       history,
-      location: { pathname },
-      createAccountStore: { isImport, setPhrase }
+      location: { pathname }
     } = this.props;
     const currentStep = pathname.slice(-1);
     const { value } = this.state;
 
     // If we're importing, derive address from recovery phrase when we submit
+    if (isImport) {
+      this.setState({ isLoading: true });
+      await setPhrase(value);
+    }
+
+    history.push(`/accounts/new/${+currentStep + 1}`);
+  };
+
+  /**
+    Set a flag "skippedFlag" in store to pop a warning until user decides
+    to go back to handle this step.
+
+    The rest of the account creation flow goes as usual.
+  */
+  skipRecoveryStep = async () => {
+    const {
+      createAccountStore: { isImport, setPhrase, setPhraseRewriteSkippedFlag },
+      history,
+      location: { pathname }
+    } = this.props;
+    const currentStep = pathname.slice(-1);
+    const { value } = this.state;
+
+    setPhraseRewriteSkippedFlag(true);
+
     if (isImport) {
       this.setState({ isLoading: true });
       await setPhrase(value);
@@ -65,6 +85,10 @@ class AccountRewritePhrase extends Component {
                 Type your secret phrase to confirm that you wrote it down
                 correctly:
               </p>
+              <button class='button' onClick={this.skipRecoveryStep}>
+                {' '}
+                Skip{' '}
+              </button>
               {error}
             </div>
           )}

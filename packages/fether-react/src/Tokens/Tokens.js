@@ -6,11 +6,13 @@
 import React, { PureComponent } from 'react';
 import { AccountHeader, Clickable, MenuPopup } from 'fether-ui';
 import { Link, withRouter } from 'react-router-dom';
+import { inject } from 'mobx-react';
 
 import Health from '../Health';
 import TokensList from './TokensList';
 import withAccount from '../utils/withAccount';
 
+@inject('createAccountStore')
 @withRouter
 @withAccount
 class Tokens extends PureComponent {
@@ -24,6 +26,10 @@ class Tokens extends PureComponent {
 
   handleMenuOpen = () => {
     this.setState({ isMenuOpen: true });
+  };
+
+  handlePhraseRewrite = () => {
+    console.log('rewrite clicked');
   };
 
   isParitySignerAccount = () => {
@@ -65,9 +71,30 @@ class Tokens extends PureComponent {
 
   render () {
     const {
-      account: { address, name, type }
+      account: { address, name, type },
+      createAccountStore: { skippedFlag }
     } = this.props;
     const { isMenuOpen } = this.state;
+
+    const rightMenu = (
+      <div>
+        {skippedFlag ? (
+          <Clickable
+            className='icon -warning'
+            onClick={this.handlePhraseRewrite}
+          />
+        ) : null}
+        <MenuPopup
+          className='popup-menu-account'
+          horizontalOffset={1}
+          menuItems={this.menuItems()}
+          onClose={this.handleMenuClose}
+          onOpen={this.handleMenuOpen}
+          size='small'
+          trigger={<Clickable className='icon -menu' />}
+        />
+      </div>
+    );
 
     return (
       <div className='tokens'>
@@ -82,17 +109,7 @@ class Tokens extends PureComponent {
               Back
             </Link>
           }
-          right={
-            <MenuPopup
-              className='popup-menu-account'
-              horizontalOffset={1}
-              menuItems={this.menuItems()}
-              onClose={this.handleMenuClose}
-              onOpen={this.handleMenuOpen}
-              size='small'
-              trigger={<Clickable className='icon -menu' />}
-            />
-          }
+          right={rightMenu}
         />
 
         <TokensList />

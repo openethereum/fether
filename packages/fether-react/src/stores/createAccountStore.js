@@ -26,6 +26,9 @@ const JSON_VERSION = 3;
 
 export class CreateAccountStore {
   @observable
+  skippedFlag = false; // Did the user opt to skip the recovery rewrite step?
+
+  @observable
   isImport = false; // Are we creating a new account, or importing via phrase?
 
   @observable
@@ -142,6 +145,14 @@ export class CreateAccountStore {
     return this.setBip39Phrase(phrase).catch(() =>
       this.setParityPhrase(phrase)
     );
+  };
+
+  /**
+    User opted to skip recovery rewrite step.
+    @param flag: boolean
+  */
+  setPhraseRewriteSkippedFlag = flag => {
+    this.skippedFlag = flag;
   };
 
   setBip39Phrase = async phrase => {
