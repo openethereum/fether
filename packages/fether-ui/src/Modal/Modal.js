@@ -12,8 +12,8 @@ export const Modal = ({
   description,
   fullscreen,
   link,
-  loading,
-  navigateTo,
+  icon,
+  buttons,
   title,
   visible
 }) => (
@@ -24,19 +24,21 @@ export const Modal = ({
     >
       <div className={`alert-screen ${fullscreen ? '-full-screen' : ''}`}>
         <SUIModal.Content image className='alert-screen-content'>
-          <SUIImage
-            wrapped
-            alt='loading'
-            size='medium'
-            src={loading}
-            className='alert-screen_image'
-          />
+          {icon && (
+            <SUIImage
+              wrapped
+              alt='loading'
+              size='medium'
+              src={icon}
+              className='alert-screen_image'
+            />
+          )}
           <SUIModal.Description className='alert-screen_text'>
             <h1>{title}</h1>
             <p>{description}</p>
             <p>{link || null}</p>
           </SUIModal.Description>
-          {navigateTo || null}
+          {buttons || null}
         </SUIModal.Content>
       </div>
     </SUIModal>
@@ -49,8 +51,8 @@ Modal.propTypes = {
   description: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   fullscreen: PropTypes.bool,
   link: PropTypes.node,
-  loading: PropTypes.any.isRequired,
-  navigateTo: PropTypes.node,
+  icon: PropTypes.any,
+  buttons: PropTypes.node,
   title: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   visible: PropTypes.bool
 };

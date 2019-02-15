@@ -13,7 +13,10 @@ import {
 } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import isElectron from 'is-electron';
+import { Modal } from 'fether-ui';
 import ReactResizeDetector from 'react-resize-detector';
+import semver from 'semver';
+import { version } from '../../package.json';
 
 import Accounts from '../Accounts';
 import BackupAccount from '../BackupAccount';
@@ -22,6 +25,8 @@ import RequireHealthOverlay from '../RequireHealthOverlay';
 import Send from '../Send';
 import Tokens from '../Tokens';
 import Whitelist from '../Whitelist';
+
+const currentVersion = version;
 
 // Use MemoryRouter for production viewing in file:// protocol
 // https://github.com/facebook/create-react-app/issues/3591
@@ -38,6 +43,55 @@ class App extends Component {
     }
     // Send height to main process
     electron.ipcRenderer.send('asynchronous-message', 'app-resize', height);
+  };
+
+  state = {
+    newRelease: false // false | {name, url, ignore}
+  };
+
+  componentDidMount () {
+    window
+      .fetch('https://api.github.com/repos/paritytech/fether/releases/latest')
+      .then(j => j.json())
+      .then(({ name, html_url: url, tag_name: tag }) => {
+        const latestVersion = tag.match(/v(\d+\.\d+(\.\d+)?)/)[1];
+        if (semver.gt(latestVersion, currentVersion)) {
+          this.setState({
+            newRelease: {
+              name,
+              url,
+              ignore: false
+            }
+          });
+        }
+      })
+      .catch(e => {
+        console.error('Error while checking for a new version of Fether:', e);
+      });
+  }
+
+  renderModalLinks = () => {
+    return (
+      <nav className='form-nav -binary'>
+        <button className='button -back' onClick={this.hideNewReleaseModal}>
+          Remind me later
+        </button>
+
+        <button className='button' onClick={this.openNewReleaseUrl}>
+          Download
+        </button>
+      </nav>
+    );
+  };
+
+  hideNewReleaseModal = () => {
+    this.setState({
+      newRelease: { ...this.state.newRelease, ignore: true }
+    });
+  };
+
+  openNewReleaseUrl = () => {
+    window.open(this.state.newRelease.url);
   };
 
   /**
@@ -79,28 +133,36 @@ class App extends Component {
       <ReactResizeDetector handleHeight onResize={this.handleResize}>
         <div className='content'>
           <div className='window'>
-            <Router>
-              <Switch>
-                {/* The next line is the homepage */}
-                <Redirect exact from='/' to='/accounts' />
-                <Route path='/accounts' component={Accounts} />
-                <Route path='/onboarding' component={Onboarding} />
-                <Route path='/tokens/:accountAddress' component={Tokens} />
-                <Route
-                  path='/whitelist/:accountAddress'
-                  component={Whitelist}
-                />
-                <Route
-                  path='/backup/:accountAddress'
-                  component={BackupAccount}
-                />
-                <Route
-                  path='/send/:tokenAddress/from/:accountAddress'
-                  component={Send}
-                />
-                <Redirect from='*' to='/' />
-              </Switch>
-            </Router>
+            <Modal
+              title='New version available'
+              description={`${this.state.newRelease.name &&
+                this.state.newRelease.name} was released!`}
+              visible={this.state.newRelease && !this.state.newRelease.ignore}
+              buttons={this.renderModalLinks()}
+            >
+              <Router>
+                <Switch>
+                  {/* The next line is the homepage */}
+                  <Redirect exact from='/' to='/accounts' />
+                  <Route path='/accounts' component={Accounts} />
+                  <Route path='/onboarding' component={Onboarding} />
+                  <Route path='/tokens/:accountAddress' component={Tokens} />
+                  <Route
+                    path='/whitelist/:accountAddress'
+                    component={Whitelist}
+                  />
+                  <Route
+                    path='/backup/:accountAddress'
+                    component={BackupAccount}
+                  />
+                  <Route
+                    path='/send/:tokenAddress/from/:accountAddress'
+                    component={Send}
+                  />
+                  <Redirect from='*' to='/' />
+                </Switch>
+              </Router>
+            </Modal>
           </div>
         </div>
       </ReactResizeDetector>
