@@ -59,9 +59,39 @@ const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 @observer
 class TxForm extends Component {
   state = {
+    chainId: undefined,
+    balance: undefined,
+    ethBalance: undefined,
     maxSelected: false,
-    showDetails: false
+    showDetails: false,
+    transactionCount: undefined
   };
+
+  /**
+   * Update state with the latest prop value if it is defined
+   */
+  static getDerivedStateFromProps (nextProps, prevState) {
+    if (
+      (nextProps.chainId && nextProps.chainId !== prevState.chainId) ||
+      (nextProps.balance && nextProps.balance !== prevState.balance) ||
+      (nextProps.ethBalance && nextProps.ethBalance !== prevState.ethBalance) ||
+      (nextProps.transactionCount &&
+        nextProps.transactionCount !== prevState.transactionCount)
+    ) {
+      return {
+        chainId: (nextProps.chainId && nextProps.chainId) || prevState.chainId,
+        balance: (nextProps.balance && nextProps.balance) || prevState.balance,
+        ethBalance:
+          (nextProps.ethBalance && nextProps.ethBalance) ||
+          prevState.ethBalance,
+        transactionCount:
+          (nextProps.transactionCount && nextProps.transactionCount) ||
+          prevState.transactionCount
+      };
+    }
+
+    return null; // No change to state
+  }
 
   decorator = createDecorator({
     field: /to|amount/, // when the value of these fields change...
@@ -145,12 +175,22 @@ class TxForm extends Component {
   handleSubmit = values => {
     const {
       account: { address, type },
-      chainId,
       history,
       sendStore,
-      token,
-      transactionCount
+      token
     } = this.props;
+    const { balance, chainId, ethBalance, transactionCount } = this.state;
+
+    console.log('TxForm handleSubmit - balance', balance && balance.toString());
+    console.log('TxForm handleSubmit - chainId', chainId && chainId.toString());
+    console.log(
+      'TxForm handleSubmit - ethBalance',
+      ethBalance && ethBalance.toString()
+    );
+    console.log(
+      'TxForm handleSubmit - transactionCount',
+      transactionCount && transactionCount.toString()
+    );
 
     sendStore.setTx({ ...values, chainId, token, transactionCount });
 
@@ -202,8 +242,25 @@ class TxForm extends Component {
       sendStore: { tx },
       token
     } = this.props;
+    const {
+      balance,
+      chainId,
+      ethBalance,
+      showDetails,
+      transactionCount
+    } = this.state;
 
-    const { showDetails } = this.state;
+    console.log('TxForm render - this.state: ', this.state);
+    console.log('TxForm render - balance', balance && balance.toString());
+    console.log('TxForm render - chainId', chainId && chainId.toString());
+    console.log(
+      'TxForm render - ethBalance',
+      ethBalance && ethBalance.toString()
+    );
+    console.log(
+      'TxForm render - transactionCount',
+      transactionCount && transactionCount.toString()
+    );
 
     return (
       <div>
@@ -224,7 +281,14 @@ class TxForm extends Component {
                 drawers={[
                   <Form
                     key='txForm'
-                    initialValues={{ from: address, gasPrice: 4, ...tx }}
+                    initialValues={{
+                      chainId: chainId,
+                      ethBalance: ethBalance,
+                      from: address,
+                      gasPrice: 4,
+                      transactionCount: transactionCount,
+                      ...tx
+                    }}
                     onSubmit={this.handleSubmit}
                     validate={this.validateForm}
                     decorators={[this.decorator]}
@@ -403,33 +467,31 @@ class TxForm extends Component {
       return;
     }
 
+    if (!values.chainId) {
+      return { amount: 'Loading chain identifier...' };
+    }
+
+    if (!values.transactionCount) {
+      return { amount: 'Loading transaction count...' };
+    }
+
+    if (!values.ethBalance) {
+      return { amount: 'Loading Ethereum balance...' };
+    }
+
     try {
       const {
         account: { address },
-        chainId,
         ethBalance,
-        transactionCount,
         token
       } = this.props;
-
-      if (!chainId) {
-        throw new Error('chaindId is required for an EthereumTx');
-      }
 
       if (!address) {
         throw new Error('address of an account is required');
       }
 
-      if (!transactionCount) {
-        throw new Error('transactionCount is required for an EthereumTx');
-      }
-
       if (!token || !token.address || !token.decimals) {
         throw new Error('token information is required for an EthereumTx');
-      }
-
-      if (!ethBalance) {
-        throw new Error('No "ethBalance"');
       }
 
       const preValidation = this.preValidate(values);

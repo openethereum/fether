@@ -52,7 +52,10 @@ TokenCard.defaultProps = {
 };
 
 TokenCard.propTypes = {
+  balance: PropTypes.object,
+  children: PropTypes.object,
   decimals: PropTypes.number.isRequired,
+  showBalance: PropTypes.bool,
   token: PropTypes.shape({
     logo: PropTypes.string,
     name: PropTypes.string,

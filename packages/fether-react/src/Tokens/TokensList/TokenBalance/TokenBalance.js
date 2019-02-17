@@ -18,7 +18,17 @@ import withBalance from '../../../utils/withBalance';
 @inject('sendStore')
 class TokenBalance extends Component {
   static propTypes = {
-    hideLoadingAccountTokensModal: PropTypes.func,
+    account: PropTypes.object,
+    balance: PropTypes.object,
+    decimals: PropTypes.number,
+    drawers: PropTypes.array,
+    erc20Balance: PropTypes.object,
+    history: PropTypes.object.isRequired,
+    location: PropTypes.object,
+    match: PropTypes.object,
+    onClick: PropTypes.func,
+    sendStore: PropTypes.object,
+    staticContext: PropTypes.object,
     token: PropTypes.object
   };
 
