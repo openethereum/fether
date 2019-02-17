@@ -21,11 +21,13 @@ const getIsAlwaysOnTop = fetherApp => {
 // Create the Application's main menu
 // https://github.com/electron/electron/blob/master/docs/api/menu.md#examples
 export const getTemplate = fetherApp => {
-  const labelAlwaysOnTop = 'Always On Top';
-  const labelBlurOnClick = 'Blur On Click';
+  const labelEnableAlwaysOnTop = 'Enable Always On Top';
+  const labelDisableAlwaysOnTop = 'Disable Always On Top';
 
   const menuItemAlwaysOnTop = {
-    label: getIsAlwaysOnTop(fetherApp) ? labelBlurOnClick : labelAlwaysOnTop,
+    label: getIsAlwaysOnTop(fetherApp)
+      ? labelDisableAlwaysOnTop
+      : labelEnableAlwaysOnTop,
     click () {
       const isAlwaysOnTop = getIsAlwaysOnTop(fetherApp);
       fetherApp.win.setAlwaysOnTop(!isAlwaysOnTop);
