@@ -80,7 +80,7 @@ class TxForm extends Component {
             );
           } catch (error) {
             console.error(error);
-            throw new Error('Unable to estimate gas');
+            return new BigNumber(-1);
           }
         }
 
@@ -119,15 +119,23 @@ class TxForm extends Component {
     return output;
   };
 
-  estimatedTxFee = values => {
+  isEstimatedTxFee = values => {
     if (
-      !values.amount ||
-      !values.gas ||
-      !values.gasPrice ||
-      isNaN(values.amount) ||
-      isNaN(values.gas) ||
-      isNaN(values.gasPrice)
+      values.amount &&
+      values.gas &&
+      values.gasPrice &&
+      !isNaN(values.amount) &&
+      !values.gas.isNaN() &&
+      !isNaN(values.gasPrice)
     ) {
+      return true;
+    }
+
+    return false;
+  };
+
+  estimatedTxFee = values => {
+    if (!this.isEstimatedTxFee(values)) {
       return null;
     }
 
@@ -431,10 +439,14 @@ class TxForm extends Component {
         return preValidation;
       }
 
+      if (values.gas && values.gas.eq(-1)) {
+        return { amount: 'Unable to estimate gas...' };
+      }
+
       // If the gas hasn't been calculated yet, then we don't show any errors,
       // just wait a bit more
-      if (!this.estimatedTxFee(values)) {
-        return;
+      if (!this.isEstimatedTxFee(values)) {
+        return { amount: 'Estimating gas...' };
       }
 
       // Verify that `gas + (eth amount if sending eth) <= ethBalance`

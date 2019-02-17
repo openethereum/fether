@@ -18,6 +18,7 @@ import ReactResizeDetector from 'react-resize-detector';
 import Accounts from '../Accounts';
 import BackupAccount from '../BackupAccount';
 import Onboarding from '../Onboarding';
+import RequireHealthOverlay from '../RequireHealthOverlay';
 import Send from '../Send';
 import Tokens from '../Tokens';
 import Whitelist from '../Whitelist';
@@ -28,7 +29,7 @@ const Router =
   process.env.NODE_ENV === 'production' ? MemoryRouter : BrowserRouter;
 const electron = isElectron() ? window.require('electron') : null;
 
-@inject('onboardingStore')
+@inject('onboardingStore', 'parityStore')
 @observer
 class App extends Component {
   handleResize = (_, height) => {
@@ -44,7 +45,8 @@ class App extends Component {
    */
   render () {
     const {
-      onboardingStore: { isFirstRun }
+      onboardingStore: { isFirstRun },
+      parityStore: { api }
     } = this.props;
 
     if (isFirstRun) {
@@ -55,11 +57,28 @@ class App extends Component {
       );
     }
 
+    // The child components make use of light.js and light.js needs to be passed
+    // an API first, otherwise it will throw an error.
+    // We set parityStore.api right after we set the API for light.js, so we
+    // verify here that parityStore.api is defined, and if not we don't render
+    // the children, just a <RequireHealthOverlay />.
+    if (!api) {
+      return (
+        <ReactResizeDetector handleHeight onResize={this.handleResize}>
+          <RequireHealthOverlay fullscreen require='node'>
+            {/* Adding these components to have minimum height on window */}
+            <div className='content'>
+              <div className='window' />
+            </div>
+          </RequireHealthOverlay>
+        </ReactResizeDetector>
+      );
+    }
+
     return (
       <ReactResizeDetector handleHeight onResize={this.handleResize}>
         <div className='content'>
           <div className='window'>
-            {/* Don't display child components requiring RPCs if API is not yet set */}
             <Router>
               <Switch>
                 {/* The next line is the homepage */}
