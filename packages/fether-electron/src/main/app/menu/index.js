@@ -8,11 +8,11 @@ import { getTemplate } from './template';
 
 const { Menu } = electron;
 
-let hasCalledInitParityEthereum = false;
+let hasCalledInitFetherMenu = false;
 
 class FetherMenu {
   constructor () {
-    if (hasCalledInitParityEthereum) {
+    if (hasCalledInitFetherMenu) {
       throw new Error('Unable to initialise Fether menu more than once');
     }
   }
