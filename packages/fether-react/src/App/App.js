@@ -18,6 +18,7 @@ import ReactResizeDetector from 'react-resize-detector';
 import Accounts from '../Accounts';
 import BackupAccount from '../BackupAccount';
 import Onboarding from '../Onboarding';
+import RequireHealthOverlay from '../RequireHealthOverlay';
 import Send from '../Send';
 import Tokens from '../Tokens';
 import Whitelist from '../Whitelist';
@@ -48,20 +49,29 @@ class App extends Component {
       parityStore: { api }
     } = this.props;
 
-    // The child components make use of light.js and light.js needs to be passed
-    // an API first, otherwise it will throw an error.
-    // We set parityStore.api right after we set the API for light.js, so we
-    // verify here that parityStore.api is defined, and if not we don't render
-    // the children.
-    if (!api) {
-      return null;
-    }
-
     if (isFirstRun) {
       return (
         <div className='window'>
           <Onboarding />
         </div>
+      );
+    }
+
+    // The child components make use of light.js and light.js needs to be passed
+    // an API first, otherwise it will throw an error.
+    // We set parityStore.api right after we set the API for light.js, so we
+    // verify here that parityStore.api is defined, and if not we don't render
+    // the children, just a <RequireHealthOverlay />.
+    if (!api) {
+      return (
+        <ReactResizeDetector handleHeight onResize={this.handleResize}>
+          <RequireHealthOverlay fullscreen require='node'>
+            {/* Adding these components to have minimum height on window */}
+            <div className='content'>
+              <div className='window' />
+            </div>
+          </RequireHealthOverlay>
+        </ReactResizeDetector>
       );
     }
 
