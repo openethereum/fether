@@ -43,15 +43,21 @@ function setupAppListeners (fetherApp) {
   });
 
   fetherApp.on('hide-window', () => {
-    pino.info('Hiding window on blur since not on top');
+    pino.info('Hiding window');
   });
 
   fetherApp.on('after-hide-window', () => {
     pino.info('Finished hiding window');
   });
 
-  fetherApp.on('blur-window', () => {
-    pino.info('Blur window since lost focus when on top');
+  fetherApp.on('blur-window', fetherApp => {
+    pino.info(
+      `Blur window ${
+        fetherApp.win.isAlwaysOnTop()
+          ? 'prevented since menu item Alway On Top is enabled'
+          : ''
+      }`
+    );
   });
 
   fetherApp.on('after-moved-window-position-saved', () => {

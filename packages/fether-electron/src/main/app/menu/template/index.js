@@ -8,14 +8,19 @@ import settings from 'electron-settings';
 
 const { app, shell } = electron;
 
+/**
+ * If the user enables or disables Always On Top in the Fether menu then
+ * the it saves the state of Always On Top using electron-settings under
+ * key 'always-on-top'. In development on macOS the settings are stored in
+ * ~/Library/Application Support/Electron/Settings
+ * Otherwise it returns the default configuration value of `alwaysOnTop`
+ */
 const getIsAlwaysOnTop = fetherApp => {
   if (settings.has('always-on-top')) {
     fetherApp.win.setAlwaysOnTop(settings.get('always-on-top'));
   }
 
-  return settings.has('always-on-top')
-    ? settings.get('always-on-top')
-    : fetherApp.win.isAlwaysOnTop();
+  return fetherApp.win.isAlwaysOnTop();
 };
 
 // Create the Application's main menu
