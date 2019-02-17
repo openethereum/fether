@@ -7,20 +7,13 @@ import React, { Component } from 'react';
 import BigNumber from 'bignumber.js';
 import { Clickable, Form as FetherForm, Header } from 'fether-ui';
 import createDecorator from 'final-form-calculate';
-import {
-  chainId$,
-  transactionCountOf$,
-  withoutLoading
-} from '@parity/light.js';
 import debounce from 'debounce-promise';
 import { Field, Form } from 'react-final-form';
 import { fromWei, toWei } from '@parity/api/lib/util/wei';
 import { inject, observer } from 'mobx-react';
 import { isAddress } from '@parity/api/lib/util/address';
-import light from '@parity/light.js-react';
 import { Link } from 'react-router-dom';
 import { OnChange } from 'react-final-form-listeners';
-import { startWith } from 'rxjs/operators';
 import { withProps } from 'recompose';
 
 import { estimateGas } from '../../utils/transaction';
@@ -29,7 +22,9 @@ import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import TxDetails from './TxDetails';
 import withAccount from '../../utils/withAccount';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
+import withChainInfo from '../../utils/withChainInfo';
 import withTokens from '../../utils/withTokens';
+import withTxCount from '../../utils/withTxCount';
 
 const DEFAULT_AMOUNT_MAX_CHARS = 9;
 const MEDIUM_AMOUNT_MAX_CHARS = 14;
@@ -42,20 +37,10 @@ const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
   token: tokens[tokenAddress]
 }))
 @withAccount
-@light({
-  chainId: () =>
-    chainId$().pipe(
-      withoutLoading(),
-      startWith(undefined) // This will allow showing the component immediately, so no blank screen
-    ),
-  transactionCount: ({ account: { address } }) =>
-    transactionCountOf$(address).pipe(
-      withoutLoading(),
-      startWith(undefined) // This will allow showing the component immediately, so no blank screen
-    )
-})
+@withTxCount
 @withBalance // Balance of current token (can be ETH)
 @withEthBalance // ETH balance
+@withChainInfo
 @observer
 class TxForm extends Component {
   state = {
@@ -180,6 +165,20 @@ class TxForm extends Component {
       token
     } = this.props;
     const { balance, chainId, ethBalance, transactionCount } = this.state;
+
+    if (
+      !balance ||
+      !chainId ||
+      !ethBalance ||
+      !values.gas ||
+      !values.gasPrice ||
+      !transactionCount
+    ) {
+      return {
+        amount:
+          'Unable to submit without token balance, chain identifier, Ether balance, gas, and transaction count...'
+      };
+    }
 
     console.log('TxForm handleSubmit - balance', balance && balance.toString());
     console.log('TxForm handleSubmit - chainId', chainId && chainId.toString());
@@ -473,6 +472,10 @@ class TxForm extends Component {
 
     if (!values.transactionCount) {
       return { amount: 'Loading transaction count...' };
+    }
+
+    if (!values.balance) {
+      return { amount: 'Loading token balance...' };
     }
 
     if (!values.ethBalance) {
