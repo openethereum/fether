@@ -91,7 +91,7 @@ class App extends Component {
   };
 
   openNewReleaseUrl = () => {
-    window.open(this.state.newRelease.url);
+    window.open(this.state.newRelease.url, '_blank', 'noopener noreferrer');
   };
 
   /**
@@ -102,6 +102,8 @@ class App extends Component {
       onboardingStore: { isFirstRun },
       parityStore: { api }
     } = this.props;
+
+    const { newRelease } = this.state;
 
     if (isFirstRun) {
       return (
@@ -135,9 +137,8 @@ class App extends Component {
           <div className='window'>
             <Modal
               title='New version available'
-              description={`${this.state.newRelease.name &&
-                this.state.newRelease.name} was released!`}
-              visible={this.state.newRelease && !this.state.newRelease.ignore}
+              description={`${newRelease && newRelease.name} was released!`}
+              visible={newRelease && !newRelease.ignore}
               buttons={this.renderModalLinks()}
             >
               <Router>

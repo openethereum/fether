@@ -8,12 +8,12 @@ import PropTypes from 'prop-types';
 import { Image as SUIImage, Modal as SUIModal } from 'semantic-ui-react';
 
 export const Modal = ({
+  buttons,
   children,
   description,
   fullscreen,
-  link,
   icon,
-  buttons,
+  link,
   title,
   visible
 }) => (
@@ -26,11 +26,11 @@ export const Modal = ({
         <SUIModal.Content image className='alert-screen-content'>
           {icon && (
             <SUIImage
-              wrapped
               alt='loading'
+              className='alert-screen_image'
               size='medium'
               src={icon}
-              className='alert-screen_image'
+              wrapped
             />
           )}
           <SUIModal.Description className='alert-screen_text'>
@@ -47,12 +47,12 @@ export const Modal = ({
 );
 
 Modal.propTypes = {
+  buttons: PropTypes.node,
   children: PropTypes.node,
   description: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   fullscreen: PropTypes.bool,
+  icon: PropTypes.string,
   link: PropTypes.node,
-  icon: PropTypes.any,
-  buttons: PropTypes.node,
   title: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   visible: PropTypes.bool
 };
