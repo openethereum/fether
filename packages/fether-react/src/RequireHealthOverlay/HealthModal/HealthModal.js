@@ -5,6 +5,7 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { branch } from 'recompose';
 import { chainName$, withoutLoading } from '@parity/light.js';
 import light from '@parity/light.js-react';
 import { Modal } from 'fether-ui';
@@ -12,10 +13,18 @@ import { Modal } from 'fether-ui';
 import withHealth from '../../utils/withHealth';
 import loading from '../../assets/img/icons/loading.svg';
 
-@light({
-  chainName: () => chainName$().pipe(withoutLoading())
-})
 @withHealth
+@branch(
+  ({
+    health: {
+      status: { syncing }
+    }
+  }) => syncing,
+  // Only call light.js chainName$ if we're syncing
+  light({
+    chainName: () => chainName$().pipe(withoutLoading())
+  })
+)
 class HealthModal extends Component {
   static propTypes = {
     chainName: PropTypes.string,
@@ -46,16 +55,16 @@ class HealthModal extends Component {
       health: { status }
     } = this.props;
 
-    if (!status.nodeConnected && !status.internet) {
+    if (status.downloading) {
+      return 'Downloading Parity Ethereum...';
+    } else if (status.launching) {
+      return 'Launching the node...';
+    } else if (!status.nodeConnected && !status.internet) {
       return 'No internet. No node connected';
     } else if (!status.nodeConnected && status.internet) {
       return 'Connecting to node...';
     } else if (status.nodeConnected && !status.internet) {
       return 'No internet. Connected to node';
-    } else if (status.downloading) {
-      return 'Downloading Parity Ethereum...';
-    } else if (status.launching) {
-      return 'Launching the node...';
     } else if (!status.clockSync) {
       return 'Clock of host not in sync';
     } else if (!status.peers) {
