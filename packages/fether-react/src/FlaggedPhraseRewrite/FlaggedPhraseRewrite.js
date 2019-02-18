@@ -2,7 +2,7 @@
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
-import { Header, Form as FetherForm } from 'fether-ui';
+import { AccountCard, Header, Form as FetherForm } from 'fether-ui';
 import localForage from 'localforage';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
@@ -27,6 +27,18 @@ class FlaggedPhraseRewrite extends Component {
     this.setState({ value });
   };
 
+  handleSubmit = async () => {
+    const {
+      account: { address },
+      history
+    } = this.props;
+
+    // unset account flag
+    await localForage.removeItem(`__flagged_${address}`);
+    // go to account
+    history.push(`/tokens/${address}`);
+  };
+
   getPhrase = async () => {
     const phrase = await localForage.getItem(
       `__flagged_${this.props.account.address}`
@@ -38,9 +50,8 @@ class FlaggedPhraseRewrite extends Component {
   onCopyOrPastePhrase = event => {
     // Disable copying the phrase if in production.
     // Keep it enabled for development.
-    event.preventDefault();
-
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV === 'production') {
+      event.preventDefault();
       this.setState({
         error:
           'Copy and pasting is disabled for this step. Please type out your full recovery phrase.'
@@ -51,7 +62,10 @@ class FlaggedPhraseRewrite extends Component {
   };
 
   render () {
-    const { history } = this.props;
+    const {
+      account: { address, name },
+      history
+    } = this.props;
     const { error, phrase, value } = this.state;
 
     return (
@@ -70,32 +84,39 @@ class FlaggedPhraseRewrite extends Component {
             title={<h1>Account Recovery Phrase</h1>}
           />
 
+          <AccountCard
+            address={address}
+            name={address && !name ? '(no name)' : name}
+          />
+
           <div className='text -code' onCopy={this.onCopyOrPastePhrase}>
             {phrase}
           </div>
 
-          <FetherForm.Field
-            autoFocus
-            as='textarea'
-            label='Recovery phrase'
-            onChange={this.handleChange}
-            onPaste={this.onCopyOrPastePhrase}
-            required
-            value={value}
-          />
+          <form key='rewritePhrase' onSubmit={this.handleSubmit}>
+            <FetherForm.Field
+              autoFocus
+              as='textarea'
+              label='Recovery phrase'
+              onChange={this.handleChange}
+              onPaste={this.onCopyOrPastePhrase}
+              required
+              value={value}
+            />
 
-          <nav className='form-nav -space-around'>
-            <button
-              className='button -back'
-              onClick={history.goBack}
-              type='button'
-            >
-              Back
-            </button>
-            <button className='button' disabled={value !== phrase}>
-              Next
-            </button>
-          </nav>
+            <nav className='form-nav -space-around'>
+              <button
+                className='button -back'
+                onClick={history.goBack}
+                type='button'
+              >
+                Back
+              </button>
+              <button className='button' disabled={value !== phrase}>
+                Next
+              </button>
+            </nav>
+          </form>
 
           {error}
 

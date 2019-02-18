@@ -5,7 +5,7 @@
 
 import localForage from 'localforage';
 import React, { PureComponent } from 'react';
-import { AccountHeader, Clickable, MenuPopup, Modal } from 'fether-ui';
+import { AccountHeader, Clickable, MenuPopup } from 'fether-ui';
 import { Link, withRouter } from 'react-router-dom';
 
 import Health from '../Health';
@@ -18,9 +18,13 @@ import loading from '../assets/img/icons/loading.svg';
 class Tokens extends PureComponent {
   state = {
     isMenuOpen: false,
-    showWarning: false,
-    showPhrase: false
+    phrase: null,
+    showWarning: false
   };
+
+  componentDidMount () {
+    this.isAccountFlagged();
+  }
 
   handleMenuClose = () => {
     this.setState({ isMenuOpen: false });
@@ -36,17 +40,21 @@ class Tokens extends PureComponent {
       history
     } = this.props;
 
-    const phrase = await localForage.getItem(`__flagged_${address}`);
-    console.log('this is the flagged accounts recovery phrase -> ', phrase);
     // Redirect to rewrite screen.
     history.push(`/rewrite/${address}`);
   };
 
   isAccountFlagged = async () => {
-    return (
-      (await localForage.getItem(`__flagged_${this.props.account.address}`)) ||
-      null
-    );
+    const {
+      account: { address }
+    } = this.props;
+
+    const phrase = await localForage.getItem(`__flagged_${address}`);
+
+    this.setState({
+      phrase,
+      showWarning: phrase !== null
+    });
   };
 
   isParitySignerAccount = () => {
@@ -72,10 +80,6 @@ class Tokens extends PureComponent {
       {
         name: 'Add Tokens',
         onClick: () => history.push(`/whitelist/${address}`)
-      },
-      {
-        name: 'View Recovery Phrase',
-        onClick: () => history.push(`/rewrite/${address}`)
       }
     ];
 
@@ -84,27 +88,6 @@ class Tokens extends PureComponent {
     }
 
     return menuItems;
-  };
-
-  showPhraseInModal = async () => {
-    const { showPhrase } = this.state;
-
-    const phrase = await localForage.getItem(
-      `__flagged_${this.props.account.address}`
-    );
-
-    return (
-      <Modal
-        description={
-          'Keep a copy of this somewhere safe and click rewrite to confirm. You will NOT be able to view this phrase again after you confirm!'
-        }
-        loading={loading}
-        title={'Account Recovery Phrase'}
-        visible={showPhrase}
-      >
-        phrase
-      </Modal>
-    );
   };
 
   render () {
