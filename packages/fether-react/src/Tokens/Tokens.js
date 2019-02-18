@@ -11,7 +11,6 @@ import { Link, withRouter } from 'react-router-dom';
 import Health from '../Health';
 import TokensList from './TokensList';
 import withAccount from '../utils/withAccount';
-import loading from '../assets/img/icons/loading.svg';
 
 @withRouter
 @withAccount
