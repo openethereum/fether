@@ -83,6 +83,8 @@ export class CreateAccountStore {
   saveAccountToParity = async password => {
     debug('Saving account to Parity.');
 
+    let parityAddress;
+
     if (this.noPrivateKey) {
       // Store new Signer account in local storage
       // If the address of the account to add doesn't already exist, add it
@@ -109,12 +111,12 @@ export class CreateAccountStore {
           password
         );
       } else if (this.parityPhrase) {
-        await parityStore.api.parity.newAccountFromPhrase(
+        parityAddress = await parityStore.api.parity.newAccountFromPhrase(
           this.parityPhrase,
           password
         );
       } else if (this.bip39Phrase) {
-        await parityStore.api.parity.newAccountFromSecret(
+        parityAddress = await parityStore.api.parity.newAccountFromSecret(
           '0x' +
             hdkey
               .fromMasterSeed(bip39.mnemonicToSeed(this.bip39Phrase))
@@ -127,6 +129,13 @@ export class CreateAccountStore {
       } else {
         throw new Error(
           'saveAccountToParity: no JSON, Parity phrase, BIP39 phrase or address'
+        );
+      }
+
+      if (this.skippedFlag) {
+        await localForage.setItem(
+          `__flagged_${parityAddress}`,
+          this.bip39Phrase || this.parityPhrase
         );
       }
 
@@ -151,8 +160,8 @@ export class CreateAccountStore {
     User opted to skip recovery rewrite step.
     @param flag: boolean
   */
-  setPhraseRewriteSkippedFlag = flag => {
-    this.skippedFlag = flag;
+  flagAccount = () => {
+    this.skippedFlag = true;
   };
 
   setBip39Phrase = async phrase => {

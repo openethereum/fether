@@ -23,9 +23,9 @@ class AccountRewritePhrase extends Component {
     this.setState({ value });
   };
 
-  handleSubmit = async () => {
+  handleSubmit = async event => {
     const {
-      createAccountStore: { isImport, setPhrase },
+      createAccountStore: { flagAccount, isImport, setPhrase },
       history,
       location: { pathname }
     } = this.props;
@@ -38,29 +38,8 @@ class AccountRewritePhrase extends Component {
       await setPhrase(value);
     }
 
-    history.push(`/accounts/new/${+currentStep + 1}`);
-  };
-
-  /**
-    Set a flag "skippedFlag" in store to pop a warning until user decides
-    to go back to handle this step.
-
-    The rest of the account creation flow goes as usual.
-  */
-  skipRecoveryStep = async () => {
-    const {
-      createAccountStore: { isImport, setPhrase, setPhraseRewriteSkippedFlag },
-      history,
-      location: { pathname }
-    } = this.props;
-    const currentStep = pathname.slice(-1);
-    const { value } = this.state;
-
-    setPhraseRewriteSkippedFlag(true);
-
-    if (isImport) {
-      this.setState({ isLoading: true });
-      await setPhrase(value);
+    if (event.currentTarget.dataset.skip) {
+      await flagAccount();
     }
 
     history.push(`/accounts/new/${+currentStep + 1}`);
@@ -85,9 +64,12 @@ class AccountRewritePhrase extends Component {
                 Type your secret phrase to confirm that you wrote it down
                 correctly:
               </p>
-              <button class='button' onClick={this.skipRecoveryStep}>
-                {' '}
-                Skip{' '}
+              <button
+                className='button'
+                data-skip
+                onClick={this.handleSubmit}
+              >
+                Skip
               </button>
               {error}
             </div>
