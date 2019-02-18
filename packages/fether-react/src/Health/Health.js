@@ -4,15 +4,23 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-
+import { branch } from 'recompose';
 import { chainName$, withoutLoading } from '@parity/light.js';
 import light from '@parity/light.js-react';
 import withHealth from '../utils/withHealth';
 
-@light({
-  chainName: () => chainName$().pipe(withoutLoading())
-})
 @withHealth
+@branch(
+  ({
+    health: {
+      status: { good, syncing }
+    }
+  }) => good || syncing,
+  // Only call light.js chainName$ if we're syncing or good
+  light({
+    chainName: () => chainName$().pipe(withoutLoading())
+  })
+)
 class Health extends Component {
   render () {
     return (
@@ -49,18 +57,18 @@ class Health extends Component {
       chainName
     } = this.props;
 
-    if (!status.nodeConnected && !status.internet) {
+    if (status.downloading) {
+      return `Downloading Parity Ethereum (${
+        payload.downloading.syncPercentage
+      }%)`;
+    } else if (status.launching) {
+      return 'Launching the node...';
+    } else if (!status.nodeConnected && !status.internet) {
       return 'No internet. No node connected';
     } else if (!status.nodeConnected && status.internet) {
       return 'Connecting to node...';
     } else if (status.nodeConnected && !status.internet) {
       return 'No internet. Connected to node';
-    } else if (status.downloading) {
-      return `Downloading Parity Ethereum... (${
-        payload.downloading.syncPercentage
-      }%)`;
-    } else if (status.launching) {
-      return 'Launching the node...';
     } else if (!status.clockSync) {
       return 'Clock of host not in sync';
     } else if (!status.peers) {
