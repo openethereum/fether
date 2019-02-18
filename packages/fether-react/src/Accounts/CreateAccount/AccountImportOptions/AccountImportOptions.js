@@ -37,7 +37,6 @@ class AccountImportOptions extends Component {
   };
 
   handlePhraseChange = ({ target: { value: phrase } }) => {
-    // FIXME: repeated logic in AccountRewritePhrase handleChange()
     const words = phrase.split(' ');
     const lastVal = words.slice(-1);
     const isWordEnded = lastVal.join() === '';
@@ -47,19 +46,26 @@ class AccountImportOptions extends Component {
       lastWord = words[words.length - 2];
     }
 
-    // Case: word doesn't exist in either wordlist (i.e. self-generated)
     if (
       isWordEnded &&
       lastWord &&
       !BIP39_WORDLIST.has(lastWord) &&
       !PARITY_WORDLIST.has(lastWord)
     ) {
-      // Handle through customer support
+      // Guide them to contact Fether Riot
       let error = (
         <div>
-          <p
-          >{`${lastWord} is not a valid BIP39 or Parity word. If you wish to recover your account with a self-generated phrase, please`}</p>
-          <button class='button'> Contact Us </button>
+          {`${lastWord} is not a valid BIP39 or Parity word. If you wish to recover your account with a self-generated phrase, please`}
+          <button className='button -utility'>
+            <a
+              className='contact'
+              href='https://riot.im/app/#/room/#fether:matrix.parity.io'
+              rel='noopener noreferrer'
+              target='_blank'
+            >
+              Contact Us
+            </a>
+          </button>
         </div>
       );
 
