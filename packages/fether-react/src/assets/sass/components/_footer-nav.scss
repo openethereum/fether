@@ -4,6 +4,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center; // default alignent for flex items
+  margin: auto auto 0 0; //sticky at the botton left
 
   .footer-feedback {
     align-self: flex-end; // override default alignment for individual flex item

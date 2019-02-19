@@ -90,16 +90,15 @@ class AccountsList extends Component {
               )}
             </div>
           </div>
-
-          <nav className='footer-nav'>
-            <div className='footer-nav_status'>
-              <Health />
-            </div>
-            <div className='footer-feedback'>
-              <Feedback accountsListLength={accountsListLength} />
-            </div>
-          </nav>
         </div>
+        <nav className='footer-nav'>
+          <div className='footer-nav_status'>
+            <Health />
+          </div>
+          <div className='footer-feedback'>
+            <Feedback accountsListLength={accountsListLength} />
+          </div>
+        </nav>
       </RequireHealthOverlay>
     );
   }
