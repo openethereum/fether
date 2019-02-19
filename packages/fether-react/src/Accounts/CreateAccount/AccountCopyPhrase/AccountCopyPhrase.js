@@ -62,10 +62,7 @@ class AccountCopyPhrase extends Component {
                 <div className='text -tiny'>
                   Keep it secure and secret.
                   <ul className='-bulleted'>
-                    <li>
-                      If you lose your secret phrase, your wallet cannot be
-                      recovered.
-                    </li>
+                    <li>You can view and save the recovery phrase later on.</li>
                     <li>
                       If someone gets hold of your secret phrase, they will be
                       able to drain your account.
