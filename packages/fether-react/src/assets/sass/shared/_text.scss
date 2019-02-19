@@ -22,6 +22,10 @@
     text-align: right;
   }
 
+  &.-space-around {
+    padding: 1rem 1rem;
+  }
+
   &.-tiny {
     font-size: ms(-2);
   }

@@ -19,7 +19,8 @@ class FlaggedPhraseRewrite extends Component {
     error: null,
     password: '',
     phrase: '',
-    phraseRewrite: ''
+    phraseRewrite: '',
+    unlocked: true
   };
 
   componentDidMount () {
@@ -80,6 +81,10 @@ class FlaggedPhraseRewrite extends Component {
 
     try {
       await api.parity.testPassword(address, password);
+
+      this.setState({
+        unlocked: true
+      });
     } catch (e) {
       console.log(e);
     }
@@ -114,8 +119,8 @@ class FlaggedPhraseRewrite extends Component {
           />
 
           {unlocked ? this.renderRewriteForm() : this.renderPasswordForm()}
-
           {error}
+          {this.renderTips()}
 
           <nav className='footer-nav'>
             <div className='footer-nav_status'>
@@ -132,28 +137,34 @@ class FlaggedPhraseRewrite extends Component {
     const { password } = this.state;
 
     return (
-      <form key='password' onSubmit={this.unlockWithPassword}>
-        <FetherForm.Field
-          autoFocus
-          label='Password'
-          onChange={this.handleChangePassword}
-          required
-          type='password'
-          value={password}
-        />
-        <nav className='form-nav -space-around'>
-          <button
-            className='button -back'
-            onClick={history.goBack}
-            type='button'
-          >
-            Back
-          </button>
-          <button className='button' disabled={!password || !password.length}>
-            Unlock
-          </button>
-        </nav>
-      </form>
+      <div>
+        <div className='text -centered -space-around'>
+          Unlock your account to view your phrase then rewrite your it below to
+          confirm you have backed it up somewhere safe.
+        </div>
+        <form key='password' onSubmit={this.unlockWithPassword}>
+          <FetherForm.Field
+            autoFocus
+            label='Password'
+            onChange={this.handleChangePassword}
+            required
+            type='password'
+            value={password}
+          />
+          <nav className='form-nav -space-around'>
+            <button
+              className='button -back'
+              onClick={history.goBack}
+              type='button'
+            >
+              Back
+            </button>
+            <button className='button' disabled={!password || !password.length}>
+              Unlock
+            </button>
+          </nav>
+        </form>
+      </div>
     );
   }
 
@@ -163,7 +174,14 @@ class FlaggedPhraseRewrite extends Component {
 
     return (
       <div>
-        <div className='text -code' onCopy={this.onCopyOrPastePhrase}>
+        <div className='text -centered -space-around'>
+          Rewrite your phrase below to confirm you have backed it up somewhere
+          safe.
+        </div>
+        <div
+          className='text -code -space-around'
+          onCopy={this.onCopyOrPastePhrase}
+        >
           {phrase}
         </div>
         <form key='rewritePhrase' onSubmit={this.handleSubmit}>
@@ -171,7 +189,7 @@ class FlaggedPhraseRewrite extends Component {
             autoFocus
             as='textarea'
             label='Recovery phrase'
-            onChange={this.handleChange}
+            onChange={this.handleChangePhrase}
             onPaste={this.onCopyOrPastePhrase}
             required
             value={phraseRewrite}
@@ -190,6 +208,23 @@ class FlaggedPhraseRewrite extends Component {
             </button>
           </nav>
         </form>
+      </div>
+    );
+  }
+
+  renderTips () {
+    return (
+      <div className='text -space-around'>
+        <div className='text -tiny'>
+          Keep it secure and secret.
+          <ul className='-bulleted'>
+            <li>You can view and save the recovery phrase later on.</li>
+            <li>
+              If someone gets hold of your secret phrase, they will be able to
+              drain your account.
+            </li>
+          </ul>
+        </div>
       </div>
     );
   }
