@@ -19,6 +19,7 @@ export const MenuPopup = ({ menuItems, onClose, onOpen, ...otherProps }) => (
               onClick={item.onClick}
             >
               {item.name}
+              <span className='-warning' />
             </div>
           ))}
       </SUIPopup.Content>

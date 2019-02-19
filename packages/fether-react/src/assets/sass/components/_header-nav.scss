@@ -72,14 +72,6 @@
         opacity: 1;
       }
 
-      &.-receive {
-        background-image: url('./assets/img/icons/receive.svg');
-      }
-
-      &.-settings {
-        background-image: url('./assets/img/icons/gear.svg');
-      }
-
       &.-back {
         background-image: url('./assets/img/icons/back.svg');
       }
@@ -88,12 +80,20 @@
         background-image: url('./assets/img/icons/close.svg');
       }
 
+      &.-menu {
+        background-image: url('./assets/img/icons/menu.svg');
+      }
+
       &.-new {
         background-image: url('./assets/img/icons/plus.svg');
       }
 
-      &.-menu {
-        background-image: url('./assets/img/icons/menu.svg');
+      &.-receive {
+        background-image: url('./assets/img/icons/receive.svg');
+      }
+
+      &.-settings {
+        background-image: url('./assets/img/icons/gear.svg');
       }
 
       &.-warning {

@@ -69,10 +69,17 @@ class Tokens extends PureComponent {
       account: { address },
       history
     } = this.props;
+    const { showWarning } = this.state;
 
     const backupAccountItem = {
       name: 'Backup Account',
       onClick: () => history.push(`/backup/${address}`)
+    };
+
+    const backupRecoveryItem = {
+      name: 'Backup Recovery',
+      onClick: () => history.push(`/rewrite/${address}`),
+      warn: true
     };
 
     const menuItems = [
@@ -86,24 +93,32 @@ class Tokens extends PureComponent {
       menuItems.unshift(backupAccountItem);
     }
 
+    if (showWarning) {
+      menuItems.push(backupRecoveryItem);
+    }
+
     return menuItems;
+  };
+
+  menuTrigger = () => {
+    const { showWarning } = this.state;
+
+    return (
+      <span style={{ display: 'flex' }}>
+        <Clickable className='icon -menu' />
+        {showWarning && <a className='icon -warning' />}
+      </span>
+    );
   };
 
   render () {
     const {
       account: { address, name, type }
     } = this.props;
-    const { showWarning, isMenuOpen } = this.state;
+    const { isMenuOpen } = this.state;
 
     const rightMenu = (
       <div>
-        {showWarning && (
-          <Clickable
-            className='icon -warning'
-            onClick={this.handlePhraseRewrite}
-          />
-        )}
-
         <MenuPopup
           className='popup-menu-account'
           horizontalOffset={1}
@@ -111,7 +126,7 @@ class Tokens extends PureComponent {
           onClose={this.handleMenuClose}
           onOpen={this.handleMenuOpen}
           size='small'
-          trigger={<Clickable className='icon -menu' />}
+          trigger={this.menuTrigger()}
         />
       </div>
     );

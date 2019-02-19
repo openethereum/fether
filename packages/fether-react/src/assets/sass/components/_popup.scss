@@ -40,5 +40,11 @@
       color: $black;
       cursor: pointer;
     }
+
+    &span {
+      &.-warning {
+        background-image: url('./assets/img/icons/warning.svg');
+      }
+    }
   }
 }
