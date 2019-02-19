@@ -12,7 +12,7 @@ import {
   Switch
 } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
-import isElectron from 'is-electron';
+// import isElectron from 'is-electron';
 // import ReactResizeDetector from 'react-resize-detector';
 
 import Accounts from '../Accounts';
