@@ -175,14 +175,16 @@ class FlaggedPhraseRewrite extends Component {
     return (
       <div>
         <div className='text -centered -space-around'>
-          Rewrite your phrase below to confirm you have backed it up somewhere
-          safe.
+          Please write your secret phrase on a piece of paper.
         </div>
         <div
           className='text -code -space-around'
           onCopy={this.onCopyOrPastePhrase}
         >
           {phrase}
+        </div>
+        <div className='text -centered -space-around'>
+          Rewrite it below to confirm you have backed it up somewhere safe.
         </div>
         <form key='rewritePhrase' onSubmit={this.handleSubmit}>
           <FetherForm.Field
