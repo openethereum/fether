@@ -27,7 +27,7 @@ import Whitelist from '../Whitelist';
 // https://github.com/facebook/create-react-app/issues/3591
 const Router =
   process.env.NODE_ENV === 'production' ? MemoryRouter : BrowserRouter;
-const electron = isElectron() ? window.require('electron') : null;
+// const electron = isElectron() ? window.require('electron') : null;
 
 @inject('onboardingStore', 'parityStore')
 @observer
