@@ -14,7 +14,6 @@ import AccountImportOptions from '../AccountImportOptions';
 @observer
 class AccountRewritePhrase extends Component {
   state = {
-    error: null,
     isLoading: false,
     value: ''
   };
@@ -23,9 +22,9 @@ class AccountRewritePhrase extends Component {
     this.setState({ value });
   };
 
-  handleSubmit = async event => {
+  handleSubmit = async () => {
     const {
-      createAccountStore: { flagAccount, isImport, setPhrase },
+      createAccountStore: { isImport, setPhrase },
       history,
       location: { pathname }
     } = this.props;
@@ -38,10 +37,6 @@ class AccountRewritePhrase extends Component {
       await setPhrase(value);
     }
 
-    if (event.currentTarget.dataset.skip) {
-      await flagAccount();
-    }
-
     history.push(`/accounts/new/${+currentStep + 1}`);
   };
 
@@ -51,7 +46,7 @@ class AccountRewritePhrase extends Component {
       history,
       location: { pathname }
     } = this.props;
-    const { error, value } = this.state;
+    const { value } = this.state;
     const currentStep = pathname.slice(-1);
     const body = [
       <form key='createAccount' onSubmit={this.handleSubmit}>
@@ -64,14 +59,6 @@ class AccountRewritePhrase extends Component {
                 Type your secret phrase to confirm that you wrote it down
                 correctly:
               </p>
-              <button
-                className='button'
-                data-skip
-                onClick={this.handleSubmit}
-              >
-                Skip
-              </button>
-              {error}
             </div>
           )}
         </div>

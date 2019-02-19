@@ -12,15 +12,22 @@ import RequireHealthOverlay from '../../../RequireHealthOverlay';
 @inject('createAccountStore')
 @observer
 class AccountCopyPhrase extends Component {
-  handleSubmit = () => {
+  handleSubmit = async event => {
     const {
+      createAccountStore: { flagAccount },
       history,
       location: { pathname }
     } = this.props;
 
     const currentStep = pathname.slice(-1);
 
-    history.push(`/accounts/new/${+currentStep + 1}`);
+    // If user wants to skip, move directly past the rewrite step.
+    if (event.currentTarget.dataset.skip) {
+      await flagAccount();
+      history.push(`/accounts/new/${+currentStep + 2}`);
+    } else {
+      history.push(`/accounts/new/${+currentStep + 1}`);
+    }
   };
 
   render () {
@@ -40,6 +47,15 @@ class AccountCopyPhrase extends Component {
             <form key='createAccount' onSubmit={this.handleSubmit}>
               <div className='text'>
                 <p>Please write your secret phrase on a piece of paper:</p>
+              </div>
+              <div className='text -right'>
+                <button
+                  className='button -tiny'
+                  data-skip
+                  onClick={this.handleSubmit}
+                >
+                  Skip
+                </button>
               </div>
               <div className='text -code'>{bip39Phrase}</div>
               <div className='text'>
@@ -67,6 +83,7 @@ class AccountCopyPhrase extends Component {
                     Back
                   </button>
                 )}
+
                 <button autoFocus className='button'>
                   Next
                 </button>
