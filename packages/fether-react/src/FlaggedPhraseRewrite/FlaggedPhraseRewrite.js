@@ -6,25 +6,33 @@ import { AccountCard, Header, Form as FetherForm } from 'fether-ui';
 import localForage from 'localforage';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { inject } from 'mobx-react';
 
 import RequireHealthOverlay from '../RequireHealthOverlay';
 import withAccount from '../utils/withAccount';
 import Health from '../Health';
 
+@inject('parityStore')
 @withAccount
 class FlaggedPhraseRewrite extends Component {
   state = {
     error: null,
-    phrase: null,
-    value: ''
+    password: '',
+    phrase: '',
+    phraseRewrite: ''
   };
 
   componentDidMount () {
     this.getPhrase();
   }
 
-  handleChange = ({ target: { value } }) => {
-    this.setState({ value });
+  handleChangePassword = ({ target: { value } }) => {
+    this.setState({ password: value });
+  };
+
+  // handle the user typed phrase rewrite
+  handleChangePhrase = ({ target: { value } }) => {
+    this.setState({ phraseRewrite: value });
   };
 
   handleSubmit = async () => {
@@ -39,6 +47,7 @@ class FlaggedPhraseRewrite extends Component {
     history.push(`/tokens/${address}`);
   };
 
+  // Get the actual phrase to rewrite
   getPhrase = async () => {
     const phrase = await localForage.getItem(
       `__flagged_${this.props.account.address}`
@@ -61,12 +70,27 @@ class FlaggedPhraseRewrite extends Component {
     }
   };
 
+  unlockWithPassword = async () => {
+    const {
+      account: { address },
+      parityStore: { api }
+    } = this.props;
+
+    const { password } = this.state;
+
+    try {
+      await api.parity.testPassword(address, password);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   render () {
     const {
       account: { address, name },
       history
     } = this.props;
-    const { error, phrase, value } = this.state;
+    const { error, unlocked } = this.state;
 
     return (
       <RequireHealthOverlay require='sync'>
@@ -89,34 +113,7 @@ class FlaggedPhraseRewrite extends Component {
             name={address && !name ? '(no name)' : name}
           />
 
-          <div className='text -code' onCopy={this.onCopyOrPastePhrase}>
-            {phrase}
-          </div>
-
-          <form key='rewritePhrase' onSubmit={this.handleSubmit}>
-            <FetherForm.Field
-              autoFocus
-              as='textarea'
-              label='Recovery phrase'
-              onChange={this.handleChange}
-              onPaste={this.onCopyOrPastePhrase}
-              required
-              value={value}
-            />
-
-            <nav className='form-nav -space-around'>
-              <button
-                className='button -back'
-                onClick={history.goBack}
-                type='button'
-              >
-                Back
-              </button>
-              <button className='button' disabled={value !== phrase}>
-                Next
-              </button>
-            </nav>
-          </form>
+          {unlocked ? this.renderRewriteForm() : this.renderPasswordForm()}
 
           {error}
 
@@ -127,6 +124,73 @@ class FlaggedPhraseRewrite extends Component {
           </nav>
         </div>
       </RequireHealthOverlay>
+    );
+  }
+
+  renderPasswordForm () {
+    const { history } = this.props;
+    const { password } = this.state;
+
+    return (
+      <form key='password' onSubmit={this.unlockWithPassword}>
+        <FetherForm.Field
+          autoFocus
+          label='Password'
+          onChange={this.handleChangePassword}
+          required
+          type='password'
+          value={password}
+        />
+        <nav className='form-nav -space-around'>
+          <button
+            className='button -back'
+            onClick={history.goBack}
+            type='button'
+          >
+            Back
+          </button>
+          <button className='button' disabled={!password || !password.length}>
+            Unlock
+          </button>
+        </nav>
+      </form>
+    );
+  }
+
+  renderRewriteForm () {
+    const { history } = this.props;
+    const { phrase, phraseRewrite } = this.state;
+
+    return (
+      <div>
+        <div className='text -code' onCopy={this.onCopyOrPastePhrase}>
+          {phrase}
+        </div>
+        <form key='rewritePhrase' onSubmit={this.handleSubmit}>
+          <FetherForm.Field
+            autoFocus
+            as='textarea'
+            label='Recovery phrase'
+            onChange={this.handleChange}
+            onPaste={this.onCopyOrPastePhrase}
+            required
+            value={phraseRewrite}
+          />
+
+          <nav className='form-nav -space-around'>
+            <button
+              className='button -back'
+              onClick={history.goBack}
+              type='button'
+            >
+              Back
+            </button>
+            <button className='button' disabled={phraseRewrite !== phrase}>
+              Next
+            </button>
+          </nav>
+        </form>
+      </div>
     );
   }
 }
