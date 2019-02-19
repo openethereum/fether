@@ -19,7 +19,7 @@ export const MenuPopup = ({ menuItems, onClose, onOpen, ...otherProps }) => (
               onClick={item.onClick}
             >
               {item.name}
-              <span className='-warning' />
+              {item.warn && <a className='icon -warning' />}
             </div>
           ))}
       </SUIPopup.Content>
