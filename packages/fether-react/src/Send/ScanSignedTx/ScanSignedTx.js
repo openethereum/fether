@@ -76,7 +76,7 @@ class ScanSignedTx extends Component {
               <Card className='-centered'>
                 <Scanner
                   onScan={this.onScanSignedTx}
-                  label='Please show the QR code of the signed transaction on the webcam'
+                  label="Show Parity Signer account\'s QR code"
                 />
 
                 {error && <p className='text -standard'>{error}</p>}

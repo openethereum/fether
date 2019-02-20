@@ -98,17 +98,7 @@ class CreateAccount extends Component {
             </div>
           ) : (
             <div className='footer-nav_option'>
-              {isImport ? (
-                <p>
-                  Need to create an account?
-                  <button
-                    className='button -footer'
-                    onClick={this.handleToggleCreateImport}
-                  >
-                    New account
-                  </button>
-                </p>
-              ) : (
+              {isImport ? null : (
                 <p>
                   Already have an account?
                   <button

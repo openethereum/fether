@@ -168,7 +168,7 @@ class AccountImportOptions extends Component {
             {importingFromSigner ? (
               <Scanner
                 onScan={this.handleSignerImported}
-                label='Please show the QR code of the account on the webcam.'
+                label='Scan Parity Signer account QR code'
               />
             ) : (
               <button
