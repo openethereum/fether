@@ -7,6 +7,7 @@ import { action, computed, observable } from 'mobx';
 
 import bip39 from 'bip39';
 import hdkey from 'ethereumjs-wallet/hdkey';
+import * as CryptoJS from 'crypto-js';
 
 import localForage from 'localforage';
 import LS_PREFIX from './utils/lsPrefix';
@@ -133,11 +134,17 @@ export class CreateAccountStore {
       }
 
       if (this.skippedFlag) {
-        // encrypt
+        const phrase = this.bip39Phrase || this.parityPhrase;
+
+        // AES encrypt the phrase
+        const encryptedPhrase = CryptoJS.AES.encrypt(
+          phrase,
+          password
+        ).toString();
 
         await localForage.setItem(
           `__flagged_${parityAddress}`,
-          this.bip39Phrase || this.parityPhrase
+          encryptedPhrase
         );
       }
 
@@ -151,7 +158,6 @@ export class CreateAccountStore {
   /**
    * Set phrase (detect type) and corresponding address
    */
-
   setPhrase = phrase => {
     return this.setBip39Phrase(phrase).catch(() =>
       this.setParityPhrase(phrase)
@@ -159,8 +165,7 @@ export class CreateAccountStore {
   };
 
   /**
-    User opted to skip recovery rewrite step.
-    @param flag: boolean
+    User opted to skip recovery phrase rewrite step.
   */
   flagAccount = () => {
     this.skippedFlag = true;

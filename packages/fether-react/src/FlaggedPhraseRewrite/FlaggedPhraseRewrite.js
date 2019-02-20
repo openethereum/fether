@@ -2,6 +2,7 @@
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
+import * as CryptoJS from 'crypto-js';
 import { AccountCard, Header, Form as FetherForm } from 'fether-ui';
 import localForage from 'localforage';
 import React, { Component } from 'react';
@@ -55,6 +56,7 @@ class FlaggedPhraseRewrite extends Component {
       `__flagged_${this.props.account.address}`
     );
 
+    // phrase is still encrypted
     this.setState({ phrase });
   };
 
@@ -95,23 +97,36 @@ class FlaggedPhraseRewrite extends Component {
     });
   };
 
-  unlockWithPassword = async () => {
+  // Decrypt the encrypted phrase from state
+  unlockWithPassword = async event => {
     const {
-      account: { address },
-      parityStore: { api }
+      account: { address }
     } = this.props;
 
-    const { password } = this.state;
+    const { password, phrase } = this.state;
 
     try {
-      // FIXME: use the correct method for this stuff
-      await api.parity.testPassword(address, password);
+      // decrypt the phrase
+      var phraseInBytes = CryptoJS.AES.decrypt(phrase, password);
+      var originalPhrase = phraseInBytes.toString(CryptoJS.enc.Utf8);
+
+      if (!originalPhrase) {
+        throw new Error('Incorrect password');
+      }
 
       this.setState({
+        error: null,
+        phrase: originalPhrase,
         unlocked: true
       });
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      event.preventDefault();
+
+      this.setState({
+        error: error.message + '. \n Please check your password and try again.'
+      });
+
+      return false;
     }
   };
 
@@ -139,7 +154,7 @@ class FlaggedPhraseRewrite extends Component {
                 address={address}
                 name={name}
                 drawers={[
-                  <form key='rewritePhrase' onSubmit={this.handleSubmit}>
+                  <div>
                     {unlocked
                       ? this.renderCopyAndRewrite()
                       : this.renderPasswordForm()}
@@ -150,7 +165,7 @@ class FlaggedPhraseRewrite extends Component {
                         <Health />
                       </div>
                     </nav>
-                  </form>
+                  </div>
                 ]}
               />
             </RequireHealthOverlay>
