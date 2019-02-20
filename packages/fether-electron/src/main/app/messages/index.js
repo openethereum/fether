@@ -29,7 +29,8 @@ export default async (fetherAppWindow, event, action, ...args) => {
         const feedbackButtonHeight = 20;
         const resizeHeight = newHeight + 2;
         const height =
-          process.platform === 'win32' && fetherAppWindow.isMenuBarVisible()
+          (process.platform === 'win32' || process.platform === 'linux') &&
+          fetherAppWindow.isMenuBarVisible()
             ? resizeHeight + feedbackButtonHeight
             : resizeHeight;
 
