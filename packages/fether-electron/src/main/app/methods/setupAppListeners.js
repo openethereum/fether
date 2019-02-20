@@ -43,7 +43,7 @@ function setupAppListeners (fetherApp) {
   });
 
   fetherApp.on('hide-window', () => {
-    pino.info('Hiding window on blur since not on top');
+    pino.info('Hiding window');
   });
 
   fetherApp.on('after-hide-window', () => {
@@ -51,7 +51,7 @@ function setupAppListeners (fetherApp) {
   });
 
   fetherApp.on('blur-window', () => {
-    pino.info('Blur window since lost focus when on top');
+    pino.info('Blur window');
   });
 
   fetherApp.on('after-moved-window-position-saved', () => {
