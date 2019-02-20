@@ -99,10 +99,6 @@ class FlaggedPhraseRewrite extends Component {
 
   // Decrypt the encrypted phrase from state
   unlockWithPassword = async event => {
-    const {
-      account: { address }
-    } = this.props;
-
     const { password, phrase } = this.state;
 
     try {
