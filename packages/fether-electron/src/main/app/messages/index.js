@@ -26,12 +26,12 @@ export default async (fetherAppWindow, event, action, ...args) => {
         // Conversion to integer is required to pass as argument to setContentSize.
         // Reference: https://electronjs.org/docs/all#winsetcontentsizewidth-height-animate
         const newHeight = parseInt(args[0]);
-        const feedbackButtonHeight = 20;
+        const menuHeight = 20;
         const resizeHeight = newHeight + 2;
         const height =
           (process.platform === 'win32' || process.platform === 'linux') &&
           fetherAppWindow.isMenuBarVisible()
-            ? resizeHeight + feedbackButtonHeight
+            ? resizeHeight + menuHeight
             : resizeHeight;
 
         fetherAppWindow.setContentSize(width, height);
