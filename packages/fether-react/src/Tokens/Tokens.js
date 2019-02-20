@@ -77,9 +77,9 @@ class Tokens extends PureComponent {
     };
 
     const backupRecoveryItem = {
-      name: 'Backup Recovery',
+      name: 'Backup Recovery Phrase',
       onClick: () => history.push(`/rewrite/${address}`),
-      warn: true
+      warn: showWarning
     };
 
     const menuItems = [
@@ -89,8 +89,8 @@ class Tokens extends PureComponent {
       }
     ];
 
-    if (this.isParitySignerAccount() === false) {
-      menuItems.unshift(backupAccountItem);
+    if (!this.isParitySignerAccount()) {
+      menuItems.push(backupAccountItem);
     }
 
     if (showWarning) {
@@ -106,7 +106,7 @@ class Tokens extends PureComponent {
     return (
       <span style={{ display: 'flex' }}>
         <Clickable className='icon -menu' />
-        {showWarning && <a className='icon -warning' />}
+        {showWarning && <span className='icon -warning' />}
       </span>
     );
   };

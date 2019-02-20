@@ -15,7 +15,7 @@
   background: $white !important;
   bottom: auto !important;
   line-height: 1.9rem !important;
-  max-width: 205px !important; /* Allow space between items and scrollbar */
+  max-width: 245px !important; /* Allow space between items and scrollbar */
   max-height: 220px;
   padding: 0px !important; /* Allow menu items to take up full width*/
   top: 3px !important;
@@ -31,9 +31,9 @@
   .popup-screen_item {
     background: $white;
     color: rgba($black, 0.675);
+    display: flex;
     font-weight: 500;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding: 0 15px;
 
     &:hover {
       background: rgba($faint, 0.5);
@@ -42,7 +42,7 @@
     }
   }
 
-  a {
+  span {
     display: inline-block;
 
     &.icon {

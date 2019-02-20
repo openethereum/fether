@@ -49,14 +49,13 @@
         top: 0.5rem;
         right: 0.5rem;
         border: solid 1px $black;
-   
+
       &.active{
         background-color: darken($black, 2.5%);
         color: $white;
         opacity: 0.75;
       }
     }
-
 
     &:hover {
       opacity: 0.625;

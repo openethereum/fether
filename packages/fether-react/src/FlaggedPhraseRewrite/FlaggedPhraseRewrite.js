@@ -98,36 +98,22 @@ class FlaggedPhraseRewrite extends Component {
     const { error, unlocked } = this.state;
 
     return (
-      <RequireHealthOverlay require='sync'>
-        <div>
-          <Header
-            left={
-              <Link
-                to='/tokens'
-                className='icon -back'
-                onClick={history.goBack}
-              >
-                Close
-              </Link>
-            }
-            title={<h1>Account Recovery Phrase</h1>}
-          />
-
-          <AccountCard
-            address={address}
-            name={address && !name ? '(no name)' : name}
-          />
-
-          {unlocked ? this.renderRewriteForm() : this.renderPasswordForm()}
-          {error}
-          {this.renderTips()}
-
-          <nav className='footer-nav'>
-            <div className='footer-nav_status'>
-              <Health />
-            </div>
-          </nav>
-        </div>
+      <RequireHealthOverlay require='node'>
+        <AccountCard
+          address={address}
+          name={name}
+          drawers={[
+            <form key='createAccount' onSubmit={this.handleSubmit}>
+              {unlocked ? this.renderCopyForm() : this.renderPasswordForm()}
+              {this.renderTips()}
+              <nav className='footer-nav'>
+                <div className='footer-nav_status'>
+                  <Health />
+                </div>
+              </nav>
+            </form>
+          ]}
+        />
       </RequireHealthOverlay>
     );
   }
@@ -168,14 +154,14 @@ class FlaggedPhraseRewrite extends Component {
     );
   }
 
-  renderRewriteForm () {
+  renderCopyForm () {
     const { history } = this.props;
-    const { phrase, phraseRewrite } = this.state;
+    const { phrase } = this.state;
 
     return (
       <div>
-        <div className='text -centered -space-around'>
-          Please write your secret phrase on a piece of paper.
+        <div className='text -centered'>
+          Please write your recovery phrase on a piece of paper.
         </div>
         <div
           className='text -code -space-around'
@@ -183,7 +169,27 @@ class FlaggedPhraseRewrite extends Component {
         >
           {phrase}
         </div>
-        <div className='text -centered -space-around'>
+        <nav className='form-nav -space-around'>
+          <button
+            className='button -back'
+            onClick={history.goBack}
+            type='button'
+          >
+            Back
+          </button>
+          <button className='button'>Next</button>
+        </nav>
+      </div>
+    );
+  }
+
+  renderRewriteForm () {
+    const { history } = this.props;
+    const { phrase, phraseRewrite } = this.state;
+
+    return (
+      <div>
+        <div className='text -centered'>
           Rewrite it below to confirm you have backed it up somewhere safe.
         </div>
         <form key='rewritePhrase' onSubmit={this.handleSubmit}>
@@ -205,8 +211,12 @@ class FlaggedPhraseRewrite extends Component {
             >
               Back
             </button>
-            <button className='button' disabled={phraseRewrite !== phrase}>
-              Next
+            <button
+              autoFocus
+              className='button'
+              disabled={phraseRewrite !== phrase}
+            >
+              Confirm
             </button>
           </nav>
         </form>
@@ -220,9 +230,22 @@ class FlaggedPhraseRewrite extends Component {
         <div className='text -tiny'>
           Keep it secure and secret.
           <ul className='-bulleted'>
-            <li>You can view and save the recovery phrase later on.</li>
             <li>
-              If someone gets hold of your secret phrase, they will be able to
+              {' '}
+              Once you confirm your recovery phrase, you MUST make sure it is
+              somewhere safe & accessible. You will not be able to view it
+              again.{' '}
+            </li>
+            <li>
+              <b>
+                If you lose your recovery phrase, your wallet cannot be
+                recovered
+              </b>{' '}
+              unless you choose to backup your account to a password encrypted
+              JSON file. You must remember this password!
+            </li>
+            <li>
+              If someone gets hold of your recovery phrase, they will be able to
               drain your account.
             </li>
           </ul>

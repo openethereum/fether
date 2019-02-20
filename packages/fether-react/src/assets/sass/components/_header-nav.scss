@@ -45,7 +45,8 @@
 
   a,
   a:link,
-  a:visited {
+  a:visited,
+  span {
     z-index: 9;
     color: rgba($black, 0.675);
     font-weight: 500;

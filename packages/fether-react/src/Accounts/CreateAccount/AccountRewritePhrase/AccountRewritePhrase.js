@@ -56,7 +56,7 @@ class AccountRewritePhrase extends Component {
           ) : (
             <div>
               <p>
-                Type your secret phrase to confirm that you wrote it down
+                Type your recovery phrase to confirm that you wrote it down
                 correctly:
               </p>
             </div>

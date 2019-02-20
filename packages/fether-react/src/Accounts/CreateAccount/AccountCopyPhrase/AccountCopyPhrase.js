@@ -46,40 +46,48 @@ class AccountCopyPhrase extends Component {
           drawers={[
             <form key='createAccount' onSubmit={this.handleSubmit}>
               <div className='text'>
-                <p>Please write your secret phrase on a piece of paper:</p>
-              </div>
-              <div className='text -right'>
-                <button
-                  className='button -tiny'
-                  data-skip
-                  onClick={this.handleSubmit}
-                >
-                  Skip
-                </button>
+                <p>Please write your recovery phrase on a piece of paper:</p>
               </div>
               <div className='text -code'>{bip39Phrase}</div>
               <div className='text'>
                 <div className='text -tiny'>
                   Keep it secure and secret.
                   <ul className='-bulleted'>
-                    <li>You can view and save the recovery phrase later on.</li>
                     <li>
-                      If someone gets hold of your secret phrase, they will be
+                      {' '}
+                      If you skip this step you can view your phrase to copy it
+                      to somewhere safe later on{' '}
+                      <b> only if you remember your password! </b>{' '}
+                    </li>
+                    <li>
+                      <b>
+                        If you lose your recovery phrase, your wallet cannot be
+                        recovered
+                      </b>{' '}
+                      unless you choose to backup your account to a password
+                      encrypted JSON file. You must remember this password!
+                    </li>
+                    <li>
+                      If someone gets hold of your recovery phrase, they will be
                       able to drain your account.
+                    </li>
+                    <li>
+                      {' '}
+                      If you do confirm your recovery phrase on the next screen,
+                      you MUST make sure it is somewhere safe & accessible. You
+                      will not be able to view it again.{' '}
                     </li>
                   </ul>
                 </div>
               </div>
               <nav className='form-nav -space-around'>
-                {currentStep > 1 && (
-                  <button
-                    className='button -back'
-                    onClick={history.goBack}
-                    type='button'
-                  >
-                    Back
-                  </button>
-                )}
+                <button
+                  className='button -skip'
+                  data-skip
+                  onClick={this.handleSubmit}
+                >
+                  Skip
+                </button>
 
                 <button autoFocus className='button'>
                   Next
