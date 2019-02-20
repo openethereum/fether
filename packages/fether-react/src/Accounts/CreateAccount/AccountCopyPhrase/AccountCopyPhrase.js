@@ -51,6 +51,15 @@ class AccountCopyPhrase extends Component {
                 <div className='text -tiny'>
                   <ul className='-bulleted'>
                     <li>
+                      You can opt to skip this step and copy your phrase later
+                      by selecting the Backup Recovery Phrase option from your
+                      account.{' '}
+                      <b>
+                        You must remember your password to view your recovery
+                        phrase again!
+                      </b>
+                    </li>
+                    <li>
                       <b>
                         Once you confirm your recovery phrase, you will not be
                         able to view it again.

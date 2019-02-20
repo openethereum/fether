@@ -6,6 +6,8 @@
 /* eslint-env jest */
 
 import bip39 from 'bip39';
+import * as CryptoJS from 'crypto-js';
+
 import { CreateAccountStore } from './createAccountStore';
 import parityStore from './parityStore';
 
@@ -99,5 +101,40 @@ describe('method saveAccountToParity', () => {
 
   test('should call api.parity.setAccountMeta', () => {
     expect(parityStore.api.parity.setAccountMeta).toHaveBeenCalled();
+  });
+
+  describe('Crypto-js', () => {
+    let encryptedPhrase;
+    const rawPhrase =
+      'onto blandness slobbery putt crazed repackage defender subzero bullpen virus skater blunderer';
+
+    test('should output an encrypted string', () => {
+      encryptedPhrase = CryptoJS.AES.encrypt(
+        rawPhrase,
+        'correctpassword'
+      ).toString();
+
+      expect(encryptedPhrase).toBeDefined();
+      expect(typeof encryptedPhrase).toEqual('string');
+    });
+
+    test('should not be able to decrypt with incorrect password', () => {
+      const wrongDecrypt = CryptoJS.AES.decrypt(
+        encryptedPhrase,
+        'wrongpassword'
+      );
+
+      expect(() => wrongDecrypt.toString(CryptoJS.enc.Utf8)).toThrow();
+    });
+
+    test('should decrypt to the correct original phrase', () => {
+      const correctDecrypt = CryptoJS.AES.decrypt(
+        encryptedPhrase,
+        'correctpassword'
+      );
+      const correctDecryptAsString = correctDecrypt.toString(CryptoJS.enc.Utf8);
+
+      expect(correctDecryptAsString).toEqual(rawPhrase);
+    });
   });
 });
