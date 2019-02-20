@@ -20,7 +20,8 @@ class FlaggedPhraseRewrite extends Component {
     password: '',
     phrase: '',
     phraseRewrite: '',
-    unlocked: true
+    step: 1,
+    unlocked: false
   };
 
   componentDidMount () {
@@ -71,6 +72,29 @@ class FlaggedPhraseRewrite extends Component {
     }
   };
 
+  nextStep = event => {
+    event.preventDefault();
+    this.setState({
+      step: this.state.step + 1
+    });
+  };
+
+  prevStep = () => {
+    const {
+      account: { address },
+      history
+    } = this.props;
+    const { step } = this.state;
+
+    if (step === 1) {
+      history.push(`/tokens/${address}`);
+    }
+
+    this.setState({
+      step: step - 1
+    });
+  };
+
   unlockWithPassword = async () => {
     const {
       account: { address },
@@ -98,23 +122,41 @@ class FlaggedPhraseRewrite extends Component {
     const { error, unlocked } = this.state;
 
     return (
-      <RequireHealthOverlay require='node'>
-        <AccountCard
-          address={address}
-          name={name}
-          drawers={[
-            <form key='createAccount' onSubmit={this.handleSubmit}>
-              {unlocked ? this.renderCopyForm() : this.renderPasswordForm()}
-              {this.renderTips()}
-              <nav className='footer-nav'>
-                <div className='footer-nav_status'>
-                  <Health />
-                </div>
-              </nav>
-            </form>
-          ]}
+      <div>
+        <Header
+          left={
+            <Link className='icon -back' to='/accounts'>
+              Back
+            </Link>
+          }
+          title={<h1>Backup Recovery Phrase</h1>}
         />
-      </RequireHealthOverlay>
+
+        <div className='window_content'>
+          <div className='box -padded'>
+            <RequireHealthOverlay require='node'>
+              <AccountCard
+                address={address}
+                name={name}
+                drawers={[
+                  <form key='rewritePhrase' onSubmit={this.handleSubmit}>
+                    {unlocked
+                      ? this.renderCopyAndRewrite()
+                      : this.renderPasswordForm()}
+                    {this.renderTips()}
+                    {error}
+                    <nav className='footer-nav'>
+                      <div className='footer-nav_status'>
+                        <Health />
+                      </div>
+                    </nav>
+                  </form>
+                ]}
+              />
+            </RequireHealthOverlay>
+          </div>
+        </div>
+      </div>
     );
   }
 
@@ -124,9 +166,8 @@ class FlaggedPhraseRewrite extends Component {
 
     return (
       <div>
-        <div className='text -centered -space-around'>
-          Unlock your account to view your phrase then rewrite your it below to
-          confirm you have backed it up somewhere safe.
+        <div className='text -centered'>
+          Unlock your account to view and backup your recovery phrase.
         </div>
         <form key='password' onSubmit={this.unlockWithPassword}>
           <FetherForm.Field
@@ -154,6 +195,16 @@ class FlaggedPhraseRewrite extends Component {
     );
   }
 
+  renderCopyAndRewrite () {
+    const { step } = this.state;
+
+    if (step === 1) {
+      return this.renderCopyForm();
+    } else {
+      return this.renderRewriteForm();
+    }
+  }
+
   renderCopyForm () {
     const { history } = this.props;
     const { phrase } = this.state;
@@ -172,12 +223,14 @@ class FlaggedPhraseRewrite extends Component {
         <nav className='form-nav -space-around'>
           <button
             className='button -back'
-            onClick={history.goBack}
+            onClick={this.prevStep}
             type='button'
           >
             Back
           </button>
-          <button className='button'>Next</button>
+          <button className='button' onClick={this.nextStep}>
+            Next
+          </button>
         </nav>
       </div>
     );
@@ -200,13 +253,14 @@ class FlaggedPhraseRewrite extends Component {
             onChange={this.handleChangePhrase}
             onPaste={this.onCopyOrPastePhrase}
             required
+            rows={3}
             value={phraseRewrite}
           />
 
           <nav className='form-nav -space-around'>
             <button
               className='button -back'
-              onClick={history.goBack}
+              onClick={this.prevStep}
               type='button'
             >
               Back
@@ -227,14 +281,15 @@ class FlaggedPhraseRewrite extends Component {
   renderTips () {
     return (
       <div className='text -space-around'>
+        <b>IMPORTANT</b>
         <div className='text -tiny'>
-          Keep it secure and secret.
           <ul className='-bulleted'>
             <li>
-              {' '}
-              Once you confirm your recovery phrase, you MUST make sure it is
-              somewhere safe & accessible. You will not be able to view it
-              again.{' '}
+              <b>
+                Once you confirm your recovery phrase, you will not be able to
+                view it again.
+              </b>{' '}
+              You MUST make sure it is somewhere safe & accessible.
             </li>
             <li>
               <b>
@@ -245,8 +300,10 @@ class FlaggedPhraseRewrite extends Component {
               JSON file. You must remember this password!
             </li>
             <li>
-              If someone gets hold of your recovery phrase, they will be able to
-              drain your account.
+              <b>
+                If someone gets hold of your recovery phrase, they will be able
+                to drain your account.
+              </b>
             </li>
           </ul>
         </div>

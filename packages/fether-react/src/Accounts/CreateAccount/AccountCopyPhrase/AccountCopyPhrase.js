@@ -49,15 +49,16 @@ class AccountCopyPhrase extends Component {
                 <p>Please write your recovery phrase on a piece of paper:</p>
               </div>
               <div className='text -code'>{bip39Phrase}</div>
-              <div className='text'>
+              <div className='text -space-around'>
+                <b>IMPORTANT</b>
                 <div className='text -tiny'>
-                  Keep it secure and secret.
                   <ul className='-bulleted'>
                     <li>
-                      {' '}
-                      If you skip this step you can view your phrase to copy it
-                      to somewhere safe later on{' '}
-                      <b> only if you remember your password! </b>{' '}
+                      <b>
+                        Once you confirm your recovery phrase, you will not be
+                        able to view it again.
+                      </b>{' '}
+                      You MUST make sure it is somewhere safe & accessible.
                     </li>
                     <li>
                       <b>
@@ -68,14 +69,10 @@ class AccountCopyPhrase extends Component {
                       encrypted JSON file. You must remember this password!
                     </li>
                     <li>
-                      If someone gets hold of your recovery phrase, they will be
-                      able to drain your account.
-                    </li>
-                    <li>
-                      {' '}
-                      If you do confirm your recovery phrase on the next screen,
-                      you MUST make sure it is somewhere safe & accessible. You
-                      will not be able to view it again.{' '}
+                      <b>
+                        If someone gets hold of your recovery phrase, they will
+                        be able to drain your account.
+                      </b>
                     </li>
                   </ul>
                 </div>
