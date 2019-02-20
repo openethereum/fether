@@ -40,7 +40,10 @@ if (process.platform === 'win32') {
   );
 }
 
-const shouldUseFrame = process.platform === 'win32';
+// Fether window must have a "frame" otherwise the menu
+// does not appear on Windows 10 or Linux Mint
+const shouldUseFrame =
+  process.platform === 'win32' || process.platform === 'linux';
 
 const windowPosition =
   process.platform === 'win32' ? 'trayBottomCenter' : 'trayCenter';
