@@ -69,6 +69,7 @@ class AccountRewritePhrase extends Component {
           label='Recovery phrase'
           onChange={this.handleChange}
           required
+          rows={3}
           value={value}
         />
 

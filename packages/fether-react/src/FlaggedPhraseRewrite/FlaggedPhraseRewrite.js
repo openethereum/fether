@@ -104,6 +104,7 @@ class FlaggedPhraseRewrite extends Component {
     const { password } = this.state;
 
     try {
+      // FIXME: use the correct method for this stuff
       await api.parity.testPassword(address, password);
 
       this.setState({

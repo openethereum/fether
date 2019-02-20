@@ -133,6 +133,8 @@ export class CreateAccountStore {
       }
 
       if (this.skippedFlag) {
+        // encrypt
+
         await localForage.setItem(
           `__flagged_${parityAddress}`,
           this.bip39Phrase || this.parityPhrase

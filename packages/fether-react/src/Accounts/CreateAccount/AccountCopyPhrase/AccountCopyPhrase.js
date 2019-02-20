@@ -76,7 +76,7 @@ class AccountCopyPhrase extends Component {
               </div>
               <nav className='form-nav -space-around'>
                 <button
-                  className='button -skip'
+                  className='button -back'
                   data-skip
                   onClick={this.handleSubmit}
                 >
