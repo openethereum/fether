@@ -32,11 +32,8 @@ class AccountCopyPhrase extends Component {
 
   render () {
     const {
-      createAccountStore: { address, name, bip39Phrase },
-      history,
-      location: { pathname }
+      createAccountStore: { address, name, bip39Phrase }
     } = this.props;
-    const currentStep = pathname.slice(-1);
 
     return (
       <RequireHealthOverlay require='node'>

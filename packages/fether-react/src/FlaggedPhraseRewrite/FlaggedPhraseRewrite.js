@@ -116,8 +116,7 @@ class FlaggedPhraseRewrite extends Component {
 
   render () {
     const {
-      account: { address, name },
-      history
+      account: { address, name }
     } = this.props;
     const { error, unlocked } = this.state;
 
@@ -206,7 +205,6 @@ class FlaggedPhraseRewrite extends Component {
   }
 
   renderCopyForm () {
-    const { history } = this.props;
     const { phrase } = this.state;
 
     return (
@@ -237,7 +235,6 @@ class FlaggedPhraseRewrite extends Component {
   }
 
   renderRewriteForm () {
-    const { history } = this.props;
     const { phrase, phraseRewrite } = this.state;
 
     return (
