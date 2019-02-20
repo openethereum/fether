@@ -40,7 +40,7 @@ export const Modal = ({
         </SUIModal.Content>
       </div>
     </SUIModal>
-    <div>{children}</div>
+    {children}
   </div>
 );
 
