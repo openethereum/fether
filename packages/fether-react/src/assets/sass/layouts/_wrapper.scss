@@ -27,12 +27,15 @@
     border-radius: 0.25rem;
     min-height: 15rem;
     position: relative;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
 
     .window_content {
       min-height: 7.5rem;
     }
   }
+}
+
+.window {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
