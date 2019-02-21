@@ -24,9 +24,9 @@ function showTrayBalloon (fetherApp) {
   pino.info('Showing Tray Balloon');
 
   tray.displayBalloon({
-    content: `Press ALT in the Fether window to toggle the menu`,
+    content: `'Left-click or right-click tray icon toggles Fether window or Fether menu'`,
     icon: iconBalloonPath,
-    title: 'Fether Menu'
+    title: 'Fether Window and Menu'
   });
 }
 
