@@ -55,16 +55,16 @@ function setupWinListeners (fetherApp) {
   });
 
   // macOS and Linux (not Windows)
-  win.on('resize', () => {
-    pino.info('Detected resize event');
+  /*  win.on('resize', () => {
+      pino.info('Detected resize event');
 
-    /*    moveWindowUp(fetherApp);
-    setTimeout(() => {
-      moveWindowUp(fetherApp);
-    }, 5000);
+          moveWindowUp(fetherApp);
+      setTimeout(() => {
+        moveWindowUp(fetherApp);
+      }, 5000);
+
+    });
   */
-  });
-
   win.on('blur', () => {
     options.alwaysOnTop ? fetherApp.emit('blur-window') : hideWindow(fetherApp);
   });

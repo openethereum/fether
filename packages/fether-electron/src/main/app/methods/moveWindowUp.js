@@ -19,22 +19,22 @@ function moveWindowUp (fetherApp) {
   const { getScreenResolution, win } = fetherApp;
 
   if (!win) {
-    return;
-  }
 
-  pino.info('Fether window resized. Moving it back up into view if required');
-  const position = win.getPosition();
-  const positionStruct = { x: position[0], y: position[1] };
-  const trayDepth = fetherApp.trayDepth || 40; // Default incase resizes on load
-  const resolution = getScreenResolution();
-  const winHeight = win.getSize()[1];
-  const maxWinY = resolution.y - winHeight - trayDepth;
-  const adjustY = positionStruct.y - maxWinY;
-
-  if (adjustY > 0) {
-    fetherApp.emit('moved-window-up-into-view');
-    win.setPosition(positionStruct.x, maxWinY);
   }
+  /*
+    pino.info('Fether window resized. Moving it back up into view if required');
+    const position = win.getPosition();
+    const positionStruct = { x: position[0], y: position[1] };
+    const trayDepth = fetherApp.trayDepth || 40; // Default incase resizes on load
+    const resolution = getScreenResolution();
+    const winHeight = win.getSize()[1];
+    const maxWinY = resolution.y - winHeight - trayDepth;
+    const adjustY = positionStruct.y - maxWinY;
+
+    if (adjustY > 0) {
+      fetherApp.emit('moved-window-up-into-view');
+      win.setPosition(positionStruct.x, maxWinY);
+    } */
 }
 
 export default moveWindowUp;
