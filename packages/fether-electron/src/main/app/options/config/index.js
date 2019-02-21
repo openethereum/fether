@@ -45,6 +45,9 @@ const shouldUseFrame = process.platform === 'win32';
 const windowPosition =
   process.platform === 'win32' ? 'trayBottomCenter' : 'trayCenter';
 
+const tooltip =
+  'Right-click to toggle Fether window. Left-click to toggle Fether menu';
+
 // API docs: https://electronjs.org/docs/api/browser-window
 const DEFAULT_OPTIONS = {
   alwaysOnTop: false,
@@ -73,7 +76,7 @@ const TASKBAR_OPTIONS = {
   height: 464,
   // On Linux the user must click the tray icon and then click the tooltip
   // to toggle the Fether window open/close
-  tooltip: 'Click to toggle Fether window',
+  tooltip: tooltip,
   width: 352,
   withTaskbar: true
 };

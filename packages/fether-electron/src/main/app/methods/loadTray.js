@@ -17,23 +17,28 @@ function loadTray (fetherApp) {
       app.dock.hide();
     }
 
-    const defaultClickEvent = options.showOnRightClick
-      ? 'right-click'
-      : 'click';
-
     // Note: See https://github.com/RocketChat/Rocket.Chat.Electron/issues/44
     if (process.platform === 'win32') {
       showTrayBalloon(fetherApp);
     }
 
-    tray.on(defaultClickEvent, () => onTrayClick(fetherApp));
-    tray.on('double-click', () => onTrayClick(fetherApp));
-    // Right click event handler does not work on Windows as intended
+    tray.setContextMenu(fetherApp.menu.getMenu());
+
     tray.on('right-click', () => {
+      pino.info('Detected right-click on tray icon');
+
+      onTrayClick(fetherApp);
+
       if (process.platform === 'win32') {
         pino.info('Detected right click on Windows');
         showTrayBalloon(fetherApp);
       }
+    });
+
+    tray.on('click', () => {
+      pino.info('Detected single click on tray icon');
+
+      tray.popUpContextMenu();
     });
     tray.setToolTip(options.tooltip);
     tray.setHighlightMode('never');
