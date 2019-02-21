@@ -73,9 +73,9 @@ function setupWin32Listeners (fetherApp) {
      *
      * Detect event on Windows when Fether window was moved or resized
      */
-    /*    win.hookWindowMessage(Number.parseInt('0x0232'), (wParam, lParam) => {
+    win.hookWindowMessage(Number.parseInt('0x0232'), (wParam, lParam) => {
       pino.info('Detected completion of move or resize event');
-
+      /*
             // Move Fether window back up into view if it was a resize event
             // that causes the bottom to be cropped
             moveWindowUp(fetherApp);
@@ -88,8 +88,8 @@ function setupWin32Listeners (fetherApp) {
 
             // Save Fether window position to Electron settings
             processSaveWinPosition(fetherApp);
-
-    }); */
+            */
+    });
   }
 }
 
