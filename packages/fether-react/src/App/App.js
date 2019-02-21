@@ -137,7 +137,7 @@ class App extends Component {
           <div className='window'>
             <Modal
               title='New version available'
-              description={`${newRelease && newRelease.name} was released!`}
+              description={newRelease ? `${newRelease.name} was released!` : ''}
               visible={newRelease && !newRelease.ignore}
               buttons={this.renderModalLinks()}
             >
