@@ -8,7 +8,15 @@ function windowClear (fetherApp) {
 
   if (win) {
     // Remove relevant events when window object deleted
-    const events = ['close', 'move', 'moved', 'resize'];
+    const events = [
+      'blur',
+      'close',
+      'closed',
+      'minimize',
+      'move',
+      'moved',
+      'resize'
+    ];
     for (let event in events) {
       win.removeAllListeners(event);
     }

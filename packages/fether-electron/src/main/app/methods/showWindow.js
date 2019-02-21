@@ -21,6 +21,8 @@ function showWindow (fetherApp, trayPos) {
     win
   } = fetherApp;
 
+  pino.info('Showing window id: ', fetherApp.win && fetherApp.win.id);
+
   if (!win) {
     createWindow(fetherApp);
   }
@@ -75,8 +77,12 @@ function showWindow (fetherApp, trayPos) {
   fetherApp.win.setPosition(x, y);
   fetherApp.win.show();
 
-  setupWinListeners(fetherApp);
-  setupWin32Listeners(fetherApp);
+  if (!fetherApp.hasSetupWinListeners) {
+    setupWinListeners(fetherApp);
+    setupWin32Listeners(fetherApp);
+
+    fetherApp.hasSetupWinListeners = true;
+  }
 
   fetherApp.emit('after-show-window');
 }
