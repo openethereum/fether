@@ -70,7 +70,7 @@ const DEFAULT_OPTIONS = {
 
 const TASKBAR_OPTIONS = {
   frame: shouldUseFrame,
-  height: 500,
+  height: 515,
   // On Linux the user must click the tray icon and then click the tooltip
   // to toggle the Fether window open/close
   tooltip: 'Click to toggle Fether window',
