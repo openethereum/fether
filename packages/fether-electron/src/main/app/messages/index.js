@@ -18,24 +18,6 @@ export default async (fetherAppWindow, event, action, ...args) => {
       return;
     }
     switch (action) {
-      // case 'app-resize': {
-      //   if (!args[0]) {
-      //     return;
-      //   }
-      //   const [width] = fetherAppWindow.getContentSize();
-      //   // Conversion to integer is required to pass as argument to setContentSize.
-      //   // Reference: https://electronjs.org/docs/all#winsetcontentsizewidth-height-animate
-      //   const newHeight = parseInt(args[0]);
-      //   const feedbackButtonHeight = 20;
-      //   const resizeHeight = newHeight + 2;
-      //   const height =
-      //     process.platform === 'win32' && fetherAppWindow.isMenuBarVisible()
-      //       ? resizeHeight + feedbackButtonHeight
-      //       : resizeHeight;
-
-      //   fetherAppWindow.setContentSize(width, height);
-      //   break;
-      // }
       case 'check-clock-sync': {
         checkClockSync().then(t => {
           event.sender.send('check-clock-sync-reply', t);
