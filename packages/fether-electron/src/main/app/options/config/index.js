@@ -44,7 +44,9 @@ const windowPosition =
   process.platform === 'win32' ? 'trayBottomCenter' : 'trayCenter';
 
 let tooltip =
-  'Click tray icon toggles Fether menu. Click dock icon to toggle Fether window';
+  process.platform === 'darwin'
+    ? 'Click tray icon to toggle Fether window'
+    : 'Click tray icon to toggle Fether menu. Click dock icon to toggle Fether window';
 
 // API docs: https://electronjs.org/docs/api/browser-window
 const DEFAULT_OPTIONS = {
