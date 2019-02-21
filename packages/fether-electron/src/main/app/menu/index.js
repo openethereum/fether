@@ -4,18 +4,49 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import electron from 'electron';
-import { template } from './template';
+import { getTemplate } from './template';
 
 const { Menu } = electron;
 
-const menu = Menu.buildFromTemplate(template);
+let hasCalledInitFetherMenu = false;
 
-const getMenu = () => {
-  return Menu.getApplicationMenu();
-};
+class FetherMenu {
+  constructor () {
+    if (hasCalledInitFetherMenu) {
+      throw new Error('Unable to initialise Fether menu more than once');
+    }
+  }
 
-const addMenu = () => {
-  Menu.setApplicationMenu(menu);
-};
+  getMenu = () => {
+    return Menu.getApplicationMenu();
+  };
 
-export { addMenu, getMenu };
+  getMenuTemplate = fetherApp => {
+    return getTemplate(fetherApp);
+  };
+
+  getDefaultBuiltMenuTemplate = fetherApp => {
+    return Menu.buildFromTemplate(this.getMenuTemplate(fetherApp));
+  };
+
+  createCustomBuiltMenuTemplate = customMenuTemplate => {
+    return Menu.buildFromTemplate(customMenuTemplate);
+  };
+
+  setMenu = (fetherApp, customBuiltMenuTemplate) => {
+    const defaultBuiltMenuTemplate = this.getDefaultBuiltMenuTemplate(
+      fetherApp
+    );
+    Menu.setApplicationMenu(
+      customBuiltMenuTemplate || defaultBuiltMenuTemplate
+    );
+  };
+
+  updateMenu = fetherApp => {
+    const newMenu = this.getMenuTemplate(fetherApp);
+    const customBuiltMenuTemplate = this.createCustomBuiltMenuTemplate(newMenu);
+    this.setMenu(fetherApp, customBuiltMenuTemplate);
+  };
+}
+
+export default FetherMenu;

@@ -9,8 +9,30 @@ const { app, shell } = electron;
 
 // Create the Application's main menu
 // https://github.com/electron/electron/blob/master/docs/api/menu.md#examples
-export const template = [
-  {
+export const getTemplate = fetherApp => {
+  // File menu
+  const fileTab =
+    process.platform === 'darwin'
+      ? {
+        label: app.getName(),
+        submenu: [
+          { role: 'about' },
+          { type: 'separator' },
+          { role: 'services', submenu: [] },
+          { type: 'separator' },
+          { role: 'hide' },
+          { role: 'hideothers' },
+          { role: 'unhide' },
+          { type: 'separator' },
+          { role: 'quit' }
+        ]
+      }
+      : {
+        label: app.getName(),
+        submenu: [{ role: 'quit' }]
+      };
+
+  const editTab = {
     label: 'Edit',
     submenu: [
       { role: 'cut' },
@@ -19,8 +41,9 @@ export const template = [
       { role: 'delete' },
       { role: 'selectall' }
     ]
-  },
-  {
+  };
+
+  const viewTab = {
     label: 'View',
     submenu: [
       { role: 'reload' },
@@ -33,12 +56,14 @@ export const template = [
       { type: 'separator' },
       { role: 'togglefullscreen' }
     ]
-  },
-  {
+  };
+
+  const windowTab = {
     role: 'window',
     submenu: [{ role: 'minimize' }, { role: 'close' }]
-  },
-  {
+  };
+
+  const helpTab = {
     role: 'help',
     submenu: [
       {
@@ -48,40 +73,31 @@ export const template = [
         }
       }
     ]
+  };
+
+  let template = [fileTab, editTab, viewTab, windowTab, helpTab];
+
+  if (process.platform === 'darwin') {
+    // Edit menu
+    template[1].submenu.push(
+      { type: 'separator' },
+      {
+        label: 'Speech',
+        submenu: [{ role: 'startspeaking' }, { role: 'stopspeaking' }]
+      }
+    );
   }
-];
 
-if (process.platform === 'darwin') {
-  template.unshift({
-    label: app.getName(),
-    submenu: [
-      { role: 'about' },
+  if (process.platform === 'darwin') {
+    // Window menu
+    template[3].submenu = [
+      { role: 'close' },
+      { role: 'minimize' },
+      { role: 'zoom' },
       { type: 'separator' },
-      { role: 'services', submenu: [] },
-      { type: 'separator' },
-      { role: 'hide' },
-      { role: 'hideothers' },
-      { role: 'unhide' },
-      { type: 'separator' },
-      { role: 'quit' }
-    ]
-  });
+      { role: 'front' }
+    ];
+  }
 
-  // Edit menu
-  template[1].submenu.push(
-    { type: 'separator' },
-    {
-      label: 'Speech',
-      submenu: [{ role: 'startspeaking' }, { role: 'stopspeaking' }]
-    }
-  );
-
-  // Window menu
-  template[3].submenu = [
-    { role: 'close' },
-    { role: 'minimize' },
-    { role: 'zoom' },
-    { type: 'separator' },
-    { role: 'front' }
-  ];
-}
+  return template;
+};
