@@ -26,7 +26,7 @@ function showTrayBalloon (fetherApp) {
 
   tray.displayBalloon({
     content:
-      'Click tray icon to toggle Fether menu. Click dock icon to toggle Fether window',
+      'Click tray icon toggles Fether menu. Click dock icon toggles Fether window',
     icon: iconBalloonPath,
     title: 'Fether Window & Menu Usage'
   });
