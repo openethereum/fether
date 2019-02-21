@@ -58,11 +58,10 @@ function setupWinListeners (fetherApp) {
   win.on('resize', () => {
     pino.info('Detected resize event');
 
-    /*    moveWindowUp(fetherApp);
+    moveWindowUp(fetherApp);
     setTimeout(() => {
       moveWindowUp(fetherApp);
     }, 5000);
-  */
   });
 
   win.on('blur', () => {
