@@ -99,5 +99,10 @@ export const getTemplate = fetherApp => {
     ];
   }
 
+  if (fetherApp.options.withTaskbar) {
+    // Remove 'close' and 'minimize' options when running as taskbar app
+    template[3].submenu.splice(0, 2);
+  }
+
   return template;
 };
