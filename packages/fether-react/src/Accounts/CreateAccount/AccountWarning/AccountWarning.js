@@ -71,7 +71,7 @@ class AccountWarning extends PureComponent {
             </button>
           )}
           <button className='button' onClick={this.handleNext}>
-            I Understand
+            I Understand.
           </button>
         </nav>
       </RequireHealthOverlay>
