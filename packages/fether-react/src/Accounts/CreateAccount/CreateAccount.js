@@ -13,6 +13,7 @@ import AccountImportOptions from './AccountImportOptions';
 import AccountRewritePhrase from './AccountRewritePhrase';
 import AccountName from './AccountName';
 import AccountPassword from './AccountPassword';
+import AccountWarning from './AccountWarning';
 import Health from '../../Health';
 import withAccountsInfo from '../../utils/withAccountsInfo';
 
@@ -27,12 +28,18 @@ class CreateAccount extends Component {
 
   /**
    * Creating account and importing accounts have different processes: 4 steps
-   * for importing, and 5 steps for creating
+   * for importing, and 5 steps for creating (6 including the warning screen)
    */
   getSteps = isImport =>
     isImport
       ? [AccountImportOptions, AccountName, AccountPassword]
-      : [AccountName, AccountCopyPhrase, AccountRewritePhrase, AccountPassword];
+      : [
+        AccountName,
+        AccountCopyPhrase,
+        AccountWarning,
+        AccountRewritePhrase,
+        AccountPassword
+      ];
 
   handleToggleCreateImport = () => {
     const {

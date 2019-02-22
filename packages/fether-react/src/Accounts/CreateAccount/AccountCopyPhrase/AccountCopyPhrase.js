@@ -24,7 +24,7 @@ class AccountCopyPhrase extends Component {
     // If user wants to skip, move directly past the rewrite step.
     if (event.currentTarget.dataset.skip) {
       await flagAccount();
-      history.push(`/accounts/new/${+currentStep + 2}`);
+      history.push(`/accounts/new/${+currentStep + 1}/true`);
     } else {
       history.push(`/accounts/new/${+currentStep + 1}`);
     }
@@ -51,35 +51,12 @@ class AccountCopyPhrase extends Component {
                 <div className='text -tiny'>
                   <ul className='-bulleted'>
                     <li>
-                      You can opt to skip this step and copy your phrase later
-                      by selecting the Backup Recovery Phrase option from your
-                      account.{' '}
-                      <b>
-                        You must remember your password to view your recovery
-                        phrase again!
-                      </b>
-                    </li>
-                    <li>
-                      <b>
-                        Once you confirm your recovery phrase, you will not be
-                        able to view it again.
-                      </b>{' '}
-                      You MUST make sure it is somewhere safe & accessible.
-                    </li>
-                    <li>
-                      <b>
-                        If you lose your recovery phrase, your wallet cannot be
-                        recovered
-                      </b>{' '}
-                      unless you choose to backup your account to a password
-                      encrypted JSON file. You must remember this password!
-                    </li>
-                    <li>
                       <b>
                         If someone gets hold of your recovery phrase, they will
                         be able to drain your account.
                       </b>
                     </li>
+                    <li>Write it on a piece of paper and store securely.</li>
                   </ul>
                 </div>
               </div>

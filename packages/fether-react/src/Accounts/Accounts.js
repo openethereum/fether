@@ -14,7 +14,10 @@ class Accounts extends PureComponent {
     return (
       <Switch>
         <Route exact path='/accounts' component={AccountsList} />
-        <Route path='/accounts/new/:step' component={CreateAccount} />
+        <Route
+          path='/accounts/new/:step/:shouldSkipRewrite?'
+          component={CreateAccount}
+        />
         <Redirect from='/accounts/new' to='/accounts/new/1' />
       </Switch>
     );

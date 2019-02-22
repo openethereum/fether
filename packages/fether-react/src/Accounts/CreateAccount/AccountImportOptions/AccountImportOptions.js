@@ -33,6 +33,7 @@ class AccountImportOptions extends Component {
       location: { pathname }
     } = this.props;
     const currentStep = pathname.slice(-1);
+
     history.push(`/accounts/new/${+currentStep + 1}`);
   };
 
