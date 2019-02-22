@@ -17,7 +17,6 @@ import withAccount from '../utils/withAccount';
 class Tokens extends PureComponent {
   state = {
     isMenuOpen: false,
-    phrase: null,
     showWarning: false
   };
 
@@ -48,12 +47,13 @@ class Tokens extends PureComponent {
       account: { address }
     } = this.props;
 
-    const phrase = await localForage.getItem(`__flagged_${address}`);
+    const flagged = await localForage.getItem(`__flagged_${address}`);
 
-    this.setState({
-      phrase,
-      showWarning: phrase !== null
-    });
+    if (flagged) {
+      this.setState({
+        showWarning: true
+      });
+    }
   };
 
   isParitySignerAccount = () => {
@@ -76,25 +76,20 @@ class Tokens extends PureComponent {
       onClick: () => history.push(`/backup/${address}`)
     };
 
-    const backupRecoveryItem = {
-      name: 'Backup Recovery Phrase',
-      onClick: () => history.push(`/rewrite/${address}`),
-      warn: showWarning
-    };
-
     const menuItems = [
       {
         name: 'Add Tokens',
         onClick: () => history.push(`/whitelist/${address}`)
+      },
+      {
+        name: 'Backup Recovery Phrase',
+        onClick: () => history.push(`/rewrite/${address}`),
+        warn: showWarning
       }
     ];
 
     if (!this.isParitySignerAccount()) {
       menuItems.push(backupAccountItem);
-    }
-
-    if (showWarning) {
-      menuItems.push(backupRecoveryItem);
     }
 
     return menuItems;

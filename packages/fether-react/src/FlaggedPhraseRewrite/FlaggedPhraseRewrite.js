@@ -5,9 +5,9 @@
 import * as CryptoJS from 'crypto-js';
 import { AccountCard, Header, Form as FetherForm } from 'fether-ui';
 import localForage from 'localforage';
+import { inject } from 'mobx-react';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { inject } from 'mobx-react';
 
 import RequireHealthOverlay from '../RequireHealthOverlay';
 import withAccount from '../utils/withAccount';
@@ -43,18 +43,30 @@ class FlaggedPhraseRewrite extends Component {
       account: { address },
       history
     } = this.props;
+    const { password, phrase } = this.state;
 
     // unset account flag
     await localForage.removeItem(`__flagged_${address}`);
+
+    // AES encrypt the phrase
+    const encryptedPhrase = CryptoJS.AES.encrypt(phrase, password).toString();
+
+    // set flag as safe
+    await localForage.setItem(`__safe_${address}`, encryptedPhrase);
+
     // go to account
     history.push(`/tokens/${address}`);
   };
 
   // Get the actual phrase to rewrite
   getPhrase = async () => {
-    const phrase = await localForage.getItem(
-      `__flagged_${this.props.account.address}`
-    );
+    const {
+      account: { address }
+    } = this.props;
+
+    const phrase =
+      (await localForage.getItem(`__flagged_${address}`)) ||
+      (await localForage.getItem(`__safe_${address}`));
 
     // phrase is still encrypted
     this.setState({ phrase });

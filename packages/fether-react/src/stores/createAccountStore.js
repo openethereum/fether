@@ -6,10 +6,10 @@
 import { action, computed, observable } from 'mobx';
 
 import bip39 from 'bip39';
-import hdkey from 'ethereumjs-wallet/hdkey';
 import * as CryptoJS from 'crypto-js';
-
+import hdkey from 'ethereumjs-wallet/hdkey';
 import localForage from 'localforage';
+
 import LS_PREFIX from './utils/lsPrefix';
 
 import Debug from '../utils/debug';
@@ -133,20 +133,19 @@ export class CreateAccountStore {
         );
       }
 
+      const phrase = this.bip39Phrase || this.parityPhrase;
+
+      // AES encrypt the phrase
+      const encryptedPhrase = CryptoJS.AES.encrypt(phrase, password).toString();
+
+      let flag;
       if (this.skippedFlag) {
-        const phrase = this.bip39Phrase || this.parityPhrase;
-
-        // AES encrypt the phrase
-        const encryptedPhrase = CryptoJS.AES.encrypt(
-          phrase,
-          password
-        ).toString();
-
-        await localForage.setItem(
-          `__flagged_${parityAddress}`,
-          encryptedPhrase
-        );
+        flag = '__flagged_';
+      } else {
+        flag = '__safe_';
       }
+
+      await localForage.setItem(`${flag}${parityAddress}`, encryptedPhrase);
 
       await parityStore.api.parity.setAccountName(this.address, this.name);
       await parityStore.api.parity.setAccountMeta(this.address, {
