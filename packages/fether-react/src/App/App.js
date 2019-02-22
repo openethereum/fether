@@ -18,7 +18,7 @@ import ReactResizeDetector from 'react-resize-detector';
 import Accounts from '../Accounts';
 import BackupAccount from '../BackupAccount';
 import Onboarding from '../Onboarding';
-import FlaggedPhraseRewrite from '../FlaggedPhraseRewrite';
+import BackupPhrase from '../BackupPhrase';
 import RequireHealthOverlay from '../RequireHealthOverlay';
 import Send from '../Send';
 import Tokens from '../Tokens';
@@ -96,8 +96,8 @@ class App extends Component {
                   component={BackupAccount}
                 />
                 <Route
-                  path='/rewrite/:accountAddress'
-                  component={FlaggedPhraseRewrite}
+                  path='/rewrite/:accountAddress/'
+                  component={BackupPhrase}
                 />
                 <Route
                   path='/send/:tokenAddress/from/:accountAddress'

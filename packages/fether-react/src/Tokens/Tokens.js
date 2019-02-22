@@ -82,8 +82,10 @@ class Tokens extends PureComponent {
         onClick: () => history.push(`/whitelist/${address}`)
       },
       {
-        name: 'Backup Recovery Phrase',
-        onClick: () => history.push(`/rewrite/${address}`),
+        name: `${
+          showWarning ? 'Backup Recovery Phrase' : 'View Recovery Phrase'
+        }`,
+        onClick: () => history.push(`/rewrite/${address}/${showWarning}`),
         warn: showWarning
       }
     ];

@@ -13,9 +13,18 @@ import RequireHealthOverlay from '../RequireHealthOverlay';
 import withAccount from '../utils/withAccount';
 import Health from '../Health';
 
+/*
+  The user skipped phrase rewrite during account creation.
+  Then ->
+    Two cases:
+    1. The user hasn't confirmed recovery phrase backup yet.
+      -> In this case we show a warning and guide them to decrypt the phrase with their password and through to the rewrite step.
+    2. The user has confirmed backup of their recovery phrase, but just wants to view it once more.
+      -> In this case, we do not show warning, but we alow them to decrypt the phrase with their password.
+*/
 @inject('parityStore')
 @withAccount
-class FlaggedPhraseRewrite extends Component {
+class BackupPhrase extends Component {
   state = {
     error: null,
     password: '',
@@ -116,6 +125,7 @@ class FlaggedPhraseRewrite extends Component {
     try {
       // decrypt the phrase
       var phraseInBytes = CryptoJS.AES.decrypt(phrase, password);
+      // this will throw in the case of a wrong password
       var originalPhrase = phraseInBytes.toString(CryptoJS.enc.Utf8);
 
       if (!originalPhrase) {
@@ -140,9 +150,15 @@ class FlaggedPhraseRewrite extends Component {
 
   render () {
     const {
-      account: { address, name }
+      account: { address, name },
+      location: { pathname }
     } = this.props;
     const { error, unlocked } = this.state;
+
+    const needsRewrite = pathname.split('/')[3];
+    const title = `${
+      needsRewrite ? 'Backup Recovery Phrase' : 'View Recovery Phrase'
+    }`;
 
     return (
       <div>
@@ -152,7 +168,7 @@ class FlaggedPhraseRewrite extends Component {
               Back
             </Link>
           }
-          title={<h1>Backup Recovery Phrase</h1>}
+          title={<h1>{title}</h1>}
         />
 
         <div className='window_content'>
@@ -230,6 +246,13 @@ class FlaggedPhraseRewrite extends Component {
 
   renderCopyForm () {
     const { phrase } = this.state;
+    const {
+      account: { address },
+      history,
+      location: { pathname }
+    } = this.props;
+
+    const needsRewrite = pathname.split('/')[3];
 
     return (
       <div>
@@ -250,9 +273,18 @@ class FlaggedPhraseRewrite extends Component {
           >
             Back
           </button>
-          <button className='button' onClick={this.nextStep}>
-            Next
-          </button>
+          {needsRewrite ? (
+            <button className='button' onClick={this.nextStep}>
+              Next
+            </button>
+          ) : (
+            <button
+              className='button'
+              onClick={history.push(`/accounts/${address}`)}
+            >
+              Done
+            </button>
+          )}
         </nav>
       </div>
     );
@@ -306,25 +338,22 @@ class FlaggedPhraseRewrite extends Component {
         <div className='text -tiny'>
           <ul className='-bulleted'>
             <li>
-              <b>
-                Once you confirm your recovery phrase, you will not be able to
-                view it again.
-              </b>{' '}
-              You MUST make sure it is somewhere safe & accessible.
+              {' '}
+              Copy down your recovery phrase somewhere secure in case you need
+              to recover your account in the future.{' '}
+              <b> Skipping this step is NOT recommended. </b>
             </li>
             <li>
-              <b>
-                If you lose your recovery phrase, your wallet cannot be
-                recovered
-              </b>{' '}
-              unless you choose to backup your account to a password encrypted
-              JSON file. You must remember this password!
+              {' '}
+              You can view and copy your recovery phrase later on by selecting
+              "View Recovery Phrase" from your account.{' '}
+              <b> Note that you need your account password to do so. </b>{' '}
             </li>
             <li>
-              <b>
-                If someone gets hold of your recovery phrase, they will be able
-                to drain your account.
-              </b>
+              {' '}
+              If you lose your recovery phrase and you did not perform a JSON
+              Backup (select "Backup Account" from the account menu),{' '}
+              <b> your wallet cannot be recovered </b>{' '}
             </li>
           </ul>
         </div>
@@ -333,4 +362,4 @@ class FlaggedPhraseRewrite extends Component {
   }
 }
 
-export default FlaggedPhraseRewrite;
+export default BackupPhrase;

@@ -3,6 +3,6 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import FlaggedPhraseRewrite from './FlaggedPhraseRewrite';
+import BackupPhrase from './BackupPhrase';
 
-export default FlaggedPhraseRewrite;
+export default BackupPhrase;

@@ -15,14 +15,10 @@ class AccountWarning extends PureComponent {
       location: { pathname }
     } = this.props;
 
-    const currentStep = pathname.split('/')[3];
-    const shouldSkipRewrite = pathname.split('/')[4];
+    const currentStep = pathname.slice(-1);
 
-    if (shouldSkipRewrite) {
-      history.push(`/accounts/new/${+currentStep + 2}`);
-    } else {
-      history.push(`/accounts/new/${+currentStep + 1}`);
-    }
+    // skip the rewrite screen to password screen
+    history.push(`/accounts/new/${+currentStep + 2}`);
   };
 
   render () {
@@ -31,7 +27,7 @@ class AccountWarning extends PureComponent {
       location: { pathname }
     } = this.props;
 
-    const currentStep = pathname.split('/')[3];
+    const currentStep = pathname.slice(-1);
 
     return (
       <RequireHealthOverlay require='node'>
@@ -61,15 +57,13 @@ class AccountWarning extends PureComponent {
           </div>
         </Card>
         <nav className='form-nav -space-around'>
-          {currentStep > 1 && (
-            <button
-              className='button -back'
-              onClick={history.goBack}
-              type='button'
-            >
-              Back
-            </button>
-          )}
+          <button
+            className='button -back'
+            onClick={history.goBack}
+            type='button'
+          >
+            Back
+          </button>
           <button className='button' onClick={this.handleNext}>
             I Understand.
           </button>

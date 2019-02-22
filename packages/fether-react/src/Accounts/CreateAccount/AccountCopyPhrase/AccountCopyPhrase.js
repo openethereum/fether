@@ -24,9 +24,9 @@ class AccountCopyPhrase extends Component {
     // If user wants to skip, move directly past the rewrite step.
     if (event.currentTarget.dataset.skip) {
       await flagAccount();
-      history.push(`/accounts/new/${+currentStep + 1}/true`);
-    } else {
       history.push(`/accounts/new/${+currentStep + 1}`);
+    } else {
+      history.push(`/accounts/new/${+currentStep + 2}`);
     }
   };
 
@@ -43,7 +43,7 @@ class AccountCopyPhrase extends Component {
           drawers={[
             <form key='createAccount' onSubmit={this.handleSubmit}>
               <div className='text'>
-                <p>Please write your recovery phrase on a piece of paper:</p>
+                <p>Write down your recovery phrase.</p>
               </div>
               <div className='text -code'>{bip39Phrase}</div>
               <div className='text -space-around'>
