@@ -47,7 +47,7 @@ const windowPosition =
 
 // API docs: https://electronjs.org/docs/api/browser-window
 const DEFAULT_OPTIONS = {
-  alwaysOnTop: true,
+  alwaysOnTop: false,
   dir: staticPath,
   frame: true,
   height: 640,

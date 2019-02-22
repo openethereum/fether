@@ -19,7 +19,7 @@ export default async (fetherAppWindow, event, action, ...args) => {
     }
     switch (action) {
       case 'app-resize': {
-        if (!args[0]) {
+        if (!fetherAppWindow || !args[0]) {
           return;
         }
         const [width] = fetherAppWindow.getContentSize();
