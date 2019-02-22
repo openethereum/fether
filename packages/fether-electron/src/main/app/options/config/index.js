@@ -40,7 +40,7 @@ if (process.platform === 'win32') {
   );
 }
 
-const shouldUseFrame = process.platform === 'win32';
+const shouldUseFrame = false;
 
 const windowPosition =
   process.platform === 'win32' ? 'trayBottomCenter' : 'trayCenter';
