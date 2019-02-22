@@ -32,22 +32,16 @@ export const getTemplate = fetherApp => {
         submenu: [{ role: 'quit' }]
       };
 
+  /**
+   * On win32 we need to use `webContents` to make some of the menu items
+   * functional (whereas it is not required on Linux and macOS).
+   * i.e on macOS/Linux `{ role: 'undo' }` suffices to add the Undo menu item,
+   * whereas on win32 we must use `webContents` as follows:
+   * `{ label: 'Undo', click: () => fetherApp.win.webContents.undo() }`.
+   * Since all items in the 'Edit' menu work with `webContents` we will use
+   * it to prevent code duplication
+   */
   const editTab = {
-    label: 'Edit',
-    submenu: [
-      { role: 'undo' },
-      { role: 'redo' },
-      { type: 'separator' },
-      { role: 'cut' },
-      { role: 'copy' },
-      { role: 'paste' },
-      { type: 'separator' },
-      { role: 'delete' },
-      { role: 'selectall' }
-    ]
-  };
-
-  const editTabWindowsOS = {
     label: 'Edit',
     submenu: [
       { label: 'Undo', click: () => fetherApp.win.webContents.undo() },
@@ -80,6 +74,13 @@ export const getTemplate = fetherApp => {
     ]
   };
 
+  /**
+   * On win32 we need to use `webContents` to make some of the menu items
+   * functional (whereas it is not required on Linux and macOS).
+   * Note that some menu items are not available in `webContents`
+   * (i.e. resetzoom, zoomin, zoomout, togglefullscreen), however they
+   * add no benefit to users anyway
+   */
   const viewTabWindowsOS = {
     label: 'View',
     submenu: [
@@ -110,7 +111,7 @@ export const getTemplate = fetherApp => {
 
   let template = [
     fileTab,
-    process.platform === 'win32' ? editTabWindowsOS : editTab,
+    editTab,
     process.platform === 'win32' ? viewTabWindowsOS : viewTab,
     windowTab,
     helpTab
