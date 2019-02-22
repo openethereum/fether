@@ -35,11 +35,33 @@ export const getTemplate = fetherApp => {
   const editTab = {
     label: 'Edit',
     submenu: [
+      { role: 'undo' },
+      { role: 'redo' },
+      { type: 'separator' },
       { role: 'cut' },
       { role: 'copy' },
       { role: 'paste' },
+      { type: 'separator' },
       { role: 'delete' },
       { role: 'selectall' }
+    ]
+  };
+
+  const editTabWindowsOS = {
+    label: 'Edit',
+    submenu: [
+      { label: 'Undo', click: () => fetherApp.win.webContents.undo() },
+      { label: 'Redo', click: () => fetherApp.win.webContents.redo() },
+      { type: 'separator' },
+      { label: 'Cut', click: () => fetherApp.win.webContents.cut() },
+      { label: 'Copy', click: () => fetherApp.win.webContents.copy() },
+      { label: 'Paste', click: () => fetherApp.win.webContents.paste() },
+      { type: 'separator' },
+      { label: 'Delete', click: () => fetherApp.win.webContents.delete() },
+      {
+        label: 'Select All',
+        click: () => fetherApp.win.webContents.selectAll()
+      }
     ]
   };
 
@@ -55,6 +77,17 @@ export const getTemplate = fetherApp => {
       { role: 'zoomout' },
       { type: 'separator' },
       { role: 'togglefullscreen' }
+    ]
+  };
+
+  const viewTabWindowsOS = {
+    label: 'View',
+    submenu: [
+      { label: 'Reload', click: () => fetherApp.win.webContents.reload() },
+      {
+        label: 'Toggle Developer Tools',
+        click: () => fetherApp.win.webContents.toggleDevTools()
+      }
     ]
   };
 
@@ -75,7 +108,13 @@ export const getTemplate = fetherApp => {
     ]
   };
 
-  let template = [fileTab, editTab, viewTab, windowTab, helpTab];
+  let template = [
+    fileTab,
+    process.platform === 'win32' ? editTabWindowsOS : editTab,
+    process.platform === 'win32' ? viewTabWindowsOS : viewTab,
+    windowTab,
+    helpTab
+  ];
 
   if (process.platform === 'darwin') {
     // Edit menu
