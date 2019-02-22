@@ -5,7 +5,7 @@
 
 import electron from 'electron';
 
-const { app, shell } = electron;
+const { shell } = electron;
 
 // Create the Application's main menu
 // https://github.com/electron/electron/blob/master/docs/api/menu.md#examples
@@ -14,7 +14,7 @@ export const getTemplate = fetherApp => {
   const fileTab =
     process.platform === 'darwin'
       ? {
-        label: app.getName(),
+        label: 'File',
         submenu: [
           { role: 'about' },
           { type: 'separator' },
@@ -28,7 +28,7 @@ export const getTemplate = fetherApp => {
         ]
       }
       : {
-        label: app.getName(),
+        label: 'File',
         submenu: [{ role: 'quit' }]
       };
 
