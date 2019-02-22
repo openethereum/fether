@@ -16,6 +16,8 @@ function showWindow (fetherApp, trayPos) {
     calculateWinPosition,
     createWindow,
     fixWinPosition,
+    moveWindowUp,
+    processSaveWinPosition,
     setupWinListeners,
     setupWin32Listeners,
     win
@@ -82,6 +84,16 @@ function showWindow (fetherApp, trayPos) {
     setupWin32Listeners(fetherApp);
 
     fetherApp.hasSetupWinListeners = true;
+  }
+
+  if (process.platform === 'win32') {
+    // Handled in setupWinListeners.js on non-win32 OSes
+    moveWindowUp(fetherApp);
+    setTimeout(() => {
+      moveWindowUp(fetherApp);
+    }, 5000);
+
+    processSaveWinPosition(fetherApp);
   }
 
   fetherApp.emit('after-show-window');

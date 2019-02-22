@@ -24,7 +24,7 @@ function setupWinListeners (fetherApp) {
     electron.shell.openExternal(url);
   });
 
-  // Linux (unchecked on others)
+  // Windows and Linux (unchecked on others)
   win.on('move', () => {
     /**
      * On Linux using this with debouncing is the closest equivalent
@@ -49,13 +49,17 @@ function setupWinListeners (fetherApp) {
      * On Linux the closest equivalent to achieving 'moved' is debouncing
      * on the 'move' event. It also works in 'close' even when app crashes
      */
+    pino.info('Detected moved event');
+
+    // Handle this in showWindow.js on win32 OS
     processSaveWinPosition(fetherApp);
   });
 
-  // macOS and Linux (not Windows)
+  // macOS and Linux and Windows
   win.on('resize', () => {
     pino.info('Detected resize event');
 
+    // Handle this in showWindow.js on win32 OS
     moveWindowUp(fetherApp);
     setTimeout(() => {
       moveWindowUp(fetherApp);
