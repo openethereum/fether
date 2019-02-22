@@ -47,7 +47,7 @@ class BackupPhrase extends Component {
     this.setState({ phraseRewrite: value });
   };
 
-  handleSubmit = async () => {
+  handleSubmit = async event => {
     const {
       account: { address },
       history
@@ -96,7 +96,18 @@ class BackupPhrase extends Component {
   };
 
   nextStep = event => {
+    const {
+      account: { address },
+      history,
+      location: { pathname }
+    } = this.props;
+
     event.preventDefault();
+
+    if (pathname.split('/')[3] !== 'true') {
+      history.push(`/tokens/${address}`);
+    }
+
     this.setState({
       step: this.state.step + 1
     });
@@ -156,9 +167,10 @@ class BackupPhrase extends Component {
     const { error, unlocked } = this.state;
 
     const needsRewrite = pathname.split('/')[3];
-    const title = `${
-      needsRewrite ? 'Backup Recovery Phrase' : 'View Recovery Phrase'
-    }`;
+    const title =
+      needsRewrite === 'true'
+        ? 'Backup Recovery Phrase'
+        : 'View Recovery Phrase';
 
     return (
       <div>
@@ -182,7 +194,7 @@ class BackupPhrase extends Component {
                     {unlocked
                       ? this.renderCopyAndRewrite()
                       : this.renderPasswordForm()}
-                    {this.renderTips()}
+                    {needsRewrite === 'true' ? this.renderTips() : null}
                     {error}
                     <nav className='footer-nav'>
                       <div className='footer-nav_status'>
@@ -206,7 +218,7 @@ class BackupPhrase extends Component {
     return (
       <div>
         <div className='text -centered'>
-          Unlock your account to view and backup your recovery phrase.
+          Unlock your account to view your recovery phrase.
         </div>
         <form key='password' onSubmit={this.unlockWithPassword}>
           <FetherForm.Field
@@ -252,12 +264,14 @@ class BackupPhrase extends Component {
       location: { pathname }
     } = this.props;
 
-    const needsRewrite = pathname.split('/')[3];
+    const needsRewrite = pathname.split('/')[3] === 'true';
 
     return (
       <div>
         <div className='text -centered'>
-          Please write your recovery phrase on a piece of paper.
+          {needsRewrite
+            ? 'Please write your recovery phrase on a piece of paper.'
+            : 'Make sure not to let anyone see your recovery phrase.'}
         </div>
         <div
           className='text -code -space-around'
@@ -273,18 +287,9 @@ class BackupPhrase extends Component {
           >
             Back
           </button>
-          {needsRewrite ? (
-            <button className='button' onClick={this.nextStep}>
-              Next
-            </button>
-          ) : (
-            <button
-              className='button'
-              onClick={history.push(`/accounts/${address}`)}
-            >
-              Done
-            </button>
-          )}
+          <button className='button' onClick={this.nextStep}>
+            {needsRewrite ? 'Next' : 'Done'}
+          </button>
         </nav>
       </div>
     );

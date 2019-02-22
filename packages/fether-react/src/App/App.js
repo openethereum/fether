@@ -96,7 +96,7 @@ class App extends Component {
                   component={BackupAccount}
                 />
                 <Route
-                  path='/rewrite/:accountAddress/'
+                  path='/backupPhrase/:accountAddress/:needsRewrite'
                   component={BackupPhrase}
                 />
                 <Route

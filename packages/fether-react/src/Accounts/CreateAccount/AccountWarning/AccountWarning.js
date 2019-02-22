@@ -22,12 +22,7 @@ class AccountWarning extends PureComponent {
   };
 
   render () {
-    const {
-      history,
-      location: { pathname }
-    } = this.props;
-
-    const currentStep = pathname.slice(-1);
+    const { history } = this.props;
 
     return (
       <RequireHealthOverlay require='node'>
