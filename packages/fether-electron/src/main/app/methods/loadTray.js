@@ -45,6 +45,14 @@ function loadTray (fetherApp) {
     tray.on('click', () => {
       pino.info('Detected single click on tray icon');
 
+      // On win32, if the user clicks a menu item in the 'Edit' menu tab
+      // of the Fether context menu after clicking the system tray icon
+      // the menu items do not work because the Fether window is blurred,
+      // so we need to regain focus on the Fether window for them to work
+      if (process.platform === 'win32') {
+        fetherApp.win.focus();
+      }
+
       // On macOS we just use single click on tray icon to toggle Fether window.
       // and do not use the context menu since the menu is shown in the taskbar.
       if (process.platform !== 'darwin') {
