@@ -132,6 +132,20 @@ export const getTemplate = fetherApp => {
   if (fetherApp.options.withTaskbar) {
     // Remove Window menu tab when running as taskbar app
     template.splice(3, 1);
+
+    if (process.platform !== 'darwin') {
+      // Remove File and Help menus on non-macOS in taskbar mode
+      // for context menu, since we not using context menu on macOS
+      template.shift();
+      template.pop();
+      template.push({
+        label: 'About',
+        click () {
+          shell.openExternal('https://parity.io');
+        }
+      });
+      template.push({ role: 'quit' });
+    }
   }
 
   return template;
