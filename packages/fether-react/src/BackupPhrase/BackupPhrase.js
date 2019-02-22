@@ -259,8 +259,6 @@ class BackupPhrase extends Component {
   renderCopyForm () {
     const { phrase } = this.state;
     const {
-      account: { address },
-      history,
       location: { pathname }
     } = this.props;
 
