@@ -76,21 +76,23 @@ class Tokens extends PureComponent {
       onClick: () => history.push(`/backup/${address}`)
     };
 
+    const backupPhraseItem = {
+      name: `${
+        showWarning ? 'Backup Recovery Phrase' : 'View Recovery Phrase'
+      }`,
+      onClick: () => history.push(`/backupPhrase/${address}/${showWarning}`),
+      warn: showWarning
+    };
+
     const menuItems = [
       {
         name: 'Add Tokens',
         onClick: () => history.push(`/whitelist/${address}`)
-      },
-      {
-        name: `${
-          showWarning ? 'Backup Recovery Phrase' : 'View Recovery Phrase'
-        }`,
-        onClick: () => history.push(`/backupPhrase/${address}/${showWarning}`),
-        warn: showWarning
       }
     ];
 
     if (!this.isParitySignerAccount()) {
+      menuItems.push(backupPhraseItem);
       menuItems.push(backupAccountItem);
     }
 
