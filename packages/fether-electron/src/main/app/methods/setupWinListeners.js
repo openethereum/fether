@@ -11,12 +11,7 @@ import Pino from '../utils/pino';
 const pino = Pino();
 
 function setupWinListeners (fetherApp) {
-  const {
-    moveWindowUp,
-    onWindowClose,
-    processSaveWinPosition,
-    win
-  } = fetherApp;
+  const { onWindowClose, processSaveWinPosition, win } = fetherApp;
 
   // Open external links in browser
   win.webContents.on('new-window', (event, url) => {
@@ -50,20 +45,11 @@ function setupWinListeners (fetherApp) {
      * on the 'move' event. It also works in 'close' even when app crashes
      */
     pino.info('Detected moved event');
-
-    // Handle this in showWindow.js on win32 OS
-    processSaveWinPosition(fetherApp);
   });
 
   // macOS and Linux and Windows
   win.on('resize', () => {
     pino.info('Detected resize event');
-
-    // Handle this in showWindow.js on win32 OS
-    moveWindowUp(fetherApp);
-    setTimeout(() => {
-      moveWindowUp(fetherApp);
-    }, 5000);
   });
 
   win.on('blur', () => {
