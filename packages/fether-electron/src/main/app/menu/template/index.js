@@ -144,7 +144,7 @@ export const getTemplate = fetherApp => {
           shell.openExternal('https://parity.io');
         }
       });
-      template.push({ role: 'quit' });
+      template.push({ label: 'Quit', role: 'quit' });
     }
   }
 
