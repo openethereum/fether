@@ -139,13 +139,8 @@ export const getTemplate = fetherApp => {
   }
 
   if (fetherApp.options.withTaskbar) {
-    if (process.platform === 'darwin') {
-      // Remove 'close' and 'minimize' options when running as taskbar app
-      template[3].submenu.splice(0, 2);
-    } else {
-      // Remove Window menu tab on non-macOS when running as taskbar app
-      template.splice(3, 1);
-    }
+    // Remove Window menu tab when running as taskbar app
+    template.splice(3, 1);
   }
 
   return template;
