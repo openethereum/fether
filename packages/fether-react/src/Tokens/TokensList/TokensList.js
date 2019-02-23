@@ -31,7 +31,7 @@ class TokensList extends Component {
         <Modal
           description='Please wait...'
           fullscreen={false}
-          loading={loading}
+          icon={loading}
           title='Loading account tokens...'
           visible={isLoadingAccountTokens}
         />
