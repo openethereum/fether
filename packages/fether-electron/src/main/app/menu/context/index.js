@@ -23,16 +23,16 @@ class FetherContextMenu {
     this.buildMenuTemplate(this.menuTemplate);
   }
 
-  getMenu = () => {
-    return this.builtMenu;
-  };
-
   setMenuTemplate = menuTemplate => {
     this.menuTemplate = menuTemplate;
   };
 
   buildMenuTemplate = menuTemplate => {
     this.builtMenu = Menu.buildFromTemplate(menuTemplate);
+  };
+
+  getMenu = () => {
+    return this.builtMenu;
   };
 }
 

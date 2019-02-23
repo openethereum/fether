@@ -31,13 +31,13 @@ class FetherMenubarMenu {
     this.builtMenu = Menu.buildFromTemplate(menuTemplate);
   };
 
+  setMenu = customBuiltMenuTemplate => {
+    Menu.setApplicationMenu(customBuiltMenuTemplate || this.builtMenu);
+  };
+
   getMenu = () => {
     // return Menu.getApplicationMenu();
     return this.builtMenu;
-  };
-
-  setMenu = customBuiltMenuTemplate => {
-    Menu.setApplicationMenu(customBuiltMenuTemplate || this.builtMenu);
   };
 }
 
