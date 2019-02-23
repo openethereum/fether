@@ -9,7 +9,7 @@ const { shell } = electron;
 
 // Create the Application's main menu
 // https://github.com/electron/electron/blob/master/docs/api/menu.md#examples
-export const getTemplate = fetherApp => {
+const getMenubarMenuTemplate = fetherApp => {
   // File menu
   const fileTab =
     process.platform === 'darwin'
@@ -132,21 +132,35 @@ export const getTemplate = fetherApp => {
   if (fetherApp.options.withTaskbar) {
     // Remove Window menu tab when running as taskbar app
     template.splice(3, 1);
-
-    if (process.platform !== 'darwin') {
-      // Remove File and Help menus on non-macOS in taskbar mode
-      // for context menu, since we not using context menu on macOS
-      template.shift();
-      template.pop();
-      template.push({
-        label: 'About',
-        click () {
-          shell.openExternal('https://parity.io');
-        }
-      });
-      template.push({ label: 'Quit', role: 'quit' });
-    }
   }
 
   return template;
 };
+
+const getContextMenuTemplate = fetherApp => {
+  let template = getMenubarMenuTemplate(fetherApp);
+
+  if (fetherApp.options.withTaskbar) {
+    // Remove File and Help menus in taskbar mode for context menu
+    template.shift();
+    template.pop();
+    template.push();
+    template.push({
+      role: 'help',
+      submenu: [
+        { role: 'about' },
+        {
+          label: 'Learn More',
+          click () {
+            shell.openExternal('https://parity.io');
+          }
+        }
+      ]
+    });
+    template.push({ label: 'Quit', role: 'quit' });
+  }
+
+  return template;
+};
+
+export { getMenubarMenuTemplate, getContextMenuTemplate };

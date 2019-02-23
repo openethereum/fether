@@ -24,12 +24,13 @@ function loadTray (fetherApp) {
 
     /**
      * On macOS we do not need context menu since taskbar menu permanently shown
-     * If choose to use context menu on macOS then it exhibits strange behaviour
-     * and only works when right-click to toggles Fether window, and single click
+     * If choose to use "tray" context menu on macOS then it exhibits strange behaviour
+     * and only works when right-click tray toggles Fether window, and single click
      * to toggles Fether menu (not the preferred way of the other way around).
+     * Note that "window" context menu on macOS using right-click has no issues.
      */
     if (process.platform !== 'darwin') {
-      tray.setContextMenu(fetherApp.menu.getMenu());
+      tray.setContextMenu(fetherApp.contextMenu.getMenu());
     }
 
     // Right-click event listener does not work on Windows

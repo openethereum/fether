@@ -3,18 +3,19 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import FetherMenu from '../menu';
+import { FetherContextMenu, FetherMenubarMenu } from '../menu';
 import Pino from '../utils/pino';
 
 const pino = Pino();
 
 function setupMenu (fetherApp) {
-  // Add Fether menu
-  fetherApp.menu = new FetherMenu();
-  fetherApp.menu.setMenu(fetherApp, undefined);
+  fetherApp.menubarMenu = new FetherMenubarMenu(fetherApp);
+  fetherApp.menubarMenu.setMenu();
+
+  fetherApp.contextMenu = new FetherContextMenu(fetherApp);
 
   /**
-   * Toggle the Fether menu bar in the frame.
+   * Toggle the Fether menubar menu in window frame when options `frame: true`.
    * If not shown by default then when shown it may crop the bottom
    * of the window when menu open/close toggled on Windows.
    */
