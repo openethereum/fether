@@ -12,21 +12,28 @@ const pino = Pino();
 /**
  * Handle all asynchronous messages from renderer to main.
  */
-export default async (fetherAppWindow, event, action, ...args) => {
+export default async (fetherApp, event, action, ...args) => {
   try {
     if (!action) {
       return;
     }
     switch (action) {
       case 'app-resize': {
-        if (!fetherAppWindow || !args[0]) {
+        if (!fetherApp.win || !args[0]) {
           return;
         }
-        const [width] = fetherAppWindow.getContentSize();
+        const [width] = fetherApp.win.getContentSize();
         // Conversion to integer is required to pass as argument to setContentSize.
         // Reference: https://electronjs.org/docs/all#winsetcontentsizewidth-height-animate
         const newHeight = parseInt(args[0]);
-        fetherAppWindow.setContentSize(width, Math.round(newHeight) + 2);
+        fetherApp.win.setContentSize(width, Math.round(newHeight) + 2);
+        break;
+      }
+      case 'app-right-click': {
+        if (!fetherApp.win) {
+          return;
+        }
+        fetherApp.menu.getMenu().popup({ window: fetherApp.win });
         break;
       }
       case 'check-clock-sync': {

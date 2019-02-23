@@ -32,12 +32,27 @@ const electron = isElectron() ? window.require('electron') : null;
 @inject('onboardingStore', 'parityStore')
 @observer
 class App extends Component {
+  componentDidMount () {
+    window.addEventListener('contextmenu', this.handleRightClick);
+  }
+
+  componentDidUnmount () {
+    window.removeEventListener('contextmenu', this.handleRightClick);
+  }
+
   handleResize = (_, height) => {
     if (!electron) {
       return;
     }
     // Send height to main process
     electron.ipcRenderer.send('asynchronous-message', 'app-resize', height);
+  };
+
+  handleRightClick = () => {
+    if (!electron) {
+      return;
+    }
+    electron.ipcRenderer.send('asynchronous-message', 'app-right-click');
   };
 
   /**
