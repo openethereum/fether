@@ -67,7 +67,9 @@ const DEFAULT_OPTIONS = {
 };
 
 const TASKBAR_OPTIONS = {
-  frame: false, // Do not use frame. It causes window height to shrink upon show/hide
+  // Do not use frame but context menu required on non-macOS.
+  // Without frame it causes window height to shrink upon show/hide
+  frame: false,
   height: 464,
   // On Linux the user must click the tray icon and then click the tooltip
   // to toggle the Fether window open/close
