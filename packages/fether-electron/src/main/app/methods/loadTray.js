@@ -22,17 +22,6 @@ function loadTray (fetherApp) {
       showTrayBalloon(fetherApp);
     }
 
-    /**
-     * On macOS we do not need context menu since taskbar menu permanently shown
-     * If choose to use "tray" context menu on macOS then it exhibits strange behaviour
-     * and only works when right-click tray toggles Fether window, and single click
-     * to toggles Fether menu (not the preferred way of the other way around).
-     * Note that "window" context menu on macOS using right-click has no issues.
-     */
-    if (process.platform !== 'darwin') {
-      tray.setContextMenu(fetherApp.contextMenu.getMenu());
-    }
-
     // Right-click event listener does not work on Windows
     tray.on('right-click', () => {
       pino.info('Detected right-click on tray icon');
@@ -46,19 +35,8 @@ function loadTray (fetherApp) {
     tray.on('click', () => {
       pino.info('Detected single click on tray icon');
 
-      // If the user clicks a menu item in the 'Edit' menu tab
-      // of the Fether taskbar menu or context menu after clicking the system tray icon
-      // the menu items do not work because the Fether window is blurred,
-      // so we need to regain focus on the Fether window for them to work
       fetherApp.win.focus();
-
-      // On macOS we just use single click on tray icon to toggle Fether window.
-      // and do not use the context menu since the menu is shown in the taskbar.
-      if (process.platform !== 'darwin') {
-        tray.popUpContextMenu();
-      } else {
-        onTrayClick(fetherApp);
-      }
+      onTrayClick(fetherApp);
     });
     tray.setToolTip(options.tooltip);
     tray.setHighlightMode('never');
