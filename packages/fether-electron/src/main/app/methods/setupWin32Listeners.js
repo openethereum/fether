@@ -8,12 +8,7 @@ import Pino from '../utils/pino';
 const pino = Pino();
 
 function setupWin32Listeners (fetherApp) {
-  const {
-    onWindowClose,
-    processSaveWinPosition,
-    showTrayBalloon,
-    win
-  } = fetherApp;
+  const { onWindowClose, processSaveWinPosition, win } = fetherApp;
 
   if (process.platform === 'win32') {
     /**
@@ -51,7 +46,6 @@ function setupWin32Listeners (fetherApp) {
       } else if (wParam.readUInt32LE(0) === 0xf030) {
         // SC_MAXIMIZE
         eventName = 'maximize';
-        showTrayBalloon(fetherApp);
       } else if (wParam.readUInt32LE(0) === 0xf020) {
         // SC_MINIMIZE
         eventName = 'minimize';
@@ -59,7 +53,6 @@ function setupWin32Listeners (fetherApp) {
       } else if (wParam.readUInt32LE(0) === 0xf120) {
         // SC_RESTORE
         eventName = 'restored';
-        showTrayBalloon(fetherApp);
       }
 
       if (eventName !== null) {

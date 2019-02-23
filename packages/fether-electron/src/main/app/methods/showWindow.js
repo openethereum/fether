@@ -17,7 +17,6 @@ function showWindow (fetherApp, trayPos) {
     createWindow,
     fixWinPosition,
     moveWindowUp,
-    options,
     processSaveWinPosition,
     setupWinListeners,
     setupWin32Listeners,
@@ -87,14 +86,10 @@ function showWindow (fetherApp, trayPos) {
     fetherApp.hasSetupWinListeners = true;
   }
 
-  // Only use `moveWindowUp` when Fether window is 'frameless'
-  // otherwise it shrinks each time it is dragged to the screen bottom
-  if (!options.frame) {
+  moveWindowUp(fetherApp);
+  setTimeout(() => {
     moveWindowUp(fetherApp);
-    setTimeout(() => {
-      moveWindowUp(fetherApp);
-    }, 5000);
-  }
+  }, 5000);
 
   processSaveWinPosition(fetherApp);
 
