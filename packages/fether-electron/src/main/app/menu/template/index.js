@@ -173,7 +173,7 @@ const getContextMenuTemplate = fetherApp => {
         isLaunchOnStartup = await fetherAutoLauncher.isEnabled();
         return isLaunchOnStartup;
       } else {
-        return getIsLaunchOnStartup(fetherApp);
+        return getIsLaunchOnStartup(fetherApp) || false;
       }
     },
     async click () {
