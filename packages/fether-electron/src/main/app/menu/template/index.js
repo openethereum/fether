@@ -158,7 +158,7 @@ const settingsLaunchOnStartup = shouldLaunchOnStartup => {
 };
 
 const getIsLaunchOnStartup = fetherApp => {
-  return fetherApp.app.getLoginItemSettings().openAtLogin;
+  return fetherApp.app.getLoginItemSettings().openAtLogin || false;
 };
 
 const getContextMenuTemplate = fetherApp => {
@@ -173,7 +173,7 @@ const getContextMenuTemplate = fetherApp => {
         isLaunchOnStartup = await fetherAutoLauncher.isEnabled();
         return isLaunchOnStartup;
       } else {
-        return getIsLaunchOnStartup(fetherApp) || false;
+        return getIsLaunchOnStartup(fetherApp);
       }
     },
     async click () {
