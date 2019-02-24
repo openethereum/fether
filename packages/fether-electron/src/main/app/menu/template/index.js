@@ -3,6 +3,7 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
+import path from 'path';
 import electron from 'electron';
 // https://www.npmjs.com/package/auto-launch
 import AutoLaunch from 'auto-launch';
@@ -147,14 +148,32 @@ const getMenubarMenuTemplate = fetherApp => {
   return template;
 };
 
+const execName = path.basename(process.execPath);
+pino.info('Executable Name: ', execName);
+pino.info('Executable Path: ', process.execPath);
+
 const settingsLaunchOnStartup = shouldLaunchOnStartup => {
-  return {
-    openAtLogin: shouldLaunchOnStartup
-    // TODO - configure additional properties
-    // References:
-    // - https://electronjs.org/docs/api/app#appsetloginitemsettingssettings-macos-windows
-    // - https://github.com/electron-archive/grunt-electron-installer/issues/115
-  };
+  if (process.platform === 'win32') {
+    return {
+      openAtLogin: shouldLaunchOnStartup,
+      path: process.execPath, // Windows only
+      args: [
+        // Windows only
+        '--processStart',
+        `${execName}`,
+        '--process-start-args',
+        '--hidden'
+      ]
+      // TODO - configure additional properties
+      // References:
+      // - https://electronjs.org/docs/api/app#appsetloginitemsettingssettings-macos-windows
+      // - https://github.com/electron-archive/grunt-electron-installer/issues/115
+    };
+  } else {
+    return {
+      openAtLogin: shouldLaunchOnStartup
+    };
+  }
 };
 
 const getIsLaunchOnStartup = fetherApp => {
