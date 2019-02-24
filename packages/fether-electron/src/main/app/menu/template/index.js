@@ -4,8 +4,14 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import electron from 'electron';
+// https://www.npmjs.com/package/auto-launch
+import AutoLaunch from 'auto-launch';
 
 import Pino from '../../utils/pino';
+
+const fetherAutoLauncher = new AutoLaunch({
+  name: 'Fether'
+});
 
 const { shell } = electron;
 
@@ -156,17 +162,33 @@ const getIsLaunchOnStartup = fetherApp => {
 };
 
 const getContextMenuTemplate = fetherApp => {
+  let isLaunchOnStartup;
   let template = getMenubarMenuTemplate(fetherApp);
 
   const menuItemLaunchOnStartup = {
     label: 'Launch On Startup',
     type: 'checkbox',
-    checked: getIsLaunchOnStartup(fetherApp),
-    click () {
-      const isLaunchOnStartup = getIsLaunchOnStartup(fetherApp);
-      fetherApp.app.setLoginItemSettings(
-        settingsLaunchOnStartup(!isLaunchOnStartup)
-      );
+    checked: async () => {
+      if (process.platform === 'linux') {
+        isLaunchOnStartup = await fetherAutoLauncher.isEnabled();
+        return isLaunchOnStartup;
+      } else {
+        return getIsLaunchOnStartup(fetherApp);
+      }
+    },
+    async click () {
+      if (process.platform === 'linux') {
+        isLaunchOnStartup = await fetherAutoLauncher.isEnabled();
+        isLaunchOnStartup
+          ? await fetherAutoLauncher.disable()
+          : await fetherAutoLauncher.enable();
+      } else {
+        isLaunchOnStartup = getIsLaunchOnStartup(fetherApp);
+        fetherApp.app.setLoginItemSettings(
+          settingsLaunchOnStartup(!isLaunchOnStartup)
+        );
+      }
+
       pino.info(
         'Set Launch Fether On Startup setting to: ',
         !isLaunchOnStartup
