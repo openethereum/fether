@@ -5,7 +5,11 @@
 
 import electron from 'electron';
 
+import Pino from '../../utils/pino';
+
 const { shell } = electron;
+
+const pino = Pino();
 
 // Create the Application's main menu
 // https://github.com/electron/electron/blob/master/docs/api/menu.md#examples
@@ -137,14 +141,47 @@ const getMenubarMenuTemplate = fetherApp => {
   return template;
 };
 
+const settingsLaunchOnStartup = shouldLaunchOnStartup => {
+  return {
+    openAtLogin: shouldLaunchOnStartup
+    // TODO - configure additional properties
+    // References:
+    // - https://electronjs.org/docs/api/app#appsetloginitemsettingssettings-macos-windows
+    // - https://github.com/electron-archive/grunt-electron-installer/issues/115
+  };
+};
+
+const getIsLaunchOnStartup = fetherApp => {
+  return fetherApp.app.getLoginItemSettings().openAtLogin;
+};
+
 const getContextMenuTemplate = fetherApp => {
   let template = getMenubarMenuTemplate(fetherApp);
+
+  const menuItemLaunchOnStartup = {
+    label: 'Launch On Startup',
+    type: 'checkbox',
+    checked: getIsLaunchOnStartup(fetherApp),
+    click () {
+      const isLaunchOnStartup = getIsLaunchOnStartup(fetherApp);
+      fetherApp.app.setLoginItemSettings(
+        settingsLaunchOnStartup(!isLaunchOnStartup)
+      );
+      pino.info(
+        'Set Launch Fether On Startup setting to: ',
+        !isLaunchOnStartup
+      );
+    }
+  };
 
   if (fetherApp.options.withTaskbar) {
     // Remove File and Help menus in taskbar mode for context menu
     template.shift();
     template.pop();
-    template.push();
+    template.push({
+      label: 'Preferences',
+      submenu: [menuItemLaunchOnStartup]
+    });
     template.push({
       role: 'help',
       submenu: [
@@ -157,6 +194,7 @@ const getContextMenuTemplate = fetherApp => {
         }
       ]
     });
+    template.push({ type: 'separator' });
     template.push({ label: 'Quit', role: 'quit' });
   }
 
