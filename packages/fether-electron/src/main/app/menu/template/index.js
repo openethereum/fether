@@ -182,17 +182,20 @@ const getContextMenuTemplate = fetherApp => {
         isLaunchOnStartup
           ? await fetherAutoLauncher.disable()
           : await fetherAutoLauncher.enable();
+        pino.info(
+          'Set Launch Fether On Startup setting to: ',
+          isLaunchOnStartup
+        );
       } else {
         isLaunchOnStartup = getIsLaunchOnStartup(fetherApp);
         fetherApp.app.setLoginItemSettings(
           settingsLaunchOnStartup(!isLaunchOnStartup)
         );
+        pino.info(
+          'Set Launch Fether On Startup setting to: ',
+          !isLaunchOnStartup
+        );
       }
-
-      pino.info(
-        'Set Launch Fether On Startup setting to: ',
-        !isLaunchOnStartup
-      );
     }
   };
 
