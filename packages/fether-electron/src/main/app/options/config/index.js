@@ -17,7 +17,7 @@ const INDEX_HTML_PATH =
   });
 
 // Icon path differs when started with `yarn electron` or `yarn start`
-let iconPath = path.join(staticPath, 'assets', 'icons', 'icon.png');
+let iconPath = path.join(staticPath, 'assets', 'icons', 'mac', 'iconDock.png');
 let iconDockPath = '';
 
 if (process.platform === 'win32') {
