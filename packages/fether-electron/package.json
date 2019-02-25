@@ -57,6 +57,7 @@
     "electron": "^4.0.1",
     "electron-builder": "^20.38.5",
     "electron-webpack": "^2.6.1",
+    "source-map-support": "^0.5.10",
     "webpack": "^4.29.1"
   }
 }
