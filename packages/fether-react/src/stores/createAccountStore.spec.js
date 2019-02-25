@@ -10,6 +10,7 @@ import * as CryptoJS from 'crypto-js';
 
 import { CreateAccountStore } from './createAccountStore';
 import parityStore from './parityStore';
+import { hashString } from './utils/hash';
 
 jest.mock('./parityStore', () => ({
   api: {
@@ -108,6 +109,7 @@ describe('Crypto-JS', () => {
   let encryptedPhrase;
   const rawPhrase =
     'onto blandness slobbery putt crazed repackage defender subzero bullpen virus skater blunderer';
+  const rawPhraseHash = hashString(rawPhrase);
 
   test('should output an encrypted string', () => {
     encryptedPhrase = CryptoJS.AES.encrypt(
@@ -120,9 +122,17 @@ describe('Crypto-JS', () => {
   });
 
   test('should not be able to decrypt with incorrect password', () => {
-    const wrongDecrypt = CryptoJS.AES.decrypt(encryptedPhrase, 'wrongpassword');
+    // FIXME: crypto-js aes decrypt() will sporadically throw on failed decryption, otherwise return ""
+    // The current imperfect workaround is to take a hash of the phrase before encrypting,
+    // then comparing with the hash of the phrase after decrypting...which is not great.
+    // Logged here: https://github.com/brix/crypto-js/issues/158
+    const wrongDecryptedPhrase = CryptoJS.AES.decrypt(
+      encryptedPhrase,
+      'wrongpassword'
+    ).toString(CryptoJS.enc.Utf8);
+    const wrongDecryptHash = hashString(wrongDecryptedPhrase);
 
-    expect(wrongDecrypt.toString(CryptoJS.enc.Utf8)).toBe('');
+    expect(wrongDecryptHash).not.toBe(rawPhraseHash);
   });
 
   test('should decrypt to the correct original phrase', () => {
