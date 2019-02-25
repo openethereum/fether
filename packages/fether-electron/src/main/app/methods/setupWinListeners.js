@@ -12,10 +12,8 @@ const pino = Pino();
 
 function setupWinListeners (fetherApp) {
   const {
-    hideWindow,
     moveWindowUp,
     onWindowClose,
-    options,
     processSaveWinPosition,
     win
   } = fetherApp;
@@ -65,7 +63,7 @@ function setupWinListeners (fetherApp) {
   });
 
   win.on('blur', () => {
-    options.alwaysOnTop ? fetherApp.emit('blur-window') : hideWindow(fetherApp);
+    fetherApp.emit('blur-window');
   });
 
   win.on('close', () => {
@@ -76,6 +74,10 @@ function setupWinListeners (fetherApp) {
     fetherApp.win = null;
 
     fetherApp.emit('after-closed-window');
+  });
+
+  win.on('minimize', () => {
+    fetherApp.emit('minimize-window');
   });
 }
 
