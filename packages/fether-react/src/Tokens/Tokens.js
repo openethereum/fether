@@ -16,13 +16,29 @@ import withAccount from '../utils/withAccount';
 @withAccount
 class Tokens extends PureComponent {
   state = {
+    canViewRecoveryPhrase: false,
     isMenuOpen: false,
     showWarning: false
   };
 
   componentDidMount () {
-    this.isAccountFlagged();
+    this.checkAccount();
   }
+
+  checkAccount = async () => {
+    const {
+      account: { address }
+    } = this.props;
+
+    const flagged = await localForage.getItem(`__flagged_${address}`);
+    const canViewRecoveryPhrase =
+      (await localForage.getItem(`__safe_${address}`)) || flagged;
+
+    this.setState({
+      canViewRecoveryPhrase,
+      showWarning: flagged
+    });
+  };
 
   handleMenuClose = () => {
     this.setState({ isMenuOpen: false });
@@ -42,20 +58,6 @@ class Tokens extends PureComponent {
     history.push(`/rewrite/${address}`);
   };
 
-  isAccountFlagged = async () => {
-    const {
-      account: { address }
-    } = this.props;
-
-    const flagged = await localForage.getItem(`__flagged_${address}`);
-
-    if (flagged) {
-      this.setState({
-        showWarning: true
-      });
-    }
-  };
-
   isParitySignerAccount = () => {
     const {
       account: { type }
@@ -69,7 +71,7 @@ class Tokens extends PureComponent {
       account: { address },
       history
     } = this.props;
-    const { showWarning } = this.state;
+    const { canViewRecoveryPhrase, showWarning } = this.state;
 
     const backupAccountItem = {
       name: 'Backup Account',
@@ -92,7 +94,9 @@ class Tokens extends PureComponent {
     ];
 
     if (!this.isParitySignerAccount()) {
-      menuItems.push(backupPhraseItem);
+      if (canViewRecoveryPhrase) {
+        menuItems.push(backupPhraseItem);
+      }
       menuItems.push(backupAccountItem);
     }
 
