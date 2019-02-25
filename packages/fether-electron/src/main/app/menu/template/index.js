@@ -186,12 +186,12 @@ const isChecked = fetherApp => {
   if (process.platform === 'linux') {
     isLaunchOnStartup = fetherAutoLauncher.isEnabled();
   } else {
-    isLaunchOnStartup = getIsLaunchOnStartup(fetherApp)
+    isLaunchOnStartup = getIsLaunchOnStartup(fetherApp);
   }
 
   pino.info('Set Launch on Startup checkbox to: ', isLaunchOnStartup);
   return isLaunchOnStartup;
-}
+};
 
 const getContextMenuTemplate = fetherApp => {
   let template = getMenubarMenuTemplate(fetherApp);
@@ -215,10 +215,7 @@ const getContextMenuTemplate = fetherApp => {
         );
       }
 
-      pino.info(
-        'Set Launch On Startup setting to: ',
-        !isLaunchOnStartup
-      );
+      pino.info('Set Launch On Startup setting to: ', !isLaunchOnStartup);
     }
   };
 
