@@ -132,6 +132,7 @@ describe('method saveAccountToParity', () => {
         encryptedPhrase,
         'correctpassword'
       );
+
       const correctDecryptAsString = correctDecrypt.toString(CryptoJS.enc.Utf8);
 
       expect(correctDecryptAsString).toEqual(rawPhrase);
