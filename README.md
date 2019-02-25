@@ -150,7 +150,7 @@ open ./packages/fether-electron/dist/Parity\ Fether-0.3.0.dmg
 
 Build and run binaries (i.e. .deb) for production on Linux
 
-> Note: If you want to save time building, then first edit electron-builder.json so that builds .deb for example
+> Note: If you want to save time building, then first edit electron-builder.json so that it only builds a single binary like .deb instead of all of them
 
 ```bash
 sudo rm -rf /opt/Parity\ Fether;
@@ -166,7 +166,7 @@ fether
 
 ### Windows
 
-Build and run binaries (i.e. .exe) binary for production in on Windows
+Build and run binaries (i.e. .exe) binary for production on Windows
 
 ```bash
 rm -rf /packages/fether-electron/dist;
