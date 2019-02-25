@@ -76,7 +76,7 @@ class ScanSignedTx extends Component {
               <Card className='-centered'>
                 <Scanner
                   onScan={this.onScanSignedTx}
-                  label="Show the signed transaction's QR code"
+                  label='Show the signed transaction QR code'
                 />
 
                 {error && <p className='text -standard'>{error}</p>}

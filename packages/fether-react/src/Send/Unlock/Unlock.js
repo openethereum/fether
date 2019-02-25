@@ -90,7 +90,7 @@ class Unlock extends Component {
                     render={({ handleSubmit, pristine, submitting }) => (
                       <form onSubmit={handleSubmit}>
                         <div className='text'>
-                          <p>Unlock your account for this transaction:</p>
+                          <p>Unlock account:</p>
                         </div>
 
                         <Field
