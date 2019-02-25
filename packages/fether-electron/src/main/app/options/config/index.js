@@ -40,8 +40,6 @@ if (process.platform === 'win32') {
   );
 }
 
-const shouldUseFrame = process.platform === 'win32';
-
 const windowPosition =
   process.platform === 'win32' ? 'trayBottomCenter' : 'trayCenter';
 
@@ -69,7 +67,9 @@ const DEFAULT_OPTIONS = {
 };
 
 const TASKBAR_OPTIONS = {
-  frame: shouldUseFrame,
+  // Do not use frame but context menu required on non-macOS.
+  // Without frame it causes window height to shrink upon show/hide
+  frame: false,
   height: 464,
   // On Linux the user must click the tray icon and then click the tooltip
   // to toggle the Fether window open/close
