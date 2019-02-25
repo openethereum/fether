@@ -162,11 +162,9 @@ const getContextWindowMenuTemplate = fetherApp => {
     // Remove File and Help menus in taskbar mode for window context menu
     template.shift();
     template.pop();
-    template.push();
     template.push({
       role: 'help',
       submenu: [
-        { role: 'about' },
         {
           label: 'Learn More',
           click () {
@@ -175,6 +173,11 @@ const getContextWindowMenuTemplate = fetherApp => {
         }
       ]
     });
+
+    if (process.platform === 'darwin') {
+      template[2].submenu.push({ role: 'about' });
+    }
+
     template.push({ label: 'Quit', role: 'quit' });
   }
 
