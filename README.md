@@ -60,7 +60,7 @@ curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -;
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list;
 sudo apt-get update && sudo apt-get install yarn;
 sudo ln -s /usr/bin/yarn /usr/local/bin/yarn;
-
+yarn global add windows-build-tools;
 ```
 
 ## Install and start Parity Fether
