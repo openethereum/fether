@@ -189,11 +189,7 @@ const isChecked = fetherApp => {
   let isLaunchOnStartup;
 
   if (process.platform === 'linux') {
-    if (settings.has('launch-on-startup')) {
-      isLaunchOnStartup = settings.get('launch-on-startup');
-    } else {
-      isLaunchOnStartup = fetherAutoLauncher.isEnabled();
-    }
+    isLaunchOnStartup = settings.get('launch-on-startup');
   } else {
     isLaunchOnStartup = getIsLaunchOnStartup(fetherApp);
   }
@@ -205,10 +201,13 @@ const isChecked = fetherApp => {
 const getContextMenuTemplate = fetherApp => {
   let template = getMenubarMenuTemplate(fetherApp);
 
+  // Set the checkbox value off in the context menu on first launch
+  let isFirstLaunch = settings.has('launch-on-startup');
+
   const menuItemLaunchOnStartup = {
     label: 'Launch On Startup',
     type: 'checkbox',
-    checked: isChecked(fetherApp),
+    checked: isFirstLaunch ? false : isChecked(fetherApp),
     async click () {
       let isLaunchOnStartup;
 
@@ -240,6 +239,8 @@ const getContextMenuTemplate = fetherApp => {
       pino.info('Set Launch On Startup setting to: ', !isLaunchOnStartup);
     }
   };
+
+  isFirstLaunch = undefined;
 
   if (fetherApp.options.withTaskbar) {
     // Remove File and Help menus in taskbar mode for context menu
