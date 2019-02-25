@@ -4,6 +4,8 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center; // default alignent for flex items
+  width: 100%;
+  margin: auto auto 0 0; //sticky at the botton left
 
   .footer-feedback {
     align-self: flex-end; // override default alignment for individual flex item
@@ -13,7 +15,7 @@
     border-radius: 4px;
 
     .feedback {
-      color: $faint;
+      color: $white;
       background: $grey;
       font-size: 0.8em;
       font-weight: 500;
@@ -22,7 +24,7 @@
       box-shadow: 0.125rem 0.250rem 0.3rem 0 rgba($black, 0.3);
       transition: box-shadow ease 0.250s;
       &:hover {
-        color: $white;
+        color: $faint;
         background: $grey;
         box-shadow: 0.125rem 0.275rem 0.3rem 0 rgba($black, 0.4);
       }
@@ -36,7 +38,7 @@
   }
 
   .footer-nav_icons {
-    padding: 1rem;
+    padding: 0 1rem 0 1rem;
   }
 
   .footer-nav_option {
@@ -57,7 +59,6 @@
   a:link,
   a:visited {
     display: block;
-    margin: -0.175rem 0 -0.175rem;
     padding: 0.25rem 0.5rem 0.175rem;
     border-radius: 0.25rem;
     &:hover {

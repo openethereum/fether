@@ -18,17 +18,6 @@ export default async (fetherAppWindow, event, action, ...args) => {
       return;
     }
     switch (action) {
-      case 'app-resize': {
-        if (!fetherAppWindow || !args[0]) {
-          return;
-        }
-        const [width] = fetherAppWindow.getContentSize();
-        // Conversion to integer is required to pass as argument to setContentSize.
-        // Reference: https://electronjs.org/docs/all#winsetcontentsizewidth-height-animate
-        const newHeight = parseInt(args[0]);
-        fetherAppWindow.setContentSize(width, Math.round(newHeight) + 2);
-        break;
-      }
       case 'check-clock-sync': {
         checkClockSync().then(t => {
           event.sender.send('check-clock-sync-reply', t);

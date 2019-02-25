@@ -49,11 +49,11 @@ class Onboarding extends Component {
 
   render () {
     return (
-      <div>
+      <React.Fragment>
         <Header title={<h1>Terms of Use</h1>} />
 
         <div className='window_content'>
-          <div className='box -padded-extra'>
+          <div className='box -padded -scroller'>
             <div className='terms-and-conditions-wrapper'>
               <FetherForm.Field
                 as={ReactMarkdown}
@@ -76,7 +76,7 @@ class Onboarding extends Component {
             </button>
           </div>
         </nav>
-      </div>
+      </React.Fragment>
     );
   }
 }

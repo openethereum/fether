@@ -100,40 +100,35 @@ class Whitelist extends Component {
     const displayedTokens = search ? matches : this.props.tokensArrayWithoutEth;
 
     return (
-      <RequireHealthOverlay require='sync'>
-        <div>
-          <Header
-            left={
-              <Link
-                to='/tokens'
-                className='icon -back'
-                onClick={history.goBack}
-              >
-                Close
-              </Link>
-            }
-            title={<h1>Search tokens</h1>}
-          />
-
+      <React.Fragment>
+        <Header
+          left={
+            <Link to='/tokens' className='icon -back' onClick={history.goBack}>
+              Close
+            </Link>
+          }
+          title={<h1>Search tokens</h1>}
+        />
+        <RequireHealthOverlay require='sync'>
           <div className='window_content'>
-            <div className='box -padded'>
-              <div className='search-form'>
-                <input
-                  onChange={this.handleSearch}
-                  placeholder='Find token by name or symbol'
-                  value={search}
-                  type='text'
-                />
-                <button
-                  onClick={this.handleClear}
-                  className='button -icon -clear'
-                  disabled={!search.length}
-                >
-                  Clear
-                </button>
-              </div>
-            </div>
             <div className='box -scroller'>
+              <div className='box -padded'>
+                <div className='search-form'>
+                  <input
+                    onChange={this.handleSearch}
+                    placeholder='Find token by name or symbol'
+                    value={search}
+                    type='text'
+                  />
+                  <button
+                    onClick={this.handleClear}
+                    className='button -icon -clear'
+                    disabled={!search.length}
+                  >
+                    Clear
+                  </button>
+                </div>
+              </div>
               <ul className='list -tokens'>
                 {displayedTokens.map(token => (
                   <NewTokenItem key={token.address} token={token} />
@@ -141,14 +136,13 @@ class Whitelist extends Component {
               </ul>
             </div>
           </div>
-
-          <nav className='footer-nav'>
-            <div className='footer-nav_status'>
-              <Health />
-            </div>
-          </nav>
-        </div>
-      </RequireHealthOverlay>
+        </RequireHealthOverlay>
+        <nav className='footer-nav'>
+          <div className='footer-nav_status'>
+            <Health />
+          </div>
+        </nav>
+      </React.Fragment>
     );
   }
 }

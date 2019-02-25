@@ -168,7 +168,7 @@ class AccountImportOptions extends Component {
             {importingFromSigner ? (
               <Scanner
                 onScan={this.handleSignerImported}
-                label='Please show the QR code of the account on the webcam.'
+                label='Scan Parity Signer account QR code'
               />
             ) : (
               <button
@@ -203,15 +203,16 @@ class AccountImportOptions extends Component {
       </Card>
     );
 
+    const spacer = <div style={{ height: '0.5rem' }} />;
+
     return (
       <RequireHealthOverlay require='node'>
         <div className='center-md'>
           {!importingFromSigner && jsonCard}
-          <br />
+          {spacer}
           {signerCard}
-          <br />
+          {spacer}
           {!importingFromSigner && phraseCard}
-          <br />
           <p>{error}</p>
           <nav className='form-nav -space-around'>
             {currentStep > 1 && (

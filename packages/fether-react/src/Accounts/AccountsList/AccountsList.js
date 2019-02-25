@@ -90,7 +90,6 @@ class AccountsList extends Component {
               )}
             </div>
           </div>
-
           <nav className='footer-nav'>
             <div className='footer-nav_status'>
               <Health />
