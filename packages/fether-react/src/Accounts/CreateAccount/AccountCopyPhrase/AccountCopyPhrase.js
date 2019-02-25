@@ -52,6 +52,7 @@ class AccountCopyPhrase extends Component {
     const {
       createAccountStore: { address, name, bip39Phrase }
     } = this.props;
+    const { error } = this.state;
 
     return (
       <RequireHealthOverlay require='node'>

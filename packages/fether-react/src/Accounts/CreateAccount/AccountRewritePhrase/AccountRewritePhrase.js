@@ -61,7 +61,7 @@ class AccountRewritePhrase extends Component {
       history,
       location: { pathname }
     } = this.props;
-    const { value } = this.state;
+    const { error, value } = this.state;
     const currentStep = pathname.slice(-1);
     const body = [
       <form key='createAccount' onSubmit={this.handleSubmit}>
