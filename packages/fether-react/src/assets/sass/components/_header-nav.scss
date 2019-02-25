@@ -1,28 +1,33 @@
 .header-nav {
+  // Reference: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Aligning_Items_in_a_Flex_Container
   display: flex;
-  justify-content: space-between;
-  padding: 1rem 0.5rem;
-  position: relative;
-  overflow: hidden;
+  flex-direction: row;
   height: 3.5rem;
 
   .header-nav_left,
   .header-nav_right {
-    display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    width: 2.3rem;
+  }
+
+  .header-nav_left {
+    padding-left: 0.5rem;
+  }
+
+  .header-nav_right {
+    padding-right: 0.5rem;
   }
 
   .header-nav_title {
+    align-items: center; /* vertical alignment of titles */
+    /**
+     * Push the the area for the right button to the right
+     * https://stackoverflow.com/a/35270047/3208553
+     */
+    flex-grow: 1;
+    justify-content: center;
     z-index: 2;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    padding: 1rem 0.5rem;
-    text-align: center;
 
     a,
     a:link,
@@ -48,6 +53,7 @@
     margin: -0.175rem 0 -0.175rem;
     padding: 0.25rem 0.5rem 0.175rem;
     border-radius: 0.25rem;
+
     &:hover {
       background: rgba($faint, 0.5);
       color: $black;
@@ -61,6 +67,7 @@
       background-position: center center;
       background-repeat: no-repeat;
       opacity: 0.675;
+
       &:hover {
         opacity: 1;
       }
@@ -83,6 +90,10 @@
 
       &.-new {
         background-image: url('./assets/img/icons/plus.svg');
+      }
+
+      &.-menu {
+        background-image: url('./assets/img/icons/menu.svg');
       }
     }
   }

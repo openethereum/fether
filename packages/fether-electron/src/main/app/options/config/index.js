@@ -20,39 +20,57 @@ const INDEX_HTML_PATH =
   });
 
 // Icon path differs when started with `yarn electron` or `yarn start`
-const ICON_PATH =
-  process.env.ELECTRON_START_ICON || process.env.SKIP_PREFLIGHT_CHECK
-    ? 'src/main/app/options/config/icons/parity-ethereum-fether-icon.png'
-    : path.join(__dirname, 'icons', 'parity-ethereum-fether-icon.png');
+let iconPath = path.join(staticPath, 'assets', 'icons', 'mac', 'iconDock.png');
+let iconDockPath = '';
 
-const shouldUseDevTools = process.env.NODE_ENV !== 'production';
-
-// API docs: https://electronjs.org/docs/api/browser-window
-const DEFAULT_OPTIONS = {
-  alwaysOnTop: true,
-  frame: true,
-  height: 640,
-  index: INDEX_HTML_PATH,
-  resizable: false,
-  show: true,
-  tabbingIdentifier: 'parity',
-  width: 360,
-  withTaskbar: false
-};
+if (process.platform === 'win32') {
+  iconPath = path.join(staticPath, 'assets', 'icons', 'win', 'icon.ico');
+} else if (process.platform === 'darwin') {
+  // https://github.com/electron/electron/blob/master/docs/api/native-image.md#template-image
+  iconPath = path.join(
+    staticPath,
+    'assets',
+    'icons',
+    'mac',
+    'iconTemplate.png'
+  );
+  iconDockPath = path.join(
+    staticPath,
+    'assets',
+    'icons',
+    'mac',
+    'iconDock.png'
+  );
+}
 
 const windowPosition =
   process.platform === 'win32' ? 'trayBottomCenter' : 'trayCenter';
 
-const TASKBAR_OPTIONS = {
+// API docs: https://electronjs.org/docs/api/browser-window
+const DEFAULT_OPTIONS = {
+  alwaysOnTop: false,
   dir: staticPath,
-  frame: false,
+  frame: true,
+  height: 640,
   hasShadow: true,
-  height: 464,
-  icon: ICON_PATH,
-  show: false, // Run showWindow later when taskbar has loaded in FetherApp
-  showDockIcon: true,
-  tooltip: 'Parity Fether',
+  icon: iconPath,
+  iconDock: iconDockPath,
+  index: INDEX_HTML_PATH,
+  resizable: false,
+  show: false, // Run showWindow later
+  showDockIcon: true, // macOS usage only
+  tabbingIdentifier: 'parity',
+  width: 360,
   windowPosition: windowPosition, // Required
+  withTaskbar: false
+};
+
+const TASKBAR_OPTIONS = {
+  height: 515,
+  frame: false,
+  // On Linux the user must click the tray icon and then click the tooltip
+  // to toggle the Fether window open/close
+  tooltip: 'Click to toggle Fether window',
   width: 352,
   withTaskbar: true
 };
@@ -63,7 +81,7 @@ const SECURITY_OPTIONS = {
      * Potential security risk options set explicitly even when default is favourable.
      * Reference: https://electronjs.org/docs/tutorial/security
      */
-    devTools: shouldUseDevTools,
+    devTools: true,
     /**
      * `nodeIntegration` when enabled allows the software to use Electron's APIs
      * and gain access to Node.js and requires the user to sanitise user inputs
@@ -72,7 +90,7 @@ const SECURITY_OPTIONS = {
     // nodeIntegration: true, // FIXME - should be disabled but causes error
     nodeIntegrationInWorker: false,
     sandbox: false,
-    enableRemoteModule: false,
+    enableRemoteModule: true, // Remote is required in fether-react parityStore.js
     webSecurity: true,
     allowRunningInsecureContent: false,
     plugins: false,

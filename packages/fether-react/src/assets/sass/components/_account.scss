@@ -1,15 +1,12 @@
 .account {
-  display: flex;
+  display: flex !important;
 
   &.-header {
-    .account_address {
-      font-size: 0.7rem;
-    }
+    justify-content: center;
+    width: 16rem;
   }
 
   .account_avatar {
-    width: (ms(0) * 1.3) + 1rem;
-    height: (ms(0) * 1.3) + 1rem;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -19,8 +16,6 @@
 
     canvas {
       display: block;
-      height: (ms(0) * 1.3) + 1rem !important;
-      width: auto !important;
     }
 
     .account_avatar_loading {
@@ -30,9 +25,7 @@
   }
 
   .account_information {
-    padding-left: 0.325rem;
-    overflow: hidden;
-    flex-grow: 1;
+    padding-left: 0.325rem; /* gap from avatar */
   }
 
   .account_change_blockies {
@@ -45,6 +38,16 @@
     color: $black;
     font-weight: 500;
     margin-bottom: 0.1rem;
+
+    /**
+     * Information component when used with components
+     * in the header requires more bottom margin than
+     * where it is used in the AccountList component
+     */
+    &.-header {
+      margin-top: 0.2rem;
+      margin-bottom: 0.3rem;
+    }
   }
 
   .account_address {
@@ -53,5 +56,19 @@
     font-size: ms(-2);
     line-height: ms(-2) * 1.3;
     user-select: text;
+
+    /* Narrow address and ensure it all fits */
+    &.-narrow {
+      -webkit-transform: scale(0.95, 1.0);
+      -moz-transform: scale(0.95, 1.0);
+      -ms-transform: scale(0.95, 1.0);
+      -o-transform: scale(0.95, 1.0);
+      transform: scale(0.95, 1.0);
+
+      -webkit-transform-origin-x: 0;
+      -moz-transform-origin-x: 0;
+      -ms-transform-origin-x: 0;
+      -o-transform-origin-x: 0;
+    }
   }
 }

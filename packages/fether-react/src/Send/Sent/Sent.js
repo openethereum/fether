@@ -4,11 +4,14 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { chainName$, withoutLoading } from '@parity/light.js';
+import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
+import { chainName$, withoutLoading } from '@parity/light.js';
 import light from '@parity/light.js-react';
 import { withProps } from 'recompose';
+import { Modal } from 'fether-ui';
 
+import RequireHealthOverlay from '../../RequireHealthOverlay';
 import check from '../../assets/img/icons/check.svg';
 import loading from '../../assets/img/icons/loading.svg';
 import withTokens from '../../utils/withTokens';
@@ -27,6 +30,12 @@ const MIN_CONFIRMATIONS = 6;
 }))
 @observer
 class Sent extends Component {
+  static propTypes = {
+    chainName: PropTypes.string,
+    sendStore: PropTypes.object,
+    token: PropTypes.object
+  };
+
   componentWillMount () {
     // If we refresh on this page, return to homepage
     if (!this.props.sendStore.txStatus) {
@@ -41,36 +50,20 @@ class Sent extends Component {
   };
 
   render () {
-    const {
-      sendStore: { confirmations }
-    } = this.props;
-
     return (
-      <div className='window_content'>
-        <div className='alert-screen'>
-          <div className='alert-screen_content'>
-            <div className='alert-screen_image'>
-              <img alt='loading' src={this.renderIcon()} />
-            </div>
-            <div className='alert-screen_text'>
-              <h1>{this.renderTitle()}</h1>
-              <p>{this.renderDescription()}</p>
-              <p>{this.renderLink()}</p>
-            </div>
-            {confirmations >= MIN_CONFIRMATIONS && (
-              <nav className='form-nav'>
-                <button
-                  className='button'
-                  disabled={confirmations < 6}
-                  onClick={this.handleGoToHomepage}
-                >
-                  Go back
-                </button>
-              </nav>
-            )}
-          </div>
+      <RequireHealthOverlay require='node-internet' fullscreen>
+        <div className='window_content'>
+          <Modal
+            description={this.renderDescription()}
+            fullscreen
+            link={this.renderLink()}
+            icon={this.renderIcon()}
+            buttons={this.renderGoHomepage()}
+            title={this.renderTitle()}
+            visible
+          />
         </div>
-      </div>
+      </RequireHealthOverlay>
     );
   }
 
@@ -106,9 +99,11 @@ class Sent extends Component {
     const {
       sendStore: { confirmations }
     } = this.props;
+
     if (confirmations >= MIN_CONFIRMATIONS) {
       return check;
     }
+
     return loading;
   };
 
@@ -138,6 +133,28 @@ class Sent extends Component {
     return 'Sending your transaction...';
   };
 
+  renderGoHomepage = () => {
+    const {
+      sendStore: { confirmations }
+    } = this.props;
+
+    if (confirmations < MIN_CONFIRMATIONS) {
+      return;
+    }
+
+    return (
+      <nav className='form-nav'>
+        <button
+          className='button'
+          disabled={confirmations < MIN_CONFIRMATIONS}
+          onClick={this.handleGoToHomepage}
+        >
+          Go back
+        </button>
+      </nav>
+    );
+  };
+
   renderLink = () => {
     const {
       chainName,
@@ -145,7 +162,7 @@ class Sent extends Component {
       token
     } = this.props;
 
-    if (confirmations >= 0) {
+    if (txStatus && txStatus.confirmed && confirmations >= 0) {
       return (
         <a
           href={blockscoutTxUrl(

@@ -7,14 +7,40 @@ import React from 'react';
 import Blockies from 'react-blockies';
 import PropTypes from 'prop-types';
 
+import signerIcon from './signerIcon.png';
 import { Placeholder } from '../../Placeholder';
 
-export const Avatar = ({ address, ...otherProps }) => (
-  <div className='account_avatar' {...otherProps}>
+export const Avatar = ({
+  address,
+  type,
+  style,
+  scale = 4,
+  size = 8,
+  ...otherProps
+}) => (
+  <div className='account_avatar' style={style}>
     {address ? (
-      <Blockies seed={address.toLowerCase()} />
+      <figure style={{ margin: '0', position: 'relative' }}>
+        <Blockies
+          seed={address.toLowerCase()}
+          scale={scale}
+          size={size}
+          {...otherProps}
+        />
+        {type === 'signer' && (
+          <img
+            src={signerIcon}
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              right: 0,
+              height: size * scale * 0.5
+            }}
+          />
+        )}
+      </figure>
     ) : (
-      <Placeholder height={36} width={36} />
+      <Placeholder height={size * scale} width={size * scale} />
     )}
   </div>
 );

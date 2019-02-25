@@ -1,7 +1,7 @@
 {
   "name": "fether-ui",
   "description": "Fether Wallet",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "author": "Parity Team <admin@parity.io>",
   "maintainers": [
@@ -30,7 +30,11 @@
     "build": "babel src --out-dir lib",
     "start": "yarn build --watch"
   },
+  "resolutions": {
+    "terser": "3.16.1"
+  },
   "dependencies": {
+    "babel-plugin-inline-import-data-uri": "^1.0.1",
     "react-blockies": "^1.3.0",
     "react-content-loader": "^3.1.2",
     "react-dropzone": "^7.0.1",
@@ -38,14 +42,15 @@
     "semantic-ui-react": "^0.81.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.49",
-    "@babel/core": "^7.0.0-beta.49",
-    "@babel/preset-env": "^7.0.0-beta.49",
-    "@babel/preset-react": "^7.0.0-beta.49",
-    "@babel/preset-stage-0": "^7.0.0-beta.49",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.3.0",
     "prop-types": "^15.6.1",
     "react": "^16.4.0",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "terser": "^3.16.1"
   },
   "peerDependencies": {
     "prop-types": "^15.6.1",

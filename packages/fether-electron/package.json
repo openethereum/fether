@@ -1,7 +1,7 @@
 {
   "name": "fether",
   "description": "Fether Wallet",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "author": "Parity Team <admin@parity.io>",
   "maintainers": [
@@ -25,7 +25,7 @@
   ],
   "homepage": "https://github.com/paritytech/fether",
   "parity": {
-    "channel": "beta"
+    "channel": "stable"
   },
   "scripts": {
     "prebuild": "copyfiles -u 2 \"../fether-react/build/**/*\" static/ && ./scripts/fixElectronBug.sh",
@@ -36,31 +36,27 @@
     "prerelease": "./scripts/revertElectronBug.sh",
     "release": "electron-builder",
     "start": "cross-env ELECTRON_START_URL=http://localhost:3000 electron-webpack dev --ws-origins all",
-    "test": "ln -s ../../../node_modules/react-scripts node_modules/ && cross-env SKIP_PREFLIGHT_CHECK=true craco test; rm node_modules/react-scripts"
+    "test": "jest --all --color --coverage"
   },
   "dependencies": {
-    "@craco/craco": "^3.2.3",
-    "@parity/electron": "^3.0.1",
+    "@parity/electron": "^4.0.0",
+    "ansi-styles": "^3.2.1",
     "commander": "^2.15.1",
     "commander-remaining-args": "^1.2.0",
     "electron-positioner": "^4.1.0",
     "electron-settings": "^3.2.0",
-    "extend": "^3.0.2",
-    "fether-react": "^0.2.0",
+    "fether-react": "^0.3.0",
     "parse-url": "^5.0.1",
     "pino": "^4.16.1",
     "pino-multi-stream": "^3.1.2",
-    "source-map-support": "^0.5.6"
+    "source-map-support": "^0.5.10"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.49",
-    "@babel/core": "^7.0.0-beta.49",
-    "@babel/preset-env": "^7.0.0-beta.49",
-    "copyfiles": "^2.0.0",
+    "copyfiles": "^2.1.0",
     "cross-env": "^5.2.0",
-    "electron": "^2.0.2",
-    "electron-builder": "^20.29.0",
-    "electron-webpack": "^2.1.2",
-    "webpack": "^4.7.0"
+    "electron": "^4.0.1",
+    "electron-builder": "^20.38.5",
+    "electron-webpack": "^2.6.1",
+    "webpack": "^4.29.1"
   }
 }

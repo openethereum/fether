@@ -10,7 +10,11 @@ variables:
   CARGOFLAGS: ''
 
 cache:
-  untracked: true
+  key: "${CI_JOB_NAME}"
+  paths:
+    - node_modules/
+    - packages/*/node_modules/
+
 
 .branches: &branches
   only:
@@ -22,7 +26,7 @@ cache:
 
 linux-test:
   stage: test
-  image: node:8
+  image: node:10
   script:
     - curl -o- -L https://yarnpkg.com/install.sh | bash
     - export PATH=$HOME/.yarn/bin:$PATH
@@ -33,7 +37,7 @@ linux-test:
 
 linux-build:
   stage: build
-  image: node:8
+  image: node:10
   <<: *branches
   script:
     - curl -o- -L https://yarnpkg.com/install.sh | bash

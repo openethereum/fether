@@ -1,0 +1,48 @@
+.popup-underlay {
+  background: transparent;
+  bottom: 0;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 1899; /* Under the menu popup */
+}
+
+.ui.popup {
+  z-index: 2000;
+}
+
+.popup-menu-account {
+  /* Override SUI popup styles so popup does not appear above menu icon */
+  background: $white !important;
+  bottom: auto !important;
+  line-height: 1.9rem !important;
+  max-width: 205px !important; /* Allow space between items and scrollbar */
+  max-height: 220px;
+  padding: 0px !important; /* Allow menu items to take up full width*/
+  top: 3px !important;
+  z-index: 3000 !important; /* Above the alert screen modal */
+
+  .popup-screen {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    max-height: 195px;
+    overflow-y: auto;
+  }
+
+  .popup-screen_item {
+    background: $white;
+    color: rgba($black, 0.675);
+    font-weight: 500;
+    padding-left: 15px;
+    padding-right: 15px;
+
+    &:hover {
+      background: rgba($faint, 0.5);
+      color: $black;
+      cursor: pointer;
+    }
+  }
+}

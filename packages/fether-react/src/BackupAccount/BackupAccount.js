@@ -6,18 +6,14 @@
 import React, { Component } from 'react';
 import { AccountHeader, Card, Form as FetherForm } from 'fether-ui';
 import { observer } from 'mobx-react';
-import { accountsInfo$ } from '@parity/light.js';
-import light from '@parity/light.js-react';
 import { Link, withRouter } from 'react-router-dom';
 
+import RequireHealthOverlay from '../RequireHealthOverlay';
 import backupAccount from '../utils/backupAccount';
 import withAccount from '../utils/withAccount';
 
 @withRouter
 @withAccount
-@light({
-  accountsInfo: accountsInfo$
-})
 @observer
 class BackupAccount extends Component {
   state = {
@@ -31,14 +27,17 @@ class BackupAccount extends Component {
   };
 
   handleSubmit = event => {
-    const { accountAddress, history } = this.props;
+    const {
+      account: { address },
+      history
+    } = this.props;
     const { password } = this.state;
 
     event && event.preventDefault();
 
     this.setState({ isLoading: true });
 
-    backupAccount(accountAddress, password)
+    backupAccount(address, password)
       .then(res => {
         /*
           FIXME: this timeout is a placeholder for after the backup file is saved.
@@ -58,66 +57,63 @@ class BackupAccount extends Component {
 
   render () {
     const {
-      accountsInfo,
-      history,
-      location: { pathname }
+      account: { name, address, type },
+      history
     } = this.props;
     const { isLoading, message, password } = this.state;
-    const accountAddress = pathname.slice(-42);
 
     return (
-      <div>
-        <AccountHeader
-          address={accountAddress}
-          copyAddress
-          name={
-            accountsInfo &&
-            accountsInfo[accountAddress] &&
-            accountsInfo[accountAddress].name
-          }
-          left={
-            <Link to='/accounts' className='icon -back'>
-              Back
-            </Link>
-          }
-        />
-        <br />
-        <Card className='-space-around'>
-          <form key='backupAccount' onSubmit={this.handleSubmit}>
-            <div className='text'>
-              <p>Unlock your account to encrypt the JSON keystore file:</p>
-            </div>
-
-            <FetherForm.Field
-              label='Password'
-              onChange={this.handlePasswordChange}
-              autoFocus
-              required
-              type='password'
-              value={password}
-            />
-
-            <p className='error'> {message} </p>
-
-            <nav className='form-nav -space-around'>
-              <button
-                className='button -cancel'
-                onClick={history.goBack}
-                type='button'
-              >
+      <RequireHealthOverlay require='node'>
+        <div>
+          <AccountHeader
+            address={address}
+            copyAddress
+            name={name}
+            type={type}
+            left={
+              <Link to='/accounts' className='icon -back'>
                 Back
-              </button>
-              <button
-                className='button'
-                disabled={!password || isLoading}
+              </Link>
+            }
+          />
+          <br />
+          <Card className='-space-around'>
+            <form key='backupAccount' onSubmit={this.handleSubmit}>
+              <div className='text'>
+                <p>Unlock your account to encrypt the JSON keystore file:</p>
+              </div>
+
+              <FetherForm.Field
+                label='Password'
+                onChange={this.handlePasswordChange}
                 autoFocus
-              >
-                Confirm backup
-              </button>
-            </nav>
-          </form>
-        </Card>
-      </div>
+                required
+                type='password'
+                value={password}
+              />
+
+              <p className='error'> {message} </p>
+
+              <nav className='form-nav -space-around'>
+                <button
+                  className='button -back'
+                  onClick={history.goBack}
+                  type='button'
+                >
+                  Back
+                </button>
+                <button
+                  className='button'
+                  disabled={!password || isLoading}
+                  autoFocus
+                >
+                  Confirm backup
+                </button>
+              </nav>
+            </form>
+          </Card>
+        </div>
+      </RequireHealthOverlay>
     );
   }
 }

@@ -4,9 +4,15 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import { action, computed, observable } from 'mobx';
-import { blockNumber$, post$ } from '@parity/light.js';
+import { blockNumber$, post$, postRaw$ } from '@parity/light.js';
 
-import { contractForToken, txForErc20, txForEth } from '../utils/estimateGas';
+import {
+  contractForToken,
+  txForErc20,
+  txForEth,
+  transactionToRlp,
+  signTransactionWithSignature
+} from '../utils/transaction';
 import Debug from '../utils/debug';
 import parityStore from './parityStore';
 
@@ -19,10 +25,14 @@ export class SendStore {
   @observable
   txStatus; // Status of the tx, see wiki for details.
 
+  listenForConfirmations = () => {
+    this.subscription = blockNumber$().subscribe(this.setBlockNumber);
+  };
+
   acceptRequest = (requestId, password) => {
     // Since we accepted this request, we also start to listen to blockNumber,
     // to calculate the number of confirmations
-    this.subscription = blockNumber$().subscribe(this.setBlockNumber);
+    this.listenForConfirmations();
 
     return parityStore.api.signer.confirmRequest(requestId, null, password);
   };
@@ -49,9 +59,11 @@ export class SendStore {
   }
 
   /**
-   * Create a transaction.
+   * Send a transaction.
    */
-  send = (token, password) => {
+  send = password => {
+    const { token } = this.tx;
+
     const tx =
       token.address === 'ETH' ? txForEth(this.tx) : txForErc20(this.tx, token);
     const send$ =
@@ -63,16 +75,51 @@ export class SendStore {
 
     return new Promise((resolve, reject) => {
       send$.subscribe(txStatus => {
+        this.setTxStatus(txStatus);
         // When we arrive to the `requested` stage, we accept the request
         if (txStatus.requested) {
           this.acceptRequest(txStatus.requested, password)
             .then(resolve)
             .catch(reject);
         }
-        this.setTxStatus(txStatus);
         debug('Tx status updated.', txStatus);
       }, reject);
     });
+  };
+
+  /**
+   * Send a raw, signed transaction.
+   */
+  sendRaw = () => {
+    debug('Sending raw tx.', this.tx.rawSigned);
+
+    return new Promise((resolve, reject) => {
+      postRaw$(this.tx.rawSigned).subscribe(txStatus => {
+        this.setTxStatus(txStatus);
+        if (txStatus.signed) {
+          this.listenForConfirmations();
+          resolve();
+        }
+        debug('Tx status updated.', txStatus);
+      }, reject);
+    });
+  };
+
+  /**
+   * Get the RLP of an (unsigned) transaction.
+   */
+  getRlp = () => {
+    return transactionToRlp(this.tx);
+  };
+
+  /**
+   * Sign the transaction with the given signature.
+   */
+  @action
+  signRaw = signature => {
+    const signed = signTransactionWithSignature(this.tx, signature);
+
+    this.tx.rawSigned = '0x' + signed.toString('hex');
   };
 
   @action
