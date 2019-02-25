@@ -10,8 +10,12 @@ import AutoLaunch from 'auto-launch';
 
 import Pino from '../../utils/pino';
 
+// Only use 'auto-launch' library on Linux since Electron API's
+// `setLoginItemSettings` is only supported on macOS and Windows
+// https://electronjs.org/docs/api/app#appsetloginitemsettingssettings-macos-windows
 const fetherAutoLauncher = new AutoLaunch({
-  name: 'Fether'
+  name: 'Fether',
+  path: '/usr/local/bin/fether'
 });
 
 const { shell } = electron;
@@ -205,9 +209,12 @@ const getContextMenuTemplate = fetherApp => {
 
       if (process.platform === 'linux') {
         isLaunchOnStartup = await fetherAutoLauncher.isEnabled();
+        pino.info('Previous Launch on Startup setting: ', isLaunchOnStartup);
         isLaunchOnStartup
           ? await fetherAutoLauncher.disable()
           : await fetherAutoLauncher.enable();
+        const newSetting = await fetherAutoLauncher.isEnabled();
+        pino.info('New Launch on Startup setting: ', newSetting);
       } else {
         isLaunchOnStartup = getIsLaunchOnStartup(fetherApp);
         fetherApp.app.setLoginItemSettings(
