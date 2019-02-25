@@ -25,6 +25,13 @@ class Tokens extends PureComponent {
     this.checkAccount();
   }
 
+  /*
+    Check if user account is flagged for skipping
+    phrase rewrite step. Show warning if flagged.
+    If account was created before #400, the
+    Backup Recovery Phrase menu item will not be
+    visible.
+  */
   checkAccount = async () => {
     const {
       account: { address }
