@@ -104,7 +104,9 @@ class BackupPhrase extends Component {
 
     event.preventDefault();
 
-    if (pathname.split('/')[3] !== 'true') {
+    const needsRewrite = pathname.split('/')[3] === 'true';
+
+    if (!needsRewrite) {
       history.push(`/tokens/${address}`);
     }
 
@@ -166,11 +168,11 @@ class BackupPhrase extends Component {
     } = this.props;
     const { error, unlocked } = this.state;
 
-    const needsRewrite = pathname.split('/')[3];
-    const title =
-      needsRewrite === 'true'
-        ? 'Backup Recovery Phrase'
-        : 'View Recovery Phrase';
+    const needsRewrite = pathname.split('/')[3] === 'true';
+
+    const title = needsRewrite
+      ? 'Backup Recovery Phrase'
+      : 'View Recovery Phrase';
 
     return (
       <div>
@@ -194,7 +196,7 @@ class BackupPhrase extends Component {
                     {unlocked
                       ? this.renderCopyAndRewrite()
                       : this.renderPasswordForm()}
-                    {needsRewrite === 'true' ? this.renderTips() : null}
+                    {needsRewrite ? this.renderTips() : null}
                     {error}
                     <nav className='footer-nav'>
                       <div className='footer-nav_status'>
@@ -207,41 +209,6 @@ class BackupPhrase extends Component {
             </RequireHealthOverlay>
           </div>
         </div>
-      </div>
-    );
-  }
-
-  renderPasswordForm () {
-    const { history } = this.props;
-    const { password } = this.state;
-
-    return (
-      <div>
-        <div className='text -centered'>
-          Unlock your account to view your recovery phrase.
-        </div>
-        <form key='password' onSubmit={this.unlockWithPassword}>
-          <FetherForm.Field
-            autoFocus
-            label='Password'
-            onChange={this.handleChangePassword}
-            required
-            type='password'
-            value={password}
-          />
-          <nav className='form-nav -space-around'>
-            <button
-              className='button -back'
-              onClick={history.goBack}
-              type='button'
-            >
-              Back
-            </button>
-            <button className='button' disabled={!password || !password.length}>
-              Unlock
-            </button>
-          </nav>
-        </form>
       </div>
     );
   }
@@ -289,6 +256,41 @@ class BackupPhrase extends Component {
             {needsRewrite ? 'Next' : 'Done'}
           </button>
         </nav>
+      </div>
+    );
+  }
+
+  renderPasswordForm () {
+    const { history } = this.props;
+    const { password } = this.state;
+
+    return (
+      <div>
+        <div className='text -centered'>
+          Unlock your account to view your recovery phrase.
+        </div>
+        <form key='password' onSubmit={this.unlockWithPassword}>
+          <FetherForm.Field
+            autoFocus
+            label='Password'
+            onChange={this.handleChangePassword}
+            required
+            type='password'
+            value={password}
+          />
+          <nav className='form-nav -space-around'>
+            <button
+              className='button -back'
+              onClick={history.goBack}
+              type='button'
+            >
+              Back
+            </button>
+            <button className='button' disabled={!password || !password.length}>
+              Unlock
+            </button>
+          </nav>
+        </form>
       </div>
     );
   }

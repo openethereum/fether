@@ -18,7 +18,8 @@ class Tokens extends PureComponent {
   state = {
     canViewRecoveryPhrase: false,
     isMenuOpen: false,
-    showWarning: false
+    showWarning: false,
+    flaggedPhrase: null
   };
 
   componentDidMount () {
@@ -37,13 +38,15 @@ class Tokens extends PureComponent {
       account: { address }
     } = this.props;
 
-    const flagged = await localForage.getItem(`__flagged_${address}`);
+    const flaggedPhrase = await localForage.getItem(`__flagged_${address}`);
     const canViewRecoveryPhrase =
-      (await localForage.getItem(`__safe_${address}`)) || flagged;
+      (await localForage.getItem(`__safe_${address}`)) ||
+      (flaggedPhrase && true);
 
     this.setState({
       canViewRecoveryPhrase,
-      showWarning: flagged
+      flaggedPhrase,
+      showWarning: flaggedPhrase && true
     });
   };
 
