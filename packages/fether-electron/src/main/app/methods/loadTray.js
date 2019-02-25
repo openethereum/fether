@@ -30,10 +30,7 @@ function loadTray (fetherApp) {
     tray.on('double-click', () => onTrayClick(fetherApp));
     // Right click event handler does not work on Windows as intended
     tray.on('right-click', () => {
-      if (process.platform === 'win32') {
-        pino.info('Detected right click on Windows');
-        showTrayBalloon(fetherApp);
-      }
+      pino.info('Detected right click on Windows');
     });
     tray.setToolTip(options.tooltip);
     tray.setHighlightMode('never');
