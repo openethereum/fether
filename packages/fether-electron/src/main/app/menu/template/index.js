@@ -5,6 +5,7 @@
 
 import path from 'path';
 import electron from 'electron';
+import settings from 'electron-settings';
 // https://www.npmjs.com/package/auto-launch
 import AutoLaunch from 'auto-launch';
 
@@ -188,7 +189,11 @@ const isChecked = fetherApp => {
   let isLaunchOnStartup;
 
   if (process.platform === 'linux') {
-    isLaunchOnStartup = fetherAutoLauncher.isEnabled();
+    if (settings.has('launch-on-startup')) {
+      isLaunchOnStartup = settings.get('launch-on-startup');
+    } else {
+      isLaunchOnStartup = fetherAutoLauncher.isEnabled();
+    }
   } else {
     isLaunchOnStartup = getIsLaunchOnStartup(fetherApp);
   }
@@ -215,6 +220,16 @@ const getContextMenuTemplate = fetherApp => {
           : await fetherAutoLauncher.enable();
         const newSetting = await fetherAutoLauncher.isEnabled();
         pino.info('New Launch on Startup setting: ', newSetting);
+        /**
+         * Hack since `checked` property is promise and unable to
+         * assign it to result of resolved promise. Instead we store
+         * the state using electron-settings. Only issue is that the
+         * checked value shown in the UI will be incorrect the first
+         * time the user runs the application, but after the user
+         * the value and it starts using the electron-settings value
+         * it will be correct.
+         */
+        settings.set('launch-on-startup', newSetting);
       } else {
         isLaunchOnStartup = getIsLaunchOnStartup(fetherApp);
         fetherApp.app.setLoginItemSettings(
