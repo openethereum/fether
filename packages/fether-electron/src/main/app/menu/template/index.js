@@ -177,44 +177,48 @@ const settingsLaunchOnStartup = shouldLaunchOnStartup => {
 };
 
 const getIsLaunchOnStartup = fetherApp => {
-  return fetherApp.app.getLoginItemSettings().openAtLogin || false;
+  return fetherApp.app.getLoginItemSettings().openAtLogin;
 };
 
-const getContextMenuTemplate = fetherApp => {
+const isChecked = fetherApp => {
   let isLaunchOnStartup;
+
+  if (process.platform === 'linux') {
+    isLaunchOnStartup = fetherAutoLauncher.isEnabled();
+  } else {
+    isLaunchOnStartup = getIsLaunchOnStartup(fetherApp)
+  }
+
+  pino.info('Set Launch on Startup checkbox to: ', isLaunchOnStartup);
+  return isLaunchOnStartup;
+}
+
+const getContextMenuTemplate = fetherApp => {
   let template = getMenubarMenuTemplate(fetherApp);
 
   const menuItemLaunchOnStartup = {
     label: 'Launch On Startup',
     type: 'checkbox',
-    checked: async () => {
-      if (process.platform === 'linux') {
-        isLaunchOnStartup = await fetherAutoLauncher.isEnabled();
-        return isLaunchOnStartup;
-      } else {
-        return getIsLaunchOnStartup(fetherApp);
-      }
-    },
+    checked: isChecked(fetherApp),
     async click () {
+      let isLaunchOnStartup;
+
       if (process.platform === 'linux') {
         isLaunchOnStartup = await fetherAutoLauncher.isEnabled();
         isLaunchOnStartup
           ? await fetherAutoLauncher.disable()
           : await fetherAutoLauncher.enable();
-        pino.info(
-          'Set Launch Fether On Startup setting to: ',
-          isLaunchOnStartup
-        );
       } else {
         isLaunchOnStartup = getIsLaunchOnStartup(fetherApp);
         fetherApp.app.setLoginItemSettings(
           settingsLaunchOnStartup(!isLaunchOnStartup)
         );
-        pino.info(
-          'Set Launch Fether On Startup setting to: ',
-          !isLaunchOnStartup
-        );
       }
+
+      pino.info(
+        'Set Launch On Startup setting to: ',
+        !isLaunchOnStartup
+      );
     }
   };
 
