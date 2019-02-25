@@ -17,7 +17,7 @@ export const Modal = ({
   title,
   visible
 }) => (
-  <div className='alert-wrapper'>
+  <React.Fragment>
     <SUIModal
       className={`alert-screen-wrapper ${fullscreen ? '-full-screen' : ''}`}
       open={visible}
@@ -43,7 +43,7 @@ export const Modal = ({
       </div>
     </SUIModal>
     {children}
-  </div>
+  </React.Fragment>
 );
 
 Modal.propTypes = {
