@@ -102,40 +102,37 @@ describe('method saveAccountToParity', () => {
   test('should call api.parity.setAccountMeta', () => {
     expect(parityStore.api.parity.setAccountMeta).toHaveBeenCalled();
   });
+});
 
-  describe('Crypto-js', () => {
-    let encryptedPhrase;
-    const rawPhrase =
-      'onto blandness slobbery putt crazed repackage defender subzero bullpen virus skater blunderer';
+describe('Crypto-JS', () => {
+  let encryptedPhrase;
+  const rawPhrase =
+    'onto blandness slobbery putt crazed repackage defender subzero bullpen virus skater blunderer';
 
-    test('should output an encrypted string', () => {
-      encryptedPhrase = CryptoJS.AES.encrypt(
-        rawPhrase,
-        'correctpassword'
-      ).toString();
+  test('should output an encrypted string', () => {
+    encryptedPhrase = CryptoJS.AES.encrypt(
+      rawPhrase,
+      'correctpassword'
+    ).toString();
 
-      expect(encryptedPhrase).toBeDefined();
-      expect(typeof encryptedPhrase).toEqual('string');
-    });
+    expect(encryptedPhrase).toBeDefined();
+    expect(typeof encryptedPhrase).toEqual('string');
+  });
 
-    test('should not be able to decrypt with incorrect password', () => {
-      const wrongDecrypt = CryptoJS.AES.decrypt(
-        encryptedPhrase,
-        'wrongpassword'
-      );
+  test('should not be able to decrypt with incorrect password', () => {
+    const wrongDecrypt = CryptoJS.AES.decrypt(encryptedPhrase, 'wrongpassword');
 
-      expect(() => wrongDecrypt.toString(CryptoJS.enc.Utf8)).toThrow();
-    });
+    expect(wrongDecrypt.toString(CryptoJS.enc.Utf8)).toBe('');
+  });
 
-    test('should decrypt to the correct original phrase', () => {
-      const correctDecrypt = CryptoJS.AES.decrypt(
-        encryptedPhrase,
-        'correctpassword'
-      );
+  test('should decrypt to the correct original phrase', () => {
+    const correctDecrypt = CryptoJS.AES.decrypt(
+      encryptedPhrase,
+      'correctpassword'
+    );
 
-      const correctDecryptAsString = correctDecrypt.toString(CryptoJS.enc.Utf8);
+    const correctDecryptAsString = correctDecrypt.toString(CryptoJS.enc.Utf8);
 
-      expect(correctDecryptAsString).toEqual(rawPhrase);
-    });
+    expect(correctDecryptAsString).toEqual(rawPhrase);
   });
 });
