@@ -14,6 +14,7 @@ import AccountImportOptions from '../AccountImportOptions';
 @observer
 class AccountRewritePhrase extends Component {
   state = {
+    error: null,
     isLoading: false,
     value: ''
   };
@@ -38,6 +39,20 @@ class AccountRewritePhrase extends Component {
     }
 
     history.push(`/accounts/new/${+currentStep + 1}`);
+  };
+
+  onPastePhrase = event => {
+    // Disable copying the phrase if in production.
+    // Keep it enabled for development.
+    if (process.env.NODE_ENV === 'production') {
+      event.preventDefault();
+      this.setState({
+        error:
+          'Copy and pasting is disabled for this step. Please type out your full recovery phrase.'
+      });
+
+      return false;
+    }
   };
 
   render () {
@@ -68,11 +83,12 @@ class AccountRewritePhrase extends Component {
           as='textarea'
           label='Recovery phrase'
           onChange={this.handleChange}
+          onPaste={this.onPastePhrase}
           required
           rows={3}
           value={value}
         />
-
+        {error}
         <nav className='form-nav -space-around'>
           {currentStep > 1 && (
             <button

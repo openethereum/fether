@@ -12,6 +12,10 @@ import RequireHealthOverlay from '../../../RequireHealthOverlay';
 @inject('createAccountStore')
 @observer
 class AccountCopyPhrase extends Component {
+  state = {
+    error: null
+  };
+
   handleSubmit = async event => {
     const {
       createAccountStore: { flagAccount },
@@ -30,6 +34,20 @@ class AccountCopyPhrase extends Component {
     }
   };
 
+  onCopyPhrase = event => {
+    // Disable copying the phrase if in production.
+    // Keep it enabled for development.
+    if (process.env.NODE_ENV === 'production') {
+      event.preventDefault();
+      this.setState({
+        error:
+          'Copy and pasting is disabled for this step. Please type out your full recovery phrase.'
+      });
+
+      return false;
+    }
+  };
+
   render () {
     const {
       createAccountStore: { address, name, bip39Phrase }
@@ -45,7 +63,9 @@ class AccountCopyPhrase extends Component {
               <div className='text'>
                 <p>Write down your recovery phrase.</p>
               </div>
-              <div className='text -code'>{bip39Phrase}</div>
+              <div className='text -code' onCopy={this.onCopyPhrase}>
+                {bip39Phrase}
+              </div>
               <div className='text -space-around'>
                 <b>IMPORTANT</b>
                 <div className='text -tiny'>
@@ -60,6 +80,9 @@ class AccountCopyPhrase extends Component {
                   </ul>
                 </div>
               </div>
+
+              {error}
+
               <nav className='form-nav -space-around'>
                 <button
                   className='button -back'
