@@ -17,7 +17,7 @@ const INDEX_HTML_PATH =
   });
 
 // Icon path differs when started with `yarn electron` or `yarn start`
-let iconPath = path.join(staticPath, 'assets', 'icons', 'icon.png');
+let iconPath = path.join(staticPath, 'assets', 'icons', 'mac', 'iconDock.png');
 let iconDockPath = '';
 
 if (process.platform === 'win32') {
@@ -71,7 +71,7 @@ const DEFAULT_OPTIONS = {
 
 const TASKBAR_OPTIONS = {
   frame: false,
-  height: 464,
+  height: 515,
   // On Linux the user must click the tray icon and then click the tooltip
   // to toggle the Fether window open/close
   tooltip: tooltip,

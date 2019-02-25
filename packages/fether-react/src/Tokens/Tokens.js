@@ -66,39 +66,40 @@ class Tokens extends PureComponent {
     const { isMenuOpen } = this.state;
 
     return (
-      <div className='tokens'>
-        <div className={isMenuOpen ? 'popup-underlay' : ''} />
-        <AccountHeader
-          address={address}
-          copyAddress
-          name={name}
-          type={type}
-          left={
-            <Link to='/accounts' className='icon -back'>
-              Back
-            </Link>
-          }
-          right={
-            <MenuPopup
-              className='popup-menu-account'
-              horizontalOffset={1}
-              menuItems={this.menuItems()}
-              onClose={this.handleMenuClose}
-              onOpen={this.handleMenuOpen}
-              size='small'
-              trigger={<Clickable className='icon -menu' />}
-            />
-          }
-        />
+      <React.Fragment>
+        <div className='tokens'>
+          <div className={isMenuOpen ? 'popup-underlay' : ''} />
+          <AccountHeader
+            address={address}
+            copyAddress
+            name={name}
+            type={type}
+            left={
+              <Link to='/accounts' className='icon -back'>
+                Back
+              </Link>
+            }
+            right={
+              <MenuPopup
+                className='popup-menu-account'
+                horizontalOffset={1}
+                menuItems={this.menuItems()}
+                onClose={this.handleMenuClose}
+                onOpen={this.handleMenuOpen}
+                size='small'
+                trigger={<Clickable className='icon -menu' />}
+              />
+            }
+          />
 
-        <TokensList />
-
+          <TokensList />
+        </div>
         <nav className='footer-nav'>
           <div className='footer-nav_status'>
             <Health />
           </div>
         </nav>
-      </div>
+      </React.Fragment>
     );
   }
 }

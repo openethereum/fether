@@ -73,7 +73,7 @@ export default class Scanner extends React.PureComponent {
     const size = 300;
 
     return (
-      <div>
+      <React.Fragment>
         {isLoading ? (
           <img alt='loading' src={loading} />
         ) : webcamError ? (
@@ -81,11 +81,10 @@ export default class Scanner extends React.PureComponent {
         ) : (
           <div>
             <p>{label}</p>
-            <br />
             <QrSigner scan onScan={onScan} size={size} />
           </div>
         )}
-      </div>
+      </React.Fragment>
     );
   }
 }

@@ -7,7 +7,7 @@
   top: 3rem;
   left: 0;
   right: 0;
-  bottom: -2px;
+  bottom: 0;
   height: auto;
   overflow: hidden;
   position: absolute;
@@ -30,6 +30,7 @@
 }
 
 .alert-screen-content {
+  width: 75%;
 
   .alert-screen_image {
     display: flex;

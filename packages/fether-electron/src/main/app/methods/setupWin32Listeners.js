@@ -8,13 +8,7 @@ import Pino from '../utils/pino';
 const pino = Pino();
 
 function setupWin32Listeners (fetherApp) {
-  const {
-    moveWindowUp,
-    onWindowClose,
-    processSaveWinPosition,
-    showTrayBalloon,
-    win
-  } = fetherApp;
+  const { onWindowClose, processSaveWinPosition, win } = fetherApp;
 
   if (process.platform === 'win32') {
     /**
@@ -52,7 +46,6 @@ function setupWin32Listeners (fetherApp) {
       } else if (wParam.readUInt32LE(0) === 0xf030) {
         // SC_MAXIMIZE
         eventName = 'maximize';
-        showTrayBalloon(fetherApp);
       } else if (wParam.readUInt32LE(0) === 0xf020) {
         // SC_MINIMIZE
         eventName = 'minimize';
@@ -60,7 +53,6 @@ function setupWin32Listeners (fetherApp) {
       } else if (wParam.readUInt32LE(0) === 0xf120) {
         // SC_RESTORE
         eventName = 'restored';
-        showTrayBalloon(fetherApp);
       }
 
       if (eventName !== null) {
@@ -74,17 +66,7 @@ function setupWin32Listeners (fetherApp) {
      * Detect event on Windows when Fether window was moved or resized
      */
     win.hookWindowMessage(Number.parseInt('0x0232'), (wParam, lParam) => {
-      pino.info('Detected completion of move or resize event');
-
-      // Move Fether window back up into view if it was a resize event
-      // that causes the bottom to be cropped
-      moveWindowUp(fetherApp);
-
-      // Try again after a delay incase Fether window resize occurs
-      // x seconds after navigating to a new page.
-      setTimeout(() => {
-        moveWindowUp(fetherApp);
-      }, 5000);
+      pino.info('Detected completion of moved or resize event');
 
       // Save Fether window position to Electron settings
       processSaveWinPosition(fetherApp);

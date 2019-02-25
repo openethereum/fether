@@ -13,7 +13,9 @@ import {
 } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import isElectron from 'is-electron';
-import ReactResizeDetector from 'react-resize-detector';
+import { Modal } from 'fether-ui';
+import semver from 'semver';
+import { version } from '../../package.json';
 
 import Accounts from '../Accounts';
 import BackupAccount from '../BackupAccount';
@@ -23,29 +25,71 @@ import Send from '../Send';
 import Tokens from '../Tokens';
 import Whitelist from '../Whitelist';
 
+const currentVersion = version;
+
 // Use MemoryRouter for production viewing in file:// protocol
 // https://github.com/facebook/create-react-app/issues/3591
 const Router =
   process.env.NODE_ENV === 'production' ? MemoryRouter : BrowserRouter;
+
 const electron = isElectron() ? window.require('electron') : null;
 
 @inject('onboardingStore', 'parityStore')
 @observer
 class App extends Component {
+  state = {
+    newRelease: false // false | {name, url, ignore}
+  };
+
   componentDidMount () {
     window.addEventListener('contextmenu', this.handleRightClick);
+
+    window
+      .fetch('https://api.github.com/repos/paritytech/fether/releases/latest')
+      .then(j => j.json())
+      .then(({ name, html_url: url, tag_name: tag }) => {
+        const latestVersion = tag.match(/v(\d+\.\d+(\.\d+)?)/)[1];
+        if (semver.gt(latestVersion, currentVersion)) {
+          this.setState({
+            newRelease: {
+              name,
+              url,
+              ignore: false
+            }
+          });
+        }
+      })
+      .catch(e => {
+        console.error('Error while checking for a new version of Fether:', e);
+      });
   }
 
   componentDidUnmount () {
     window.removeEventListener('contextmenu', this.handleRightClick);
   }
 
-  handleResize = (_, height) => {
-    if (!electron) {
-      return;
-    }
-    // Send height to main process
-    electron.ipcRenderer.send('asynchronous-message', 'app-resize', height);
+  renderModalLinks = () => {
+    return (
+      <nav className='form-nav -binary'>
+        <button className='button -back' onClick={this.hideNewReleaseModal}>
+          Remind me later
+        </button>
+
+        <button className='button' onClick={this.openNewReleaseUrl}>
+          Download
+        </button>
+      </nav>
+    );
+  };
+
+  hideNewReleaseModal = () => {
+    this.setState({
+      newRelease: { ...this.state.newRelease, ignore: true }
+    });
+  };
+
+  openNewReleaseUrl = () => {
+    window.open(this.state.newRelease.url, '_blank', 'noopener noreferrer');
   };
 
   handleRightClick = () => {
@@ -64,6 +108,8 @@ class App extends Component {
       parityStore: { api }
     } = this.props;
 
+    const { newRelease } = this.state;
+
     if (isFirstRun) {
       return (
         <div className='window'>
@@ -79,21 +125,24 @@ class App extends Component {
     // the children, just a <RequireHealthOverlay />.
     if (!api) {
       return (
-        <ReactResizeDetector handleHeight onResize={this.handleResize}>
-          <RequireHealthOverlay fullscreen require='node'>
-            {/* Adding these components to have minimum height on window */}
-            <div className='content'>
-              <div className='window' />
-            </div>
-          </RequireHealthOverlay>
-        </ReactResizeDetector>
+        <RequireHealthOverlay fullscreen require='node'>
+          {/* Adding these components to have minimum height on window */}
+          <div className='content'>
+            <div className='window' />
+          </div>
+        </RequireHealthOverlay>
       );
     }
 
     return (
-      <ReactResizeDetector handleHeight onResize={this.handleResize}>
-        <div className='content'>
-          <div className='window'>
+      <div className='content'>
+        <div className='window'>
+          <Modal
+            title='New version available'
+            description={newRelease ? `${newRelease.name} was released!` : ''}
+            visible={newRelease && !newRelease.ignore}
+            buttons={this.renderModalLinks()}
+          >
             <Router>
               <Switch>
                 {/* The next line is the homepage */}
@@ -116,9 +165,9 @@ class App extends Component {
                 <Redirect from='*' to='/' />
               </Switch>
             </Router>
-          </div>
+          </Modal>
         </div>
-      </ReactResizeDetector>
+      </div>
     );
   }
 }

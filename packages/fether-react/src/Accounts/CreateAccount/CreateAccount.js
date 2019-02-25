@@ -63,7 +63,7 @@ class CreateAccount extends Component {
     const Steps = this.getSteps(isImport);
 
     return (
-      <div>
+      <React.Fragment>
         <Header
           left={
             // Show back button if we already have some accounts, so we can go back to AccountsList
@@ -98,17 +98,7 @@ class CreateAccount extends Component {
             </div>
           ) : (
             <div className='footer-nav_option'>
-              {isImport ? (
-                <p>
-                  Need to create an account?
-                  <button
-                    className='button -footer'
-                    onClick={this.handleToggleCreateImport}
-                  >
-                    New account
-                  </button>
-                </p>
-              ) : (
+              {isImport ? null : (
                 <p>
                   Already have an account?
                   <button
@@ -122,7 +112,7 @@ class CreateAccount extends Component {
             </div>
           )}
         </nav>
-      </div>
+      </React.Fragment>
     );
   }
 }

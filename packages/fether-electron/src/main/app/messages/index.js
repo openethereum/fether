@@ -18,17 +18,6 @@ export default async (fetherApp, event, action, ...args) => {
       return;
     }
     switch (action) {
-      case 'app-resize': {
-        if (!fetherApp.win || !args[0]) {
-          return;
-        }
-        const [width] = fetherApp.win.getContentSize();
-        // Conversion to integer is required to pass as argument to setContentSize.
-        // Reference: https://electronjs.org/docs/all#winsetcontentsizewidth-height-animate
-        const newHeight = parseInt(args[0]);
-        fetherApp.win.setContentSize(width, Math.round(newHeight) + 2);
-        break;
-      }
       case 'app-right-click': {
         if (!fetherApp.win) {
           return;
