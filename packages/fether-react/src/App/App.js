@@ -34,7 +34,6 @@ const Router =
 @inject('onboardingStore', 'parityStore')
 @observer
 class App extends Component {
-
   state = {
     newRelease: false // false | {name, url, ignore}
   };
@@ -120,38 +119,37 @@ class App extends Component {
     }
 
     return (
-        <div className='content'>
-          <div className='window'>
-            <Modal
-              title='New version available'
-              description={newRelease ? `${newRelease.name} was released!` : ''}
-              visible={newRelease && !newRelease.ignore}
-              buttons={this.renderModalLinks()}
-            >
-              <Router>
-                <Switch>
-                  {/* The next line is the homepage */}
-                  <Redirect exact from='/' to='/accounts' />
-                  <Route path='/accounts' component={Accounts} />
-                  <Route path='/onboarding' component={Onboarding} />
-                  <Route path='/tokens/:accountAddress' component={Tokens} />
-                  <Route
-                    path='/whitelist/:accountAddress'
-                    component={Whitelist}
-                  />
-                  <Route
-                    path='/backup/:accountAddress'
-                    component={BackupAccount}
-                  />
-                  <Route
-                    path='/send/:tokenAddress/from/:accountAddress'
-                    component={Send}
-                  />
-                  <Redirect from='*' to='/' />
-                </Switch>
-              </Router>
-            </Modal>
-          </div>
+      <div className='content'>
+        <div className='window'>
+          <Modal
+            title='New version available'
+            description={newRelease ? `${newRelease.name} was released!` : ''}
+            visible={newRelease && !newRelease.ignore}
+            buttons={this.renderModalLinks()}
+          >
+            <Router>
+              <Switch>
+                {/* The next line is the homepage */}
+                <Redirect exact from='/' to='/accounts' />
+                <Route path='/accounts' component={Accounts} />
+                <Route path='/onboarding' component={Onboarding} />
+                <Route path='/tokens/:accountAddress' component={Tokens} />
+                <Route
+                  path='/whitelist/:accountAddress'
+                  component={Whitelist}
+                />
+                <Route
+                  path='/backup/:accountAddress'
+                  component={BackupAccount}
+                />
+                <Route
+                  path='/send/:tokenAddress/from/:accountAddress'
+                  component={Send}
+                />
+                <Redirect from='*' to='/' />
+              </Switch>
+            </Router>
+          </Modal>
         </div>
       </div>
     );
