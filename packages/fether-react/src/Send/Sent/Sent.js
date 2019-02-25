@@ -57,8 +57,8 @@ class Sent extends Component {
             description={this.renderDescription()}
             fullscreen
             link={this.renderLink()}
-            loading={this.renderIcon()}
-            navigateTo={this.renderGoHomepage()}
+            icon={this.renderIcon()}
+            buttons={this.renderGoHomepage()}
             title={this.renderTitle()}
             visible
           />
