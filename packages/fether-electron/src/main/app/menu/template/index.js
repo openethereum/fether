@@ -137,11 +137,29 @@ const getMenubarMenuTemplate = fetherApp => {
   return template;
 };
 
-const getContextMenuTemplate = fetherApp => {
+const getContextTrayMenuTemplate = fetherApp => {
+  if (fetherApp.options.withTaskbar) {
+    const template = [
+      {
+        label: 'Show/Hide Fether',
+        click () {
+          fetherApp.win.isVisible()
+            ? fetherApp.win.hide()
+            : fetherApp.win.show();
+        }
+      },
+      { label: 'Quit', role: 'quit' }
+    ];
+
+    return template;
+  }
+};
+
+const getContextWindowMenuTemplate = fetherApp => {
   let template = getMenubarMenuTemplate(fetherApp);
 
   if (fetherApp.options.withTaskbar) {
-    // Remove File and Help menus in taskbar mode for context menu
+    // Remove File and Help menus in taskbar mode for window context menu
     template.shift();
     template.pop();
     template.push();
@@ -163,4 +181,8 @@ const getContextMenuTemplate = fetherApp => {
   return template;
 };
 
-export { getMenubarMenuTemplate, getContextMenuTemplate };
+export {
+  getContextTrayMenuTemplate,
+  getContextWindowMenuTemplate,
+  getMenubarMenuTemplate
+};

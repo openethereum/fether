@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import FetherMenubarMenu from './menubar';
-import FetherContextMenu from './context';
+import FetherContextTrayMenu from './contextTray';
+import FetherContextWindowMenu from './contextWindow';
 
-export { FetherMenubarMenu, FetherContextMenu };
+export { FetherMenubarMenu, FetherContextTrayMenu, FetherContextWindowMenu };

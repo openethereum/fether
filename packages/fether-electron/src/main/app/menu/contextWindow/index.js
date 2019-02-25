@@ -5,21 +5,21 @@
 
 import electron from 'electron';
 
-import { getContextMenuTemplate } from '../template';
+import { getContextWindowMenuTemplate } from '../template';
 
 const { Menu } = electron;
 
 let hasCalledInitMenu = false;
 
-class FetherContextMenu {
+class FetherContextWindowMenu {
   constructor (fetherApp) {
     if (hasCalledInitMenu) {
       throw new Error(
-        'Unable to initialise Fether context menu more than once'
+        'Unable to initialise Fether context window menu more than once'
       );
     }
 
-    this.setMenuTemplate(getContextMenuTemplate(fetherApp));
+    this.setMenuTemplate(getContextWindowMenuTemplate(fetherApp));
     this.buildMenuTemplate(this.menuTemplate);
   }
 
@@ -36,4 +36,4 @@ class FetherContextMenu {
   };
 }
 
-export default FetherContextMenu;
+export default FetherContextWindowMenu;

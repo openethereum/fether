@@ -3,7 +3,11 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { FetherContextMenu, FetherMenubarMenu } from '../menu';
+import {
+  FetherContextTrayMenu,
+  FetherContextWindowMenu,
+  FetherMenubarMenu
+} from '../menu';
 import Pino from '../utils/pino';
 
 const pino = Pino();
@@ -12,7 +16,11 @@ function setupMenu (fetherApp) {
   fetherApp.menubarMenu = new FetherMenubarMenu(fetherApp);
   fetherApp.menubarMenu.setMenu();
 
-  fetherApp.contextMenu = new FetherContextMenu(fetherApp);
+  if (fetherApp.options.withTaskbar) {
+    fetherApp.contextTrayMenu = new FetherContextTrayMenu(fetherApp);
+  }
+
+  fetherApp.contextWindowMenu = new FetherContextWindowMenu(fetherApp);
 
   /**
    * Toggle the Fether menubar menu in window frame when options `frame: true`.

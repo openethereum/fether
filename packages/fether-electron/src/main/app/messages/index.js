@@ -33,7 +33,7 @@ export default async (fetherApp, event, action, ...args) => {
         if (!fetherApp.win) {
           return;
         }
-        fetherApp.contextMenu.getMenu().popup({ window: fetherApp.win });
+        fetherApp.contextWindowMenu.getMenu().popup({ window: fetherApp.win });
         break;
       }
       case 'check-clock-sync': {
