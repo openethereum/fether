@@ -41,7 +41,7 @@ class HealthModal extends Component {
       <Modal
         description={this.renderDescription()}
         fullscreen={fullscreen}
-        loading={loading}
+        icon={loading}
         title={this.renderTitle()}
         visible={visible}
       >
