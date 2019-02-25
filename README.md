@@ -123,6 +123,79 @@ yarn start
 TASKBAR=false yarn start
 ```
 
+# Production
+
+## Build binaries for production
+
+### General Notes:
+
+1) Alternative to `yarn; yarn build; DEBUG=electron-builder yarn release --mac;` is to just run `yarn package` and then run the `open "./packages/fether-electron/dist/mac/Parity Fether.app"` (i.e. no need to install)
+
+2) Publishing a new release to GitHub is performed by a maintainer of the repository. In this case you need to obtain the `GH_TOKEN` from GitHub settings and add it using `export GH_TOKEN="..."` to ~/.bashrc and then run `source ~/.bashrc`. If you get an error that the `GH_TOKEN` is missing and you are only building the binary but not publishing, then just ignore the error.
+
+### macOS
+
+Build and run binaries (i.e. .dmg) for production on macOS of a specific remote branch
+
+```bash
+git fetch origin INSERT_BRANCH_NAME:INSERT_BRANCH_NAME;
+git checkout INSERT_BRANCH_NAME;
+rm -rf ./packages/fether-electron/dist/
+rm -rf /Applications/Parity\ Fether.app/
+yarn; yarn build; DEBUG=electron-builder yarn release --mac;
+open ./packages/fether-electron/dist/Parity\ Fether-0.3.0.dmg
+```
+
+### Linux
+
+Build and run binaries (i.e. .deb) for production on Linux
+
+> Note: If you want to save time building, then first edit electron-builder.json so that builds .deb for example
+
+```bash
+sudo rm -rf /opt/Parity\ Fether;
+rm -rf ~/.config/Electron;
+rm -rf ~/.config/fether;
+rm -rf ./packages/fether-electron/dist/;
+sudo rm /usr/local/bin/fether;
+sudo apt remove -y fether;
+yarn; yarn build; DEBUG=electron-builder yarn release --linux
+sudo apt install -y ./packages/fether-electron/dist/fether_0.3.0_amd64.deb
+fether
+```
+
+### Windows
+
+Build and run binaries (i.e. .exe) binary for production in on Windows
+
+```bash
+rm -rf /packages/fether-electron/dist;
+yarn; yarn build; DEBUG=electron-builder yarn release --win;
+./packages/fether-electron/dist/Parity\ Fether-0.3.0.exe
+```
+
+## Debugging in production
+
+Show terminal logs whilst running a binary executable.
+
+### macOS
+
+```
+tail -f ~/Library/Application\ Support/fether/fether.log
+```
+
+### Linux 
+
+```
+tail -f ~/.config/fether/fether.log
+```
+
+### Windows 
+
+```
+tail -f ~/Application\ Data/fether/fether.log
+```
+
 # Usage of taskbar mode
 
 ### macOS
@@ -130,42 +203,49 @@ TASKBAR=false yarn start
 Taskbar mode is `true` by default.
 
 * Enabled `true`
-  * Fether window may be toggled open/closed by clicking the Fether tray icon, but not the Fether dock icon
-  * Fether window does not have a frame (i.e. no close/minimise icons)
+  * Tray icon - Left-click or right-click the tray icon shows "tray context menu" containing just "Show/Hide Fether" and "Quit" options. "Show/Hide Fether" toggles the Fether window show/hide
+  * Dock icon - no action
+  * Fether window - frameless
 * Disabled `false`
-  * Fether window may be toggled open by clicking the Fether dock icon
-  * Fether window has a frame (with close/minimise icons)
+  * Dock icon - toggles show/hide Fether window
+  * Fether window - frame (with close/minimise icons)
 * Always
-  * Fether menu shown in the tray by default
-  * Fether window position is saved upon move, minimising, and close so it is restored in the same position.
+  * Menubar - Fether menu shown by default
+  * Fether window - "window context menu" shown upon right-click in the Fether window
+  * Fether window - position is saved upon move, minimising, and close so it is restored in the same position.
 
 ### Linux
 
 Taskbar mode is `true` by default.
 
 * Enabled `true`
-  * Fether window may be toggled minimise/restore by clicking the Fether tray icon to reveal a tooltip that says "Click to toggle Fether window" and then clicking the tooltip.
-  * Fether window may not have a frame (i.e. no close/minimise icons) if `frame: false` in packages/fether-electron/src/main/app/options/config/index.js
+  * Tray icon - Left-click or right-click the tray icon shows "tray context menu" containing just "Show/Hide Fether" and "Quit" options. "Show/Hide Fether" toggles the Fether window show/hide
+  * Dock icon - toggles show/hide Fether window
+  * Fether window - frameless
 * Disabled `false`
-  * Fether window may be toggled open by clicking the Fether dock icon
-  * Fether window has a frame (with close/minimise icons)
+  * Dock icon - toggles show/hide Fether window
+  * Fether window - frame (with close/minimise icons)
+  * Menubar - Fether menu may not be not shown in the tray by default depending on whether `setMenuBarVisibility` has been set. Fether menu may be configured to automatically hide by setting `setAutoHideMenuBar`. Toggle show/hide the Fether menu in the frame by clicking the Fether window and then holding down the ALT key to reveal it, which only works if auto-hide menu bar is enabled.
 * Always
-  * Fether menu may not be not shown in the tray by default depending on whether `setMenuBarVisibility` has been set. Show the Fether menu in the tray by clicking the Fether window and then holding down the ALT key to reveal it.
-  * Fether menu may be configured to automatically hide by setting `setAutoHideMenuBar`
-  * Fether window position is saved upon move, minimising, and close so it is restored in the same position.
+  * Fether window - "window context menu" shown upon right-click in the Fether window
+  * Fether window - position is saved upon move, minimising, and close so it is restored in the same position.
 
 ### Windows
 
-Taskbar mode is always `false` since the Fether menu does not appear without a frame on the Fether window.
+Taskbar mode is `true` by default.
 
+* Enabled `true`
+  * Tray icon - Left-click toggles show/hide Fether window
+  * Tray icon - Right-click the tray icon shows "tray context menu" containing just "Show/Hide Fether" and "Quit" options. "Show/Hide Fether" toggles the Fether window show/hide
+  * Dock icon - toggles show/hide Fether window
+  * Fether window - frameless
 * Disabled `false`
-  * Fether window may be toggled open/minimise by clicking the Fether dock icon
-  * Fether window has a frame (with close/minimise icons).
+  * Dock icon - toggles show/hide Fether window
+  * Fether window - frame (with close/minimise icons).
+  * Menubar - Fether menu may not be not shown in the tray by default depending on whether `setMenuBarVisibility` has been set. Fether menu may be configured to automatically hide by setting `setAutoHideMenuBar`. Toggle show/hide the Fether menu in the frame by clicking the Fether window and then holding down the ALT key to reveal it, which only works if auto-hide menu bar is enabled.
 * Always
-  * Fether menu is shown in the Fether window by clicking the Fether window and then holding down the ALT key to reveal it.
-  * Fether menu may be configured to automatically hide by setting `setAutoHideMenuBar`
-  * Fether tray icon does nothing
-  * Fether window position is saved upon move, minimising, and close so it is restored in the same position.
+  * Fether window - "window context menu" shown upon right-click in the Fether window
+  * Fether window - position is saved upon move, minimising, and close so it is restored in the same position.
 
 ## Join the chat!
 
