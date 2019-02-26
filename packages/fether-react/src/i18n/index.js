@@ -84,4 +84,7 @@ i18next.on('languageChanged', lng => {
   console.log('Detected language change to: ', lng);
 });
 
+i18n.changeLanguage('de');
+console.log('i18n.language: ', i18n.language);
+
 export default i18n;

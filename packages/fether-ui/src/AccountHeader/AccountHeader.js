@@ -18,8 +18,13 @@ const NormalContainer = ({ children }) => (
   <h1 className='account -header'>{children}</h1>
 );
 
-const CopyContainer = ({ address, children, ...otherProps }) => (
-  <ClickToCopy label='Copy address' textToCopy={address} {...otherProps}>
+const CopyContainer = ({ address, children, i18n, ...otherProps }) => (
+  <ClickToCopy
+    label={i18n.t('ns1:ui.click_to_copy.header.label')}
+    i18n={i18n}
+    textToCopy={address}
+    {...otherProps}
+  >
     <Clickable className='account -header'>{children}</Clickable>
   </ClickToCopy>
 );
@@ -27,6 +32,7 @@ const CopyContainer = ({ address, children, ...otherProps }) => (
 export const AccountHeader = ({
   address,
   copyAddress,
+  i18n,
   name,
   type,
   ...otherProps
@@ -40,7 +46,7 @@ export const AccountHeader = ({
           address &&
           name &&
           type && (
-            <Container address={address} className='account'>
+            <Container address={address} className='account' i18n={i18n}>
               <Avatar address={address} scale={4} type={type} />
               <Information>
                 <Name name={name} screen='account' />
@@ -57,5 +63,6 @@ export const AccountHeader = ({
 
 AccountHeader.propTypes = {
   address: PropTypes.string,
+  i18n: PropTypes.object,
   name: PropTypes.string
 };

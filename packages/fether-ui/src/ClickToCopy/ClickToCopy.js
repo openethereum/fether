@@ -9,12 +9,9 @@ import PropTypes from 'prop-types';
 import 'semantic-ui-css/components/popup.min.css';
 
 export class ClickToCopy extends PureComponent {
-  static defaultProps = {
-    label: 'Click to copy'
-  };
-
   static propTypes = {
     children: PropTypes.node,
+    i18n: PropTypes.object,
     label: PropTypes.string.isRequired
   };
 
@@ -38,12 +35,12 @@ export class ClickToCopy extends PureComponent {
   handleResetCopied = () => this.setState({ copied: false });
 
   render () {
-    const { children, label, textToCopy, ...otherProps } = this.props;
+    const { children, i18n, label, textToCopy, ...otherProps } = this.props;
     const { copied } = this.state;
 
     return (
       <Popup
-        content={copied ? 'Copied' : label}
+        content={copied ? i18n.t('ns1:ui.click_to_copy.copied') : label}
         inverted
         onClose={this.handleResetCopied}
         position='bottom center'

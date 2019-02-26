@@ -6,6 +6,7 @@
 import React from 'react';
 import QrSigner from '@parity/qr-signer';
 
+import i18n from '../i18n';
 import loading from '../assets/img/icons/loading.svg';
 
 export default class Scanner extends React.PureComponent {
@@ -46,18 +47,17 @@ export default class Scanner extends React.PureComponent {
         switch (e.name) {
           case 'NotAllowedError':
           case 'SecurityError':
-            errorMessage = 'Access to the webcam was refused.';
+            errorMessage = i18n.t('ns1:scanner.error_security');
             break;
           case 'NotFoundError':
           case 'OverconstrainedError':
-            errorMessage = 'No webcam found on the device.';
+            errorMessage = i18n.t('ns1:scanner.error_overconstrained');
             break;
           case 'NotReadableError':
-            errorMessage =
-              'Webcam hardware error. Try restarting your computer';
+            errorMessage = i18n.t('ns1:scanner.error_not_readable');
             break;
           default:
-            errorMessage = 'Unknown error.';
+            errorMessage = i18n.t('ns1:scanner.error_unknown');
         }
         this.setState({
           webcamError: errorMessage,

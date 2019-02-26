@@ -7,6 +7,7 @@ import React, { PureComponent } from 'react';
 import { AccountHeader, Clickable, MenuPopup } from 'fether-ui';
 import { Link, withRouter } from 'react-router-dom';
 
+import i18n from '../i18n';
 import Health from '../Health';
 import TokensList from './TokensList';
 import withAccount from '../utils/withAccount';
@@ -41,13 +42,13 @@ class Tokens extends PureComponent {
     } = this.props;
 
     const backupAccountItem = {
-      name: 'Backup Account',
+      name: i18n.t('ns1:tokens.tokens.menu_items.backup_account'),
       onClick: () => history.push(`/backup/${address}`)
     };
 
     const menuItems = [
       {
-        name: 'Add Tokens',
+        name: i18n.t('ns1:tokens.tokens.menu_items.add_tokens'),
         onClick: () => history.push(`/whitelist/${address}`)
       }
     ];
@@ -72,11 +73,12 @@ class Tokens extends PureComponent {
           <AccountHeader
             address={address}
             copyAddress
+            i18n={i18n}
             name={name}
             type={type}
             left={
               <Link to='/accounts' className='icon -back'>
-                Back
+                {i18n.t('ns1:navigation.back')}
               </Link>
             }
             right={

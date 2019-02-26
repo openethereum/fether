@@ -3,6 +3,8 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
+import i18n from '../i18n';
+
 const baseUrlForChain = chainName => {
   let baseUrl;
 
@@ -19,9 +21,7 @@ const baseUrlForChain = chainName => {
       baseUrl = `https://blockscout.com/eth/${chainNameBlockscout}`;
       break;
     default:
-      console.error(
-        'Chain name not yet supported. Please open a Github issue at https://github.com/paritytech/fether/issues/new'
-      );
+      console.error(i18n.t('ns1:utils.blockscout_chain'));
   }
 
   return baseUrl;

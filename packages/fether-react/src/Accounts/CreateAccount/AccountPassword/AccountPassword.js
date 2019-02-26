@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import { AccountCard, Form as FetherForm } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 
+import i18n from '../../../i18n';
 import RequireHealthOverlay from '../../../RequireHealthOverlay';
 
 @inject('createAccountStore')
@@ -35,7 +36,9 @@ class AccountPassword extends Component {
 
     if (!createAccountStore.jsonString && confirm !== password) {
       this.setState({
-        error: 'Password confirmation does not match.'
+        error: `${i18n.t(
+          'ns1:account.password.create.error_msg_password_confirmation_no_match'
+        )}`
       });
       return;
     }
@@ -79,14 +82,16 @@ class AccountPassword extends Component {
                 <p>
                   {' '}
                   {jsonString
-                    ? 'Unlock your account to decrypt your JSON keystore file: '
-                    : 'Secure your account with a password:'}
+                    ? i18n.t(
+                      'ns1:account.password.import.label_msg_unlock_json'
+                    )
+                    : i18n.t('ns1:account.password.create.label_msg_password')}
                 </p>
               </div>
 
               <FetherForm.Field
                 autoFocus
-                label='Password'
+                label={i18n.t('ns1:account.password.common.label_password')}
                 onChange={this.handlePasswordChange}
                 required
                 type='password'
@@ -95,7 +100,9 @@ class AccountPassword extends Component {
 
               {!jsonString && (
                 <FetherForm.Field
-                  label='Confirm'
+                  label={i18n.t(
+                    'ns1:account.password.common.label_password_confirm'
+                  )}
                   onChange={this.handleConfirmChange}
                   required
                   type='password'
@@ -104,7 +111,12 @@ class AccountPassword extends Component {
               )}
 
               <p>
-                {error && error + ' Please check your password and try again.'}
+                {error &&
+                  error +
+                    ' ' +
+                    i18n.t(
+                      'ns1:account.password.common.error_msg_password_incorrect'
+                    )}
               </p>
 
               <nav className='form-nav -space-around'>
@@ -114,7 +126,7 @@ class AccountPassword extends Component {
                     onClick={history.goBack}
                     type='button'
                   >
-                    Back
+                    {i18n.t('ns1:navigation.back')}
                   </button>
                 )}
                 <button
@@ -126,11 +138,20 @@ class AccountPassword extends Component {
                     isLoading
                   }
                 >
-                  Confirm account {isImport ? `${'import'}` : `${'creation'}`}
+                  {i18n.t('ns1:account.password.common.button_confirm', {
+                    postfix: isImport
+                      ? i18n.t(
+                        'ns1:account.password.common.button_confirm_opt1'
+                      )
+                      : i18n.t(
+                        'ns1:account.password.common.button_confirm_opt2'
+                      )
+                  })}
                 </button>
               </nav>
             </form>
           ]}
+          i18n={i18n}
         />
       </RequireHealthOverlay>
     );

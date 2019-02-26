@@ -8,6 +8,7 @@ import { Form as FetherForm, Header } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 import ReactMarkdown from 'react-markdown';
 
+import i18n from '../i18n';
 import Health from '../Health';
 import termsAndConditions from './termsAndConditions.md';
 
@@ -50,7 +51,7 @@ class Onboarding extends Component {
   render () {
     return (
       <React.Fragment>
-        <Header title={<h1>Terms of Use</h1>} />
+        <Header title={<h1>{i18n.t('ns1:onboarding.header')}</h1>} />
 
         <div className='window_content'>
           <div className='box -padded -scroller'>
@@ -60,7 +61,7 @@ class Onboarding extends Component {
                 className='terms-and-conditions'
                 renderers={reactMarkdownOptions}
                 source={this.state.markdown}
-                label='Please read carefully'
+                label={i18n.t('ns1:onboarding.instructions')}
               />
             </div>
           </div>
@@ -72,7 +73,7 @@ class Onboarding extends Component {
           </div>
           <div className='footer-nav_icons'>
             <button className='button' onClick={this.handleFirstRun}>
-              Accept
+              {i18n.t('ns1:onboarding.button_accept')}
             </button>
           </div>
         </nav>

@@ -13,9 +13,10 @@ import { Card } from '../Card';
 import { Information } from './Information';
 import { Name } from './Name';
 
-const CopyContainer = ({ address, children, ...otherProps }) => (
+const CopyContainer = ({ address, children, i18n, ...otherProps }) => (
   <ClickToCopy
-    label='Click to copy address'
+    i18n={i18n}
+    label={i18n.t('ns1:ui.click_to_copy.card.label')}
     textToCopy={address}
     {...otherProps}
   >
@@ -36,6 +37,7 @@ const CardContents = ({ address, name, shortAddress, type }) => (
 export const AccountCard = ({
   address,
   copyAddress,
+  i18n,
   name,
   type,
   screen,
@@ -44,7 +46,7 @@ export const AccountCard = ({
 }) => (
   <Card {...otherProps}>
     {copyAddress ? (
-      <CopyContainer address={address}>
+      <CopyContainer address={address} i18n={i18n}>
         <CardContents
           address={address}
           name={name}
@@ -72,6 +74,7 @@ AccountCard.propTypes = {
   address: PropTypes.string,
   copyAddress: PropTypes.bool,
   drawers: PropTypes.arrayOf(PropTypes.node),
+  i18n: PropTypes.object,
   name: PropTypes.string,
   screen: PropTypes.string,
   shortAddress: PropTypes.bool

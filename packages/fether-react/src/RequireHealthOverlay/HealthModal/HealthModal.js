@@ -10,6 +10,7 @@ import { chainName$, withoutLoading } from '@parity/light.js';
 import light from '@parity/light.js-react';
 import { Modal } from 'fether-ui';
 
+import i18n from '../../i18n';
 import withHealth from '../../utils/withHealth';
 import loading from '../../assets/img/icons/loading.svg';
 
@@ -56,21 +57,21 @@ class HealthModal extends Component {
     } = this.props;
 
     if (status.downloading) {
-      return 'Downloading Parity Ethereum...';
+      return i18n.t('ns1:health.status.title.downloading');
     } else if (status.launching) {
-      return 'Launching the node...';
+      return i18n.t('ns1:health.status.title.launching');
     } else if (!status.nodeConnected && !status.internet) {
-      return 'No internet. No node connected';
+      return i18n.t('ns1:health.status.title.no_internet_no_node_connected');
     } else if (!status.nodeConnected && status.internet) {
-      return 'Connecting to node...';
+      return i18n.t('ns1:health.status.title.internet_no_node_connected');
     } else if (status.nodeConnected && !status.internet) {
-      return 'No internet. Connected to node';
+      return i18n.t('ns1:health.status.title.no_internet_node_connected');
     } else if (!status.clockSync) {
-      return 'Clock of host not in sync';
+      return i18n.t('ns1:health.status.title.no_clock_sync');
     } else if (!status.peers) {
-      return 'Connecting to peers...';
+      return i18n.t('ns1:health.status.title.no_peers');
     } else if (status.syncing) {
-      return `Syncing...`;
+      return i18n.t('ns1:health.status.title.syncing');
     } else {
       return '';
     }
@@ -83,18 +84,17 @@ class HealthModal extends Component {
     } = this.props;
 
     if (!status.internet) {
-      return 'Please connect to the Internet';
+      return i18n.t('ns1:health.status.description.no_internet');
     } else if (status.downloading) {
-      return `Downloading Parity Ethereum... (${
+      return `${i18n.t('ns1:health.status.description.downloading')} (${
         payload.downloading.syncPercentage
       }%)`;
     } else if (!status.clockSync) {
-      return `Mac: System Preferences -> Date & Time -> Uncheck and recheck "Set date and time automatically"
-      Windows: Control Panel -> "Clock, Language, and Region" -> "Date and Time" -> Uncheck and recheck "Set date and time automatically"`;
+      return i18n.t('ns1:health.status.description.no_clock_sync');
     } else if (!status.peers) {
-      return 'Searching for peers';
+      return i18n.t('ns1:health.status.description.no_peers');
     } else if (status.syncing) {
-      return `Syncing...${
+      return `${i18n.t('ns1:health.status.description.syncing')} ${
         payload &&
         payload.syncing &&
         payload.syncing.syncPercentage &&

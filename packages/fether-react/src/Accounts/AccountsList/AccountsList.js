@@ -13,12 +13,7 @@ import i18n from '../../i18n';
 import RequireHealthOverlay from '../../RequireHealthOverlay';
 import Health from '../../Health';
 import withAccountsInfo from '../../utils/withAccountsInfo';
-// import withTranslation from '../../utils/withTranslation';
-
 import Feedback from './Feedback';
-
-i18n.changeLanguage('de-DE');
-console.log('i18n.language: ', i18n.language);
 
 @withAccountsInfo
 @inject('createAccountStore', 'parityStore')
@@ -44,9 +39,6 @@ class AccountsList extends Component {
 
   render () {
     const { accountsInfo, chainId } = this.props;
-
-    // i18n.changeLanguage('en-US');
-    // console.log('i18n.language: ', i18n.language);
 
     const accountsList = Object.keys(accountsInfo).filter(
       key =>
@@ -81,20 +73,24 @@ class AccountsList extends Component {
                       <AccountCard
                         address={address}
                         className='-clickable'
-                        type={accountsInfo[address].type}
-                        name={accountsInfo[address].name || i18n.t('(no name)')}
+                        i18n={i18n}
+                        name={
+                          accountsInfo[address].name ||
+                          i18n.t('ns1:account.existing.no_name')
+                        }
                         screen='accounts'
                         shortAddress
+                        type={accountsInfo[address].type}
                       />
                     </li>
                   ))}
                 </ul>
               ) : (
                 <p className='create-hint'>
-                  Nothing here yet!
+                  {i18n.t('ns1:accounts_list.hint.none')}
                   <br />
                   <br />
-                  {i18n.t('ns1:accounts_list.hint')}
+                  {i18n.t('ns1:accounts_list.hint.exist')}
                 </p>
               )}
             </div>

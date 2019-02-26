@@ -10,6 +10,7 @@ import { Link, Redirect } from 'react-router-dom';
 import QrSigner from '@parity/qr-signer';
 import { withProps } from 'recompose';
 
+import i18n from '../../i18n';
 import RequireHealthOverlay from '../../RequireHealthOverlay';
 import withAccount from '../../utils/withAccount.js';
 import withTokens from '../../utils/withTokens';
@@ -48,7 +49,7 @@ class TxQrCode extends Component {
         <Header
           left={
             <Link to={`/tokens/${address}`} className='icon -back'>
-              Close
+              {i18n.t('ns1:navigation.close')}
             </Link>
           }
           title={token && <h1>Send {token.name}</h1>}
@@ -58,9 +59,7 @@ class TxQrCode extends Component {
           <div className='window_content'>
             <div className='box -padded'>
               <Card className='-centered'>
-                <p>
-                  Please scan the QR code of the transaction on Parity Signer
-                </p>
+                <p>{i18n.t('ns1:tx.scan.msg_qr_scan')}</p>
                 <br />
                 <QrSigner
                   scan={false}
@@ -74,14 +73,14 @@ class TxQrCode extends Component {
                     onClick={history.goBack}
                     type='button'
                   >
-                    Back
+                    {i18n.t('ns1:navigation.back')}
                   </button>
 
                   <button
                     className='button -submit'
                     onClick={this.handleNextStep}
                   >
-                    Next step
+                    {i18n.t('ns1:navigation.next_step')}
                   </button>
                 </nav>
               </Card>

@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import { AccountCard, Card, Form as FetherForm } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 
+import i18n from '../../../i18n';
 import RequireHealthOverlay from '../../../RequireHealthOverlay';
 import AccountImportOptions from '../AccountImportOptions';
 
@@ -55,8 +56,7 @@ class AccountRewritePhrase extends Component {
             <AccountImportOptions />
           ) : (
             <p>
-              Type your secret phrase to confirm that you wrote it down
-              correctly:
+              {i18n.t('ns1:account.phrase_rewrite.label_msg_rewrite_phrase')}
             </p>
           )}
         </div>
@@ -64,7 +64,7 @@ class AccountRewritePhrase extends Component {
         <FetherForm.Field
           autoFocus
           as='textarea'
-          label='Recovery phrase'
+          label={i18n.t('ns1:account.phrase_rewrite.label_rewrite_phrase')}
           onChange={this.handleChange}
           required
           value={value}
@@ -77,7 +77,7 @@ class AccountRewritePhrase extends Component {
               onClick={history.goBack}
               type='button'
             >
-              Back
+              {i18n.t('ns1:navigation.back')}
             </button>
           )}
           {this.renderButton()}
@@ -92,8 +92,11 @@ class AccountRewritePhrase extends Component {
         ) : (
           <AccountCard
             address={address}
-            name={address && !name ? '(no name)' : name}
+            name={
+              address && !name ? i18n.t('ns1:account.existing.no_name') : name
+            }
             drawers={body}
+            i18n={i18n}
           />
         )}
       </RequireHealthOverlay>
@@ -111,7 +114,7 @@ class AccountRewritePhrase extends Component {
     if (!isImport) {
       return (
         <button className='button' disabled={value !== bip39Phrase}>
-          Next
+          {i18n.t('ns1:navigation.next')}
         </button>
       );
     }
@@ -119,7 +122,7 @@ class AccountRewritePhrase extends Component {
     // If we are importing an existing account, the button goes to the next step
     return (
       <button className='button' disabled={!value.length || isLoading}>
-        Next
+        {i18n.t('ns1:navigation.next')}
       </button>
     );
   };

@@ -18,6 +18,7 @@ import { Link } from 'react-router-dom';
 import { OnChange } from 'react-final-form-listeners';
 import { withProps } from 'recompose';
 
+import i18n from '../../i18n';
 import { estimateGas } from '../../utils/transaction';
 import RequireHealthOverlay from '../../RequireHealthOverlay';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
@@ -162,7 +163,9 @@ class TxForm extends Component {
   showDetailsAnchor = () => {
     return (
       <span className='toggle-details'>
-        <Clickable onClick={this.toggleDetails}>&darr; Details</Clickable>
+        <Clickable onClick={this.toggleDetails}>
+          &darr; {i18n.t('ns1:tx.form.details.details')}
+        </Clickable>
       </span>
     );
   };
@@ -170,7 +173,9 @@ class TxForm extends Component {
   showHideAnchor = () => {
     return (
       <span className='toggle-details'>
-        <Clickable onClick={this.toggleDetails}>&uarr; Hide</Clickable>
+        <Clickable onClick={this.toggleDetails}>
+          &uarr; {i18n.t('ns1:tx.form.details.hide')}
+        </Clickable>
       </span>
     );
   };
@@ -195,10 +200,16 @@ class TxForm extends Component {
         <Header
           left={
             <Link to={`/tokens/${address}`} className='icon -back'>
-              Close
+              {i18n.t('ns1:navigation.close')}
             </Link>
           }
-          title={token && <h1>Send {token.name}</h1>}
+          title={
+            token && (
+              <h1>
+                {i18n.t('ns1:tx.header_send_prefix', { token: token.name })}
+              </h1>
+            )
+          }
         />
 
         <RequireHealthOverlay require='sync'>
@@ -227,7 +238,7 @@ class TxForm extends Component {
                             as='textarea'
                             autoFocus
                             className='-sm'
-                            label='To'
+                            label={i18n.t('ns1:tx.form.field.to')}
                             name='to'
                             placeholder='0x...'
                             required
@@ -242,7 +253,7 @@ class TxForm extends Component {
                             }`}
                             disabled={this.state.maxSelected}
                             formNoValidate
-                            label='Amount'
+                            label={i18n.t('ns1:tx.form.field.amount')}
                             name='amount'
                             placeholder='0.00'
                             render={FetherForm.Field}
@@ -261,14 +272,14 @@ class TxForm extends Component {
                                 mutators.recalculateMax();
                               }}
                             >
-                              Max
+                              {i18n.t('ns1:tx.form.button_max')}
                             </button>
                           </Field>
 
                           <Field
                             centerText={`${values.gasPrice} GWEI`}
                             className='-range'
-                            label='Transaction Speed'
+                            label={i18n.t('ns1:tx.form.field.tx_speed')}
                             leftText='Low'
                             max={MAX_GAS_PRICE}
                             min={MIN_GAS_PRICE}
@@ -297,9 +308,15 @@ class TxForm extends Component {
 
                           {values.to === values.from && (
                             <span>
-                              <h3>WARNING:</h3>
+                              <h3>
+                                {i18n.t(
+                                  'ns1:tx.form.warning.title_same_sender_receiver'
+                                )}
+                              </h3>
                               <p>
-                                The sender and receiver addresses are the same.
+                                {i18n.t(
+                                  'ns1:tx.form.warning.body_same_sender_receiver'
+                                )}
                               </p>
                             </span>
                           )}
@@ -315,10 +332,10 @@ class TxForm extends Component {
                             className='button'
                           >
                             {validating
-                              ? 'Checking...'
+                              ? i18n.t('ns1:tx.form.button_checking')
                               : type === 'signer'
-                                ? 'Scan'
-                                : 'Send'}
+                                ? i18n.t('ns1:tx.form.button_scan')
+                                : i18n.t('ns1:tx.form.button_send')}
                           </button>
                         </nav>
                       </form>
@@ -343,37 +360,46 @@ class TxForm extends Component {
     }
 
     if (!values.amount) {
-      return { amount: 'Please enter a valid amount' };
+      return { amount: i18n.t('ns1:tx.form.validation.alert.amount_invalid') };
     }
 
     const amountBn = new BigNumber(values.amount.toString());
 
     if (amountBn.isNaN()) {
-      return { amount: 'Please enter a valid amount' };
+      return { amount: i18n.t('ns1:tx.form.validation.alert.amount_invalid') };
     } else if (amountBn.isZero()) {
       if (this.state.maxSelected) {
-        return { amount: 'ETH balance too low to pay for gas.' };
+        return {
+          amount: i18n.t(
+            'ns1:tx.form.validation.alert.eth_balance_too_low_for_gas'
+          )
+        };
       }
-      return { amount: 'Please enter a non-zero amount' };
+      return { amount: i18n.t('ns1:tx.form.validation.alert.non_zero_amount') };
     } else if (amountBn.isNegative()) {
-      return { amount: 'Please enter a positive amount' };
+      return { amount: i18n.t('ns1:tx.form.validation.alert.positive_amount') };
     } else if (token.address === 'ETH' && toWei(values.amount).lt(1)) {
-      return { amount: 'Please enter at least 1 Wei' };
+      return { amount: i18n.t('ns1:tx.form.validation.alert.min_wei') };
     } else if (amountBn.dp() > token.decimals) {
       return {
-        amount: `Please enter a ${token.name} value of less than ${
-          token.decimals
-        } decimal places`
+        amount: i18n.t('ns1:tx.form.validation.alert.min_decimals', {
+          token_name: token.name,
+          token_decimals: token.decimals
+        })
       };
     } else if (balance && balance.lt(amountBn)) {
-      return { amount: `You don't have enough ${token.symbol} balance` };
+      return {
+        amount: i18n.t('ns1:tx.form.validation.alert.token_balance_too_low', {
+          token_symbol: token.symbol
+        })
+      };
     } else if (!values.to || !isAddress(values.to)) {
-      return { to: 'Please enter a valid Ethereum address' };
+      return { to: i18n.t('ns1:tx.form.validation.alert.invalid_eth_address') };
     } else if (values.to === '0x0000000000000000000000000000000000000000') {
       return {
-        to: `You are not permitted to send ${
-          token.name
-        } to the zero account (0x0)`
+        to: i18n.t('ns1:tx.form.validation.alert.prevent_send_zero_account', {
+          token_name: token.name
+        })
       };
     }
     return true;
@@ -397,23 +423,23 @@ class TxForm extends Component {
       } = this.props;
 
       if (!chainId) {
-        throw new Error('chaindId is required for an EthereumTx');
+        throw new Error(i18n.t('ns1:tx.form.validation.throw.no_chain_id'));
       }
 
       if (!address) {
-        throw new Error('address of an account is required');
+        throw new Error(i18n.t('ns1:tx.form.validation.throw.no_address'));
       }
 
       if (!transactionCount) {
-        throw new Error('transactionCount is required for an EthereumTx');
+        throw new Error(i18n.t('ns1:tx.form.validation.throw.no_tx_count'));
       }
 
       if (!token || !token.address || !token.decimals) {
-        throw new Error('token information is required for an EthereumTx');
+        throw new Error(i18n.t('ns1:tx.form.validation.throw.no_token_info'));
       }
 
       if (!ethBalance) {
-        throw new Error('No "ethBalance"');
+        throw new Error(i18n.t('ns1:tx.form.validation.throw.no_eth_balance'));
       }
 
       const preValidation = this.preValidate(values);
@@ -424,13 +450,17 @@ class TxForm extends Component {
       }
 
       if (values.gas && values.gas.eq(-1)) {
-        return { amount: 'Unable to estimate gas...' };
+        return {
+          amount: i18n.t('ns1:tx.form.validation.alert.unable_estimate_gas')
+        };
       }
 
       // If the gas hasn't been calculated yet, then we don't show any errors,
       // just wait a bit more
       if (!this.isEstimatedTxFee(values)) {
-        return { amount: 'Estimating gas...' };
+        return {
+          amount: i18n.t('ns1:tx.form.validation.alert.estimating_gas')
+        };
       }
 
       // Verify that `gas + (eth amount if sending eth) <= ethBalance`
@@ -440,13 +470,19 @@ class TxForm extends Component {
           .gt(toWei(ethBalance))
       ) {
         return token.address !== 'ETH'
-          ? { amount: 'ETH balance too low to pay for gas' }
-          : { amount: "You don't have enough ETH balance" };
+          ? {
+            amount: i18n.t(
+              'ns1:tx.form.validation.alert.eth_balance_too_low_for_gas'
+            )
+          }
+          : {
+            amount: i18n.t('ns1:tx.form.validation.alert.eth_balance_too_low')
+          };
       }
     } catch (err) {
       console.error(err);
       return {
-        amount: 'Failed estimating balance, please try again'
+        amount: i18n.t('ns1:tx.form.validation.alert.error_estimating_balance')
       };
     }
   }, 1000);
