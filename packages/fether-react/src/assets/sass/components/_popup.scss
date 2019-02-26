@@ -10,6 +10,10 @@
   z-index: 1899; /* Under the menu popup */
 }
 
+.ui.popup {
+  z-index: 2000;
+}
+
 .popup-menu-account {
   /* Override SUI popup styles so popup does not appear above menu icon */
   background: $white !important;

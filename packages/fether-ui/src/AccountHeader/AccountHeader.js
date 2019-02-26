@@ -34,7 +34,7 @@ export const AccountHeader = ({
   const Container = copyAddress ? CopyContainer : NormalContainer;
 
   return (
-    <div>
+    <React.Fragment>
       <Header
         title={
           address &&
@@ -51,7 +51,7 @@ export const AccountHeader = ({
         }
         {...otherProps}
       />
-    </div>
+    </React.Fragment>
   );
 };
 

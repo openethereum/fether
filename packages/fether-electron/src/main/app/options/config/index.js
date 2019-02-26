@@ -17,7 +17,7 @@ const INDEX_HTML_PATH =
   });
 
 // Icon path differs when started with `yarn electron` or `yarn start`
-let iconPath = path.join(staticPath, 'assets', 'icons', 'icon.png');
+let iconPath = path.join(staticPath, 'assets', 'icons', 'mac', 'iconDock.png');
 let iconDockPath = '';
 
 if (process.platform === 'win32') {
@@ -39,8 +39,6 @@ if (process.platform === 'win32') {
     'iconDock.png'
   );
 }
-
-const shouldUseFrame = process.platform === 'win32';
 
 const windowPosition =
   process.platform === 'win32' ? 'trayBottomCenter' : 'trayCenter';
@@ -69,8 +67,8 @@ const DEFAULT_OPTIONS = {
 };
 
 const TASKBAR_OPTIONS = {
-  frame: shouldUseFrame,
-  height: 464,
+  height: 515,
+  frame: false,
   // On Linux the user must click the tray icon and then click the tooltip
   // to toggle the Fether window open/close
   tooltip: 'Click to toggle Fether window',
