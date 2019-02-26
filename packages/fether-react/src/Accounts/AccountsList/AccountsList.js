@@ -9,10 +9,16 @@ import { chainId$, withoutLoading } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
 import light from '@parity/light.js-react';
 
+import i18n from '../../i18n';
 import RequireHealthOverlay from '../../RequireHealthOverlay';
 import Health from '../../Health';
-import Feedback from './Feedback';
 import withAccountsInfo from '../../utils/withAccountsInfo';
+// import withTranslation from '../../utils/withTranslation';
+
+import Feedback from './Feedback';
+
+i18n.changeLanguage('de-DE');
+console.log('i18n.language: ', i18n.language);
 
 @withAccountsInfo
 @inject('createAccountStore', 'parityStore')
@@ -39,6 +45,9 @@ class AccountsList extends Component {
   render () {
     const { accountsInfo, chainId } = this.props;
 
+    // i18n.changeLanguage('en-US');
+    // console.log('i18n.language: ', i18n.language);
+
     const accountsList = Object.keys(accountsInfo).filter(
       key =>
         !accountsInfo[key].chainId ||
@@ -56,7 +65,7 @@ class AccountsList extends Component {
                 onClick={this.handleCreateAccount}
               />
             }
-            title={<h1>Accounts</h1>}
+            title={<h1>{i18n.t('ns1:accounts_list.header')}</h1>}
           />
 
           <div className='window_content'>
@@ -73,7 +82,7 @@ class AccountsList extends Component {
                         address={address}
                         className='-clickable'
                         type={accountsInfo[address].type}
-                        name={accountsInfo[address].name || '(no name)'}
+                        name={accountsInfo[address].name || i18n.t('(no name)')}
                         screen='accounts'
                         shortAddress
                       />
@@ -85,7 +94,7 @@ class AccountsList extends Component {
                   Nothing here yet!
                   <br />
                   <br />
-                  Click the + icon to add a new account.
+                  {i18n.t('ns1:accounts_list.hint')}
                 </p>
               )}
             </div>
