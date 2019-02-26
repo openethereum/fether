@@ -126,13 +126,17 @@ describe('Crypto-JS', () => {
     // The current imperfect workaround is to take a hash of the phrase before encrypting,
     // then comparing with the hash of the phrase after decrypting...which is not great.
     // Logged here: https://github.com/brix/crypto-js/issues/158
-    const wrongDecryptedPhrase = CryptoJS.AES.decrypt(
-      encryptedPhrase,
-      'wrongpassword'
-    ).toString(CryptoJS.enc.Utf8);
-    const wrongDecryptHash = hashString(wrongDecryptedPhrase);
+    try {
+      const wrongDecryptedPhrase = CryptoJS.AES.decrypt(
+        encryptedPhrase,
+        'wrongpassword'
+      ).toString(CryptoJS.enc.Utf8);
+      const wrongDecryptHash = hashString(wrongDecryptedPhrase);
 
-    expect(wrongDecryptHash).not.toBe(rawPhraseHash);
+      expect(wrongDecryptHash).not.toBe(rawPhraseHash);
+    } catch (error) {
+      expect(error).toBe('Malformed UTF-8 data');
+    }
   });
 
   test('should decrypt to the correct original phrase', () => {
