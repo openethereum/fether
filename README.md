@@ -25,47 +25,27 @@ If you run into problems while using Parity Fether, feel free to file an issue i
 
 ![Parity Fether](https://wiki.parity.io/images/fether-screenshot-0.jpg)
 
-## Install dependencies
 
-### MacOS
+## Join the chat!
 
-Install Xcode Command Line Tools, NVM, Node.js latest LTS, Yarn, and Git
+Get in touch with us on Gitter:
+[![Gitter](https://img.shields.io/badge/Gitter-Fether-brightgreen.svg)](https://gitter.im/paritytech/fether)
 
-```bash
-xcode-select --install;
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash;
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-echo -e "Installing Node.js latest LTS version";
-nvm install --lts
-echo -e "Switching to use Node.js latest LTS version";
-nvm use --lts;
-brew install yarn --without-node;
-brew install git --verbose;
-brew upgrade git --verbose;
-```
-
-### Linux and Windows (Git Bash)
-
-Install Node.js 10.x, Yarn, Git, and increase amount of inotify watchers
-
-```bash
-sudo apt update;
-sudo apt install -y git nodejs npm curl;
-curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -;
-apt-get install -y nodejs;
-sudo ln -s /usr/bin/nodejs /usr/bin/node;
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -;
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list;
-sudo apt-get update && sudo apt-get install yarn;
-sudo ln -s /usr/bin/yarn /usr/local/bin/yarn;
-yarn global add windows-build-tools;
-```
+Official website: https://parity.io | Be sure to check out [our Wiki](https://wiki.parity.io) for more information.
 
 ## Install and start Parity Fether
 
+### Mac
+- Download the [`.dmg` file](https://github.com/paritytech/fether/releases).
+- Double click on it to install Fether.
+
+### Windows
+- Download the [`.exe` file](https://github.com/paritytech/fether/releases).
+- Double click on it to install Fether.
+- Fether will be added to the program menu.
+
 ### Linux
+
   #### Using the AppImage (any distro)
   - Download the [`.AppImage` file](https://github.com/paritytech/fether/releases).
   - Make it executable `chmod +x /path/to/fether-x.x.x-x86_64.AppImage`.
@@ -81,14 +61,7 @@ yarn global add windows-build-tools;
   - Double click on the file to install Fether.
   - Fether will be added to the program menu.
   
-### Mac
-- Download the [`.dmg` file](https://github.com/paritytech/fether/releases).
-- Double click on it to install Fether.
 
-### Windows
-- Download the [`.exe` file](https://github.com/paritytech/fether/releases).
-- Double click on it to install Fether.
-- Fether will be added to the program menu.
 
 ### Passing config flags to the underlying Parity Ethereum node
 
@@ -117,12 +90,42 @@ $ /path/to/fether
 
 ## Build from sources
 
-### Dependencies
+### Install dependencies
 
-Make sure you have at least `yarn` version 1.4.2 and [Node.js >=10.10.0](https://nodejs.org/en/)
+#### Mac
+
+Install Xcode Command Line Tools, NVM, Node.js latest LTS, Yarn, and Git
 
 ```bash
-yarn --version // Should be at least 1.4.2
+xcode-select --install;
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash;
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+echo -e "Installing Node.js latest LTS version";
+nvm install --lts
+echo -e "Switching to use Node.js latest LTS version";
+nvm use --lts;
+brew install yarn --without-node;
+brew install git --verbose;
+brew upgrade git --verbose;
+```
+
+#### Linux and Windows (Git Bash)
+
+Install Node.js 10.x, Yarn, Git, and increase amount of inotify watchers
+
+```bash
+sudo apt update;
+sudo apt install -y git nodejs npm curl;
+curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -;
+apt-get install -y nodejs;
+sudo ln -s /usr/bin/nodejs /usr/bin/node;
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -;
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list;
+sudo apt-get update && sudo apt-get install yarn;
+sudo ln -s /usr/bin/yarn /usr/local/bin/yarn;
+yarn global add windows-build-tools;
 ```
 
 ### Clone this repo
@@ -133,35 +136,36 @@ cd ./fether
 yarn install
 ```
 
-### Build this repo and run
+### Build and run
+
+#### Build this repo and run
 
 ```bash
 yarn electron
 ```
 
-### Build binaries
+#### Build binaries
 
 ```bash
 yarn package
 ```
 
-### Run with live reload for development
+#### Run with live reload for development
 
 ```bash
 yarn start
 ```
 
-> Troubleshooting: If it hangs on a white screen in Electron even though it has compiled and has been syncing for a long time, then simply choose 'View > Reload' (CMD + R on macOS) from the Fether/Electron menu. If the Fether menu is not shown in the tray, then by clicking the Fether window and then holding down the ALT key to reveal it.
-
-> Developer Tools: Open developer tools automatically by running `DEBUG=true yarn start` when not in the production environment
-
-# Run without taskbar mode (no tray icon)
+### Run without taskbar mode (no tray icon)
 
 ```bash
 TASKBAR=false yarn start
 ```
 
-# Production
+> Troubleshooting: If it hangs on a white screen in Electron even though it has compiled and has been syncing for a long time, then simply choose 'View > Reload' (CMD + R on Mac, CTRL + R on Linux/Windows) from the Fether/Electron menu.
+
+> Developer Tools: Open developer tools automatically by running `DEBUG=true yarn start` when not in the production environment.
+
 
 ## Build binaries for production
 
@@ -171,9 +175,9 @@ TASKBAR=false yarn start
 
 2) Publishing a new release to GitHub is performed by a maintainer of the repository. In this case you need to obtain the `GH_TOKEN` from GitHub settings and add it using `export GH_TOKEN="..."` to ~/.bashrc and then run `source ~/.bashrc`. If you get an error that the `GH_TOKEN` is missing and you are only building the binary but not publishing, then just ignore the error.
 
-### macOS
+### Mac
 
-Build and run binaries (i.e. .dmg) for production on macOS of a specific remote branch
+Build and run binaries (i.e. .dmg) for production on Mac of a specific remote branch
 
 ```bash
 git fetch origin INSERT_BRANCH_NAME:INSERT_BRANCH_NAME;
@@ -216,7 +220,7 @@ yarn; yarn build; DEBUG=electron-builder yarn release --win;
 
 Show terminal logs whilst running a binary executable.
 
-### macOS
+### Mac
 
 ```
 tail -f ~/Library/Application\ Support/fether/fether.log
@@ -234,9 +238,9 @@ tail -f ~/.config/fether/fether.log
 tail -f ~/Application\ Data/fether/fether.log
 ```
 
-# Usage of taskbar mode
+## Usage of taskbar mode
 
-### macOS
+### Mac
 
 Taskbar mode is `true` by default.
 
@@ -285,9 +289,3 @@ Taskbar mode is `true` by default.
   * Fether window - "window context menu" shown upon right-click in the Fether window
   * Fether window - position is saved upon move, minimising, and close so it is restored in the same position.
 
-## Join the chat!
-
-Get in touch with us on Gitter:
-[![Gitter](https://img.shields.io/badge/Gitter-Fether-brightgreen.svg)](https://gitter.im/paritytech/fether)
-
-Official website: https://parity.io | Be sure to check out [our Wiki](https://wiki.parity.io) for more information.
