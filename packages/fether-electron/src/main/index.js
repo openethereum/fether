@@ -23,10 +23,13 @@ if (!['darwin', 'win32'].includes(process.platform)) {
   app.disableHardwareAcceleration();
 }
 
+let fetherApp;
 const options = fetherAppOptions(withTaskbar, {});
 
 app.on('ready', () => {
-  return new FetherApp(app, options);
+  fetherApp = new FetherApp(app, options);
+
+  return fetherApp;
 });
 
 // Event triggered by clicking the Electron icon in the menu Dock
@@ -44,7 +47,9 @@ app.on('activate', (event, hasVisibleWindows) => {
     return;
   }
 
-  return new FetherApp(app, options);
+  fetherApp = new FetherApp(app, options);
+
+  return fetherApp;
 });
 
 app.on('window-all-closed', () => {
@@ -63,3 +68,5 @@ app.on('quit', () => {
   pino.info('Leaving Fether');
   killParity();
 });
+
+export { fetherApp };
