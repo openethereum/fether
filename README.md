@@ -267,7 +267,7 @@ Taskbar mode is `true` by default.
 * Disabled `false`
   * Dock icon - toggles show/hide Fether window
   * Fether window - frame (with close/minimise icons)
-  * Menubar - Fether menu may not be not shown in the tray by default depending on whether `setMenuBarVisibility` has been set. Fether menu may be configured to automatically hide by setting `setAutoHideMenuBar`. Toggle show/hide the Fether menu in the frame by clicking the Fether window and then holding down the ALT key to reveal it, which only works if auto-hide menu bar is enabled.
+  * Menubar - Fether menu may not be shown in the tray by default depending on whether `setMenuBarVisibility` has been set. Fether menu may be configured to automatically hide by setting `setAutoHideMenuBar`. Toggle show/hide the Fether menu in the frame by clicking the Fether window and then holding down the ALT key to reveal it, which only works if auto-hide menu bar is enabled.
 * Always
   * Fether window - "window context menu" shown upon right-click in the Fether window
   * Fether window - position is saved upon move, minimising, and close so it is restored in the same position.
