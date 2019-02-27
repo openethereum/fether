@@ -10,8 +10,11 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 // // https://www.npmjs.com/package/i18next-xhr-backend
 // import Backend from 'i18next-xhr-backend';
 import { initReactI18next } from 'react-i18next';
+import store from 'store';
 
 import { en, de } from './locales';
+
+const LANG_LS_KEY = 'fether-language';
 
 const i18n = i18next;
 i18n
@@ -25,7 +28,7 @@ i18n
     interpolation: {
       escapeValue: false
     },
-    lng: 'en',
+    lng: store.get(LANG_LS_KEY) || 'en',
     ns: ['ns1'],
     // https://react.i18next.com/misc/using-with-icu-format
     react: {

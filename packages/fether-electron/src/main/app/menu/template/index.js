@@ -7,6 +7,29 @@ import electron from 'electron';
 
 const { shell } = electron;
 
+// Preferences menu
+const getPreferences = fetherApp => {
+  return {
+    label: 'Languages',
+    submenu: [
+      {
+        label: 'English',
+        type: 'radio',
+        click () {
+          fetherApp.win.webContents.emit('set-language', 'en');
+        }
+      },
+      {
+        label: 'German',
+        type: 'radio',
+        click () {
+          fetherApp.win.webContents.emit('set-language', 'de');
+        }
+      }
+    ]
+  };
+};
+
 // Create the Application's main menu
 // https://github.com/electron/electron/blob/master/docs/api/menu.md#examples
 const getMenubarMenuTemplate = fetherApp => {
@@ -17,6 +40,8 @@ const getMenubarMenuTemplate = fetherApp => {
         label: 'File',
         submenu: [
           { role: 'about' },
+          { type: 'separator' },
+          { label: 'Preferences', submenu: [getPreferences(fetherApp)] },
           { type: 'separator' },
           { role: 'services', submenu: [] },
           { type: 'separator' },
@@ -163,6 +188,10 @@ const getContextWindowMenuTemplate = fetherApp => {
     template.shift();
     template.pop();
     template.push({
+      label: 'Preferences',
+      submenu: [getPreferences(fetherApp)]
+    });
+    template.push({
       role: 'help',
       submenu: [
         {
@@ -175,7 +204,7 @@ const getContextWindowMenuTemplate = fetherApp => {
     });
 
     if (process.platform === 'darwin') {
-      template[2].submenu.push({ role: 'about' });
+      template[3].submenu.push({ role: 'about' });
     }
 
     template.push({ label: 'Quit', role: 'quit' });

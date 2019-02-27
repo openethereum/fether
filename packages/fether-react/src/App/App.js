@@ -12,11 +12,13 @@ import {
   Switch
 } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
+import store from 'store';
 import isElectron from 'is-electron';
 import { Modal } from 'fether-ui';
 import semver from 'semver';
 import { version } from '../../package.json';
 
+import i18n from '../i18n';
 import Accounts from '../Accounts';
 import BackupAccount from '../BackupAccount';
 import Onboarding from '../Onboarding';
@@ -25,6 +27,7 @@ import Send from '../Send';
 import Tokens from '../Tokens';
 import Whitelist from '../Whitelist';
 
+const LANG_LS_KEY = 'fether-language';
 const currentVersion = version;
 
 // Use MemoryRouter for production viewing in file:// protocol
@@ -42,6 +45,22 @@ class App extends Component {
   };
 
   componentDidMount () {
+    if (!electron) {
+      return;
+    }
+
+    if (store.get(LANG_LS_KEY) && i18n.language !== store.get(LANG_LS_KEY)) {
+      i18n.changeLanguage(store.get(LANG_LS_KEY));
+    }
+
+    electron.remote
+      .getCurrentWindow()
+      .webContents.addListener('set-language', newLanguage => {
+        i18n.changeLanguage(newLanguage);
+        store.set(LANG_LS_KEY, newLanguage);
+        electron.remote.getCurrentWindow().webContents.reload();
+      });
+
     window.addEventListener('contextmenu', this.handleRightClick);
 
     window
@@ -64,8 +83,11 @@ class App extends Component {
       });
   }
 
-  componentDidUnmount () {
+  componentWillUnmount () {
     window.removeEventListener('contextmenu', this.handleRightClick);
+    electron.remote
+      .getCurrentWindow()
+      .webContents.removeListener('set-language');
   }
 
   renderModalLinks = () => {
