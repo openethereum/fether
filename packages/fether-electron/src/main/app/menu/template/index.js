@@ -143,7 +143,7 @@ const getContextTrayMenuTemplate = fetherApp => {
       {
         label: 'Show/Hide Fether',
         click () {
-          fetherApp.win.isVisible()
+          fetherApp.win.isVisible() && fetherApp.win.isFocused()
             ? fetherApp.win.hide()
             : fetherApp.win.show();
         }
