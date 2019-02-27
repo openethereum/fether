@@ -3,19 +3,8 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import electron from 'electron';
-import { template } from './template';
+import FetherMenubarMenu from './menubar';
+import FetherContextTrayMenu from './contextTray';
+import FetherContextWindowMenu from './contextWindow';
 
-const { Menu } = electron;
-
-const menu = Menu.buildFromTemplate(template);
-
-const getMenu = () => {
-  return Menu.getApplicationMenu();
-};
-
-const addMenu = () => {
-  Menu.setApplicationMenu(menu);
-};
-
-export { addMenu, getMenu };
+export { FetherMenubarMenu, FetherContextTrayMenu, FetherContextWindowMenu };
