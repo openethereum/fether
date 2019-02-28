@@ -11,7 +11,7 @@ const { ipcMain, session } = electron;
 function setupRequestListeners (fetherApp) {
   // Listen to messages from renderer process
   ipcMain.on('asynchronous-message', (...args) => {
-    return messages(fetherApp.win, ...args);
+    return messages(fetherApp, ...args);
   });
 
   // WS calls have Origin `file://` by default, which is not trusted.

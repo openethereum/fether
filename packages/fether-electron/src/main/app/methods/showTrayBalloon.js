@@ -18,15 +18,17 @@ const iconBalloonPath = path.join(
 
 const pino = Pino();
 
+// Supported only on Windows OS
 function showTrayBalloon (fetherApp) {
   const { tray } = fetherApp;
 
   pino.info('Showing Tray Balloon');
 
   tray.displayBalloon({
-    content: `Press ALT in the Fether window to toggle the menu`,
+    content:
+      'Click to toggle Fether window. Right-click Fether window to toggle Fether menu',
     icon: iconBalloonPath,
-    title: 'Fether Menu'
+    title: 'Fether Window & Menu Usage'
   });
 }
 
