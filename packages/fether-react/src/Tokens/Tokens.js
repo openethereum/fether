@@ -145,7 +145,7 @@ class Tokens extends PureComponent {
     );
 
     return (
-      <React.Fragment className='tokens'>
+      <div className='tokens'>
         <div className={isMenuOpen ? 'popup-underlay' : ''} />
         <AccountHeader
           address={address}
@@ -167,7 +167,7 @@ class Tokens extends PureComponent {
             <Health />
           </div>
         </nav>
-      </React.Fragment>
+      </div>
     );
   }
 }

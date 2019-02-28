@@ -10,6 +10,10 @@
     }
   }
 
+  &.-fade {
+    animation: fade 1s 1s forwards;
+  }
+
   &.-standard {
     margin: 1rem 0;
   }
@@ -53,6 +57,21 @@
     font-size: ms(-1);
     border-radius: 0.25rem;
     word-wrap: break-word;
+  }
+}
+
+@keyframes fade {
+  25% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.25;
+  }
+  100% {
+    opacity: 1;
   }
 }
 

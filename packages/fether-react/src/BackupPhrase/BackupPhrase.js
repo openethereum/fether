@@ -196,16 +196,16 @@ class BackupPhrase extends Component {
                     {unlocked
                       ? this.renderCopyAndRewrite()
                       : this.renderPasswordForm()}
-                    {needsRewrite ? this.renderTips() : null}
+                    {needsRewrite && unlocked ? this.renderTips() : null}
                     {error}
-                    <nav className='footer-nav'>
-                      <div className='footer-nav_status'>
-                        <Health />
-                      </div>
-                    </nav>
                   </div>
                 ]}
               />
+              <nav className='footer-nav'>
+                <div className='footer-nav_status'>
+                  <Health />
+                </div>
+              </nav>
             </RequireHealthOverlay>
           </div>
         </div>
@@ -337,8 +337,12 @@ class BackupPhrase extends Component {
   }
 
   renderTips () {
+    const { step } = this.state;
+    // add fade animation as final attention to the important message before confirmation.
+    const classname = `text ${step === 2 ? '-fade' : ''} -space-around`;
+
     return (
-      <div className='text -space-around'>
+      <div className={classname}>
         <b>IMPORTANT</b>
         <div className='text -tiny'>
           <ul className='-bulleted'>
