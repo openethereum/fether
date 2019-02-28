@@ -4,25 +4,40 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import electron from 'electron';
+import settings from 'electron-settings';
+
+import i18n from '../i18n';
 
 const { shell } = electron;
 
 // Preferences menu
 const getPreferences = fetherApp => {
   return {
-    label: 'Languages',
+    label: i18n.t('menu.file.preferences.languages.submenu_name'),
     submenu: [
       {
-        label: 'English',
+        label: i18n.t('menu.file.preferences.languages.english'),
         type: 'radio',
+        checked: settings.get('fether-language') === 'en',
         click () {
+          // Backend menu change language
+          i18n.changeLanguage('en');
+          settings.set('fether-language', 'en');
+          fetherApp.setupMenu(fetherApp);
+          // Frontend change language
           fetherApp.win.webContents.emit('set-language', 'en');
         }
       },
       {
-        label: 'German',
+        label: i18n.t('menu.file.preferences.languages.german'),
         type: 'radio',
+        checked: settings.get('fether-language') === 'de',
         click () {
+          // Backend menu change language
+          i18n.changeLanguage('de');
+          settings.set('fether-language', 'de');
+          fetherApp.setupMenu(fetherApp);
+          // Frontend change language
           fetherApp.win.webContents.emit('set-language', 'de');
         }
       }
@@ -37,24 +52,31 @@ const getMenubarMenuTemplate = fetherApp => {
   const fileTab =
     process.platform === 'darwin'
       ? {
-        label: 'File',
+        label: i18n.t('menu.file.submenu_name'),
         submenu: [
-          { role: 'about' },
+          { role: 'about', label: i18n.t('menu.file.about') },
           { type: 'separator' },
-          { label: 'Preferences', submenu: [getPreferences(fetherApp)] },
+          {
+            label: i18n.t('menu.file.preferences.submenu_name'),
+            submenu: [getPreferences(fetherApp)]
+          },
           { type: 'separator' },
-          { role: 'services', submenu: [] },
+          {
+            role: 'services',
+            label: i18n.t('menu.file.services'),
+            submenu: []
+          },
           { type: 'separator' },
-          { role: 'hide' },
-          { role: 'hideothers' },
-          { role: 'unhide' },
+          { role: 'hide', label: i18n.t('menu.file.hide') },
+          { role: 'hideothers', label: i18n.t('menu.file.hide_others') },
+          { role: 'unhide', label: i18n.t('menu.file.unhide') },
           { type: 'separator' },
-          { role: 'quit' }
+          { role: 'quit', label: i18n.t('menu.file.quit') }
         ]
       }
       : {
-        label: 'File',
-        submenu: [{ role: 'quit' }]
+        label: i18n.t('menu.file.submenu_name'),
+        submenu: [{ role: 'quit', label: i18n.t('menu.file.quit') }]
       };
 
   /**
@@ -67,26 +89,50 @@ const getMenubarMenuTemplate = fetherApp => {
    * it to prevent code duplication
    */
   const editTab = {
-    label: 'Edit',
+    label: i18n.t('menu.edit.submenu_name'),
     submenu: [
-      { label: 'Undo', click: () => fetherApp.win.webContents.undo() },
-      { label: 'Redo', click: () => fetherApp.win.webContents.redo() },
-      { type: 'separator' },
-      { label: 'Cut', click: () => fetherApp.win.webContents.cut() },
-      { label: 'Copy', click: () => fetherApp.win.webContents.copy() },
-      { label: 'Paste', click: () => fetherApp.win.webContents.paste() },
-      { type: 'separator' },
-      { label: 'Delete', click: () => fetherApp.win.webContents.delete() },
       {
-        label: 'Select All',
+        label: i18n.t('menu.edit.undo'),
+        click: () => fetherApp.win.webContents.undo()
+      },
+      {
+        label: i18n.t('menu.edit.redo'),
+        click: () => fetherApp.win.webContents.redo()
+      },
+      { type: 'separator' },
+      {
+        label: i18n.t('menu.edit.cut'),
+        click: () => fetherApp.win.webContents.cut()
+      },
+      {
+        label: i18n.t('menu.edit.copy'),
+        click: () => fetherApp.win.webContents.copy()
+      },
+      {
+        label: i18n.t('menu.edit.paste'),
+        click: () => fetherApp.win.webContents.paste()
+      },
+      { type: 'separator' },
+      {
+        label: i18n.t('menu.edit.delete'),
+        click: () => fetherApp.win.webContents.delete()
+      },
+      {
+        label: i18n.t('menu.edit.select_all'),
         click: () => fetherApp.win.webContents.selectAll()
       }
     ]
   };
 
   const viewTab = {
-    label: 'View',
-    submenu: [{ role: 'reload' }, { role: 'toggledevtools' }]
+    label: i18n.t('menu.view.submenu_name'),
+    submenu: [
+      { role: 'reload', label: i18n.t('menu.view.reload') },
+      {
+        role: 'toggledevtools',
+        label: i18n.t('menu.view.toggle_developer_tools')
+      }
+    ]
   };
 
   /**
@@ -97,11 +143,14 @@ const getMenubarMenuTemplate = fetherApp => {
    * add no benefit to users anyway
    */
   const viewTabWindowsOS = {
-    label: 'View',
+    label: i18n.t('menu.view.submenu_name'),
     submenu: [
-      { label: 'Reload', click: () => fetherApp.win.webContents.reload() },
       {
-        label: 'Toggle Developer Tools',
+        label: i18n.t('menu.view.reload'),
+        click: () => fetherApp.win.webContents.reload()
+      },
+      {
+        label: i18n.t('menu.view.toggle_developer_tools'),
         click: () => fetherApp.win.webContents.toggleDevTools()
       }
     ]
@@ -109,14 +158,19 @@ const getMenubarMenuTemplate = fetherApp => {
 
   const windowTab = {
     role: 'window',
-    submenu: [{ role: 'minimize' }, { role: 'close' }]
+    label: i18n.t('menu.window.submenu_name'),
+    submenu: [
+      { role: 'minimize', label: i18n.t('menu.window.minimize') },
+      { role: 'close', label: i18n.t('menu.window.close') }
+    ]
   };
 
   const helpTab = {
     role: 'help',
+    label: i18n.t('menu.help.submenu_name'),
     submenu: [
       {
-        label: 'Learn More',
+        label: i18n.t('menu.help.learn_more'),
         click () {
           shell.openExternal('https://parity.io');
         }
@@ -137,8 +191,17 @@ const getMenubarMenuTemplate = fetherApp => {
     template[1].submenu.push(
       { type: 'separator' },
       {
-        label: 'Speech',
-        submenu: [{ role: 'startspeaking' }, { role: 'stopspeaking' }]
+        label: i18n.t('menu.edit.speech.submenu_name'),
+        submenu: [
+          {
+            role: 'startspeaking',
+            label: i18n.t('menu.edit.speech.start_speaking')
+          },
+          {
+            role: 'stopspeaking',
+            label: i18n.t('menu.edit.speech.stop_speaking')
+          }
+        ]
       }
     );
   }
@@ -146,11 +209,11 @@ const getMenubarMenuTemplate = fetherApp => {
   if (process.platform === 'darwin') {
     // Window menu
     template[3].submenu = [
-      { role: 'close' },
-      { role: 'minimize' },
-      { role: 'zoom' },
+      { role: 'close', label: i18n.t('menu.window.close') },
+      { role: 'minimize', label: i18n.t('menu.window.minimize') },
+      { role: 'zoom', label: i18n.t('menu.window.zoom') },
       { type: 'separator' },
-      { role: 'front' }
+      { role: 'front', label: i18n.t('menu.window.bring_all_to_front') }
     ];
   }
 
@@ -166,14 +229,14 @@ const getContextTrayMenuTemplate = fetherApp => {
   if (fetherApp.options.withTaskbar) {
     const template = [
       {
-        label: 'Show/Hide Fether',
+        label: i18n.t('menu.show_hide_fether'),
         click () {
           fetherApp.win.isVisible()
             ? fetherApp.win.hide()
             : fetherApp.win.show();
         }
       },
-      { label: 'Quit', role: 'quit' }
+      { role: 'quit', label: i18n.t('menu.file.quit') }
     ];
 
     return template;
@@ -188,14 +251,15 @@ const getContextWindowMenuTemplate = fetherApp => {
     template.shift();
     template.pop();
     template.push({
-      label: 'Preferences',
+      label: i18n.t('menu.file.preferences.submenu_name'),
       submenu: [getPreferences(fetherApp)]
     });
     template.push({
       role: 'help',
+      label: i18n.t('menu.help.submenu_name'),
       submenu: [
         {
-          label: 'Learn More',
+          label: i18n.t('menu.help.learn_more'),
           click () {
             shell.openExternal('https://parity.io');
           }
@@ -204,10 +268,13 @@ const getContextWindowMenuTemplate = fetherApp => {
     });
 
     if (process.platform === 'darwin') {
-      template[3].submenu.push({ role: 'about' });
+      template[3].submenu.push({
+        role: 'about',
+        label: i18n.t('menu.file.about')
+      });
     }
 
-    template.push({ label: 'Quit', role: 'quit' });
+    template.push({ role: 'quit', label: i18n.t('menu.file.quit') });
   }
 
   return template;
