@@ -25,9 +25,27 @@ If you run into problems while using Parity Fether, feel free to file an issue i
 
 ![Parity Fether](https://wiki.parity.io/images/fether-screenshot-0.jpg)
 
+
+## Join the chat!
+
+Get in touch with us on Gitter:
+[![Gitter](https://img.shields.io/badge/Gitter-Fether-brightgreen.svg)](https://gitter.im/paritytech/fether)
+
+Official website: https://parity.io | Be sure to check out [our Wiki](https://wiki.parity.io) for more information.
+
 ## Install and start Parity Fether
 
+### Mac
+- Download the [`.dmg` file](https://github.com/paritytech/fether/releases).
+- Double click on it to install Fether.
+
+### Windows
+- Download the [`.exe` file](https://github.com/paritytech/fether/releases).
+- Double click on it to install Fether.
+- Fether will be added to the program menu.
+
 ### Linux
+
   #### Using the AppImage (any distro)
   - Download the [`.AppImage` file](https://github.com/paritytech/fether/releases).
   - Make it executable `chmod +x /path/to/fether-x.x.x-x86_64.AppImage`.
@@ -43,14 +61,7 @@ If you run into problems while using Parity Fether, feel free to file an issue i
   - Double click on the file to install Fether.
   - Fether will be added to the program menu.
   
-### Mac
-- Download the [`.dmg` file](https://github.com/paritytech/fether/releases).
-- Double click on it to install Fether.
 
-### Windows
-- Download the [`.exe` file](https://github.com/paritytech/fether/releases).
-- Double click on it to install Fether.
-- Fether will be added to the program menu.
 
 ### Passing config flags to the underlying Parity Ethereum node
 
@@ -79,12 +90,42 @@ $ /path/to/fether
 
 ## Build from sources
 
-### Dependencies
+### Install dependencies
 
-Make sure you have at least `yarn` version 1.4.2 and [Node.js >=10.10.0](https://nodejs.org/en/)
+#### Mac
+
+Install Xcode Command Line Tools, NVM, Node.js latest LTS, Yarn, and Git
 
 ```bash
-yarn --version // Should be at least 1.4.2
+xcode-select --install;
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash;
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+echo -e "Installing Node.js latest LTS version";
+nvm install --lts
+echo -e "Switching to use Node.js latest LTS version";
+nvm use --lts;
+brew install yarn --without-node;
+brew install git --verbose;
+brew upgrade git --verbose;
+```
+
+#### Linux and Windows (Git Bash)
+
+Install Node.js 10.x, Yarn, Git, and increase amount of inotify watchers
+
+```bash
+sudo apt update;
+sudo apt install -y git nodejs npm curl;
+curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -;
+apt-get install -y nodejs;
+sudo ln -s /usr/bin/nodejs /usr/bin/node;
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -;
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list;
+sudo apt-get update && sudo apt-get install yarn;
+sudo ln -s /usr/bin/yarn /usr/local/bin/yarn;
+yarn global add windows-build-tools;
 ```
 
 ### Clone this repo
@@ -95,81 +136,156 @@ cd ./fether
 yarn install
 ```
 
-### Build this repo and run
+### Build and run
+
+#### Build this repo and run
 
 ```bash
 yarn electron
 ```
 
-### Build binaries
+#### Build binaries
 
 ```bash
 yarn package
 ```
 
-### Run with live reload for development
+#### Run with live reload for development
 
 ```bash
 yarn start
 ```
 
-> Troubleshooting: If it hangs on a white screen in Electron even though it has compiled and has been syncing for a long time, then simply choose 'View > Reload' (CMD + R on macOS) from the Fether/Electron menu. If the Fether menu is not shown in the tray, then by clicking the Fether window and then holding down the ALT key to reveal it.
-
-> Developer Tools: Open developer tools automatically by running `DEBUG=true yarn start` when not in the production environment
-
-# Run without taskbar mode (no tray icon)
+### Run without taskbar mode (no tray icon)
 
 ```bash
 TASKBAR=false yarn start
 ```
 
-# Usage of taskbar mode
+> Troubleshooting: If it hangs on a white screen in Electron even though it has compiled and has been syncing for a long time, then simply choose 'View > Reload' (CMD + R on Mac, CTRL + R on Linux/Windows) from the Fether/Electron menu.
 
-### macOS
+> Developer Tools: Open developer tools automatically by running `DEBUG=true yarn start` when not in the production environment.
+
+
+## Build binaries for production
+
+### General Notes:
+
+1) Alternative to `yarn; yarn build; DEBUG=electron-builder yarn release --mac;` is to just run `yarn package` and then run the `open "./packages/fether-electron/dist/mac/Parity Fether.app"` (i.e. no need to install)
+
+2) Publishing a new release to GitHub is performed by a maintainer of the repository. In this case you need to obtain the `GH_TOKEN` from GitHub settings and add it using `export GH_TOKEN="..."` to ~/.bashrc and then run `source ~/.bashrc`. If you get an error that the `GH_TOKEN` is missing and you are only building the binary but not publishing, then just ignore the error.
+
+### Mac
+
+Build and run binaries (i.e. .dmg) for production on Mac of a specific remote branch
+
+```bash
+git fetch origin INSERT_BRANCH_NAME:INSERT_BRANCH_NAME;
+git checkout INSERT_BRANCH_NAME;
+rm -rf ./packages/fether-electron/dist/
+rm -rf /Applications/Parity\ Fether.app/
+yarn; yarn build; DEBUG=electron-builder yarn release --mac;
+open ./packages/fether-electron/dist/Parity\ Fether-0.3.0.dmg
+```
+
+### Linux
+
+Build and run binaries (i.e. .deb) for production on Linux
+
+> Note: If you want to save time building, then first edit electron-builder.json so that it only builds a single binary like .deb instead of all of them
+
+```bash
+sudo rm -rf /opt/Parity\ Fether;
+rm -rf ~/.config/Electron;
+rm -rf ~/.config/fether;
+rm -rf ./packages/fether-electron/dist/;
+sudo rm /usr/local/bin/fether;
+sudo apt remove -y fether;
+yarn; yarn build; DEBUG=electron-builder yarn release --linux
+sudo apt install -y ./packages/fether-electron/dist/fether_0.3.0_amd64.deb
+fether
+```
+
+### Windows
+
+Build and run binaries (i.e. .exe) binary for production on Windows
+
+```bash
+rm -rf /packages/fether-electron/dist;
+yarn; yarn build; DEBUG=electron-builder yarn release --win;
+./packages/fether-electron/dist/Parity\ Fether-0.3.0.exe
+```
+
+## Debugging in production
+
+Show terminal logs whilst running a binary executable.
+
+### Mac
+
+```
+tail -f ~/Library/Application\ Support/fether/fether.log
+```
+
+### Linux 
+
+```
+tail -f ~/.config/fether/fether.log
+```
+
+### Windows 
+
+```
+tail -f ~/Application\ Data/fether/fether.log
+```
+
+## Usage of taskbar mode
+
+### Mac
 
 Taskbar mode is `true` by default.
 
 * Enabled `true`
-  * Fether window may be toggled open/closed by clicking the Fether tray icon, but not the Fether dock icon
-  * Fether window does not have a frame (i.e. no close/minimise icons)
+  * Tray icon - Left-click or right-click the tray icon shows "tray context menu" containing just "Show/Hide Fether" and "Quit" options. "Show/Hide Fether" toggles the Fether window show/hide
+  * Dock icon - no action
+  * Fether window - frameless
 * Disabled `false`
-  * Fether window may be toggled open by clicking the Fether dock icon
-  * Fether window has a frame (with close/minimise icons)
+  * Dock icon - toggles show/hide Fether window
+  * Fether window - frame (with close/minimise icons)
 * Always
-  * Fether menu shown in the tray by default
-  * Fether window position is saved upon move, minimising, and close so it is restored in the same position.
+  * Menubar - Fether menu shown by default
+  * Fether window - "window context menu" shown upon right-click in the Fether window
+  * Fether window - position is saved upon move, minimising, and close so it is restored in the same position.
 
 ### Linux
 
 Taskbar mode is `true` by default.
 
 * Enabled `true`
-  * Fether window may be toggled minimise/restore by clicking the Fether tray icon to reveal a tooltip that says "Click to toggle Fether window" and then clicking the tooltip.
-  * Fether window may not have a frame (i.e. no close/minimise icons) if `frame: false` in packages/fether-electron/src/main/app/options/config/index.js
+  * Tray icon - Left-click or right-click the tray icon shows "tray context menu" containing just "Show/Hide Fether" and "Quit" options. "Show/Hide Fether" toggles the Fether window show/hide
+  * Dock icon - toggles show/hide Fether window
+  * Fether window - frameless
 * Disabled `false`
-  * Fether window may be toggled open by clicking the Fether dock icon
-  * Fether window has a frame (with close/minimise icons)
+  * Dock icon - toggles show/hide Fether window
+  * Fether window - frame (with close/minimise icons)
+  * Menubar - Fether menu may not be shown in the tray by default depending on whether `setMenuBarVisibility` has been set. Fether menu may be configured to automatically hide by setting `setAutoHideMenuBar`. Toggle show/hide the Fether menu in the frame by clicking the Fether window and then holding down the ALT key to reveal it, which only works if auto-hide menu bar is enabled.
 * Always
-  * Fether menu may not be not shown in the tray by default depending on whether `setMenuBarVisibility` has been set. Show the Fether menu in the tray by clicking the Fether window and then holding down the ALT key to reveal it.
-  * Fether menu may be configured to automatically hide by setting `setAutoHideMenuBar`
-  * Fether window position is saved upon move, minimising, and close so it is restored in the same position.
+  * Fether window - "window context menu" shown upon right-click in the Fether window
+  * Fether window - position is saved upon move, minimising, and close so it is restored in the same position.
 
 ### Windows
 
-Taskbar mode is always `false` since the Fether menu does not appear without a frame on the Fether window.
+Taskbar mode is `true` by default.
 
+* Enabled `true`
+  * Tray icon - Left-click toggles show/hide Fether window
+  * Tray icon - Right-click the tray icon shows "tray context menu" containing just "Show/Hide Fether" and "Quit" options. "Show/Hide Fether" toggles the Fether window show/hide
+  * Dock icon - toggles show/hide Fether window
+  * Fether window - frameless
 * Disabled `false`
-  * Fether window may be toggled open/minimise by clicking the Fether dock icon
-  * Fether window has a frame (with close/minimise icons).
+  * Dock icon - toggles show/hide Fether window
+  * Fether window - frame (with close/minimise icons).
+  * Menubar - Fether menu may not be not shown in the tray by default depending on whether `setMenuBarVisibility` has been set. Fether menu may be configured to automatically hide by setting `setAutoHideMenuBar`. Toggle show/hide the Fether menu in the frame by clicking the Fether window and then holding down the ALT key to reveal it, which only works if auto-hide menu bar is enabled.
 * Always
-  * Fether menu is shown in the Fether window by clicking the Fether window and then holding down the ALT key to reveal it.
-  * Fether menu may be configured to automatically hide by setting `setAutoHideMenuBar`
-  * Fether tray icon does nothing
-  * Fether window position is saved upon move, minimising, and close so it is restored in the same position.
+  * Fether window - "window context menu" shown upon right-click in the Fether window
+  * Fether window - position is saved upon move, minimising, and close so it is restored in the same position.
 
-## Join the chat!
-
-Get in touch with us on Gitter:
-[![Gitter](https://img.shields.io/badge/Gitter-Fether-brightgreen.svg)](https://gitter.im/paritytech/fether)
-
-Official website: https://parity.io | Be sure to check out [our Wiki](https://wiki.parity.io) for more information.

@@ -12,6 +12,7 @@ import {
   Switch
 } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
+import isElectron from 'is-electron';
 import { Modal } from 'fether-ui';
 import semver from 'semver';
 import { version } from '../../package.json';
@@ -32,6 +33,8 @@ const currentVersion = version;
 const Router =
   process.env.NODE_ENV === 'production' ? MemoryRouter : BrowserRouter;
 
+const electron = isElectron() ? window.require('electron') : null;
+
 @inject('onboardingStore', 'parityStore')
 @observer
 class App extends Component {
@@ -40,6 +43,8 @@ class App extends Component {
   };
 
   componentDidMount () {
+    window.addEventListener('contextmenu', this.handleRightClick);
+
     window
       .fetch('https://api.github.com/repos/paritytech/fether/releases/latest')
       .then(j => j.json())
@@ -58,6 +63,10 @@ class App extends Component {
       .catch(e => {
         console.error('Error while checking for a new version of Fether:', e);
       });
+  }
+
+  componentDidUnmount () {
+    window.removeEventListener('contextmenu', this.handleRightClick);
   }
 
   renderModalLinks = () => {
@@ -82,6 +91,13 @@ class App extends Component {
 
   openNewReleaseUrl = () => {
     window.open(this.state.newRelease.url, '_blank', 'noopener noreferrer');
+  };
+
+  handleRightClick = () => {
+    if (!electron) {
+      return;
+    }
+    electron.ipcRenderer.send('asynchronous-message', 'app-right-click');
   };
 
   /**
