@@ -145,29 +145,30 @@ class Tokens extends PureComponent {
     );
 
     return (
-      <div className='tokens'>
-        <div className={isMenuOpen ? 'popup-underlay' : ''} />
-        <AccountHeader
-          address={address}
-          copyAddress
-          name={name}
-          type={type}
-          left={
-            <Link to='/accounts' className='icon -back'>
-              Back
-            </Link>
-          }
-          right={rightMenu}
-        />
+      <React.Fragment>
+        <div className='tokens'>
+          <div className={isMenuOpen ? 'popup-underlay' : ''} />
+          <AccountHeader
+            address={address}
+            copyAddress
+            name={name}
+            type={type}
+            left={
+              <Link to='/accounts' className='icon -back'>
+                Back
+              </Link>
+            }
+            right={rightMenu}
+          />
 
-        <TokensList />
-
+          <TokensList />
+        </div>
         <nav className='footer-nav'>
           <div className='footer-nav_status'>
             <Health />
           </div>
         </nav>
-      </div>
+      </React.Fragment>
     );
   }
 }
