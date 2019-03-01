@@ -18,12 +18,15 @@ sourceMapSupport.install({
   handleUncaughtExceptions: true,
   hookRequire: true
 });
-const { app } = electron;
+const { app, shell } = electron;
 const pino = Pino();
 
 let withTaskbar = process.env.TASKBAR !== 'false';
 
 pino.info('Platform detected: ', process.platform);
+pino.info('Process type: ', process.type);
+pino.info('Process ID: ', process.pid);
+pino.info('Process args: ', process.argv);
 
 // Disable gpu acceleration on linux
 // https://github.com/parity-js/fether/issues/85
@@ -118,17 +121,52 @@ app.on('web-contents-created', (eventOuter, contents) => {
     webPreferences.nodeIntegration = false;
 
     // Verify URL being loaded
-    if (!params.src.startsWith('http://localhost.3000/')) {
+    if (!params.src.startsWith('https://localhost.3000/')) {
       eventOuter.preventDefault();
       eventInner.preventDefault();
     }
   });
 
-  contents.on('will-navigate', (event, navigationUrl) => {
-    const parsedUrl = parseUrl(navigationUrl);
+  // Insecure TLS Validation - verify the application does not explicitly opt-out of TLS validation
+  // Reference: https://doyensec.com/resources/us-17-Carettoni-Electronegativity-A-Study-Of-Electron-Security-wp.pdf
+  app.on(
+    'certificate-error',
+    (event, webContents, url, error, certificate, callback) => {
+      if (url === 'https://localhost:3000/') {
+        // Proceed anyway
+        callback(true); // eslint-disable-line
+      } else {
+        callback(false); // eslint-disable-line
+      }
+    }
+  );
 
-    if (parsedUrl.origin !== 'http://localhost:3000') {
+  contents.on('will-navigate', (event, url) => {
+    const parsedUrl = parseUrl(url);
+
+    if (parsedUrl.origin !== 'https://localhost:3000') {
       event.preventDefault();
     }
+  });
+
+  // Security vulnerability fix https://electronjs.org/blog/window-open-fix
+  contents.on('-add-new-contents', event => {
+    event.preventDefault();
+  });
+
+  // Open external links in browser
+  contents.on('new-window', (event, url) => {
+    event.preventDefault();
+
+    // const parsedUrl = parseUrl(url);
+
+    // if (parsedUrl.origin !== 'https://localhost:3000') {
+    //   pino.info('Unable to open external link to untrusted content');
+    //   return;
+    // }
+
+    // FIXME - determine how to modify this so it only works for trusted content.
+    // See https://electronjs.org/docs/tutorial/security#14-do-not-use-openexternal-with-untrusted-content
+    shell.openExternal(url);
   });
 });

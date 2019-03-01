@@ -30,6 +30,59 @@ function setupRequestListeners (fetherApp) {
       callback({ requestHeaders: details.requestHeaders }); // eslint-disable-line
     }
   );
+
+  // Content Security Policy (CSP)
+  session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+    /* eslint-disable */
+    callback({
+      responseHeaders: {
+        ...details.responseHeaders,
+        "Content-Security-Policy": [
+          `
+          default-src 'self';
+          script-src 'self' file: http: blob: 'unsafe-inline' 'unsafe-eval';
+          connect-src 'self' file: http: https: ws: wss:;
+          img-src 'self' 'unsafe-inline' file: data: blob: http: https:;
+          style-src 'self' 'unsafe-inline' file: blob:;
+          object-src 'none';
+          `
+        ]
+      }
+    });
+    /* eslint-enable */
+  });
+
+  // Limit specific permissions (i.e. `openExternal`) in response to events from particular origins
+  // to limit the exploitability of applications that load remote content
+  // References:
+  //   https://electronjs.org/docs/api/session#sessetpermissionrequesthandlerhandler
+  //   https://doyensec.com/resources/us-17-Carettoni-Electronegativity-A-Study-Of-Electron-Security-wp.pdf
+  session.defaultSession.setPermissionRequestHandler(
+    (webContents, permission, callback, details) => {
+      let permissionGranted = false;
+      const trustedURLs = [
+        'https://parity.io',
+        'https://github.com/paritytech/fether/issues/new',
+        'https://api.github.com/repos/paritytech/fether/releases/latest'
+      ];
+
+      // FIXME - does not work
+      if (
+        webContents.getURL() !== 'https://localhost:3000/' &&
+        permission === 'openExternal'
+      ) {
+        if (trustedURLs.includes(details.externalURL)) {
+          permissionGranted = true;
+        }
+
+        return callback(permissionGranted);
+      } else {
+        permissionGranted = true;
+
+        return callback(permissionGranted);
+      }
+    }
+  );
 }
 
 export default setupRequestListeners;

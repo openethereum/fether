@@ -87,15 +87,24 @@ const SECURITY_OPTIONS = {
      * and gain access to Node.js and requires the user to sanitise user inputs
      * to reduce the possible XSS attack surface.
      */
-    // nodeIntegration: true, // FIXME - should be disabled but causes error
+    // nodeIntegration: false, // FIXME - should be disabled but causes error
     nodeIntegrationInWorker: false,
-    sandbox: false,
-    enableRemoteModule: true, // Remote is required in fether-react parityStore.js
-    webSecurity: true,
-    allowRunningInsecureContent: false,
-    plugins: false,
-    experimentalFeatures: false,
     // contextIsolation: true, // FIXME - should be enabled but causes error
+    // preload: './preload.js', // TODO
+
+    /**
+     * Sandbox the BrowserWindow renderer associated with the window still allowing access to
+     * all underlying Electron/Node.js primitives using `remote` or internal IPC
+     * Reference: https://doyensec.com/resources/us-17-Carettoni-Electronegativity-A-Study-Of-Electron-Security-wp.pdf
+     */
+    sandbox: false, // Do not set to false. Run electron with `electron --enable-sandbox` to sandbox all BrowserWindow instances
+    enableRemoteModule: true, // Remote is required in fether-react parityStore.js
+    // Enables same origin policy to prevent execution of insecure code. Do not set to false
+    webSecurity: true,
+    allowRunningInsecureContent: false, // Do not set to true
+    plugins: false,
+    experimentalFeatures: false, // Do not set to true
+    enableBlinkFeatures: '', // Do not enable any of them
     nativeWindowOpen: true,
     /**
      * `webviewTag` when enabled allows content to be embedded into the
@@ -105,7 +114,7 @@ const SECURITY_OPTIONS = {
      * with the `window.open` command and passing a WebView tag
      * (see `webView`) to enable `nodeIntegration`.
      */
-    webviewTag: false,
+    webviewTag: false, // Associated with `will-attach-webview`
     safeDialogs: true,
     safeDialogsMessage: 'Electron consecutive dialog protection was triggered',
     navigateOnDragDrop: false

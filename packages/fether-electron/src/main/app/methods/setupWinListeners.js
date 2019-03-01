@@ -3,7 +3,6 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import electron from 'electron';
 import debounce from 'lodash/debounce';
 
 import Pino from '../utils/pino';
@@ -13,10 +12,18 @@ const pino = Pino();
 function setupWinListeners (fetherApp) {
   const { onWindowClose, processSaveWinPosition, win } = fetherApp;
 
-  // Open external links in browser
-  win.webContents.on('new-window', (event, url) => {
-    event.preventDefault();
-    electron.shell.openExternal(url);
+  // Insecure TLS Validation - verify the application does not explicitly opt-out of TLS validation
+  // Reference: https://doyensec.com/resources/us-17-Carettoni-Electronegativity-A-Study-Of-Electron-Security-wp.pdf
+  win.webContents.session.setCertificateVerifyProc((request, callback) => {
+    const { hostname } = request;
+
+    if (hostname === 'https://localhost:3000/') {
+      // Success and disables certificate verification
+      callback(0); // eslint-disable-line
+    } else {
+      // Use the verification result from Chromium
+      callback(-3); // eslint-disable-line
+    }
   });
 
   // Windows and Linux (unchecked on others)
