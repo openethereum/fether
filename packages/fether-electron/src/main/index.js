@@ -27,6 +27,7 @@ pino.info('Platform detected: ', process.platform);
 pino.info('Process type: ', process.type);
 pino.info('Process ID: ', process.pid);
 pino.info('Process args: ', process.argv);
+pino.info('Electron version: ', process.versions['electron']);
 
 // Disable gpu acceleration on linux
 // https://github.com/parity-js/fether/issues/85
