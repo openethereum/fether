@@ -6,7 +6,7 @@
 import ParityEthereum from '../parityEthereum';
 
 function setupParityEthereum (fetherApp) {
-  // Download, install, and run Parity Ethereum if not running and requested
+  // Run Parity Ethereum if not running and requested
   return new ParityEthereum(fetherApp.win);
 }
 

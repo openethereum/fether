@@ -6,6 +6,7 @@
 import { checkClockSync, signerNewToken } from '@parity/electron';
 
 import Pino from '../utils/pino';
+import { bundledParityPath } from '../utils/paths';
 
 const pino = Pino();
 
@@ -32,7 +33,7 @@ export default async (fetherApp, event, action, ...args) => {
         break;
       }
       case 'signer-new-token': {
-        const token = await signerNewToken();
+        const token = await signerNewToken({ parityPath: bundledParityPath });
         // Send back the token to the renderer process
         event.sender.send('signer-new-token-reply', token);
         break;

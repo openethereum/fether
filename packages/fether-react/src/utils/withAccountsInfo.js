@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { accountsInfo$, withoutLoading } from '@parity/light.js';
+import { accountsInfo$ } from '@parity/light.js';
 import { compose, mapPropsStream } from 'recompose';
 import keyBy from 'lodash/keyBy';
 import light from '@parity/light.js-react';
@@ -19,7 +19,7 @@ import { SIGNER_ACCOUNTS_LS_KEY } from '../stores/createAccountStore';
  */
 const withAccountsInfo = compose(
   light({
-    accountsInfo: () => accountsInfo$().pipe(withoutLoading())
+    accountsInfo: () => accountsInfo$()
   }),
   // mapPropsStream and add localForage$
   mapPropsStream(

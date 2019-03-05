@@ -25,6 +25,7 @@
   ],
   "homepage": "https://github.com/paritytech/fether",
   "parity": {
+    "version": ">=2.4.1",
     "channel": "stable"
   },
   "scripts": {

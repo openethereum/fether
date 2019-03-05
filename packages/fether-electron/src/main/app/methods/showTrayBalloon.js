@@ -5,7 +5,7 @@
 
 import path from 'path';
 
-import staticPath from '../utils/staticPath';
+import { staticPath } from '../utils/paths';
 import Pino from '../utils/pino';
 
 const iconBalloonPath = path.join(
