@@ -32,6 +32,24 @@ const getMenubarMenuTemplate = fetherApp => {
         submenu: [{ role: 'quit' }]
       };
 
+  /* eslint-disable */
+  const editTabMacOS = {
+    label: "Edit",
+    submenu: [
+      { role: "undo" },
+      { role: "redo" },
+      { type: "separator" },
+      { role: "cut" },
+      ,
+      { role: "copy" },
+      { role: "paste" },
+      { type: "separator" },
+      { role: "delete" },
+      { role: "selectall" }
+    ]
+  };
+  /* eslint-enable */
+
   /**
    * On win32 we need to use `webContents` to make some of the menu items
    * functional (whereas it is not required on Linux and macOS).
@@ -101,7 +119,7 @@ const getMenubarMenuTemplate = fetherApp => {
 
   let template = [
     fileTab,
-    editTab,
+    process.platform === 'darwin' ? editTabMacOS : editTab,
     process.platform === 'win32' ? viewTabWindowsOS : viewTab,
     windowTab,
     helpTab
