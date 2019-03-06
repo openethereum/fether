@@ -32,23 +32,22 @@ const getMenubarMenuTemplate = fetherApp => {
         submenu: [{ role: 'quit' }]
       };
 
-  /* eslint-disable */
+  /* eslint-disable no-sparse-arrays */
   const editTabMacOS = {
-    label: "Edit",
+    label: 'Edit',
     submenu: [
-      { role: "undo" },
-      { role: "redo" },
-      { type: "separator" },
-      { role: "cut" },
-      ,
-      { role: "copy" },
-      { role: "paste" },
-      { type: "separator" },
-      { role: "delete" },
-      { role: "selectall" }
+      { role: 'undo' },
+      { role: 'redo' },
+      { type: 'separator' },
+      { role: 'cut' },,
+      { role: 'copy' },
+      { role: 'paste' },
+      { type: 'separator' },
+      { role: 'delete' },
+      { role: 'selectall' }
     ]
   };
-  /* eslint-enable */
+  /* eslint-enable no-sparse-arrays */
 
   /**
    * On win32 we need to use `webContents` to make some of the menu items
