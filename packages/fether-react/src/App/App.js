@@ -64,7 +64,7 @@ class App extends Component {
       });
   }
 
-  componentDidUnmount () {
+  componentWillUnmount () {
     window.removeEventListener('contextmenu', this.handleRightClick);
   }
 
