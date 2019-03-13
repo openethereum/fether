@@ -8,6 +8,29 @@ import electron from 'electron';
 import messages from '../messages';
 const { ipcMain, session } = electron;
 
+console.log(
+  'Configuring Content-Security-Policy for environment: ',
+  process.env.NODE_ENV
+);
+const CSP =
+  process.env.NODE_ENV === 'development'
+    ? `
+    default-src 'self';
+    script-src 'self' file: http: blob: 'unsafe-inline' 'unsafe-eval';
+    connect-src 'self' file: http: https: ws: wss:;
+    img-src 'self' 'unsafe-inline' file: data: blob: http: https:;
+    style-src 'self' 'unsafe-inline' file: blob:;
+    object-src 'none';
+  `
+    : `
+    default-src 'none';
+    script-src file: 'unsafe-inline';
+    connect-src http: https: ws: wss:;
+    img-src 'self' 'unsafe-inline' file: data: blob: http: https:;
+    style-src 'unsafe-inline' blob: file:;
+    worker-src 'blob';
+  `;
+
 function setupRequestListeners (fetherApp) {
   // Listen to messages from renderer process
   ipcMain.on('asynchronous-message', (...args) => {
@@ -37,16 +60,7 @@ function setupRequestListeners (fetherApp) {
     callback({
       responseHeaders: {
         ...details.responseHeaders,
-        "Content-Security-Policy": [
-          `
-          default-src 'self';
-          script-src 'self' file: http: blob: 'unsafe-inline' 'unsafe-eval';
-          connect-src 'self' file: http: https: ws: wss:;
-          img-src 'self' 'unsafe-inline' file: data: blob: http: https:;
-          style-src 'self' 'unsafe-inline' file: blob:;
-          object-src 'none';
-          `
-        ]
+        "Content-Security-Policy": [CSP]
       }
     });
     /* eslint-enable */
