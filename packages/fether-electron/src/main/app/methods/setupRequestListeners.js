@@ -12,6 +12,7 @@ console.log(
   'Configuring Content-Security-Policy for environment: ',
   process.env.NODE_ENV
 );
+// Note: `worker-src blob:` required for the webcam
 const CSP =
   process.env.NODE_ENV === 'development'
     ? `
@@ -28,7 +29,7 @@ const CSP =
     connect-src http: https: ws: wss:;
     img-src 'self' 'unsafe-inline' file: data: blob: http: https:;
     style-src 'unsafe-inline' blob: file:;
-    worker-src 'blob';
+    worker-src blob:;
   `;
 
 function setupRequestListeners (fetherApp) {
