@@ -5,19 +5,12 @@
 
 import electron from 'electron';
 import parseUrl from 'parse-url';
-// https://webpack.electron.build/development
-import sourceMapSupport from 'source-map-support';
 import { killParity } from '@parity/electron';
 
 import Pino from './app/utils/pino';
 import FetherApp from './app';
 import fetherAppOptions from './app/options';
 
-sourceMapSupport.install({
-  environment: 'node',
-  handleUncaughtExceptions: true,
-  hookRequire: true
-});
 const { app, shell } = electron;
 const pino = Pino();
 
