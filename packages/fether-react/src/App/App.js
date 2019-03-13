@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -65,7 +65,7 @@ class App extends Component {
       });
   }
 
-  componentDidUnmount () {
+  componentWillUnmount () {
     window.removeEventListener('contextmenu', this.handleRightClick);
   }
 
