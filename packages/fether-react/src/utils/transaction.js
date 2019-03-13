@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -142,17 +142,19 @@ const getEthereumTx = tx => {
     txParams.to = token.address;
     txParams.data =
       '0x' +
-      new Abi(eip20).functions.find(f => f._name === 'transfer').encodeCall([
-        new Token('address', to),
-        new Token(
-          'uint',
-          '0x' +
-            new BigNumber(amount)
-              .multipliedBy(new BigNumber(10).pow(token.decimals))
-              .toNumber()
-              .toString(16)
-        )
-      ]);
+      new Abi(eip20).functions
+        .find(f => f._name === 'transfer')
+        .encodeCall([
+          new Token('address', to),
+          new Token(
+            'uint',
+            '0x' +
+              new BigNumber(amount)
+                .multipliedBy(new BigNumber(10).pow(token.decimals))
+                .toNumber()
+                .toString(16)
+          )
+        ]);
   }
 
   return new EthereumTx(txParams);

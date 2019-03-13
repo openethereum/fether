@@ -1,5 +1,6 @@
 {
   "appId": "io.parity.fether",
+  "copyright": "Copyright 2015-2019 Parity Technologies (UK) Ltd.",
   "linux": {
     "category": "Utility",
     "target": ["AppImage", "snap", "deb", "tar.xz"]
@@ -10,6 +11,7 @@
   "productName": "Parity Fether",
   "publish": "github",
   "win": {
+    "icon": "icons/icon.ico",
     "publisherName": "Parity Technologies (UK) Ltd.",
     "target": "nsis"
   }

@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -23,18 +23,6 @@ import { peerCount$, syncStatus$, withoutLoading } from '@parity/light.js';
 import parityStore from '../stores/parityStore';
 
 const electron = isElectron() ? window.require('electron') : null;
-
-// List here all possible states of our health store. Each state can have a
-// payload.
-export const STATUS = {
-  CLOCKNOTSYNC: Symbol('CLOCKNOTSYNC'), // Local clock is not sync
-  DOWNLOADING: Symbol('DOWNLOADING'), // Currently downloading Parity
-  GOOD: Symbol('GOOD'), // Everything's fine
-  NOINTERNET: Symbol('NOINTERNET'), // No Internet connection
-  NOPEERS: Symbol('NOPEERS'), // Not connected to any peers
-  LAUNCHING: Symbol('LAUNCHING'), // Parity is being launched (only happens at startup)
-  SYNCING: Symbol('SYNCING') // Obvious
-};
 
 const isApiConnected$ = parityStore.isApiConnected$;
 
@@ -95,7 +83,7 @@ const rpcs$ = isApiConnected$.pipe(
             }
 
             const { currentBlock, highestBlock, startingBlock } = syncStatus;
-            const percentage = currentBlock
+            const syncPercentage = currentBlock
               .minus(startingBlock)
               .multipliedBy(100)
               .div(highestBlock.minus(startingBlock));
@@ -105,7 +93,7 @@ const rpcs$ = isApiConnected$.pipe(
               syncPayload: {
                 currentBlock,
                 highestBlock,
-                percentage,
+                syncPercentage,
                 startingBlock
               }
             };
@@ -137,77 +125,38 @@ export default compose(
           ],
           [{ isSync, syncPayload }, peerCount]
         ]) => {
-          // No connexion to the internet
-          if (!online) {
-            return {
-              ...props,
-              health: {
-                status: STATUS.NOINTERNET
-              }
-            };
-          }
+          const isDownloading =
+            online && downloadProgress > 0 && !isParityRunning;
+          const isNoPeers =
+            isApiConnected && (peerCount === undefined || peerCount.lte(1));
+          const isGood =
+            isSync && !isNoPeers && isClockSync && isApiConnected && online;
 
-          // Parity is being downloaded
-          if (downloadProgress > 0 && !isParityRunning) {
-            return {
-              ...props,
-              health: {
-                status: STATUS.DOWNLOADING,
-                payload: {
-                  percentage: new BigNumber(Math.round(downloadProgress * 100))
-                }
-              }
-            };
-          }
+          // Status - list of all states of health store
+          const status = {
+            internet: online, // Internet connection
+            nodeConnected: isApiConnected, // Connected to local Parity Ethereum node
+            clockSync: isClockSync, // Local clock is not synchronised
+            downloading: isDownloading, // Currently downloading Parity Ethereum
+            launching: !isApiConnected, // Launching Parity Ethereum only upon startup
+            peers: !isNoPeers, // Connecion to peer nodes
+            syncing: isApiConnected && !isSync, // Synchronising blocks
+            good: isGood // Synchronised and no issues
+          };
 
-          // Parity is being launched
-          if (!isApiConnected) {
-            return {
-              ...props,
-              health: {
-                status: STATUS.LAUNCHING
-              }
-            };
-          }
+          // Payload - optional payload of a state
+          const payload = {
+            downloading: {
+              syncPercentage: new BigNumber(Math.round(downloadProgress * 100))
+            },
+            syncing: syncPayload
+          };
 
-          // At this point we have a successful connection to parity
-
-          // Clock is not synchronized
-          if (!isClockSync) {
-            return {
-              ...props,
-              health: {
-                status: STATUS.CLOCKNOTSYNC
-              }
-            };
-          }
-
-          // Not enough peers
-          if (peerCount === undefined || peerCount.lte(1)) {
-            return {
-              ...props,
-              health: {
-                status: STATUS.NOPEERS
-              }
-            };
-          }
-
-          // Syncing blocks
-          if (!isSync) {
-            return {
-              ...props,
-              health: {
-                status: STATUS.SYNCING,
-                payload: syncPayload
-              }
-            };
-          }
-
-          // Everything's OK
           return {
             ...props,
             health: {
-              status: STATUS.GOOD
+              status,
+              payload
             }
           };
         }

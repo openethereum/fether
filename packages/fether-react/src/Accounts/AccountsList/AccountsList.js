@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -9,6 +9,7 @@ import { chainId$, withoutLoading } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
 import light from '@parity/light.js-react';
 
+import RequireHealthOverlay from '../../RequireHealthOverlay';
 import Health from '../../Health';
 import Feedback from './Feedback';
 import withAccountsInfo from '../../utils/withAccountsInfo';
@@ -46,58 +47,59 @@ class AccountsList extends Component {
     const accountsListLength = accountsList && accountsList.length;
 
     return (
-      <div className='accounts-list'>
-        <Header
-          right={
-            <Clickable
-              className='icon -new'
-              onClick={this.handleCreateAccount}
-            />
-          }
-          title={<h1>Accounts</h1>}
-        />
+      <RequireHealthOverlay require='node'>
+        <div className='accounts-list'>
+          <Header
+            right={
+              <Clickable
+                className='icon -new'
+                onClick={this.handleCreateAccount}
+              />
+            }
+            title={<h1>Accounts</h1>}
+          />
 
-        <div className='window_content'>
-          <div className='box -scroller'>
-            {accountsListLength ? (
-              <ul className='list'>
-                {accountsList.map(address => (
-                  <li
-                    key={address}
-                    data-address={address} // Using data- to avoid creating a new item Component
-                    onClick={this.handleClick}
-                  >
-                    <AccountCard
-                      address={address}
-                      className='-clickable'
-                      type={accountsInfo[address].type}
-                      name={accountsInfo[address].name || '(no name)'}
-                      screen='accounts'
-                      shortAddress
-                    />
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className='create-hint'>
-                Nothing here yet!
-                <br />
-                <br />
-                Click the + icon to add a new account.
-              </p>
-            )}
+          <div className='window_content'>
+            <div className='box -scroller'>
+              {accountsListLength ? (
+                <ul className='list'>
+                  {accountsList.map(address => (
+                    <li
+                      key={address}
+                      data-address={address} // Using data- to avoid creating a new item Component
+                      onClick={this.handleClick}
+                    >
+                      <AccountCard
+                        address={address}
+                        className='-clickable'
+                        type={accountsInfo[address].type}
+                        name={accountsInfo[address].name || '(no name)'}
+                        screen='accounts'
+                        shortAddress
+                      />
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className='create-hint'>
+                  Nothing here yet!
+                  <br />
+                  <br />
+                  Click the + icon to add a new account.
+                </p>
+              )}
+            </div>
           </div>
+          <nav className='footer-nav'>
+            <div className='footer-nav_status'>
+              <Health />
+            </div>
+            <div className='footer-feedback'>
+              <Feedback accountsListLength={accountsListLength} />
+            </div>
+          </nav>
         </div>
-
-        <nav className='footer-nav'>
-          <div className='footer-nav_status'>
-            <Health />
-          </div>
-          <div className='footer-feedback'>
-            <Feedback accountsListLength={accountsListLength} />
-          </div>
-        </nav>
-      </div>
+      </RequireHealthOverlay>
     );
   }
 }

@@ -3,13 +3,19 @@ html {
 }
 
 body {
+   /* Running taskbar app requires $eggshell background colour otherwise
+    * Onboarding component screen is shown with grey background
+    */
+  background-color: $eggshell;
   user-select: none;
   color: $black;
   font-family: $sans;
   font-weight: 400;
   font-size: ms(0);
   line-height: ms(0) * 1.3;
-  overflow-y: hidden;
+  position: relative;
+  /* https://electronjs.org/docs/api/frameless-window#draggable-region */
+  -webkit-app-region: drag;
 }
 
 .hidden {
@@ -24,4 +30,33 @@ a:visited {
   &:hover {
     cursor: pointer;
   }
+}
+
+button,
+input[type='text'],
+input[type='number'],
+input[type='tel'],
+input[type='email'],
+input[type='password'],
+input[type='range'],
+p,
+textarea,
+.account.-header, /* i.e. account name/address in header that is clickable */
+.account_avatar, /* i.e. on create a new account page */
+.box.-card, /* i.e. account button */
+.form-details-buttons, /* i.e. show/hide transaction details button */
+.feedback,
+.footer-feedback, /* i.e. feedback button in header */
+.header-nav_left, /* i.e. back button in header */
+.header-nav_right, /* i.e. menu */
+.window_content, /* i.e. main body (e.g. accounts list) */
+.text {
+  -webkit-app-region: no-drag;
+}
+
+h1, /* i.e. Send Ether title */
+.account.-header,
+.status,
+.text {
+  -webkit-user-select: none;
 }

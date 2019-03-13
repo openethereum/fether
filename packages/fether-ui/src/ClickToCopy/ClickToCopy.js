@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -43,7 +43,7 @@ export class ClickToCopy extends PureComponent {
 
     return (
       <Popup
-        content={copied ? 'Copied.' : 'Click to copy'}
+        content={copied ? 'Copied' : label}
         inverted
         onClose={this.handleResetCopied}
         position='bottom center'

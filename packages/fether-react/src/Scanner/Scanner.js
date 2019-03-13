@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -73,7 +73,7 @@ export default class Scanner extends React.PureComponent {
     const size = 300;
 
     return (
-      <div>
+      <React.Fragment>
         {isLoading ? (
           <img alt='loading' src={loading} />
         ) : webcamError ? (
@@ -81,11 +81,10 @@ export default class Scanner extends React.PureComponent {
         ) : (
           <div>
             <p>{label}</p>
-            <br />
             <QrSigner scan onScan={onScan} size={size} />
           </div>
         )}
-      </div>
+      </React.Fragment>
     );
   }
 }

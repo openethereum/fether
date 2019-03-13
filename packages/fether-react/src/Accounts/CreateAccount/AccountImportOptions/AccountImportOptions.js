@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import { addressShort, Card, Form as FetherForm } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 
+import RequireHealthOverlay from '../../../RequireHealthOverlay';
 import Scanner from '../../../Scanner';
 import withAccountsInfo from '../../../utils/withAccountsInfo';
 
@@ -167,7 +168,7 @@ class AccountImportOptions extends Component {
             {importingFromSigner ? (
               <Scanner
                 onScan={this.handleSignerImported}
-                label='Please show the QR code of the account on the webcam.'
+                label='Scan Parity Signer account QR code'
               />
             ) : (
               <button
@@ -202,23 +203,26 @@ class AccountImportOptions extends Component {
       </Card>
     );
 
+    const spacer = <div style={{ height: '0.5rem' }} />;
+
     return (
-      <div className='center-md'>
-        {!importingFromSigner && jsonCard}
-        <br />
-        {signerCard}
-        <br />
-        {!importingFromSigner && phraseCard}
-        <br />
-        <p>{error}</p>
-        <nav className='form-nav -space-around'>
-          {currentStep > 1 && (
-            <button className='button -back' onClick={history.goBack}>
-              Back
-            </button>
-          )}
-        </nav>
-      </div>
+      <RequireHealthOverlay require='node'>
+        <div className='center-md'>
+          {!importingFromSigner && jsonCard}
+          {spacer}
+          {signerCard}
+          {spacer}
+          {!importingFromSigner && phraseCard}
+          <p>{error}</p>
+          <nav className='form-nav -space-around'>
+            {currentStep > 1 && (
+              <button className='button -back' onClick={history.goBack}>
+                Back
+              </button>
+            )}
+          </nav>
+        </div>
+      </RequireHealthOverlay>
     );
   }
 
