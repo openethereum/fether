@@ -40,11 +40,8 @@ const foundPath = [
 
 if (foundPath) {
   // Bundled Parity was found, we check if the version matches the minimum requirements
-  exec(`${foundPath} --version`)
-    .then(({ stdout, stderr }) => {
-      if (stderr) throw new Error(stderr);
-
-      const version = stdout.match(/v\d+\.\d+\.\d+/)[0];
+  getBinaryVersion(foundPath)
+    .then(version => {
       if (!semver.satisfies(version, versionRequirement)) {
         console.log(
           'Bundled Parity Ethereum %s is older than required version %s',
@@ -89,10 +86,20 @@ function downloadParity () {
 
         // Write to file and set a+x permissions
         const destinationPath = `${STATIC_DIRECTORY}/${name}`;
-        return fsWriteFile(destinationPath, data).then(() =>
-          fsChmod(destinationPath, 755)
-        );
+        return fsWriteFile(destinationPath, data)
+          .then(() => fsChmod(destinationPath, 755))
+          .then(() => destinationPath);
       });
     })
-    .then(() => console.log('Success.'));
+    .then(getBinaryVersion)
+    .then(bundledVersion =>
+      console.log(`Success: bundled Parity Ethereum ${bundledVersion}`)
+    );
+}
+
+function getBinaryVersion (binaryPath) {
+  return exec(`${binaryPath} --version`).then(({ stdout, stderr }) => {
+    if (stderr) throw new Error(stderr);
+    return stdout.match(/v\d+\.\d+\.\d+/)[0];
+  });
 }

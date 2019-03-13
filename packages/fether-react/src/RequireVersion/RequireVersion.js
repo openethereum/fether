@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -43,7 +43,6 @@ class RequireVersion extends Component {
     const { versionInfo } = this.props;
 
     if (versionInfo) {
-      console.log('versioninfo is', versionInfo);
       const { major, minor, patch } = versionInfo.version;
       if (!semver.satisfies(`${major}.${minor}.${patch}`, requiredVersion)) {
         const friendlyVersion =

@@ -1572,39 +1572,39 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@parity/abi@^3.0.27", "@parity/abi@^3.0.31":
-  version "3.0.31"
-  resolved "https://registry.yarnpkg.com/@parity/abi/-/abi-3.0.31.tgz#0e77eda657917bf76cf8edcc9e9001168214c15f"
-  integrity sha512-gxabux8mmkR7sc54gLRjy5FsU6TY4V07+cFH+Yg8eizThk38DTTuceV7pWZuXgtXiNgkPdlIGHdUxVI2OkTL8w==
+"@parity/abi@^5.1.1":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@parity/abi/-/abi-5.1.1.tgz#a91b1483ef969ede7c1a29c59fa5dd39b4880f51"
+  integrity sha512-in+1ubZq69yWgZQzjp8SLcwnhKSqV4LLpzjbDA4lJsE/BJtsCndJ8HWBjiv690Ej9v2TgggRyuyrF091j2Eluw==
   dependencies:
     bignumber.js "^8.0.1"
-    js-sha3 "0.7.0"
+    js-sha3 "0.8.0"
     utf8 "^3.0.0"
 
-"@parity/api@^3.0.27", "@parity/api@^3.0.31":
-  version "3.0.31"
-  resolved "https://registry.yarnpkg.com/@parity/api/-/api-3.0.31.tgz#2163f5c305bc0304a016f218dd91e41d02b1e404"
-  integrity sha512-8xsYFBKbu5sfuv27tdkQ3LHmngqwA3fxZ+vEzCw+V+C06AXkb4LG4bb+8+ENRrYMmVQ7EuMHLq88m4imIwcXRA==
+"@parity/api@^5.1.1":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@parity/api/-/api-5.1.1.tgz#3ac522262f68f23910193b5ab9a37fd261701c14"
+  integrity sha512-JPngq2ifejXDhAJ4Xhx7vVr5LeDRvsm6UW1QBRIlm8bpqeaAUw9nwoyvxGZC/JUI9Riq4WjaHYGIa6ZRvpd0rg==
   dependencies:
-    "@parity/abi" "^3.0.31"
+    "@parity/abi" "^5.1.1"
     bignumber.js "^8.0.1"
     blockies "0.0.2"
     es6-error "4.0.2"
     es6-promise "^4.1.1"
     eventemitter3 "^3.1.0"
     isomorphic-fetch "^2.2.1"
-    js-sha3 "0.5.5"
+    js-sha3 "0.8.0"
     lodash "^4.17.11"
     store "^2.0.12"
     websocket "^1.0.25"
 
-"@parity/contracts@^3.0.27":
-  version "3.0.31"
-  resolved "https://registry.yarnpkg.com/@parity/contracts/-/contracts-3.0.31.tgz#9aa1c25d0e8fbfae28fa8e184f25fc0ebb5b3c36"
-  integrity sha512-Pm+dmGOvu5OCafpX0ef/+E+Dc8s0bwjl3AvAMC9zvR+IkdZesseElX+dVgjl2Wb7nANSRCFa/kJ4SnlYZ5977A==
+"@parity/contracts@^5.1.1":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@parity/contracts/-/contracts-5.1.1.tgz#c00c9a194882850de9ed3646f4bd25e8610d87a8"
+  integrity sha512-9JFzSGjn5W4tyfpDDznVlErxZiIYRp0e4uzIqAerPQOKFvZZdw00NVHUJkwLcoXJmwIMQQxy/X2ZByQSY3x1TQ==
   dependencies:
-    "@parity/abi" "^3.0.31"
-    "@parity/api" "^3.0.31"
+    "@parity/abi" "^5.1.1"
+    "@parity/api" "^5.1.1"
     bignumber.js "^8.0.1"
 
 "@parity/electron@^4.0.0":
@@ -1626,25 +1626,26 @@
   resolved "https://registry.yarnpkg.com/@parity/erc681/-/erc681-0.1.1.tgz#0ade5233751011c15d5e75bd2bb583a9ba450a5e"
   integrity sha512-OGDAWbAcm4mh+wzw6uBYxw0OJtqJ+39W3pOXl0W93d2p/cH7ppfvunwf7irEPw0FPiAIuR/F77nU1zMKNhm8Dg==
 
-"@parity/light.js-react@^3.0.27":
-  version "3.0.31"
-  resolved "https://registry.yarnpkg.com/@parity/light.js-react/-/light.js-react-3.0.31.tgz#e2c2fa4878981b782f6458c149b89fd7bfb17eab"
-  integrity sha512-kXNvakkhNU9aCawbNAG7p88lCjPwT6amrHh41pFu7fw86BbNnFvVE/Nc/uPGdSzlm3z5AT5FhA3hnasA8o4geA==
+"@parity/light.js-react@^5.1.1":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@parity/light.js-react/-/light.js-react-5.1.1.tgz#1b5e1b62dd04fa846e8d11971742ec793500fe0c"
+  integrity sha512-LD05kpHLzhgONeFiGEKrN59LBSmeBzx5NakxBXzu8vixBQt6Cyq5z1gOzg4RtbtkcTrUC7Q02H4DwOh8QJpNmw==
   dependencies:
     recompose "^0.30.0"
     symbol-observable "^1.2.0"
 
-"@parity/light.js@^3.0.27":
-  version "3.0.31"
-  resolved "https://registry.yarnpkg.com/@parity/light.js/-/light.js-3.0.31.tgz#b8cce4e911e9b275f26b53d409314a74265080eb"
-  integrity sha512-GrOcChhUgbXl6qHQGewvXosEwDhley/oWEW4CV7/cipKHa3Oe4x9W7Kv5y8Y0qaSgURBNFh9t6RsDvf0Vh8ssg==
+"@parity/light.js@^5.1.1":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@parity/light.js/-/light.js-5.1.1.tgz#141f4c168f46208b1caa6273161ad9a8b1675862"
+  integrity sha512-AJ/klFpim+lKLxYKpIhJL9Btu4OuXs43lfbBK8XA0kXOV6M51vCv5n+sO5oTWVx6IJE3lXuDIc674H9BC4fcvQ==
   dependencies:
-    "@parity/abi" "^3.0.31"
-    "@parity/api" "^3.0.31"
+    "@parity/abi" "^5.1.1"
+    "@parity/api" "^5.1.1"
     async-retry "^1.2.3"
     bignumber.js "^8.0.1"
     debug "^4.1.0"
     memoizee "^0.4.12"
+    rxjs-etc "^9.4.0"
 
 "@parity/qr-signer@^0.3.2":
   version "0.3.2"
@@ -8719,15 +8720,10 @@ js-levenshtein@^1.1.3:
   resolved "https://registry.yarnpkg.com/js-levenshtein/-/js-levenshtein-1.1.6.tgz#c6cee58eb3550372df8deb85fad5ce66ce01d59d"
   integrity sha512-X2BB11YZtrRqY4EnQcLX5Rh373zbK4alC1FW7D7MBhL2gtcC17cTnr6DmfHZeS0s2rTHjUTMMHfG7gO8SSdw+g==
 
-js-sha3@0.5.5:
-  version "0.5.5"
-  resolved "https://registry.yarnpkg.com/js-sha3/-/js-sha3-0.5.5.tgz#baf0c0e8c54ad5903447df96ade7a4a1bca79a4a"
-  integrity sha1-uvDA6MVK1ZA0R9+Wreekobynmko=
-
-js-sha3@0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/js-sha3/-/js-sha3-0.7.0.tgz#0a5c57b36f79882573b2d84051f8bb85dd1bd63a"
-  integrity sha512-Wpks3yBDm0UcL5qlVhwW9Jr9n9i4FfeWBFOOXP5puDS/SiudJGhw7DPyBqn3487qD4F0lsC0q3zxink37f7zeA==
+js-sha3@0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/js-sha3/-/js-sha3-0.8.0.tgz#b9b7a5da73afad7dedd0f8c463954cbde6818840"
+  integrity sha512-gF1cRrHhIzNfToc802P800N8PpXS+evLLXfsVpowqmAFR9uwbi89WvXg2QspOmXL8QL86J4T1EpFu+yUkwJY3Q==
 
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
@@ -13209,6 +13205,11 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   integrity sha1-6Eg5bwV9Ij8kOGkkYY4laUFh7Ec=
   dependencies:
     aproba "^1.1.1"
+
+rxjs-etc@^9.4.0:
+  version "9.4.0"
+  resolved "https://registry.yarnpkg.com/rxjs-etc/-/rxjs-etc-9.4.0.tgz#53f613d4840feb6d244aeb47dbbcf57ea3562401"
+  integrity sha512-5wsZRkAYYFXoci40bQgYKi6Dqmu8eczx/JHuut98sOV9PJeE9xBKrwf0bLgG6a/ip9UWvbTT35HiGh16x7akJA==
 
 rxjs@^5.5.2:
   version "5.5.12"
