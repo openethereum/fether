@@ -5,7 +5,6 @@
 
 import { action, observable } from 'mobx';
 import Api from '@parity/api';
-import isElectron from 'is-electron';
 import light from '@parity/light.js';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import store from 'store';
@@ -16,7 +15,8 @@ import LS_PREFIX from './utils/lsPrefix';
 
 const debug = Debug('parityStore');
 
-const electron = isElectron() ? window.require('electron') : null;
+// The preload scripts injects `electron` into `window`
+const electron = window.electron;
 
 const LS_KEY = `${LS_PREFIX}::secureToken`;
 

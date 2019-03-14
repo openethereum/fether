@@ -16,13 +16,13 @@ import {
   switchMap,
   take
 } from 'rxjs/operators';
-import isElectron from 'is-electron';
 import isEqual from 'lodash/isEqual';
 import { peerCount$, syncStatus$, withoutLoading } from '@parity/light.js';
 
 import parityStore from '../stores/parityStore';
 
-const electron = isElectron() ? window.require('electron') : null;
+// The preload scripts injects `electron` into `window`
+const electron = window.electron;
 
 const isApiConnected$ = parityStore.isApiConnected$;
 
