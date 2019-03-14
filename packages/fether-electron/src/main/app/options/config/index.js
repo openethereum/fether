@@ -87,21 +87,30 @@ const SECURITY_OPTIONS = {
      * and gain access to Node.js and requires the user to sanitise user inputs
      * to reduce the possible XSS attack surface.
      */
-    // FIXME - this must be false. Node.js's `.require` method should not be available in fether-react
-    // nodeIntegration: false, // Must be disabled
-    nodeIntegrationInWorker: false,
-    // contextIsolation: true, // Must be disabled
-    // FIXME - this or an alternative approach needs to be used to isolate access to
-    // Electron/Node.js from the Fether web app
-    // preload: process.cwd() + '/preload.js', // Must be carefully configured
+    nodeIntegration: false, // Must be disabled
+    nodeIntegrationInWorker: false, // Must be disabled
+    /**
+     * Electron security recommends us to set this to `true`. However, we need
+     * some communication between the main process and the renderer process
+     * (via ipcMain and ipcRenderer), so we need to disabled contextIsolation.
+     * https://stackoverflow.com/questions/55164360/with-contextisolation-true-is-it-possible-to-use-ipcrenderer
+     * Currently experimental and may change or be removed in future Electron releases.
+     */
+    contextIsolation: false, // Should be enabled
+    /**
+     * Isolate access to Electron/Node.js from the Fether web app, by creating
+     * a bridge which plays the role of an API between main and renderer
+     * processes.
+     * https://github.com/electron/electron/issues/9920#issuecomment-336757899
+     */
+    preload: path.resolve(__dirname, 'preload.js'),
 
     /**
      * Sandbox the BrowserWindow renderer associated with the window still allowing access to
      * all underlying Electron/Node.js primitives using `remote` or internal IPC
      * Reference: https://doyensec.com/resources/us-17-Carettoni-Electronegativity-A-Study-Of-Electron-Security-wp.pdf
      */
-    // FIXME - this must be true. Node.js's `.require` method should not be available in fether-react
-    // sandbox: true, // Do not set to false. Run electron with `electron --enable-sandbox` to sandbox all BrowserWindow instances
+    sandbox: true, // Do not set to false. Run electron with `electron --enable-sandbox` to sandbox all BrowserWindow instances
     enableRemoteModule: true, // Remote is required in fether-react parityStore.js
     // Enables same origin policy to prevent execution of insecure code. Do not set to false
     webSecurity: true,

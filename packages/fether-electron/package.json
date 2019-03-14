@@ -30,7 +30,7 @@
   "scripts": {
     "prebuild": "copyfiles -u 2 \"../fether-react/build/**/*\" static/ && ./scripts/fixElectronBug.sh",
     "build": "electron-webpack",
-    "electron": "cross-env SKIP_PREFLIGHT_CHECK=true electron --enable-sandbox dist/main/main.js",
+    "electron": "electron dist/main/main.js",
     "prepackage": "./scripts/revertElectronBug.sh",
     "package": "electron-builder",
     "prerelease": "./scripts/revertElectronBug.sh",
