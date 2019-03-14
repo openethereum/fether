@@ -25,8 +25,7 @@
   ],
   "homepage": "https://github.com/paritytech/fether",
   "parity": {
-    "version": "^2.4.1",
-    "channel": "beta"
+    "version": "^2.4.1"
   },
   "scripts": {
     "prebuild": "copyfiles -u 2 \"../fether-react/build/**/*\" static/ && ./scripts/fixElectronBug.sh",

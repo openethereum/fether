@@ -10,7 +10,7 @@ const { promisify } = require('util');
 const semver = require('semver');
 
 const {
-  parity: { version: versionRequirement, channel: track }
+  parity: { version: versionRequirement }
 } = require('../packages/fether-electron/package.json');
 
 const exec = promisify(require('child_process').exec);
@@ -29,7 +29,7 @@ switch (process.platform) {
     os = 'linux';
 }
 
-const ENDPOINT = `https://vanity-service.parity.io/parity-binaries?version=${track}&os=${os}&architecture=x86_64`;
+const ENDPOINT = `https://vanity-service.parity.io/parity-binaries?os=${os}&architecture=x86_64`;
 
 const STATIC_DIRECTORY = '../packages/fether-electron/static/';
 
@@ -64,37 +64,70 @@ if (foundPath) {
 }
 
 function downloadParity () {
-  return fetch(ENDPOINT)
-    .then(r => r.json())
-    .then(resp =>
-      resp[0].files.find(({ name }) => ['parity', 'parity.exe'].includes(name))
-    )
-    .then(({ name, downloadUrl, checksum: expectedChecksum }) => {
-      console.log('Downloading Parity Ethereum... (%s)', downloadUrl);
+  return (
+    fetch(ENDPOINT)
+      .then(r => r.json())
+      // Find the latest version matching the version requirement
+      //
+      // We use this method rather than downloading the latest beta, because if
+      // somebody checks out a year-old commit, then the latest beta of Parity would
+      // be downloaded, which would most likely not be compatible with the version
+      // requirement (e.g. ~2.4.1)
+      .then(resp => {
+        const latestCompatibleItem = resp
+          .filter(({ version }) => semver.valid(version))
+          .reduce(
+            (bestItem, item) =>
+              semver.gt(item.version, bestItem.version) &&
+              semver.satisfies(item.version, versionRequirement)
+                ? item
+                : bestItem,
+            { version: '0.0.0' }
+          );
 
-      return download(downloadUrl).then(data => {
-        const actualChecksum = crypto
-          .createHash('sha256')
-          .update(data)
-          .digest('hex');
-
-        if (expectedChecksum !== actualChecksum) {
+        if (latestCompatibleItem.version === '0.0.0') {
           throw new Error(
-            `Parity Ethereum checksum mismatch: expecting ${expectedChecksum}, got ${actualChecksum}.`
+            `Couldn't find a Parity Ethereum version compatible with ${versionRequirement}`
           );
         }
 
-        // Write to file and set a+x permissions
-        const destinationPath = `${STATIC_DIRECTORY}/${name}`;
-        return fsWriteFile(destinationPath, data)
-          .then(() => fsChmod(destinationPath, 755))
-          .then(() => destinationPath);
-      });
-    })
-    .then(getBinaryVersion)
-    .then(bundledVersion =>
-      console.log(`Success: bundled Parity Ethereum ${bundledVersion}`)
-    );
+        return latestCompatibleItem;
+      })
+      .then(({ files, version }) => ({
+        ...files.find(({ name }) => ['parity', 'parity.exe'].includes(name)),
+        version
+      }))
+      .then(({ name, downloadUrl, checksum: expectedChecksum, version }) => {
+        console.log(
+          'Downloading Parity Ethereum %s... (%s)',
+          version,
+          downloadUrl
+        );
+
+        return download(downloadUrl).then(data => {
+          const actualChecksum = crypto
+            .createHash('sha256')
+            .update(data)
+            .digest('hex');
+
+          if (expectedChecksum !== actualChecksum) {
+            throw new Error(
+              `Parity Ethereum checksum mismatch: expecting ${expectedChecksum}, got ${actualChecksum}.`
+            );
+          }
+
+          // Write to file and set a+x permissions
+          const destinationPath = `${STATIC_DIRECTORY}/${name}`;
+          return fsWriteFile(destinationPath, data)
+            .then(() => fsChmod(destinationPath, 755))
+            .then(() => destinationPath);
+        });
+      })
+      .then(getBinaryVersion)
+      .then(bundledVersion =>
+        console.log(`Success: bundled Parity Ethereum ${bundledVersion}`)
+      )
+  );
 }
 
 function getBinaryVersion (binaryPath) {
