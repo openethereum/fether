@@ -38,7 +38,7 @@ const requiredVersion = parity.version;
       })
     )
 })
-class RequireVersion extends Component {
+class RequireParityVersion extends Component {
   render () {
     const { versionInfo } = this.props;
 
@@ -63,4 +63,4 @@ class RequireVersion extends Component {
   }
 }
 
-export default RequireVersion;
+export default RequireParityVersion;

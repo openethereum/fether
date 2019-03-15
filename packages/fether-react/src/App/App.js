@@ -20,7 +20,7 @@ import { version } from '../../package.json';
 import Accounts from '../Accounts';
 import BackupAccount from '../BackupAccount';
 import Onboarding from '../Onboarding';
-import RequireVersion from '../RequireVersion';
+import RequireParityVersion from '../RequireParityVersion';
 import RequireHealthOverlay from '../RequireHealthOverlay';
 import Send from '../Send';
 import Tokens from '../Tokens';
@@ -138,7 +138,7 @@ class App extends Component {
     return (
       <div className='content'>
         <div className='window'>
-          <RequireVersion>
+          <RequireParityVersion>
             <Modal
               title='New version available'
               description={newRelease ? `${newRelease.name} was released!` : ''}
@@ -168,7 +168,7 @@ class App extends Component {
                 </Switch>
               </Router>
             </Modal>
-          </RequireVersion>
+          </RequireParityVersion>
         </div>
       </div>
     );

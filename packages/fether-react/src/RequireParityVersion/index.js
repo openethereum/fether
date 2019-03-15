@@ -3,6 +3,6 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import RequireVersion from './RequireVersion';
+import RequireParityVersion from './RequireParityVersion';
 
-export default RequireVersion;
+export default RequireParityVersion;
