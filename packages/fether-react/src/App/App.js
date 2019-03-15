@@ -12,7 +12,6 @@ import {
   Switch
 } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
-import isElectron from 'is-electron';
 import { Modal } from 'fether-ui';
 import semver from 'semver';
 import { version } from '../../package.json';
@@ -32,7 +31,8 @@ const currentVersion = version;
 const Router =
   process.env.NODE_ENV === 'production' ? MemoryRouter : BrowserRouter;
 
-const electron = isElectron() ? window.require('electron') : null;
+// The preload scripts injects `electron` into `window`
+const electron = window.electron;
 
 @inject('onboardingStore', 'parityStore')
 @observer
