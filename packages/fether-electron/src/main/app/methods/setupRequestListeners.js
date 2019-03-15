@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -35,7 +35,7 @@ const CSP =
 function setupRequestListeners (fetherApp) {
   // Listen to messages from renderer process
   ipcMain.on('asynchronous-message', (...args) => {
-    return messages(fetherApp.win, ...args);
+    return messages(fetherApp, ...args);
   });
 
   // WS calls have Origin `file://` by default, which is not trusted.

@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -28,10 +28,13 @@ if (!['darwin', 'win32'].includes(process.platform)) {
   app.disableHardwareAcceleration();
 }
 
+let fetherApp;
 const options = fetherAppOptions(withTaskbar, {});
 
 app.once('ready', () => {
-  return new FetherApp(app, options);
+  fetherApp = new FetherApp(app, options);
+
+  return fetherApp;
 });
 
 // Event triggered by clicking the Electron icon in the menu Dock
@@ -49,7 +52,9 @@ app.on('activate', (event, hasVisibleWindows) => {
     return;
   }
 
-  return new FetherApp(app, options);
+  fetherApp = new FetherApp(app, options);
+
+  return fetherApp;
 });
 
 app.on('window-all-closed', () => {
@@ -164,3 +169,5 @@ app.on('web-contents-created', (eventOuter, contents) => {
     shell.openExternal(url);
   });
 });
+
+export { fetherApp };

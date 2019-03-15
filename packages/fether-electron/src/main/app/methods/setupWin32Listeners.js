@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -25,7 +25,7 @@ function setupWin32Listeners (fetherApp) {
        * Reference: https://nodejs.org/api/buffer.html
        */
       if (wParam) {
-        pino.info('Detected ALT key pressed to toggle the Fether menu');
+        pino.info('Detected ALT key pressed');
         // showTrayBalloon(fetherApp);
       }
     });

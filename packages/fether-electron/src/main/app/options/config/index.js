@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -46,6 +46,9 @@ if (process.platform === 'win32') {
 const windowPosition =
   process.platform === 'win32' ? 'trayBottomCenter' : 'trayCenter';
 
+let tooltip =
+  'Click to toggle Fether window. Right-click Fether window to toggle Fether menu';
+
 // API docs: https://electronjs.org/docs/api/browser-window
 const DEFAULT_OPTIONS = {
   alwaysOnTop: false,
@@ -66,11 +69,11 @@ const DEFAULT_OPTIONS = {
 };
 
 const TASKBAR_OPTIONS = {
-  height: 515,
   frame: false,
+  height: 515,
   // On Linux the user must click the tray icon and then click the tooltip
   // to toggle the Fether window open/close
-  tooltip: 'Click to toggle Fether window',
+  tooltip: tooltip,
   width: 352,
   withTaskbar: true
 };

@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -18,15 +18,17 @@ const iconBalloonPath = path.join(
 
 const pino = Pino();
 
+// Supported only on Windows OS
 function showTrayBalloon (fetherApp) {
   const { tray } = fetherApp;
 
   pino.info('Showing Tray Balloon');
 
   tray.displayBalloon({
-    content: `Press ALT in the Fether window to toggle the menu`,
+    content:
+      'Click to toggle Fether window. Right-click Fether window to toggle Fether menu',
     icon: iconBalloonPath,
-    title: 'Fether Menu'
+    title: 'Fether Window & Menu Usage'
   });
 }
 

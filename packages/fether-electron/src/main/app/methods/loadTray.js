@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -17,20 +17,27 @@ function loadTray (fetherApp) {
       app.dock.hide();
     }
 
-    const defaultClickEvent = options.showOnRightClick
-      ? 'right-click'
-      : 'click';
-
     // Note: See https://github.com/RocketChat/Rocket.Chat.Electron/issues/44
     if (process.platform === 'win32') {
       showTrayBalloon(fetherApp);
     }
 
-    tray.on(defaultClickEvent, () => onTrayClick(fetherApp));
-    tray.on('double-click', () => onTrayClick(fetherApp));
-    // Right click event handler does not work on Windows as intended
+    tray.setContextMenu(fetherApp.contextTrayMenu.getMenu());
+
+    // Right-click event listener does not work on Windows
     tray.on('right-click', () => {
-      pino.info('Detected right click on Windows');
+      pino.info('Detected right-click on tray icon');
+
+      tray.popUpContextMenu();
+      fetherApp.win.focus();
+    });
+
+    // Single click event listener works on Windows
+    tray.on('click', () => {
+      pino.info('Detected single click on tray icon');
+
+      onTrayClick(fetherApp);
+      fetherApp.win.focus();
     });
     tray.setToolTip(options.tooltip);
     tray.setHighlightMode('never');
