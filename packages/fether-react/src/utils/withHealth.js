@@ -21,33 +21,31 @@ import { peerCount$, syncStatus$, withoutLoading } from '@parity/light.js';
 
 import parityStore from '../stores/parityStore';
 
-// The preload scripts injects `electron` into `window`
-const electron = window.electron;
+// The preload scripts injects `ipcRenderer` into `window.bridge`
+const { ipcRenderer, isParityRunningStatus } = window.bridge;
 
 const isApiConnected$ = parityStore.isApiConnected$;
 
 const isParityRunning$ = Observable.create(observer => {
-  if (electron) {
-    electron.ipcRenderer.on('parity-running', (_, isParityRunning) => {
+  if (ipcRenderer) {
+    ipcRenderer.on('parity-running', (_, isParityRunning) => {
       observer.next(isParityRunning);
     });
   }
-}).pipe(
-  startWith(electron ? !!electron.remote.getGlobal('isParityRunning') : false)
-);
+}).pipe(startWith(isParityRunningStatus ? !!isParityRunningStatus : false));
 
 const downloadProgress$ = Observable.create(observer => {
-  if (electron) {
-    electron.ipcRenderer.on('parity-download-progress', (_, progress) => {
+  if (ipcRenderer) {
+    ipcRenderer.on('parity-download-progress', (_, progress) => {
       observer.next(progress);
     });
   }
 }).pipe(startWith(0));
 
 const isClockSync$ = Observable.create(observer => {
-  if (electron) {
-    electron.ipcRenderer.send('asynchronous-message', 'check-clock-sync');
-    electron.ipcRenderer.once('check-clock-sync-reply', (_, clockSync) => {
+  if (ipcRenderer) {
+    ipcRenderer.send('asynchronous-message', 'check-clock-sync');
+    ipcRenderer.once('check-clock-sync-reply', (_, clockSync) => {
       observer.next(clockSync.isClockSync);
     });
   }

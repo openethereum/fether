@@ -31,8 +31,8 @@ const currentVersion = version;
 const Router =
   process.env.NODE_ENV === 'production' ? MemoryRouter : BrowserRouter;
 
-// The preload scripts injects `electron` into `window`
-const electron = window.electron;
+// The preload scripts injects `ipcRenderer` into `window.bridge`
+const { ipcRenderer } = window.bridge;
 
 @inject('onboardingStore', 'parityStore')
 @observer
@@ -93,10 +93,10 @@ class App extends Component {
   };
 
   handleRightClick = () => {
-    if (!electron) {
+    if (!ipcRenderer) {
       return;
     }
-    electron.ipcRenderer.send('asynchronous-message', 'app-right-click');
+    ipcRenderer.send('asynchronous-message', 'app-right-click');
   };
 
   /**

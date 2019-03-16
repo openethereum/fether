@@ -87,8 +87,9 @@ const SECURITY_OPTIONS = {
     devTools: true,
     /**
      * `nodeIntegration` when enabled allows the software to use Electron's APIs
-     * and gain access to Node.js and requires the user to sanitise user inputs
-     * to reduce the possible XSS attack surface.
+     * and gain access to Node.js. It must be disabled to restricting access to
+     * Node.js global symbols like `require` from global scope and requires the
+     * user to sanitise user inputs to reduce the possible XSS attack surface.
      */
     nodeIntegration: false, // Must be disabled
     nodeIntegrationInWorker: false, // Must be disabled
@@ -109,7 +110,8 @@ const SECURITY_OPTIONS = {
     preload: path.resolve(__dirname, 'preload.js'),
 
     /**
-     * Sandbox the BrowserWindow renderer associated with the window still allowing access to
+     * Sandbox the BrowserWindow renderer associated with the window to mitigate
+     * against the risk of malicious preload scripts, whilst still allowing access to
      * all underlying Electron/Node.js primitives using `remote` or internal IPC
      * Reference: https://doyensec.com/resources/us-17-Carettoni-Electronegativity-A-Study-Of-Electron-Security-wp.pdf
      */

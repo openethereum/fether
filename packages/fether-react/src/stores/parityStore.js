@@ -15,8 +15,13 @@ import LS_PREFIX from './utils/lsPrefix';
 
 const debug = Debug('parityStore');
 
-// The preload scripts injects `electron` into `window`
-const electron = window.electron;
+// The preload scripts injects `ipcRenderer` into `window.bridge`
+const {
+  ipcRenderer,
+  isParityRunningStatus,
+  wsInterface,
+  wsPort
+} = window.bridge;
 
 const LS_KEY = `${LS_PREFIX}::secureToken`;
 
@@ -49,20 +54,20 @@ export class ParityStore {
 
     // FIXME - consider moving to start of this constructor block since
     // if `setToken` method is called then `connectToApi` is called, which
-    // requires `electron` to be defined
-    if (!electron) {
+    // requires `ipcRenderer` to be defined
+    if (!ipcRenderer) {
       debug(
         'Not in Electron, ParityStore will only have limited capabilities.'
       );
       return;
     }
 
-    const { ipcRenderer, remote } = electron;
-
     // Check if isParityRunning
-    this.setIsParityRunning(!!remote.getGlobal('isParityRunning'));
+    this.setIsParityRunning(!!isParityRunningStatus);
     // We also listen to future changes
     ipcRenderer.on('parity-running', (_, isParityRunning) => {
+      // FIXME - Unable to console.log anything here when running a separate
+      // Parity Ethereum node and then stop it and start it again.
       this.setIsParityRunning(isParityRunning);
     });
   }
@@ -71,10 +76,7 @@ export class ParityStore {
     // Get the provider, optionally from --ws-interface and --ws-port flags
     const [defaultInterface, defaultPort] = ['127.0.0.1', '8546'];
     let provider = `ws://${defaultInterface}:${defaultPort}`;
-    if (electron) {
-      const { remote } = electron;
-      const wsInterface = remote.getGlobal('wsInterface');
-      const wsPort = remote.getGlobal('wsPort');
+    if (ipcRenderer) {
       provider = `ws://${wsInterface || defaultInterface}:${wsPort ||
         defaultPort}`;
     }
@@ -95,8 +97,6 @@ export class ParityStore {
   };
 
   requestNewToken = () => {
-    const { ipcRenderer } = electron;
-
     // Request new token from Electron
     debug('Requesting new token.');
     ipcRenderer.send('asynchronous-message', 'signer-new-token');
