@@ -64,6 +64,7 @@ export class ParityStore {
 
     // Check if isParityRunning
     this.setIsParityRunning(!!isParityRunningStatus);
+
     // We also listen to future changes
     ipcRenderer.on('parity-running', (_, isParityRunning) => {
       // FIXME - Unable to console.log anything here when running a separate
