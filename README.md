@@ -288,3 +288,31 @@ Taskbar mode is `true` by default.
 * Always
   * Fether window - "window context menu" shown upon right-click in the Fether window
   * Fether window - position is saved upon move, minimising, and close so it is restored in the same position.
+
+## Internationalisation
+
+### Add New Language
+
+Follow these steps to add support for an additional language:
+
+#### Example: Add language support for the German language
+
+**Solution:** See the following commit for the changes required to add German language support https://github.com/paritytech/fether/commit/d53dbb9e68ab52aedb02115858d5bd5e9e8a0e5d
+
+1) [Language internationalisation abbreviation](https://www.w3.org/International/O-charset-lang.html) for the new language. The language will be referred to as <LANG>. Example: 'de' for Deutsch (German), or 'en' for English.
+2) Language conversion of the Fether menu item names to the new language.
+* Create a file named <LANG>.json within the fether-electron folder. Example: fether-electron/src/main/app/menu/i18n/locales/de.json. Copy/paste into it the contents of the English file fether-electron/src/main/app/menu/i18n/locales/en.json. Find a native speaker in that language to convert each **value** (not key) into the new language.
+* Update fether-electron/src/main/app/menu/i18n/locales/index.js
+* Update fether-electron/src/main/app/menu/template/index.js, which includes:
+  * Adding item for the new language as a value of the `submenu`. 
+* Update fether-electron/src/main/app/menu/i18n/index.js, which includes:
+  * Import the <LANG> from the 'locales' subdirectory 
+  * Adding the new language as a fallback language in the desired order to the `fallbackLng`.
+  * Adding a key named <LANG> to `resources` using the imported <LANG>.json file as the namespace `ns1`.
+3) Language conversion of the Fether window contents to the new language.
+* Create a file named <LANG>.json within the fether-react folder. Example: fether-react/src/i18n/locales/de.json. Copy/paste into it the contents of the English file fether-react/src/i18n/locales/en.json. Find a native speaker in that language to convert each **value** (not key) into the new language.
+* Update fether-react/src/i18n/locales/index.js.
+* Update fether-react/src/i18n/index.js, which includes:
+  * Import the <LANG> from the 'locales' subdirectory 
+  * Adding the new language as a fallback language in the desired order to the `fallbackLng`.
+  * Adding a key named <LANG> to `resources` using the imported <LANG>.json file as the namespace `ns1`.
