@@ -1,0 +1,227 @@
+{
+  "account": {
+    "create": {
+      "change_icon": "Generieren Sie ein anderes Symbol",
+      "label_name_msg": "Bitte geben Sie diesem Konto einen Namen:",
+      "label_name": "Name",
+      "title": "Ein neues Konto erstellen",
+      "copy_phrase": {
+        "msg1": "Bitte schreibe deinen geheimen Satz auf ein Blatt Papier:",
+        "msg2": "Behalte es sicher und geheim.",
+        "msg3": "Wenn Sie Ihren geheimen Satz verlieren, kann Ihre Brieftasche nicht wiederhergestellt werden.",
+        "msg4": "Wenn jemand Ihren geheimen Satz ergreift, kann er Ihr Konto belasten."
+      }
+    },
+    "existing": {
+      "no_name": "(kein Name}"
+    },
+    "backup": {
+      "label_msg_password_unlock": "Entsperren Sie Ihr Konto, um die JSON-Keystore-Datei zu verschlüsseln:",
+      "label_password_unlock": "Passwort",
+      "button_confirm": "Bestätigen Sie die Sicherung"
+    },
+    "import": {
+      "error_msg_existing_address": "Konto {{address}} bereits aufgeführt",
+      "signer": {
+        "error_msg_signer_imported": "Ungültiger QR-Code",
+        "label_msg_recover_signer": "Erholen Sie sich von Parity Signer",
+        "label_button_recover_signer_scan": "QR-Code scannen",
+        "label_msg_recover_signer_scan": "QR-Code des Parity Signer-Kontos scannen"
+      },
+      "json": {
+        "error_msg_change_json_file": "Ungültige Datei. Bitte überprüfen Sie, ob dies Ihre aktuelle Parity-Backup-JSON-Schlüsseldatei ist, und versuchen Sie es erneut.",
+        "label_msg_recover_json": "Stellen Sie die JSON-Schlüsseldatei wieder her",
+        "label_recover_json": "JSON-Sicherungsschlüsseldatei"
+      },
+      "phrase": {
+        "error_msg_submit_phrase": "Die Passphrase wurde nicht erkannt. Bitte vergewissern Sie sich, dass Sie Ihre Passphrase richtig eingegeben haben.",
+        "label_msg_recover_phrase": "Erholen Sie sich von der Seed Phrase",
+        "label_recover_phrase": "Wiederherstellungssatz"
+      },
+      "question": "Hast du schon ein Konto?",
+      "title": "Konto importieren"
+    },
+    "password": {
+      "common": {
+        "label_password": "Passwort",
+        "label_password_confirm": "Bestätigen",
+        "error_msg_password_incorrect": "Bitte überprüfen Sie Ihr Passwort und versuchen Sie es erneut.",
+        "button_confirm": "Konto bestätigen {{postfix}}",
+        "button_confirm_opt1": "einführen",
+        "button_confirm_opt2": "Schaffung"
+      },
+      "create": {
+        "error_msg_password_confirmation_no_match": "Passwortbestätigung stimmt nicht überein.",
+        "label_msg_password": "Sichern Sie sich Ihr Konto mit einem Passwort:"
+      },
+      "import": {
+        "label_msg_unlock_json": "Entsperren Sie Ihr Konto, um Ihre JSON-Keystore-Datei zu entschlüsseln:"
+      }
+    },
+    "phrase_rewrite": {
+      "label_msg_rewrite_phrase": "Geben Sie Ihren geheimen Satz ein, um zu bestätigen, dass Sie ihn korrekt aufgeschrieben haben:",
+      "label_rewrite_phrase": "Wiederherstellungssatz"
+    }
+  },
+  "accounts_list": {
+    "header": "Konten",
+    "hint": {
+      "exist": "Klicken Sie auf das + Symbol, um ein neues Konto hinzuzufügen.",
+      "none": "Keine Konten vorhanden!"
+    }
+  },
+  "feedback": {
+    "title": "Feedback"
+  },
+  "health": {
+    "status": {
+      "title": {
+        "downloading": "Parity Ethereum wird heruntergeladen...",
+        "launching": "Knoten starten...",
+        "no_internet_no_node_connected": "Kein Internet. Kein Knoten verbunden",
+        "internet_no_node_connected": "Verbindung zum Knoten...",
+        "no_internet_node_connected": "Kein Internet. Verbindung zum Knoten",
+        "no_clock_sync": "Uhr des Hosts nicht synchron",
+        "no_peers": "Verbindung zu Netzwerkkollegen...",
+        "syncing": "Synchronisieren...",
+        "synced": "Synchronisiert"
+      },
+      "description": {
+        "no_internet": "Bitte verbinden Sie sich mit dem Internet",
+        "downloading": "Parity Ethereum wird heruntergeladen...",
+        "no_clock_sync": "Mac: Systemeinstellungen -> Datum und Uhrzeit -> Deaktivieren Sie das Kontrollkästchen 'Datum und Uhrzeit automatisch festlegen'. Windows: Systemsteuerung -> 'Uhrzeit, Sprache und Region' -> 'Datum und Uhrzeit' -> Deaktivieren Sie das Kontrollkästchen 'Datum einstellen' und Zeit automatisch",
+        "no_peers": "Verbindung zu Netzwerkkollegen...",
+        "syncing": "Synchronisieren..."
+      }
+    },
+    "overlay": {
+      "error_status_invalid": "Der Status muss einer von sein 'node-internet|node|sync': "
+    }
+  },
+  "onboarding": {
+    "header": "Nutzungsbedingungen",
+    "instructions": "Bitte aufmerksam lesen",
+    "button_accept": "Akzeptieren"
+  },
+  "navigation": {
+    "back": "Zurück",
+    "go_back": "Geh zurück",
+    "close": "Schließen",
+    "next": "Weiter",
+    "next_step": "Nächster Schritt"
+  },
+  "search_tokens": {
+    "add": "Hinzufügen",
+    "clear": "Klar",
+    "placeholder": "Token nach Namen oder Symbol suchen",
+    "remove": "Löschen",
+    "title": "Suchmarken"
+  },
+  "scanner": {
+    "error_security": "Der Zugriff auf die Webcam wurde abgelehnt",
+    "error_overcontrained": "Keine Webcam auf dem Gerät gefunden.",
+    "error_not_readable": "Webcam-Hardwarefehler. Starten Sie Ihren Computer neu",
+    "error_unknown": "Unbekannter Fehler."
+  },
+  "tx": {
+    "header_send_prefix": "Senden {{token}}",
+    "header_sending": "Senden Sie Ihre Transaktion...",
+    "blockscout": "Siehe auf BlockScout",
+    "form": {
+      "button_checking": "Überprüfung...",
+      "button_scan": "Scan",
+      "button_send": "Senden",
+      "button_max": "Max",
+      "button_confirm_tx": "Transaktion bestätigen",
+      "label_unlock": "Konto entsperren:",
+      "field": {
+        "to": "Zu",
+        "amount": "Menge",
+        "tx_speed": "Transaktionsgeschwindigkeit",
+        "password": "Passwort"
+      },
+      "details": {
+        "details": "Einzelheiten",
+        "hide": "Verbergen",
+        "missing_fields": "Fehlende Eingabefelder...",
+        "gas_limit": "Gaslimit: {{gas_limit}}",
+        "fee": "Gebühr: {{fee}} ETH (Gaslimit * Gaspreis)",
+        "total_amount": "Gesamtmenge: {{total_amount}} ETH",
+        "title": "Transaktionsdetails:"
+      },
+      "warning": {
+        "title_same_sender_receiver": "WARNUNG:",
+        "body_same_sender_receiver": "Die Absender- und Empfängeradressen sind gleich."
+      },
+      "validation": {
+        "alert": {
+          "amount_invalid": "Bitte geben Sie einen gültigen Betrag ein",
+          "eth_balance_too_low_for_gas": "ETH-Bilanz zu niedrig, um für Gas zu zahlen.",
+          "eth_balance_too_low": "Sie haben nicht genug ETH-Balance",
+          "non_zero_amount": "Bitte geben Sie einen Betrag ungleich Null ein",
+          "positive_amount": "Bitte geben Sie einen positiven Betrag ein",
+          "min_wei": "Bitte geben Sie mindestens 1 Wei ein",
+          "min_decimals": "Bitte geben Sie einen {{token_name}} Wert mit weniger als {{token_decimals}} Dezimalstellen",
+          "token_balance_too_low": "Sie haben nicht genug {{token_symbol}} Gleichgewicht",
+          "invalid_eth_address": "Bitte geben Sie eine gültige Ethereum-Adresse ein",
+          "prevent_send_zero_account": "Sie dürfen nicht mit Token {{token_name}} an das Nullkonto (0x0)",
+          "unable_estimate_gas": "Gas kann nicht geschätzt werden...",
+          "estimating_gas": "Gas schätzen...",
+          "error_estimating_balance": "Fehler beim Schätzen des Guthabens, bitte versuchen Sie es erneut"
+        },
+        "throw": {
+          "no_chain_id": "chaindId ist für ein EthereumTx erforderlich",
+          "no_address": "Adresse eines Kontos ist erforderlich",
+          "no_tx_count": "Für einen EthereumTx ist transactionCount erforderlich",
+          "no_token_info": "Token-Informationen sind für EthereumTx erforderlich",
+          "no_eth_balance": "Kein 'ethBalance'"
+        }
+      }
+    },
+    "scan": {
+      "msg_qr_scan": "Bitte scannen Sie den QR-Code der Transaktion in Parity Signer"
+    },
+    "scan_signed": {
+      "error_qr_tx_invalid": "Der QR-Code scheint keine gültige Transaktion zu sein.",
+      "label_msg_qr_tx": "Zeigt den signierten Transaktions-QR-Code an"
+    },
+    "sent": {
+      "waiting_confirmations_receiving": "Warten {{progress}} auf Bestätigungen: ",
+      "waiting_confirmed": "Warten auf Bestätigungen...",
+      "confirmed": "Transaktion bestätigt",
+      "submitted": "Eingereicht",
+      "error": "Error"
+    }
+  },
+  "tokens": {
+    "tokens": {
+      "menu_items": {
+        "backup_account": "Sicherungskonto",
+        "add_tokens": "Token hinzufügen"
+      }
+    },
+    "token_list": {
+      "modal": {
+        "description": "Warten Sie mal...",
+        "title": "Kontokennzeichen werden geladen..."
+      }
+    }
+  },
+  "ui": {
+    "click_to_copy": {
+      "card": {
+        "label": "Klicken Sie hier, um die Adresse zu kopieren"
+      },
+      "header": {
+        "label": "Adresse kopieren"
+      },
+      "copied": "Kopiert"
+    },
+    "form_input_file": {
+      "select_file": "Datei aussuchen"
+    }
+  },
+  "utils": {
+    "blockscout_chain": "Kettenname wird noch nicht unterstützt. Bitte öffnen Sie eine Github-Ausgabe unter https://github.com/paritytech/fether/issues/new"
+  }
+}

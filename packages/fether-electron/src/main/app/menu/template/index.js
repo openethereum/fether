@@ -27,6 +27,19 @@ const getPreferences = fetherApp => {
           // Frontend change language
           fetherApp.win.webContents.emit('set-language', 'en');
         }
+      },
+      {
+        label: i18n.t('menu.file.preferences.languages.german'),
+        type: 'radio',
+        checked: settings.get('fether-language') === 'de',
+        click () {
+          // Backend menu change language
+          i18n.changeLanguage('de');
+          settings.set('fether-language', 'de');
+          fetherApp.setupMenu(fetherApp);
+          // Frontend change language
+          fetherApp.win.webContents.emit('set-language', 'de');
+        }
       }
     ]
   };
