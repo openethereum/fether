@@ -1,6 +1,5 @@
 {
   "main": {
-    "extraEntries": ["@/app/options/config/preload.js"],
     "webpackConfig": "custom.webpack.additions.js"
   },
   "renderer": {

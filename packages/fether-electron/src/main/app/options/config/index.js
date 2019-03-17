@@ -107,8 +107,7 @@ const SECURITY_OPTIONS = {
      * processes.
      * https://github.com/electron/electron/issues/9920#issuecomment-336757899
      */
-    preload: path.resolve(__dirname, 'preload.js'),
-
+    preload: path.join(staticPath, 'preload.js'),
     /**
      * Sandbox the BrowserWindow renderer associated with the window to mitigate
      * against the risk of malicious preload scripts, whilst still allowing access to
