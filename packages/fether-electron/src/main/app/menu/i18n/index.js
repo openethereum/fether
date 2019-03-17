@@ -10,7 +10,7 @@ import settings from 'electron-settings';
 
 import Pino from '../../utils/pino';
 
-import { en, de } from './locales';
+import { en } from './locales';
 
 let { app } = electron;
 const pino = Pino();
@@ -21,7 +21,7 @@ i18n
   .init({
     debug: true,
     defaultNS: 'ns1',
-    fallbackLng: ['en-US', 'en', 'de-DE', 'de'],
+    fallbackLng: ['en-US', 'en'],
     interpolation: {
       escapeValue: false
     },
@@ -30,9 +30,6 @@ i18n
     resources: {
       en: {
         ns1: en
-      },
-      de: {
-        ns1: de
       }
     },
     saveMissing: true

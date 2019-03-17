@@ -10,7 +10,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 import store from 'store';
 
-import { en, de } from './locales';
+import { en } from './locales';
 
 const LANG_LS_KEY = 'fether-language';
 
@@ -21,7 +21,7 @@ i18n
   .init({
     debug: true,
     defaultNS: 'ns1',
-    fallbackLng: ['en-US', 'en', 'de-DE', 'de'],
+    fallbackLng: ['en-US', 'en'],
     interpolation: {
       escapeValue: false
     },
@@ -37,9 +37,6 @@ i18n
     resources: {
       en: {
         ns1: en
-      },
-      de: {
-        ns1: de
       }
     },
     saveMissing: true
