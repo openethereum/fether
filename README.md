@@ -291,6 +291,12 @@ Taskbar mode is `true` by default.
 
 ## Internationalisation
 
+English language support is currently the default. Contributors are invited to create a Pull Request with a conversion into another language.
+
+### Usage
+
+Switch between languages when multiple languages are available by going to the Fether Menu > Preferences > Language, and choosing one from the list. The active language has a tick next to it.
+
 ### Add New Language
 
 Follow these steps to add support for an additional language:
@@ -316,3 +322,9 @@ Follow these steps to add support for an additional language:
   * Import the <LANG> from the 'locales' subdirectory 
   * Adding the new language as a fallback language in the desired order to the `fallbackLng`.
   * Adding a key named <LANG> to `resources` using the imported <LANG>.json file as the namespace `ns1`.
+
+### Known Issues
+
+* After choosing a new language to switch to, the Fether window will refresh automatically and the contents of Fether will be in the new language, except for the menu items "Show/Hide Fether" and "Quit" that are shown when you click the taskbar icon, which only changes to the chosen language after you have restarted Fether.
+
+* The Fether Terms & Conditions are only available in English.
