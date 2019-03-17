@@ -288,4 +288,3 @@ Taskbar mode is `true` by default.
 * Always
   * Fether window - "window context menu" shown upon right-click in the Fether window
   * Fether window - position is saved upon move, minimising, and close so it is restored in the same position.
-
