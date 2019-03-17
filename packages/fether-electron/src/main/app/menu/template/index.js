@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -78,6 +78,23 @@ const getMenubarMenuTemplate = fetherApp => {
         label: i18n.t('menu.file.submenu_name'),
         submenu: [{ role: 'quit', label: i18n.t('menu.file.quit') }]
       };
+
+  /* eslint-disable no-sparse-arrays */
+  const editTabMacOS = {
+    label: 'Edit',
+    submenu: [
+      { role: 'undo' },
+      { role: 'redo' },
+      { type: 'separator' },
+      { role: 'cut' },,
+      { role: 'copy' },
+      { role: 'paste' },
+      { type: 'separator' },
+      { role: 'delete' },
+      { role: 'selectall' }
+    ]
+  };
+  /* eslint-enable no-sparse-arrays */
 
   /**
    * On win32 we need to use `webContents` to make some of the menu items
@@ -180,7 +197,7 @@ const getMenubarMenuTemplate = fetherApp => {
 
   let template = [
     fileTab,
-    editTab,
+    process.platform === 'darwin' ? editTabMacOS : editTab,
     process.platform === 'win32' ? viewTabWindowsOS : viewTab,
     windowTab,
     helpTab
@@ -231,9 +248,12 @@ const getContextTrayMenuTemplate = fetherApp => {
       {
         label: i18n.t('menu.show_hide_fether'),
         click () {
-          fetherApp.win.isVisible()
-            ? fetherApp.win.hide()
-            : fetherApp.win.show();
+          if (fetherApp.win.isVisible() && fetherApp.win.isFocused()) {
+            fetherApp.win.hide();
+          } else {
+            fetherApp.win.show();
+            fetherApp.win.focus();
+          }
         }
       },
       { role: 'quit', label: i18n.t('menu.file.quit') }
