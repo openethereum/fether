@@ -289,3 +289,14 @@ Taskbar mode is `true` by default.
   * Fether window - "window context menu" shown upon right-click in the Fether window
   * Fether window - position is saved upon move, minimising, and close so it is restored in the same position.
 
+## Troubleshooting
+
+### Fether not syncing blocks.
+
+If on the "Accounts" page in the Fether window it shows "Syncing... kovan" without showing a percentage like "Syncing... (x%) kovan" and in the Terminal window logs the block number that it says it is currently syncing is not the [latest Kovan block number](https://blockscout.com/eth/kovan) and it no longer changes, then the Kovan Light database may have an issue.
+
+#### Solution
+
+##### Mac
+
+Remove the Parity Ethereum Kovan Light DB from ~/Library/Application Support/io.parity.ethereum/chains_light/kovan
