@@ -31,10 +31,34 @@ if (!['darwin', 'win32'].includes(process.platform)) {
 let fetherApp;
 const options = fetherAppOptions(withTaskbar, {});
 
+const gotTheLock = app.requestSingleInstanceLock();
+pino.info(
+  `Single Fether instance lock obtained by ${
+    app.hasSingleInstanceLock() ? 'this instance' : 'another instance'
+  }`
+);
+
+if (!gotTheLock) {
+  pino.info(
+    'Multiple instances of Fether on the same device are not permitted'
+  );
+  app.quit();
+}
+
 app.once('ready', () => {
   fetherApp = new FetherApp(app, options);
 
   return fetherApp;
+});
+
+// Prevent a second instance of Fether. Focus the first window instance
+app.on('second-instance', (event, commandLine, workingDirectory) => {
+  if (fetherApp.win) {
+    if (fetherApp.win.isMinimized()) {
+      fetherApp.win.restore();
+    }
+    fetherApp.win.focus();
+  }
 });
 
 // Event triggered by clicking the Electron icon in the menu Dock
@@ -71,6 +95,7 @@ app.on('will-quit', killParity);
 
 app.on('quit', () => {
   pino.info('Leaving Fether');
+  app.releaseSingleInstanceLock();
   killParity();
 });
 
