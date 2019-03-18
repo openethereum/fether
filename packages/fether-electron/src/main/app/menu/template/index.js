@@ -156,7 +156,7 @@ const getMenubarMenuTemplate = fetherApp => {
 
 const getContextTrayMenuTemplate = fetherApp => {
   if (fetherApp.options.withTaskbar) {
-    const template = [
+    let template = [
       {
         label: 'Show/Hide Fether',
         click () {
@@ -167,9 +167,17 @@ const getContextTrayMenuTemplate = fetherApp => {
             fetherApp.win.focus();
           }
         }
-      },
-      { label: 'Quit', role: 'quit' }
+      }
     ];
+
+    if (process.env.NODE_ENV !== 'production') {
+      template.push({
+        label: 'Reload',
+        click: () => fetherApp.win.webContents.reload()
+      });
+    }
+
+    template.push({ label: 'Quit', role: 'quit' });
 
     return template;
   }
