@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -35,6 +35,9 @@ export class ParityStore {
   @observable
   token = null;
 
+  @observable
+  api = undefined;
+
   constructor () {
     // Retrieve token from localStorage
     const token = store.get(LS_KEY);
@@ -43,6 +46,9 @@ export class ParityStore {
       this.setToken(token);
     }
 
+    // FIXME - consider moving to start of this constructor block since
+    // if `setToken` method is called then `connectToApi` is called, which
+    // requires `electron` to be defined
     if (!electron) {
       debug(
         'Not in Electron, ParityStore will only have limited capabilities.'

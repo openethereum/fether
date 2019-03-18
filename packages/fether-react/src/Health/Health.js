@@ -1,18 +1,26 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-
-import { chainName$, isLoading } from '@parity/light.js';
+import { branch } from 'recompose';
+import { chainName$, withoutLoading } from '@parity/light.js';
 import light from '@parity/light.js-react';
-import withHealth, { STATUS } from '../utils/withHealth';
+import withHealth from '../utils/withHealth';
 
-@light({
-  chainName: chainName$
-})
 @withHealth
+@branch(
+  ({
+    health: {
+      status: { good, syncing }
+    }
+  }) => good || syncing,
+  // Only call light.js chainName$ if we're syncing or good
+  light({
+    chainName: () => chainName$().pipe(withoutLoading())
+  })
+)
 class Health extends Component {
   render () {
     return (
@@ -34,15 +42,12 @@ class Health extends Component {
     const {
       health: { status }
     } = this.props;
-    switch (status) {
-      case STATUS.GOOD:
-        return '-good';
-      case STATUS.DOWNLOADING:
-      case STATUS.LAUNCHING:
-      case STATUS.SYNCING:
-        return '-syncing';
-      default:
-        return '-bad';
+    if (status.good) {
+      return '-good';
+    } else if (status.downloading || status.launching || status.syncing) {
+      return '-syncing';
+    } else {
+      return '-bad';
     }
   };
 
@@ -52,29 +57,35 @@ class Health extends Component {
       chainName
     } = this.props;
 
-    const chainNameAppend = isLoading(chainName) ? '' : ` (${chainName})`;
-
-    switch (status) {
-      case STATUS.CLOCKNOTSYNC:
-        return 'Clock not sync';
-      case STATUS.DOWNLOADING:
-        return `Downloading... (${payload.percentage}%)`;
-      case STATUS.GOOD:
-        return `Synced${chainNameAppend}`;
-      case STATUS.NOINTERNET:
-        return 'No Internet connection';
-      case STATUS.NOPEERS:
-        return 'Not connected to any peer';
-      case STATUS.LAUNCHING:
-        return 'Launching the node...';
-      case STATUS.SYNCING:
-        return `Syncing...${
-          payload && payload.percentage && payload.percentage.gt(0)
-            ? ` (${payload.percentage.toFixed(0)}%)`
-            : ''
-        }${chainNameAppend}`;
-      default:
-        return JSON.stringify(payload); // Just in case payload is an object
+    if (status.downloading) {
+      return `Downloading Parity Ethereum (${
+        payload.downloading.syncPercentage
+      }%)`;
+    } else if (status.launching) {
+      return 'Launching the node...';
+    } else if (!status.nodeConnected && !status.internet) {
+      return 'No internet. No node connected';
+    } else if (!status.nodeConnected && status.internet) {
+      return 'Connecting to node...';
+    } else if (status.nodeConnected && !status.internet) {
+      return 'No internet. Connected to node';
+    } else if (!status.clockSync) {
+      return 'Clock of host not in sync';
+    } else if (!status.peers) {
+      return 'Connecting to peers...';
+    } else if (status.syncing) {
+      return `Syncing...${
+        payload &&
+        payload.syncing &&
+        payload.syncing.syncPercentage &&
+        payload.syncing.syncPercentage.gt(0)
+          ? ` (${payload.syncing.syncPercentage.toFixed(0)}%)`
+          : ''
+      } ${chainName}`;
+    } else if (status.good) {
+      return `Synced ${chainName}`;
+    } else {
+      return JSON.stringify(payload) || ''; // Just in case payload is an object
     }
   };
 }

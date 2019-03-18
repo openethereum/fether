@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -12,7 +12,7 @@ const MAX_ACCOUNT_NAME_LENGTH = 25;
 
 export const Name = ({ name, screen, ...otherProps }) => (
   <div
-    className={`account_name ${screen !== 'accounts' ? '-header' : ''}`}
+    className={`account_name ${screen === 'account' ? '-header' : ''}`}
     {...otherProps}
   >
     {name.length > MAX_ACCOUNT_NAME_LENGTH

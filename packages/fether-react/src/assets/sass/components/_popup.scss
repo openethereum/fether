@@ -10,6 +10,10 @@
   z-index: 1899; /* Under the menu popup */
 }
 
+.ui.popup {
+  z-index: 2000;
+}
+
 .popup-menu-account {
   /* Override SUI popup styles so popup does not appear above menu icon */
   background: $white !important;
@@ -19,6 +23,7 @@
   max-height: 220px;
   padding: 0px !important; /* Allow menu items to take up full width*/
   top: 3px !important;
+  z-index: 3000 !important; /* Above the alert screen modal */
 
   .popup-screen {
     margin-top: 5px;

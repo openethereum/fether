@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -50,8 +50,14 @@ describe('method acceptRequest', () => {
 });
 
 describe('method clear', () => {
-  test('should clear tx', () => {
-    sendStore.setTx(mock.tx);
+  test('should clear txEth', () => {
+    sendStore.setTx(mock.txEth);
+    sendStore.clear();
+    expect(sendStore.tx).toEqual({});
+  });
+
+  test('should clear txErc20', () => {
+    sendStore.setTx(mock.txErc20);
     sendStore.clear();
     expect(sendStore.tx).toEqual({});
   });
@@ -82,12 +88,10 @@ describe('@computed confirmations', () => {
 });
 
 describe('method send', () => {
-  beforeEach(() => {
-    sendStore.setTx(mock.tx);
-  });
-
   test('should call transfer$ if the token is Erc20', () => {
-    sendStore.send(mock.erc20);
+    sendStore.setTx(mock.txErc20);
+    sendStore.send('password');
+    expect(mock.txErc20.token.address).toEqual('THIBCoin');
     expect(mock.makeContract.transfer$).toHaveBeenCalledWith(
       '0x123',
       new BigNumber('10000000000000000'),
@@ -96,7 +100,9 @@ describe('method send', () => {
   });
 
   test('should call post$ if the token is ETH', () => {
-    sendStore.send(mock.eth);
+    sendStore.setTx(mock.txEth);
+    sendStore.send('password');
+    expect(mock.txEth.token.address).toEqual('ETH');
     expect(lightJs.post$).toHaveBeenCalledWith({
       from: '0x456',
       gasPrice: new BigNumber('4000000000'),
@@ -107,14 +113,18 @@ describe('method send', () => {
 
   test('should update txStatus', () => {
     sendStore.setTxStatus = jest.fn();
-    sendStore.send(mock.eth);
+    sendStore.setTx(mock.txEth);
+    sendStore.send('password');
+    expect(mock.txEth.token.address).toEqual('ETH');
     expect(sendStore.setTxStatus).toHaveBeenCalledWith({ estimating: true });
   });
 
   test('should call acceptRequest when txStatus is requested', () => {
     sendStore.acceptRequest = jest.fn(() => Promise.resolve(true));
-    sendStore.send(mock.eth, 'foo');
-    expect(sendStore.acceptRequest).toHaveBeenCalledWith(1, 'foo');
+    sendStore.setTx(mock.txEth);
+    sendStore.send('password');
+    expect(mock.txEth.token.address).toEqual('ETH');
+    expect(sendStore.acceptRequest).toHaveBeenCalledWith(1, 'password');
   });
 });
 

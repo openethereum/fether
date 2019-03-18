@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { TokenCard } from 'fether-ui';
 import { withRouter } from 'react-router-dom';
 
-import withAccount from '../../../utils/withAccount.js';
+import withAccount from '../../../utils/withAccount';
 import withBalance from '../../../utils/withBalance';
 
 @withRouter
@@ -18,8 +18,17 @@ import withBalance from '../../../utils/withBalance';
 @inject('sendStore')
 class TokenBalance extends Component {
   static propTypes = {
+    hideLoadingAccountTokensModal: PropTypes.func,
     token: PropTypes.object
   };
+
+  componentDidMount () {
+    const { hideLoadingAccountTokensModal } = this.props;
+
+    if (hideLoadingAccountTokensModal) {
+      hideLoadingAccountTokensModal();
+    }
+  }
 
   handleClick = () => {
     const {
@@ -28,9 +37,11 @@ class TokenBalance extends Component {
       sendStore,
       token
     } = this.props;
+
     if (!token.address) {
       return;
     }
+
     sendStore.clear();
     history.push(`/send/${token.address}/from/${address}`);
   };
