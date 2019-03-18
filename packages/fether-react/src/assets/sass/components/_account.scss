@@ -37,8 +37,11 @@
   .account_name {
     color: $black;
     font-weight: 500;
-    margin-bottom: 0.1rem;
+    overflow: hidden;
+    padding-bottom: 0.1rem;
+    text-overflow: ellipsis;
     white-space: nowrap;
+    width: 230px;
 
     /**
      * Information component when used with components
@@ -47,7 +50,7 @@
      */
     &.-header {
       margin-top: 0.2rem;
-      margin-bottom: 0.3rem;
+      padding-bottom: 0.3rem;
     }
   }
 
