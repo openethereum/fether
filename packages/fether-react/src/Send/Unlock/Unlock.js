@@ -95,7 +95,7 @@ class Unlock extends Component {
                     key='signerForm'
                     onSubmit={this.handleAccept}
                     render={({ handleSubmit, pristine, submitting }) => (
-                      <form onSubmit={handleSubmit}>
+                      <form noValidate onSubmit={handleSubmit}>
                         <div className='text'>
                           <p>{i18n.t('ns1:tx.form.label_unlock')}</p>
                         </div>

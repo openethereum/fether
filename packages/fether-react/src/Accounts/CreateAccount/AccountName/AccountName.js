@@ -123,7 +123,7 @@ class AccountName extends Component {
     const currentStep = pathname.slice(-1);
 
     return (
-      <form key='createAccount' onSubmit={this.handleSubmit}>
+      <form key='createAccount' noValidate onSubmit={this.handleSubmit}>
         <div className='text'>
           <p>{i18n.t('ns1:account.create.label_name_msg')}</p>
         </div>

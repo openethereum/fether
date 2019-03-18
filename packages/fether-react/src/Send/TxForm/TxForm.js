@@ -232,7 +232,11 @@ class TxForm extends Component {
                       values,
                       form: { mutators }
                     }) => (
-                      <form className='send-form' onSubmit={handleSubmit}>
+                      <form
+                        className='send-form'
+                        noValidate
+                        onSubmit={handleSubmit}
+                      >
                         <fieldset className='form_fields'>
                           <Field
                             as='textarea'
@@ -280,13 +284,13 @@ class TxForm extends Component {
                             centerText={`${values.gasPrice} GWEI`}
                             className='-range'
                             label={i18n.t('ns1:tx.form.field.tx_speed')}
-                            leftText='Low'
+                            leftText={i18n.t('ns1:tx.form.field.low')}
                             max={MAX_GAS_PRICE}
                             min={MIN_GAS_PRICE}
                             name='gasPrice'
                             render={FetherForm.Slider}
                             required
-                            rightText='High'
+                            rightText={i18n.t('ns1:tx.form.field.high')}
                             step={0.5}
                             type='range' // In Gwei
                           />

@@ -77,7 +77,7 @@ class AccountPassword extends Component {
           address={address}
           name={name}
           drawers={[
-            <form key='createAccount' onSubmit={this.handleSubmit}>
+            <form key='createAccount' noValidate onSubmit={this.handleSubmit}>
               <div className='text'>
                 <p>
                   {' '}

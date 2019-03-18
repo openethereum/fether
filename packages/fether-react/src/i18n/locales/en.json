@@ -138,6 +138,8 @@
         "to": "To",
         "amount": "Amount",
         "tx_speed": "Transaction Speed",
+        "high": "High",
+        "low": "Low",
         "password": "Password"
       },
       "details": {
