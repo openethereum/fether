@@ -68,17 +68,17 @@ const getMenubarMenuTemplate = fetherApp => {
 
   /* eslint-disable no-sparse-arrays */
   const editTabMacOS = {
-    label: 'Edit',
+    label: i18n.t('menu.edit.submenu_name'),
     submenu: [
-      { role: 'undo' },
-      { role: 'redo' },
+      { role: 'undo', label: i18n.t('menu.edit.undo') },
+      { role: 'redo', label: i18n.t('menu.edit.redo') },
       { type: 'separator' },
-      { role: 'cut' },,
-      { role: 'copy' },
-      { role: 'paste' },
+      { role: 'cut', label: i18n.t('menu.edit.cut') },
+      { role: 'copy', label: i18n.t('menu.edit.copy') },
+      { role: 'paste', label: i18n.t('menu.edit.paste') },
       { type: 'separator' },
-      { role: 'delete' },
-      { role: 'selectall' }
+      { role: 'delete', label: i18n.t('menu.edit.delete') },
+      { role: 'selectall', label: i18n.t('menu.edit.select_all') }
     ]
   };
   /* eslint-enable no-sparse-arrays */
