@@ -43,10 +43,27 @@
     }
   }
 
+  span {
+    &.icon {
+      width: ms(0) * 1.3 + 0.5rem;
+      height: ms(0) * 1.3 + 0.5rem;
+      background-size: ms(0) auto;
+      background-position: center bottom;
+      background-repeat: no-repeat;
+
+      &.-warning {
+        position: absolute;
+        width:1rem;
+        top: 3px;
+        right: 0px;
+        background-image: url('./assets/img/icons/warning.svg');
+      }
+    }
+  }
+
   a,
   a:link,
-  a:visited,
-  span {
+  a:visited {
     z-index: 9;
     color: rgba($black, 0.675);
     font-weight: 500;
