@@ -13,7 +13,7 @@ export const Name = ({ name, screen, ...otherProps }) => (
     className={`account_name ${screen === 'account' ? '-header' : ''}`}
     {...otherProps}
   >
-    {name || <Placeholder height={18} width={100} />}
+    {name || <Placeholder height={14} width={100} />}
   </div>
 );
 
