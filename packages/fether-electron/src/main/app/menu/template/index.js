@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -31,6 +31,23 @@ const getMenubarMenuTemplate = fetherApp => {
         label: 'File',
         submenu: [{ role: 'quit' }]
       };
+
+  /* eslint-disable no-sparse-arrays */
+  const editTabMacOS = {
+    label: 'Edit',
+    submenu: [
+      { role: 'undo' },
+      { role: 'redo' },
+      { type: 'separator' },
+      { role: 'cut' },,
+      { role: 'copy' },
+      { role: 'paste' },
+      { type: 'separator' },
+      { role: 'delete' },
+      { role: 'selectall' }
+    ]
+  };
+  /* eslint-enable no-sparse-arrays */
 
   /**
    * On win32 we need to use `webContents` to make some of the menu items
@@ -101,7 +118,7 @@ const getMenubarMenuTemplate = fetherApp => {
 
   let template = [
     fileTab,
-    editTab,
+    process.platform === 'darwin' ? editTabMacOS : editTab,
     process.platform === 'win32' ? viewTabWindowsOS : viewTab,
     windowTab,
     helpTab
