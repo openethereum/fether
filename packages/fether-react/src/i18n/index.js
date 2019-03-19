@@ -5,8 +5,6 @@
 
 // https://react.i18next.com/getting-started
 import i18next from 'i18next';
-// // https://github.com/i18next/i18next-browser-languageDetector
-import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 import store from 'store';
 
@@ -24,7 +22,6 @@ const debug = Debug(menuNS);
 
 const i18n = i18next;
 i18n
-  .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     debug: true,
