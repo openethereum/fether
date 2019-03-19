@@ -3,10 +3,14 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
+import Debug from '../src/utils/debug';
+
 const Api = require('@parity/api');
 const { bytesToHex } = require('@parity/api/lib/util');
 const Contracts = require('@parity/contracts').default;
 const fs = require('fs');
+
+const debug = Debug('updateTokens');
 
 // A node serving a HTTP server needs to be running at the following port. The
 // chain this script is fetching the tokens is the chain which this node
@@ -17,7 +21,7 @@ const run = async () => {
   const { tokenReg, githubHint } = new Contracts(api);
 
   const chainName = await api.parity.netChain();
-  console.log(`Fetching all tokens on ${chainName}, please wait...`);
+  debug(`Fetching all tokens on ${chainName}, please wait...`);
 
   // Create file to write tokens to
   const filePath = `src/assets/tokens/${chainName}.json`;
@@ -73,7 +77,7 @@ const run = async () => {
     wstream.close();
 
     // Finished, we can exit
-    console.log(`Wrote ${tokenCount} tokens to ${filePath}.`);
+    debug(`Wrote ${tokenCount} tokens to ${filePath}.`);
     process.exit(0);
   });
 };

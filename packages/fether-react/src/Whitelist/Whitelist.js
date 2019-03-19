@@ -10,7 +10,7 @@ import { Header } from 'fether-ui';
 import light from '@parity/light.js-react';
 import { Link } from 'react-router-dom';
 
-import i18n from '../i18n';
+import i18n, { packageNS } from '../i18n';
 import RequireHealthOverlay from '../RequireHealthOverlay';
 import Health from '../Health';
 import NewTokenItem from './NewTokenItem';
@@ -105,10 +105,10 @@ class Whitelist extends Component {
         <Header
           left={
             <Link to='/tokens' className='icon -back' onClick={history.goBack}>
-              {i18n.t('ns1:navigation.close')}
+              {i18n.t(`${packageNS}:navigation.close`)}
             </Link>
           }
-          title={<h1>{i18n.t('ns1:search_tokens.title')}</h1>}
+          title={<h1>{i18n.t(`${packageNS}:search_tokens.title`)}</h1>}
         />
         <RequireHealthOverlay require='sync'>
           <div className='window_content'>
@@ -117,7 +117,9 @@ class Whitelist extends Component {
                 <div className='search-form'>
                   <input
                     onChange={this.handleSearch}
-                    placeholder={i18n.t('ns1:search_tokens.placeholder')}
+                    placeholder={i18n.t(
+                      `${packageNS}:search_tokens.placeholder`
+                    )}
                     value={search}
                     type='text'
                   />
@@ -126,7 +128,7 @@ class Whitelist extends Component {
                     className='button -icon -clear'
                     disabled={!search.length}
                   >
-                    {i18n.t('ns1:search_tokens.clear')}
+                    {i18n.t(`${packageNS}:search_tokens.clear`)}
                   </button>
                 </div>
               </div>

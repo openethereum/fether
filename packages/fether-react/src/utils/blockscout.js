@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import i18n from '../i18n';
+import i18n, { packageNS } from '../i18n';
 
 const baseUrlForChain = chainName => {
   let baseUrl;
@@ -21,7 +21,7 @@ const baseUrlForChain = chainName => {
       baseUrl = `https://blockscout.com/eth/${chainNameBlockscout}`;
       break;
     default:
-      console.error(i18n.t('ns1:utils.blockscout_chain'));
+      console.error(i18n.t(`${packageNS}:utils.blockscout_chain`));
   }
 
   return baseUrl;

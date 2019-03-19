@@ -10,7 +10,7 @@ import { inject, observer } from 'mobx-react';
 import RequireHealthOverlay from '../../../RequireHealthOverlay';
 import Scanner from '../../../Scanner';
 import withAccountsInfo from '../../../utils/withAccountsInfo';
-import i18n from '../../../i18n';
+import i18n, { packageNS } from '../../../i18n';
 
 @withAccountsInfo
 @inject('createAccountStore')
@@ -56,7 +56,9 @@ class AccountImportOptions extends Component {
     } catch (error) {
       this.setState({
         isLoading: false,
-        error: i18n.t('ns1:account.import.phrase.error_msg_submit_phrase')
+        error: i18n.t(
+          `${packageNS}:account.import.phrase.error_msg_submit_phrase`
+        )
       });
       console.error(error);
     }
@@ -81,7 +83,7 @@ class AccountImportOptions extends Component {
     } catch (error) {
       this.setState({
         isLoading: false,
-        error: i18n.t('ns1:account.import.error_msg_change_json_file')
+        error: i18n.t(`${packageNS}:account.import.error_msg_change_json_file`)
       });
       console.error(error);
     }
@@ -94,7 +96,9 @@ class AccountImportOptions extends Component {
 
     if (!address || !chainIdString) {
       this.setState({
-        error: i18n.t('ns1:account.import.signer.error_msg_signer_imported')
+        error: i18n.t(
+          `${packageNS}:account.import.signer.error_msg_signer_imported`
+        )
       });
       return;
     }
@@ -129,9 +133,12 @@ class AccountImportOptions extends Component {
     if (isExistingAddress) {
       this.setState({
         isLoading: false,
-        error: i18n.t('ns1:account.import.error_msg_existing_address', {
-          address: addressShort(addressForImport)
-        })
+        error: i18n.t(
+          `${packageNS}:account.import.error_msg_existing_address`,
+          {
+            address: addressShort(addressForImport)
+          }
+        )
       });
     }
 
@@ -150,12 +157,19 @@ class AccountImportOptions extends Component {
       <Card>
         <div key='createAccount'>
           <div className='text -centered'>
-            <p>{i18n.t('ns1:account.import.json.label_msg_recover_json')}</p>
+            <p>
+              {i18n.t(
+                `${packageNS}:account.import.json.label_msg_recover_json`
+              )}
+            </p>
 
             <FetherForm.InputFile
               i18n={i18n}
-              label={i18n.t('ns1:account.import.json.label_recover_json')}
+              label={i18n.t(
+                `${packageNS}:account.import.json.label_recover_json`
+              )}
               onChangeFile={this.handleChangeFile}
+              packageNS={packageNS}
               required
             />
           </div>
@@ -168,14 +182,16 @@ class AccountImportOptions extends Component {
         <div key='createAccount'>
           <div className='text -centered'>
             <p>
-              {i18n.t('ns1:account.import.signer.label_msg_recover_signer')}
+              {i18n.t(
+                `${packageNS}:account.import.signer.label_msg_recover_signer`
+              )}
             </p>
 
             {importingFromSigner ? (
               <Scanner
                 onScan={this.handleSignerImported}
                 label={i18n.t(
-                  'ns1:account.import.signer.label_msg_recover_signer_scan'
+                  `${packageNS}:account.import.signer.label_msg_recover_signer_scan`
                 )}
               />
             ) : (
@@ -184,7 +200,7 @@ class AccountImportOptions extends Component {
                 onClick={this.handleSignerImport}
               >
                 {i18n.t(
-                  'ns1:account.import.signer.label_button_recover_signer_scan'
+                  `${packageNS}:account.import.signer.label_button_recover_signer_scan`
                 )}
               </button>
             )}
@@ -198,12 +214,16 @@ class AccountImportOptions extends Component {
         <div key='importBackup'>
           <div className='text -centered'>
             <p>
-              {i18n.t('ns1:account.import.phrase.label_msg_recover_phrase')}
+              {i18n.t(
+                `${packageNS}:account.import.phrase.label_msg_recover_phrase`
+              )}
             </p>
 
             <FetherForm.Field
               as='textarea'
-              label={i18n.t('ns1:account.import.phrase.label_recover_phrase')}
+              label={i18n.t(
+                `${packageNS}:account.import.phrase.label_recover_phrase`
+              )}
               onChange={this.handlePhraseChange}
               required
               phrase={phrase}
@@ -229,7 +249,7 @@ class AccountImportOptions extends Component {
           <nav className='form-nav -space-around'>
             {currentStep > 1 && (
               <button className='button -back' onClick={history.goBack}>
-                {i18n.t('ns1:navigation.back')}
+                {i18n.t(`${packageNS}:navigation.back`)}
               </button>
             )}
           </nav>
@@ -248,7 +268,7 @@ class AccountImportOptions extends Component {
         disabled={(!json && !phrase) || isLoading}
         onClick={this.handleSubmitPhrase}
       >
-        {i18n.t('ns1:navigation.next')}
+        {i18n.t(`${packageNS}:navigation.next`)}
       </button>
     );
   };

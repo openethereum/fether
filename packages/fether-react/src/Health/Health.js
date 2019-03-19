@@ -8,7 +8,7 @@ import { branch } from 'recompose';
 import { chainName$, withoutLoading } from '@parity/light.js';
 import light from '@parity/light.js-react';
 import withHealth from '../utils/withHealth';
-import i18n from '../i18n';
+import i18n, { packageNS } from '../i18n';
 
 @withHealth
 @branch(
@@ -59,23 +59,29 @@ class Health extends Component {
     } = this.props;
 
     if (status.downloading) {
-      return `${i18n.t('ns1:health.status.title.downloading')} (${
+      return `${i18n.t(`${packageNS}:health.status.title.downloading`)} (${
         payload.downloading.syncPercentage
       }%)`;
     } else if (status.launching) {
-      return i18n.t('ns1:health.status.title.launching');
+      return i18n.t(`${packageNS}:health.status.title.launching`);
     } else if (!status.nodeConnected && !status.internet) {
-      return i18n.t('ns1:health.status.title.no_internet_no_node_connected');
+      return i18n.t(
+        `${packageNS}:health.status.title.no_internet_no_node_connected`
+      );
     } else if (!status.nodeConnected && status.internet) {
-      return i18n.t('ns1:health.status.title.internet_no_node_connected');
+      return i18n.t(
+        `${packageNS}:health.status.title.internet_no_node_connected`
+      );
     } else if (status.nodeConnected && !status.internet) {
-      return i18n.t('ns1:health.status.title.no_internet_node_connected');
+      return i18n.t(
+        `${packageNS}:health.status.title.no_internet_node_connected`
+      );
     } else if (!status.clockSync) {
-      return i18n.t('ns1:health.status.title.no_clock_sync');
+      return i18n.t(`${packageNS}:health.status.title.no_clock_sync`);
     } else if (!status.peers) {
-      return i18n.t('ns1:health.status.title.no_peers');
+      return i18n.t(`${packageNS}:health.status.title.no_peers`);
     } else if (status.syncing) {
-      return `${i18n.t('ns1:health.status.title.syncing')} ${
+      return `${i18n.t(`${packageNS}:health.status.title.syncing`)} ${
         payload &&
         payload.syncing &&
         payload.syncing.syncPercentage &&
@@ -84,7 +90,9 @@ class Health extends Component {
           : ''
       } ${chainName}`;
     } else if (status.good) {
-      return `${i18n.t('ns1:health.status.title.synced')} ${chainName}`;
+      return `${i18n.t(
+        `${packageNS}:health.status.title.synced`
+      )} ${chainName}`;
     } else {
       return JSON.stringify(payload) || ''; // Just in case payload is an object
     }

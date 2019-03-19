@@ -6,7 +6,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import i18n from '../i18n';
+import i18n, { packageNS } from '../i18n';
 import withHealth from '../utils/withHealth';
 import { HealthModal } from './HealthModal';
 
@@ -22,7 +22,9 @@ function statusMatches (status, require) {
     case 'sync':
       return status.good;
     default:
-      throw new Error(i18n.t('ns1:health.error_status_invalid', { status }));
+      throw new Error(
+        i18n.t(`${packageNS}:health.error_status_invalid`, { status })
+      );
   }
 }
 

@@ -18,7 +18,7 @@ import { Link } from 'react-router-dom';
 import { OnChange } from 'react-final-form-listeners';
 import { withProps } from 'recompose';
 
-import i18n from '../../i18n';
+import i18n, { packageNS } from '../../i18n';
 import { estimateGas } from '../../utils/transaction';
 import RequireHealthOverlay from '../../RequireHealthOverlay';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
@@ -164,7 +164,7 @@ class TxForm extends Component {
     return (
       <span className='toggle-details'>
         <Clickable onClick={this.toggleDetails}>
-          &darr; {i18n.t('ns1:tx.form.details.details')}
+          &darr; {i18n.t(`${packageNS}:tx.form.details.details`)}
         </Clickable>
       </span>
     );
@@ -174,7 +174,7 @@ class TxForm extends Component {
     return (
       <span className='toggle-details'>
         <Clickable onClick={this.toggleDetails}>
-          &uarr; {i18n.t('ns1:tx.form.details.hide')}
+          &uarr; {i18n.t(`${packageNS}:tx.form.details.hide`)}
         </Clickable>
       </span>
     );
@@ -200,13 +200,15 @@ class TxForm extends Component {
         <Header
           left={
             <Link to={`/tokens/${address}`} className='icon -back'>
-              {i18n.t('ns1:navigation.close')}
+              {i18n.t(`${packageNS}:navigation.close`)}
             </Link>
           }
           title={
             token && (
               <h1>
-                {i18n.t('ns1:tx.header_send_prefix', { token: token.name })}
+                {i18n.t(`${packageNS}:tx.header_send_prefix`, {
+                  token: token.name
+                })}
               </h1>
             )
           }
@@ -242,7 +244,7 @@ class TxForm extends Component {
                             as='textarea'
                             autoFocus
                             className='-sm'
-                            label={i18n.t('ns1:tx.form.field.to')}
+                            label={i18n.t(`${packageNS}:tx.form.field.to`)}
                             name='to'
                             placeholder='0x...'
                             required
@@ -257,7 +259,7 @@ class TxForm extends Component {
                             }`}
                             disabled={this.state.maxSelected}
                             formNoValidate
-                            label={i18n.t('ns1:tx.form.field.amount')}
+                            label={i18n.t(`${packageNS}:tx.form.field.amount`)}
                             name='amount'
                             placeholder='0.00'
                             render={FetherForm.Field}
@@ -276,21 +278,25 @@ class TxForm extends Component {
                                 mutators.recalculateMax();
                               }}
                             >
-                              {i18n.t('ns1:tx.form.button_max')}
+                              {i18n.t(`${packageNS}:tx.form.button_max`)}
                             </button>
                           </Field>
 
                           <Field
                             centerText={`${values.gasPrice} GWEI`}
                             className='-range'
-                            label={i18n.t('ns1:tx.form.field.tx_speed')}
-                            leftText={i18n.t('ns1:tx.form.field.low')}
+                            label={i18n.t(
+                              `${packageNS}:tx.form.field.tx_speed`
+                            )}
+                            leftText={i18n.t(`${packageNS}:tx.form.field.low`)}
                             max={MAX_GAS_PRICE}
                             min={MIN_GAS_PRICE}
                             name='gasPrice'
                             render={FetherForm.Slider}
                             required
-                            rightText={i18n.t('ns1:tx.form.field.high')}
+                            rightText={i18n.t(
+                              `${packageNS}:tx.form.field.high`
+                            )}
                             step={0.5}
                             type='range' // In Gwei
                           />
@@ -314,12 +320,12 @@ class TxForm extends Component {
                             <span>
                               <h3>
                                 {i18n.t(
-                                  'ns1:tx.form.warning.title_same_sender_receiver'
+                                  `${packageNS}:tx.form.warning.title_same_sender_receiver`
                                 )}
                               </h3>
                               <p>
                                 {i18n.t(
-                                  'ns1:tx.form.warning.body_same_sender_receiver'
+                                  `${packageNS}:tx.form.warning.body_same_sender_receiver`
                                 )}
                               </p>
                             </span>
@@ -336,10 +342,10 @@ class TxForm extends Component {
                             className='button'
                           >
                             {validating
-                              ? i18n.t('ns1:tx.form.button_checking')
+                              ? i18n.t(`${packageNS}:tx.form.button_checking`)
                               : type === 'signer'
-                                ? i18n.t('ns1:tx.form.button_scan')
-                                : i18n.t('ns1:tx.form.button_send')}
+                                ? i18n.t(`${packageNS}:tx.form.button_scan`)
+                                : i18n.t(`${packageNS}:tx.form.button_send`)}
                           </button>
                         </nav>
                       </form>
@@ -364,46 +370,64 @@ class TxForm extends Component {
     }
 
     if (!values.amount) {
-      return { amount: i18n.t('ns1:tx.form.validation.alert.amount_invalid') };
+      return {
+        amount: i18n.t(`${packageNS}:tx.form.validation.alert.amount_invalid`)
+      };
     }
 
     const amountBn = new BigNumber(values.amount.toString());
 
     if (amountBn.isNaN()) {
-      return { amount: i18n.t('ns1:tx.form.validation.alert.amount_invalid') };
+      return {
+        amount: i18n.t(`${packageNS}:tx.form.validation.alert.amount_invalid`)
+      };
     } else if (amountBn.isZero()) {
       if (this.state.maxSelected) {
         return {
           amount: i18n.t(
-            'ns1:tx.form.validation.alert.eth_balance_too_low_for_gas'
+            `${packageNS}:tx.form.validation.alert.eth_balance_too_low_for_gas`
           )
         };
       }
-      return { amount: i18n.t('ns1:tx.form.validation.alert.non_zero_amount') };
+      return {
+        amount: i18n.t(`${packageNS}:tx.form.validation.alert.non_zero_amount`)
+      };
     } else if (amountBn.isNegative()) {
-      return { amount: i18n.t('ns1:tx.form.validation.alert.positive_amount') };
+      return {
+        amount: i18n.t(`${packageNS}:tx.form.validation.alert.positive_amount`)
+      };
     } else if (token.address === 'ETH' && toWei(values.amount).lt(1)) {
-      return { amount: i18n.t('ns1:tx.form.validation.alert.min_wei') };
+      return {
+        amount: i18n.t(`${packageNS}:tx.form.validation.alert.min_wei`)
+      };
     } else if (amountBn.dp() > token.decimals) {
       return {
-        amount: i18n.t('ns1:tx.form.validation.alert.min_decimals', {
+        amount: i18n.t(`${packageNS}:tx.form.validation.alert.min_decimals`, {
           token_name: token.name,
           token_decimals: token.decimals
         })
       };
     } else if (balance && balance.lt(amountBn)) {
       return {
-        amount: i18n.t('ns1:tx.form.validation.alert.token_balance_too_low', {
-          token_symbol: token.symbol
-        })
+        amount: i18n.t(
+          `${packageNS}:tx.form.validation.alert.token_balance_too_low`,
+          {
+            token_symbol: token.symbol
+          }
+        )
       };
     } else if (!values.to || !isAddress(values.to)) {
-      return { to: i18n.t('ns1:tx.form.validation.alert.invalid_eth_address') };
+      return {
+        to: i18n.t(`${packageNS}:tx.form.validation.alert.invalid_eth_address`)
+      };
     } else if (values.to === '0x0000000000000000000000000000000000000000') {
       return {
-        to: i18n.t('ns1:tx.form.validation.alert.prevent_send_zero_account', {
-          token_name: token.name
-        })
+        to: i18n.t(
+          `${packageNS}:tx.form.validation.alert.prevent_send_zero_account`,
+          {
+            token_name: token.name
+          }
+        )
       };
     }
     return true;
@@ -427,23 +451,33 @@ class TxForm extends Component {
       } = this.props;
 
       if (!chainId) {
-        throw new Error(i18n.t('ns1:tx.form.validation.throw.no_chain_id'));
+        throw new Error(
+          i18n.t(`${packageNS}:tx.form.validation.throw.no_chain_id`)
+        );
       }
 
       if (!address) {
-        throw new Error(i18n.t('ns1:tx.form.validation.throw.no_address'));
+        throw new Error(
+          i18n.t(`${packageNS}:tx.form.validation.throw.no_address`)
+        );
       }
 
       if (!transactionCount) {
-        throw new Error(i18n.t('ns1:tx.form.validation.throw.no_tx_count'));
+        throw new Error(
+          i18n.t(`${packageNS}:tx.form.validation.throw.no_tx_count`)
+        );
       }
 
       if (!token || !token.address || !token.decimals) {
-        throw new Error(i18n.t('ns1:tx.form.validation.throw.no_token_info'));
+        throw new Error(
+          i18n.t(`${packageNS}:tx.form.validation.throw.no_token_info`)
+        );
       }
 
       if (!ethBalance) {
-        throw new Error(i18n.t('ns1:tx.form.validation.throw.no_eth_balance'));
+        throw new Error(
+          i18n.t(`${packageNS}:tx.form.validation.throw.no_eth_balance`)
+        );
       }
 
       const preValidation = this.preValidate(values);
@@ -455,7 +489,9 @@ class TxForm extends Component {
 
       if (values.gas && values.gas.eq(-1)) {
         return {
-          amount: i18n.t('ns1:tx.form.validation.alert.unable_estimate_gas')
+          amount: i18n.t(
+            `${packageNS}:tx.form.validation.alert.unable_estimate_gas`
+          )
         };
       }
 
@@ -463,7 +499,7 @@ class TxForm extends Component {
       // just wait a bit more
       if (!this.isEstimatedTxFee(values)) {
         return {
-          amount: i18n.t('ns1:tx.form.validation.alert.estimating_gas')
+          amount: i18n.t(`${packageNS}:tx.form.validation.alert.estimating_gas`)
         };
       }
 
@@ -476,17 +512,21 @@ class TxForm extends Component {
         return token.address !== 'ETH'
           ? {
             amount: i18n.t(
-              'ns1:tx.form.validation.alert.eth_balance_too_low_for_gas'
+              `${packageNS}:tx.form.validation.alert.eth_balance_too_low_for_gas`
             )
           }
           : {
-            amount: i18n.t('ns1:tx.form.validation.alert.eth_balance_too_low')
+            amount: i18n.t(
+              `${packageNS}:tx.form.validation.alert.eth_balance_too_low`
+            )
           };
       }
     } catch (err) {
       console.error(err);
       return {
-        amount: i18n.t('ns1:tx.form.validation.alert.error_estimating_balance')
+        amount: i18n.t(
+          `${packageNS}:tx.form.validation.alert.error_estimating_balance`
+        )
       };
     }
   }, 1000);

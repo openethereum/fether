@@ -18,10 +18,17 @@ const NormalContainer = ({ children }) => (
   <h1 className='account -header'>{children}</h1>
 );
 
-const CopyContainer = ({ address, children, i18n, ...otherProps }) => (
+const CopyContainer = ({
+  address,
+  children,
+  i18n,
+  packageNS,
+  ...otherProps
+}) => (
   <ClickToCopy
-    label={i18n.t('ns1:ui.click_to_copy.header.label')}
+    label={i18n.t(`${packageNS}:ui.click_to_copy.header.label`)}
     i18n={i18n}
+    packageNS={packageNS}
     textToCopy={address}
     {...otherProps}
   >
@@ -34,6 +41,7 @@ export const AccountHeader = ({
   copyAddress,
   i18n,
   name,
+  packageNS,
   type,
   ...otherProps
 }) => {
@@ -46,7 +54,12 @@ export const AccountHeader = ({
           address &&
           name &&
           type && (
-            <Container address={address} className='account' i18n={i18n}>
+            <Container
+              address={address}
+              className='account'
+              i18n={i18n}
+              packageNS={packageNS}
+            >
               <Avatar address={address} scale={4} type={type} />
               <Information>
                 <Name name={name} screen='account' />
@@ -64,5 +77,6 @@ export const AccountHeader = ({
 AccountHeader.propTypes = {
   address: PropTypes.string,
   i18n: PropTypes.object,
-  name: PropTypes.string
+  name: PropTypes.string,
+  packageNS: PropTypes.string
 };

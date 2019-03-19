@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { AccountCard } from 'fether-ui';
 import { withRouter } from 'react-router-dom';
 
-import i18n from '../../../i18n';
+import i18n, { packageNS } from '../../../i18n';
 import withAccount from '../../../utils/withAccount';
 
 @withRouter
@@ -37,6 +37,7 @@ class TokenAddress extends Component {
         drawers={drawers}
         i18n={i18n}
         name={name}
+        packageNS={packageNS}
         shortAddress={shortAddress}
         type={type}
       />

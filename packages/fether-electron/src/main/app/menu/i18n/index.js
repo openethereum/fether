@@ -8,70 +8,73 @@ import Backend from 'i18next-node-fs-backend';
 import electron from 'electron';
 import settings from 'electron-settings';
 
+import { name } from '../../../../../package.json';
 import Pino from '../../utils/pino';
-
 import { en } from './locales';
 
 let { app } = electron;
 const pino = Pino();
+let resourceEnglishNS = {};
+resourceEnglishNS[name] = en;
+const packageNS = Object.keys(resourceEnglishNS)[0].toString();
+const moduleNS = 'i18n';
+const menuNS = `${packageNS}-${moduleNS}`;
 
 const i18n = i18next;
 i18n
   .use(Backend)
   .init({
     debug: true,
-    defaultNS: 'ns1',
+    defaultNS: packageNS,
     fallbackLng: ['en-US', 'en'],
     interpolation: {
       escapeValue: false
     },
     lng: settings.get('fether-language') || 'en',
-    ns: ['ns1'],
+    ns: [packageNS],
     resources: {
-      en: {
-        ns1: en
-      }
+      en: resourceEnglishNS
     },
     saveMissing: true
   })
-  .then(() => pino.info('i18n backend: success'))
-  .catch(error => pino.info('i18n backend: failure', error));
+  .then(() => pino.info(`${menuNS}: success`))
+  .catch(error => pino.info(`${menuNS}: failure`, error));
 
 // https://www.i18next.com/overview/api#changelanguage
 i18n.changeLanguage(app.getLocale(), (err, t) => {
   if (err) {
-    pino.info(`i18n backend: Error loading language ${app.getLocale()}`, err);
+    pino.info(`${menuNS}: Error loading language ${app.getLocale()}`, err);
   }
 });
 
 i18next.on('initialized', options => {
-  pino.info('i18n backend: Detected initialisation of i18n');
+  pino.debug(`${menuNS}: Detected initialisation of i18n`);
 });
 
 i18next.on('loaded', loaded => {
-  pino.info('i18n backend: Detected success loading resources', loaded);
+  pino.info(`${menuNS}: Detected success loading resources: `, loaded);
 });
 
 i18next.on('failedLoading', (lng, ns, msg) => {
-  pino.info('i18n backend: Detected failure loading resources', lng, ns, msg);
+  pino.info(`${menuNS}: Detected failure loading resources: `, lng, ns, msg);
 });
 
 // saveMissing must be configured to `true`
 i18next.on('missingKey', (lngs, namespace, key, res) => {
-  pino.info('i18n backend: Detected missing key: ', lngs, namespace, key, res);
+  pino.info(`${menuNS}: Detected missing key: `, lngs, namespace, key, res);
 });
 
 i18next.store.on('added', (lng, ns) => {
-  pino.info('i18n backend: Detected resources added', lng, ns);
+  pino.debug(`${menuNS}: Detected resources added: `, lng, ns);
 });
 
 i18next.store.on('removed', (lng, ns) => {
-  pino.info('i18n backend: Detected resources removed', lng, ns);
+  pino.debug(`${menuNS}: Detected resources removed: `, lng, ns);
 });
 
 // https://www.i18next.com/overview/api#changelanguage
 i18next.on('languageChanged', lng => {
-  pino.info('i18n backend: Detected language change to: ', lng);
+  pino.info(`${menuNS}: Detected language change to: `, lng);
 });
 
 export default i18n;

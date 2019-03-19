@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import BigNumber from 'bignumber.js';
 import { fromWei, toWei } from '@parity/api/lib/util/wei';
 
-import i18n from '../../../i18n';
+import i18n, { packageNS } from '../../../i18n';
 
 class TxDetails extends Component {
   renderDetails = () => {
@@ -21,7 +21,7 @@ class TxDetails extends Component {
     ) {
       // Keep line break so message is centered
       return `
-${i18n.t('ns1:tx.form.details.missing_fields')}`;
+${i18n.t(`${packageNS}:tx.form.details.missing_fields`)}`;
     }
 
     return `${this.renderCalculation()}
@@ -43,7 +43,9 @@ ${this.renderTotalAmount()}`;
       .toFixed(0)
       .toString();
 
-    return i18n.t('ns1:tx.form.details.gas_limit', { gas_limit: gasLimitBn });
+    return i18n.t(`${packageNS}:tx.form.details.gas_limit`, {
+      gas_limit: gasLimitBn
+    });
   };
 
   renderFee = () => {
@@ -57,7 +59,7 @@ ${this.renderTotalAmount()}`;
       .toFixed(9)
       .toString()}`;
 
-    return i18n.t('ns1:tx.form.details.fee', { fee });
+    return i18n.t(`${packageNS}:tx.form.details.fee`, { fee });
   };
 
   renderTotalAmount = () => {
@@ -74,7 +76,7 @@ ${this.renderTotalAmount()}`;
       'ether'
     ).toString()}`;
 
-    return i18n.t('ns1:tx.form.details.total_amount', {
+    return i18n.t(`${packageNS}:tx.form.details.total_amount`, {
       total_amount: totalAmount
     });
   };
@@ -87,7 +89,7 @@ ${this.renderTotalAmount()}`;
         <div className='form_field'>
           <div hidden={!showDetails}>
             <label htmlFor='txDetails'>
-              {i18n.t('ns1:tx.form.details.title')}
+              {i18n.t(`${packageNS}:tx.form.details.title`)}
             </label>
             <textarea
               className='-sm-details'

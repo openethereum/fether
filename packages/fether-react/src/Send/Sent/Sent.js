@@ -11,7 +11,7 @@ import light from '@parity/light.js-react';
 import { withProps } from 'recompose';
 import { Modal } from 'fether-ui';
 
-import i18n from '../../i18n';
+import i18n, { packageNS } from '../../i18n';
 import RequireHealthOverlay from '../../RequireHealthOverlay';
 import check from '../../assets/img/icons/check.svg';
 import loading from '../../assets/img/icons/loading.svg';
@@ -82,13 +82,13 @@ class Sent extends Component {
     }
 
     if (confirmations > 0) {
-      return i18n.t('ns1:tx.sent.waiting_confirmations_receiving', {
+      return i18n.t(`${packageNS}:tx.sent.waiting_confirmations_receiving`, {
         progress: `${confirmations}/${MIN_CONFIRMATIONS}`
       });
     }
 
     if (txStatus.confirmed) {
-      return i18n.t('ns1:tx.sent.waiting_confirmed');
+      return i18n.t(`${packageNS}:tx.sent.waiting_confirmed`);
     }
 
     if (txStatus.failed) {
@@ -123,17 +123,17 @@ class Sent extends Component {
       return (
         <span>
           {confirmations >= MIN_CONFIRMATIONS
-            ? i18n.t('ns1:tx.sent.confirmed')
-            : i18n.t('ns1:tx.sent.submitted')}
+            ? i18n.t(`${packageNS}:tx.sent.confirmed`)
+            : i18n.t(`${packageNS}:tx.sent.submitted`)}
         </span>
       );
     }
 
     if (txStatus.failed) {
-      return i18n.t('ns1:tx.sent.error');
+      return i18n.t(`${packageNS}:tx.sent.error`);
     }
 
-    return i18n.t('ns1:tx.header_sending');
+    return i18n.t(`${packageNS}:tx.header_sending`);
   };
 
   renderGoHomepage = () => {
@@ -152,7 +152,7 @@ class Sent extends Component {
           disabled={confirmations < MIN_CONFIRMATIONS}
           onClick={this.handleGoToHomepage}
         >
-          {i18n.t('ns1:navigation.go_back')}
+          {i18n.t(`${packageNS}:navigation.go_back`)}
         </button>
       </nav>
     );
@@ -177,7 +177,7 @@ class Sent extends Component {
           rel='noopener noreferrer'
         >
           <button className='button -tiny'>
-            {i18n.t('ns1:tx.blockscout')}
+            {i18n.t(`${packageNS}:tx.blockscout`)}
           </button>
         </a>
       );

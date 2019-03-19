@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import { AccountCard, Card, Form as FetherForm } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 
-import i18n from '../../../i18n';
+import i18n, { packageNS } from '../../../i18n';
 import RequireHealthOverlay from '../../../RequireHealthOverlay';
 import AccountImportOptions from '../AccountImportOptions';
 
@@ -56,7 +56,9 @@ class AccountRewritePhrase extends Component {
             <AccountImportOptions />
           ) : (
             <p>
-              {i18n.t('ns1:account.phrase_rewrite.label_msg_rewrite_phrase')}
+              {i18n.t(
+                `${packageNS}:account.phrase_rewrite.label_msg_rewrite_phrase`
+              )}
             </p>
           )}
         </div>
@@ -64,7 +66,9 @@ class AccountRewritePhrase extends Component {
         <FetherForm.Field
           autoFocus
           as='textarea'
-          label={i18n.t('ns1:account.phrase_rewrite.label_rewrite_phrase')}
+          label={i18n.t(
+            `${packageNS}:account.phrase_rewrite.label_rewrite_phrase`
+          )}
           onChange={this.handleChange}
           required
           value={value}
@@ -77,7 +81,7 @@ class AccountRewritePhrase extends Component {
               onClick={history.goBack}
               type='button'
             >
-              {i18n.t('ns1:navigation.back')}
+              {i18n.t(`${packageNS}:navigation.back`)}
             </button>
           )}
           {this.renderButton()}
@@ -93,10 +97,13 @@ class AccountRewritePhrase extends Component {
           <AccountCard
             address={address}
             name={
-              address && !name ? i18n.t('ns1:account.existing.no_name') : name
+              address && !name
+                ? i18n.t(`${packageNS}:account.existing.no_name`)
+                : name
             }
             drawers={body}
             i18n={i18n}
+            packageNS={packageNS}
           />
         )}
       </RequireHealthOverlay>
@@ -114,7 +121,7 @@ class AccountRewritePhrase extends Component {
     if (!isImport) {
       return (
         <button className='button' disabled={value !== bip39Phrase}>
-          {i18n.t('ns1:navigation.next')}
+          {i18n.t(`${packageNS}:navigation.next`)}
         </button>
       );
     }
@@ -122,7 +129,7 @@ class AccountRewritePhrase extends Component {
     // If we are importing an existing account, the button goes to the next step
     return (
       <button className='button' disabled={!value.length || isLoading}>
-        {i18n.t('ns1:navigation.next')}
+        {i18n.t(`${packageNS}:navigation.next`)}
       </button>
     );
   };

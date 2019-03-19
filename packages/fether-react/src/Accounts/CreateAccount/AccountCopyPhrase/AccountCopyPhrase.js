@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import { AccountCard } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 
-import i18n from '../../../i18n';
+import i18n, { packageNS } from '../../../i18n';
 import RequireHealthOverlay from '../../../RequireHealthOverlay';
 
 @inject('createAccountStore')
@@ -40,15 +40,19 @@ class AccountCopyPhrase extends Component {
           drawers={[
             <form key='createAccount' onSubmit={this.handleSubmit}>
               <div className='text'>
-                <p>{i18n.t('ns1:account.create.copy_phrase.msg1')}</p>
+                <p>{i18n.t(`${packageNS}:account.create.copy_phrase.msg1`)}</p>
               </div>
               <div className='text -code'>{bip39Phrase}</div>
               <div className='text'>
                 <div className='text -tiny'>
-                  {i18n.t('ns1:account.create.copy_phrase.msg2')}
+                  {i18n.t(`${packageNS}:account.create.copy_phrase.msg2`)}
                   <ul className='-bulleted'>
-                    <li>{i18n.t('ns1:account.create.copy_phrase.msg3')}</li>
-                    <li>{i18n.t('ns1:account.create.copy_phrase.msg4')}</li>
+                    <li>
+                      {i18n.t(`${packageNS}:account.create.copy_phrase.msg3`)}
+                    </li>
+                    <li>
+                      {i18n.t(`${packageNS}:account.create.copy_phrase.msg4`)}
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -59,16 +63,17 @@ class AccountCopyPhrase extends Component {
                     onClick={history.goBack}
                     type='button'
                   >
-                    {i18n.t('ns1:navigation.back')}
+                    {i18n.t(`${packageNS}:navigation.back`)}
                   </button>
                 )}
                 <button autoFocus className='button'>
-                  {i18n.t('ns1:navigation.next')}
+                  {i18n.t(`${packageNS}:navigation.next`)}
                 </button>
               </nav>
             </form>
           ]}
           i18n={i18n}
+          packageNS={packageNS}
         />
       </RequireHealthOverlay>
     );

@@ -6,7 +6,7 @@
 import React, { Component } from 'react';
 import { Modal } from 'fether-ui';
 
-import i18n from '../../i18n';
+import i18n, { packageNS } from '../../i18n';
 import RequireHealthOverlay from '../../RequireHealthOverlay';
 import withTokens from '../../utils/withTokens';
 import loading from '../../assets/img/icons/loading.svg';
@@ -31,10 +31,12 @@ class TokensList extends Component {
     return (
       <RequireHealthOverlay require='sync'>
         <Modal
-          description={i18n.t('ns1:tokens.token_list.modal.description')}
+          description={i18n.t(
+            `${packageNS}:tokens.token_list.modal.description`
+          )}
           fullscreen={false}
           icon={loading}
-          title={i18n.t('ns1:tokens.token_list.modal.title')}
+          title={i18n.t(`${packageNS}:tokens.token_list.modal.title`)}
           visible={isLoadingAccountTokens}
         />
         <div className='window_content'>

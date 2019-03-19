@@ -10,7 +10,7 @@ import { inject, observer } from 'mobx-react';
 import { Link, Redirect } from 'react-router-dom';
 import { withProps } from 'recompose';
 
-import i18n from '../../i18n';
+import i18n, { packageNS } from '../../i18n';
 import RequireHealthOverlay from '../../RequireHealthOverlay';
 import TokenAddress from '../../Tokens/TokensList/TokenAddress';
 import withAccount from '../../utils/withAccount.js';
@@ -57,13 +57,15 @@ class Unlock extends Component {
         <Header
           left={
             <Link to={`/tokens/${address}`} className='icon -back'>
-              {i18n.t('ns1:navigation.close')}
+              {i18n.t(`${packageNS}:navigation.close`)}
             </Link>
           }
           title={
             token && (
               <h1>
-                {i18n.t('ns1:tx.header_send_prefix', { token: token.name })}
+                {i18n.t(`${packageNS}:tx.header_send_prefix`, {
+                  token: token.name
+                })}
               </h1>
             )
           }
@@ -81,14 +83,14 @@ class Unlock extends Component {
                       className='form_field_value'
                       disabled
                       defaultValue={tx.to}
-                      label={i18n.t('ns1:tx.form.field.to')}
+                      label={i18n.t(`${packageNS}:tx.form.field.to`)}
                     />
 
                     <FetherForm.Field
                       className='form_field_value'
                       disabled
                       defaultValue={`${tx.amount} ${token.symbol}`}
-                      label={i18n.t('ns1:tx.form.field.amount')}
+                      label={i18n.t(`${packageNS}:tx.form.field.amount`)}
                     />
                   </div>,
                   <Form
@@ -97,12 +99,12 @@ class Unlock extends Component {
                     render={({ handleSubmit, pristine, submitting }) => (
                       <form noValidate onSubmit={handleSubmit}>
                         <div className='text'>
-                          <p>{i18n.t('ns1:tx.form.label_unlock')}</p>
+                          <p>{i18n.t(`${packageNS}:tx.form.label_unlock`)}</p>
                         </div>
 
                         <Field
                           autoFocus
-                          label={i18n.t('ns1:tx.form.field.password')}
+                          label={i18n.t(`${packageNS}:tx.form.field.password`)}
                           name='password'
                           render={FetherForm.Field}
                           required
@@ -115,14 +117,14 @@ class Unlock extends Component {
                             onClick={history.goBack}
                             type='button'
                           >
-                            {i18n.t('ns1:navigation.back')}
+                            {i18n.t(`${packageNS}:navigation.back`)}
                           </button>
 
                           <button
                             className='button -submit'
                             disabled={pristine || submitting}
                           >
-                            {i18n.t('ns1:tx.form.button_confirm_tx')}
+                            {i18n.t(`${packageNS}:tx.form.button_confirm_tx`)}
                           </button>
                         </nav>
                       </form>

@@ -12,6 +12,7 @@ export class InputFile extends React.PureComponent {
     i18n: PropTypes.object,
     label: PropTypes.string.isRequired,
     onChangeFile: PropTypes.func.isRequired,
+    packageNS: PropTypes.string,
     required: PropTypes.bool,
     value: PropTypes.any
   };
@@ -55,7 +56,7 @@ export class InputFile extends React.PureComponent {
   };
 
   render () {
-    const { i18n, label } = this.props;
+    const { i18n, label, packageNS } = this.props;
 
     return (
       <Dropzone
@@ -69,7 +70,7 @@ export class InputFile extends React.PureComponent {
           <div className='dropzone -md'>
             <label htmlFor='backupKeyfile'>{label}</label>
             <button type='button' className='button' onClick={() => open()}>
-              {i18n.t('ns1:ui.form_input_file.select_file')}
+              {i18n.t(`${packageNS}:ui.form_input_file.select_file`)}
             </button>
           </div>
         )}
