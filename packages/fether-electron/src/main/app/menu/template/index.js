@@ -116,7 +116,7 @@ const getMenubarMenuTemplate = fetherApp => {
     ]
   };
 
-  let template = [
+  const template = [
     fileTab,
     process.platform === 'darwin' ? editTabMacOS : editTab,
     process.platform === 'win32' ? viewTabWindowsOS : viewTab,
@@ -156,7 +156,7 @@ const getMenubarMenuTemplate = fetherApp => {
 
 const getContextTrayMenuTemplate = fetherApp => {
   if (fetherApp.options.withTaskbar) {
-    let template = [
+    const template = [
       {
         label: 'Show/Hide Fether',
         click () {
@@ -184,7 +184,7 @@ const getContextTrayMenuTemplate = fetherApp => {
 };
 
 const getContextWindowMenuTemplate = fetherApp => {
-  let template = getMenubarMenuTemplate(fetherApp);
+  const template = getMenubarMenuTemplate(fetherApp);
 
   if (fetherApp.options.withTaskbar) {
     // Remove File and Help menus in taskbar mode for window context menu
