@@ -116,7 +116,7 @@ const getMenubarMenuTemplate = fetherApp => {
     ]
   };
 
-  let template = [
+  const template = [
     fileTab,
     process.platform === 'darwin' ? editTabMacOS : editTab,
     process.platform === 'win32' ? viewTabWindowsOS : viewTab,
@@ -167,16 +167,24 @@ const getContextTrayMenuTemplate = fetherApp => {
             fetherApp.win.focus();
           }
         }
-      },
-      { label: 'Quit', role: 'quit' }
+      }
     ];
+
+    if (process.env.NODE_ENV !== 'production') {
+      template.push({
+        label: 'Reload',
+        click: () => fetherApp.win.webContents.reload()
+      });
+    }
+
+    template.push({ label: 'Quit', role: 'quit' });
 
     return template;
   }
 };
 
 const getContextWindowMenuTemplate = fetherApp => {
-  let template = getMenubarMenuTemplate(fetherApp);
+  const template = getMenubarMenuTemplate(fetherApp);
 
   if (fetherApp.options.withTaskbar) {
     // Remove File and Help menus in taskbar mode for window context menu
