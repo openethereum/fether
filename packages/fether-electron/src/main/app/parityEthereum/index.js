@@ -49,7 +49,7 @@ class ParityEthereum {
       // Parity Ethereum isn't running: run the bundled binary
       await this.run();
       pino.info('Running Parity Ethereum');
-      return true;
+      resolve(true);
     })
       .then(isRunning => {
         // Notify the renderers

@@ -49,6 +49,12 @@ if (foundPath) {
           versionRequirement
         );
         return downloadParity();
+      } else {
+        console.log(
+          'Bundled Parity Ethereum %s matches required version %s',
+          version,
+          versionRequirement
+        );
       }
     })
     .catch(e => {
