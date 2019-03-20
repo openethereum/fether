@@ -14,7 +14,7 @@ import withAccount from '../utils/withAccount';
 import Health from '../Health';
 
 /*
-  The user skipped phrase rewrite during account creation.
+  feat #100: The user skipped phrase rewrite during account creation.
   Then ->
     Two cases:
     1. The user hasn't confirmed recovery phrase backup yet.
@@ -175,19 +175,19 @@ class BackupPhrase extends Component {
       : 'View Recovery Phrase';
 
     return (
-      <div>
-        <Header
-          left={
-            <Link className='icon -back' to='/accounts'>
-              Back
-            </Link>
-          }
-          title={<h1>{title}</h1>}
-        />
+      <React.Fragment>
+        <RequireHealthOverlay require='node'>
+          <Header
+            left={
+              <Link className='icon -back' to='/accounts'>
+                Back
+              </Link>
+            }
+            title={<h1>{title}</h1>}
+          />
 
-        <div className='window_content'>
-          <div className='box -padded'>
-            <RequireHealthOverlay require='node'>
+          <div className='window_content'>
+            <div className='box -padded'>
               <AccountCard
                 address={address}
                 name={name}
@@ -197,19 +197,50 @@ class BackupPhrase extends Component {
                       ? this.renderCopyAndRewrite()
                       : this.renderPasswordForm()}
                     {needsRewrite && unlocked ? this.renderTips() : null}
+                    {unlocked && this.renderButtons()}
                     {error}
                   </div>
                 ]}
               />
-              <nav className='footer-nav'>
-                <div className='footer-nav_status'>
-                  <Health />
-                </div>
-              </nav>
-            </RequireHealthOverlay>
+            </div>
           </div>
-        </div>
-      </div>
+          <nav className='footer-nav'>
+            <div className='footer-nav_status'>
+              <Health />
+            </div>
+          </nav>
+        </RequireHealthOverlay>
+      </React.Fragment>
+    );
+  }
+
+  renderButtons () {
+    const { phrase, phraseRewrite, step } = this.state;
+    const {
+      location: { pathname }
+    } = this.props;
+
+    const needsRewrite = pathname.split('/')[3] === 'true';
+
+    return (
+      <nav className='form-nav -space-around'>
+        <button className='button -back' onClick={this.prevStep} type='button'>
+          Back
+        </button>
+        {step === 1 ? (
+          <button autoFocus className='button' onClick={this.nextStep}>
+            {needsRewrite ? 'Next' : 'Done'}
+          </button>
+        ) : (
+          <button
+            autoFocus
+            className='button'
+            disabled={phraseRewrite !== phrase}
+          >
+            Confirm
+          </button>
+        )}
+      </nav>
     );
   }
 
@@ -244,18 +275,6 @@ class BackupPhrase extends Component {
         >
           {phrase}
         </div>
-        <nav className='form-nav -space-around'>
-          <button
-            className='button -back'
-            onClick={this.prevStep}
-            type='button'
-          >
-            Back
-          </button>
-          <button className='button' onClick={this.nextStep}>
-            {needsRewrite ? 'Next' : 'Done'}
-          </button>
-        </nav>
       </div>
     );
   }
@@ -296,7 +315,7 @@ class BackupPhrase extends Component {
   }
 
   renderRewriteForm () {
-    const { phrase, phraseRewrite } = this.state;
+    const { phraseRewrite } = this.state;
 
     return (
       <div>
@@ -314,23 +333,6 @@ class BackupPhrase extends Component {
             rows={3}
             value={phraseRewrite}
           />
-
-          <nav className='form-nav -space-around'>
-            <button
-              className='button -back'
-              onClick={this.prevStep}
-              type='button'
-            >
-              Back
-            </button>
-            <button
-              autoFocus
-              className='button'
-              disabled={phraseRewrite !== phrase}
-            >
-              Confirm
-            </button>
-          </nav>
         </form>
       </div>
     );
@@ -338,33 +340,56 @@ class BackupPhrase extends Component {
 
   renderTips () {
     const { step } = this.state;
-    // add fade animation as final attention to the important message before confirmation.
-    const classname = `text ${step === 2 ? '-fade' : ''} -space-around`;
-
     return (
-      <div className={classname}>
+      <div className='text -space-around'>
         <b>IMPORTANT</b>
         <div className='text -tiny'>
-          <ul className='-bulleted'>
-            <li>
-              {' '}
-              Copy down your recovery phrase somewhere secure in case you need
-              to recover your account in the future.{' '}
-              <b> Skipping this step is NOT recommended. </b>
-            </li>
-            <li>
-              {' '}
-              You can view and copy your recovery phrase later on by selecting
-              "View Recovery Phrase" from your account.{' '}
-              <b> Note that you need your account password to do so. </b>{' '}
-            </li>
-            <li>
-              {' '}
-              If you lose your recovery phrase and you did not perform a JSON
-              Backup (select "Backup Account" from the account menu),{' '}
-              <b> your wallet cannot be recovered </b>{' '}
-            </li>
-          </ul>
+          {step === 1 ? (
+            <ul className='-bulleted'>
+              <li>
+                {' '}
+                Write down this recovery phrase to store it somewhere secure.{' '}
+                <b> A picture on your phone is not safe!</b> If you lose it you
+                may not be able to recover your account.
+              </li>
+              <li>
+                {' '}
+                <b>
+                  Anyone in possession of this recovery phrase can access and
+                  potentially drain your funds.{' '}
+                </b>{' '}
+                It must be stored securely offline.
+              </li>
+            </ul>
+          ) : (
+            <ul className='-bulleted'>
+              <li>
+                {' '}
+                If someone get holds of this recovery phrase, they can steal
+                your funds.{' '}
+                <b>
+                  You must keep this recovery phrase somewhere safe, preferably
+                  offline.
+                </b>{' '}
+                A picture on your phone is not safe!
+              </li>
+              <li>
+                {' '}
+                <b>
+                  There are two ways to recover you account, should you lose
+                  access to it:
+                </b>
+                <ol>
+                  <li> 1. This Recovery Phrase. </li>
+                  <li> 2. Account Backup JSON Keyfile + Account Password. </li>
+                </ol>
+                <b>
+                  If you lose both of these, no-one can help you recover your
+                  account!
+                </b>
+              </li>
+            </ul>
+          )}
         </div>
       </div>
     );
