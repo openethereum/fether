@@ -27,6 +27,7 @@
     border-radius: 0.25rem;
     min-height: 15rem;
     position: relative;
+    overflow-y: auto;
 
     .window_content {
       min-height: 7.5rem;
