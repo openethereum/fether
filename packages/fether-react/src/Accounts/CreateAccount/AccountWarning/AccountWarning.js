@@ -50,19 +50,19 @@ class AccountWarning extends PureComponent {
               </li>
             </ul>
           </div>
+          <nav className='form-nav -space-around'>
+            <button
+              className='button -back'
+              onClick={history.goBack}
+              type='button'
+            >
+              Back
+            </button>
+            <button className='button' onClick={this.handleNext}>
+              I Understand.
+            </button>
+          </nav>
         </Card>
-        <nav className='form-nav -space-around'>
-          <button
-            className='button -back'
-            onClick={history.goBack}
-            type='button'
-          >
-            Back
-          </button>
-          <button className='button' onClick={this.handleNext}>
-            I Understand.
-          </button>
-        </nav>
       </RequireHealthOverlay>
     );
   }
