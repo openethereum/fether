@@ -230,6 +230,7 @@ class BackupPhrase extends Component {
             autoFocus
             className='button'
             disabled={phraseRewrite !== phrase}
+            onClick={this.handleSubmit}
           >
             Confirm
           </button>
