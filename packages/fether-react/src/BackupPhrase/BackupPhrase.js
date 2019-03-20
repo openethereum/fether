@@ -11,7 +11,6 @@ import { Link } from 'react-router-dom';
 
 import RequireHealthOverlay from '../RequireHealthOverlay';
 import withAccount from '../utils/withAccount';
-import Health from '../Health';
 
 /*
   feat #100: The user skipped phrase rewrite during account creation.
@@ -204,11 +203,6 @@ class BackupPhrase extends Component {
               />
             </div>
           </div>
-          <nav className='footer-nav'>
-            <div className='footer-nav_status'>
-              <Health />
-            </div>
-          </nav>
         </RequireHealthOverlay>
       </React.Fragment>
     );
@@ -266,7 +260,7 @@ class BackupPhrase extends Component {
       <div>
         <div className='text -centered'>
           {needsRewrite
-            ? 'Please write your recovery phrase on a piece of paper.'
+            ? 'Write down your recovery phrase'
             : 'Make sure not to let anyone see your recovery phrase.'}
         </div>
         <div
@@ -376,7 +370,7 @@ class BackupPhrase extends Component {
               <li>
                 {' '}
                 <b>
-                  There are two ways to recover you account, should you lose
+                  There are two ways to recover your account, should you lose
                   access to it:
                 </b>
                 <ol>
