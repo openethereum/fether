@@ -52,7 +52,7 @@ class RequireParityVersion extends Component {
         return (
           <Modal
             title='Unsupported version'
-            description={`You are running Parity Ethereum ${friendlyVersion}, which is unsupported. Please upgrade to Parity Ethereum ${requiredVersion}`}
+            description={`You are running Parity Ethereum ${friendlyVersion}, which is unsupported. Please use Parity Ethereum ${requiredVersion}`}
             visible
           />
         );
