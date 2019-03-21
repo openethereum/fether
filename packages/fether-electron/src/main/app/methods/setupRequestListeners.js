@@ -6,9 +6,12 @@
 import electron from 'electron';
 
 import messages from '../messages';
+import Pino from '../utils/pino';
+
+const pino = Pino();
 const { ipcMain, session } = electron;
 
-console.log(
+pino.debug(
   'Configuring Content-Security-Policy for environment: ',
   process.env.NODE_ENV
 );
