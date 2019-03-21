@@ -24,14 +24,14 @@ const CSP =
     connect-src 'self' file: http: https: ws: wss:;
     img-src 'self' 'unsafe-inline' file: data: blob: http: https:;
     style-src 'self' 'unsafe-inline' file: blob:;
-    object-src 'none';
+    worker-src blob:;
   `
     : `
     default-src 'none';
     script-src file: 'unsafe-inline';
     connect-src http: https: ws: wss:;
     img-src 'self' 'unsafe-inline' file: data: blob: http: https:;
-    style-src 'unsafe-inline' blob: file:;
+    style-src 'unsafe-inline' file: blob:;
     worker-src blob:;
   `;
 
