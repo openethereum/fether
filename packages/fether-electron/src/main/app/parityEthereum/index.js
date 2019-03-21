@@ -34,15 +34,15 @@ class ParityEthereum {
 
     // Run the bundled Parity Ethereum if needed and wanted
     return new Promise(async (resolve, reject) => {
-      // User ran Fether with --no-run-parity: don't run the bundled binary
-      if (!cli.runParity) {
-        resolve(false);
-        return;
-      }
-
       // Parity Ethereum is already running: don't run the bundled binary
       if (await this.isRunning()) {
         resolve(true);
+        return;
+      }
+
+      // User ran Fether with --no-run-parity: don't run the bundled binary
+      if (!cli.runParity) {
+        resolve(false);
         return;
       }
 
