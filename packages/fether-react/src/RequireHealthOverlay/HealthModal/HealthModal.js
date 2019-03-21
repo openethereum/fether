@@ -6,7 +6,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { branch } from 'recompose';
-import { chainName$, withoutLoading } from '@parity/light.js';
+import { chainName$ } from '@parity/light.js';
 import light from '@parity/light.js-react';
 import { Modal } from 'fether-ui';
 
@@ -22,7 +22,7 @@ import loading from '../../assets/img/icons/loading.svg';
   }) => syncing,
   // Only call light.js chainName$ if we're syncing
   light({
-    chainName: () => chainName$().pipe(withoutLoading())
+    chainName: () => chainName$()
   })
 )
 class HealthModal extends Component {
@@ -55,9 +55,7 @@ class HealthModal extends Component {
       health: { status }
     } = this.props;
 
-    if (status.downloading) {
-      return 'Downloading Parity Ethereum...';
-    } else if (status.launching) {
+    if (status.launching) {
       return 'Launching the node...';
     } else if (!status.nodeConnected && !status.internet) {
       return 'No internet. No node connected';
@@ -84,10 +82,6 @@ class HealthModal extends Component {
 
     if (!status.internet) {
       return 'Please connect to the Internet';
-    } else if (status.downloading) {
-      return `Downloading Parity Ethereum... (${
-        payload.downloading.syncPercentage
-      }%)`;
     } else if (!status.clockSync) {
       return `Mac: System Preferences -> Date & Time -> Uncheck and recheck "Set date and time automatically"
       Windows: Control Panel -> "Clock, Language, and Region" -> "Date and Time" -> Uncheck and recheck "Set date and time automatically"`;

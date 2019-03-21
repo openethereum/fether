@@ -5,6 +5,8 @@
 
 /* global __static */
 
+import path from 'path';
+
 const appIsPackaged = !process.defaultApp;
 
 /**
@@ -16,4 +18,12 @@ const staticPath = appIsPackaged
   ? __dirname.replace(/app\.asar$/, 'static')
   : __static;
 
-export default staticPath;
+/**
+ * Get the path to the bundled Parity Ethereum binary.
+ */
+const bundledParityPath =
+  process.platform === 'win32'
+    ? path.join(staticPath, 'parity.exe')
+    : path.join(staticPath, 'parity');
+
+export { staticPath, bundledParityPath };

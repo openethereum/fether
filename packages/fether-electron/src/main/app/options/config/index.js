@@ -6,7 +6,7 @@
 import path from 'path';
 import url from 'url';
 
-import staticPath from '../../utils/staticPath';
+import { staticPath } from '../../utils/paths';
 
 const INDEX_HTML_PATH =
   process.env.ELECTRON_START_URL ||

@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import BigNumber from 'bignumber.js';
 import { Clickable, Form as FetherForm, Header } from 'fether-ui';
 import createDecorator from 'final-form-calculate';
-import { chainId$, withoutLoading } from '@parity/light.js';
+import { chainId$ } from '@parity/light.js';
 import debounce from 'debounce-promise';
 import { Field, Form } from 'react-final-form';
 import { fromWei, toWei } from '@parity/api/lib/util/wei';
@@ -38,7 +38,7 @@ const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 }))
 @withAccount
 @light({
-  chainId: () => chainId$().pipe(withoutLoading())
+  chainId: () => chainId$()
 })
 @withBalance // Balance of current token (can be ETH)
 @withEthBalance // ETH balance
