@@ -9,6 +9,7 @@ import { killParity } from '@parity/electron';
 
 import Pino from './app/utils/pino';
 import FetherApp from './app';
+import { TRUSTED_URLS } from './app/constants';
 import fetherAppOptions from './app/options';
 
 const { app, shell } = electron;
@@ -111,26 +112,65 @@ app.on(
     // Prevent default behaviour of continuing to load the page
     event.preventDefault();
 
-    // FIXME - verify self-signed certificate
+    let isValidCertificate = false;
 
-    if (url === 'https://localhost:3000/') {
+    // FIXME - in development environment validate own certificate,
+    // either self-signed or signed by a local root,
+    // that has been trusted in the trust store of the OS.
+    //
+    // Reference: https://letsencrypt.org/docs/certificates-for-localhost/
+
+    if (isValidCertificate) {
       callback(true); // eslint-disable-line
     } else {
-      // Disallow insecure (invalid) certificates like self signed
+      // Disallow insecure (invalid) certificates
       callback(false); // eslint-disable-line
     }
   }
 );
 
-/**
- * Security.
- */
+// FIXME - uncomment and show how Linux users may create a valid certificate
+// and perhaps access it using an environment variable
+
+// /**
+//  * Security. Verify custom TLS certificates imported into the platform
+//  * certificate store on Linux.
+//  *
+//  * Reference: Page 13 of https://doyensec.com/resources/us-17-Carettoni-Electronegativity-A-Study-Of-Electron-Security-wp.pdf
+//  */
+// if (!['darwin', 'win32'].includes(process.platform)) {
+//   const options = {
+//     certificate: CERTIFICATE_PKCS12_FILE_PATH,
+//     password: CERTIFICATE_PASSPHRASE
+//   };
+
+//   // Reference: https://electronjs.org/docs/all#appimportcertificateoptions-callback-linux
+//   app.importCertificate(options, importCertificateResult => {
+//     const isValidCertificate = importCertificateResult === 0;
+
+//     return isValidCertificate;
+//   });
+// }
+
+// Security
 app.on('web-contents-created', (eventOuter, win) => {
   win.on('will-navigate', (event, url) => {
+    // FIXME - check that parser is memory-safe
+    //
+    // Reference: https://letsencrypt.org/docs/certificates-for-localhost/
+
     const parsedUrl = parseUrl(url);
 
-    if (parsedUrl.origin !== 'https://localhost:3000') {
-      event.preventDefault();
+    pino.debug(
+      'Processing request to navigate to url in will-navigate listener: ',
+      parsedUrl
+    );
+
+    if (!TRUSTED_URLS.includes(parsedUrl.origin)) {
+      pino.info(
+        'Unable to navigate to untrusted content url due to will-navigate listener: ',
+        parsedUrl
+      );
     }
   });
 
@@ -167,14 +207,24 @@ app.on('web-contents-created', (eventOuter, win) => {
 
       // FIXME - Checking for and only allow opening trusted urls
 
-      // const parsedUrl = parseUrl(url);
+      const parsedUrl = parseUrl(url);
 
-      // if (parsedUrl.origin !== 'https://localhost:3000') {
-      //   pino.info('Unable to open external link to untrusted content');
-      //   return;
-      // }
+      pino.debug(
+        'Processing request to navigate to url in new-window listener: ',
+        parsedUrl
+      );
 
-      // Check for a valid certificate in 'certificate-error' event handler
+      if (!TRUSTED_URLS.includes(parsedUrl.origin)) {
+        pino.info('Unable to open external link to untrusted content');
+        pino.info(
+          'Unable to open new window with untrusted content url due to new-window listener: ',
+          parsedUrl
+        );
+
+        return;
+      }
+
+      // Note that we check for a valid certificate in 'certificate-error' event handler
       // so we only allow trusted content.
       // See https://electronjs.org/docs/tutorial/security#14-do-not-use-openexternal-with-untrusted-content
       shell.openExternal(url);

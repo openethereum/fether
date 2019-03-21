@@ -6,6 +6,7 @@
 import electron from 'electron';
 
 import messages from '../messages';
+import { TRUSTED_URLS } from '../constants';
 import Pino from '../utils/pino';
 
 const pino = Pino();
@@ -70,26 +71,34 @@ function setupRequestListeners (fetherApp) {
     /* eslint-enable */
   });
 
-  // Limit specific permissions (i.e. `openExternal`) in response to events from particular origins
-  // to limit the exploitability of applications that load remote content
-  // References:
-  //   https://electronjs.org/docs/api/session#sessetpermissionrequesthandlerhandler
-  //   https://doyensec.com/resources/us-17-Carettoni-Electronegativity-A-Study-Of-Electron-Security-wp.pdf
+  /**
+   * Limit specific permissions (i.e. `openExternal`) in response to events from particular origins
+   * to limit the exploitability of applications that load remote content.
+   *
+   * References:
+   * https://electronjs.org/docs/api/session#sessetpermissionrequesthandlerhandler
+   * https://doyensec.com/resources/us-17-Carettoni-Electronegativity-A-Study-Of-Electron-Security-wp.pdf
+   */
   session.defaultSession.setPermissionRequestHandler(
     (webContents, permission, callback, details) => {
+      pino.debug(
+        'Processing request to open external link to url in setPermissionRequestHandler: ',
+        details.externalURL
+      );
+
       let permissionGranted = false;
-      const trustedURLs = [
-        'https://parity.io',
-        'https://github.com/paritytech/fether/issues/new',
-        'https://api.github.com/repos/paritytech/fether/releases/latest'
-      ];
 
       // FIXME - does not work
       if (
-        webContents.getURL() !== 'https://localhost:3000/' &&
+        webContents.getURL() !== 'https://127.0.0.1:3000/' &&
         permission === 'openExternal'
       ) {
-        if (trustedURLs.includes(details.externalURL)) {
+        if (!TRUSTED_URLS.includes(details.externalURL)) {
+          pino.info(
+            'Unable to open external link to untrusted content url due to setPermissionRequestHandler: ',
+            details.externalURL
+          );
+        } else {
           permissionGranted = true;
         }
 
