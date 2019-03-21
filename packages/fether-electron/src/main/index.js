@@ -100,72 +100,33 @@ app.on('quit', () => {
 });
 
 /**
- * Security. Intercept new-window events (i.e. `window.open`) by
- * overriding event.newGuest without using the supplied options tag
- * to try to mitigate risk of an exploit re-enabling node integration
- * despite being turned off in the configuration
- * (i.e. `nodeIntegration: false`).
+ * Security. Insecure TLS Validation - verify the application does not explicitly opt-out
+ * of TLS validation.
  *
- * References:
- * - https://www.electronjs.org/blog/webview-fix
- * - https://blog.scottlogic.com/2016/03/09/As-It-Stands-Electron-Security.html
+ * Reference: https://doyensec.com/resources/us-17-Carettoni-Electronegativity-A-Study-Of-Electron-Security-wp.pdf
  */
-app.on('web-contents-created', (event, win) => {
-  win.on(
-    'new-window',
-    (event, newURL, frameName, disposition, options, additionalFeatures) => {
-      event.newGuest = null;
+app.on(
+  'certificate-error',
+  (event, webContents, url, error, certificate, callback) => {
+    // Prevent default behaviour of continuing to load the page
+    event.preventDefault();
 
-      if (!options.webPreferences) {
-        options.webPreferences = {};
-      }
+    // FIXME - verify self-signed certificate
 
-      options.webPreferences.nodeIntegration = false;
-      options.webPreferences.nodeIntegrationInWorker = false;
-      options.webPreferences.webviewTag = false;
-      delete options.webPreferences.preload;
+    if (url === 'https://localhost:3000/') {
+      callback(true); // eslint-disable-line
+    } else {
+      // Disallow insecure (invalid) certificates like self signed
+      callback(false); // eslint-disable-line
     }
-  );
-});
+  }
+);
 
 /**
- * Security. Intercept and prevent new WebView (that may be used
- * by an attacker to gain access to the file system) in addition
- * to setting `webviewTag: false`
- *
- * Reference: https://www.electronjs.org/blog/webview-fix
+ * Security.
  */
-app.on('web-contents-created', (eventOuter, contents) => {
-  contents.on('will-attach-webview', (eventInner, webPreferences, params) => {
-    // Strip away preload scripts if unused or verify their location is legitimate
-    delete webPreferences.preload;
-    delete webPreferences.preloadURL;
-
-    // Disable Node.js integration
-    webPreferences.nodeIntegration = false;
-
-    // Verify URL being loaded
-    if (!params.src.startsWith('https://localhost.3000/')) {
-      eventOuter.preventDefault();
-      eventInner.preventDefault();
-    }
-  });
-
-  // Insecure TLS Validation - verify the application does not explicitly opt-out of TLS validation
-  // Reference: https://doyensec.com/resources/us-17-Carettoni-Electronegativity-A-Study-Of-Electron-Security-wp.pdf
-  app.on(
-    'certificate-error',
-    (event, webContents, url, error, certificate, callback) => {
-      if (url === 'https://localhost:3000/') {
-        // Proceed anyway
-        callback(true); // eslint-disable-line
-      } else {
-        callback(false); // eslint-disable-line
-      }
-    }
-  );
-
-  contents.on('will-navigate', (event, url) => {
+app.on('web-contents-created', (eventOuter, win) => {
+  win.on('will-navigate', (event, url) => {
     const parsedUrl = parseUrl(url);
 
     if (parsedUrl.origin !== 'https://localhost:3000') {
@@ -173,25 +134,56 @@ app.on('web-contents-created', (eventOuter, contents) => {
     }
   });
 
+  /**
+   * Security. Intercept new-window events (i.e. `window.open`) before opening
+   * external links in the browser by overriding event.newGuest without using
+   * the supplied options tag to try to mitigate risk of an exploit re-enabling
+   * node integration despite being turned off in the configuration
+   * (i.e. `nodeIntegration: false`).
+   *
+   * References:
+   * - https://www.electronjs.org/blog/webview-fix
+   * - https://blog.scottlogic.com/2016/03/09/As-It-Stands-Electron-Security.html
+   */
+  win.on(
+    'new-window',
+    (event, url, frameName, disposition, options, additionalFeatures) => {
+      event.preventDefault();
+
+      event.newGuest = null;
+
+      if (!options.webPreferences) {
+        options.webPreferences = {};
+      }
+
+      // Disable Node.js integration
+      options.webPreferences.nodeIntegration = false;
+      options.webPreferences.nodeIntegrationInWorker = false;
+      options.webPreferences.webviewTag = false;
+
+      // Strip away preload scripts if unused or verify their location is legitimate
+      delete options.webPreferences.preload;
+      delete options.webPreferences.preloadURL;
+
+      // FIXME - Checking for and only allow opening trusted urls
+
+      // const parsedUrl = parseUrl(url);
+
+      // if (parsedUrl.origin !== 'https://localhost:3000') {
+      //   pino.info('Unable to open external link to untrusted content');
+      //   return;
+      // }
+
+      // Check for a valid certificate in 'certificate-error' event handler
+      // so we only allow trusted content.
+      // See https://electronjs.org/docs/tutorial/security#14-do-not-use-openexternal-with-untrusted-content
+      shell.openExternal(url);
+    }
+  );
+
   // Security vulnerability fix https://electronjs.org/blog/window-open-fix
-  contents.on('-add-new-contents', event => {
+  win.on('-add-new-contents', event => {
     event.preventDefault();
-  });
-
-  // Open external links in browser
-  contents.on('new-window', (event, url) => {
-    event.preventDefault();
-
-    // const parsedUrl = parseUrl(url);
-
-    // if (parsedUrl.origin !== 'https://localhost:3000') {
-    //   pino.info('Unable to open external link to untrusted content');
-    //   return;
-    // }
-
-    // FIXME - determine how to modify this so it only works for trusted content.
-    // See https://electronjs.org/docs/tutorial/security#14-do-not-use-openexternal-with-untrusted-content
-    shell.openExternal(url);
   });
 });
 

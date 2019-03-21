@@ -130,6 +130,13 @@ const SECURITY_OPTIONS = {
      * to try and prevent attackers from controlling the new browser windows
      * with the `window.open` command and passing a WebView tag
      * (see `webView`) to enable `nodeIntegration`.
+     *
+     * If any webview's https://electronjs.org/docs/api/webview-tag are implemented
+     * then it is important to check if it is necessary to update security by
+     * implementing the `''will-attach-webview'` listener
+     * https://electronjs.org/blog/webview-fix to intercept and prevent
+     * a new WebView (that may be used by an attacker to gain access to the
+     * file system) in addition to setting `webviewTag: false`.
      */
     webviewTag: false, // Associated with `will-attach-webview`
     safeDialogs: true,
