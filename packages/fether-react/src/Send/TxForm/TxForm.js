@@ -15,8 +15,8 @@ import { inject, observer } from 'mobx-react';
 import { isAddress } from '@parity/api/lib/util/address';
 import light from '@parity/light.js-react';
 import { Link } from 'react-router-dom';
-import { startWith } from 'rxjs/operators';
 import { OnChange } from 'react-final-form-listeners';
+import { startWith } from 'rxjs/operators';
 import { withProps } from 'recompose';
 
 import { estimateGas } from '../../utils/transaction';
