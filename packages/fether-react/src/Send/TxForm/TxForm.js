@@ -15,7 +15,7 @@ import { inject, observer } from 'mobx-react';
 import { isAddress } from '@parity/api/lib/util/address';
 import light from '@parity/light.js-react';
 import { Link } from 'react-router-dom';
-import { map, startWith, delay, tap } from 'rxjs/operators';
+import { startWith } from 'rxjs/operators';
 import { OnChange } from 'react-final-form-listeners';
 import { withProps } from 'recompose';
 
@@ -49,7 +49,7 @@ const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
     transactionCountOf$(address).pipe(startWith(undefined))
 })
 @withBalance // Balance of current token (can be ETH)
-@withEthBalance
+@withEthBalance // ETH balance
 @observer
 class TxForm extends Component {
   state = {
@@ -243,7 +243,8 @@ class TxForm extends Component {
                       <form className='send-form' onSubmit={handleSubmit}>
                         <fieldset className='form_fields'>
                           {/* Unfortunately, we need to set these hidden fields
-                              for the 3 values that come from props. */}
+                              for the 3 values that come from props, even
+                              though they are already set in initialValues. */}
                           <Field name='chainId' render={() => null} />
                           <Field name='ethBalance' render={() => null} />
                           <Field name='transactionCount' render={() => null} />
@@ -418,7 +419,6 @@ class TxForm extends Component {
 
     try {
       const { token } = this.props;
-      const { chainId, ethBalance, transactionCount } = values;
 
       const preValidation = this.preValidate(values);
 
@@ -431,15 +431,15 @@ class TxForm extends Component {
       // come from props, and are passed into `values` via the form's
       // initialValues. As such, they don't have visible fields, so putting an
       // error here just means we're keeping the form state as not valid.
-      if (!chainId) {
+      if (!values.chainId) {
         return { chainId: 'Fetching chainId' };
       }
 
-      if (!ethBalance) {
+      if (!values.ethBalance) {
         return { ethBalance: 'Fetching ethBalance' };
       }
 
-      if (!transactionCount) {
+      if (!values.transactionCount) {
         return {
           transactionCount: 'Fetching transactionCount'
         };
@@ -459,7 +459,7 @@ class TxForm extends Component {
       if (
         this.estimatedTxFee(values)
           .plus(token.address === 'ETH' ? toWei(values.amount) : 0)
-          .gt(toWei(ethBalance))
+          .gt(toWei(values.ethBalance))
       ) {
         return token.address !== 'ETH'
           ? { amount: 'ETH balance too low to pay for gas' }
