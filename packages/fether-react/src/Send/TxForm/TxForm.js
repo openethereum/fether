@@ -451,7 +451,7 @@ class TxForm extends Component {
       }
 
       if (values.gas && values.gas.eq(-1)) {
-        return {};
+        return { amount: 'Unable to estimate gas...' };
       }
 
       // If the gas hasn't been calculated yet, then we don't show any errors,
