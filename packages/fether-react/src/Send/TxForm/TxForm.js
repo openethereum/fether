@@ -364,7 +364,7 @@ class TxForm extends Component {
     );
   }
 
-  renderNull = this.renderNull;
+  renderNull = () => null;
 
   /**
    * Prevalidate form on user's input. These validations are sync.
