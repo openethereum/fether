@@ -125,7 +125,7 @@ function downloadParity () {
           // Write to file and set a+x permissions
           const destinationPath = `${STATIC_DIRECTORY}/${name}`;
           return fsWriteFile(destinationPath, data)
-            .then(() => fsChmod(destinationPath, 755))
+            .then(() => fsChmod(destinationPath, 0o755))
             .then(() => destinationPath);
         });
       })
