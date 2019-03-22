@@ -163,13 +163,13 @@ app.on('web-contents-created', (eventOuter, win) => {
 
     pino.debug(
       'Processing request to navigate to url in will-navigate listener: ',
-      parsedUrl
+      parsedUrl.href
     );
 
-    if (!TRUSTED_URLS.includes(parsedUrl.origin)) {
+    if (!TRUSTED_URLS.includes(parsedUrl.href)) {
       pino.info(
         'Unable to navigate to untrusted content url due to will-navigate listener: ',
-        parsedUrl
+        parsedUrl.href
       );
     }
   });
@@ -196,13 +196,13 @@ app.on('web-contents-created', (eventOuter, win) => {
 
       pino.debug(
         'Processing request to navigate to url in new-window listener: ',
-        parsedUrl
+        parsedUrl.href
       );
 
-      if (!TRUSTED_URLS.includes(parsedUrl.origin)) {
+      if (!TRUSTED_URLS.includes(parsedUrl.href)) {
         pino.info(
           'Unable to open new window with untrusted content url due to new-window listener: ',
-          parsedUrl
+          parsedUrl.href
         );
 
         return;
