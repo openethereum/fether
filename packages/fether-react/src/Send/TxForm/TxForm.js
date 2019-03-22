@@ -245,9 +245,12 @@ class TxForm extends Component {
                           {/* Unfortunately, we need to set these hidden fields
                               for the 3 values that come from props, even
                               though they are already set in initialValues. */}
-                          <Field name='chainId' render={() => null} />
-                          <Field name='ethBalance' render={() => null} />
-                          <Field name='transactionCount' render={() => null} />
+                          <Field name='chainId' render={this.renderNull} />
+                          <Field name='ethBalance' render={this.renderNull} />
+                          <Field
+                            name='transactionCount'
+                            render={this.renderNull}
+                          />
 
                           <Field
                             as='textarea'
@@ -360,6 +363,8 @@ class TxForm extends Component {
       </div>
     );
   }
+
+  renderNull = this.renderNull;
 
   /**
    * Prevalidate form on user's input. These validations are sync.
