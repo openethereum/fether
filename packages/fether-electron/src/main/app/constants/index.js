@@ -3,8 +3,12 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-// See trustworthiness of 127.0.0.1 vs localhost: https://letsencrypt.org/docs/certificates-for-localhost/
+// Disallows users from using Fether with a remote node.
+// SSH tunnels are still possible.
+//
+// References: See trustworthiness of 127.0.0.1 vs localhost: https://letsencrypt.org/docs/certificates-for-localhost/
 const TRUSTED_URLS = [
+  'http://127.0.0.1:3000', // In dev mode it opens in http
   'https://127.0.0.1:3000',
   'wss://127.0.0.1:8546',
   'https://parity.io',

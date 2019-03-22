@@ -76,15 +76,15 @@ export class ParityStore {
   connectToApi = () => {
     // Get the provider, optionally from --ws-interface and --ws-port flags
     const [defaultInterface, defaultPort] = ['127.0.0.1', '8546'];
-    let provider = `ws://${defaultInterface}:${defaultPort}`;
+    let provider = `wss://${defaultInterface}:${defaultPort}`;
     if (ipcRenderer) {
-      provider = `ws://${wsInterface || defaultInterface}:${wsPort ||
+      provider = `wss://${wsInterface || defaultInterface}:${wsPort ||
         defaultPort}`;
     }
 
     debug(`Connecting to ${provider}.`);
     const api = new Api(
-      new Api.Provider.Ws(
+      new Api.Provider.WsSecure(
         provider,
         this.token.replace(/[^a-zA-Z0-9]/g, '') // Sanitize token
       )
