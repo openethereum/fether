@@ -4,8 +4,8 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { balanceOf$, chainId$, transactionCountOf$ } from '@parity/light.js';
 import BigNumber from 'bignumber.js';
+import { chainId$, transactionCountOf$ } from '@parity/light.js';
 import { Clickable, Form as FetherForm, Header } from 'fether-ui';
 import createDecorator from 'final-form-calculate';
 import debounce from 'debounce-promise';
@@ -24,14 +24,13 @@ import RequireHealthOverlay from '../../RequireHealthOverlay';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import TxDetails from './TxDetails';
 import withAccount from '../../utils/withAccount';
-import withBalance from '../../utils/withBalance';
+import withBalance, { withEthBalance } from '../../utils/withBalance';
 import withTokens from '../../utils/withTokens';
 
 const DEFAULT_AMOUNT_MAX_CHARS = 9;
 const MEDIUM_AMOUNT_MAX_CHARS = 14;
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
-const MINUS_ONE = new BigNumber(-1);
 
 @inject('parityStore', 'sendStore')
 @withTokens
@@ -40,15 +39,14 @@ const MINUS_ONE = new BigNumber(-1);
 }))
 @withAccount
 @light({
-  chainId: () => chainId$().pipe(startWith(undefined)), // Start with `undefined` not to block UI
+  // We need to wait for 3 values that might take time:
+  // - ethBalance: to check that we have enough to send amount+fees
+  // - chainId & transactionCount: needed to construct the tx
+  // For the three of them, we add the `startWith()` operator so that the UI is
+  // not blocked while waiting for their first response.
+  chainId: () => chainId$().pipe(startWith(undefined)),
   transactionCount: ({ account: { address } }) =>
-    transactionCountOf$(address).pipe(
-      delay(5000),
-      tap(a => console.log('GOT transactionCountOf', a.toString())),
-      // Start with some value not to block UI, needs to be a truthy value to
-      // taken into account by final-form
-      startWith(undefined)
-    )
+    transactionCountOf$(address).pipe(startWith(undefined))
 })
 @withBalance // Balance of current token (can be ETH)
 @withEthBalance
@@ -75,7 +73,6 @@ class TxForm extends Component {
               parityStore.api
             );
           } catch (error) {
-            console.error(error);
             return new BigNumber(-1);
           }
         }
@@ -202,10 +199,6 @@ class TxForm extends Component {
 
     const { showDetails } = this.state;
 
-    if (!ethBalance || !chainId || !transactionCount) {
-      return null;
-    }
-
     return (
       <div>
         <Header
@@ -233,7 +226,7 @@ class TxForm extends Component {
                       transactionCount,
                       ...tx
                     }}
-                    keepDirtyOnReinitialize
+                    keepDirtyOnReinitialize // Don't erase other fields when we get new initialValues
                     key='txForm'
                     mutators={{
                       recalculateMax: this.recalculateMax
@@ -249,6 +242,12 @@ class TxForm extends Component {
                     }) => (
                       <form className='send-form' onSubmit={handleSubmit}>
                         <fieldset className='form_fields'>
+                          {/* Unfortunately, we need to set these hidden fields
+                              for the 3 values that come from props. */}
+                          <Field name='chainId' render={() => null} />
+                          <Field name='ethBalance' render={() => null} />
+                          <Field name='transactionCount' render={() => null} />
+
                           <Field
                             as='textarea'
                             autoFocus
@@ -413,7 +412,6 @@ class TxForm extends Component {
    * the tx.
    */
   validateForm = debounce(values => {
-    console.log('CALLING validateForm', values);
     if (!values) {
       return;
     }
@@ -426,7 +424,6 @@ class TxForm extends Component {
 
       // preValidate return an error if a field isn't valid
       if (preValidation !== true) {
-        console.log('prevalidation did not pass');
         return preValidation;
       }
 
@@ -435,24 +432,20 @@ class TxForm extends Component {
       // initialValues. As such, they don't have visible fields, so putting an
       // error here just means we're keeping the form state as not valid.
       if (!chainId) {
-        console.log('chainId did not pass');
         return { chainId: 'Fetching chainId' };
       }
 
       if (!ethBalance) {
-        console.log('ethBalance did not pass');
         return { ethBalance: 'Fetching ethBalance' };
       }
 
       if (!transactionCount) {
-        console.log('transactionCount did not pass', transactionCount);
         return {
           transactionCount: 'Fetching transactionCount'
         };
       }
 
       if (values.gas && values.gas.eq(-1)) {
-        console.log('values.gas did not pass', values.gas);
         return {};
       }
 
@@ -472,8 +465,6 @@ class TxForm extends Component {
           ? { amount: 'ETH balance too low to pay for gas' }
           : { amount: "You don't have enough ETH balance" };
       }
-
-      console.log('passed');
     } catch (err) {
       console.error(err);
       return {
