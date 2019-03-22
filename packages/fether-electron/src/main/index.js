@@ -200,7 +200,6 @@ app.on('web-contents-created', (eventOuter, win) => {
       );
 
       if (!TRUSTED_URLS.includes(parsedUrl.origin)) {
-        pino.info('Unable to open external link to untrusted content');
         pino.info(
           'Unable to open new window with untrusted content url due to new-window listener: ',
           parsedUrl
