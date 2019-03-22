@@ -4,10 +4,10 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
+import { balanceOf$, chainId$, transactionCountOf$ } from '@parity/light.js';
 import BigNumber from 'bignumber.js';
 import { Clickable, Form as FetherForm, Header } from 'fether-ui';
 import createDecorator from 'final-form-calculate';
-import { chainId$ } from '@parity/light.js';
 import debounce from 'debounce-promise';
 import { Field, Form } from 'react-final-form';
 import { fromWei, toWei } from '@parity/api/lib/util/wei';
@@ -15,6 +15,7 @@ import { inject, observer } from 'mobx-react';
 import { isAddress } from '@parity/api/lib/util/address';
 import light from '@parity/light.js-react';
 import { Link } from 'react-router-dom';
+import { map, startWith, delay, tap } from 'rxjs/operators';
 import { OnChange } from 'react-final-form-listeners';
 import { withProps } from 'recompose';
 
@@ -23,13 +24,14 @@ import RequireHealthOverlay from '../../RequireHealthOverlay';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import TxDetails from './TxDetails';
 import withAccount from '../../utils/withAccount';
-import withBalance, { withEthBalance } from '../../utils/withBalance';
+import withBalance from '../../utils/withBalance';
 import withTokens from '../../utils/withTokens';
 
 const DEFAULT_AMOUNT_MAX_CHARS = 9;
 const MEDIUM_AMOUNT_MAX_CHARS = 14;
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
+const MINUS_ONE = new BigNumber(-1);
 
 @inject('parityStore', 'sendStore')
 @withTokens
@@ -38,10 +40,18 @@ const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 }))
 @withAccount
 @light({
-  chainId: () => chainId$()
+  chainId: () => chainId$().pipe(startWith(undefined)), // Start with `undefined` not to block UI
+  transactionCount: ({ account: { address } }) =>
+    transactionCountOf$(address).pipe(
+      delay(5000),
+      tap(a => console.log('GOT transactionCountOf', a.toString())),
+      // Start with some value not to block UI, needs to be a truthy value to
+      // taken into account by final-form
+      startWith(undefined)
+    )
 })
 @withBalance // Balance of current token (can be ETH)
-@withEthBalance // ETH balance
+@withEthBalance
 @observer
 class TxForm extends Component {
   state = {
@@ -130,14 +140,13 @@ class TxForm extends Component {
 
   handleSubmit = values => {
     const {
-      account: { address, type, transactionCount },
-      chainId,
+      account: { address, type },
       history,
       sendStore,
       token
     } = this.props;
 
-    sendStore.setTx({ ...values, chainId, token, transactionCount });
+    sendStore.setTx({ ...values, token });
 
     if (type === 'signer') {
       history.push(`/send/${token.address}/from/${address}/txqrcode`);
@@ -184,11 +193,18 @@ class TxForm extends Component {
   render () {
     const {
       account: { address, type },
+      chainId,
+      ethBalance,
       sendStore: { tx },
-      token
+      token,
+      transactionCount
     } = this.props;
 
     const { showDetails } = this.state;
+
+    if (!ethBalance || !chainId || !transactionCount) {
+      return null;
+    }
 
     return (
       <div>
@@ -208,12 +224,22 @@ class TxForm extends Component {
                 decimals={6}
                 drawers={[
                   <Form
+                    decorators={[this.decorator]}
+                    initialValues={{
+                      chainId,
+                      ethBalance,
+                      from: address,
+                      gasPrice: 4,
+                      transactionCount,
+                      ...tx
+                    }}
+                    keepDirtyOnReinitialize
                     key='txForm'
-                    initialValues={{ from: address, gasPrice: 4, ...tx }}
+                    mutators={{
+                      recalculateMax: this.recalculateMax
+                    }}
                     onSubmit={this.handleSubmit}
                     validate={this.validateForm}
-                    decorators={[this.decorator]}
-                    mutators={{ recalculateMax: this.recalculateMax }}
                     render={({
                       handleSubmit,
                       valid,
@@ -335,6 +361,9 @@ class TxForm extends Component {
     );
   }
 
+  /**
+   * Prevalidate form on user's input. These validations are sync.
+   */
   preValidate = values => {
     const { balance, token } = this.props;
 
@@ -384,47 +413,47 @@ class TxForm extends Component {
    * the tx.
    */
   validateForm = debounce(values => {
+    console.log('CALLING validateForm', values);
     if (!values) {
       return;
     }
 
     try {
-      const {
-        account: { address, transactionCount },
-        chainId,
-        ethBalance,
-        token
-      } = this.props;
-
-      if (!chainId) {
-        throw new Error('chaindId is required for an EthereumTx');
-      }
-
-      if (!address) {
-        throw new Error('address of an account is required');
-      }
-
-      if (!transactionCount) {
-        throw new Error('transactionCount is required for an EthereumTx');
-      }
-
-      if (!token || !token.address || !token.decimals) {
-        throw new Error('token information is required for an EthereumTx');
-      }
-
-      if (!ethBalance) {
-        throw new Error('No "ethBalance"');
-      }
+      const { token } = this.props;
+      const { chainId, ethBalance, transactionCount } = values;
 
       const preValidation = this.preValidate(values);
 
       // preValidate return an error if a field isn't valid
       if (preValidation !== true) {
+        console.log('prevalidation did not pass');
         return preValidation;
       }
 
+      // The 3 values below (`chainId`, `ethBalance`, and `transactionCount`)
+      // come from props, and are passed into `values` via the form's
+      // initialValues. As such, they don't have visible fields, so putting an
+      // error here just means we're keeping the form state as not valid.
+      if (!chainId) {
+        console.log('chainId did not pass');
+        return { chainId: 'Fetching chainId' };
+      }
+
+      if (!ethBalance) {
+        console.log('ethBalance did not pass');
+        return { ethBalance: 'Fetching ethBalance' };
+      }
+
+      if (!transactionCount) {
+        console.log('transactionCount did not pass', transactionCount);
+        return {
+          transactionCount: 'Fetching transactionCount'
+        };
+      }
+
       if (values.gas && values.gas.eq(-1)) {
-        return { amount: 'Unable to estimate gas...' };
+        console.log('values.gas did not pass', values.gas);
+        return {};
       }
 
       // If the gas hasn't been calculated yet, then we don't show any errors,
@@ -443,6 +472,8 @@ class TxForm extends Component {
           ? { amount: 'ETH balance too low to pay for gas' }
           : { amount: "You don't have enough ETH balance" };
       }
+
+      console.log('passed');
     } catch (err) {
       console.error(err);
       return {
