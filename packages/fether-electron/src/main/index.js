@@ -190,21 +190,6 @@ app.on('web-contents-created', (eventOuter, win) => {
     (event, url, frameName, disposition, options, additionalFeatures) => {
       event.preventDefault();
 
-      event.newGuest = null;
-
-      if (!options.webPreferences) {
-        options.webPreferences = {};
-      }
-
-      // Disable Node.js integration
-      options.webPreferences.nodeIntegration = false;
-      options.webPreferences.nodeIntegrationInWorker = false;
-      options.webPreferences.webviewTag = false;
-
-      // Strip away preload scripts if unused or verify their location is legitimate
-      delete options.webPreferences.preload;
-      delete options.webPreferences.preloadURL;
-
       // FIXME - Checking for and only allow opening trusted urls
 
       const parsedUrl = parseUrl(url);
