@@ -16,7 +16,7 @@ import rootStore from './stores';
 import './index.css';
 
 // Show debug logs
-window.localStorage.debug = 'fether*'; // https://github.com/visionmedia/debug#browser-support
+window.localStorage.debug = 'fether*,@parity*'; // https://github.com/visionmedia/debug#browser-support
 
 // Set recompose to use RxJS
 // https://github.com/acdlite/recompose/blob/master/docs/API.md#setobservableconfig
