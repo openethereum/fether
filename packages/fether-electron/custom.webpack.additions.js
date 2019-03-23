@@ -5,9 +5,6 @@ const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
 
 const withWebpackBuildNotifier = process.env.NOTIFIER === 'true';
 
-console.log('XXX', path.resolve('./build/favicon.ico'));
-console.log('YYY', path.resolve('./build/icons/webpack/compile.png'));
-
 module.exports = withWebpackBuildNotifier
   ? {
     plugins: [
