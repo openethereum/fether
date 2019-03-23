@@ -9,9 +9,7 @@
 // References: See trustworthiness of 127.0.0.1 vs localhost: https://letsencrypt.org/docs/certificates-for-localhost/
 const TRUSTED_URLS = [
   // Allow open 127.0.0.1 using http in dev mode
-  process.env.NODE_ENV === 'development'
-    ? 'http://127.0.0.1:3000'
-    : 'https://127.0.0.1:3000',
+  'http://127.0.0.1:3000',
   'wss://127.0.0.1:8546',
   'https://parity.io',
   'https://github.com/paritytech/fether/issues/new',
