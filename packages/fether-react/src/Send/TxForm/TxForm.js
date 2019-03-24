@@ -434,28 +434,24 @@ class TxForm extends Component {
 
       // The 3 values below (`chainId`, `ethBalance`, and `transactionCount`)
       // come from props, and are passed into `values` via the form's
-      // initialValues. As such, they don't have visible fields, so putting an
-      // error here just means we're keeping the form state as not valid.
+      // initialValues. As such, they don't have visible fields, so we put
+      // their errors in the `amount` field arbitrarily.
       if (!values.chainId) {
-        return { chainId: 'Fetching chainId' };
+        return { amount: 'Fetching chain ID' };
       }
 
       if (!values.ethBalance) {
-        return { ethBalance: 'Fetching ethBalance' };
+        return { amount: 'Fetching Ether balance' };
       }
 
       if (!values.transactionCount) {
-        return {
-          transactionCount: 'Fetching transactionCount'
-        };
+        return { amount: 'Fetching transaction count for nonce' };
       }
 
       if (values.gas && values.gas.eq(-1)) {
         return { amount: 'Unable to estimate gas...' };
       }
 
-      // If the gas hasn't been calculated yet, then we don't show any errors,
-      // just wait a bit more
       if (!this.isEstimatedTxFee(values)) {
         return { amount: 'Estimating gas...' };
       }
