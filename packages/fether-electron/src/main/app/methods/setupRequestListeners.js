@@ -64,15 +64,16 @@ function setupRequestListeners (fetherApp) {
   session.defaultSession.setPermissionRequestHandler(
     (webContents, permission, callback, details) => {
       pino.debug(
-        'Processing request to open external link to url in setPermissionRequestHandler: ',
-        details.externalURL
+        `Processing request from ${webContents.getURL()} to open external link to url ${
+          details.externalURL
+        } in setPermissionRequestHandler`
       );
 
       let permissionGranted = false;
 
       // FIXME - does not work
       if (
-        webContents.getURL() !== 'https://127.0.0.1:3000/' &&
+        webContents.getURL() !== 'http://127.0.0.1:3000/' &&
         permission === 'openExternal'
       ) {
         if (!TRUSTED_URLS.includes(details.externalURL)) {

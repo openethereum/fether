@@ -10,8 +10,8 @@ const CSP_CONFIG = {
   blockAllMixedContent: "block-all-mixed-content;",
   // Disallow framing and web workers.
   childSrc: "child-src 'none';",
-  // Only allow connecting to WSS and HTTPS servers.
-  connectSrc: "connect-src https: wss:;",
+  // FIXME - Only allow connecting to WSS and HTTPS servers.
+  connectSrc: "connect-src http: ws:;",
   // Fallback for missing directives.
   // Reference: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/default-src
   //

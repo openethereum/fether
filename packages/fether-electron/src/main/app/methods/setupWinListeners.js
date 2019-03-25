@@ -5,7 +5,7 @@
 
 import debounce from 'lodash/debounce';
 
-import { TRUSTED_URLS } from '../constants';
+import { TRUSTED_HOSTS } from '../constants';
 import Pino from '../utils/pino';
 
 const pino = Pino();
@@ -36,9 +36,9 @@ function setupWinListeners (fetherApp) {
 
       // Failure accepting certificate due to errorCode
       callback(-2); // eslint-disable-line
-    } else if (!TRUSTED_URLS.includes(hostname)) {
+    } else if (!TRUSTED_HOSTS.includes(hostname)) {
       pino.info(
-        'Failure accepting server certification due to its hostname being an untrusted url in setCertificateVerifyProc: ',
+        'Failure accepting server certification due to its hostname being an untrusted host in setCertificateVerifyProc: ',
         hostname
       );
 
@@ -46,7 +46,7 @@ function setupWinListeners (fetherApp) {
       callback(-2); // eslint-disable-line
     } else if (verificationResult) {
       pino.info(
-        'Unable to open external link to untrusted content url due to setPermissionRequestHandler: ',
+        'Unable to open external link to untrusted content host due to setPermissionRequestHandler: ',
         hostname
       );
 

@@ -76,9 +76,9 @@ export class ParityStore {
   connectToApi = () => {
     // Get the provider, optionally from --ws-interface and --ws-port flags
     const [defaultInterface, defaultPort] = ['127.0.0.1', '8546'];
-    let provider = `wss://${defaultInterface}:${defaultPort}`;
+    let provider = `ws://${defaultInterface}:${defaultPort}`;
     if (ipcRenderer) {
-      provider = `wss://${wsInterface || defaultInterface}:${wsPort ||
+      provider = `ws://${wsInterface || defaultInterface}:${wsPort ||
         defaultPort}`;
     }
 

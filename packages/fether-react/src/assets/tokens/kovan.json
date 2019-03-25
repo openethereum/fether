@@ -329,5 +329,5 @@
 {"address":"0xA6666386617070BBe6b76550D9d8072451583c3c","decimals":0,"name":"Bottle Cap","symbol":"BCP"},
 {"address":"0x63BE8AF3033BC5780D54EC2ddBe03780293D3851","decimals":6,"name":"My test par credits","symbol":"TS2"},
 {"address":"0xE18e580c8B479415A76D50A799d747ACAe4f463c","decimals":18,"name":"SMOL Token","symbol":"SML"},
-{"address":"0x4A6e6C3868A279e1D9047B42C3fB356FF4680003","decimals":18,"name":"THIBCoin","symbol":"TIB","logo":"http://pix.toile-libre.org/upload/original/1525765045.jpg"}
+{"address":"0x4A6e6C3868A279e1D9047B42C3fB356FF4680003","decimals":18,"name":"THIBCoin","symbol":"TIB","logo":"https://pix.toile-libre.org/upload/original/1525765045.jpg"}
 ]

@@ -3,6 +3,8 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
+const TRUSTED_HOSTS = ['api.github.com'];
+
 // Disallows users from using Fether with a remote node.
 // SSH tunnels are still possible.
 //
@@ -10,10 +12,10 @@
 const TRUSTED_URLS = [
   // Allow open 127.0.0.1 using http in dev mode
   'http://127.0.0.1:3000',
-  'wss://127.0.0.1:8546',
+  'ws://127.0.0.1:8546',
   'https://parity.io',
   'https://github.com/paritytech/fether/issues/new',
   'https://api.github.com/repos/paritytech/fether/releases/latest'
 ];
 
-export { TRUSTED_URLS };
+export { TRUSTED_HOSTS, TRUSTED_URLS };

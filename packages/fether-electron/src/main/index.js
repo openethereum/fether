@@ -100,58 +100,6 @@ app.on('quit', () => {
   killParity();
 });
 
-/**
- * Security. Insecure TLS Validation - verify the application does not explicitly opt-out
- * of TLS validation.
- *
- * Reference: https://doyensec.com/resources/us-17-Carettoni-Electronegativity-A-Study-Of-Electron-Security-wp.pdf
- */
-app.on(
-  'certificate-error',
-  (event, webContents, url, error, certificate, callback) => {
-    // Prevent default behaviour of continuing to load the page
-    event.preventDefault();
-
-    let isValidCertificate = false;
-
-    // FIXME - in development environment validate own certificate,
-    // either self-signed or signed by a local root,
-    // that has been trusted in the trust store of the OS.
-    //
-    // Reference: https://letsencrypt.org/docs/certificates-for-localhost/
-
-    if (isValidCertificate) {
-      callback(true); // eslint-disable-line
-    } else {
-      // Disallow insecure (invalid) certificates
-      callback(false); // eslint-disable-line
-    }
-  }
-);
-
-// FIXME - uncomment and show how Linux users may create a valid certificate
-// and perhaps access it using an environment variable
-
-// /**
-//  * Security. Verify custom TLS certificates imported into the platform
-//  * certificate store on Linux.
-//  *
-//  * Reference: Page 13 of https://doyensec.com/resources/us-17-Carettoni-Electronegativity-A-Study-Of-Electron-Security-wp.pdf
-//  */
-// if (!['darwin', 'win32'].includes(process.platform)) {
-//   const options = {
-//     certificate: CERTIFICATE_PKCS12_FILE_PATH,
-//     password: CERTIFICATE_PASSPHRASE
-//   };
-
-//   // Reference: https://electronjs.org/docs/all#appimportcertificateoptions-callback-linux
-//   app.importCertificate(options, importCertificateResult => {
-//     const isValidCertificate = importCertificateResult === 0;
-
-//     return isValidCertificate;
-//   });
-// }
-
 // Security
 app.on('web-contents-created', (eventOuter, win) => {
   win.on('will-navigate', (event, url) => {
@@ -190,8 +138,6 @@ app.on('web-contents-created', (eventOuter, win) => {
     (event, url, frameName, disposition, options, additionalFeatures) => {
       event.preventDefault();
 
-      // FIXME - Checking for and only allow opening trusted urls
-
       const parsedUrl = parseUrl(url);
 
       pino.debug(
@@ -208,7 +154,7 @@ app.on('web-contents-created', (eventOuter, win) => {
         return;
       }
 
-      // Note that we check for a valid certificate in 'certificate-error' event handler
+      // FIXME - Note that we need to check for a valid certificate in 'certificate-error' event handler
       // so we only allow trusted content.
       // See https://electronjs.org/docs/tutorial/security#14-do-not-use-openexternal-with-untrusted-content
       shell.openExternal(url);
