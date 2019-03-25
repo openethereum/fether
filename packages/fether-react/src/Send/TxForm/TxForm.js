@@ -461,7 +461,8 @@ class TxForm extends Component {
 
       if (values.gas && values.gas.eq(-1)) {
         debug('Unable to estimate gas...');
-        return { gas: 'Unable to estimate gas...' };
+        // Show this error on the `amount` field
+        return { amount: 'Unable to estimate gas...' };
       }
 
       if (!this.isEstimatedTxFee(values)) {
