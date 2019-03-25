@@ -158,8 +158,8 @@ export class CreateAccountStore {
    * Set phrase (detect type) and corresponding address
    */
   setPhrase = phrase => {
-    return this.setBip39Phrase(phrase).catch(() =>
-      this.setParityPhrase(phrase)
+    return this.setBip39Phrase(phrase.toLowerCase()).catch(() =>
+      this.setParityPhrase(phrase.toLowerCase())
     );
   };
 

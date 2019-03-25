@@ -208,22 +208,28 @@ class BackupPhrase extends Component {
 
     return (
       <nav className='form-nav -space-around'>
-        <button className='button -back' onClick={this.prevStep} type='button'>
-          Back
-        </button>
         {step === 1 ? (
           <button autoFocus className='button' onClick={this.nextStep}>
             {needsRewrite ? 'Next' : 'Done'}
           </button>
         ) : (
-          <button
-            autoFocus
-            className='button'
-            disabled={phraseRewrite !== phrase}
-            onClick={this.handleSubmit}
-          >
-            Confirm
-          </button>
+          <React.Fragment>
+            <button
+              className='button -back'
+              onClick={this.prevStep}
+              type='button'
+            >
+              Back
+            </button>
+            <button
+              autoFocus
+              className='button'
+              disabled={phraseRewrite !== phrase}
+              onClick={this.handleSubmit}
+            >
+              Confirm
+            </button>
+          </React.Fragment>
         )}
       </nav>
     );

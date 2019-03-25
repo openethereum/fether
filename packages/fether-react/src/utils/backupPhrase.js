@@ -32,6 +32,10 @@ export const decryptPhrase = async (phrase, password) => {
   // this will throw in the case of a wrong password
   var originalPhrase = phraseInBytes.toString(CryptoJS.enc.Utf8);
 
+  /* sometimes CryptoJS will not throw on incorrect password,
+     but instead output a valid but empty utf8 string.
+     in this case, we manually throw an error. */
+
   if (!originalPhrase) {
     throw new Error('Incorrect password');
   } else {

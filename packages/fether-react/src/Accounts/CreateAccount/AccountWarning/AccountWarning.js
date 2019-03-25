@@ -59,7 +59,7 @@ class AccountWarning extends PureComponent {
               Back
             </button>
             <button className='button' onClick={this.handleNext}>
-              I Understand.
+              Skip Anyway.
             </button>
           </nav>
         </Card>
