@@ -218,14 +218,6 @@ yarn; yarn build; DEBUG=electron-builder yarn release --win;
 
 # Development
 
-## Debugging in development
-
-* Terminal - shows `pino.info`'s
-
-* Right-click Fether window to display "window context menu" and select 'Toggle Developer Tools'
-  * Console tab - shows `console.log`'s
-  * Sources tab - choose 'Page > top > webpack-internal://' then set breakpoints and run app and introspect values in Console tab
-
 ## Debugging in production
 
 Show terminal logs whilst running a binary executable.
