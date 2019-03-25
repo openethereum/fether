@@ -42,15 +42,25 @@ function setupWinListeners (fetherApp) {
         hostname
       );
 
-      // Failure accepting certificate due to its source hostname being untrusted
+      // Failure accepting server certificate due to its source hostname being untrusted
       callback(-2); // eslint-disable-line
-    } else if (verificationResult) {
+    } else if (!verificationResult === 'net::OK') {
       pino.info(
-        'Unable to open external link to untrusted content host due to setCertificateVerifyProc: ',
-        hostname
+        'Failure accepting server certificate due to it failing Chromium verification: ',
+        hostname,
+        verificationResult
       );
 
-      // Fallback to using the verification result from Chromium if it exists
+      // Failure accepting server certificate due to it failing Chromium verification
+      callback(-2); // eslint-disable-line
+    } else {
+      pino.info(
+        'Fallback to using the verification result from Chromium: ',
+        hostname,
+        verificationResult
+      );
+
+      // Fallback to using the verification result from Chromium
       callback(-3); // eslint-disable-line
 
       // // Success and accept the certifcate, disable Certificate Transparency verification
