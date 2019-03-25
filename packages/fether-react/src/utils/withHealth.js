@@ -32,7 +32,7 @@ const isParityRunning$ = Observable.create(observer => {
       observer.next(isParityRunning);
     });
   }
-}).pipe(startWith(isParityRunningStatus ? !!isParityRunningStatus : false));
+}).pipe(startWith(!!isParityRunningStatus));
 
 const downloadProgress$ = Observable.create(observer => {
   if (ipcRenderer) {
