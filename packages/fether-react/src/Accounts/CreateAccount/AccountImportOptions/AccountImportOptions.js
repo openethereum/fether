@@ -85,7 +85,8 @@ class AccountImportOptions extends Component {
   handleSubmitPhrase = async () => {
     const phrase = this.state.phrase.trim();
     const {
-      createAccountStore: { address, setPhrase }
+      createAccountStore,
+      createAccountStore: { setPhrase }
     } = this.props;
 
     this.setState({ isLoading: true, phrase });
@@ -93,7 +94,7 @@ class AccountImportOptions extends Component {
     try {
       await setPhrase(phrase);
 
-      if (this.hasExistingAddressForImport(address)) {
+      if (this.hasExistingAddressForImport(createAccountStore.address)) {
         return;
       }
 
@@ -110,7 +111,8 @@ class AccountImportOptions extends Component {
 
   handleChangeFile = async jsonString => {
     const {
-      createAccountStore: { address, setJsonString }
+      createAccountStore,
+      createAccountStore: { setJsonString }
     } = this.props;
 
     this.setState({ isLoading: true });
@@ -118,7 +120,7 @@ class AccountImportOptions extends Component {
     try {
       await setJsonString(jsonString);
 
-      if (this.hasExistingAddressForImport(address)) {
+      if (this.hasExistingAddressForImport(createAccountStore.address)) {
         return;
       }
 

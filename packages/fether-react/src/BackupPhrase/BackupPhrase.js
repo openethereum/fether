@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -91,12 +91,14 @@ class BackupPhrase extends Component {
     const {
       account: { address },
       history,
-      location: { pathname }
+      match: {
+        params: { showWarning }
+      }
     } = this.props;
 
     event.preventDefault();
 
-    const needsRewrite = pathname.split('/')[3] === 'true';
+    const needsRewrite = showWarning === 'true';
 
     if (!needsRewrite) {
       history.push(`/tokens/${address}`);
@@ -147,11 +149,13 @@ class BackupPhrase extends Component {
   render () {
     const {
       account: { address, name },
-      location: { pathname }
+      match: {
+        params: { showWarning }
+      }
     } = this.props;
     const { error, unlocked } = this.state;
 
-    const needsRewrite = pathname.split('/')[3] === 'true';
+    const needsRewrite = showWarning === 'true';
 
     const title = needsRewrite
       ? 'Backup Recovery Phrase'
@@ -195,10 +199,12 @@ class BackupPhrase extends Component {
   renderButtons () {
     const { phrase, phraseRewrite, step } = this.state;
     const {
-      location: { pathname }
+      match: {
+        params: { showWarning }
+      }
     } = this.props;
 
-    const needsRewrite = pathname.split('/')[3] === 'true';
+    const needsRewrite = showWarning === 'true';
 
     return (
       <nav className='form-nav -space-around'>
@@ -236,10 +242,12 @@ class BackupPhrase extends Component {
   renderCopyForm () {
     const { phrase } = this.state;
     const {
-      location: { pathname }
+      match: {
+        params: { showWarning }
+      }
     } = this.props;
 
-    const needsRewrite = pathname.split('/')[3] === 'true';
+    const needsRewrite = showWarning === 'true';
 
     return (
       <div>
