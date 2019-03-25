@@ -20,6 +20,7 @@ import { startWith } from 'rxjs/operators';
 import { withProps } from 'recompose';
 
 import { estimateGas } from '../../utils/transaction';
+import Debug from '../../utils/debug';
 import RequireHealthOverlay from '../../RequireHealthOverlay';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import TxDetails from './TxDetails';
@@ -31,6 +32,8 @@ const DEFAULT_AMOUNT_MAX_CHARS = 9;
 const MEDIUM_AMOUNT_MAX_CHARS = 14;
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
+
+const debug = Debug('TxForm');
 
 @inject('parityStore', 'sendStore')
 @withTokens
@@ -234,6 +237,7 @@ class TxForm extends Component {
                     onSubmit={this.handleSubmit}
                     validate={this.validateForm}
                     render={({
+                      errors,
                       handleSubmit,
                       valid,
                       validating,
@@ -343,7 +347,11 @@ class TxForm extends Component {
                             disabled={!valid || validating}
                             className='button'
                           >
-                            {validating
+                            {validating ||
+                            errors.chainId ||
+                            errors.ethBalance ||
+                            errors.gas ||
+                            errors.transactionCount
                               ? 'Checking...'
                               : type === 'signer'
                                 ? 'Scan'
@@ -434,26 +442,31 @@ class TxForm extends Component {
 
       // The 3 values below (`chainId`, `ethBalance`, and `transactionCount`)
       // come from props, and are passed into `values` via the form's
-      // initialValues. As such, they don't have visible fields, so we put
-      // their errors in the `amount` field arbitrarily.
+      // initialValues. As such, they don't have visible fields, so these
+      // errors won't actually be shown on the UI.
       if (!values.chainId) {
-        return { amount: 'Fetching chain ID' };
+        debug('Fetching chain ID');
+        return { chainId: 'Fetching chain ID' };
       }
 
       if (!values.ethBalance) {
-        return { amount: 'Fetching Ether balance' };
+        debug('Fetching Ether balance');
+        return { ethBalance: 'Fetching Ether balance' };
       }
 
       if (!values.transactionCount) {
-        return { amount: 'Fetching transaction count for nonce' };
+        debug('Fetching transaction count for nonce');
+        return { transactionCount: 'Fetching transaction count for nonce' };
       }
 
       if (values.gas && values.gas.eq(-1)) {
-        return { amount: 'Unable to estimate gas...' };
+        debug('Unable to estimate gas...');
+        return { gas: 'Unable to estimate gas...' };
       }
 
       if (!this.isEstimatedTxFee(values)) {
-        return { amount: 'Estimating gas...' };
+        debug('Estimating gas...');
+        return { gas: 'Estimating gas...' };
       }
 
       // Verify that `gas + (eth amount if sending eth) <= ethBalance`
@@ -466,6 +479,8 @@ class TxForm extends Component {
           ? { amount: 'ETH balance too low to pay for gas' }
           : { amount: "You don't have enough ETH balance" };
       }
+
+      debug('Transaction seems valid');
     } catch (err) {
       console.error(err);
       return {
