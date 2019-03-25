@@ -7,7 +7,6 @@ import electron from 'electron';
 
 import { CSP } from '../utils/csp';
 import messages from '../messages';
-import { TRUSTED_URLS } from '../constants';
 import Pino from '../utils/pino';
 
 const pino = Pino();
@@ -52,47 +51,6 @@ function setupRequestListeners (fetherApp) {
     });
     /* eslint-enable */
   });
-
-  /**
-   * Limit specific permissions (i.e. `openExternal`) in response to events from particular origins
-   * to limit the exploitability of applications that load remote content.
-   *
-   * References:
-   * https://electronjs.org/docs/api/session#sessetpermissionrequesthandlerhandler
-   * https://doyensec.com/resources/us-17-Carettoni-Electronegativity-A-Study-Of-Electron-Security-wp.pdf
-   */
-  session.defaultSession.setPermissionRequestHandler(
-    (webContents, permission, callback, details) => {
-      pino.debug(
-        `Processing request from ${webContents.getURL()} to open external link to url ${
-          details.externalURL
-        } in setPermissionRequestHandler`
-      );
-
-      let permissionGranted = false;
-
-      // FIXME - does not work
-      if (
-        webContents.getURL() !== 'http://127.0.0.1:3000/' &&
-        permission === 'openExternal'
-      ) {
-        if (!TRUSTED_URLS.includes(details.externalURL)) {
-          pino.info(
-            'Unable to open external link to untrusted content url due to setPermissionRequestHandler: ',
-            details.externalURL
-          );
-        } else {
-          permissionGranted = true;
-        }
-
-        return callback(permissionGranted);
-      } else {
-        permissionGranted = true;
-
-        return callback(permissionGranted);
-      }
-    }
-  );
 }
 
 export default setupRequestListeners;
