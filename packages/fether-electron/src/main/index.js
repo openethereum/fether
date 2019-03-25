@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import electron from 'electron';
-import parseUrl from 'parse-url';
+import { URL } from 'url';
 import { killParity } from '@parity/electron';
 
 import Pino from './app/utils/pino';
@@ -107,7 +107,7 @@ app.on('web-contents-created', (eventOuter, win) => {
     //
     // Reference: https://letsencrypt.org/docs/certificates-for-localhost/
 
-    const parsedUrl = parseUrl(url);
+    const parsedUrl = new URL(url);
 
     pino.debug(
       'Processing request to navigate to url in will-navigate listener: ',
@@ -138,7 +138,7 @@ app.on('web-contents-created', (eventOuter, win) => {
     (event, url, frameName, disposition, options, additionalFeatures) => {
       event.preventDefault();
 
-      const parsedUrl = parseUrl(url);
+      const parsedUrl = new URL(url);
 
       pino.debug(
         'Processing request to navigate to url in new-window listener: ',
