@@ -6,24 +6,14 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose, mapProps } from 'recompose';
-import { startWith } from 'rxjs/operators';
-import light from '@parity/light.js-react';
-import { transactionCountOf$ } from '@parity/light.js';
 
 import withAccountsInfo from '../utils/withAccountsInfo';
 
 const WithAccount = compose(
   withRouter,
   withAccountsInfo,
-  light({
-    transactionCount: props =>
-      transactionCountOf$(props.match.params.accountAddress).pipe(
-        startWith(undefined)
-      )
-  }),
   mapProps(
     ({
-      transactionCount,
       match: {
         params: { accountAddress }
       },
@@ -33,8 +23,7 @@ const WithAccount = compose(
       account: {
         address: accountAddress,
         name: accountsInfo[accountAddress].name,
-        type: accountsInfo[accountAddress].type,
-        transactionCount
+        type: accountsInfo[accountAddress].type
       },
       ...otherProps
     })
