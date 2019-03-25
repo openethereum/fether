@@ -46,7 +46,7 @@ function setupWinListeners (fetherApp) {
       callback(-2); // eslint-disable-line
     } else if (verificationResult) {
       pino.info(
-        'Unable to open external link to untrusted content host due to setPermissionRequestHandler: ',
+        'Unable to open external link to untrusted content host due to setCertificateVerifyProc: ',
         hostname
       );
 
