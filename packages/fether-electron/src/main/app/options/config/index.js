@@ -6,7 +6,7 @@
 import path from 'path';
 import url from 'url';
 
-import staticPath from '../../utils/staticPath';
+import { staticPath } from '../../utils/paths';
 
 // https://electronjs.org/docs/tutorial/security#electron-security-warnings
 process.env.ELECTRON_ENABLE_SECURITY_WARNINGS = true;

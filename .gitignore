@@ -20,3 +20,7 @@ lib
 
 # os-generated files
 .DS_Store
+
+# parity binary
+packages/fether-electron/static/parity
+packages/fether-electron/static/parity.exe

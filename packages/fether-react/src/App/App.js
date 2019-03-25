@@ -19,6 +19,7 @@ import { version } from '../../package.json';
 import Accounts from '../Accounts';
 import BackupAccount from '../BackupAccount';
 import Onboarding from '../Onboarding';
+import RequireParityVersion from '../RequireParityVersion';
 import RequireHealthOverlay from '../RequireHealthOverlay';
 import Send from '../Send';
 import Tokens from '../Tokens';
@@ -137,35 +138,37 @@ class App extends Component {
     return (
       <div className='content'>
         <div className='window'>
-          <Modal
-            title='New version available'
-            description={newRelease ? `${newRelease.name} was released!` : ''}
-            visible={newRelease && !newRelease.ignore}
-            buttons={this.renderModalLinks()}
-          >
-            <Router>
-              <Switch>
-                {/* The next line is the homepage */}
-                <Redirect exact from='/' to='/accounts' />
-                <Route path='/accounts' component={Accounts} />
-                <Route path='/onboarding' component={Onboarding} />
-                <Route path='/tokens/:accountAddress' component={Tokens} />
-                <Route
-                  path='/whitelist/:accountAddress'
-                  component={Whitelist}
-                />
-                <Route
-                  path='/backup/:accountAddress'
-                  component={BackupAccount}
-                />
-                <Route
-                  path='/send/:tokenAddress/from/:accountAddress'
-                  component={Send}
-                />
-                <Redirect from='*' to='/' />
-              </Switch>
-            </Router>
-          </Modal>
+          <RequireParityVersion>
+            <Modal
+              title='New version available'
+              description={newRelease ? `${newRelease.name} was released!` : ''}
+              visible={newRelease && !newRelease.ignore}
+              buttons={this.renderModalLinks()}
+            >
+              <Router>
+                <Switch>
+                  {/* The next line is the homepage */}
+                  <Redirect exact from='/' to='/accounts' />
+                  <Route path='/accounts' component={Accounts} />
+                  <Route path='/onboarding' component={Onboarding} />
+                  <Route path='/tokens/:accountAddress' component={Tokens} />
+                  <Route
+                    path='/whitelist/:accountAddress'
+                    component={Whitelist}
+                  />
+                  <Route
+                    path='/backup/:accountAddress'
+                    component={BackupAccount}
+                  />
+                  <Route
+                    path='/send/:tokenAddress/from/:accountAddress'
+                    component={Send}
+                  />
+                  <Redirect from='*' to='/' />
+                </Switch>
+              </Router>
+            </Modal>
+          </RequireParityVersion>
         </div>
       </div>
     );
