@@ -42,6 +42,12 @@ function setupRequestListeners (fetherApp) {
 
   // Content Security Policy (CSP)
   session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+    pino.debug(
+      'Configuring Content-Security-Policy for environment: ',
+      process.env.NODE_ENV,
+      details.responseHeaders
+    );
+
     /* eslint-disable */
     callback({
       responseHeaders: {
