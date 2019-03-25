@@ -216,8 +216,6 @@ yarn; yarn build; DEBUG=electron-builder yarn release --win;
 ./packages/fether-electron/dist/Parity\ Fether-0.3.0.exe
 ```
 
-# Development
-
 ## Debugging in production
 
 Show terminal logs whilst running a binary executable.
