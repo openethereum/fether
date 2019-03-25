@@ -20,6 +20,7 @@ import { version } from '../../package.json';
 import Accounts from '../Accounts';
 import BackupAccount from '../BackupAccount';
 import Onboarding from '../Onboarding';
+import RequireParityVersion from '../RequireParityVersion';
 import BackupPhrase from '../BackupPhrase';
 import RequireHealthOverlay from '../RequireHealthOverlay';
 import Send from '../Send';
@@ -158,10 +159,6 @@ class App extends Component {
                 <Route
                   path='/backup/:accountAddress'
                   component={BackupAccount}
-                />
-                <Route
-                  path='/backupPhrase/:accountAddress/:needsRewrite'
-                  component={BackupPhrase}
                 />
                 <Route
                   path='/send/:tokenAddress/from/:accountAddress'
