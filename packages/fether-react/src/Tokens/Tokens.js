@@ -3,7 +3,6 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import localForage from 'localforage';
 import React, { PureComponent } from 'react';
 import { AccountHeader, Clickable, MenuPopup } from 'fether-ui';
 import { Link, withRouter } from 'react-router-dom';
@@ -11,6 +10,7 @@ import { Link, withRouter } from 'react-router-dom';
 import Health from '../Health';
 import TokensList from './TokensList';
 import withAccount from '../utils/withAccount';
+import { getAccountFlagStatus } from '../utils/backupPhrase';
 
 @withRouter
 @withAccount
@@ -38,10 +38,9 @@ class Tokens extends PureComponent {
       account: { address }
     } = this.props;
 
-    const flaggedPhrase = await localForage.getItem(`__flagged_${address}`);
-    const canViewRecoveryPhrase =
-      (await localForage.getItem(`__safe_${address}`)) ||
-      (flaggedPhrase && true);
+    const status = await getAccountFlagStatus(address);
+    const canViewRecoveryPhrase = status[0];
+    const flaggedPhrase = status[1];
 
     this.setState({
       canViewRecoveryPhrase,

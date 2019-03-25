@@ -2,7 +2,6 @@
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
-import * as CryptoJS from 'crypto-js';
 import { AccountCard, Header, Form as FetherForm } from 'fether-ui';
 import localForage from 'localforage';
 import { inject } from 'mobx-react';
@@ -11,6 +10,7 @@ import { Link } from 'react-router-dom';
 
 import RequireHealthOverlay from '../RequireHealthOverlay';
 import withAccount from '../utils/withAccount';
+import { decryptPhrase, setAccountAsSafe } from '../utils/backupPhrase';
 
 /*
   feat #100: The user skipped phrase rewrite during account creation.
@@ -53,14 +53,7 @@ class BackupPhrase extends Component {
     } = this.props;
     const { password, phrase } = this.state;
 
-    // unset account flag
-    await localForage.removeItem(`__flagged_${address}`);
-
-    // AES encrypt the phrase
-    const encryptedPhrase = CryptoJS.AES.encrypt(phrase, password).toString();
-
-    // set flag as safe
-    await localForage.setItem(`__safe_${address}`, encryptedPhrase);
+    await setAccountAsSafe(address, phrase, password);
 
     // go to account
     history.push(`/tokens/${address}`);
@@ -135,18 +128,9 @@ class BackupPhrase extends Component {
     const { password, phrase } = this.state;
 
     try {
-      // decrypt the phrase
-      var phraseInBytes = CryptoJS.AES.decrypt(phrase, password);
-      // this will throw in the case of a wrong password
-      var originalPhrase = phraseInBytes.toString(CryptoJS.enc.Utf8);
-
-      if (!originalPhrase) {
-        throw new Error('Incorrect password');
-      }
-
       this.setState({
         error: null,
-        phrase: originalPhrase,
+        phrase: await decryptPhrase(phrase, password),
         unlocked: true
       });
     } catch (error) {

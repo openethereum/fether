@@ -89,6 +89,7 @@ class AccountCopyPhrase extends Component {
                   className='button -back'
                   data-skip
                   onClick={this.handleSubmit}
+                  type='button'
                 >
                   Skip
                 </button>
