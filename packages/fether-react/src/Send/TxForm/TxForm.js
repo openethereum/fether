@@ -5,9 +5,9 @@
 
 import React, { Component } from 'react';
 import BigNumber from 'bignumber.js';
+import { chainId$, transactionCountOf$ } from '@parity/light.js';
 import { Clickable, Form as FetherForm, Header } from 'fether-ui';
 import createDecorator from 'final-form-calculate';
-import { chainId$ } from '@parity/light.js';
 import debounce from 'debounce-promise';
 import { Field, Form } from 'react-final-form';
 import { fromWei, toWei } from '@parity/api/lib/util/wei';
@@ -16,9 +16,11 @@ import { isAddress } from '@parity/api/lib/util/address';
 import light from '@parity/light.js-react';
 import { Link } from 'react-router-dom';
 import { OnChange } from 'react-final-form-listeners';
+import { startWith } from 'rxjs/operators';
 import { withProps } from 'recompose';
 
 import { estimateGas } from '../../utils/transaction';
+import Debug from '../../utils/debug';
 import RequireHealthOverlay from '../../RequireHealthOverlay';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import TxDetails from './TxDetails';
@@ -31,6 +33,8 @@ const MEDIUM_AMOUNT_MAX_CHARS = 14;
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 
+const debug = Debug('TxForm');
+
 @inject('parityStore', 'sendStore')
 @withTokens
 @withProps(({ match: { params: { tokenAddress } }, tokens }) => ({
@@ -38,7 +42,14 @@ const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
 }))
 @withAccount
 @light({
-  chainId: () => chainId$()
+  // We need to wait for 3 values that might take time:
+  // - ethBalance: to check that we have enough to send amount+fees
+  // - chainId & transactionCount: needed to construct the tx
+  // For the three of them, we add the `startWith()` operator so that the UI is
+  // not blocked while waiting for their first response.
+  chainId: () => chainId$().pipe(startWith(undefined)),
+  transactionCount: ({ account: { address } }) =>
+    transactionCountOf$(address).pipe(startWith(undefined))
 })
 @withBalance // Balance of current token (can be ETH)
 @withEthBalance // ETH balance
@@ -65,7 +76,6 @@ class TxForm extends Component {
               parityStore.api
             );
           } catch (error) {
-            console.error(error);
             return new BigNumber(-1);
           }
         }
@@ -130,14 +140,13 @@ class TxForm extends Component {
 
   handleSubmit = values => {
     const {
-      account: { address, type, transactionCount },
-      chainId,
+      account: { address, type },
       history,
       sendStore,
       token
     } = this.props;
 
-    sendStore.setTx({ ...values, chainId, token, transactionCount });
+    sendStore.setTx({ ...values, token });
 
     if (type === 'signer') {
       history.push(`/send/${token.address}/from/${address}/txqrcode`);
@@ -184,8 +193,11 @@ class TxForm extends Component {
   render () {
     const {
       account: { address, type },
+      chainId,
+      ethBalance,
       sendStore: { tx },
-      token
+      token,
+      transactionCount
     } = this.props;
 
     const { showDetails } = this.state;
@@ -208,13 +220,24 @@ class TxForm extends Component {
                 decimals={6}
                 drawers={[
                   <Form
+                    decorators={[this.decorator]}
+                    initialValues={{
+                      chainId,
+                      ethBalance,
+                      from: address,
+                      gasPrice: 4,
+                      transactionCount,
+                      ...tx
+                    }}
+                    keepDirtyOnReinitialize // Don't erase other fields when we get new initialValues
                     key='txForm'
-                    initialValues={{ from: address, gasPrice: 4, ...tx }}
+                    mutators={{
+                      recalculateMax: this.recalculateMax
+                    }}
                     onSubmit={this.handleSubmit}
                     validate={this.validateForm}
-                    decorators={[this.decorator]}
-                    mutators={{ recalculateMax: this.recalculateMax }}
                     render={({
+                      errors,
                       handleSubmit,
                       valid,
                       validating,
@@ -223,6 +246,16 @@ class TxForm extends Component {
                     }) => (
                       <form className='send-form' onSubmit={handleSubmit}>
                         <fieldset className='form_fields'>
+                          {/* Unfortunately, we need to set these hidden fields
+                              for the 3 values that come from props, even
+                              though they are already set in initialValues. */}
+                          <Field name='chainId' render={this.renderNull} />
+                          <Field name='ethBalance' render={this.renderNull} />
+                          <Field
+                            name='transactionCount'
+                            render={this.renderNull}
+                          />
+
                           <Field
                             as='textarea'
                             autoFocus
@@ -314,7 +347,11 @@ class TxForm extends Component {
                             disabled={!valid || validating}
                             className='button'
                           >
-                            {validating
+                            {validating ||
+                            errors.chainId ||
+                            errors.ethBalance ||
+                            errors.gas ||
+                            errors.transactionCount
                               ? 'Checking...'
                               : type === 'signer'
                                 ? 'Scan'
@@ -335,6 +372,11 @@ class TxForm extends Component {
     );
   }
 
+  renderNull = () => null;
+
+  /**
+   * Prevalidate form on user's input. These validations are sync.
+   */
   preValidate = values => {
     const { balance, token } = this.props;
 
@@ -389,32 +431,7 @@ class TxForm extends Component {
     }
 
     try {
-      const {
-        account: { address, transactionCount },
-        chainId,
-        ethBalance,
-        token
-      } = this.props;
-
-      if (!chainId) {
-        throw new Error('chaindId is required for an EthereumTx');
-      }
-
-      if (!address) {
-        throw new Error('address of an account is required');
-      }
-
-      if (!transactionCount) {
-        throw new Error('transactionCount is required for an EthereumTx');
-      }
-
-      if (!token || !token.address || !token.decimals) {
-        throw new Error('token information is required for an EthereumTx');
-      }
-
-      if (!ethBalance) {
-        throw new Error('No "ethBalance"');
-      }
+      const { token } = this.props;
 
       const preValidation = this.preValidate(values);
 
@@ -423,26 +440,48 @@ class TxForm extends Component {
         return preValidation;
       }
 
+      // The 3 values below (`chainId`, `ethBalance`, and `transactionCount`)
+      // come from props, and are passed into `values` via the form's
+      // initialValues. As such, they don't have visible fields, so these
+      // errors won't actually be shown on the UI.
+      if (!values.chainId) {
+        debug('Fetching chain ID');
+        return { chainId: 'Fetching chain ID' };
+      }
+
+      if (!values.ethBalance) {
+        debug('Fetching Ether balance');
+        return { ethBalance: 'Fetching Ether balance' };
+      }
+
+      if (!values.transactionCount) {
+        debug('Fetching transaction count for nonce');
+        return { transactionCount: 'Fetching transaction count for nonce' };
+      }
+
       if (values.gas && values.gas.eq(-1)) {
+        debug('Unable to estimate gas...');
+        // Show this error on the `amount` field
         return { amount: 'Unable to estimate gas...' };
       }
 
-      // If the gas hasn't been calculated yet, then we don't show any errors,
-      // just wait a bit more
       if (!this.isEstimatedTxFee(values)) {
-        return { amount: 'Estimating gas...' };
+        debug('Estimating gas...');
+        return { gas: 'Estimating gas...' };
       }
 
       // Verify that `gas + (eth amount if sending eth) <= ethBalance`
       if (
         this.estimatedTxFee(values)
           .plus(token.address === 'ETH' ? toWei(values.amount) : 0)
-          .gt(toWei(ethBalance))
+          .gt(toWei(values.ethBalance))
       ) {
         return token.address !== 'ETH'
           ? { amount: 'ETH balance too low to pay for gas' }
           : { amount: "You don't have enough ETH balance" };
       }
+
+      debug('Transaction seems valid');
     } catch (err) {
       console.error(err);
       return {
