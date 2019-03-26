@@ -53,7 +53,8 @@
     "start-electron": "cd packages/fether-electron && yarn start",
     "start-react": "cd packages/fether-react && yarn start",
     "start-ui": "cd packages/fether-ui && yarn start",
-    "test": "semistandard '**/*.{js,ts}' --parser babel-eslint && CI=true lerna run test --parallel"
+    "test": "semistandard '**/*.{js,ts}' --parser babel-eslint && CI=true lerna run test --parallel",
+    "update-tokens": "yarn run ts-node --project scripts/updateTokens/tsconfig.json scripts/updateTokens"
   },
   "husky": {
     "hooks": {
@@ -71,6 +72,8 @@
   "dependencies": {
     "download": "^7.1.0",
     "node-fetch": "^2.3.0",
-    "semver": "^5.6.0"
+    "semver": "^5.6.0",
+    "ts-node": "^8.0.3",
+    "typescript": "^3.3.4000"
   }
 }
