@@ -22,6 +22,7 @@ const PARITY_WORDLIST = getParityWordlist();
 class AccountImportOptions extends Component {
   state = {
     error: '',
+    invalidWords: new Set(),
     isLoading: false,
     phrase: '',
     importingFromSigner: false
@@ -38,25 +39,43 @@ class AccountImportOptions extends Component {
   };
 
   handlePhraseChange = ({ target: { value: phrase } }) => {
+    const { invalidWords } = this.state;
+
     const words = phrase.split(' ');
     const lastVal = words.slice(-1);
     const isWordEnded = lastVal.join() === '';
 
-    let lastWord;
     if (isWordEnded) {
-      lastWord = words[words.length - 2];
+      for (let i = 0; i < words.length; i++) {
+        let word = words[i];
+
+        if (
+          word &&
+          !BIP39_WORDLIST.has(word.toLowerCase()) &&
+          !PARITY_WORDLIST.has(word.toLowerCase())
+        ) {
+          invalidWords.add(word);
+
+          this.setState({
+            invalidWords
+          });
+        }
+      }
+
+      invalidWords.forEach(invalidWord => {
+        if (!words.includes(invalidWord)) {
+          invalidWords.delete(invalidWord);
+        }
+      });
     }
 
-    if (
-      isWordEnded &&
-      lastWord &&
-      !BIP39_WORDLIST.has(lastWord) &&
-      !PARITY_WORDLIST.has(lastWord)
-    ) {
+    if (invalidWords && invalidWords.size) {
       // Guide them to contact Fether Riot
       let error = (
-        <div>
-          {`${lastWord} is not a valid BIP39 or Parity word. If you wish to recover your account with a self-generated phrase, please`}
+        <React.Fragment>
+          {`${Array.from(invalidWords).join(
+            ', '
+          )} is not a valid BIP39 or Parity word. If you wish to recover your account with a self-generated phrase, please`}
           <button className='button -utility'>
             <a
               className='contact'
@@ -67,7 +86,7 @@ class AccountImportOptions extends Component {
               Contact Us
             </a>
           </button>
-        </div>
+        </React.Fragment>
       );
 
       this.setState({
@@ -79,7 +98,7 @@ class AccountImportOptions extends Component {
       });
     }
 
-    this.setState({ phrase });
+    this.setState({ phrase: phrase.toLowerCase() });
   };
 
   handleSubmitPhrase = async () => {
