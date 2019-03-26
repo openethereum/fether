@@ -15,6 +15,11 @@ class TxDetails extends Component {
       !estimatedTxFee ||
       !values.gasPrice ||
       !values.amount ||
+      !values.chainId ||
+      !values.ethBalance ||
+      !values.gas ||
+      !values.gasPrice ||
+      !values.transactionCount ||
       !token.address
     ) {
       // Keep line break so message is centered
