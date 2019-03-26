@@ -40,6 +40,8 @@ i18n
   .then(() => pino.info(`${menuNS}: success`))
   .catch(error => pino.info(`${menuNS}: failure`, error));
 
+// FIXME i18n - convert all text below to i18n
+
 // https://www.i18next.com/overview/api#changelanguage
 i18n.changeLanguage(app.getLocale(), (err, t) => {
   if (err) {

@@ -47,6 +47,8 @@ i18n
   .then(() => debug('success'))
   .catch(error => debug('failure', error));
 
+// FIXME i18n - convert all text below to i18n
+
 // https://www.i18next.com/overview/api#changelanguage
 i18n.changeLanguage(navigator.language, (err, t) => {
   if (err) {

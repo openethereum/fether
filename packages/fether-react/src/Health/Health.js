@@ -5,7 +5,7 @@
 
 import React, { Component } from 'react';
 import { branch } from 'recompose';
-import { chainName$, withoutLoading } from '@parity/light.js';
+import { chainName$ } from '@parity/light.js';
 import light from '@parity/light.js-react';
 import withHealth from '../utils/withHealth';
 import i18n, { packageNS } from '../i18n';
@@ -19,7 +19,7 @@ import i18n, { packageNS } from '../i18n';
   }) => good || syncing,
   // Only call light.js chainName$ if we're syncing or good
   light({
-    chainName: () => chainName$().pipe(withoutLoading())
+    chainName: () => chainName$()
   })
 )
 class Health extends Component {
@@ -45,7 +45,7 @@ class Health extends Component {
     } = this.props;
     if (status.good) {
       return '-good';
-    } else if (status.downloading || status.launching || status.syncing) {
+    } else if (status.launching || status.syncing) {
       return '-syncing';
     } else {
       return '-bad';
@@ -58,11 +58,7 @@ class Health extends Component {
       chainName
     } = this.props;
 
-    if (status.downloading) {
-      return `${i18n.t(`${packageNS}:health.status.title.downloading`)} (${
-        payload.downloading.syncPercentage
-      }%)`;
-    } else if (status.launching) {
+    if (status.launching) {
       return i18n.t(`${packageNS}:health.status.title.launching`);
     } else if (!status.nodeConnected && !status.internet) {
       return i18n.t(

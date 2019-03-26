@@ -6,7 +6,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { branch } from 'recompose';
-import { chainName$, withoutLoading } from '@parity/light.js';
+import { chainName$ } from '@parity/light.js';
 import light from '@parity/light.js-react';
 import { Modal } from 'fether-ui';
 
@@ -23,7 +23,7 @@ import loading from '../../assets/img/icons/loading.svg';
   }) => syncing,
   // Only call light.js chainName$ if we're syncing
   light({
-    chainName: () => chainName$().pipe(withoutLoading())
+    chainName: () => chainName$()
   })
 )
 class HealthModal extends Component {
@@ -56,9 +56,7 @@ class HealthModal extends Component {
       health: { status }
     } = this.props;
 
-    if (status.downloading) {
-      return i18n.t(`${packageNS}:health.status.title.downloading`);
-    } else if (status.launching) {
+    if (status.launching) {
       return i18n.t(`${packageNS}:health.status.title.launching`);
     } else if (!status.nodeConnected && !status.internet) {
       return i18n.t(
@@ -91,10 +89,6 @@ class HealthModal extends Component {
 
     if (!status.internet) {
       return i18n.t(`${packageNS}:health.status.description.no_internet`);
-    } else if (status.downloading) {
-      return `${i18n.t(
-        `${packageNS}:health.status.description.downloading`
-      )} (${payload.downloading.syncPercentage}%)`;
     } else if (!status.clockSync) {
       return i18n.t(`${packageNS}:health.status.description.no_clock_sync`);
     } else if (!status.peers) {

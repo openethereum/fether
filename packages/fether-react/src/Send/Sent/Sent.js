@@ -6,7 +6,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
-import { chainName$, withoutLoading } from '@parity/light.js';
+import { chainName$ } from '@parity/light.js';
 import light from '@parity/light.js-react';
 import { withProps } from 'recompose';
 import { Modal } from 'fether-ui';
@@ -22,7 +22,7 @@ import { blockscoutTxUrl } from '../../utils/blockscout';
 const MIN_CONFIRMATIONS = 6;
 
 @light({
-  chainName: () => chainName$().pipe(withoutLoading())
+  chainName: () => chainName$()
 })
 @inject('sendStore')
 @withTokens

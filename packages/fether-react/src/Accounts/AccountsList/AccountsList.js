@@ -5,7 +5,7 @@
 
 import React, { Component } from 'react';
 import { AccountCard, Clickable, Header } from 'fether-ui';
-import { chainId$, withoutLoading } from '@parity/light.js';
+import { chainId$ } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
 import light from '@parity/light.js-react';
 
@@ -18,7 +18,7 @@ import Feedback from './Feedback';
 @withAccountsInfo
 @inject('createAccountStore', 'parityStore')
 @light({
-  chainId: () => chainId$().pipe(withoutLoading())
+  chainId: () => chainId$()
 })
 @observer
 class AccountsList extends Component {
