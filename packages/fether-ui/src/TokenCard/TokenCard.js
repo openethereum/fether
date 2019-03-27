@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 
 import { Card } from '../Card';
 import { Placeholder } from '../Placeholder';
+import { tokenPlaceholderImage } from '../assets/img/tokens/token-placeholder-128x128.jpg';
 
 export const TokenCard = ({
   balance,
@@ -23,7 +24,10 @@ export const TokenCard = ({
         {token && token.logo ? (
           <img alt={token.symbol} src={token.logo} />
         ) : (
-          <Placeholder height={20} width={20} />
+          <img
+            alt={!!token.symbol && token.symbol}
+            src={tokenPlaceholderImage}
+          />
         )}
       </div>
       <div className='token_name'>
