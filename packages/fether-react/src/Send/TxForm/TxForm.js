@@ -19,8 +19,9 @@ import { OnChange } from 'react-final-form-listeners';
 import { startWith } from 'rxjs/operators';
 import { withProps } from 'recompose';
 
-import { estimateGas } from '../../utils/transaction';
 import Debug from '../../utils/debug';
+import defaultTokenImage from '../../assets/img/tokens/default-token-128x128.jpg';
+import { estimateGas } from '../../utils/transaction';
 import RequireHealthOverlay from '../../RequireHealthOverlay';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import TxDetails from './TxDetails';
@@ -364,6 +365,7 @@ class TxForm extends Component {
                 ]}
                 onClick={null} // To disable cursor:pointer on card // TODO Can this be done better?
                 token={token}
+                defaultTokenImage={defaultTokenImage}
               />
             </div>
           </div>

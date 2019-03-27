@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 
 import { Card } from '../Card';
 import { Placeholder } from '../Placeholder';
-import { tokenPlaceholderImage } from '../assets/img/tokens/token-placeholder-128x128.jpg';
 
 export const TokenCard = ({
   balance,
@@ -16,18 +15,23 @@ export const TokenCard = ({
   decimals,
   showBalance,
   token,
+  defaultTokenImage,
   ...otherProps
 }) => (
   <Card {...otherProps}>
     <div className='token'>
       <div className='token_icon'>
         {token && token.logo ? (
-          <img alt={token.symbol} src={token.logo} />
-        ) : (
           <img
-            alt={!!token.symbol && token.symbol}
-            src={tokenPlaceholderImage}
+            alt={token.symbol}
+            src={token.logo}
+            onError={ev => {
+              ev.target.onerror = null;
+              ev.target.src = defaultTokenImage;
+            }}
           />
+        ) : (
+          <img alt={token.symbol} src={defaultTokenImage} />
         )}
       </div>
       <div className='token_name'>

@@ -10,9 +10,10 @@ import { Header } from 'fether-ui';
 import light from '@parity/light.js-react';
 import { Link } from 'react-router-dom';
 
-import RequireHealthOverlay from '../RequireHealthOverlay';
+import defaultTokenImage from '../assets/img/tokens/default-token-128x128.jpg';
 import Health from '../Health';
 import NewTokenItem from './NewTokenItem';
+import RequireHealthOverlay from '../RequireHealthOverlay';
 import withTokens from '../utils/withTokens';
 
 @withTokens
@@ -131,7 +132,11 @@ class Whitelist extends Component {
               </div>
               <ul className='list -tokens'>
                 {displayedTokens.map(token => (
-                  <NewTokenItem key={token.address} token={token} />
+                  <NewTokenItem
+                    key={token.address}
+                    token={token}
+                    defaultTokenImage={defaultTokenImage}
+                  />
                 ))}
               </ul>
             </div>
