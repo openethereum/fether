@@ -61,6 +61,10 @@ async function run() {
         }
         const tokensUrl = tokenUrlMatch[1];
     */
+
+    // Previous lines are commented and are responsible for fetching the IPFS links from the ethereum-lists repo
+    // I manually uploaded the files resulting from the building of github.com/ethereum-lists/tokens
+    // to be able to test the rest of the pipeline
     const ipfs_gateway = "https://cloudflare-ipfs.com/ipfs/";
     const ipfs_files = {
       kov: "QmZUXkAH69BpjJWcpND5HnQVsro6CXVxKiSX9vK49KsyZn",
