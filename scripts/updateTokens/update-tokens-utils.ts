@@ -51,13 +51,13 @@ function validateTokenJSON(token: RawTokenJSON): ValidatedTokenJSON {
 
 function normalizeTokenJSON(token: ValidatedTokenJSON): NormalizedTokenJSON {
   const { address, decimals, symbol, name, logo } = token;
-  let t: NormalizedTokenJSON = null;
-  if (!!logo && logo.src) {
-    t = { address, symbol, decimals: +decimals, name, logo: logo.src };
-  } else {
-    t = { address, symbol, decimals: +decimals, name };
-  }
-  return t;
+  return <NormalizedTokenJSON>{
+    address,
+    symbol,
+    decimals: +decimals,
+    name,
+    ...(!!logo && logo.src ? { logo: logo.src } : {})
+  };
 }
 
 /**
