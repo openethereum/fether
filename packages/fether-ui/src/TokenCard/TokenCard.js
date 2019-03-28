@@ -21,7 +21,7 @@ export const TokenCard = ({
   <Card {...otherProps}>
     <div className='token'>
       <div className='token_icon'>
-        {token && token.logo ? (
+        {!!token && !!token.logo ? (
           <img
             alt={token.symbol}
             src={token.logo}

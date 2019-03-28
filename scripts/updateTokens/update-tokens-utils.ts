@@ -14,6 +14,10 @@ const networks = [
     networkNameIPFS: "eth"
   },
   {
+    networkName: "goerli",
+    networkNameIPFS: "gor"
+  },
+  {
     networkName: "kovan",
     networkNameIPFS: "kov"
   },
@@ -28,9 +32,7 @@ function processTokenJson(tokensJson: RawTokenJSON[]): Token[] {
     .map(validateTokenJSON)
     .map(normalizeTokenJSON);
   checkForDuplicateAddresses(normalizedTokens);
-  return handleDuplicateSymbols(normalizedTokens).map(
-    ({ name: _, ...rest }) => rest
-  );
+  return handleDuplicateSymbols(normalizedTokens);
 }
 
 function validateTokenJSON(token: RawTokenJSON): ValidatedTokenJSON {
@@ -48,8 +50,13 @@ function validateTokenJSON(token: RawTokenJSON): ValidatedTokenJSON {
 }
 
 function normalizeTokenJSON(token: ValidatedTokenJSON): NormalizedTokenJSON {
-  const { address, decimals, symbol, name } = token;
-  const t: NormalizedTokenJSON = { address, symbol, decimal: +decimals, name };
+  const { address, decimals, symbol, name, logo } = token;
+  let t: NormalizedTokenJSON = null;
+  if (!!logo && logo.src) {
+    t = { address, symbol, decimals: +decimals, name, logo: logo.src };
+  } else {
+    t = { address, symbol, decimals: +decimals, name };
+  }
   return t;
 }
 

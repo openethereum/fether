@@ -10,11 +10,17 @@ export interface ValidatedTokenJSON {
   symbol: string;
   address: string;
   decimals: number | string;
+  logo: tokenLogo;
+}
+
+export interface tokenLogo {
+  src: string;
 }
 
 export interface NormalizedTokenJSON {
   name: string;
   symbol: string;
   address: string;
-  decimal: number;
+  decimals: number;
+  logo?: string;
 }

@@ -1,1 +1,77 @@
-[{"name":"RadarRelay test MakerDAO","symbol":"MKR","address":"0x1Dad4783cf3fe3085C1426157aB175A6119A04bA","decimals":18},{"name":"RadarRelay test Dai Stablecoin v1.0","symbol":"DAI","address":"0xC4375B7De8af5a38a93548eb8453a498222C4fF2","decimals":18},{"name":"RadarRelay test Golem Network Token","symbol":"GNT","address":"0xeF7FfF64389B814A946f3E92105513705CA6B990","decimals":18},{"name":"RadarRelay test Augur Reputation Token","symbol":"REP","address":"0xB18845c260F680d5B9D84649638813E342E4F8C9","decimals":18},{"name":"Aeternity","symbol":"Aeternity","address":"0x8667559254241ddeD4d11392f868d72092765367","decimals":18},{"name":"iExec RLC","symbol":"RLC","address":"0xc57538846Ec405Ea25Deb00e0f9B29a432D53507","decimals":9},{"name":"RadarRelay test Digix DAO Token","symbol":"DGD","address":"0xeeE3870657E4716670f185dF08652dd848fe8f7e","decimals":18},{"name":"GUP","symbol":"GUP","address":"0x3C67f7D4decF7795225f51b54134F81137385f83","decimals":3},{"name":"RadarRelay test Melon Tokens","symbol":"MLN","address":"0x323B5d4C32345ced77393B3530b1EeD0f346429D","decimals":18},{"name":"RadarRelay test 0x Protocol Token","symbol":"ZRX","address":"0x6Ff6C0Ff1d68b964901F986d4C9FA3ac68346570","decimals":18}]
+[
+  {
+    "address": "0x1Dad4783cf3fe3085C1426157aB175A6119A04bA",
+    "symbol": "MKR",
+    "decimals": 18,
+    "name": "RadarRelay test MakerDAO"
+  },
+  {
+    "address": "0x4A6e6C3868A279e1D9047B42C3fB356FF4680003",
+    "symbol": "TIB",
+    "decimals": 18,
+    "name": "ThibCoin",
+    "logo": "https://i.imgur.com/qvmnsxw.jpg"
+  },
+  {
+    "address": "0xC4375B7De8af5a38a93548eb8453a498222C4fF2",
+    "symbol": "DAI",
+    "decimals": 18,
+    "name": "RadarRelay test Dai Stablecoin v1.0"
+  },
+  {
+    "address": "0xeF7FfF64389B814A946f3E92105513705CA6B990",
+    "symbol": "GNT",
+    "decimals": 18,
+    "name": "RadarRelay test Golem Network Token"
+  },
+  {
+    "address": "0xB18845c260F680d5B9D84649638813E342E4F8C9",
+    "symbol": "REP",
+    "decimals": 18,
+    "name": "RadarRelay test Augur Reputation Token"
+  },
+  {
+    "address": "0x8667559254241ddeD4d11392f868d72092765367",
+    "symbol": "Aeternity",
+    "decimals": 18,
+    "name": "Aeternity"
+  },
+  {
+    "address": "0xc57538846Ec405Ea25Deb00e0f9B29a432D53507",
+    "symbol": "RLC",
+    "decimals": 9,
+    "name": "iExec RLC",
+    "logo": "https://ipfs.io/ipfs/QmcjNqEC4uDyZJBM946Pyrh8murWVkMh9ufBjpt5hPYuZp"
+  },
+  {
+    "address": "0xeeE3870657E4716670f185dF08652dd848fe8f7e",
+    "symbol": "DGD",
+    "decimals": 18,
+    "name": "RadarRelay test Digix DAO Token"
+  },
+  {
+    "address": "0x3C67f7D4decF7795225f51b54134F81137385f83",
+    "symbol": "GUP",
+    "decimals": 3,
+    "name": "GUP"
+  },
+  {
+    "address": "0x4733659a5cB7896A65c918Add6f59C5148FB5ffa",
+    "symbol": "GAV",
+    "decimals": 6,
+    "name": "GavCoin",
+    "logo": "https://raw.githubusercontent.com/ethcore/dapp-assets/9e135f76fe9ba61e2d8ccbd72ed144c26c450780/tokens/gavcoin-64x64.png"
+  },
+  {
+    "address": "0x323B5d4C32345ced77393B3530b1EeD0f346429D",
+    "symbol": "MLN",
+    "decimals": 18,
+    "name": "RadarRelay test Melon Tokens"
+  },
+  {
+    "address": "0x6Ff6C0Ff1d68b964901F986d4C9FA3ac68346570",
+    "symbol": "ZRX",
+    "decimals": 18,
+    "name": "RadarRelay test 0x Protocol Token"
+  }
+]
