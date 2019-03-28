@@ -1,1 +1,1 @@
-require('./update-tokens');
+import './update-tokens';

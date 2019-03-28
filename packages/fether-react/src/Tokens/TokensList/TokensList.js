@@ -5,7 +5,6 @@
 
 import React, { Component } from 'react';
 
-import defaultTokenImage from '../../assets/img/tokens/default-token-128x128.jpg';
 import RequireHealthOverlay from '../../RequireHealthOverlay';
 import TokenBalance from './TokenBalance';
 import withTokens from '../../utils/withTokens';
@@ -26,10 +25,7 @@ class TokensList extends Component {
                 index // With empty tokens, the token.address is not defined, so we prefix with index
               ) => (
                 <li key={`${index}-${token.address}`}>
-                  <TokenBalance
-                    token={token}
-                    defaultTokenImage={defaultTokenImage}
-                  />
+                  <TokenBalance token={token} />
                 </li>
               ))}
             </ul>

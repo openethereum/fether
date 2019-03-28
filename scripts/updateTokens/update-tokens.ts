@@ -1,12 +1,11 @@
-import { GitCommit } from "./types/GitCommit";
 import { CommitStatus } from "./types/CommitStatus";
+import { GitCommit } from "./types/GitCommit";
 import { RawTokenJSON } from "./types/TokensJson";
-import { get } from "http";
 
-const { networks, processTokenJson } = require("./update-tokens-utils");
-const https = require("https");
-const fs = require("fs");
-const path = require("path");
+import * as fs from "fs";
+import * as https from "https";
+import { networks, processTokenJson } from "./update-tokens-utils";
+import * as path from "path";
 
 const hardcoded_ipfs_files = {
   eth:

@@ -9,27 +9,25 @@ import PropTypes from 'prop-types';
 import { Card } from '../Card';
 import { Placeholder } from '../Placeholder';
 
+const handleError = ev => {
+  ev.target.onerror = null;
+  ev.target.src = defaultTokenImage;
+};
+
 export const TokenCard = ({
   balance,
   children,
   decimals,
+  defaultTokenImage,
   showBalance,
   token,
-  defaultTokenImage,
   ...otherProps
 }) => (
   <Card {...otherProps}>
     <div className='token'>
       <div className='token_icon'>
         {!!token && !!token.logo ? (
-          <img
-            alt={token.symbol}
-            src={token.logo}
-            onError={ev => {
-              ev.target.onerror = null;
-              ev.target.src = defaultTokenImage;
-            }}
-          />
+          <img alt={token.symbol} src={token.logo} onError={handleError} />
         ) : (
           <img alt={token.symbol} src={defaultTokenImage} />
         )}

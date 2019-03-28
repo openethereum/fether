@@ -164,4 +164,4 @@ function renameSymbolCollisions(
   }, renamedTokens);
 }
 
-module.exports = { networks, processTokenJson };
+export { networks, processTokenJson };

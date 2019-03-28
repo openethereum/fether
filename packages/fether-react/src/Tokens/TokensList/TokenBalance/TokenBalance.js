@@ -3,12 +3,13 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import React, { Component } from 'react';
 import { inject } from 'mobx-react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { TokenCard } from 'fether-ui';
 import { withRouter } from 'react-router-dom';
 
+import defaultTokenImage from '../../../assets/img/tokens/default-token-128x128.jpg';
 import withAccount from '../../../utils/withAccount';
 import withBalance from '../../../utils/withBalance';
 
@@ -38,7 +39,13 @@ class TokenBalance extends Component {
   };
 
   render () {
-    return <TokenCard onClick={this.handleClick} {...this.props} />;
+    return (
+      <TokenCard
+        onClick={this.handleClick}
+        defaultTokenImage={defaultTokenImage}
+        {...this.props}
+      />
+    );
   }
 }
 
