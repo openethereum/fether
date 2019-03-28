@@ -1,11 +1,21 @@
 import { GitCommit } from "./types/GitCommit";
 import { CommitStatus } from "./types/CommitStatus";
 import { RawTokenJSON } from "./types/TokensJson";
+import { get } from "http";
 
 const { networks, processTokenJson } = require("./update-tokens-utils");
 const https = require("https");
 const fs = require("fs");
 const path = require("path");
+
+const hardcoded_ipfs_files = {
+  eth:
+    "https://cloudflare-ipfs.com/ipfs/QmUJJpSQXWiKh6Jex6wLSZ1RWND8CxJu6XQMb7v2ByQhTR",
+  kov:
+    "https://cloudflare-ipfs.com/ipfs/QmZUXkAH69BpjJWcpND5HnQVsro6CXVxKiSX9vK49KsyZn",
+  rop:
+    "https://cloudflare-ipfs.com/ipfs/QmRAzyMEFNFFRqKTMcpk5qDdTpctgTDQU2PN8RPXSt5guj"
+};
 
 function httpsGet(opts: any): Promise<string> {
   return new Promise(resolve => {
@@ -31,49 +41,66 @@ function githubApi<T extends object>(pathTail: string): Promise<T> {
   }).then(body => JSON.parse(body));
 }
 
-async function run() {
-  /*
+async function getIPFSaddresses() {
+  let useHardcodedAddresses = false;
+
+  // parse the command line params passed to the script
+  // if "--use-hardcoded-ipfs-addresses" was passed
+  // we use the hardcoded ipfs files defined at the top
+  // of this script
+  process.argv.forEach(function(val, index, array) {
+    if (val === "--use-hardcoded-ipfs-addresses") {
+      useHardcodedAddresses = true;
+    }
+  });
+
+  if (useHardcodedAddresses) {
+    console.log(`Using hardcoded IPFS addresses...`);
+    return hardcoded_ipfs_files;
+  } else {
     // First we fetch the latest commit from ethereum-lists/tokens
     console.log("Fetching ethereum-lists/tokens commits...");
     const commits = await githubApi<GitCommit[]>("/commits");
     const commit = commits[0];
-  
+
     // Then we fetch its build status
     console.log("Fetching commits statuses...");
     const statuses = await githubApi<CommitStatus[]>(`/statuses/${commit.sha}`);
-    
-      // Fetch the IPFS link, which is a page of links to other IPFS links
-      console.log("Fetching IPFS output HTML...");
-      const ipfsUrl = statuses.find(status => status.target_url.includes("ipfs"));
-      if (!ipfsUrl) {
-        throw Error("ipfs url not found");
+
+    // Fetch the IPFS link, which is a page of links to other IPFS links
+    console.log("Fetching IPFS output HTML...");
+    const ipfsUrl = statuses.find(status => status.target_url.includes("ipfs"));
+    if (!ipfsUrl) {
+      throw Error("ipfs url not found");
+    }
+    const ipfsTargetUrl = ipfsUrl.target_url;
+    const ipfsHtml = await httpsGet(ipfsTargetUrl);
+
+    // Get the IPFS url for the each network tokens json. Regexxing HTML hurts, but w/e
+    const ipfs_files = {};
+    networks.forEach(async network => {
+      console.log(`Fetching IPFS ${network.networkName} Tokens JSON...`);
+      const regex = `<a href='([^']+)'>output\/full\/${
+        network.networkNameIPFS
+      }\.json<\/a>`;
+      const tokenUrlMatch = ipfsHtml.match(regex);
+      if (!tokenUrlMatch) {
+        throw Error("No match found for token url");
       }
-      const ipfsTargetUrl = ipfsUrl.target_url;
-      const ipfsHtml = await httpsGet(ipfsTargetUrl);
-    */
-  // Get the IPFS url for the each network tokens json. Regexxing HTML hurts, but w/e
+      ipfs_files[network.networkNameIPFS] = tokenUrlMatch[1];
+    });
+    return ipfs_files;
+  }
+}
+
+async function run() {
+  // get the list of file to use per network
+  const ipfsAddresses = await getIPFSaddresses();
+  console.log("Using the following addresses: ", ipfsAddresses);
+
   networks.forEach(async network => {
-    /*    console.log(`Fetching IPFS ${network.networkName} Tokens JSON...`);
-        const regex = `<a href='([^']+)'>output\/full\/${network.networkNameIPFS}\.json<\/a>`;
-        const tokenUrlMatch = ipfsHtml.match(regex);
-        if (!tokenUrlMatch) {
-          throw Error("No match found for token url");
-        }
-        const tokensUrl = tokenUrlMatch[1];
-    */
-
-    // Previous lines are commented and are responsible for fetching the IPFS links from the ethereum-lists repo
-    // I manually uploaded the files resulting from the building of github.com/ethereum-lists/tokens
-    // to be able to test the rest of the pipeline
-    const ipfs_gateway = "https://cloudflare-ipfs.com/ipfs/";
-    const ipfs_files = {
-      kov: "QmZUXkAH69BpjJWcpND5HnQVsro6CXVxKiSX9vK49KsyZn",
-      eth: "QmUJJpSQXWiKh6Jex6wLSZ1RWND8CxJu6XQMb7v2ByQhTR",
-      rop: "QmRAzyMEFNFFRqKTMcpk5qDdTpctgTDQU2PN8RPXSt5guj"
-    };
-
-    if (!!ipfs_files[network.networkNameIPFS]) {
-      const tokensUrl = ipfs_gateway + ipfs_files[network.networkNameIPFS];
+    if (!!ipfsAddresses[network.networkNameIPFS]) {
+      const tokensUrl = ipfsAddresses[network.networkNameIPFS];
       const tokensJson: RawTokenJSON[] = JSON.parse(await httpsGet(tokensUrl));
 
       // Format the json to match our format in /packages/fether-react/src/assets/tokens/<network>.json
