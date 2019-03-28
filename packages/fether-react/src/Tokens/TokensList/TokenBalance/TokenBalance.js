@@ -41,8 +41,8 @@ class TokenBalance extends Component {
   render () {
     return (
       <TokenCard
-        onClick={this.handleClick}
         defaultTokenImage={defaultTokenImage}
+        onClick={this.handleClick}
         {...this.props}
       />
     );
