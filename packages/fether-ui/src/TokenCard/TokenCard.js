@@ -13,6 +13,7 @@ export const TokenCard = ({
   balance,
   children,
   decimals,
+  defaultTokenImage,
   showBalance,
   token,
   ...otherProps
@@ -20,10 +21,17 @@ export const TokenCard = ({
   <Card {...otherProps}>
     <div className='token'>
       <div className='token_icon'>
-        {token && token.logo ? (
-          <img alt={token.symbol} src={token.logo} />
+        {!!token && !!token.logo ? (
+          <img
+            alt={token.symbol}
+            src={token.logo}
+            onError={ev => {
+              ev.target.onerror = null;
+              ev.target.src = defaultTokenImage;
+            }}
+          />
         ) : (
-          <Placeholder height={20} width={20} />
+          <img alt={token.symbol} src={defaultTokenImage} />
         )}
       </div>
       <div className='token_name'>
@@ -53,6 +61,7 @@ TokenCard.defaultProps = {
 
 TokenCard.propTypes = {
   decimals: PropTypes.number.isRequired,
+  defaultTokenImage: PropTypes.string,
   token: PropTypes.shape({
     logo: PropTypes.string,
     name: PropTypes.string,

@@ -19,8 +19,8 @@ import { OnChange } from 'react-final-form-listeners';
 import { startWith } from 'rxjs/operators';
 import { withProps } from 'recompose';
 
-import { estimateGas } from '../../utils/transaction';
 import Debug from '../../utils/debug';
+import { estimateGas } from '../../utils/transaction';
 import RequireHealthOverlay from '../../RequireHealthOverlay';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import TxDetails from './TxDetails';
