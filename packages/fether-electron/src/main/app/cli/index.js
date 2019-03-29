@@ -24,8 +24,8 @@ cli
   .allowUnknownOption()
   .option(
     '--chain <chain>',
-    'The network to connect to, can be one of "foundation", "kovan" or "ropsten". (default: "kovan")',
-    'kovan'
+    'The network to connect to, can be one of "foundation", "kovan" or "ropsten". (default: "foundation")',
+    'foundation'
   )
   .option(
     '--no-run-parity',
