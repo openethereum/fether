@@ -6,6 +6,7 @@
 import { isParityRunning, runParity } from '@parity/electron';
 import getRemainingArgs from 'commander-remaining-args';
 
+import { TRUSTED_LOOPBACK, TRUSTED_WS_ORIGINS } from '../constants';
 import { bundledParityPath } from '../utils/paths';
 import handleError from '../utils/handleError';
 import cli from '../cli';
@@ -61,7 +62,7 @@ class ParityEthereum {
 
   isRunning = async () => {
     return isParityRunning({
-      wsInterface: cli.wsInterface,
+      wsInterface: TRUSTED_LOOPBACK,
       wsPort: cli.wsPort
     });
   };
@@ -75,10 +76,10 @@ class ParityEthereum {
         '--light',
         '--chain',
         cli.chain,
-        '--ws-interface',
-        cli.wsInterface,
         '--ws-port',
-        cli.wsPort
+        cli.wsPort,
+        '--ws-origins',
+        TRUSTED_WS_ORIGINS
       ],
       onParityError: err =>
         handleError(err, 'An error occured with Parity Ethereum.')

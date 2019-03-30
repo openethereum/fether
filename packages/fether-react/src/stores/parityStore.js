@@ -17,6 +17,8 @@ const debug = Debug('parityStore');
 
 // The preload scripts injects `ipcRenderer` into `window.bridge`
 const {
+  defaultWsInterface,
+  defaultWsPort,
   ipcRenderer,
   isParityRunningStatus,
   wsInterface,
@@ -75,11 +77,10 @@ export class ParityStore {
 
   connectToApi = () => {
     // Get the provider, optionally from --ws-interface and --ws-port flags
-    const [defaultInterface, defaultPort] = ['127.0.0.1', '8546'];
-    let provider = `ws://${defaultInterface}:${defaultPort}`;
+    let provider = `ws://${defaultWsInterface}:${defaultWsPort}`;
     if (ipcRenderer) {
-      provider = `ws://${wsInterface || defaultInterface}:${wsPort ||
-        defaultPort}`;
+      provider = `ws://${wsInterface || defaultWsInterface}:${wsPort ||
+        defaultWsPort}`;
     }
 
     debug(`Connecting to ${provider}.`);

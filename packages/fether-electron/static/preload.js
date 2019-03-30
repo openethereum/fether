@@ -35,6 +35,8 @@ function init () {
    * Example 2: `require` should not be defined in Chrome Developer Tools Console.
    */
   window.bridge = {
+    defaultWsInterface: remote.getGlobal('defaultWsInterface'),
+    defaultWsPort: remote.getGlobal('defaultWsPort'),
     ipcRenderer,
     isParityRunningStatus: remote.getGlobal('isParityRunning'),
     wsInterface: remote.getGlobal('wsInterface'),

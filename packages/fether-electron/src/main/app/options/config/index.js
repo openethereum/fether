@@ -11,8 +11,13 @@ import cli from '../../cli';
 import {
   DEFAULT_CHAIN,
   DEFAULT_WS_PORT,
-  TRUSTED_LOOPBACK
+  TRUSTED_LOOPBACK,
+  TRUSTED_WS_ORIGINS
 } from '../../constants';
+
+// FIXME - consider replacing with fix mentioned here https://github.com/electron-userland/electron-builder/issues/1966
+// also see https://github.com/electron/electron/issues/7714
+const isDev = process.env.NODE_ENV === 'development';
 
 /**
  * Note: If the user provides a custom CLI port to `cli.wsPort` then
@@ -30,11 +35,14 @@ import {
  * with a remote node.
  * WARNING: SSH tunnels from an attacker are still possible.
  */
+const DEFAULT_HTTP_PORT = '3000';
 const CUSTOM_WS_PORT = cli.wsPort;
 const TRUSTED_HOSTS = ['api.github.com', 'github.com'];
 const TRUSTED_WS_PORTS = [DEFAULT_WS_PORT, CUSTOM_WS_PORT];
+const DEFAULT_HTTP = `http://localhost:${DEFAULT_HTTP_PORT}`;
+const DEFAULT_HTTP_TRUSTED_LOOPBACK = `http://${TRUSTED_LOOPBACK}:${DEFAULT_HTTP_PORT}`;
 const TRUSTED_URLS = [
-  `http://${TRUSTED_LOOPBACK}:3000`,
+  DEFAULT_HTTP_TRUSTED_LOOPBACK,
   `ws://${TRUSTED_LOOPBACK}:${DEFAULT_WS_PORT}`,
   `ws://${TRUSTED_LOOPBACK}:${CUSTOM_WS_PORT}`,
   'https://parity.io',
@@ -42,11 +50,12 @@ const TRUSTED_URLS = [
   'https://api.github.com/repos/paritytech/fether/releases/latest'
 ];
 
+process.env.ELECTRON_START_URL = DEFAULT_HTTP;
 // https://electronjs.org/docs/tutorial/security#electron-security-warnings
-process.env.ELECTRON_ENABLE_SECURITY_WARNINGS = true;
+process.env.ELECTRON_ENABLE_SECURITY_WARNINGS = isDev;
 
 const INDEX_HTML_PATH =
-  process.env.ELECTRON_START_URL ||
+  (isDev && process.env.ELECTRON_START_URL) ||
   url.format({
     pathname: path.join(staticPath, 'build', 'index.html'),
     protocol: 'file:',
@@ -120,7 +129,8 @@ const SECURITY_OPTIONS = {
     TRUSTED_HOSTS,
     TRUSTED_LOOPBACK,
     TRUSTED_URLS,
-    TRUSTED_WS_PORTS
+    TRUSTED_WS_PORTS,
+    TRUSTED_WS_ORIGINS
   },
   webPreferences: {
     /**

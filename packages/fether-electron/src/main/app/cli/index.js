@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import cli from 'commander';
-import { DEFAULT_CHAIN, DEFAULT_WS_PORT, TRUSTED_LOOPBACK } from '../constants';
+import { DEFAULT_CHAIN, DEFAULT_WS_PORT } from '../constants';
 const { productName } = require('../../../../electron-builder.json');
 const { version } = require('../../../../package.json');
 
@@ -32,11 +32,6 @@ cli
     `${productName} will not attempt to run the locally installed parity.`
   )
   .option(
-    '--ws-interface <ip>',
-    `Specify the hostname portion of the WebSockets server ${productName} will connect to. IP should be an interface's IP address. (default: ${TRUSTED_LOOPBACK})`,
-    TRUSTED_LOOPBACK
-  )
-  .option(
     '--ws-port <port>',
     `Specify the port portion of the WebSockets server ${productName} will connect to. (default: ${DEFAULT_WS_PORT})`,
     DEFAULT_WS_PORT
@@ -47,7 +42,13 @@ cli
       // We want to ignore some flags and not pass them down to Parity:
       // --inspect: `electron-webpack dev` runs Electron with the `--inspect` flag for HMR
       // -psn_*: https://github.com/paritytech/fether/issues/188
-      .filter(arg => !arg.startsWith('--inspect') && !arg.startsWith('-psn_'))
+      .filter(
+        arg =>
+          !arg.startsWith('--inspect') &&
+          !arg.startsWith('-psn_') &&
+          !arg.startsWith('--ws-interface') &&
+          !arg.startsWith('--ws-origins')
+      )
   );
 
 export default cli;
