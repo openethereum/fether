@@ -3,44 +3,15 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import cli from '../cli';
-
-import Pino from '../utils/pino';
-
-const pino = Pino();
-
-// pino.info('QQQQQQQ', cli.wsPort);
-
 /**
- * Note: 127.0.0.1 is more trustworthy than localhost.
- * See https://letsencrypt.org/docs/certificates-for-localhost/
+ * Security. Additional network security is configured after `cli` is available:
+ * in fether-electron/src/main/app/options/config/index.js
  *
- * Note: If the user provides a custom CLI port we 'dynamically' trust it as well
- * as the `DEFAULT_WS_PORT` in fether-electron/src/main/index.js where we only
- * permit requests from trusted paths. It also disallows users from using Fether
- * with a remote node. SSH tunnels are still possible.
+ * Note: 127.0.0.1 is a trusted loopback and more trustworthy than localhost.
+ * See https://letsencrypt.org/docs/certificates-for-localhost/
  */
 const DEFAULT_CHAIN = 'kovan';
 const DEFAULT_WS_PORT = '8546';
 const TRUSTED_LOOPBACK = '127.0.0.1';
-const TRUSTED_LOOPBACK_PREFIX = `http://${TRUSTED_LOOPBACK}`;
-const TRUSTED_HOSTS = ['api.github.com', 'github.com'];
-const TRUSTED_URLS = [
-  `${TRUSTED_LOOPBACK_PREFIX}:3000`,
-  `ws://${TRUSTED_LOOPBACK}`,
-  'https://parity.io',
-  'https://github.com/paritytech/fether/issues/new',
-  'https://api.github.com/repos/paritytech/fether/releases/latest'
-];
 
-const TRUSTED_WS_PORTS = [DEFAULT_WS_PORT];
-
-export {
-  DEFAULT_CHAIN,
-  DEFAULT_WS_PORT,
-  TRUSTED_HOSTS,
-  TRUSTED_LOOPBACK,
-  TRUSTED_LOOPBACK_PREFIX,
-  TRUSTED_URLS,
-  TRUSTED_WS_PORTS
-};
+export { DEFAULT_CHAIN, DEFAULT_WS_PORT, TRUSTED_LOOPBACK };

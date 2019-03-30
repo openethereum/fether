@@ -5,9 +5,10 @@
 
 import debounce from 'lodash/debounce';
 
-import { TRUSTED_HOSTS } from '../constants';
+import { SECURITY_OPTIONS } from '../options/config';
 import Pino from '../utils/pino';
 
+const { TRUSTED_HOSTS } = SECURITY_OPTIONS.network;
 const pino = Pino();
 
 function setupWinListeners (fetherApp) {

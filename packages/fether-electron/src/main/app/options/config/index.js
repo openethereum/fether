@@ -7,14 +7,33 @@ import path from 'path';
 import url from 'url';
 
 import { staticPath } from '../../utils/paths';
-
 import cli from '../../cli';
+import {
+  DEFAULT_CHAIN,
+  DEFAULT_WS_PORT,
+  TRUSTED_LOOPBACK
+} from '../../constants';
 
-import Pino from '../../utils/pino';
-
-const pino = Pino();
-
-pino.info('PPPPPPPPPPPPPP', cli.wsPort);
+/**
+ * Note: If the user provides a custom CLI port to `cli.wsPort` then
+ * we 'dynamically' trust it in addition to the `DEFAULT_WS_PORT` in
+ * fether-electron/src/main/index.js, which is where we only
+ * permit requests from trusted paths.
+ *
+ * Note: We also disallows users from using Fether
+ * with a remote node. SSH tunnels are still possible.
+ */
+const CUSTOM_WS_PORT = cli.wsPort;
+const TRUSTED_HOSTS = ['api.github.com', 'github.com'];
+const TRUSTED_WS_PORTS = [DEFAULT_WS_PORT, CUSTOM_WS_PORT];
+const TRUSTED_URLS = [
+  `http://${TRUSTED_LOOPBACK}:3000`,
+  `ws://${TRUSTED_LOOPBACK}:${DEFAULT_WS_PORT}`,
+  `ws://${TRUSTED_LOOPBACK}:${CUSTOM_WS_PORT}`,
+  'https://parity.io',
+  'https://github.com/paritytech/fether/issues/new',
+  'https://api.github.com/repos/paritytech/fether/releases/latest'
+];
 
 // https://electronjs.org/docs/tutorial/security#electron-security-warnings
 process.env.ELECTRON_ENABLE_SECURITY_WARNINGS = true;
@@ -87,6 +106,15 @@ const TASKBAR_OPTIONS = {
 };
 
 const SECURITY_OPTIONS = {
+  // Custom network settings
+  network: {
+    DEFAULT_CHAIN,
+    DEFAULT_WS_PORT,
+    TRUSTED_HOSTS,
+    TRUSTED_LOOPBACK,
+    TRUSTED_URLS,
+    TRUSTED_WS_PORTS
+  },
   webPreferences: {
     /**
      * Potential security risk options set explicitly even when default is favourable.

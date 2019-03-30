@@ -8,8 +8,7 @@ import getRemainingArgs from 'commander-remaining-args';
 
 import { bundledParityPath } from '../utils/paths';
 import handleError from '../utils/handleError';
-import cli, { customWsPort } from '../cli';
-import { DEFAULT_CHAIN, TRUSTED_LOOPBACK } from '../constants';
+import cli from '../cli';
 import Pino from '../utils/pino';
 
 const pino = Pino();
@@ -62,8 +61,6 @@ class ParityEthereum {
 
   isRunning = async () => {
     return isParityRunning({
-      // wsInterface: TRUSTED_LOOPBACK || cli.wsInterface,
-      // wsPort: customWsPort || cli.wsPort
       wsInterface: cli.wsInterface,
       wsPort: cli.wsPort
     });
@@ -71,7 +68,6 @@ class ParityEthereum {
 
   // Run the bundled Parity Ethereum binary
   run = async () => {
-    pino.info('BLAH');
     return runParity({
       parityPath: bundledParityPath,
       flags: [
@@ -83,11 +79,6 @@ class ParityEthereum {
         cli.wsInterface,
         '--ws-port',
         cli.wsPort
-        // DEFAULT_CHAIN || cli.chain,
-        // '--ws-interface',
-        // TRUSTED_LOOPBACK || cli.wsInterface,
-        // '--ws-port',
-        // customWsPort || cli.wsPort
       ],
       onParityError: err =>
         handleError(err, 'An error occured with Parity Ethereum.')

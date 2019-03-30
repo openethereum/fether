@@ -5,7 +5,6 @@
 
 import cli from 'commander';
 import { DEFAULT_CHAIN, DEFAULT_WS_PORT, TRUSTED_LOOPBACK } from '../constants';
-
 const { productName } = require('../../../../electron-builder.json');
 const { version } = require('../../../../package.json');
 
