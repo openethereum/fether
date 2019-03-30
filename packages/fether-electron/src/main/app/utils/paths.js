@@ -26,4 +26,4 @@ const bundledParityPath =
     ? path.join(staticPath, 'parity.exe')
     : path.join(staticPath, 'parity');
 
-export { staticPath, bundledParityPath };
+export { appIsPackaged, bundledParityPath, staticPath };
