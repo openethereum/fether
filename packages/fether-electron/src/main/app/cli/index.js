@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import cli from 'commander';
+import { DEFAULT_CHAIN, DEFAULT_WS_PORT, TRUSTED_LOOPBACK } from '../constants';
 
 const { productName } = require('../../../../electron-builder.json');
 const { version } = require('../../../../package.json');
@@ -24,8 +25,8 @@ cli
   .allowUnknownOption()
   .option(
     '--chain <chain>',
-    'The network to connect to, can be one of "foundation", "kovan" or "ropsten". (default: "kovan")',
-    'kovan'
+    `The network to connect to, can be one of "foundation", "kovan" or "ropsten". (default: "${DEFAULT_CHAIN}")`,
+    DEFAULT_CHAIN
   )
   .option(
     '--no-run-parity',
@@ -33,13 +34,13 @@ cli
   )
   .option(
     '--ws-interface <ip>',
-    `Specify the hostname portion of the WebSockets server ${productName} will connect to. IP should be an interface's IP address. (default: 127.0.0.1)`,
-    '127.0.0.1'
+    `Specify the hostname portion of the WebSockets server ${productName} will connect to. IP should be an interface's IP address. (default: ${TRUSTED_LOOPBACK})`,
+    TRUSTED_LOOPBACK
   )
   .option(
     '--ws-port <port>',
-    `Specify the port portion of the WebSockets server ${productName} will connect to. (default: 8546)`,
-    8546
+    `Specify the port portion of the WebSockets server ${productName} will connect to. (default: ${DEFAULT_WS_PORT})`,
+    DEFAULT_WS_PORT
   )
 
   .parse(

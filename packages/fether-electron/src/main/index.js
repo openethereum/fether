@@ -9,8 +9,10 @@ import { killParity } from '@parity/electron';
 
 import Pino from './app/utils/pino';
 import FetherApp from './app';
-import { TRUSTED_URLS } from './app/constants';
+import { TRUSTED_LOOPBACK_PREFIX, TRUSTED_URLS } from './app/constants';
 import fetherAppOptions from './app/options';
+// import { customWsPort } from './app/cli';
+import cli from './app/cli';
 
 const { app, shell } = electron;
 const pino = Pino();
@@ -22,6 +24,8 @@ pino.info('Process type: ', process.type);
 pino.info('Process ID: ', process.pid);
 pino.info('Process args: ', process.argv);
 pino.info('Electron version: ', process.versions['electron']);
+// pino.info('customWsPort', customWsPort);
+pino.info('cli.wsPort: ', cli.wsPort);
 
 // Disable gpu acceleration on linux
 // https://github.com/parity-js/fether/issues/85
@@ -109,12 +113,17 @@ app.on('web-contents-created', (eventOuter, win) => {
 
     const parsedUrl = new URL(url);
 
-    pino.debug(
+    pino.info(
       'Processing request to navigate to url in will-navigate listener: ',
       parsedUrl.href
     );
 
-    if (!TRUSTED_URLS.includes(parsedUrl.href)) {
+    if (
+      !TRUSTED_URLS.includes(parsedUrl.href) ||
+      // customWsPort && parsedUrl.href !== `${TRUSTED_LOOPBACK_PREFIX}:${customWsPort}`
+      (cli.wsPort &&
+        parsedUrl.href !== `${TRUSTED_LOOPBACK_PREFIX}:${cli.wsPort}`)
+    ) {
       pino.info(
         'Unable to navigate to untrusted content url due to will-navigate listener: ',
         parsedUrl.href
@@ -140,12 +149,17 @@ app.on('web-contents-created', (eventOuter, win) => {
 
       const parsedUrl = new URL(url);
 
-      pino.debug(
+      pino.info(
         'Processing request to navigate to url in new-window listener: ',
         parsedUrl.href
       );
 
-      if (!TRUSTED_URLS.includes(parsedUrl.href)) {
+      if (
+        !TRUSTED_URLS.includes(parsedUrl.href) ||
+        // customWsPort && parsedUrl.href !== `${TRUSTED_LOOPBACK_PREFIX}:${customWsPort}`
+        (cli.wsPort &&
+          parsedUrl.href !== `${TRUSTED_LOOPBACK_PREFIX}:${cli.wsPort}`)
+      ) {
         pino.info(
           'Unable to open new window with untrusted content url due to new-window listener: ',
           parsedUrl.href

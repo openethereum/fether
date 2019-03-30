@@ -8,6 +8,14 @@ import url from 'url';
 
 import { staticPath } from '../../utils/paths';
 
+import cli from '../../cli';
+
+import Pino from '../../utils/pino';
+
+const pino = Pino();
+
+pino.info('PPPPPPPPPPPPPP', cli.wsPort);
+
 // https://electronjs.org/docs/tutorial/security#electron-security-warnings
 process.env.ELECTRON_ENABLE_SECURITY_WARNINGS = true;
 

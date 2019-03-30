@@ -35,6 +35,8 @@ const Router =
 // The preload scripts injects `ipcRenderer` into `window.bridge`
 const { ipcRenderer } = window.bridge;
 
+console.log('XXXXXXXXXXXXX', window.bridge.wsPort);
+
 @inject('onboardingStore', 'parityStore')
 @observer
 class App extends Component {
