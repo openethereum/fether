@@ -20,8 +20,15 @@ import {
  * fether-electron/src/main/index.js, which is where we only
  * permit requests from trusted paths.
  *
+ * WARNING: DO NOT add the custom CLI interface `cli.wsInterface` as a
+ * trusted host. This may avoid Fether being launched with a
+ * malicious remote `cli.wsInterface` and sending sensitive user information
+ * (i.e. account password) over RPC.
+ * See https://github.com/paritytech/fether/pull/451#discussion_r268732256
+ *
  * Note: We also disallows users from using Fether
- * with a remote node. SSH tunnels are still possible.
+ * with a remote node.
+ * WARNING: SSH tunnels from an attacker are still possible.
  */
 const CUSTOM_WS_PORT = cli.wsPort;
 const TRUSTED_HOSTS = ['api.github.com', 'github.com'];
