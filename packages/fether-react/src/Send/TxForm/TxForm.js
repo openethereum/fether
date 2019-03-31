@@ -56,8 +56,11 @@ const debug = Debug('TxForm');
 @observer
 class TxForm extends Component {
   state = {
+    amount: undefined,
+    gasPrice: undefined,
     maxSelected: false,
-    showDetails: false
+    showDetails: false,
+    to: undefined
   };
 
   decorator = createDecorator({
@@ -200,7 +203,7 @@ class TxForm extends Component {
       transactionCount
     } = this.props;
 
-    const { showDetails } = this.state;
+    const { amount, gasPrice, showDetails, to } = this.state;
 
     return (
       <div>
@@ -222,10 +225,12 @@ class TxForm extends Component {
                   <Form
                     decorators={[this.decorator]}
                     initialValues={{
+                      amount,
                       chainId,
                       ethBalance,
                       from: address,
-                      gasPrice: 4,
+                      gasPrice: gasPrice || 4,
+                      to,
                       transactionCount,
                       ...tx
                     }}
@@ -320,8 +325,18 @@ class TxForm extends Component {
                             values={values}
                           />
 
+                          <OnChange name='to'>
+                            {value => this.setState({ to: value })}
+                          </OnChange>
+
+                          <OnChange name='amount'>
+                            {value => this.setState({ amount: value })}
+                          </OnChange>
+
                           <OnChange name='gasPrice'>
                             {(value, previous) => {
+                              this.setState({ gasPrice: value });
+
                               if (this.state.maxSelected) {
                                 mutators.recalculateMax();
                               }
