@@ -5,10 +5,9 @@
 
 import React from 'react';
 import QrSigner from '@parity/qr-signer';
+import { ExternalLink } from 'fether-ui';
 
 import loading from '../assets/img/icons/loading.svg';
-
-const FAQ = 'Try the Fether FAQ https://wiki.parity.io/Fether-FAQ';
 
 export default class Scanner extends React.PureComponent {
   state = {
@@ -48,17 +47,17 @@ export default class Scanner extends React.PureComponent {
         switch (e.name) {
           case 'NotAllowedError':
           case 'SecurityError':
-            errorMessage = `Webcam access was refused. ${FAQ}`;
+            errorMessage = 'Webcam access was refused.';
             break;
           case 'NotFoundError':
           case 'OverconstrainedError':
-            errorMessage = `Webcam not found on the device. ${FAQ}`;
+            errorMessage = 'Webcam not found on the device.';
             break;
           case 'NotReadableError':
-            errorMessage = `Webcam permissions or hardware error. ${FAQ}`;
+            errorMessage = 'Webcam permissions or hardware error.';
             break;
           default:
-            errorMessage = `Webcam unknown error. ${FAQ}`;
+            errorMessage = 'Webcam unknown error.';
         }
         this.setState({
           webcamError: errorMessage,
@@ -78,7 +77,15 @@ export default class Scanner extends React.PureComponent {
         {isLoading ? (
           <img alt='loading' src={loading} />
         ) : webcamError ? (
-          <p>{webcamError}</p>
+          <div>
+            <p>
+              {webcamError}&nbsp;Try the&nbsp;
+              <ExternalLink
+                name='Fether FAQ'
+                href='https://wiki.parity.io/Fether-FAQ'
+              />
+            </p>
+          </div>
         ) : (
           <div>
             <p>{label}</p>
