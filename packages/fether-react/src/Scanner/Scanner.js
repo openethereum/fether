@@ -48,17 +48,17 @@ export default class Scanner extends React.PureComponent {
         switch (e.name) {
           case 'NotAllowedError':
           case 'SecurityError':
-            errorMessage = `Access to the webcam was refused. ${FAQ}`;
+            errorMessage = `Webcam access was refused. ${FAQ}`;
             break;
           case 'NotFoundError':
           case 'OverconstrainedError':
-            errorMessage = `No webcam found on the device. ${FAQ}`;
+            errorMessage = `Webcam not found on the device. ${FAQ}`;
             break;
           case 'NotReadableError':
             errorMessage = `Webcam permissions or hardware error. ${FAQ}`;
             break;
           default:
-            errorMessage = `Unknown error. ${FAQ}`;
+            errorMessage = `Webcam unknown error. ${FAQ}`;
         }
         this.setState({
           webcamError: errorMessage,
