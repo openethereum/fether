@@ -8,6 +8,8 @@ import QrSigner from '@parity/qr-signer';
 
 import loading from '../assets/img/icons/loading.svg';
 
+const FAQ = 'Try the Fether FAQ https://wiki.parity.io/Fether-FAQ';
+
 export default class Scanner extends React.PureComponent {
   state = {
     webcamError: null,
@@ -46,18 +48,17 @@ export default class Scanner extends React.PureComponent {
         switch (e.name) {
           case 'NotAllowedError':
           case 'SecurityError':
-            errorMessage = 'Access to the webcam was refused.';
+            errorMessage = `Access to the webcam was refused. ${FAQ}`;
             break;
           case 'NotFoundError':
           case 'OverconstrainedError':
-            errorMessage = 'No webcam found on the device.';
+            errorMessage = `No webcam found on the device. ${FAQ}`;
             break;
           case 'NotReadableError':
-            errorMessage =
-              'Webcam hardware error. Try restarting your computer';
+            errorMessage = `Webcam permissions or hardware error. ${FAQ}`;
             break;
           default:
-            errorMessage = 'Unknown error.';
+            errorMessage = `Unknown error. ${FAQ}`;
         }
         this.setState({
           webcamError: errorMessage,
