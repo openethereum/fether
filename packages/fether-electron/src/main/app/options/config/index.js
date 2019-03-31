@@ -50,6 +50,7 @@ const TRUSTED_URLS = [
   `ws://${TRUSTED_LOOPBACK}:${DEFAULT_WS_PORT}`,
   `ws://${TRUSTED_LOOPBACK}:${CUSTOM_WS_PORT}`,
   'https://parity.io',
+  'https://wiki.parity.io/Fether-FAQ',
   'https://github.com/paritytech/fether/issues/new',
   'https://api.github.com/repos/paritytech/fether/releases/latest'
 ];
