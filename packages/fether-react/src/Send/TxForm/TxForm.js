@@ -198,6 +198,7 @@ class TxForm extends Component {
       account: { address, type },
       chainId,
       ethBalance,
+      maxSelected,
       sendStore: { tx },
       token,
       transactionCount
@@ -278,7 +279,7 @@ class TxForm extends Component {
                                 ? '-resize-font-default'
                                 : this.changeAmountFontSize(values.amount)
                             }`}
-                            disabled={this.state.maxSelected}
+                            disabled={maxSelected}
                             formNoValidate
                             label='Amount'
                             name='amount'
@@ -290,7 +291,7 @@ class TxForm extends Component {
                             <button
                               type='button'
                               className={
-                                this.state.maxSelected
+                                maxSelected
                                   ? 'button -tiny active max'
                                   : 'button -tiny max'
                               }
@@ -337,7 +338,7 @@ class TxForm extends Component {
                             {(value, previous) => {
                               this.setState({ gasPrice: value });
 
-                              if (this.state.maxSelected) {
+                              if (maxSelected) {
                                 mutators.recalculateMax();
                               }
                             }}
