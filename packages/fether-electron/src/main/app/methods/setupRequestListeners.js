@@ -5,6 +5,7 @@
 
 import electron from 'electron';
 
+import { IS_PROD } from '../constants';
 import { CSP } from '../utils/csp';
 import messages from '../messages';
 import Pino from '../utils/pino';
@@ -13,8 +14,9 @@ const pino = Pino();
 const { ipcMain, session } = electron;
 
 pino.debug(
-  'Configuring Content-Security-Policy for environment: ',
-  process.env.NODE_ENV
+  `Configuring Content-Security-Policy for environment ${
+    IS_PROD ? 'production' : 'development'
+  }`
 );
 
 function setupRequestListeners (fetherApp) {
@@ -43,9 +45,9 @@ function setupRequestListeners (fetherApp) {
   // Content Security Policy (CSP)
   session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
     pino.debug(
-      'Configuring Content-Security-Policy for environment: ',
-      process.env.NODE_ENV,
-      details.responseHeaders
+      `Configuring Content-Security-Policy for environment ${
+        IS_PROD ? 'production' : 'development'
+      }`
     );
 
     /* eslint-disable */

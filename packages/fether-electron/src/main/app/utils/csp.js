@@ -3,6 +3,8 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
+import { IS_PROD } from '../constants';
+
 /* eslint-disable */
 // References: https://github.com/parity-js/shell
 const CSP_CONFIG = {
@@ -23,14 +25,13 @@ const CSP_CONFIG = {
   formAction: "form-action 'none';",
   // Disallow framing.
   frameSrc: "frame-src 'none';",
-  imgSrc:
-    process.env.NODE_ENV === "development"
-      ? // Only allow HTTPS for images. Token provider logos must be https://
-        // Allow `data:` `blob:`.
-        "img-src 'self' 'unsafe-inline' file: data: blob: https:;"
-      : // Only allow HTTPS for images. Token provider logos must be https://
-        // Allow `data:` `blob:`.
-        "img-src 'unsafe-inline' file: data: blob: https:;", // Additionally used in Parity-JS Shell `'self'`
+  imgSrc: !IS_PROD
+    ? // Only allow HTTPS for images. Token provider logos must be https://
+      // Allow `data:` `blob:`.
+      "img-src 'self' 'unsafe-inline' file: data: blob: https:;"
+    : // Only allow HTTPS for images. Token provider logos must be https://
+      // Allow `data:` `blob:`.
+      "img-src 'unsafe-inline' file: data: blob: https:;", // Additionally used in Parity-JS Shell `'self'`
   // Disallow manifests.
   manifestSrc: "manifest-src 'none';",
   // Disallow media.
@@ -39,15 +40,13 @@ const CSP_CONFIG = {
   objectSrc: "object-src 'none';",
   // Disallow prefetching.
   prefetchSrc: "prefetch-src 'none';",
-  scriptSrc:
-    process.env.NODE_ENV === "development"
-      ? // Only allow `http:` and `unsafe-eval` in dev mode (required by create-react-app)
-        "script-src 'self' file: http: blob: 'unsafe-inline' 'unsafe-eval';"
-      : "script-src file: 'unsafe-inline';",
-  styleSrc:
-    process.env.NODE_ENV === "development"
-      ? "style-src 'self' 'unsafe-inline' file: blob:;" // Additionally used in Parity-JS Shell `data: https:`
-      : "style-src unsafe-inline' file: blob:;", // Additionally used in Parity-JS Shell `data: https:`
+  scriptSrc: !IS_PROD
+    ? // Only allow `http:` and `unsafe-eval` in dev mode (required by create-react-app)
+      "script-src 'self' file: http: blob: 'unsafe-inline' 'unsafe-eval';"
+    : "script-src file: 'unsafe-inline';",
+  styleSrc: !IS_PROD
+    ? "style-src 'self' 'unsafe-inline' file: blob:;" // Additionally used in Parity-JS Shell `data: https:`
+    : "style-src unsafe-inline' file: blob:;", // Additionally used in Parity-JS Shell `data: https:`
   // Allow `blob:` for camera access (worker)
   workerSrc: "worker-src blob:;" // Additionally used in Parity-JS Shell `'self' https:`
 };

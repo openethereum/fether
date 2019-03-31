@@ -7,29 +7,20 @@ import path from 'path';
 import url from 'url';
 
 import Pino from '../../utils/pino';
-import { appIsPackaged, staticPath } from '../../utils/paths';
+import { staticPath } from '../../utils/paths';
 import cli from '../../cli';
 import {
   DEFAULT_CHAIN,
   DEFAULT_WS_PORT,
+  IS_PROD,
   TRUSTED_LOOPBACK,
   TRUSTED_WS_ORIGINS
 } from '../../constants';
 
 const pino = Pino();
 
-/**
- * `appIsPackaged` is Electron alternative to using `process.env.NODE_ENV`
- * to determine current environment
- *
- * References:
- * https://github.com/electron-userland/electron-builder/issues/1966
- * https://github.com/electron/electron/issues/7714
- */
-const isProd = appIsPackaged;
-
 pino.info(
-  `Running Fether in ${isProd ? 'production' : 'development'} environment`
+  `Running Fether in ${IS_PROD ? 'production' : 'development'} environment`
 );
 
 /**
@@ -65,10 +56,10 @@ const TRUSTED_URLS = [
 
 process.env.ELECTRON_START_URL = DEFAULT_HTTP;
 // https://electronjs.org/docs/tutorial/security#electron-security-warnings
-process.env.ELECTRON_ENABLE_SECURITY_WARNINGS = !isProd;
+process.env.ELECTRON_ENABLE_SECURITY_WARNINGS = !IS_PROD;
 
 const INDEX_HTML_PATH =
-  (!isProd && process.env.ELECTRON_START_URL) ||
+  (!IS_PROD && process.env.ELECTRON_START_URL) ||
   url.format({
     pathname: path.join(staticPath, 'build', 'index.html'),
     protocol: 'file:',

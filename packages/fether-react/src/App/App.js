@@ -27,13 +27,12 @@ import Whitelist from '../Whitelist';
 
 const currentVersion = version;
 
+// The preload scripts injects `ipcRenderer` into `window.bridge`
+const { ipcRenderer, IS_PROD } = window.bridge;
+
 // Use MemoryRouter for production viewing in file:// protocol
 // https://github.com/facebook/create-react-app/issues/3591
-const Router =
-  process.env.NODE_ENV === 'production' ? MemoryRouter : BrowserRouter;
-
-// The preload scripts injects `ipcRenderer` into `window.bridge`
-const { ipcRenderer } = window.bridge;
+const Router = IS_PROD ? MemoryRouter : BrowserRouter;
 
 @inject('onboardingStore', 'parityStore')
 @observer
