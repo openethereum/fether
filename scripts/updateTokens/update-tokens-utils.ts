@@ -168,11 +168,9 @@ function renameSymbolCollisions(
   }, renamedTokens);
 }
 
-async function addLogo(
-  token: NormalizedTokenJSON
-): Promise<NormalizedTokenJSON> {
+async function addLogo(token: NormalizedTokenJSON): NormalizedTokenJSON {
   const { symbol } = token;
-  const fetchUrl = `https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/master/32%402x/color/${symbol.toLocaleLowerCase()}%402x.png`;
+  const fetchUrl = `https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/master/32%402x/color/${symbol.toLowerCase()}%402x.png`;
 
   return await fetch(fetchUrl).then(res => {
     if (res.ok) {
