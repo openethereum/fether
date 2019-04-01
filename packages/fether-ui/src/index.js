@@ -9,6 +9,7 @@ export * from './AddressShort';
 export * from './Card';
 export * from './Clickable';
 export * from './ClickToCopy';
+export * from './ExternalLink';
 export * from './Form';
 export * from './Header';
 export * from './Modal';
