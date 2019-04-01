@@ -4,15 +4,43 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { addressShort, Card, Form as FetherForm } from 'fether-ui';
+import BigNumber from 'bignumber.js';
+import { branch } from 'recompose';
+import { chainId$, chainName$ } from '@parity/light.js';
+import light from '@parity/light.js-react';
 import { inject, observer } from 'mobx-react';
+import { addressShort, Card, Form as FetherForm } from 'fether-ui';
 
 import RequireHealthOverlay from '../../../RequireHealthOverlay';
 import Scanner from '../../../Scanner';
 import withAccountsInfo from '../../../utils/withAccountsInfo';
+import withHealth from '../../../utils/withHealth';
+
+// Parity Signer networks that are available
+const PARITY_SIGNER_NETWORKS = {
+  1: 'foundation',
+  3: 'ropsten',
+  42: 'kovan',
+  61: 'classic'
+};
 
 @withAccountsInfo
+@withHealth
 @inject('createAccountStore')
+@light({
+  chainId: () => chainId$()
+})
+@branch(
+  ({
+    health: {
+      status: { good, syncing }
+    }
+  }) => good || syncing,
+  // Only call light.js chainName$ if we're syncing or good
+  light({
+    chainName: () => chainName$()
+  })
+)
 @observer
 class AccountImportOptions extends Component {
   state = {
@@ -88,8 +116,17 @@ class AccountImportOptions extends Component {
     }
   };
 
+  /**
+   * The `chainId$` and `chainName$` from light.js corresponds to `chainID` in the
+   * Genesis configs contained in: paritytech/parity-ethereum/ethcore/res/ethereum
+   * and was introduced in EIP-155 https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md
+   * to prevent replay attacks between `foundation` and `classic` chains, which both have
+   * `networkID` of `1`.
+   */
   handleSignerImported = async ({ address, chainId: chainIdString }) => {
     const {
+      chainId: currentChainIdBN,
+      chainName,
       createAccountStore: { importFromSigner }
     } = this.props;
 
@@ -98,13 +135,22 @@ class AccountImportOptions extends Component {
       return;
     }
 
-    const chainId = parseInt(chainIdString);
+    const signerChainId = parseInt(chainIdString);
 
-    if (this.hasExistingAddressForImport(address, chainId)) {
+    if (!this.isCurrentChainIdTheAddressForImportChainId(signerChainId)) {
+      this.setState({
+        error: `Parity Signer account chainId ${chainIdString} (${
+          PARITY_SIGNER_NETWORKS[signerChainId]
+        }) must match current chainId ${currentChainIdBN.valueOf()} (${chainName}).`
+      });
       return;
     }
 
-    await importFromSigner({ address, chainId });
+    if (this.hasExistingAddressForImport(address, signerChainId)) {
+      return;
+    }
+
+    await importFromSigner({ address, signerChainId });
 
     this.handleNextStep();
   };
@@ -115,14 +161,20 @@ class AccountImportOptions extends Component {
     });
   };
 
-  hasExistingAddressForImport = (addressForImport, chainId) => {
+  isCurrentChainIdTheAddressForImportChainId = chainIdInt => {
+    const { chainId: currentChainIdBN } = this.props;
+
+    return BigNumber(chainIdInt).eq(currentChainIdBN);
+  };
+
+  hasExistingAddressForImport = (addressForImport, chainIdInt) => {
     const { accountsInfo } = this.props;
     const isExistingAddress = Object.keys(accountsInfo).some(
       key =>
         key.toLowerCase() === addressForImport.toLowerCase() &&
         (!accountsInfo[key].chainId ||
-          !chainId ||
-          accountsInfo[key].chainId === chainId)
+          !chainIdInt ||
+          accountsInfo[key].chainId === chainIdInt)
     );
 
     if (isExistingAddress) {

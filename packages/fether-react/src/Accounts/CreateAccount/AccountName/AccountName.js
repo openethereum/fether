@@ -16,6 +16,7 @@ import loading from '../../../assets/img/icons/loading.svg';
 class AccountName extends Component {
   componentDidMount () {
     const { createAccountStore } = this.props;
+
     // Generate a new public address if there's none yet
     if (!createAccountStore.address) {
       createAccountStore.generateNewAccount();

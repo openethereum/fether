@@ -13,6 +13,10 @@ const baseUrlForChain = chainName => {
       chainNameBlockscout = 'mainnet';
       baseUrl = `https://blockscout.com/eth/${chainNameBlockscout}`;
       break;
+    case 'classic':
+      chainNameBlockscout = 'mainnet';
+      baseUrl = `https://blockscout.com/etc/${chainNameBlockscout}`;
+      break;
     case 'kovan':
     case 'ropsten':
       chainNameBlockscout = chainName;
@@ -27,7 +31,7 @@ const baseUrlForChain = chainName => {
   return baseUrl;
 };
 
-// Tx URL
+// Tx URL for ETH or ETC
 const ethTxUrl = (chainName, transactionHash) =>
   `${baseUrlForChain(chainName)}/tx/${transactionHash}/internal_transactions`;
 
@@ -35,7 +39,7 @@ const tokenTxUrl = (chainName, transactionHash) =>
   `${baseUrlForChain(chainName)}/tx/${transactionHash}/token_transfers`;
 
 const blockscoutTxUrl = (chainName, transactionHash, tokenAddress) =>
-  tokenAddress === 'ETH'
+  tokenAddress === 'ETH' || tokenAddress === 'ETC'
     ? ethTxUrl(chainName, transactionHash)
     : tokenTxUrl(chainName, transactionHash);
 

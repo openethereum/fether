@@ -50,7 +50,7 @@ ${this.renderTotalAmount()}`;
   };
 
   renderFee = () => {
-    const { estimatedTxFee } = this.props;
+    const { estimatedTxFee, values } = this.props;
 
     if (!estimatedTxFee) {
       return;
@@ -58,7 +58,9 @@ ${this.renderTotalAmount()}`;
 
     return `Fee: ${fromWei(estimatedTxFee, 'ether')
       .toFixed(9)
-      .toString()} ETH (gas limit * gas price)`;
+      .toString()} ${
+      values.chainId.valueOf() === '61' ? 'ETC' : 'ETH'
+    } (gas limit * gas price)`;
   };
 
   renderTotalAmount = () => {
@@ -70,10 +72,12 @@ ${this.renderTotalAmount()}`;
 
     return `Total Amount: ${fromWei(
       estimatedTxFee.plus(
-        token.address === 'ETH' ? toWei(values.amount.toString()) : 0
+        token.address === 'ETH' || token.address === 'ETC'
+          ? toWei(values.amount.toString())
+          : 0
       ),
       'ether'
-    ).toString()} ETH`;
+    ).toString()} ${values.chainId.valueOf() === '61' ? 'ETC' : 'ETH'}`;
   };
 
   render () {

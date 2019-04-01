@@ -56,9 +56,11 @@ export class SendStore {
     const { token } = this.tx;
 
     const tx =
-      token.address === 'ETH' ? txForEth(this.tx) : txForErc20(this.tx, token);
+      token.address === 'ETH' || token.address === 'ETC'
+        ? txForEth(this.tx)
+        : txForErc20(this.tx, token);
     const send$ =
-      token.address === 'ETH'
+      token.address === 'ETH' || token.address === 'ETC'
         ? post$(tx, { passphrase: password })
         : contractForToken(token.address).transfer$(...tx.args, {
           ...tx.options,

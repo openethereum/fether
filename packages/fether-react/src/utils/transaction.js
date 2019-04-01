@@ -30,7 +30,7 @@ export const estimateGas = (tx, token, api) => {
     return Promise.reject(new Error('Tx not set.'));
   }
 
-  if (token.address === 'ETH') {
+  if (token.address === 'ETH' || token.address === 'ETC') {
     return estimateGasForEth(txForEth(tx), api).then(estimatedGasForEth => {
       // do not add any buffer in case of an account to account transaction
       return estimatedGasForEth.eq(21000)
@@ -57,8 +57,9 @@ const estimateGasForErc20 = memoize((txForErc20, token) => {
 }, JSON.stringify);
 
 /**
- * Estimate gas to transfer to an ETH address. Expensive function, so we
- * memoize it.
+ * Estimate gas to transfer to an ETH or ETC address. Expensive function, so we
+ * memoize it. Note that you must only transfer from and ETH to an ETH address,
+ * or from an ETC to an ETC address.
  */
 const estimateGasForEth = memoize((txForEth, api) => {
   debug(`Estimating gas for tx.`, txForEth);
@@ -135,7 +136,7 @@ const getEthereumTx = tx => {
     chainId
   };
 
-  if (token.address === 'ETH') {
+  if (token.address === 'ETH' || token.address === 'ETC') {
     txParams.to = to;
     txParams.value = parseFloat(amount) * Math.pow(10, 18);
   } else {

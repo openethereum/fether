@@ -43,7 +43,9 @@ const debug = Debug('TxForm');
 @withAccount
 @light({
   // We need to wait for 3 values that might take time:
-  // - ethBalance: to check that we have enough to send amount+fees
+  // - ethBalance: to check that we have enough balance to send amount+fees
+  // It may be ETH or ETC corresponding to whether we are connected to the
+  // 'foundation' or 'classic' chain.
   // - chainId & transactionCount: needed to construct the tx
   // For the three of them, we add the `startWith()` operator so that the UI is
   // not blocked while waiting for their first response.
@@ -51,8 +53,8 @@ const debug = Debug('TxForm');
   transactionCount: ({ account: { address } }) =>
     transactionCountOf$(address).pipe(startWith(undefined))
 })
-@withBalance // Balance of current token (can be ETH)
-@withEthBalance // ETH balance
+@withBalance // Balance of current token (can be ETH or ETC)
+@withEthBalance // ETH or ETC balance
 @observer
 class TxForm extends Component {
   state = {
@@ -104,7 +106,7 @@ class TxForm extends Component {
     const gasPriceBn = new BigNumber(gasPrice);
     let output;
 
-    if (token.address === 'ETH') {
+    if (token.address === 'ETH' || token.address === 'ETC') {
       output = fromWei(
         toWei(balance).minus(gasBn.multipliedBy(toWei(gasPriceBn, 'shannon')))
       );
@@ -378,7 +380,7 @@ class TxForm extends Component {
    * Prevalidate form on user's input. These validations are sync.
    */
   preValidate = values => {
-    const { balance, token } = this.props;
+    const { balance, chainId: currentChainIdBN, token } = this.props;
 
     if (!values) {
       return;
@@ -394,12 +396,19 @@ class TxForm extends Component {
       return { amount: 'Please enter a valid amount' };
     } else if (amountBn.isZero()) {
       if (this.state.maxSelected) {
-        return { amount: 'ETH balance too low to pay for gas.' };
+        return {
+          amount: `${
+            currentChainIdBN.valueOf() === '61' ? 'ETC' : 'ETH'
+          } balance too low to pay for gas.`
+        };
       }
       return { amount: 'Please enter a non-zero amount' };
     } else if (amountBn.isNegative()) {
       return { amount: 'Please enter a positive amount' };
-    } else if (token.address === 'ETH' && toWei(values.amount).lt(1)) {
+    } else if (
+      (token.address === 'ETH' || token.address === 'ETC') &&
+      toWei(values.amount).lt(1)
+    ) {
       return { amount: 'Please enter at least 1 Wei' };
     } else if (amountBn.dp() > token.decimals) {
       return {
@@ -409,8 +418,17 @@ class TxForm extends Component {
       };
     } else if (balance && balance.lt(amountBn)) {
       return { amount: `You don't have enough ${token.symbol} balance` };
-    } else if (!values.to || !isAddress(values.to)) {
+    } else if (
+      (!values.to || !isAddress(values.to)) &&
+      currentChainIdBN.valueOf() !== '61'
+    ) {
       return { to: 'Please enter a valid Ethereum address' };
+      // FIXME - modify to check if it is a valid ETC address
+    } else if (
+      (!values.to || isAddress(values.to)) &&
+      currentChainIdBN.valueOf() === '61'
+    ) {
+      return { to: 'Please enter a valid Ethereum Classic address' };
     } else if (values.to === '0x0000000000000000000000000000000000000000') {
       return {
         to: `You are not permitted to send ${
@@ -431,7 +449,7 @@ class TxForm extends Component {
     }
 
     try {
-      const { token } = this.props;
+      const { chainId: currentChainIdBN, token } = this.props;
 
       const preValidation = this.preValidate(values);
 
@@ -473,12 +491,24 @@ class TxForm extends Component {
       // Verify that `gas + (eth amount if sending eth) <= ethBalance`
       if (
         this.estimatedTxFee(values)
-          .plus(token.address === 'ETH' ? toWei(values.amount) : 0)
+          .plus(
+            token.address === 'ETH' || token.address === 'ETC'
+              ? toWei(values.amount)
+              : 0
+          )
           .gt(toWei(values.ethBalance))
       ) {
-        return token.address !== 'ETH'
-          ? { amount: 'ETH balance too low to pay for gas' }
-          : { amount: "You don't have enough ETH balance" };
+        return token.address !== 'ETH' && token.address === 'ETC'
+          ? {
+            amount: `${
+              currentChainIdBN.valueOf() === '61' ? 'ETC' : 'ETH'
+            } balance too low to pay for gas`
+          }
+          : {
+            amount: `You don't have enough ${
+              currentChainIdBN.valueOf() === '61' ? 'ETC' : 'ETH'
+            } balance`
+          };
       }
 
       debug('Transaction seems valid');

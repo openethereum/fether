@@ -22,6 +22,8 @@ export const withErc20Balance = light({
       )
 });
 
+// `withEthBalance` is either the ETH or the ETC balance, as it depends
+// on what chain they are currently connected to.
 export const withEthBalance = light({
   ethBalance: ({ account: { address } }) =>
     balanceOf$(address).pipe(
@@ -45,7 +47,11 @@ export const withEthBalance = light({
  */
 export default compose(
   branch(
-    ({ token }) => token && token.address && token.address !== 'ETH',
+    ({ token }) =>
+      token &&
+      token.address &&
+      token.address !== 'ETH' &&
+      token.address !== 'ETC',
     withErc20Balance,
     withEthBalance
   ),
