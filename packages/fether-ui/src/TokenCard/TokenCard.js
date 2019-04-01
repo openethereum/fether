@@ -21,18 +21,17 @@ export const TokenCard = ({
   <Card {...otherProps}>
     <div className='token'>
       <div className='token_icon'>
-        {!!token && !!token.logo ? (
-          <img
-            alt={token.symbol}
-            src={token.logo}
-            onError={ev => {
-              ev.target.onerror = null;
-              ev.target.src = defaultTokenImage;
-            }}
-          />
-        ) : (
-          <img alt={token.symbol} src={defaultTokenImage} />
-        )}
+        <img
+          alt={token.symbol}
+          src={
+            (!!token.logo && token.logo) ||
+            `https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/master/32%402x/color/${token.symbol.toLowerCase()}%402x.png`
+          }
+          onError={ev => {
+            ev.target.onerror = null;
+            ev.target.src = defaultTokenImage;
+          }}
+        />
       </div>
       <div className='token_name'>
         {token && token.name ? (
@@ -63,7 +62,6 @@ TokenCard.propTypes = {
   decimals: PropTypes.number.isRequired,
   defaultTokenImage: PropTypes.string,
   token: PropTypes.shape({
-    logo: PropTypes.string,
     name: PropTypes.string,
     symbol: PropTypes.string
   })
