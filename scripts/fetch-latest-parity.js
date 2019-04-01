@@ -2,10 +2,11 @@
 // https://vanity-service.parity.io/parity-binaries?version=beta&os=windows&architecture=x86_64
 // https://vanity-service.parity.io/parity-binaries?version=beta&os=darwin&architecture=x86_64
 
-const crypto = require('crypto');
 const { chmod, existsSync, writeFile } = require('fs');
+const crypto = require('crypto');
 const download = require('download');
 const fetch = require('node-fetch');
+const path = require('path');
 const { promisify } = require('util');
 const semver = require('semver');
 
@@ -34,8 +35,8 @@ const ENDPOINT = `https://vanity-service.parity.io/parity-binaries?os=${os}&arch
 const STATIC_DIRECTORY = '../packages/fether-electron/static/';
 
 const foundPath = [
-  `${STATIC_DIRECTORY}/parity`,
-  `${STATIC_DIRECTORY}/parity.exe`
+  path.join(STATIC_DIRECTORY, '/parity'),
+  path.join(STATIC_DIRECTORY, '/parity.exe')
 ].find(existsSync);
 
 if (foundPath) {
