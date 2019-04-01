@@ -79,11 +79,12 @@ export default class Scanner extends React.PureComponent {
         ) : webcamError ? (
           <div>
             <p>
-              {webcamError}&nbsp;Try the&nbsp;
+              {webcamError}&nbsp;Visit the&nbsp;
               <ExternalLink
                 name='Fether FAQ'
-                href='https://wiki.parity.io/Fether-FAQ'
+                href='https://wiki.parity.io/Fether-FAQ#how-to-fix-a-webcam-error'
               />
+              &nbsp;for help troubleshooting this issue.
             </p>
           </div>
         ) : (
