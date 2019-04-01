@@ -1,3 +1,5 @@
+import fetch from "node-fetch";
+
 import {
   RawTokenJSON,
   ValidatedTokenJSON,
@@ -30,7 +32,9 @@ const networks = [
 function processTokenJson(tokensJson: RawTokenJSON[]): Token[] {
   const normalizedTokens = tokensJson
     .map(validateTokenJSON)
-    .map(normalizeTokenJSON);
+    .map(normalizeTokenJSON)
+    .map(addLogo);
+
   checkForDuplicateAddresses(normalizedTokens);
   return handleDuplicateSymbols(normalizedTokens);
 }
@@ -162,6 +166,24 @@ function renameSymbolCollisions(
     );
     return [...prev, tokenToInsert];
   }, renamedTokens);
+}
+
+async function addLogo(
+  token: NormalizedTokenJSON
+): Promise<NormalizedTokenJSON> {
+  const { symbol } = token;
+  const fetchUrl = `https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/master/32%402x/color/${symbol.toLocaleLowerCase()}%402x.png`;
+
+  return await fetch(fetchUrl).then(res => {
+    if (res.ok) {
+      return {
+        logo: fetchUrl,
+        ...token
+      };
+    } else {
+      return token;
+    }
+  });
 }
 
 export { networks, processTokenJson };

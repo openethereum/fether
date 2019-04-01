@@ -8,12 +8,12 @@ import { networks, processTokenJson } from "./update-tokens-utils";
 import * as path from "path";
 
 const hardcoded_ipfs_files = {
-  eth:
-    "https://cloudflare-ipfs.com/ipfs/QmUJJpSQXWiKh6Jex6wLSZ1RWND8CxJu6XQMb7v2ByQhTR",
+  //  eth:
+  //    "https://cloudflare-ipfs.com/ipfs/QmUJJpSQXWiKh6Jex6wLSZ1RWND8CxJu6XQMb7v2ByQhTR",
   kov:
-    "https://cloudflare-ipfs.com/ipfs/QmZUXkAH69BpjJWcpND5HnQVsro6CXVxKiSX9vK49KsyZn",
-  rop:
-    "https://cloudflare-ipfs.com/ipfs/QmRAzyMEFNFFRqKTMcpk5qDdTpctgTDQU2PN8RPXSt5guj"
+    "https://cloudflare-ipfs.com/ipfs/QmZUXkAH69BpjJWcpND5HnQVsro6CXVxKiSX9vK49KsyZn"
+  //  rop:
+  //    "https://cloudflare-ipfs.com/ipfs/QmRAzyMEFNFFRqKTMcpk5qDdTpctgTDQU2PN8RPXSt5guj"
 };
 
 function httpsGet(opts: any): Promise<string> {
