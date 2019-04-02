@@ -10,6 +10,8 @@ import * as path from "path";
 const hardcoded_ipfs_files = {
   eth:
     "https://cloudflare-ipfs.com/ipfs/QmUJJpSQXWiKh6Jex6wLSZ1RWND8CxJu6XQMb7v2ByQhTR",
+  gor:
+    "https://cloudflare-ipfs.com/ipfs/QmYznKJJK52BaLkQVJnzeaJNf8U4QAFkFXd2PGVaT29otW",
   kov:
     "https://cloudflare-ipfs.com/ipfs/QmZUXkAH69BpjJWcpND5HnQVsro6CXVxKiSX9vK49KsyZn",
   rop:
@@ -127,7 +129,7 @@ async function run() {
               "Failed to write tokens json to file, see above error"
             );
           }
-          console.log("Succesfully imported", tokens.length, " tokens!");
+          console.log("Succesfully imported", tokens.length, "tokens!");
         }
       );
     } else {
