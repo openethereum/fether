@@ -2,10 +2,11 @@
 // https://vanity-service.parity.io/parity-binaries?version=beta&os=windows&architecture=x86_64
 // https://vanity-service.parity.io/parity-binaries?version=beta&os=darwin&architecture=x86_64
 
-const crypto = require('crypto');
 const { chmod, existsSync, writeFile } = require('fs');
+const crypto = require('crypto');
 const download = require('download');
 const fetch = require('node-fetch');
+const path = require('path');
 const { promisify } = require('util');
 const semver = require('semver');
 
@@ -31,11 +32,16 @@ switch (process.platform) {
 
 const ENDPOINT = `https://vanity-service.parity.io/parity-binaries?os=${os}&architecture=x86_64`;
 
-const STATIC_DIRECTORY = '../packages/fether-electron/static/';
+const STATIC_DIRECTORY = path.join(
+  '..',
+  'packages',
+  'fether-electron',
+  'static'
+);
 
 const foundPath = [
-  `${STATIC_DIRECTORY}/parity`,
-  `${STATIC_DIRECTORY}/parity.exe`
+  path.join(STATIC_DIRECTORY, 'parity'),
+  path.join(STATIC_DIRECTORY, 'parity.exe')
 ].find(existsSync);
 
 if (foundPath) {
@@ -123,7 +129,7 @@ function downloadParity () {
           }
 
           // Write to file and set a+x permissions
-          const destinationPath = `${STATIC_DIRECTORY}/${name}`;
+          const destinationPath = path.join(STATIC_DIRECTORY, name);
           return fsWriteFile(destinationPath, data)
             .then(() => fsChmod(destinationPath, 0o755)) // https://nodejs.org/api/fs.html#fs_fs_chmod_path_mode_callback
             .then(() => destinationPath);
