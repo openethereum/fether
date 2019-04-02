@@ -8,12 +8,12 @@ import { networks, processTokenJson } from "./update-tokens-utils";
 import * as path from "path";
 
 const hardcoded_ipfs_files = {
-  //  eth:
-  //    "https://cloudflare-ipfs.com/ipfs/QmUJJpSQXWiKh6Jex6wLSZ1RWND8CxJu6XQMb7v2ByQhTR",
+  eth:
+    "https://cloudflare-ipfs.com/ipfs/QmUJJpSQXWiKh6Jex6wLSZ1RWND8CxJu6XQMb7v2ByQhTR",
   kov:
-    "https://cloudflare-ipfs.com/ipfs/QmZUXkAH69BpjJWcpND5HnQVsro6CXVxKiSX9vK49KsyZn"
-  //  rop:
-  //    "https://cloudflare-ipfs.com/ipfs/QmRAzyMEFNFFRqKTMcpk5qDdTpctgTDQU2PN8RPXSt5guj"
+    "https://cloudflare-ipfs.com/ipfs/QmZUXkAH69BpjJWcpND5HnQVsro6CXVxKiSX9vK49KsyZn",
+  rop:
+    "https://cloudflare-ipfs.com/ipfs/QmRAzyMEFNFFRqKTMcpk5qDdTpctgTDQU2PN8RPXSt5guj"
 };
 
 function httpsGet(opts: any): Promise<string> {
@@ -103,7 +103,7 @@ async function run() {
       const tokensJson: RawTokenJSON[] = JSON.parse(await httpsGet(tokensUrl));
 
       // Format the json to match our format in /packages/fether-react/src/assets/tokens/<network>.json
-      const tokens = processTokenJson(tokensJson);
+      const tokens = await processTokenJson(tokensJson);
       // Write to the file
       console.log(
         `Writing Tokens JSON to /packages/fether-react/src/assets/tokens/${
@@ -127,7 +127,7 @@ async function run() {
               "Failed to write tokens json to file, see above error"
             );
           }
-          console.log("Succesfully imported", tokens.length, "tokens!");
+          console.log("Succesfully imported", tokens.length, " tokens!");
         }
       );
     } else {

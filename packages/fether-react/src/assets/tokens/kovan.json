@@ -1,5 +1,6 @@
 [
   {
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/master/32%402x/color/mkr%402x.png",
     "address": "0x1Dad4783cf3fe3085C1426157aB175A6119A04bA",
     "symbol": "MKR",
     "decimals": 18,
@@ -13,18 +14,21 @@
     "logo": "https://i.imgur.com/qvmnsxw.jpg"
   },
   {
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/master/32%402x/color/dai%402x.png",
     "address": "0xC4375B7De8af5a38a93548eb8453a498222C4fF2",
     "symbol": "DAI",
     "decimals": 18,
     "name": "RadarRelay test Dai Stablecoin v1.0"
   },
   {
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/master/32%402x/color/gnt%402x.png",
     "address": "0xeF7FfF64389B814A946f3E92105513705CA6B990",
     "symbol": "GNT",
     "decimals": 18,
     "name": "RadarRelay test Golem Network Token"
   },
   {
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/master/32%402x/color/rep%402x.png",
     "address": "0xB18845c260F680d5B9D84649638813E342E4F8C9",
     "symbol": "REP",
     "decimals": 18,
@@ -37,19 +41,21 @@
     "name": "Aeternity"
   },
   {
+    "logo": "https://ipfs.io/ipfs/QmcjNqEC4uDyZJBM946Pyrh8murWVkMh9ufBjpt5hPYuZp",
     "address": "0xc57538846Ec405Ea25Deb00e0f9B29a432D53507",
     "symbol": "RLC",
     "decimals": 9,
-    "name": "iExec RLC",
-    "logo": "https://ipfs.io/ipfs/QmcjNqEC4uDyZJBM946Pyrh8murWVkMh9ufBjpt5hPYuZp"
+    "name": "iExec RLC"
   },
   {
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/master/32%402x/color/dgd%402x.png",
     "address": "0xeeE3870657E4716670f185dF08652dd848fe8f7e",
     "symbol": "DGD",
     "decimals": 18,
     "name": "RadarRelay test Digix DAO Token"
   },
   {
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/master/32%402x/color/gup%402x.png",
     "address": "0x3C67f7D4decF7795225f51b54134F81137385f83",
     "symbol": "GUP",
     "decimals": 3,
@@ -63,12 +69,14 @@
     "logo": "https://raw.githubusercontent.com/ethcore/dapp-assets/9e135f76fe9ba61e2d8ccbd72ed144c26c450780/tokens/gavcoin-64x64.png"
   },
   {
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/master/32%402x/color/mln%402x.png",
     "address": "0x323B5d4C32345ced77393B3530b1EeD0f346429D",
     "symbol": "MLN",
     "decimals": 18,
     "name": "RadarRelay test Melon Tokens"
   },
   {
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/master/32%402x/color/zrx%402x.png",
     "address": "0x6Ff6C0Ff1d68b964901F986d4C9FA3ac68346570",
     "symbol": "ZRX",
     "decimals": 18,
