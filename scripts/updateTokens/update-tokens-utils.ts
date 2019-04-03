@@ -1,3 +1,5 @@
+import fetch from "node-fetch";
+
 import {
   RawTokenJSON,
   ValidatedTokenJSON,
@@ -27,10 +29,13 @@ const networks = [
   }
 ];
 
-function processTokenJson(tokensJson: RawTokenJSON[]): Token[] {
-  const normalizedTokens = tokensJson
+async function processTokenJson(tokensJson: RawTokenJSON[]): Promise<Token[]> {
+  const normalizedTokensPromises = tokensJson
     .map(validateTokenJSON)
-    .map(normalizeTokenJSON);
+    .map(normalizeTokenJSON)
+    .map(addLogo);
+
+  const normalizedTokens = await Promise.all(normalizedTokensPromises);
   checkForDuplicateAddresses(normalizedTokens);
   return handleDuplicateSymbols(normalizedTokens);
 }
@@ -50,13 +55,12 @@ function validateTokenJSON(token: RawTokenJSON): ValidatedTokenJSON {
 }
 
 function normalizeTokenJSON(token: ValidatedTokenJSON): NormalizedTokenJSON {
-  const { address, decimals, symbol, name, logo } = token;
+  const { address, decimals, symbol, name } = token;
   return <NormalizedTokenJSON>{
     address,
     symbol,
     decimals: +decimals,
-    name,
-    ...(!!logo && logo.src ? { logo: logo.src } : {})
+    name
   };
 }
 
@@ -162,6 +166,25 @@ function renameSymbolCollisions(
     );
     return [...prev, tokenToInsert];
   }, renamedTokens);
+}
+async function addLogo(
+  token: NormalizedTokenJSON
+): Promise<NormalizedTokenJSON> {
+  const { symbol } = token;
+  const fetchUrl = `https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/master/32%402x/color/${encodeURIComponent(
+    symbol.toLowerCase()
+  )}%402x.png`;
+
+  const tokenResult = await fetch(fetchUrl)
+    .then(res => {
+      if (res.ok) {
+        token.logo = fetchUrl;
+      }
+      return token;
+    })
+    .catch(() => console.log(`Error: Could not fetch ${fetchUrl}`));
+
+  return tokenResult;
 }
 
 export { networks, processTokenJson };

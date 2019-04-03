@@ -4,14 +4,13 @@
     "symbol": "RLC",
     "decimals": 9,
     "name": "iExec RLC",
-    "logo": "https://ipfs.io/ipfs/QmcjNqEC4uDyZJBM946Pyrh8murWVkMh9ufBjpt5hPYuZp"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/master/32%402x/color/rlc%402x.png"
   },
   {
     "address": "0x6f95a3B682F8e9aacC86D057A6DF88A0E68145A8",
     "symbol": "ILSC",
     "decimals": 2,
-    "name": "IsraCoin",
-    "logo": "https://i.imgur.com/I1qkFfm.png"
+    "name": "IsraCoin"
   },
   {
     "address": "0xa1bAccA0e12D4091Ec1f92e7CaE3394CC9854D3D",

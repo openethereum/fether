@@ -10,6 +10,8 @@ import * as path from "path";
 const hardcoded_ipfs_files = {
   eth:
     "https://cloudflare-ipfs.com/ipfs/QmUJJpSQXWiKh6Jex6wLSZ1RWND8CxJu6XQMb7v2ByQhTR",
+  gor:
+    "https://cloudflare-ipfs.com/ipfs/QmYznKJJK52BaLkQVJnzeaJNf8U4QAFkFXd2PGVaT29otW",
   kov:
     "https://cloudflare-ipfs.com/ipfs/QmZUXkAH69BpjJWcpND5HnQVsro6CXVxKiSX9vK49KsyZn",
   rop:
@@ -103,7 +105,7 @@ async function run() {
       const tokensJson: RawTokenJSON[] = JSON.parse(await httpsGet(tokensUrl));
 
       // Format the json to match our format in /packages/fether-react/src/assets/tokens/<network>.json
-      const tokens = processTokenJson(tokensJson);
+      const tokens = await processTokenJson(tokensJson);
       // Write to the file
       console.log(
         `Writing Tokens JSON to /packages/fether-react/src/assets/tokens/${
