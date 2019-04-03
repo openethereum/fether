@@ -182,7 +182,7 @@ async function addLogo(
       }
       return token;
     })
-    .catch(error => console.error("Error:", error));
+    .catch(() => console.error(`Error: Could not fetch ${fetchUrl}`));
 
   return tokenResult;
 }
