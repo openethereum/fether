@@ -41,7 +41,7 @@ pino.info(
  */
 const DEFAULT_HTTP_PORT = '3000';
 const CUSTOM_WS_PORT = cli.wsPort;
-const TRUSTED_HOSTS = ['api.github.com', 'github.com'];
+const TRUSTED_HOSTS = ['api.github.com', 'blockscout.com', 'github.com'];
 const TRUSTED_WS_PORTS = [DEFAULT_WS_PORT, CUSTOM_WS_PORT];
 const DEFAULT_HTTP = `http://localhost:${DEFAULT_HTTP_PORT}`;
 const DEFAULT_HTTP_TRUSTED_LOOPBACK = `http://${TRUSTED_LOOPBACK}:${DEFAULT_HTTP_PORT}`;
