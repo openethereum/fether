@@ -3,7 +3,9 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { appIsPackaged } from '../utils/paths';
+import { IS_PACKAGED } from '../utils/paths';
+
+const IS_PROD = process.env.NODE_ENV === 'production';
 
 /**
  * Security. Additional network security is configured after `cli` is available:
@@ -17,19 +19,10 @@ const DEFAULT_WS_PORT = '8546';
 const TRUSTED_LOOPBACK = '127.0.0.1';
 const TRUSTED_WS_ORIGINS = 'parity://1.ui.parity';
 
-/**
- * `appIsPackaged` is Electron alternative to using `process.env.NODE_ENV`
- * to determine current environment
- *
- * References:
- * https://github.com/electron-userland/electron-builder/issues/1966
- * https://github.com/electron/electron/issues/7714
- */
-const IS_PROD = appIsPackaged;
-
 export {
   DEFAULT_CHAIN,
   DEFAULT_WS_PORT,
+  IS_PACKAGED,
   IS_PROD,
   TRUSTED_LOOPBACK,
   TRUSTED_WS_ORIGINS

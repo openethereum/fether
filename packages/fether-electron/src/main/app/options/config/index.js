@@ -46,7 +46,6 @@ const TRUSTED_HOSTS = {
   blockscout: ['blockscout.com']
 };
 const TRUSTED_WS_PORTS = [DEFAULT_WS_PORT, CUSTOM_WS_PORT];
-const DEFAULT_HTTP = `http://localhost:${DEFAULT_HTTP_PORT}`;
 const DEFAULT_HTTP_TRUSTED_LOOPBACK = `http://${TRUSTED_LOOPBACK}:${DEFAULT_HTTP_PORT}`;
 const TRUSTED_URLS = [
   DEFAULT_HTTP_TRUSTED_LOOPBACK,
@@ -58,7 +57,6 @@ const TRUSTED_URLS = [
   'https://api.github.com/repos/paritytech/fether/releases/latest'
 ];
 
-process.env.ELECTRON_START_URL = DEFAULT_HTTP;
 // https://electronjs.org/docs/tutorial/security#electron-security-warnings
 process.env.ELECTRON_ENABLE_SECURITY_WARNINGS = true;
 

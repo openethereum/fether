@@ -5,16 +5,16 @@
 
 /* global __static */
 
+import { app } from 'electron';
 import path from 'path';
 
-const appIsPackaged = !process.defaultApp;
-
+const IS_PACKAGED = app.isPackaged;
 /**
  * Get the path to the `static` folder.
  *
  * @see https://github.com/electron-userland/electron-webpack/issues/52
  */
-const staticPath = appIsPackaged
+const staticPath = IS_PACKAGED
   ? __dirname.replace(/app\.asar$/, 'static')
   : __static;
 
@@ -26,4 +26,4 @@ const bundledParityPath =
     ? path.join(staticPath, 'parity.exe')
     : path.join(staticPath, 'parity');
 
-export { appIsPackaged, bundledParityPath, staticPath };
+export { IS_PACKAGED, bundledParityPath, staticPath };

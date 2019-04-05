@@ -35,7 +35,7 @@
     "package": "electron-builder",
     "prerelease": "./scripts/revertElectronBug.sh",
     "release": "electron-builder",
-    "start": "cross-env electron-webpack dev",
+    "start": "cross-env ELECTRON_START_URL=http://localhost:3000 electron-webpack dev",
     "test": "jest --all --color --coverage"
   },
   "dependencies": {
