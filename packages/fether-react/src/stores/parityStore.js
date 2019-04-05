@@ -85,7 +85,8 @@ export class ParityStore {
 
     debug(`Connecting to ${provider}.`);
     const api = new Api(
-      new Api.Provider.WsSecure(
+      // FIXME - change to WsSecure when implement `wss` and security certificates
+      new Api.Provider.Ws(
         provider,
         this.token.replace(/[^a-zA-Z0-9]/g, '') // Sanitize token
       )
