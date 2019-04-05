@@ -13,12 +13,6 @@ import Pino from '../utils/pino';
 const pino = Pino();
 const { ipcMain, session } = electron;
 
-pino.debug(
-  `Configuring Content-Security-Policy for environment ${
-    IS_PROD ? 'production' : 'development'
-  }`
-);
-
 function setupRequestListeners (fetherApp) {
   // Listen to messages from renderer process
   ipcMain.on('asynchronous-message', (...args) => {
