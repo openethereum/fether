@@ -15,7 +15,7 @@ import fetherAppOptions from './app/options';
 
 const pino = Pino();
 const { app, shell } = electron;
-const { TRUSTED_URLS } = SECURITY_OPTIONS.network;
+const { TRUSTED_URLS } = SECURITY_OPTIONS.fetherNetwork;
 
 let withTaskbar = process.env.TASKBAR !== 'false';
 

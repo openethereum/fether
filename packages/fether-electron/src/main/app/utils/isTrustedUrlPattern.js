@@ -7,7 +7,7 @@ import UrlPattern from 'url-pattern';
 
 import { SECURITY_OPTIONS } from '../options/config';
 
-const { TRUSTED_HOSTS } = SECURITY_OPTIONS.network;
+const { TRUSTED_HOSTS } = SECURITY_OPTIONS.fetherNetwork;
 
 // Github
 const GITHUB_TRUSTED_HOSTS = TRUSTED_HOSTS.github;

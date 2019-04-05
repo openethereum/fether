@@ -130,8 +130,15 @@ const TASKBAR_OPTIONS = {
 };
 
 const SECURITY_OPTIONS = {
-  // Custom network settings
-  network: {
+  /**
+   * Note: The keys used in this options object are passed as an argument
+   * to the `BrowserWindow` as defined in the Electron API documents
+   * https://electronjs.org/docs/api/browser-window#browserwindow.
+   * However, `fetherNetwork` is a custom property that is not part of
+   * of the API and has been added just to keep the configuration together.
+   * It has been given a unique name to prevent naming conflicts.
+   */
+  fetherNetwork: {
     DEFAULT_CHAIN,
     DEFAULT_WS_PORT,
     TRUSTED_HOSTS,

@@ -8,7 +8,7 @@ import debounce from 'lodash/debounce';
 import { SECURITY_OPTIONS } from '../options/config';
 import Pino from '../utils/pino';
 
-const { TRUSTED_HOSTS } = SECURITY_OPTIONS.network;
+const { TRUSTED_HOSTS } = SECURITY_OPTIONS.fetherNetwork;
 const trustedHostsAll = Object.values(TRUSTED_HOSTS).flat();
 const pino = Pino();
 
