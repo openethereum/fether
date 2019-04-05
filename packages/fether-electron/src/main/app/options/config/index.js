@@ -60,7 +60,7 @@ const TRUSTED_URLS = [
 
 process.env.ELECTRON_START_URL = DEFAULT_HTTP;
 // https://electronjs.org/docs/tutorial/security#electron-security-warnings
-process.env.ELECTRON_ENABLE_SECURITY_WARNINGS = !IS_PROD;
+process.env.ELECTRON_ENABLE_SECURITY_WARNINGS = true;
 
 const INDEX_HTML_PATH =
   (!IS_PROD && process.env.ELECTRON_START_URL) ||
