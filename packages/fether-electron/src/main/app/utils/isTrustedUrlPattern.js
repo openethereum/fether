@@ -9,11 +9,8 @@ import { SECURITY_OPTIONS } from '../options/config';
 
 const { TRUSTED_HOSTS } = SECURITY_OPTIONS.network;
 
-// TODO - below may not be necessary, remove if all token images work due to
-// changes made in `setCertificateVerifyProc` being sufficient
-//
-// // Github
-// const GITHUB_TRUSTED_HOSTS = TRUSTED_HOSTS.github;
+// Github
+const GITHUB_TRUSTED_HOSTS = TRUSTED_HOSTS.github;
 
 // Blockscout - Only includes those that are available on the Blockscout website
 const BLOCKSCOUT_TRUSTED_HOSTS = TRUSTED_HOSTS.blockscout;
@@ -43,28 +40,31 @@ const HASH_TX_LENGTH = 64;
 const GENERAL_PATTERN = new UrlPattern(
   '(https\\://)(:subdomain.):domain.:tld(\\::port)(/*)'
 );
-// const GITHUB_PATTERN_1 = new UrlPattern('(https\\://)(:subdomain.):domain.:tld(/)(*).png');
-// const GITHUB_PATTERN_2 = new UrlPattern('(https\\://)(:subdomain.):domain.:tld(/)atomiclabs/cryptocurrency-icons');
+const GITHUB_PATTERN_1 = new UrlPattern(
+  '(https\\://)(:subdomain.):domain.:tld(/)(*)(.png|.jpg)'
+);
+const GITHUB_PATTERN_2 = new UrlPattern(
+  '(https\\://)(:subdomain.):domain.:tld(/)atomiclabs/cryptocurrency-icons/(*)(.png|.jpg)'
+);
+const GITHUB_PATTERN_3 = new UrlPattern(
+  '(https\\://)(:subdomain.):domain.:tld(/)ethcore/(*)(.png|.jpg)'
+);
 const BLOCKSCOUT_PATTERN = new UrlPattern(
   '(https\\://)(:subdomain.):domain.:tld(/):chain(/):network(/):hashKind(/0x):hash(/:hashTrailer)'
 );
 
-// TODO - below may not be necessary, remove if all token images work due to
-// changes made in `setCertificateVerifyProc` being sufficient
-//
-// // i.e.
-// // https://github.com/atomiclabs/cryptocurrency-icons
-// // https://raw.githubusercontent.com/ethcore/dapp-assets/9e135f76fe9ba61e2d8ccbd72ed144c26c450780/tokens/gavcoin-64x64.png
-// function isValidGithubUrl(url) {
-//   const match = GITHUB_PATTERN_1.match(url) || GITHUB_PATTERN_2.match(url);
-//   pino.info('isValidGithubUrl', match);
+function isValidGithubUrl (url) {
+  const match =
+    GITHUB_PATTERN_1.match(url) ||
+    GITHUB_PATTERN_2.match(url) ||
+    GITHUB_PATTERN_3.match(url);
 
-//   if (!match) {
-//     return false;
-//   }
+  if (!match) {
+    return false;
+  }
 
-//   return true;
-// }
+  return true;
+}
 
 function isValidBlockscoutUrl (url) {
   const match = BLOCKSCOUT_PATTERN.match(url);
@@ -119,16 +119,23 @@ function isValidUrl (url) {
     return isValidBlockscoutUrl(url);
   }
 
-  // TODO - below may not be necessary, remove if all token images work due to
-  // changes made in `setCertificateVerifyProc` being sufficient
-
-  // // // Github URL
-  // if (
-  //   GITHUB_TRUSTED_HOSTS.includes(`${match.subdomain}${match.domain}${match.tld}`) ||
-  //   GITHUB_TRUSTED_HOSTS.includes(`${match.domain}${match.tld}`)
-  // ) {
-  //   return isValidGithubUrl(url);
-  // }
+  // Github URL
+  if (
+    GITHUB_TRUSTED_HOSTS.includes(
+      (match.subdomain && match.subdomain) +
+        (match.subdomain && '.') +
+        (match.domain && match.domain) +
+        (match.domain && '.') +
+        (match.tld && match.tld)
+    ) ||
+    GITHUB_TRUSTED_HOSTS.includes(
+      (match.domain && match.domain) +
+        (match.domain && '.') +
+        (match.tld && match.tld)
+    )
+  ) {
+    return isValidGithubUrl(url);
+  }
 }
 
 export default isValidUrl;

@@ -26,4 +26,25 @@ describe('trust url pattern', () => {
 
     expect(isTrustedUrlPattern(url)).toEqual(true);
   });
+
+  test('should trust token .png icons from Github ethcore', () => {
+    url =
+      'https://raw.githubusercontent.com/ethcore/dapp-assets/9e135f76fe9ba61e2d8ccbd72ed144c26c450780/tokens/gavcoin-64x64.png';
+
+    expect(isTrustedUrlPattern(url)).toEqual(true);
+  });
+
+  test('should trust token .svg icons from Github ethcore', () => {
+    url =
+      'https://raw.githubusercontent.com/ethcore/dapp-assets/9e135f76fe9ba61e2d8ccbd72ed144c26c450780/tokens/gavcoin-64x64.svg';
+
+    expect(isTrustedUrlPattern(url)).toEqual(true);
+  });
+
+  test('should trust token icons from Github atomiclabs', () => {
+    url =
+      'https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/tree/master/32/black/arg.png';
+
+    expect(isTrustedUrlPattern(url)).toEqual(true);
+  });
 });
