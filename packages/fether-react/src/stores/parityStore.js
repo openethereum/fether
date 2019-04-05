@@ -21,7 +21,6 @@ const {
   defaultWsPort,
   ipcRenderer,
   isParityRunningStatus,
-  wsInterface,
   wsPort
 } = window.bridge;
 
@@ -79,8 +78,7 @@ export class ParityStore {
     // Get the provider, optionally from --ws-interface and --ws-port flags
     let provider = `ws://${defaultWsInterface}:${defaultWsPort}`;
     if (ipcRenderer) {
-      provider = `ws://${wsInterface || defaultWsInterface}:${wsPort ||
-        defaultWsPort}`;
+      provider = `ws://${defaultWsInterface}:${wsPort || defaultWsPort}`;
     }
 
     debug(`Connecting to ${provider}.`);

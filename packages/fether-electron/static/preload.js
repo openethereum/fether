@@ -40,7 +40,6 @@ function init () {
     ipcRenderer,
     isParityRunningStatus: remote.getGlobal('isParityRunning'),
     IS_PROD: !process.defaultApp,
-    wsInterface: remote.getGlobal('wsInterface'),
     wsPort: remote.getGlobal('wsPort')
   };
 }

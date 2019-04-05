@@ -10,7 +10,6 @@ function setupGlobals () {
   // Globals for fether-react parityStore
   global.defaultWsInterface = TRUSTED_LOOPBACK;
   global.defaultWsPort = DEFAULT_WS_PORT;
-  global.wsInterface = TRUSTED_LOOPBACK;
   global.wsPort = cli.wsPort;
 }
 
