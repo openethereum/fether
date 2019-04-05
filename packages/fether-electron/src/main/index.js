@@ -8,6 +8,7 @@ import { URL } from 'url';
 import { killParity } from '@parity/electron';
 
 import Pino from './app/utils/pino';
+import isTrustedUrlPattern from './app/utils/isTrustedUrlPattern';
 import FetherApp from './app';
 import { SECURITY_OPTIONS } from './app/options/config';
 import fetherAppOptions from './app/options';
@@ -115,7 +116,10 @@ app.on('web-contents-created', (eventOuter, win) => {
       parsedUrl.href
     );
 
-    if (!TRUSTED_URLS.includes(parsedUrl.href)) {
+    if (
+      !TRUSTED_URLS.includes(parsedUrl.href) &&
+      !isTrustedUrlPattern(parsedUrl.href)
+    ) {
       pino.info(
         'Unable to navigate to untrusted content url due to will-navigate listener: ',
         parsedUrl.href
@@ -146,7 +150,7 @@ app.on('web-contents-created', (eventOuter, win) => {
         parsedUrl.href
       );
 
-      if (!TRUSTED_URLS.includes(parsedUrl.href)) {
+      if (!TRUSTED_URLS.includes(parsedUrl.href) && !isTrustedUrlPattern(url)) {
         pino.info(
           'Unable to open new window with untrusted content url due to new-window listener: ',
           parsedUrl.href

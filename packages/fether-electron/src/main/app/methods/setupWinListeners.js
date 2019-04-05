@@ -9,6 +9,7 @@ import { SECURITY_OPTIONS } from '../options/config';
 import Pino from '../utils/pino';
 
 const { TRUSTED_HOSTS } = SECURITY_OPTIONS.network;
+const trustedHostsAll = Object.values(TRUSTED_HOSTS).flat();
 const pino = Pino();
 
 function setupWinListeners (fetherApp) {
@@ -37,7 +38,7 @@ function setupWinListeners (fetherApp) {
 
       // Failure accepting certificate due to errorCode
       callback(-2); // eslint-disable-line
-    } else if (!TRUSTED_HOSTS.includes(hostname)) {
+    } else if (!trustedHostsAll.includes(hostname)) {
       pino.info(
         'Failure accepting server certification due to its hostname being an untrusted host in setCertificateVerifyProc: ',
         hostname
