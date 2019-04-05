@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -35,7 +35,10 @@ class Unlock extends Component {
       .send(values.password)
       .then(() => history.push(`/send/${token.address}/from/${address}/sent`))
       .catch(error => ({
-        password: error.text
+        password:
+          error.text === 'Method not found'
+            ? "Please enable the 'personal' api in the --ws-apis launch flag of Parity Ethereum."
+            : error.text
       }));
   };
 
@@ -90,9 +93,7 @@ class Unlock extends Component {
                     render={({ handleSubmit, pristine, submitting }) => (
                       <form onSubmit={handleSubmit}>
                         <div className='text'>
-                          <p>
-                            Enter your password to confirm this transaction.
-                          </p>
+                          <p>Unlock account:</p>
                         </div>
 
                         <Field

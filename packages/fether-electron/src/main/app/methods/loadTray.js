@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -22,21 +22,22 @@ function loadTray (fetherApp) {
       showTrayBalloon(fetherApp);
     }
 
+    tray.setContextMenu(fetherApp.contextTrayMenu.getMenu());
+
     // Right-click event listener does not work on Windows
     tray.on('right-click', () => {
       pino.info('Detected right-click on tray icon');
 
-      if (process.platform !== 'darwin') {
-        onTrayClick(fetherApp);
-      }
+      tray.popUpContextMenu();
+      fetherApp.win.focus();
     });
 
     // Single click event listener works on Windows
     tray.on('click', () => {
       pino.info('Detected single click on tray icon');
 
-      fetherApp.win.focus();
       onTrayClick(fetherApp);
+      fetherApp.win.focus();
     });
     tray.setToolTip(options.tooltip);
     tray.setHighlightMode('never');

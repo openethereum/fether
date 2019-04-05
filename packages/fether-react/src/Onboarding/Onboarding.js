@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -49,11 +49,11 @@ class Onboarding extends Component {
 
   render () {
     return (
-      <div>
+      <React.Fragment>
         <Header title={<h1>Terms of Use</h1>} />
 
         <div className='window_content'>
-          <div className='box -padded-extra'>
+          <div className='box -padded -scroller'>
             <div className='terms-and-conditions-wrapper'>
               <FetherForm.Field
                 as={ReactMarkdown}
@@ -76,7 +76,7 @@ class Onboarding extends Component {
             </button>
           </div>
         </nav>
-      </div>
+      </React.Fragment>
     );
   }
 }

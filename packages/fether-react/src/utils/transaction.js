@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -131,7 +131,7 @@ const getEthereumTx = tx => {
   const txParams = {
     nonce: '0x' + transactionCount.toNumber().toString(16),
     gasLimit: '0x' + gas.toNumber().toString(16),
-    gasPrice,
+    gasPrice: toWei(gasPrice, 'shannon').toNumber(),
     chainId
   };
 

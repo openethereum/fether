@@ -1,11 +1,11 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
 import { AccountCard, Clickable, Header } from 'fether-ui';
-import { chainId$, withoutLoading } from '@parity/light.js';
+import { chainId$ } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
 import light from '@parity/light.js-react';
 
@@ -17,7 +17,7 @@ import withAccountsInfo from '../../utils/withAccountsInfo';
 @withAccountsInfo
 @inject('createAccountStore', 'parityStore')
 @light({
-  chainId: () => chainId$().pipe(withoutLoading())
+  chainId: () => chainId$()
 })
 @observer
 class AccountsList extends Component {
@@ -90,7 +90,6 @@ class AccountsList extends Component {
               )}
             </div>
           </div>
-
           <nav className='footer-nav'>
             <div className='footer-nav_status'>
               <Health />

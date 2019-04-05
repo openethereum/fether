@@ -1,11 +1,11 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
 import { branch } from 'recompose';
-import { chainName$, withoutLoading } from '@parity/light.js';
+import { chainName$ } from '@parity/light.js';
 import light from '@parity/light.js-react';
 import withHealth from '../utils/withHealth';
 
@@ -18,7 +18,7 @@ import withHealth from '../utils/withHealth';
   }) => good || syncing,
   // Only call light.js chainName$ if we're syncing or good
   light({
-    chainName: () => chainName$().pipe(withoutLoading())
+    chainName: () => chainName$()
   })
 )
 class Health extends Component {
@@ -44,7 +44,7 @@ class Health extends Component {
     } = this.props;
     if (status.good) {
       return '-good';
-    } else if (status.downloading || status.launching || status.syncing) {
+    } else if (status.launching || status.syncing) {
       return '-syncing';
     } else {
       return '-bad';
@@ -57,11 +57,7 @@ class Health extends Component {
       chainName
     } = this.props;
 
-    if (status.downloading) {
-      return `Downloading Parity Ethereum (${
-        payload.downloading.syncPercentage
-      }%)`;
-    } else if (status.launching) {
+    if (status.launching) {
       return 'Launching the node...';
     } else if (!status.nodeConnected && !status.internet) {
       return 'No internet. No node connected';
@@ -69,6 +65,8 @@ class Health extends Component {
       return 'Connecting to node...';
     } else if (status.nodeConnected && !status.internet) {
       return 'No internet. Connected to node';
+    } else if (status.launching) {
+      return 'Launching the node...';
     } else if (!status.clockSync) {
       return 'Clock of host not in sync';
     } else if (!status.peers) {

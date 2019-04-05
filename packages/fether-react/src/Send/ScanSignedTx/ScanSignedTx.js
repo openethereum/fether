@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -76,7 +76,7 @@ class ScanSignedTx extends Component {
               <Card className='-centered'>
                 <Scanner
                   onScan={this.onScanSignedTx}
-                  label='Please show the QR code of the signed transaction on the webcam'
+                  label='Show the signed transaction QR code'
                 />
 
                 {error && <p className='text -standard'>{error}</p>}

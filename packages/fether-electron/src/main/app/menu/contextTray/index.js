@@ -1,25 +1,25 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
 import electron from 'electron';
 
-import { getContextMenuTemplate } from '../template';
+import { getContextTrayMenuTemplate } from '../template';
 
 const { Menu } = electron;
 
 let hasCalledInitMenu = false;
 
-class FetherContextMenu {
+class FetherContextTrayMenu {
   constructor (fetherApp) {
     if (hasCalledInitMenu) {
       throw new Error(
-        'Unable to initialise Fether context menu more than once'
+        'Unable to initialise Fether context tray menu more than once'
       );
     }
 
-    this.setMenuTemplate(getContextMenuTemplate(fetherApp));
+    this.setMenuTemplate(getContextTrayMenuTemplate(fetherApp));
     this.buildMenuTemplate(this.menuTemplate);
   }
 
@@ -36,4 +36,4 @@ class FetherContextMenu {
   };
 }
 
-export default FetherContextMenu;
+export default FetherContextTrayMenu;

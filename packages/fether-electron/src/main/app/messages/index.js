@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -6,6 +6,7 @@
 import { checkClockSync, signerNewToken } from '@parity/electron';
 
 import Pino from '../utils/pino';
+import { bundledParityPath } from '../utils/paths';
 
 const pino = Pino();
 
@@ -18,22 +19,11 @@ export default async (fetherApp, event, action, ...args) => {
       return;
     }
     switch (action) {
-      case 'app-resize': {
-        if (!fetherApp.win || !args[0]) {
-          return;
-        }
-        const [width] = fetherApp.win.getContentSize();
-        // Conversion to integer is required to pass as argument to setContentSize.
-        // Reference: https://electronjs.org/docs/all#winsetcontentsizewidth-height-animate
-        const newHeight = parseInt(args[0]);
-        fetherApp.win.setContentSize(width, Math.round(newHeight) + 2);
-        break;
-      }
       case 'app-right-click': {
         if (!fetherApp.win) {
           return;
         }
-        fetherApp.contextMenu.getMenu().popup({ window: fetherApp.win });
+        fetherApp.contextWindowMenu.getMenu().popup({ window: fetherApp.win });
         break;
       }
       case 'check-clock-sync': {
@@ -43,7 +33,7 @@ export default async (fetherApp, event, action, ...args) => {
         break;
       }
       case 'signer-new-token': {
-        const token = await signerNewToken();
+        const token = await signerNewToken({ parityPath: bundledParityPath });
         // Send back the token to the renderer process
         event.sender.send('signer-new-token-reply', token);
         break;

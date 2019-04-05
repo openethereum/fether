@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -11,12 +11,7 @@ import Pino from '../utils/pino';
 const pino = Pino();
 
 function setupWinListeners (fetherApp) {
-  const {
-    moveWindowUp,
-    onWindowClose,
-    processSaveWinPosition,
-    win
-  } = fetherApp;
+  const { onWindowClose, processSaveWinPosition, win } = fetherApp;
 
   // Open external links in browser
   win.webContents.on('new-window', (event, url) => {
@@ -24,7 +19,7 @@ function setupWinListeners (fetherApp) {
     electron.shell.openExternal(url);
   });
 
-  // Linux (unchecked on others)
+  // Windows and Linux (unchecked on others)
   win.on('move', () => {
     /**
      * On Linux using this with debouncing is the closest equivalent
@@ -49,17 +44,12 @@ function setupWinListeners (fetherApp) {
      * On Linux the closest equivalent to achieving 'moved' is debouncing
      * on the 'move' event. It also works in 'close' even when app crashes
      */
-    processSaveWinPosition(fetherApp);
+    pino.info('Detected moved event');
   });
 
-  // macOS and Linux (not Windows)
+  // macOS and Linux and Windows
   win.on('resize', () => {
     pino.info('Detected resize event');
-
-    moveWindowUp(fetherApp);
-    setTimeout(() => {
-      moveWindowUp(fetherApp);
-    }, 5000);
   });
 
   win.on('blur', () => {

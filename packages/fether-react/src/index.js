@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -16,7 +16,7 @@ import rootStore from './stores';
 import './index.css';
 
 // Show debug logs
-window.localStorage.debug = 'fether*'; // https://github.com/visionmedia/debug#browser-support
+window.localStorage.debug = 'fether*,@parity*'; // https://github.com/visionmedia/debug#browser-support
 
 // Set recompose to use RxJS
 // https://github.com/acdlite/recompose/blob/master/docs/API.md#setobservableconfig

@@ -1,9 +1,8 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import BigNumber from 'bignumber.js';
 import { combineLatest, interval, Observable, fromEvent, merge } from 'rxjs';
 import { compose, mapPropsStream } from 'recompose';
 import {
@@ -18,7 +17,7 @@ import {
 } from 'rxjs/operators';
 import isElectron from 'is-electron';
 import isEqual from 'lodash/isEqual';
-import { peerCount$, syncStatus$, withoutLoading } from '@parity/light.js';
+import { peerCount$, syncStatus$ } from '@parity/light.js';
 
 import parityStore from '../stores/parityStore';
 
@@ -35,14 +34,6 @@ const isParityRunning$ = Observable.create(observer => {
 }).pipe(
   startWith(electron ? !!electron.remote.getGlobal('isParityRunning') : false)
 );
-
-const downloadProgress$ = Observable.create(observer => {
-  if (electron) {
-    electron.ipcRenderer.on('parity-download-progress', (_, progress) => {
-      observer.next(progress);
-    });
-  }
-}).pipe(startWith(0));
 
 const isClockSync$ = Observable.create(observer => {
   if (electron) {
@@ -61,7 +52,6 @@ const online$ = merge(
 const combined$ = combineLatest(
   isParityRunning$,
   isApiConnected$,
-  downloadProgress$,
   online$,
   isClockSync$
 ).pipe(publishReplay(1));
@@ -101,7 +91,7 @@ const rpcs$ = isApiConnected$.pipe(
           // Emit "not synced" only if we haven't been synced for over 2 seconds
         )
         .pipe(audit(syncStatus => interval(syncStatus.isSync ? 0 : 2000))),
-      peerCount$().pipe(withoutLoading())
+      peerCount$()
     )
   ),
   startWith([{ isSync: false }, undefined]), // Don't stall the HOC's combineLatest; emit immediately
@@ -116,17 +106,9 @@ export default compose(
       map(
         ([
           props,
-          [
-            isParityRunning,
-            isApiConnected,
-            downloadProgress,
-            online,
-            isClockSync
-          ],
+          [isParityRunning, isApiConnected, online, isClockSync],
           [{ isSync, syncPayload }, peerCount]
         ]) => {
-          const isDownloading =
-            online && downloadProgress > 0 && !isParityRunning;
           const isNoPeers =
             isApiConnected && (peerCount === undefined || peerCount.lte(1));
           const isGood =
@@ -137,7 +119,6 @@ export default compose(
             internet: online, // Internet connection
             nodeConnected: isApiConnected, // Connected to local Parity Ethereum node
             clockSync: isClockSync, // Local clock is not synchronised
-            downloading: isDownloading, // Currently downloading Parity Ethereum
             launching: !isApiConnected, // Launching Parity Ethereum only upon startup
             peers: !isNoPeers, // Connecion to peer nodes
             syncing: isApiConnected && !isSync, // Synchronising blocks
@@ -146,9 +127,6 @@ export default compose(
 
           // Payload - optional payload of a state
           const payload = {
-            downloading: {
-              syncPercentage: new BigNumber(Math.round(downloadProgress * 100))
-            },
             syncing: syncPayload
           };
 

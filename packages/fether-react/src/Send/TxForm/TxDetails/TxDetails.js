@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -15,6 +15,11 @@ class TxDetails extends Component {
       !estimatedTxFee ||
       !values.gasPrice ||
       !values.amount ||
+      !values.chainId ||
+      !values.ethBalance ||
+      !values.gas ||
+      !values.gasPrice ||
+      !values.transactionCount ||
       !token.address
     ) {
       // Keep line break so message is centered

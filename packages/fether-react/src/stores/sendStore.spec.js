@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -9,7 +9,6 @@ import BigNumber from 'bignumber.js';
 import lightJs from '@parity/light.js'; // Mocked
 
 import * as mock from '../utils/testHelpers/mock';
-import parityStore from './parityStore';
 import { SendStore } from './sendStore';
 import * as storeTests from '../utils/testHelpers/storeTests';
 
@@ -24,29 +23,9 @@ jest.mock('@parity/light.js', () => ({
   post$: jest.fn(() => mock.post$)
 }));
 
-jest.mock('./parityStore', () => ({
-  api: mock.api
-}));
-
 let sendStore; // Will hold the newly created instance of SendStore in each test
 beforeEach(() => {
   sendStore = new SendStore();
-});
-
-describe('method acceptRequest', () => {
-  test('should call api.signer.confirmRequest', () => {
-    sendStore.acceptRequest(1, 'foo');
-    expect(parityStore.api.signer.confirmRequest).toHaveBeenCalledWith(
-      1,
-      null,
-      'foo'
-    );
-  });
-
-  test('should set a subscription on blockNumber$', () => {
-    sendStore.acceptRequest(1, 'foo');
-    expect(lightJs.blockNumber$).toHaveBeenCalled();
-  });
 });
 
 describe('method clear', () => {
@@ -90,41 +69,42 @@ describe('@computed confirmations', () => {
 describe('method send', () => {
   test('should call transfer$ if the token is Erc20', () => {
     sendStore.setTx(mock.txErc20);
-    sendStore.send('password');
+    sendStore.send('passphrase');
     expect(mock.txErc20.token.address).toEqual('THIBCoin');
     expect(mock.makeContract.transfer$).toHaveBeenCalledWith(
       '0x123',
       new BigNumber('10000000000000000'),
-      { from: '0x456', gasPrice: new BigNumber('4000000000') }
+      {
+        from: '0x456',
+        gasPrice: new BigNumber('4000000000'),
+        passphrase: 'passphrase'
+      }
     );
   });
 
   test('should call post$ if the token is ETH', () => {
     sendStore.setTx(mock.txEth);
-    sendStore.send('password');
+    sendStore.send('passphrase');
     expect(mock.txEth.token.address).toEqual('ETH');
-    expect(lightJs.post$).toHaveBeenCalledWith({
-      from: '0x456',
-      gasPrice: new BigNumber('4000000000'),
-      to: '0x123',
-      value: new BigNumber('10000000000000000')
-    });
+    expect(lightJs.post$).toHaveBeenCalledWith(
+      {
+        from: '0x456',
+        gasPrice: new BigNumber('4000000000'),
+        to: '0x123',
+        value: new BigNumber('10000000000000000')
+      },
+      {
+        passphrase: 'passphrase'
+      }
+    );
   });
 
   test('should update txStatus', () => {
     sendStore.setTxStatus = jest.fn();
     sendStore.setTx(mock.txEth);
-    sendStore.send('password');
+    sendStore.send('passphrase');
     expect(mock.txEth.token.address).toEqual('ETH');
     expect(sendStore.setTxStatus).toHaveBeenCalledWith({ estimating: true });
-  });
-
-  test('should call acceptRequest when txStatus is requested', () => {
-    sendStore.acceptRequest = jest.fn(() => Promise.resolve(true));
-    sendStore.setTx(mock.txEth);
-    sendStore.send('password');
-    expect(mock.txEth.token.address).toEqual('ETH');
-    expect(sendStore.acceptRequest).toHaveBeenCalledWith(1, 'password');
   });
 });
 

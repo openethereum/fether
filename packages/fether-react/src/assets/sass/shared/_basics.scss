@@ -14,7 +14,6 @@ body {
   font-size: ms(0);
   line-height: ms(0) * 1.3;
   position: relative;
-  overflow-y: hidden;
   /* https://electronjs.org/docs/api/frameless-window#draggable-region */
   -webkit-app-region: drag;
 }
@@ -31,6 +30,10 @@ a:visited {
   &:hover {
     cursor: pointer;
   }
+}
+
+.external-link {
+  color: $blue !important;
 }
 
 button,

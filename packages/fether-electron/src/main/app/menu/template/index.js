@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -47,6 +47,23 @@ const getMenubarMenuTemplate = fetherApp => {
         label: 'File',
         submenu: [{ role: 'quit' }]
       };
+
+  /* eslint-disable no-sparse-arrays */
+  const editTabMacOS = {
+    label: 'Edit',
+    submenu: [
+      { role: 'undo' },
+      { role: 'redo' },
+      { type: 'separator' },
+      { role: 'cut' },,
+      { role: 'copy' },
+      { role: 'paste' },
+      { type: 'separator' },
+      { role: 'delete' },
+      { role: 'selectall' }
+    ]
+  };
+  /* eslint-enable no-sparse-arrays */
 
   /**
    * On win32 we need to use `webContents` to make some of the menu items
@@ -115,9 +132,9 @@ const getMenubarMenuTemplate = fetherApp => {
     ]
   };
 
-  let template = [
+  const template = [
     fileTab,
-    editTab,
+    process.platform === 'darwin' ? editTabMacOS : editTab,
     process.platform === 'win32' ? viewTabWindowsOS : viewTab,
     windowTab,
     helpTab
@@ -198,8 +215,37 @@ const isChecked = fetherApp => {
   return isLaunchOnStartup;
 };
 
-const getContextMenuTemplate = fetherApp => {
-  let template = getMenubarMenuTemplate(fetherApp);
+const getContextTrayMenuTemplate = fetherApp => {
+  if (fetherApp.options.withTaskbar) {
+    const template = [
+      {
+        label: 'Show/Hide Fether',
+        click () {
+          if (fetherApp.win.isVisible() && fetherApp.win.isFocused()) {
+            fetherApp.win.hide();
+          } else {
+            fetherApp.win.show();
+            fetherApp.win.focus();
+          }
+        }
+      }
+    ];
+
+    if (process.env.NODE_ENV !== 'production') {
+      template.push({
+        label: 'Reload',
+        click: () => fetherApp.win.webContents.reload()
+      });
+    }
+
+    template.push({ label: 'Quit', role: 'quit' });
+
+    return template;
+  }
+};
+
+const getContextWindowMenuTemplate = fetherApp => {
+  const template = getMenubarMenuTemplate(fetherApp);
 
   // Set the checkbox value off in the context menu on first launch
   let isFirstLaunch = settings.has('launch-on-startup');
@@ -243,17 +289,17 @@ const getContextMenuTemplate = fetherApp => {
   isFirstLaunch = undefined;
 
   if (fetherApp.options.withTaskbar) {
-    // Remove File and Help menus in taskbar mode for context menu
+    // Remove File and Help menus in taskbar mode for window context menu
     template.shift();
     template.pop();
     template.push({
       label: 'Preferences',
       submenu: [menuItemLaunchOnStartup]
     });
+
     template.push({
       role: 'help',
       submenu: [
-        { role: 'about' },
         {
           label: 'Learn More',
           click () {
@@ -262,11 +308,21 @@ const getContextMenuTemplate = fetherApp => {
         }
       ]
     });
+
     template.push({ type: 'separator' });
+
+    if (process.platform === 'darwin') {
+      template[2].submenu.push({ role: 'about' });
+    }
+
     template.push({ label: 'Quit', role: 'quit' });
   }
 
   return template;
 };
 
-export { getMenubarMenuTemplate, getContextMenuTemplate };
+export {
+  getContextTrayMenuTemplate,
+  getContextWindowMenuTemplate,
+  getMenubarMenuTemplate
+};

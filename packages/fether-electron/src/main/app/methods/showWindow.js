@@ -1,4 +1,4 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -16,6 +16,8 @@ function showWindow (fetherApp, trayPos) {
     calculateWinPosition,
     createWindow,
     fixWinPosition,
+    moveWindowUp,
+    processSaveWinPosition,
     setupWinListeners,
     setupWin32Listeners,
     win
@@ -83,6 +85,13 @@ function showWindow (fetherApp, trayPos) {
 
     fetherApp.hasSetupWinListeners = true;
   }
+
+  moveWindowUp(fetherApp);
+  setTimeout(() => {
+    moveWindowUp(fetherApp);
+  }, 5000);
+
+  processSaveWinPosition(fetherApp);
 
   fetherApp.emit('after-show-window');
 }
