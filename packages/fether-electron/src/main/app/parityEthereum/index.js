@@ -6,7 +6,6 @@
 import { isParityRunning, runParity } from '@parity/electron';
 import getRemainingArgs from 'commander-remaining-args';
 
-import { TRUSTED_WS_ORIGINS } from '../constants';
 import { bundledParityPath } from '../utils/paths';
 import handleError from '../utils/handleError';
 import cli from '../cli';
@@ -76,9 +75,7 @@ class ParityEthereum {
         '--chain',
         cli.chain,
         '--ws-port',
-        cli.wsPort,
-        '--ws-origins',
-        TRUSTED_WS_ORIGINS
+        cli.wsPort
       ],
       onParityError: err =>
         handleError(err, 'An error occured with Parity Ethereum.')

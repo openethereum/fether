@@ -13,8 +13,7 @@ import {
   DEFAULT_CHAIN,
   DEFAULT_WS_PORT,
   IS_PROD,
-  TRUSTED_LOOPBACK,
-  TRUSTED_WS_ORIGINS
+  TRUSTED_LOOPBACK
 } from '../../constants';
 
 const pino = Pino();
@@ -142,8 +141,7 @@ const SECURITY_OPTIONS = {
     TRUSTED_HOSTS,
     TRUSTED_LOOPBACK,
     TRUSTED_URLS,
-    TRUSTED_WS_PORTS,
-    TRUSTED_WS_ORIGINS
+    TRUSTED_WS_PORTS
   },
   webPreferences: {
     /**

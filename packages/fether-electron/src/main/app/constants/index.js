@@ -17,13 +17,11 @@ const IS_PROD = process.env.NODE_ENV === 'production';
 const DEFAULT_CHAIN = 'kovan';
 const DEFAULT_WS_PORT = '8546';
 const TRUSTED_LOOPBACK = '127.0.0.1';
-const TRUSTED_WS_ORIGINS = 'parity://1.ui.parity';
 
 export {
   DEFAULT_CHAIN,
   DEFAULT_WS_PORT,
   IS_PACKAGED,
   IS_PROD,
-  TRUSTED_LOOPBACK,
-  TRUSTED_WS_ORIGINS
+  TRUSTED_LOOPBACK
 };
