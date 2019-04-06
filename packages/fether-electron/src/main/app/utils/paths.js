@@ -3,12 +3,13 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-/* global __static */
-
-import { app } from 'electron';
+import electron from 'electron';
 import path from 'path';
 
-const IS_PACKAGED = app.isPackaged;
+const { app } = electron;
+const IS_TEST = !app;
+const IS_PACKAGED = !IS_TEST && app.isPackaged;
+
 /**
  * Get the path to the `static` folder.
  *
@@ -16,7 +17,7 @@ const IS_PACKAGED = app.isPackaged;
  */
 const staticPath = IS_PACKAGED
   ? __dirname.replace(/app\.asar$/, 'static')
-  : __static;
+  : path.join(process.cwd(), 'static');
 
 /**
  * Get the path to the bundled Parity Ethereum binary.
