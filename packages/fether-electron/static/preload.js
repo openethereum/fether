@@ -16,8 +16,14 @@
 
 const { ipcRenderer, remote } = require('electron');
 
+const IS_PROD = process.env.NODE_ENV === 'production';
+
 function init () {
-  console.log('Initialising Electron Preload Script');
+  console.log(
+    `Initialising Electron Preload Script in environment: ${
+      IS_PROD ? 'production' : 'development'
+    }`
+  );
 
   /**
    * Expose only a bridging API to the Fether web app.
@@ -39,7 +45,7 @@ function init () {
     defaultWsPort: remote.getGlobal('defaultWsPort'),
     ipcRenderer,
     isParityRunningStatus: remote.getGlobal('isParityRunning'),
-    IS_PROD: !process.defaultApp,
+    IS_PROD,
     wsPort: remote.getGlobal('wsPort')
   };
 }
