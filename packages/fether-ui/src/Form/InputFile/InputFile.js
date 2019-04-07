@@ -65,7 +65,7 @@ export class InputFile extends React.PureComponent {
         disableClick
       >
         {({ open }) => (
-          <div className='dropzone -md'>
+          <div className='dropzone -sm'>
             <label htmlFor='backupKeyfile'>{label}</label>
             <button type='button' className='button' onClick={() => open()}>
               Select File

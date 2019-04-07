@@ -146,7 +146,7 @@ class AccountImportOptions extends Component {
     const jsonCard = (
       <Card>
         <div key='createAccount'>
-          <div className='text -centered'>
+          <div className='text -centered recover_from_json_keyfile'>
             <p>Recover from JSON Keyfile</p>
 
             <FetherForm.InputFile
@@ -186,7 +186,7 @@ class AccountImportOptions extends Component {
     const phraseCard = (
       <Card>
         <div key='importBackup'>
-          <div className='text -centered'>
+          <div className='text -centered recover-from-seed-phrase'>
             <p>Recover from Seed Phrase</p>
 
             <FetherForm.Field
@@ -213,14 +213,14 @@ class AccountImportOptions extends Component {
           {signerCard}
           {spacer}
           {!importingFromSigner && phraseCard}
-          <p>{error}</p>
-          <nav className='form-nav -space-around'>
-            {currentStep > 1 && (
+          <p className='error-import-account'>{error}</p>
+          {currentStep > 1 && (
+            <nav className='form-nav -space-around'>
               <button className='button -back' onClick={history.goBack}>
                 Back
               </button>
-            )}
-          </nav>
+            </nav>
+          )}
         </div>
       </RequireHealthOverlay>
     );
