@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import electron from 'electron';
+import { IS_PROD } from '../../constants';
 
 const { shell } = electron;
 
@@ -170,7 +171,7 @@ const getContextTrayMenuTemplate = fetherApp => {
       }
     ];
 
-    if (process.env.NODE_ENV !== 'production') {
+    if (!IS_PROD) {
       template.push({
         label: 'Reload',
         click: () => fetherApp.win.webContents.reload()
