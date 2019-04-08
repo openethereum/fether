@@ -5,8 +5,10 @@
   "private": true,
   "author": "Parity Team <admin@parity.io>",
   "maintainers": [
-    "Jaco Greeff",
-    "Amaury Martiny"
+    "Axel Chalon",
+    "Amaury Martiny",
+    "Thibaut Sardan",
+    "Luke Schoen"
   ],
   "contributors": [],
   "license": "BSD-3-Clause",
