@@ -423,7 +423,6 @@ class TxForm extends Component {
       currentChainIdBN.valueOf() !== '61'
     ) {
       return { to: 'Please enter a valid Ethereum address' };
-      // FIXME - modify to check if it is a valid ETC address
     } else if (
       (!values.to || isAddress(values.to)) &&
       currentChainIdBN.valueOf() === '61'
