@@ -52,13 +52,12 @@ export class CreateAccountStore {
   };
 
   /**
-   * Reinitialize everything
+   * Reinitialize account information
    */
   @action
   clear = async () => {
     this.address = null;
     this.bip39Phrase = null;
-    this.isImport = false;
     this.jsonString = null;
     this.name = '';
     this.parityPhrase = null;
