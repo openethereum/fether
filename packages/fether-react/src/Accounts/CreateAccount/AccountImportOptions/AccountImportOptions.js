@@ -144,12 +144,12 @@ class AccountImportOptions extends Component {
       return;
     }
 
-    const signerChainId = parseInt(chainIdString);
+    const signerChainIdInt = parseInt(chainIdString);
 
-    if (!this.isCurrentChainIdTheAddressForImportChainId(signerChainId)) {
+    if (!this.isCurrentChainIdTheImportChainIdOfTheAddress(signerChainIdInt)) {
       console.error(
         `Parity Signer account chainId ${chainIdString} (${
-          PARITY_SIGNER_NETWORKS[signerChainId].parityName
+          PARITY_SIGNER_NETWORKS[signerChainIdInt].parityName
         }) must match current chainId ${currentChainIdBN.valueOf()} (${chainName}).`
       );
 
@@ -161,11 +161,11 @@ class AccountImportOptions extends Component {
       return;
     }
 
-    if (this.hasExistingAddressForImport(address, signerChainId)) {
+    if (this.hasExistingAddressForImport(address, signerChainIdInt)) {
       return;
     }
 
-    await importFromSigner({ address, signerChainId });
+    await importFromSigner({ address, signerChainIdInt });
 
     this.handleNextStep();
   };
@@ -176,20 +176,20 @@ class AccountImportOptions extends Component {
     });
   };
 
-  isCurrentChainIdTheAddressForImportChainId = chainIdInt => {
+  isCurrentChainIdTheImportChainIdOfTheAddress = signerChainIdInt => {
     const { chainId: currentChainIdBN } = this.props;
 
-    return BigNumber(chainIdInt).eq(currentChainIdBN);
+    return BigNumber(signerChainIdInt).eq(currentChainIdBN);
   };
 
-  hasExistingAddressForImport = (addressForImport, chainIdInt) => {
+  hasExistingAddressForImport = (addressForImport, signerChainIdInt) => {
     const { accountsInfo } = this.props;
     const isExistingAddress = Object.keys(accountsInfo).some(
       key =>
         key.toLowerCase() === addressForImport.toLowerCase() &&
         (!accountsInfo[key].chainId ||
-          !chainIdInt ||
-          accountsInfo[key].chainId === chainIdInt)
+          !signerChainIdInt ||
+          accountsInfo[key].chainId === signerChainIdInt)
     );
 
     if (isExistingAddress) {
