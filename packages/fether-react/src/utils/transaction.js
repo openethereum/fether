@@ -12,6 +12,7 @@ import { makeContract } from '@parity/light.js';
 import memoize from 'lodash/memoize';
 import { toWei } from '@parity/api/lib/util/wei';
 
+import { isNotErc20TokenAddress } from './chain';
 import Debug from './debug';
 import EthereumTx from 'ethereumjs-tx';
 
@@ -30,7 +31,7 @@ export const estimateGas = (tx, token, api) => {
     return Promise.reject(new Error('Tx not set.'));
   }
 
-  if (token.address === 'ETH' || token.address === 'ETC') {
+  if (isNotErc20TokenAddress(token.address)) {
     return estimateGasForEth(txForEth(tx), api).then(estimatedGasForEth => {
       // do not add any buffer in case of an account to account transaction
       return estimatedGasForEth.eq(21000)
@@ -136,7 +137,7 @@ const getEthereumTx = tx => {
     chainId
   };
 
-  if (token.address === 'ETH' || token.address === 'ETC') {
+  if (isNotErc20TokenAddress(token.address)) {
     txParams.to = to;
     txParams.value = parseFloat(amount) * Math.pow(10, 18);
   } else {

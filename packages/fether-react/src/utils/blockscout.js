@@ -3,6 +3,8 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
+import { isNotErc20TokenAddress } from './chain';
+
 const baseUrlForChain = chainName => {
   let baseUrl;
 
@@ -39,7 +41,7 @@ const tokenTxUrl = (chainName, transactionHash) =>
   `${baseUrlForChain(chainName)}/tx/${transactionHash}/token_transfers`;
 
 const blockscoutTxUrl = (chainName, transactionHash, tokenAddress) =>
-  tokenAddress === 'ETH' || tokenAddress === 'ETC'
+  isNotErc20TokenAddress(tokenAddress)
     ? ethTxUrl(chainName, transactionHash)
     : tokenTxUrl(chainName, transactionHash);
 

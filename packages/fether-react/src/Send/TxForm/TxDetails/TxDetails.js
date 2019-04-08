@@ -7,6 +7,8 @@ import React, { Component } from 'react';
 import BigNumber from 'bignumber.js';
 import { fromWei, toWei } from '@parity/api/lib/util/wei';
 
+import { chainIdToString, isNotErc20TokenAddress } from '../../../utils/chain';
+
 class TxDetails extends Component {
   renderDetails = () => {
     const { estimatedTxFee, token, values } = this.props;
@@ -51,6 +53,7 @@ ${this.renderTotalAmount()}`;
 
   renderFee = () => {
     const { estimatedTxFee, values } = this.props;
+    const currentChainIdBN = values.chainId.valueOf();
 
     if (!estimatedTxFee) {
       return;
@@ -58,13 +61,14 @@ ${this.renderTotalAmount()}`;
 
     return `Fee: ${fromWei(estimatedTxFee, 'ether')
       .toFixed(9)
-      .toString()} ${
-      values.chainId.valueOf() === '61' ? 'ETC' : 'ETH'
-    } (gas limit * gas price)`;
+      .toString()} ${chainIdToString(
+      currentChainIdBN
+    )} (gas limit * gas price)`;
   };
 
   renderTotalAmount = () => {
     const { estimatedTxFee, token, values } = this.props;
+    const currentChainIdBN = values.chainId.valueOf();
 
     if (!estimatedTxFee || !values.amount || !token.address) {
       return;
@@ -72,12 +76,12 @@ ${this.renderTotalAmount()}`;
 
     return `Total Amount: ${fromWei(
       estimatedTxFee.plus(
-        token.address === 'ETH' || token.address === 'ETC'
+        isNotErc20TokenAddress(token.address)
           ? toWei(values.amount.toString())
           : 0
       ),
       'ether'
-    ).toString()} ${values.chainId.valueOf() === '61' ? 'ETC' : 'ETH'}`;
+    ).toString()} ${chainIdToString(currentChainIdBN)}`;
   };
 
   render () {

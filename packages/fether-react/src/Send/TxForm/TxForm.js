@@ -24,6 +24,11 @@ import { estimateGas } from '../../utils/transaction';
 import RequireHealthOverlay from '../../RequireHealthOverlay';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import TxDetails from './TxDetails';
+import {
+  chainIdToString,
+  isEtcChainId,
+  isNotErc20TokenAddress
+} from '../../utils/chain';
 import withAccount from '../../utils/withAccount';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
 import withTokens from '../../utils/withTokens';
@@ -106,7 +111,7 @@ class TxForm extends Component {
     const gasPriceBn = new BigNumber(gasPrice);
     let output;
 
-    if (token.address === 'ETH' || token.address === 'ETC') {
+    if (isNotErc20TokenAddress(token.address)) {
       output = fromWei(
         toWei(balance).minus(gasBn.multipliedBy(toWei(gasPriceBn, 'shannon')))
       );
@@ -397,16 +402,16 @@ class TxForm extends Component {
     } else if (amountBn.isZero()) {
       if (this.state.maxSelected) {
         return {
-          amount: `${
-            currentChainIdBN.valueOf() === '61' ? 'ETC' : 'ETH'
-          } balance too low to pay for gas.`
+          amount: `${chainIdToString(
+            currentChainIdBN
+          )} balance too low to pay for gas.`
         };
       }
       return { amount: 'Please enter a non-zero amount' };
     } else if (amountBn.isNegative()) {
       return { amount: 'Please enter a positive amount' };
     } else if (
-      (token.address === 'ETH' || token.address === 'ETC') &&
+      isNotErc20TokenAddress(token.address) &&
       toWei(values.amount).lt(1)
     ) {
       return { amount: 'Please enter at least 1 Wei' };
@@ -420,12 +425,12 @@ class TxForm extends Component {
       return { amount: `You don't have enough ${token.symbol} balance` };
     } else if (
       (!values.to || !isAddress(values.to)) &&
-      currentChainIdBN.valueOf() !== '61'
+      !isEtcChainId(currentChainIdBN)
     ) {
       return { to: 'Please enter a valid Ethereum address' };
     } else if (
       (!values.to || isAddress(values.to)) &&
-      currentChainIdBN.valueOf() === '61'
+      isEtcChainId(currentChainIdBN)
     ) {
       return { to: 'Please enter a valid Ethereum Classic address' };
     } else if (values.to === '0x0000000000000000000000000000000000000000') {
@@ -491,22 +496,20 @@ class TxForm extends Component {
       if (
         this.estimatedTxFee(values)
           .plus(
-            token.address === 'ETH' || token.address === 'ETC'
-              ? toWei(values.amount)
-              : 0
+            isNotErc20TokenAddress(token.address) ? toWei(values.amount) : 0
           )
           .gt(toWei(values.ethBalance))
       ) {
-        return token.address !== 'ETH' && token.address === 'ETC'
+        return isNotErc20TokenAddress(token.address)
           ? {
-            amount: `${
-              currentChainIdBN.valueOf() === '61' ? 'ETC' : 'ETH'
-            } balance too low to pay for gas`
+            amount: `${chainIdToString(
+              currentChainIdBN
+            )} balance too low to pay for gas`
           }
           : {
-            amount: `You don't have enough ${
-              currentChainIdBN.valueOf() === '61' ? 'ETC' : 'ETH'
-            } balance`
+            amount: `You don't have enough ${chainIdToString(
+              currentChainIdBN
+            )} balance`
           };
       }
 
