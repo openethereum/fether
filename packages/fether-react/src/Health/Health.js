@@ -16,7 +16,13 @@ import withHealth from '../utils/withHealth';
       status: { good, syncing }
     }
   }) => good || syncing,
-  // Only call light.js chainName$ if we're syncing or good
+  /**
+   * Only call light.js chainName$ if we're syncing or good
+   * to avoid making an RPC call before the API is set
+   * (since Health.js is always rendered).
+   *
+   * Reference: https://github.com/paritytech/fether/pull/483#discussion_r271303462
+   */
   light({
     chainName: () => chainName$()
   })

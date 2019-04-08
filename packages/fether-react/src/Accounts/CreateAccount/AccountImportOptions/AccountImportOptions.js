@@ -5,7 +5,6 @@
 
 import React, { Component } from 'react';
 import BigNumber from 'bignumber.js';
-import { branch } from 'recompose';
 import { chainId$, chainName$ } from '@parity/light.js';
 import light from '@parity/light.js-react';
 import { inject, observer } from 'mobx-react';
@@ -40,19 +39,17 @@ const PARITY_SIGNER_NETWORKS = {
 @withHealth
 @inject('createAccountStore')
 @light({
-  chainId: () => chainId$()
+  chainId: () => chainId$(),
+  /**
+   * It is not necessary to check the health status here before
+   * calling chainId RPC using light.js like we do in Health.js since
+   * the AccountImportOptions.js page may only be accessed through
+   * navigation inside the API, after the API is set.
+   *
+   * Reference: https://github.com/paritytech/fether/pull/483#discussion_r271303462
+   */
+  chainName: () => chainName$()
 })
-@branch(
-  ({
-    health: {
-      status: { good, syncing }
-    }
-  }) => good || syncing,
-  // Only call light.js chainName$ if we're syncing or good
-  light({
-    chainName: () => chainName$()
-  })
-)
 @observer
 class AccountImportOptions extends Component {
   state = {
