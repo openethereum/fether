@@ -11,7 +11,7 @@
 
 Parity Fether aims to be the lightest and simplest decentralized wallet. It supports Ether and ERC-20 tokens, and runs on top of [Parity Ethereum](https://github.com/paritytech/parity-ethereum) light client. This allows smooth synchronization and interaction with the Ethereum blockchain, in a decentralized manner.
 
-By default, Fether will launch its embedded Parity Ethereum light client. You can also separately launch your Ethereum client and Fether will automatically connect to it, as described in the [Fether FAQ](https://wiki.parity.io/Fether-FAQ#how-to-launch-fether-on-a-different-network).
+By default, Fether will launch its embedded Parity Ethereum light client. You can also separately launch your Ethereum client and Fether will automatically connect to it, as described in the [Fether FAQ](https://wiki.parity.io/Fether-FAQ#how-to-launch-fether-with-a-separately-launched-parity-ethereum-node).
 
 Parity Fether interacts with the light node using [`@parity/light.js`](https://github.com/paritytech/js-libs/tree/master/packages/light.js), a Javascript library specifically crafted for wallets to connect with light clients. 
 
