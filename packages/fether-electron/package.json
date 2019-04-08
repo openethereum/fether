@@ -30,12 +30,12 @@
   "scripts": {
     "prebuild": "copyfiles -u 2 \"../fether-react/build/**/*\" static/ && ./scripts/fixElectronBug.sh",
     "build": "electron-webpack",
-    "electron": "cross-env SKIP_PREFLIGHT_CHECK=true electron dist/main/main.js",
+    "electron": "electron dist/main/main.js",
     "prepackage": "./scripts/revertElectronBug.sh",
     "package": "electron-builder",
     "prerelease": "./scripts/revertElectronBug.sh",
     "release": "electron-builder",
-    "start": "cross-env ELECTRON_START_URL=http://localhost:3000 electron-webpack dev --ws-origins all",
+    "start": "cross-env ELECTRON_START_URL=http://localhost:3000 electron-webpack dev",
     "test": "jest --all --color --coverage"
   },
   "dependencies": {
@@ -48,7 +48,8 @@
     "fether-react": "^0.3.0",
     "pino": "^4.16.1",
     "pino-multi-stream": "^3.1.2",
-    "source-map-support": "^0.5.10"
+    "source-map-support": "^0.5.10",
+    "url-pattern": "^1.0.3"
   },
   "devDependencies": {
     "copyfiles": "^2.1.0",
@@ -56,6 +57,7 @@
     "electron": "^4.0.1",
     "electron-builder": "^20.38.5",
     "electron-webpack": "^2.6.1",
-    "webpack": "^4.29.1"
+    "webpack": "^4.29.1",
+    "webpack-build-notifier": "^0.1.30"
   }
 }

@@ -12,7 +12,6 @@ import {
   Switch
 } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
-import isElectron from 'is-electron';
 import { Modal } from 'fether-ui';
 import semver from 'semver';
 import { version } from '../../package.json';
@@ -28,12 +27,12 @@ import Whitelist from '../Whitelist';
 
 const currentVersion = version;
 
+// The preload scripts injects `ipcRenderer` into `window.bridge`
+const { ipcRenderer, IS_PROD } = window.bridge;
+
 // Use MemoryRouter for production viewing in file:// protocol
 // https://github.com/facebook/create-react-app/issues/3591
-const Router =
-  process.env.NODE_ENV === 'production' ? MemoryRouter : BrowserRouter;
-
-const electron = isElectron() ? window.require('electron') : null;
+const Router = IS_PROD ? MemoryRouter : BrowserRouter;
 
 @inject('onboardingStore', 'parityStore')
 @observer
@@ -94,10 +93,10 @@ class App extends Component {
   };
 
   handleRightClick = () => {
-    if (!electron) {
+    if (!ipcRenderer) {
       return;
     }
-    electron.ipcRenderer.send('asynchronous-message', 'app-right-click');
+    ipcRenderer.send('asynchronous-message', 'app-right-click');
   };
 
   /**

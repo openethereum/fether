@@ -3,20 +3,21 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-/* global __static */
-
+import electron from 'electron';
 import path from 'path';
 
-const appIsPackaged = !process.defaultApp;
+const { app } = electron;
+const IS_TEST = !app;
+const IS_PACKAGED = !IS_TEST && app.isPackaged;
 
 /**
  * Get the path to the `static` folder.
  *
  * @see https://github.com/electron-userland/electron-webpack/issues/52
  */
-const staticPath = appIsPackaged
+const staticPath = IS_PACKAGED
   ? __dirname.replace(/app\.asar$/, 'static')
-  : __static;
+  : path.join(process.cwd(), 'static');
 
 /**
  * Get the path to the bundled Parity Ethereum binary.
@@ -26,4 +27,4 @@ const bundledParityPath =
     ? path.join(staticPath, 'parity.exe')
     : path.join(staticPath, 'parity');
 
-export { staticPath, bundledParityPath };
+export { IS_PACKAGED, bundledParityPath, staticPath };
