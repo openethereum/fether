@@ -29,7 +29,7 @@ export class CreateAccountStore {
   address = null;
 
   @observable
-  bip39Phrase = null; // 12 to 24-words seed phrase
+  bip39Phrase = null; // 12 to 24-word seed phrase
 
   @observable
   isImport = false; // Are we creating a new account, or importing via phrase?
