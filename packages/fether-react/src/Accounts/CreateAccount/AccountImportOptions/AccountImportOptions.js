@@ -18,10 +18,22 @@ import withHealth from '../../../utils/withHealth';
 
 // Parity Signer networks that are available
 const PARITY_SIGNER_NETWORKS = {
-  1: 'foundation',
-  3: 'ropsten',
-  42: 'kovan',
-  61: 'classic'
+  1: {
+    parityName: 'foundation',
+    commonName: 'Ethereum Mainnet'
+  },
+  3: {
+    parityName: 'ropsten',
+    commonName: 'Ropsten Testnet'
+  },
+  42: {
+    parityName: 'kovan',
+    commonName: 'Kovan Testnet'
+  },
+  61: {
+    parityName: 'classic',
+    commonName: 'Ethereum Classic'
+  }
 };
 
 @withAccountsInfo
@@ -138,10 +150,16 @@ class AccountImportOptions extends Component {
     const signerChainId = parseInt(chainIdString);
 
     if (!this.isCurrentChainIdTheAddressForImportChainId(signerChainId)) {
-      this.setState({
-        error: `Parity Signer account chainId ${chainIdString} (${
-          PARITY_SIGNER_NETWORKS[signerChainId]
+      console.error(
+        `Parity Signer account chainId ${chainIdString} (${
+          PARITY_SIGNER_NETWORKS[signerChainId].parityName
         }) must match current chainId ${currentChainIdBN.valueOf()} (${chainName}).`
+      );
+
+      this.setState({
+        error: `Network mismatch. Please import a Parity Signer account for the current ${
+          PARITY_SIGNER_NETWORKS[currentChainIdBN.valueOf()].commonName
+        } network.`
       });
       return;
     }
