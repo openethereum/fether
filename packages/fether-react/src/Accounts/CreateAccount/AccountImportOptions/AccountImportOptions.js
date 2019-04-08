@@ -15,26 +15,6 @@ import Scanner from '../../../Scanner';
 import withAccountsInfo from '../../../utils/withAccountsInfo';
 import withHealth from '../../../utils/withHealth';
 
-// Parity Signer networks that are available
-const PARITY_SIGNER_NETWORKS = {
-  1: {
-    parityName: 'foundation',
-    commonName: 'Ethereum Mainnet'
-  },
-  3: {
-    parityName: 'ropsten',
-    commonName: 'Ropsten Testnet'
-  },
-  42: {
-    parityName: 'kovan',
-    commonName: 'Kovan Testnet'
-  },
-  61: {
-    parityName: 'classic',
-    commonName: 'Ethereum Classic'
-  }
-};
-
 @withAccountsInfo
 @withHealth
 @inject('createAccountStore')
@@ -152,15 +132,11 @@ class AccountImportOptions extends Component {
 
     if (!BigNumber(signerChainId).eq(currentChainIdBN)) {
       console.error(
-        `Parity Signer account chainId ${chainIdString} (${
-          PARITY_SIGNER_NETWORKS[signerChainId].parityName
-        }) must match current chainId ${currentChainIdBN.valueOf()} (${chainName}).`
+        `Parity Signer account chainId ${chainIdString} must match current chainId ${currentChainIdBN.valueOf()} (${chainName}).`
       );
 
       this.setState({
-        error: `Network mismatch. Please import a Parity Signer account for the current ${
-          PARITY_SIGNER_NETWORKS[currentChainIdBN.valueOf()].commonName
-        } network.`
+        error: `Network mismatch. Please import a Parity Signer account for the current ${chainName} network.`
       });
 
       return;
