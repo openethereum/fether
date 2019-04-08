@@ -41,7 +41,7 @@ export class CreateAccountStore {
   name = ''; // Account name
 
   @observable
-  parityPhrase = null; // 11 or 12-words seed phrase (Parity Signer used to generate a 11 words recovery phrase)
+  parityPhrase = null; // 11 or 12-word seed phrase (Parity Signer is used to generate an 11-word recovery phrase)
 
   @observable
   signerChainId = null;
