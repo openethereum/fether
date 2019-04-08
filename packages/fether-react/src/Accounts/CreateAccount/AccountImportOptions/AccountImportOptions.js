@@ -84,7 +84,7 @@ class AccountImportOptions extends Component {
     try {
       await setPhrase(phrase);
 
-      if (this.hasExistingAddressForImport(createAccountStore.address)) {
+      if (this.accountAlreadyExists(createAccountStore.address)) {
         return;
       }
 
@@ -110,7 +110,7 @@ class AccountImportOptions extends Component {
     try {
       await setJsonString(jsonString);
 
-      if (this.hasExistingAddressForImport(createAccountStore.address)) {
+      if (this.accountAlreadyExists(createAccountStore.address)) {
         return;
       }
 
@@ -163,7 +163,7 @@ class AccountImportOptions extends Component {
       return;
     }
 
-    if (this.hasExistingAddressForImport(address, signerChainIdInt)) {
+    if (this.accountAlreadyExists(address, signerChainIdInt)) {
       return;
     }
 
@@ -178,7 +178,7 @@ class AccountImportOptions extends Component {
     });
   };
 
-  hasExistingAddressForImport = (addressForImport, signerChainIdInt) => {
+  accountAlreadyExists = (addressForImport, signerChainIdInt) => {
     const { accountsInfo } = this.props;
     const isExistingAddress = Object.keys(accountsInfo).some(
       key =>
