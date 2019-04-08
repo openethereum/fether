@@ -55,7 +55,7 @@ export class CreateAccountStore {
    * Reinitialize account information
    */
   @action
-  clear = async () => {
+  clear = () => {
     this.address = null;
     this.bip39Phrase = null;
     this.jsonString = null;
@@ -214,7 +214,7 @@ export class CreateAccountStore {
 
   @action
   importFromSigner = async ({ address, signerChainId }) => {
-    await this.clear();
+    this.clear();
 
     this.address = address;
     this.signerChainId = signerChainId;
