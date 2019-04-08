@@ -5,8 +5,10 @@
   "private": true,
   "author": "Parity Team <admin@parity.io>",
   "maintainers": [
-    "Jaco Greeff",
-    "Amaury Martiny"
+    "Axel Chalon",
+    "Amaury Martiny",
+    "Thibaut Sardan",
+    "Luke Schoen"
   ],
   "contributors": [],
   "license": "BSD-3-Clause",
@@ -44,8 +46,8 @@
     "build": "lerna run build",
     "preelectron": "yarn build",
     "electron": "cd packages/fether-electron && yarn electron",
-    "lint-files": "./scripts/lint-files.sh",
-    "lint": "yarn lint-files '**/*.js'",
+    "lint-files": "./scripts/lint-files.sh '**/*.js'",
+    "lint": "yarn lint-files",
     "prepackage": "yarn build",
     "package": "cd packages/fether-electron && yarn package",
     "release": "cd packages/fether-electron && yarn release",

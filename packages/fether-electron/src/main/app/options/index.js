@@ -3,9 +3,15 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { DEFAULT_OPTIONS, TASKBAR_OPTIONS } from './config';
+import { DEFAULT_OPTIONS, SECURITY_OPTIONS, TASKBAR_OPTIONS } from './config';
 
 export default (withTaskbar, customOptions) =>
   withTaskbar
-    ? Object.assign({}, DEFAULT_OPTIONS, TASKBAR_OPTIONS, customOptions || {})
-    : Object.assign({}, DEFAULT_OPTIONS, customOptions || {});
+    ? Object.assign(
+      {},
+      DEFAULT_OPTIONS,
+      TASKBAR_OPTIONS,
+      customOptions || {},
+      SECURITY_OPTIONS
+    )
+    : Object.assign({}, DEFAULT_OPTIONS, customOptions || {}, SECURITY_OPTIONS);

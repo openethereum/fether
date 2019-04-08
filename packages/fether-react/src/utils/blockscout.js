@@ -33,16 +33,16 @@ const baseUrlForChain = chainName => {
   return baseUrl;
 };
 
-// Tx URL for ETH or ETC
-const ethTxUrl = (chainName, transactionHash) =>
-  `${baseUrlForChain(chainName)}/tx/${transactionHash}/internal_transactions`;
+// Tx URL
+const ethTxUrl = (chainName, hash) =>
+  `${baseUrlForChain(chainName)}/tx/${hash}/internal_transactions`;
 
-const tokenTxUrl = (chainName, transactionHash) =>
-  `${baseUrlForChain(chainName)}/tx/${transactionHash}/token_transfers`;
+const tokenTxUrl = (chainName, hash) =>
+  `${baseUrlForChain(chainName)}/tx/${hash}/token_transfers`;
 
-const blockscoutTxUrl = (chainName, transactionHash, tokenAddress) =>
+const blockscoutTxUrl = (chainName, hash, tokenAddress) =>
   isNotErc20TokenAddress(tokenAddress)
-    ? ethTxUrl(chainName, transactionHash)
-    : tokenTxUrl(chainName, transactionHash);
+    ? ethTxUrl(chainName, hash)
+    : tokenTxUrl(chainName, hash);
 
 export { blockscoutTxUrl };

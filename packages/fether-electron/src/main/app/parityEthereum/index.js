@@ -61,7 +61,6 @@ class ParityEthereum {
 
   isRunning = async () => {
     return isParityRunning({
-      wsInterface: cli.wsInterface,
       wsPort: cli.wsPort
     });
   };
@@ -75,8 +74,6 @@ class ParityEthereum {
         '--light',
         '--chain',
         cli.chain,
-        '--ws-interface',
-        cli.wsInterface,
         '--ws-port',
         cli.wsPort
       ],
