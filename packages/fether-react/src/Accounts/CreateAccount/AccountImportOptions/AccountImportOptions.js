@@ -141,12 +141,13 @@ class AccountImportOptions extends Component {
 
     if (!address || !chainIdString) {
       this.setState({ error: 'Invalid QR code.' });
+
       return;
     }
 
     const signerChainIdInt = parseInt(chainIdString);
 
-    if (!this.isCurrentChainIdTheImportChainIdOfTheAddress(signerChainIdInt)) {
+    if (!BigNumber(signerChainIdInt).eq(currentChainIdBN)) {
       console.error(
         `Parity Signer account chainId ${chainIdString} (${
           PARITY_SIGNER_NETWORKS[signerChainIdInt].parityName
@@ -158,6 +159,7 @@ class AccountImportOptions extends Component {
           PARITY_SIGNER_NETWORKS[currentChainIdBN.valueOf()].commonName
         } network.`
       });
+
       return;
     }
 
@@ -174,12 +176,6 @@ class AccountImportOptions extends Component {
     this.setState({
       importingFromSigner: true
     });
-  };
-
-  isCurrentChainIdTheImportChainIdOfTheAddress = signerChainIdInt => {
-    const { chainId: currentChainIdBN } = this.props;
-
-    return BigNumber(signerChainIdInt).eq(currentChainIdBN);
   };
 
   hasExistingAddressForImport = (addressForImport, signerChainIdInt) => {
