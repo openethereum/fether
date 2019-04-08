@@ -148,12 +148,12 @@ class AccountImportOptions extends Component {
       return;
     }
 
-    const signerChainIdInt = parseInt(chainIdString);
+    const signerChainId = parseInt(chainIdString);
 
-    if (!BigNumber(signerChainIdInt).eq(currentChainIdBN)) {
+    if (!BigNumber(signerChainId).eq(currentChainIdBN)) {
       console.error(
         `Parity Signer account chainId ${chainIdString} (${
-          PARITY_SIGNER_NETWORKS[signerChainIdInt].parityName
+          PARITY_SIGNER_NETWORKS[signerChainId].parityName
         }) must match current chainId ${currentChainIdBN.valueOf()} (${chainName}).`
       );
 
@@ -166,11 +166,11 @@ class AccountImportOptions extends Component {
       return;
     }
 
-    if (this.accountAlreadyExists(address, signerChainIdInt)) {
+    if (this.accountAlreadyExists(address, signerChainId)) {
       return;
     }
 
-    await importFromSigner({ address, signerChainIdInt });
+    await importFromSigner({ address, signerChainId });
 
     this.handleNextStep();
   };
@@ -182,14 +182,14 @@ class AccountImportOptions extends Component {
     });
   };
 
-  accountAlreadyExists = (addressForImport, signerChainIdInt) => {
+  accountAlreadyExists = (addressForImport, signerChainId) => {
     const { accountsInfo } = this.props;
     const isExistingAddress = Object.keys(accountsInfo).some(
       key =>
         key.toLowerCase() === addressForImport.toLowerCase() &&
         (!accountsInfo[key].chainId ||
-          !signerChainIdInt ||
-          accountsInfo[key].chainId === signerChainIdInt)
+          !signerChainId ||
+          accountsInfo[key].chainId === signerChainId)
     );
 
     if (isExistingAddress) {

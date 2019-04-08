@@ -214,13 +214,7 @@ export class CreateAccountStore {
 
   @action
   importFromSigner = async ({ address, signerChainId }) => {
-    /**
-     * If we do not comment out `await this.clear()` here, then in the next step is
-     * `componentDidMount` of `AccountName` component, the value of `createAccountStore.address`
-     * and `createAccountStore.signerChainId` will be both undefined, even though we tried
-     * to set both those values in this function.
-     */
-    // await this.clear();
+    await this.clear();
 
     this.address = address;
     this.signerChainId = signerChainId;
