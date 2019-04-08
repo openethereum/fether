@@ -16,7 +16,7 @@
 
 const { ipcRenderer, remote } = require('electron');
 
-const IS_PROD = process.env.NODE_ENV === 'production';
+const IS_PROD = remote.getGlobal('IS_PROD');
 
 function init () {
   console.log(
