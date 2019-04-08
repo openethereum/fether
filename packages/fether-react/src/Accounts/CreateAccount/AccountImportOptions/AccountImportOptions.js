@@ -146,7 +146,7 @@ class AccountImportOptions extends Component {
     const jsonCard = (
       <Card>
         <div key='createAccount'>
-          <div className='text -centered recover_from_json_keyfile'>
+          <div className='text -centered'>
             <p>Recover from JSON Keyfile</p>
 
             <FetherForm.InputFile
