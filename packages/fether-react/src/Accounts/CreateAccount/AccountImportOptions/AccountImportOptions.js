@@ -105,7 +105,10 @@ class AccountImportOptions extends Component {
       createAccountStore: { setJsonString }
     } = this.props;
 
-    this.setState({ isLoading: true });
+    this.setState({
+      error: '',
+      isLoading: true
+    });
 
     try {
       await setJsonString(jsonString);
@@ -174,6 +177,7 @@ class AccountImportOptions extends Component {
 
   handleSignerImport = () => {
     this.setState({
+      error: '',
       importingFromSigner: true
     });
   };
