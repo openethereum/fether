@@ -18,19 +18,28 @@ const exec = promisify(require('child_process').exec);
 const fsChmod = promisify(chmod);
 const fsWriteFile = promisify(writeFile);
 
-let os;
-switch (process.platform) {
-  case 'win32':
-    os = 'windows';
-    break;
-  case 'darwin':
-    os = 'darwin';
-    break;
-  default:
-    os = 'linux';
+function getOs () {
+  if (process.argv.includes('--win')) {
+    return 'windows';
+  }
+  if (process.argv.includes('--mac')) {
+    return 'darwin';
+  }
+  if (process.argv.includes('--linux')) {
+    return 'linux';
+  }
+
+  switch (process.platform) {
+    case 'win32':
+      return 'windows';
+    case 'darwin':
+      return 'darwin';
+    default:
+      return 'linux';
+  }
 }
 
-const ENDPOINT = `https://vanity-service.parity.io/parity-binaries?os=${os}&architecture=x86_64`;
+const ENDPOINT = `https://vanity-service.parity.io/parity-binaries?os=${getOs()}&architecture=x86_64`;
 
 const STATIC_DIRECTORY = path.join(
   '..',
