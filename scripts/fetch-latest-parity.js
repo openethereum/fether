@@ -57,6 +57,11 @@ if (foundPath) {
   // Bundled Parity was found, we check if the version matches the minimum requirements
   getBinaryVersion(foundPath)
     .then(version => {
+      if (!version) {
+        console.log("Couldn't get bundled Parity Ethereum version.");
+        return downloadParity();
+      }
+
       if (!semver.satisfies(version, versionRequirement)) {
         console.log(
           'Bundled Parity Ethereum %s is older than required version %s',
@@ -146,14 +151,19 @@ function downloadParity () {
       })
       .then(getBinaryVersion)
       .then(bundledVersion =>
-        console.log(`Success: bundled Parity Ethereum ${bundledVersion}`)
+        console.log(
+          `Success: bundled Parity Ethereum ${bundledVersion ||
+            "(couldn't get version)"}`
+        )
       )
   );
 }
 
 function getBinaryVersion (binaryPath) {
-  return exec(`${binaryPath} --version`).then(({ stdout, stderr }) => {
-    if (stderr) throw new Error(stderr);
-    return stdout.match(/v\d+\.\d+\.\d+/)[0];
-  });
+  return exec(`${binaryPath} --version`)
+    .then(({ stdout, stderr }) => {
+      if (stderr) throw new Error(stderr);
+      return stdout.match(/v\d+\.\d+\.\d+/)[0];
+    })
+    .catch(error => console.warn(error.message));
 }
