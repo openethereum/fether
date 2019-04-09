@@ -5,16 +5,16 @@ export interface RawTokenJSON {
   decimals?: number | string;
 }
 
+export interface tokenLogo {
+  src: string;
+}
+
 export interface ValidatedTokenJSON {
   name: string;
   symbol: string;
   address: string;
   decimals: number | string;
   logo: tokenLogo;
-}
-
-export interface tokenLogo {
-  src: string;
 }
 
 export interface NormalizedTokenJSON {

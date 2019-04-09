@@ -5,8 +5,10 @@
   "private": true,
   "author": "Parity Team <admin@parity.io>",
   "maintainers": [
-    "Jaco Greeff",
-    "Amaury Martiny"
+    "Axel Chalon",
+    "Amaury Martiny",
+    "Thibaut Sardan",
+    "Luke Schoen"
   ],
   "contributors": [],
   "license": "BSD-3-Clause",
@@ -35,11 +37,11 @@
   },
   "dependencies": {
     "@craco/craco": "^4.0.0",
-    "@parity/abi": "^5.1.1",
-    "@parity/api": "^5.1.1",
-    "@parity/contracts": "^5.1.1",
-    "@parity/light.js": "^5.1.1",
-    "@parity/light.js-react": "^5.1.1",
+    "@parity/abi": "^5.1.3",
+    "@parity/api": "^5.1.3",
+    "@parity/contracts": "^5.1.3",
+    "@parity/light.js": "^5.1.3",
+    "@parity/light.js-react": "^5.1.3",
     "@parity/qr-signer": "^0.3.2",
     "bignumber.js": "^8.0.1",
     "bip39": "^2.5.0",
@@ -52,7 +54,6 @@
     "file-saver": "^2.0.0",
     "final-form": "^4.8.3",
     "final-form-calculate": "^1.2.1",
-    "is-electron": "^2.1.0",
     "localforage": "^1.7.2",
     "localforage-observable": "^1.4.0",
     "lodash": "^4.17.10",

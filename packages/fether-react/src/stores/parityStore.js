@@ -5,7 +5,6 @@
 
 import { action, observable } from 'mobx';
 import Api from '@parity/api';
-import isElectron from 'is-electron';
 import light from '@parity/light.js';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import store from 'store';
@@ -15,7 +14,15 @@ import Debug from '../utils/debug';
 import LS_PREFIX from './utils/lsPrefix';
 
 const debug = Debug('parityStore');
-const electron = isElectron() ? window.require('electron') : null;
+
+// The preload scripts injects `ipcRenderer` into `window.bridge`
+const {
+  defaultWsInterface,
+  defaultWsPort,
+  ipcRenderer,
+  isParityRunningStatus,
+  wsPort
+} = window.bridge;
 
 const LS_KEY = `${LS_PREFIX}::secureToken`;
 
@@ -48,38 +55,35 @@ export class ParityStore {
 
     // FIXME - consider moving to start of this constructor block since
     // if `setToken` method is called then `connectToApi` is called, which
-    // requires `electron` to be defined
-    if (!electron) {
+    // requires `ipcRenderer` to be defined
+    if (!ipcRenderer) {
       debug(
         'Not in Electron, ParityStore will only have limited capabilities.'
       );
       return;
     }
 
-    const { ipcRenderer, remote } = electron;
-
     // Check if isParityRunning
-    this.setIsParityRunning(!!remote.getGlobal('isParityRunning'));
+    this.setIsParityRunning(!!isParityRunningStatus);
+
     // We also listen to future changes
     ipcRenderer.on('parity-running', (_, isParityRunning) => {
+      // FIXME - Unable to console.log anything here when running a separate
+      // Parity Ethereum node and then stop it and start it again.
       this.setIsParityRunning(isParityRunning);
     });
   }
 
   connectToApi = () => {
     // Get the provider, optionally from --ws-interface and --ws-port flags
-    const [defaultInterface, defaultPort] = ['127.0.0.1', '8546'];
-    let provider = `ws://${defaultInterface}:${defaultPort}`;
-    if (electron) {
-      const { remote } = electron;
-      const wsInterface = remote.getGlobal('wsInterface');
-      const wsPort = remote.getGlobal('wsPort');
-      provider = `ws://${wsInterface || defaultInterface}:${wsPort ||
-        defaultPort}`;
+    let provider = `ws://${defaultWsInterface}:${defaultWsPort}`;
+    if (ipcRenderer) {
+      provider = `ws://${defaultWsInterface}:${wsPort || defaultWsPort}`;
     }
 
     debug(`Connecting to ${provider}.`);
     const api = new Api(
+      // FIXME - change to WsSecure when implement `wss` and security certificates
       new Api.Provider.Ws(
         provider,
         this.token.replace(/[^a-zA-Z0-9]/g, '') // Sanitize token
@@ -94,8 +98,6 @@ export class ParityStore {
   };
 
   requestNewToken = () => {
-    const { ipcRenderer } = electron;
-
     // Request new token from Electron
     debug('Requesting new token.');
     ipcRenderer.send('asynchronous-message', 'signer-new-token');
