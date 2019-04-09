@@ -14,7 +14,7 @@ const IS_PROD = process.env.NODE_ENV === 'production';
  * Note: 127.0.0.1 is a trusted loopback and more trustworthy than localhost.
  * See https://letsencrypt.org/docs/certificates-for-localhost/
  */
-const DEFAULT_CHAIN = 'kovan';
+const DEFAULT_CHAIN = 'foundation';
 const DEFAULT_WS_PORT = '8546';
 const TRUSTED_LOOPBACK = '127.0.0.1';
 
