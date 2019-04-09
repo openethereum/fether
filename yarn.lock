@@ -1640,16 +1640,7 @@
     universal-user-agent "^2.0.0"
     url-template "^2.0.8"
 
-"@parity/abi@5.1.1":
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/@parity/abi/-/abi-5.1.1.tgz#a91b1483ef969ede7c1a29c59fa5dd39b4880f51"
-  integrity sha512-in+1ubZq69yWgZQzjp8SLcwnhKSqV4LLpzjbDA4lJsE/BJtsCndJ8HWBjiv690Ej9v2TgggRyuyrF091j2Eluw==
-  dependencies:
-    bignumber.js "^8.0.1"
-    js-sha3 "0.8.0"
-    utf8 "^3.0.0"
-
-"@parity/abi@^5.1.1", "@parity/abi@^5.1.3":
+"@parity/abi@^5.1.3":
   version "5.1.3"
   resolved "https://registry.yarnpkg.com/@parity/abi/-/abi-5.1.3.tgz#0503b3e541c6e02824f86000cef6fca0a0d9ab81"
   integrity sha512-hO8q++qYEUTyWlcaijBdcl+CUXt0f862H+KMOCe31RdZfJcTV2D2qnS0z1kGTZr+AEynGatBZGuvmaZV6mIPNQ==
@@ -1658,24 +1649,7 @@
     js-sha3 "0.8.0"
     utf8 "^3.0.0"
 
-"@parity/api@5.1.1":
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/@parity/api/-/api-5.1.1.tgz#3ac522262f68f23910193b5ab9a37fd261701c14"
-  integrity sha512-JPngq2ifejXDhAJ4Xhx7vVr5LeDRvsm6UW1QBRIlm8bpqeaAUw9nwoyvxGZC/JUI9Riq4WjaHYGIa6ZRvpd0rg==
-  dependencies:
-    "@parity/abi" "^5.1.1"
-    bignumber.js "^8.0.1"
-    blockies "0.0.2"
-    es6-error "4.0.2"
-    es6-promise "^4.1.1"
-    eventemitter3 "^3.1.0"
-    isomorphic-fetch "^2.2.1"
-    js-sha3 "0.8.0"
-    lodash "^4.17.11"
-    store "^2.0.12"
-    websocket "^1.0.25"
-
-"@parity/api@^5.1.1":
+"@parity/api@^5.1.3":
   version "5.1.3"
   resolved "https://registry.yarnpkg.com/@parity/api/-/api-5.1.3.tgz#c4c1a5c0cbc41d75ad8a58f37a478a09ce5d0ea3"
   integrity sha512-UiN2mdgkEIID/rsqRRBn5AMtIPvrXhJhrwGLXL3vWf9EsiF0GfTuIBYqflz0nPTZY1PySa7hi1XwOmnqprdqNg==
@@ -1692,13 +1666,13 @@
     store "^2.0.12"
     websocket "^1.0.25"
 
-"@parity/contracts@5.1.1":
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/@parity/contracts/-/contracts-5.1.1.tgz#c00c9a194882850de9ed3646f4bd25e8610d87a8"
-  integrity sha512-9JFzSGjn5W4tyfpDDznVlErxZiIYRp0e4uzIqAerPQOKFvZZdw00NVHUJkwLcoXJmwIMQQxy/X2ZByQSY3x1TQ==
+"@parity/contracts@^5.1.3":
+  version "5.1.3"
+  resolved "https://registry.yarnpkg.com/@parity/contracts/-/contracts-5.1.3.tgz#736cc9935117b9d1e86ed094a65fa60de085b6e5"
+  integrity sha512-TRq0BUUrg61MG9ByTu0UqBySYKncLtR17vx3UV1NKxi9lWS33jYlessEz5CZXr1t5ILt0tN/PYzYe+w1Brm7LQ==
   dependencies:
-    "@parity/abi" "^5.1.1"
-    "@parity/api" "^5.1.1"
+    "@parity/abi" "^5.1.3"
+    "@parity/api" "^5.1.3"
     bignumber.js "^8.0.1"
 
 "@parity/electron@^5.1.0":
@@ -1720,21 +1694,21 @@
   resolved "https://registry.yarnpkg.com/@parity/erc681/-/erc681-0.1.1.tgz#0ade5233751011c15d5e75bd2bb583a9ba450a5e"
   integrity sha512-OGDAWbAcm4mh+wzw6uBYxw0OJtqJ+39W3pOXl0W93d2p/cH7ppfvunwf7irEPw0FPiAIuR/F77nU1zMKNhm8Dg==
 
-"@parity/light.js-react@5.1.1":
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/@parity/light.js-react/-/light.js-react-5.1.1.tgz#1b5e1b62dd04fa846e8d11971742ec793500fe0c"
-  integrity sha512-LD05kpHLzhgONeFiGEKrN59LBSmeBzx5NakxBXzu8vixBQt6Cyq5z1gOzg4RtbtkcTrUC7Q02H4DwOh8QJpNmw==
+"@parity/light.js-react@^5.1.3":
+  version "5.1.3"
+  resolved "https://registry.yarnpkg.com/@parity/light.js-react/-/light.js-react-5.1.3.tgz#f7e28a0ecbd05246c99cc3f20b4c8cf96c44210f"
+  integrity sha512-t7BTy7ECrPJzoXle3gOWurK47+PEltHrfajJStvFgzVG0oyKKyrvb5ro3w2YIOc51L9tfHX0eeS1tuvUeCJLvQ==
   dependencies:
     recompose "^0.30.0"
     symbol-observable "^1.2.0"
 
-"@parity/light.js@5.1.1":
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/@parity/light.js/-/light.js-5.1.1.tgz#141f4c168f46208b1caa6273161ad9a8b1675862"
-  integrity sha512-AJ/klFpim+lKLxYKpIhJL9Btu4OuXs43lfbBK8XA0kXOV6M51vCv5n+sO5oTWVx6IJE3lXuDIc674H9BC4fcvQ==
+"@parity/light.js@^5.1.3":
+  version "5.1.3"
+  resolved "https://registry.yarnpkg.com/@parity/light.js/-/light.js-5.1.3.tgz#cb8b5e22916234cf66d446d7eeaf0f030265f9da"
+  integrity sha512-SVwGb02QGqlbICqVmg6jqCDW7VMtAzl08YtH9bGFFbYDY9XRyD/bisxnujyecAk9YyduhPUrNu8gLpk+yDrW+Q==
   dependencies:
-    "@parity/abi" "^5.1.1"
-    "@parity/api" "^5.1.1"
+    "@parity/abi" "^5.1.3"
+    "@parity/api" "^5.1.3"
     async-retry "^1.2.3"
     bignumber.js "^8.0.1"
     debug "^4.1.0"
