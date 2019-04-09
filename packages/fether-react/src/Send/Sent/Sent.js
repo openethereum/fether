@@ -167,7 +167,7 @@ class Sent extends Component {
         <a
           href={blockscoutTxUrl(
             chainName,
-            txStatus.confirmed.transactionHash,
+            txStatus.confirmed.hash,
             token.address
           )}
           target='_blank'
