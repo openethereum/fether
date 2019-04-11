@@ -31,7 +31,13 @@ const LANG_LS_KEY = 'fether-language';
 const currentVersion = version;
 
 // The preload scripts injects `ipcRenderer` into `window.bridge`
-const { remote, ipcRenderer, IS_PROD } = window.bridge;
+const {
+  currentWindowWebContentsAddListener,
+  currentWindowWebContentsReload,
+  currentWindowWebContentsRemoveListener,
+  ipcRenderer,
+  IS_PROD
+} = window.bridge;
 
 // Use MemoryRouter for production viewing in file:// protocol
 // https://github.com/facebook/create-react-app/issues/3591
@@ -45,22 +51,15 @@ class App extends Component {
   };
 
   componentDidMount () {
-    if (!remote) {
-      return;
-    }
-
     if (store.get(LANG_LS_KEY) && i18n.language !== store.get(LANG_LS_KEY)) {
       i18n.changeLanguage(store.get(LANG_LS_KEY));
     }
 
-    remote
-      .getCurrentWindow()
-      .webContents.addListener('set-language', newLanguage => {
-        i18n.changeLanguage(newLanguage);
-        store.set(LANG_LS_KEY, newLanguage);
-        console.log('RELOADO');
-        remote.getCurrentWindow().webContents.reload();
-      });
+    currentWindowWebContentsAddListener('set-language', newLanguage => {
+      i18n.changeLanguage(newLanguage);
+      store.set(LANG_LS_KEY, newLanguage);
+      currentWindowWebContentsReload();
+    });
 
     window.addEventListener('contextmenu', this.handleRightClick);
 
@@ -86,7 +85,7 @@ class App extends Component {
 
   componentWillUnmount () {
     window.removeEventListener('contextmenu', this.handleRightClick);
-    remote.getCurrentWindow().webContents.removeListener('set-language');
+    currentWindowWebContentsRemoveListener('set-language');
   }
 
   renderModalLinks = () => {
