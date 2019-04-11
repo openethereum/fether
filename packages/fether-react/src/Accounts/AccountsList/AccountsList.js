@@ -5,11 +5,11 @@
 
 import React, { Component } from 'react';
 import { AccountCard, Clickable, Header } from 'fether-ui';
-import { chainId$, withoutLoading } from '@parity/light.js';
+import { chainId$ } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
 import light from '@parity/light.js-react';
 
-import i18n from '../../i18n';
+import i18n, { packageNS } from '../../i18n';
 import RequireHealthOverlay from '../../RequireHealthOverlay';
 import Health from '../../Health';
 import withAccountsInfo from '../../utils/withAccountsInfo';
@@ -18,7 +18,7 @@ import Feedback from './Feedback';
 @withAccountsInfo
 @inject('createAccountStore', 'parityStore')
 @light({
-  chainId: () => chainId$().pipe(withoutLoading())
+  chainId: () => chainId$()
 })
 @observer
 class AccountsList extends Component {
@@ -57,7 +57,7 @@ class AccountsList extends Component {
                 onClick={this.handleCreateAccount}
               />
             }
-            title={<h1>{i18n.t('ns1:accounts_list.header')}</h1>}
+            title={<h1>{i18n.t(`${packageNS}:accounts_list.header`)}</h1>}
           />
 
           <div className='window_content'>
@@ -76,8 +76,9 @@ class AccountsList extends Component {
                         i18n={i18n}
                         name={
                           accountsInfo[address].name ||
-                          i18n.t('ns1:account.existing.no_name')
+                          i18n.t(`${packageNS}:account.existing.no_name`)
                         }
+                        packageNS={packageNS}
                         screen='accounts'
                         shortAddress
                         type={accountsInfo[address].type}
@@ -87,10 +88,10 @@ class AccountsList extends Component {
                 </ul>
               ) : (
                 <p className='create-hint'>
-                  {i18n.t('ns1:accounts_list.hint.none')}
+                  {i18n.t(`${packageNS}:accounts_list.hint.none`)}
                   <br />
                   <br />
-                  {i18n.t('ns1:accounts_list.hint.exist')}
+                  {i18n.t(`${packageNS}:accounts_list.hint.exist`)}
                 </p>
               )}
             </div>

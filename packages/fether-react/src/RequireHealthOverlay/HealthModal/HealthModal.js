@@ -6,11 +6,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { branch } from 'recompose';
-import { chainName$, withoutLoading } from '@parity/light.js';
+import { chainName$ } from '@parity/light.js';
 import light from '@parity/light.js-react';
 import { Modal } from 'fether-ui';
 
-import i18n from '../../i18n';
+import i18n, { packageNS } from '../../i18n';
 import withHealth from '../../utils/withHealth';
 import loading from '../../assets/img/icons/loading.svg';
 
@@ -23,7 +23,7 @@ import loading from '../../assets/img/icons/loading.svg';
   }) => syncing,
   // Only call light.js chainName$ if we're syncing
   light({
-    chainName: () => chainName$().pipe(withoutLoading())
+    chainName: () => chainName$()
   })
 )
 class HealthModal extends Component {
@@ -56,22 +56,26 @@ class HealthModal extends Component {
       health: { status }
     } = this.props;
 
-    if (status.downloading) {
-      return i18n.t('ns1:health.status.title.downloading');
-    } else if (status.launching) {
-      return i18n.t('ns1:health.status.title.launching');
+    if (status.launching) {
+      return i18n.t(`${packageNS}:health.status.title.launching`);
     } else if (!status.nodeConnected && !status.internet) {
-      return i18n.t('ns1:health.status.title.no_internet_no_node_connected');
+      return i18n.t(
+        `${packageNS}:health.status.title.no_internet_no_node_connected`
+      );
     } else if (!status.nodeConnected && status.internet) {
-      return i18n.t('ns1:health.status.title.internet_no_node_connected');
+      return i18n.t(
+        `${packageNS}:health.status.title.internet_no_node_connected`
+      );
     } else if (status.nodeConnected && !status.internet) {
-      return i18n.t('ns1:health.status.title.no_internet_node_connected');
+      return i18n.t(
+        `${packageNS}:health.status.title.no_internet_node_connected`
+      );
     } else if (!status.clockSync) {
-      return i18n.t('ns1:health.status.title.no_clock_sync');
+      return i18n.t(`${packageNS}:health.status.title.no_clock_sync`);
     } else if (!status.peers) {
-      return i18n.t('ns1:health.status.title.no_peers');
+      return i18n.t(`${packageNS}:health.status.title.no_peers`);
     } else if (status.syncing) {
-      return i18n.t('ns1:health.status.title.syncing');
+      return i18n.t(`${packageNS}:health.status.title.syncing`);
     } else {
       return '';
     }
@@ -84,17 +88,13 @@ class HealthModal extends Component {
     } = this.props;
 
     if (!status.internet) {
-      return i18n.t('ns1:health.status.description.no_internet');
-    } else if (status.downloading) {
-      return `${i18n.t('ns1:health.status.description.downloading')} (${
-        payload.downloading.syncPercentage
-      }%)`;
+      return i18n.t(`${packageNS}:health.status.description.no_internet`);
     } else if (!status.clockSync) {
-      return i18n.t('ns1:health.status.description.no_clock_sync');
+      return i18n.t(`${packageNS}:health.status.description.no_clock_sync`);
     } else if (!status.peers) {
-      return i18n.t('ns1:health.status.description.no_peers');
+      return i18n.t(`${packageNS}:health.status.description.no_peers`);
     } else if (status.syncing) {
-      return `${i18n.t('ns1:health.status.description.syncing')} ${
+      return `${i18n.t(`${packageNS}:health.status.description.syncing`)} ${
         payload &&
         payload.syncing &&
         payload.syncing.syncPercentage &&

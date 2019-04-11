@@ -12,7 +12,8 @@ export class ClickToCopy extends PureComponent {
   static propTypes = {
     children: PropTypes.node,
     i18n: PropTypes.object,
-    label: PropTypes.string.isRequired
+    label: PropTypes.string.isRequired,
+    packageNS: PropTypes.string
   };
 
   state = {
@@ -35,12 +36,21 @@ export class ClickToCopy extends PureComponent {
   handleResetCopied = () => this.setState({ copied: false });
 
   render () {
-    const { children, i18n, label, textToCopy, ...otherProps } = this.props;
+    const {
+      children,
+      i18n,
+      label,
+      packageNS,
+      textToCopy,
+      ...otherProps
+    } = this.props;
     const { copied } = this.state;
 
     return (
       <Popup
-        content={copied ? i18n.t('ns1:ui.click_to_copy.copied') : label}
+        content={
+          copied ? i18n.t(`${packageNS}:ui.click_to_copy.copied`) : label
+        }
         inverted
         onClose={this.handleResetCopied}
         position='bottom center'

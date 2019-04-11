@@ -3,15 +3,10 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import {
-  getParityPath,
-  fetchParity,
-  isParityRunning,
-  runParity
-} from '@parity/electron';
+import { isParityRunning, runParity } from '@parity/electron';
 import getRemainingArgs from 'commander-remaining-args';
 
-import { parity } from '../../../../package.json';
+import { bundledParityPath } from '../utils/paths';
 import handleError from '../utils/handleError';
 import cli from '../cli';
 import Pino from '../utils/pino';
@@ -26,29 +21,36 @@ class ParityEthereum {
       throw new Error('Unable to initialise Parity Ethereum more than once');
     }
 
-    // Check if Parity Ethereum is installed
-    getParityPath()
-      // Download and install Parity Ethereum if not present
-      .catch(() => {
-        pino.info('Downloading and Installing Parity Ethereum');
-        return this.install(fetherAppWindow);
-      })
-      .then(async () => {
-        // Do not run Parity Ethereum if the user ran Fether with --no-run-parity
-        if (!cli.runParity) {
-          return false;
-        }
+    /*
+     * - If an instance of Parity Ethereum is already running, we connect to it
+     *   and then check in fether-react if the parity_versionInfo RPC returns
+     *   a compatible version; otherwise, we error out.
+     * - If no instance of Parity Ethereum is running, we run the bundled Parity
+     *   Ethereum binary.
+     *
+     * `parity signer new-token` is run on the bundled binary in any case. We
+     * don't use the $PATH anymore.
+     */
 
-        // Do not run Parity Ethereum if it is already running
-        if (await this.isRunning()) {
-          return true;
-        }
+    // Run the bundled Parity Ethereum if needed and wanted
+    return new Promise(async (resolve, reject) => {
+      // Parity Ethereum is already running: don't run the bundled binary
+      if (await this.isRunning()) {
+        resolve(true);
+        return;
+      }
 
-        // Run Parity Ethereum when installed
-        await this.run();
-        pino.info('Running Parity Ethereum');
-        return true;
-      })
+      // User ran Fether with --no-run-parity: don't run the bundled binary
+      if (!cli.runParity) {
+        resolve(false);
+        return;
+      }
+
+      // Parity Ethereum isn't running: run the bundled binary
+      await this.run();
+      pino.info('Running Parity Ethereum');
+      resolve(true);
+    })
       .then(isRunning => {
         // Notify the renderers
         fetherAppWindow.webContents.send('parity-running', isRunning);
@@ -57,35 +59,21 @@ class ParityEthereum {
       .catch(handleError);
   }
 
-  install = fetherAppWindow => {
-    return fetchParity(fetherAppWindow, {
-      onProgress: progress => {
-        // Notify the renderers on download progress
-        return fetherAppWindow.webContents.send(
-          'parity-download-progress',
-          progress
-        );
-      },
-      parityChannel: parity.channel
-    });
-  };
-
   isRunning = async () => {
     return isParityRunning({
-      wsInterface: cli.wsInterface,
       wsPort: cli.wsPort
     });
   };
 
+  // Run the bundled Parity Ethereum binary
   run = async () => {
     return runParity({
+      parityPath: bundledParityPath,
       flags: [
         ...getRemainingArgs(cli),
         '--light',
         '--chain',
         cli.chain,
-        '--ws-interface',
-        cli.wsInterface,
         '--ws-port',
         cli.wsPort
       ],

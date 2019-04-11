@@ -11,13 +11,15 @@
 
 Parity Fether aims to be the lightest and simplest decentralized wallet. It supports Ether and ERC-20 tokens, and runs on top of [Parity Ethereum](https://github.com/paritytech/parity-ethereum) light client. This allows smooth synchronization and interaction with the Ethereum blockchain, in a decentralized manner.
 
-By default, Parity Fether alpha runs on the Kovan test network. You can receive free Kovan Ether by posting your address in the [Kovan Faucet](https://gitter.im/kovan-testnet/faucet) Gitter channel. Fether will download and launch Parity Ethereum node at startup if it's not found on the computer. You can also separately launch your Ethereum client, Fether will automatically connect to it.
+By default, Fether will launch its embedded Parity Ethereum light client. You can also separately launch your Ethereum client and Fether will automatically connect to it, as described in the [Fether FAQ](https://wiki.parity.io/Fether-FAQ#how-to-launch-fether-with-a-separately-launched-parity-ethereum-node).
 
-Parity Fether connects to the light node using [`@parity/light.js`](https://github.com/paritytech/js-libs/tree/master/packages/light.js), a Javascript library specifically crafted for wallets to connect with light clients. 
+Parity Fether interacts with the light node using [`@parity/light.js`](https://github.com/paritytech/js-libs/tree/master/packages/light.js), a Javascript library specifically crafted for wallets to connect with light clients. 
 
 Parity Fether is licensed under the BSD 3-Clause, and can be used for all your Ethereum needs.
 
-If you run into problems while using Parity Fether, feel free to file an issue in this repository or hop on our [Gitter](https://gitter.im/paritytech/fether) or [Riot](https://riot.im/app/#/group/+parity:matrix.parity.io) chat room to ask a question. We are glad to help! **For security-critical issues**, please refer to the security policy outlined in [SECURITY.md](https://github.com/paritytech/parity/blob/master/SECURITY.md).
+If you run into problems while using Parity Fether, first check out the [FAQ](https://wiki.parity.io/Fether-FAQ) on our wiki and feel free to file an issue in this repository or hop on our [Gitter](https://gitter.im/paritytech/fether) or [Riot](https://riot.im/app/#/group/+parity:matrix.parity.io) chat rooms if you have any question. We are glad to help!  
+
+**For security-critical issues**, please refer to the security policy outlined in [SECURITY.md](https://github.com/paritytech/parity/blob/master/SECURITY.md).
 
 ---
 
@@ -33,7 +35,7 @@ Get in touch with us on Gitter:
 
 Official website: https://parity.io | Be sure to check out [our Wiki](https://wiki.parity.io) for more information.
 
-## Install and start Parity Fether
+## Install and start Parity Fether using binaries
 
 ### Mac
 - Download the [`.dmg` file](https://github.com/paritytech/fether/releases).
@@ -60,33 +62,6 @@ Official website: https://parity.io | Be sure to check out [our Wiki](https://wi
   - Download the [`.deb` file](https://github.com/paritytech/fether/releases).
   - Double click on the file to install Fether.
   - Fether will be added to the program menu.
-  
-
-
-### Passing config flags to the underlying Parity Ethereum node
-
-You can pass specific flags for fether to launch the underlying Parity Ethereum with:
-
-```bash
-# Launching Parity Ethereum light client on Ropsten instead of Kovan (default) and connect Fether to it
-$ /path/to/fether --chain ropsten --light
-```
-
-### Separately launch Parity Ethereum node
-
-You can also launch Parity Ethereum node before, with any flag you want:
-
-```bash
-# Launching Parity Ethereum light client on Ropsten instead of Kovan (default)
-$ parity --chain ropsten --light
-```
-
-In another console launch Fether:
-
-```bash
-# Fether will connect to the running node
-$ /path/to/fether
-```
 
 ## Build from sources
 
@@ -156,17 +131,6 @@ yarn package
 yarn start
 ```
 
-### Run without taskbar mode (no tray icon)
-
-```bash
-TASKBAR=false yarn start
-```
-
-> Troubleshooting: If it hangs on a white screen in Electron even though it has compiled and has been syncing for a long time, then simply choose 'View > Reload' (CMD + R on Mac, CTRL + R on Linux/Windows) from the Fether/Electron menu.
-
-> Developer Tools: Open developer tools automatically by running `DEBUG=true yarn start` when not in the production environment.
-
-
 ## Build binaries for production
 
 ### General Notes:
@@ -215,116 +179,3 @@ rm -rf /packages/fether-electron/dist;
 yarn; yarn build; DEBUG=electron-builder yarn release --win;
 ./packages/fether-electron/dist/Parity\ Fether-0.3.0.exe
 ```
-
-## Debugging in production
-
-Show terminal logs whilst running a binary executable.
-
-### Mac
-
-```
-tail -f ~/Library/Application\ Support/fether/fether.log
-```
-
-### Linux 
-
-```
-tail -f ~/.config/fether/fether.log
-```
-
-### Windows 
-
-```
-tail -f ~/Application\ Data/fether/fether.log
-```
-
-## Usage of taskbar mode
-
-### Mac
-
-Taskbar mode is `true` by default.
-
-* Enabled `true`
-  * Tray icon - Left-click or right-click the tray icon shows "tray context menu" containing just "Show/Hide Fether" and "Quit" options. "Show/Hide Fether" toggles the Fether window show/hide
-  * Dock icon - no action
-  * Fether window - frameless
-* Disabled `false`
-  * Dock icon - toggles show/hide Fether window
-  * Fether window - frame (with close/minimise icons)
-* Always
-  * Menubar - Fether menu shown by default
-  * Fether window - "window context menu" shown upon right-click in the Fether window
-  * Fether window - position is saved upon move, minimising, and close so it is restored in the same position.
-
-### Linux
-
-Taskbar mode is `true` by default.
-
-* Enabled `true`
-  * Tray icon - Left-click or right-click the tray icon shows "tray context menu" containing just "Show/Hide Fether" and "Quit" options. "Show/Hide Fether" toggles the Fether window show/hide
-  * Dock icon - toggles show/hide Fether window
-  * Fether window - frameless
-* Disabled `false`
-  * Dock icon - toggles show/hide Fether window
-  * Fether window - frame (with close/minimise icons)
-  * Menubar - Fether menu may not be shown in the tray by default depending on whether `setMenuBarVisibility` has been set. Fether menu may be configured to automatically hide by setting `setAutoHideMenuBar`. Toggle show/hide the Fether menu in the frame by clicking the Fether window and then holding down the ALT key to reveal it, which only works if auto-hide menu bar is enabled.
-* Always
-  * Fether window - "window context menu" shown upon right-click in the Fether window
-  * Fether window - position is saved upon move, minimising, and close so it is restored in the same position.
-
-### Windows
-
-Taskbar mode is `true` by default.
-
-* Enabled `true`
-  * Tray icon - Left-click toggles show/hide Fether window
-  * Tray icon - Right-click the tray icon shows "tray context menu" containing just "Show/Hide Fether" and "Quit" options. "Show/Hide Fether" toggles the Fether window show/hide
-  * Dock icon - toggles show/hide Fether window
-  * Fether window - frameless
-* Disabled `false`
-  * Dock icon - toggles show/hide Fether window
-  * Fether window - frame (with close/minimise icons).
-  * Menubar - Fether menu may not be not shown in the tray by default depending on whether `setMenuBarVisibility` has been set. Fether menu may be configured to automatically hide by setting `setAutoHideMenuBar`. Toggle show/hide the Fether menu in the frame by clicking the Fether window and then holding down the ALT key to reveal it, which only works if auto-hide menu bar is enabled.
-* Always
-  * Fether window - "window context menu" shown upon right-click in the Fether window
-  * Fether window - position is saved upon move, minimising, and close so it is restored in the same position.
-
-## Internationalisation
-
-English language support is currently the default. Contributors are invited to create a Pull Request with a conversion into another language.
-
-### Usage
-
-Switch between languages when multiple languages are available by going to the Fether Menu > Preferences > Language, and choosing one from the list. The active language has a tick next to it.
-
-### Add New Language
-
-Follow these steps to add support for an additional language:
-
-#### Example: Add language support for the German language
-
-**Solution:** See the following commit for the changes required to add German language support https://github.com/paritytech/fether/commit/d53dbb9e68ab52aedb02115858d5bd5e9e8a0e5d
-
-1) [Language internationalisation abbreviation](https://www.w3.org/International/O-charset-lang.html) for the new language. The language will be referred to as <LANG>. Example: 'de' for Deutsch (German), or 'en' for English.
-2) Language conversion of the Fether menu item names to the new language.
-* Create a file named <LANG>.json within the fether-electron folder. Example: fether-electron/src/main/app/menu/i18n/locales/de.json. Copy/paste into it the contents of the English file fether-electron/src/main/app/menu/i18n/locales/en.json. Find a native speaker in that language to convert each **value** (not key) into the new language.
-* Update fether-electron/src/main/app/menu/i18n/locales/index.js
-* Update fether-electron/src/main/app/menu/template/index.js, which includes:
-  * Adding item for the new language as a value of the `submenu`. 
-* Update fether-electron/src/main/app/menu/i18n/index.js, which includes:
-  * Import the <LANG> from the 'locales' subdirectory 
-  * Adding the new language as a fallback language in the desired order to the `fallbackLng`.
-  * Adding a key named <LANG> to `resources` using the imported <LANG>.json file as the namespace `ns1`.
-3) Language conversion of the Fether window contents to the new language.
-* Create a file named <LANG>.json within the fether-react folder. Example: fether-react/src/i18n/locales/de.json. Copy/paste into it the contents of the English file fether-react/src/i18n/locales/en.json. Find a native speaker in that language to convert each **value** (not key) into the new language.
-* Update fether-react/src/i18n/locales/index.js.
-* Update fether-react/src/i18n/index.js, which includes:
-  * Import the <LANG> from the 'locales' subdirectory 
-  * Adding the new language as a fallback language in the desired order to the `fallbackLng`.
-  * Adding a key named <LANG> to `resources` using the imported <LANG>.json file as the namespace `ns1`.
-
-### Known Issues
-
-* After choosing a new language to switch to, the Fether window will refresh automatically and the contents of Fether will be in the new language, except for the menu items "Show/Hide Fether" and "Quit" that are shown when you click the taskbar icon, which only changes to the chosen language after you have restarted Fether.
-
-* The Fether Terms & Conditions are only available in English.

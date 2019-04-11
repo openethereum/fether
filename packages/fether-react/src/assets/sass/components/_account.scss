@@ -37,7 +37,11 @@
   .account_name {
     color: $black;
     font-weight: 500;
-    margin-bottom: 0.1rem;
+    overflow: hidden;
+    padding-bottom: 0.1rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 210px;
 
     /**
      * Information component when used with components
@@ -45,8 +49,9 @@
      * where it is used in the AccountList component
      */
     &.-header {
+      font-size: 0.95rem;
       margin-top: 0.2rem;
-      margin-bottom: 0.3rem;
+      padding-bottom: 0.3rem;
     }
   }
 

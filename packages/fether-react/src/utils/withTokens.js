@@ -1,9 +1,9 @@
-// Copyright 2015-2018 Parity Technologies (UK) Ltd.
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
 // This file is part of Parity.
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { chainName$, withoutLoading } from '@parity/light.js';
+import { chainName$ } from '@parity/light.js';
 import { compose, mapPropsStream, withHandlers, withProps } from 'recompose';
 import light from '@parity/light.js-react';
 import localForage from 'localforage';
@@ -37,7 +37,7 @@ const getLsKey = ({ account: { address }, chainName }) =>
 const withTokens = compose(
   // Inject chainName and accountAddress into props
   light({
-    chainName: () => chainName$().pipe(withoutLoading())
+    chainName: () => chainName$()
   }),
   withAccount,
   // mapPropsStream and add localForage$

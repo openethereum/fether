@@ -13,15 +13,15 @@ import {
 } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import store from 'store';
-import isElectron from 'is-electron';
 import { Modal } from 'fether-ui';
 import semver from 'semver';
 import { version } from '../../package.json';
 
-import i18n from '../i18n';
+import i18n, { packageNS } from '../i18n';
 import Accounts from '../Accounts';
 import BackupAccount from '../BackupAccount';
 import Onboarding from '../Onboarding';
+import RequireParityVersion from '../RequireParityVersion';
 import RequireHealthOverlay from '../RequireHealthOverlay';
 import Send from '../Send';
 import Tokens from '../Tokens';
@@ -30,12 +30,18 @@ import Whitelist from '../Whitelist';
 const LANG_LS_KEY = 'fether-language';
 const currentVersion = version;
 
+// The preload scripts injects `ipcRenderer` into `window.bridge`
+const {
+  currentWindowWebContentsAddListener,
+  currentWindowWebContentsReload,
+  currentWindowWebContentsRemoveListener,
+  ipcRenderer,
+  IS_PROD
+} = window.bridge;
+
 // Use MemoryRouter for production viewing in file:// protocol
 // https://github.com/facebook/create-react-app/issues/3591
-const Router =
-  process.env.NODE_ENV === 'production' ? MemoryRouter : BrowserRouter;
-
-const electron = isElectron() ? window.require('electron') : null;
+const Router = IS_PROD ? MemoryRouter : BrowserRouter;
 
 @inject('onboardingStore', 'parityStore')
 @observer
@@ -45,21 +51,15 @@ class App extends Component {
   };
 
   componentDidMount () {
-    if (!electron) {
-      return;
-    }
-
     if (store.get(LANG_LS_KEY) && i18n.language !== store.get(LANG_LS_KEY)) {
       i18n.changeLanguage(store.get(LANG_LS_KEY));
     }
 
-    electron.remote
-      .getCurrentWindow()
-      .webContents.addListener('set-language', newLanguage => {
-        i18n.changeLanguage(newLanguage);
-        store.set(LANG_LS_KEY, newLanguage);
-        electron.remote.getCurrentWindow().webContents.reload();
-      });
+    currentWindowWebContentsAddListener('set-language', newLanguage => {
+      i18n.changeLanguage(newLanguage);
+      store.set(LANG_LS_KEY, newLanguage);
+      currentWindowWebContentsReload();
+    });
 
     window.addEventListener('contextmenu', this.handleRightClick);
 
@@ -85,9 +85,7 @@ class App extends Component {
 
   componentWillUnmount () {
     window.removeEventListener('contextmenu', this.handleRightClick);
-    electron.remote
-      .getCurrentWindow()
-      .webContents.removeListener('set-language');
+    currentWindowWebContentsRemoveListener('set-language');
   }
 
   renderModalLinks = () => {
@@ -115,10 +113,10 @@ class App extends Component {
   };
 
   handleRightClick = () => {
-    if (!electron) {
+    if (!ipcRenderer) {
       return;
     }
-    electron.ipcRenderer.send('asynchronous-message', 'app-right-click');
+    ipcRenderer.send('asynchronous-message', 'app-right-click');
   };
 
   /**
@@ -159,35 +157,43 @@ class App extends Component {
     return (
       <div className='content'>
         <div className='window'>
-          <Modal
-            title='New version available'
-            description={newRelease ? `${newRelease.name} was released!` : ''}
-            visible={newRelease && !newRelease.ignore}
-            buttons={this.renderModalLinks()}
-          >
-            <Router>
-              <Switch>
-                {/* The next line is the homepage */}
-                <Redirect exact from='/' to='/accounts' />
-                <Route path='/accounts' component={Accounts} />
-                <Route path='/onboarding' component={Onboarding} />
-                <Route path='/tokens/:accountAddress' component={Tokens} />
-                <Route
-                  path='/whitelist/:accountAddress'
-                  component={Whitelist}
-                />
-                <Route
-                  path='/backup/:accountAddress'
-                  component={BackupAccount}
-                />
-                <Route
-                  path='/send/:tokenAddress/from/:accountAddress'
-                  component={Send}
-                />
-                <Redirect from='*' to='/' />
-              </Switch>
-            </Router>
-          </Modal>
+          <RequireParityVersion>
+            <Modal
+              title={i18n.t(`${packageNS}:releases.new_release_title`)}
+              description={
+                newRelease
+                  ? i18n.t(`${packageNS}:releases.new_release_description`, {
+                    release_name: newRelease.name
+                  })
+                  : ''
+              }
+              visible={newRelease && !newRelease.ignore}
+              buttons={this.renderModalLinks()}
+            >
+              <Router>
+                <Switch>
+                  {/* The next line is the homepage */}
+                  <Redirect exact from='/' to='/accounts' />
+                  <Route path='/accounts' component={Accounts} />
+                  <Route path='/onboarding' component={Onboarding} />
+                  <Route path='/tokens/:accountAddress' component={Tokens} />
+                  <Route
+                    path='/whitelist/:accountAddress'
+                    component={Whitelist}
+                  />
+                  <Route
+                    path='/backup/:accountAddress'
+                    component={BackupAccount}
+                  />
+                  <Route
+                    path='/send/:tokenAddress/from/:accountAddress'
+                    component={Send}
+                  />
+                  <Redirect from='*' to='/' />
+                </Switch>
+              </Router>
+            </Modal>
+          </RequireParityVersion>
         </div>
       </div>
     );

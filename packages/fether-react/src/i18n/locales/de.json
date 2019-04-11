@@ -76,7 +76,6 @@
   "health": {
     "status": {
       "title": {
-        "downloading": "Parity Ethereum wird heruntergeladen...",
         "launching": "Knoten starten...",
         "no_internet_no_node_connected": "Kein Internet. Kein Knoten verbunden",
         "internet_no_node_connected": "Verbindung zum Knoten...",
@@ -88,7 +87,6 @@
       },
       "description": {
         "no_internet": "Bitte verbinden Sie sich mit dem Internet",
-        "downloading": "Parity Ethereum wird heruntergeladen...",
         "no_clock_sync": "Mac: Systemeinstellungen -> Datum und Uhrzeit -> Deaktivieren Sie das Kontrollkästchen 'Datum und Uhrzeit automatisch festlegen'. Windows: Systemsteuerung -> 'Uhrzeit, Sprache und Region' -> 'Datum und Uhrzeit' -> Deaktivieren Sie das Kontrollkästchen 'Datum einstellen' und Zeit automatisch",
         "no_peers": "Verbindung zu Netzwerkkollegen...",
         "syncing": "Synchronisieren..."
@@ -109,6 +107,10 @@
     "close": "Schließen",
     "next": "Weiter",
     "next_step": "Nächster Schritt"
+  },
+  "releases": {
+    "new_release_title": "Neue Version verfügbar",
+    "new_release_description": "{{release_name}} wurde veröffentlicht!"
   },
   "search_tokens": {
     "add": "Hinzufügen",
@@ -154,28 +156,23 @@
         "body_same_sender_receiver": "Die Absender- und Empfängeradressen sind gleich."
       },
       "validation": {
-        "alert": {
-          "amount_invalid": "Bitte geben Sie einen gültigen Betrag ein",
-          "eth_balance_too_low_for_gas": "ETH-Bilanz zu niedrig, um für Gas zu zahlen.",
-          "eth_balance_too_low": "Sie haben nicht genug ETH-Balance",
-          "non_zero_amount": "Bitte geben Sie einen Betrag ungleich Null ein",
-          "positive_amount": "Bitte geben Sie einen positiven Betrag ein",
-          "min_wei": "Bitte geben Sie mindestens 1 Wei ein",
-          "min_decimals": "Bitte geben Sie einen {{token_name}} Wert mit weniger als {{token_decimals}} Dezimalstellen",
-          "token_balance_too_low": "Sie haben nicht genug {{token_symbol}} Gleichgewicht",
-          "invalid_eth_address": "Bitte geben Sie eine gültige Ethereum-Adresse ein",
-          "prevent_send_zero_account": "Sie dürfen nicht mit Token {{token_name}} an das Nullkonto (0x0)",
-          "unable_estimate_gas": "Gas kann nicht geschätzt werden...",
-          "estimating_gas": "Gas schätzen...",
-          "error_estimating_balance": "Fehler beim Schätzen des Guthabens, bitte versuchen Sie es erneut"
-        },
-        "throw": {
-          "no_chain_id": "chaindId ist für ein EthereumTx erforderlich",
-          "no_address": "Adresse eines Kontos ist erforderlich",
-          "no_tx_count": "Für einen EthereumTx ist transactionCount erforderlich",
-          "no_token_info": "Token-Informationen sind für EthereumTx erforderlich",
-          "no_eth_balance": "Kein 'ethBalance'"
-        }
+        "amount_invalid": "Bitte geben Sie einen gültigen Betrag ein",
+        "eth_balance_too_low_for_gas": "ETH-Bilanz zu niedrig, um für Gas zu zahlen.",
+        "eth_balance_too_low": "Sie haben nicht genug ETH-Balance",
+        "fetching_chain_id": "Abrufen der Ketten-ID",
+        "fetching_eth_balance": "Ether-Balance abrufen",
+        "fetching_tx_count": "Transaktionsanzahl für Nonce abrufen",
+        "non_zero_amount": "Bitte geben Sie einen Betrag ungleich Null ein",
+        "positive_amount": "Bitte geben Sie einen positiven Betrag ein",
+        "min_wei": "Bitte geben Sie mindestens 1 Wei ein",
+        "min_decimals": "Bitte geben Sie einen {{token_name}} Wert mit weniger als {{token_decimals}} Dezimalstellen",
+        "token_balance_too_low": "Sie haben nicht genug {{token_symbol}} Gleichgewicht",
+        "invalid_eth_address": "Bitte geben Sie eine gültige Ethereum-Adresse ein",
+        "prevent_send_zero_account": "Sie dürfen nicht mit Token {{token_name}} an das Nullkonto (0x0)",
+        "unable_estimate_gas": "Gas kann nicht geschätzt werden...",
+        "estimating_gas": "Gas schätzen...",
+        "error_estimating_balance": "Fehler beim Schätzen des Guthabens, bitte versuchen Sie es erneut",
+        "valid_tx": "Die Transaktion scheint gültig zu sein"
       }
     },
     "scan": {
@@ -198,12 +195,6 @@
       "menu_items": {
         "backup_account": "Sicherungskonto",
         "add_tokens": "Token hinzufügen"
-      }
-    },
-    "token_list": {
-      "modal": {
-        "description": "Warten Sie mal...",
-        "title": "Kontokennzeichen werden geladen..."
       }
     }
   },

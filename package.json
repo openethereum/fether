@@ -1,12 +1,14 @@
 {
   "name": "fether",
   "description": "Fether Wallet",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "author": "Parity Team <admin@parity.io>",
   "maintainers": [
-    "Jaco Greeff",
-    "Amaury Martiny"
+    "Axel Chalon",
+    "Amaury Martiny",
+    "Thibaut Sardan",
+    "Luke Schoen"
   ],
   "contributors": [],
   "license": "BSD-3-Clause",
@@ -40,11 +42,13 @@
     "yarn": "^1.4.2"
   },
   "scripts": {
+    "postinstall": "yarn fetch-parity",
     "build": "lerna run build",
     "preelectron": "yarn build",
     "electron": "cd packages/fether-electron && yarn electron",
-    "lint-files": "./scripts/lint-files.sh",
-    "lint": "yarn lint-files '**/*.{js,ts}'",
+    "fetch-parity": "cd scripts && node ./fetch-latest-parity.js",
+    "lint-files": "FILES='**/*.js' ./scripts/lint-files.sh $FILES",
+    "lint": "yarn lint-files",
     "prepackage": "yarn build",
     "package": "cd packages/fether-electron && yarn package",
     "release": "cd packages/fether-electron && yarn release",
@@ -52,11 +56,12 @@
     "start-electron": "cd packages/fether-electron && yarn start",
     "start-react": "cd packages/fether-react && yarn start",
     "start-ui": "cd packages/fether-ui && yarn start",
-    "test": "semistandard '**/*.{js,ts}' --parser babel-eslint && CI=true lerna run test --parallel"
+    "test": "semistandard '**/*.js' --parser babel-eslint && CI=true lerna run test --parallel",
+    "update-tokens": "yarn run ts-node --project scripts/updateTokens/tsconfig.json scripts/updateTokens"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "FILES=`git diff --staged --name-only --diff-filter=d HEAD | grep -E '.js$|.ts$'`; [ -z \"$FILES\" ] && exit 0; yarn lint-files $FILES; git add $FILES"
+      "pre-commit": "FILES=`git diff --staged --name-only --diff-filter=d HEAD | grep -E '.js$'`; [ -z \"$FILES\" ] && exit 0; yarn lint-files $FILES; git add $FILES"
     }
   },
   "devDependencies": {
@@ -66,5 +71,12 @@
     "npm-run-all": "^4.1.2",
     "prettier": "^1.14.2",
     "semistandard": "^13.0.1"
+  },
+  "dependencies": {
+    "download": "^7.1.0",
+    "node-fetch": "^2.3.0",
+    "semver": "^5.6.0",
+    "ts-node": "^8.0.3",
+    "typescript": "^3.3.4000"
   }
 }

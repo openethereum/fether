@@ -6,6 +6,7 @@
 import electron from 'electron';
 import settings from 'electron-settings';
 
+import { IS_PROD } from '../../constants';
 import i18n from '../i18n';
 
 const { shell } = electron;
@@ -81,17 +82,17 @@ const getMenubarMenuTemplate = fetherApp => {
 
   /* eslint-disable no-sparse-arrays */
   const editTabMacOS = {
-    label: 'Edit',
+    label: i18n.t('menu.edit.submenu_name'),
     submenu: [
-      { role: 'undo' },
-      { role: 'redo' },
+      { role: 'undo', label: i18n.t('menu.edit.undo') },
+      { role: 'redo', label: i18n.t('menu.edit.redo') },
       { type: 'separator' },
-      { role: 'cut' },,
-      { role: 'copy' },
-      { role: 'paste' },
+      { role: 'cut', label: i18n.t('menu.edit.cut') },
+      { role: 'copy', label: i18n.t('menu.edit.copy') },
+      { role: 'paste', label: i18n.t('menu.edit.paste') },
       { type: 'separator' },
-      { role: 'delete' },
-      { role: 'selectall' }
+      { role: 'delete', label: i18n.t('menu.edit.delete') },
+      { role: 'selectall', label: i18n.t('menu.edit.select_all') }
     ]
   };
   /* eslint-enable no-sparse-arrays */
@@ -195,7 +196,7 @@ const getMenubarMenuTemplate = fetherApp => {
     ]
   };
 
-  let template = [
+  const template = [
     fileTab,
     process.platform === 'darwin' ? editTabMacOS : editTab,
     process.platform === 'win32' ? viewTabWindowsOS : viewTab,
@@ -255,16 +256,24 @@ const getContextTrayMenuTemplate = fetherApp => {
             fetherApp.win.focus();
           }
         }
-      },
-      { role: 'quit', label: i18n.t('menu.file.quit') }
+      }
     ];
+
+    if (!IS_PROD) {
+      template.push({
+        label: i18n.t('menu.view.reload'),
+        click: () => fetherApp.win.webContents.reload()
+      });
+    }
+
+    template.push({ role: 'quit', label: i18n.t('menu.file.quit') });
 
     return template;
   }
 };
 
 const getContextWindowMenuTemplate = fetherApp => {
-  let template = getMenubarMenuTemplate(fetherApp);
+  const template = getMenubarMenuTemplate(fetherApp);
 
   if (fetherApp.options.withTaskbar) {
     // Remove File and Help menus in taskbar mode for window context menu

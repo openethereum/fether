@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import cli from 'commander';
-
+import { DEFAULT_CHAIN, DEFAULT_WS_PORT } from '../constants';
 const { productName } = require('../../../../electron-builder.json');
 const { version } = require('../../../../package.json');
 
@@ -24,22 +24,17 @@ cli
   .allowUnknownOption()
   .option(
     '--chain <chain>',
-    'The network to connect to, can be one of "foundation", "kovan" or "ropsten". (default: "kovan")',
-    'kovan'
+    `The network to connect to, can be one of "foundation", "kovan" or "ropsten". (default: "${DEFAULT_CHAIN}")`,
+    DEFAULT_CHAIN
   )
   .option(
     '--no-run-parity',
     `${productName} will not attempt to run the locally installed parity.`
   )
   .option(
-    '--ws-interface <ip>',
-    `Specify the hostname portion of the WebSockets server ${productName} will connect to. IP should be an interface's IP address. (default: 127.0.0.1)`,
-    '127.0.0.1'
-  )
-  .option(
     '--ws-port <port>',
-    `Specify the port portion of the WebSockets server ${productName} will connect to. (default: 8546)`,
-    8546
+    `Specify the port portion of the WebSockets server ${productName} will connect to. (default: ${DEFAULT_WS_PORT})`,
+    DEFAULT_WS_PORT
   )
 
   .parse(
@@ -47,7 +42,13 @@ cli
       // We want to ignore some flags and not pass them down to Parity:
       // --inspect: `electron-webpack dev` runs Electron with the `--inspect` flag for HMR
       // -psn_*: https://github.com/paritytech/fether/issues/188
-      .filter(arg => !arg.startsWith('--inspect') && !arg.startsWith('-psn_'))
+      // --ws-interface: we don't pass down this flag, because fether only allows 127.0.0.1 as WS interface
+      .filter(
+        arg =>
+          !arg.startsWith('--inspect') &&
+          !arg.startsWith('-psn_') &&
+          !arg.startsWith('--ws-interface')
+      )
   );
 
 export default cli;

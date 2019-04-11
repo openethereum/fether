@@ -131,7 +131,7 @@ const getEthereumTx = tx => {
   const txParams = {
     nonce: '0x' + transactionCount.toNumber().toString(16),
     gasLimit: '0x' + gas.toNumber().toString(16),
-    gasPrice,
+    gasPrice: toWei(gasPrice, 'shannon').toNumber(),
     chainId
   };
 
