@@ -108,6 +108,10 @@
     "next": "Next",
     "next_step": "Next step"
   },
+  "releases": {
+    "new_release_title": "New version available",
+    "new_release_description": "{{release_name}} was released!"
+  },
   "search_tokens": {
     "add": "Add",
     "clear": "Clear",

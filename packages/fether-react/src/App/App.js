@@ -17,7 +17,7 @@ import { Modal } from 'fether-ui';
 import semver from 'semver';
 import { version } from '../../package.json';
 
-import i18n from '../i18n';
+import i18n, { packageNS } from '../i18n';
 import Accounts from '../Accounts';
 import BackupAccount from '../BackupAccount';
 import Onboarding from '../Onboarding';
@@ -159,8 +159,14 @@ class App extends Component {
         <div className='window'>
           <RequireParityVersion>
             <Modal
-              title='New version available'
-              description={newRelease ? `${newRelease.name} was released!` : ''}
+              title={i18n.t(`${packageNS}:releases.new_release_title`)}
+              description={
+                newRelease
+                  ? i18n.t(`${packageNS}:releases.new_release_description`, {
+                    release_name: newRelease.name
+                  })
+                  : ''
+              }
               visible={newRelease && !newRelease.ignore}
               buttons={this.renderModalLinks()}
             >
