@@ -15,7 +15,6 @@ class TokensList extends Component {
     const { tokensArray } = this.props;
     // Show empty token placeholder if tokens have not been loaded yet
     const shownArray = tokensArray.length ? tokensArray : [{}];
-
     return (
       <RequireHealthOverlay require='sync'>
         <div className='window_content'>

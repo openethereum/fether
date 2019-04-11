@@ -6,6 +6,7 @@
 import electron from 'electron';
 import settings from 'electron-settings';
 
+import { IS_PROD } from '../../constants';
 import i18n from '../i18n';
 
 const { shell } = electron;
@@ -245,7 +246,7 @@ const getContextTrayMenuTemplate = fetherApp => {
       }
     ];
 
-    if (process.env.NODE_ENV !== 'production') {
+    if (!IS_PROD) {
       template.push({
         label: i18n.t('menu.view.reload'),
         click: () => fetherApp.win.webContents.reload()

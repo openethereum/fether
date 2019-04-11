@@ -13,7 +13,6 @@ import {
 } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import store from 'store';
-import isElectron from 'is-electron';
 import { Modal } from 'fether-ui';
 import semver from 'semver';
 import { version } from '../../package.json';
@@ -31,12 +30,12 @@ import Whitelist from '../Whitelist';
 const LANG_LS_KEY = 'fether-language';
 const currentVersion = version;
 
+// The preload scripts injects `ipcRenderer` into `window.bridge`
+const { remote, ipcRenderer, IS_PROD } = window.bridge;
+
 // Use MemoryRouter for production viewing in file:// protocol
 // https://github.com/facebook/create-react-app/issues/3591
-const Router =
-  process.env.NODE_ENV === 'production' ? MemoryRouter : BrowserRouter;
-
-const electron = isElectron() ? window.require('electron') : null;
+const Router = IS_PROD ? MemoryRouter : BrowserRouter;
 
 @inject('onboardingStore', 'parityStore')
 @observer
@@ -46,7 +45,7 @@ class App extends Component {
   };
 
   componentDidMount () {
-    if (!electron) {
+    if (!remote) {
       return;
     }
 
@@ -54,12 +53,13 @@ class App extends Component {
       i18n.changeLanguage(store.get(LANG_LS_KEY));
     }
 
-    electron.remote
+    remote
       .getCurrentWindow()
       .webContents.addListener('set-language', newLanguage => {
         i18n.changeLanguage(newLanguage);
         store.set(LANG_LS_KEY, newLanguage);
-        electron.remote.getCurrentWindow().webContents.reload();
+        console.log('RELOADO');
+        remote.getCurrentWindow().webContents.reload();
       });
 
     window.addEventListener('contextmenu', this.handleRightClick);
@@ -86,9 +86,7 @@ class App extends Component {
 
   componentWillUnmount () {
     window.removeEventListener('contextmenu', this.handleRightClick);
-    electron.remote
-      .getCurrentWindow()
-      .webContents.removeListener('set-language');
+    remote.getCurrentWindow().webContents.removeListener('set-language');
   }
 
   renderModalLinks = () => {
@@ -116,10 +114,10 @@ class App extends Component {
   };
 
   handleRightClick = () => {
-    if (!electron) {
+    if (!ipcRenderer) {
       return;
     }
-    electron.ipcRenderer.send('asynchronous-message', 'app-right-click');
+    ipcRenderer.send('asynchronous-message', 'app-right-click');
   };
 
   /**

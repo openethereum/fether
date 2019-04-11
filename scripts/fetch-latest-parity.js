@@ -2,10 +2,11 @@
 // https://vanity-service.parity.io/parity-binaries?version=beta&os=windows&architecture=x86_64
 // https://vanity-service.parity.io/parity-binaries?version=beta&os=darwin&architecture=x86_64
 
-const crypto = require('crypto');
 const { chmod, existsSync, writeFile } = require('fs');
+const crypto = require('crypto');
 const download = require('download');
 const fetch = require('node-fetch');
+const path = require('path');
 const { promisify } = require('util');
 const semver = require('semver');
 
@@ -17,33 +18,51 @@ const exec = promisify(require('child_process').exec);
 const fsChmod = promisify(chmod);
 const fsWriteFile = promisify(writeFile);
 
-let os;
-switch (process.platform) {
-  case 'win32':
-    os = 'windows';
-    break;
-  case 'darwin':
-    os = 'darwin';
-    break;
-  default:
-    os = 'linux';
+function getOs () {
+  if (process.argv.includes('--win')) {
+    return 'windows';
+  }
+  if (process.argv.includes('--mac')) {
+    return 'darwin';
+  }
+  if (process.argv.includes('--linux')) {
+    return 'linux';
+  }
+
+  switch (process.platform) {
+    case 'win32':
+      return 'windows';
+    case 'darwin':
+      return 'darwin';
+    default:
+      return 'linux';
+  }
 }
 
-const ENDPOINT = `https://vanity-service.parity.io/parity-binaries?os=${os}&architecture=x86_64`;
+const ENDPOINT = `https://vanity-service.parity.io/parity-binaries?os=${getOs()}&architecture=x86_64`;
 
-const STATIC_DIRECTORY = '../packages/fether-electron/static/';
+const STATIC_DIRECTORY = path.join(
+  '..',
+  'packages',
+  'fether-electron',
+  'static'
+);
 
 const foundPath = [
-  `${STATIC_DIRECTORY}/parity`,
-  `${STATIC_DIRECTORY}/parity.exe`
+  path.join(STATIC_DIRECTORY, 'parity'),
+  path.join(STATIC_DIRECTORY, 'parity.exe')
 ].find(existsSync);
 
 if (foundPath) {
   // Bundled Parity was found, we check if the version matches the minimum requirements
   getBinaryVersion(foundPath)
     .then(version => {
+      if (!version) {
+        console.log("Couldn't get bundled Parity Ethereum version.");
+        return downloadParity();
+      }
+
       if (!semver.satisfies(version, versionRequirement)) {
-        // FIXME i18n - convert text to i18n
         console.log(
           'Bundled Parity Ethereum %s is older than required version %s',
           version,
@@ -51,7 +70,6 @@ if (foundPath) {
         );
         return downloadParity();
       } else {
-        // FIXME i18n - convert text to i18n
         console.log(
           'Bundled Parity Ethereum %s matches required version %s',
           version,
@@ -94,7 +112,6 @@ function downloadParity () {
           );
 
         if (latestCompatibleItem.version === '0.0.0') {
-          // FIXME i18n - convert text to i18n
           throw new Error(
             `Couldn't find a Parity Ethereum version compatible with ${versionRequirement}`
           );
@@ -107,7 +124,6 @@ function downloadParity () {
         version
       }))
       .then(({ name, downloadUrl, checksum: expectedChecksum, version }) => {
-        // FIXME i18n - convert text to i18n
         console.log(
           'Downloading Parity Ethereum %s... (%s)',
           version,
@@ -121,14 +137,14 @@ function downloadParity () {
             .digest('hex');
 
           if (expectedChecksum !== actualChecksum) {
-            // FIXME i18n - convert text to i18n
             throw new Error(
               `Parity Ethereum checksum mismatch: expecting ${expectedChecksum}, got ${actualChecksum}.`
             );
           }
 
           // Write to file and set a+x permissions
-          const destinationPath = `${STATIC_DIRECTORY}/${name}`;
+          const destinationPath = path.join(STATIC_DIRECTORY, name);
+
           return fsWriteFile(destinationPath, data)
             .then(() => fsChmod(destinationPath, 0o755)) // https://nodejs.org/api/fs.html#fs_fs_chmod_path_mode_callback
             .then(() => destinationPath);
@@ -136,15 +152,19 @@ function downloadParity () {
       })
       .then(getBinaryVersion)
       .then(bundledVersion =>
-        // FIXME i18n - convert text to i18n
-        console.log(`Success: bundled Parity Ethereum ${bundledVersion}`)
+        console.log(
+          `Success: bundled Parity Ethereum ${bundledVersion ||
+            "(couldn't get version)"}`
+        )
       )
   );
 }
 
 function getBinaryVersion (binaryPath) {
-  return exec(`${binaryPath} --version`).then(({ stdout, stderr }) => {
-    if (stderr) throw new Error(stderr);
-    return stdout.match(/v\d+\.\d+\.\d+/)[0];
-  });
+  return exec(`${binaryPath} --version`)
+    .then(({ stdout, stderr }) => {
+      if (stderr) throw new Error(stderr);
+      return stdout.match(/v\d+\.\d+\.\d+/)[0];
+    })
+    .catch(error => console.warn(error.message));
 }

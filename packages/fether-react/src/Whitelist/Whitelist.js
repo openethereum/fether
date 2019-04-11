@@ -13,8 +13,8 @@ import { Link } from 'react-router-dom';
 import i18n, { packageNS } from '../i18n';
 import RequireHealthOverlay from '../RequireHealthOverlay';
 import Health from '../Health';
-import NewTokenItem from './NewTokenItem';
 import withTokens from '../utils/withTokens';
+import NewTokenItem from './NewTokenItem';
 
 @withTokens
 @light({

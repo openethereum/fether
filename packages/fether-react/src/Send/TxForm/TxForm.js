@@ -20,8 +20,8 @@ import { startWith } from 'rxjs/operators';
 import { withProps } from 'recompose';
 
 import i18n, { packageNS } from '../../i18n';
-import { estimateGas } from '../../utils/transaction';
 import Debug from '../../utils/debug';
+import { estimateGas } from '../../utils/transaction';
 import RequireHealthOverlay from '../../RequireHealthOverlay';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import TxDetails from './TxDetails';

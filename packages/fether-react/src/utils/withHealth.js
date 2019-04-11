@@ -15,30 +15,28 @@ import {
   switchMap,
   take
 } from 'rxjs/operators';
-import isElectron from 'is-electron';
 import isEqual from 'lodash/isEqual';
 import { peerCount$, syncStatus$ } from '@parity/light.js';
 
 import parityStore from '../stores/parityStore';
 
-const electron = isElectron() ? window.require('electron') : null;
+// The preload scripts injects `ipcRenderer` into `window.bridge`
+const { ipcRenderer, isParityRunningStatus } = window.bridge;
 
 const isApiConnected$ = parityStore.isApiConnected$;
 
 const isParityRunning$ = Observable.create(observer => {
-  if (electron) {
-    electron.ipcRenderer.on('parity-running', (_, isParityRunning) => {
+  if (ipcRenderer) {
+    ipcRenderer.on('parity-running', (_, isParityRunning) => {
       observer.next(isParityRunning);
     });
   }
-}).pipe(
-  startWith(electron ? !!electron.remote.getGlobal('isParityRunning') : false)
-);
+}).pipe(startWith(!!isParityRunningStatus));
 
 const isClockSync$ = Observable.create(observer => {
-  if (electron) {
-    electron.ipcRenderer.send('asynchronous-message', 'check-clock-sync');
-    electron.ipcRenderer.once('check-clock-sync-reply', (_, clockSync) => {
+  if (ipcRenderer) {
+    ipcRenderer.send('asynchronous-message', 'check-clock-sync');
+    ipcRenderer.once('check-clock-sync-reply', (_, clockSync) => {
       observer.next(clockSync.isClockSync);
     });
   }

@@ -5,6 +5,7 @@
 
 import React from 'react';
 import QrSigner from '@parity/qr-signer';
+import { ExternalLink } from 'fether-ui';
 
 import i18n, { packageNS } from '../i18n';
 import loading from '../assets/img/icons/loading.svg';
@@ -77,7 +78,16 @@ export default class Scanner extends React.PureComponent {
         {isLoading ? (
           <img alt='loading' src={loading} />
         ) : webcamError ? (
-          <p>{webcamError}</p>
+          <div>
+            <p>
+              {webcamError}&nbsp;Visit the&nbsp;
+              <ExternalLink
+                name='Fether FAQ'
+                href='https://wiki.parity.io/Fether-FAQ#how-to-fix-a-webcam-error'
+              />
+              &nbsp;for help troubleshooting this issue.
+            </p>
+          </div>
         ) : (
           <div>
             <p>{label}</p>
