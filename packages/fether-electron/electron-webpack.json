@@ -1,5 +1,9 @@
 {
+  "main": {
+    "webpackConfig": "custom.webpack.additions.js"
+  },
   "renderer": {
     "sourceDirectory": null
-  }
+  },
+  "title": "Fether"
 }

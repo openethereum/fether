@@ -5,7 +5,12 @@
 
 import electron from 'electron';
 
+import { IS_PROD } from '../constants';
+import { CSP } from '../utils/csp';
 import messages from '../messages';
+import Pino from '../utils/pino';
+
+const pino = Pino();
 const { ipcMain, session } = electron;
 
 function setupRequestListeners (fetherApp) {
@@ -30,6 +35,24 @@ function setupRequestListeners (fetherApp) {
       callback({ requestHeaders: details.requestHeaders }); // eslint-disable-line
     }
   );
+
+  // Content Security Policy (CSP)
+  session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+    pino.debug(
+      `Configuring Content-Security-Policy for environment ${
+        IS_PROD ? 'production' : 'development'
+      }`
+    );
+
+    /* eslint-disable */
+    callback({
+      responseHeaders: {
+        ...details.responseHeaders,
+        "Content-Security-Policy": [CSP]
+      }
+    });
+    /* eslint-enable */
+  });
 }
 
 export default setupRequestListeners;

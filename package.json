@@ -1,12 +1,14 @@
 {
   "name": "fether",
   "description": "Fether Wallet",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "author": "Parity Team <admin@parity.io>",
   "maintainers": [
-    "Jaco Greeff",
-    "Amaury Martiny"
+    "Axel Chalon",
+    "Amaury Martiny",
+    "Thibaut Sardan",
+    "Luke Schoen"
   ],
   "contributors": [],
   "license": "BSD-3-Clause",
@@ -40,12 +42,13 @@
     "yarn": "^1.4.2"
   },
   "scripts": {
-    "postinstall": "cd scripts && node ./fetch-latest-parity.js",
+    "postinstall": "yarn fetch-parity",
     "build": "lerna run build",
     "preelectron": "yarn build",
     "electron": "cd packages/fether-electron && yarn electron",
-    "lint-files": "./scripts/lint-files.sh",
-    "lint": "yarn lint-files '**/*.js'",
+    "fetch-parity": "cd scripts && node ./fetch-latest-parity.js",
+    "lint-files": "./scripts/lint-files.sh '**/*.js'",
+    "lint": "yarn lint-files",
     "prepackage": "yarn build",
     "package": "cd packages/fether-electron && yarn package",
     "release": "cd packages/fether-electron && yarn release",
