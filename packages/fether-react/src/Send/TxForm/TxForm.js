@@ -423,16 +423,12 @@ class TxForm extends Component {
       };
     } else if (balance && balance.lt(amountBn)) {
       return { amount: `You don't have enough ${token.symbol} balance` };
-    } else if (
-      (!values.to || !isAddress(values.to)) &&
-      !isEtcChainId(currentChainIdBN)
-    ) {
-      return { to: 'Please enter a valid Ethereum address' };
-    } else if (
-      (!values.to || isAddress(values.to)) &&
-      isEtcChainId(currentChainIdBN)
-    ) {
-      return { to: 'Please enter a valid Ethereum Classic address' };
+    } else if (!values.to || !isAddress(values.to)) {
+      return {
+        to: `Please enter a valid Ethereum ${
+          isEtcChainId(currentChainIdBN) ? 'Classic address' : 'address'
+        }`
+      };
     } else if (values.to === '0x0000000000000000000000000000000000000000') {
       return {
         to: `You are not permitted to send ${
