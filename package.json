@@ -1,12 +1,14 @@
 {
   "name": "fether",
   "description": "Fether Wallet",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "author": "Parity Team <admin@parity.io>",
   "maintainers": [
-    "Jaco Greeff",
-    "Amaury Martiny"
+    "Axel Chalon",
+    "Amaury Martiny",
+    "Thibaut Sardan",
+    "Luke Schoen"
   ],
   "contributors": [],
   "license": "BSD-3-Clause",
@@ -40,11 +42,12 @@
     "yarn": "^1.4.2"
   },
   "scripts": {
-    "postinstall": "cd scripts && node ./fetch-latest-parity.js",
+    "postinstall": "yarn fetch-parity",
     "build": "lerna run build",
     "preelectron": "yarn build",
     "electron": "cd packages/fether-electron && yarn electron",
-    "lint-files": "./scripts/lint-files.sh '**/*.js'",
+    "fetch-parity": "cd scripts && node ./fetch-latest-parity.js",
+    "lint-files": "FILES='**/*.js' ./scripts/lint-files.sh $FILES",
     "lint": "yarn lint-files",
     "prepackage": "yarn build",
     "package": "cd packages/fether-electron && yarn package",
@@ -58,7 +61,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "FILES=`git diff --staged --name-only --diff-filter=d HEAD | grep -E '.js$|.ts$'`; [ -z \"$FILES\" ] && exit 0; yarn lint-files $FILES; git add $FILES"
+      "pre-commit": "FILES=`git diff --staged --name-only --diff-filter=d HEAD | grep -E '.js$'`; [ -z \"$FILES\" ] && exit 0; yarn lint-files $FILES; git add $FILES"
     }
   },
   "devDependencies": {

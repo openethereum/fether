@@ -10,6 +10,7 @@ import { Link, Redirect } from 'react-router-dom';
 import Scanner from '../../Scanner';
 import { withProps } from 'recompose';
 
+import i18n, { packageNS } from '../../i18n';
 import RequireHealthOverlay from '../../RequireHealthOverlay';
 import withAccount from '../../utils/withAccount.js';
 import withTokens from '../../utils/withTokens';
@@ -41,7 +42,7 @@ class ScanSignedTx extends Component {
       );
     } catch (e) {
       this.setState({
-        error: "The QR code doesn't seem to be a valid transaction."
+        error: i18n.t(`${packageNS}:tx.scan_signed.error_qr_tx_invalid`)
       });
     }
   };
@@ -64,10 +65,18 @@ class ScanSignedTx extends Component {
         <Header
           left={
             <Link to={`/tokens/${address}`} className='icon -back'>
-              Close
+              {i18n.t(`${packageNS}:navigation.close`)}
             </Link>
           }
-          title={token && <h1>Send {token.name}</h1>}
+          title={
+            token && (
+              <h1>
+                {i18n.t(`${packageNS}:tx.header_send_prefix`, {
+                  token: token.name
+                })}
+              </h1>
+            )
+          }
         />
 
         <RequireHealthOverlay require='sync'>
@@ -76,7 +85,7 @@ class ScanSignedTx extends Component {
               <Card className='-centered'>
                 <Scanner
                   onScan={this.onScanSignedTx}
-                  label='Show the signed transaction QR code'
+                  label={i18n.t(`${packageNS}:tx.scan_signed.label_msg_qr_tx`)}
                 />
 
                 {error && <p className='text -standard'>{error}</p>}
@@ -87,7 +96,7 @@ class ScanSignedTx extends Component {
                     onClick={history.goBack}
                     type='button'
                   >
-                    Back
+                    {i18n.t(`${packageNS}:navigation.back`)}
                   </button>
                 </nav>
               </Card>

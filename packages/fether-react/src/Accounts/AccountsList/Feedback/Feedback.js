@@ -5,6 +5,8 @@
 
 import React from 'react';
 
+import i18n, { packageNS } from '../../../i18n';
+
 export const Feedback = ({ accountsListLength }) => (
   <a
     className='feedback'
@@ -12,6 +14,6 @@ export const Feedback = ({ accountsListLength }) => (
     rel='noopener noreferrer'
     target='_blank'
   >
-    Feedback
+    {i18n.t(`${packageNS}:feedback:title`)}
   </a>
 );

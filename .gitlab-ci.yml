@@ -10,11 +10,10 @@ variables:
   CARGOFLAGS: ''
 
 cache:
-  key: "${CI_JOB_NAME}"
+  key: '${CI_JOB_NAME}'
   paths:
     - node_modules/
     - packages/*/node_modules/
-
 
 .branches: &branches
   only:
@@ -79,6 +78,9 @@ win-build:
   script:
     - yarn install
     - yarn build
+    # `win-build` is a linux machine, so it downloaded a linux parity-ethereum.
+    # We download a windows one to make it cross-compile for windows.
+    - rm packages/fether-electron/static/parity* && yarn fetch-parity --win
     - yarn release --win
   tags:
     - linux-docker

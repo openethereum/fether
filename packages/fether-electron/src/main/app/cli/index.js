@@ -42,12 +42,12 @@ cli
       // We want to ignore some flags and not pass them down to Parity:
       // --inspect: `electron-webpack dev` runs Electron with the `--inspect` flag for HMR
       // -psn_*: https://github.com/paritytech/fether/issues/188
+      // --ws-interface: we don't pass down this flag, because fether only allows 127.0.0.1 as WS interface
       .filter(
         arg =>
           !arg.startsWith('--inspect') &&
           !arg.startsWith('-psn_') &&
-          !arg.startsWith('--ws-interface') &&
-          !arg.startsWith('--ws-origins')
+          !arg.startsWith('--ws-interface')
       )
   );
 
