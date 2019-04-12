@@ -218,7 +218,6 @@ class AccountImportOptions extends Component {
                 `${packageNS}:account.import.phrase.label_msg_recover_phrase`
               )}
             </p>
-
             <FetherForm.Field
               as='textarea'
               label={i18n.t(
@@ -245,14 +244,14 @@ class AccountImportOptions extends Component {
           {signerCard}
           {spacer}
           {!importingFromSigner && phraseCard}
-          <p>{error}</p>
-          <nav className='form-nav -space-around'>
-            {currentStep > 1 && (
+          <p className='error-import-account'>{error}</p>
+          {currentStep > 1 && (
+            <nav className='form-nav -space-around'>
               <button className='button -back' onClick={history.goBack}>
                 {i18n.t(`${packageNS}:navigation.back`)}
               </button>
-            )}
-          </nav>
+            </nav>
+          )}
         </div>
       </RequireHealthOverlay>
     );

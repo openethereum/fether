@@ -96,14 +96,14 @@ class CreateAccount extends Component {
           </div>
         </div>
 
-        <nav className='footer-nav'>
-          {step > 1 ? (
-            <div className='footer-nav_status'>
-              <Health />
-            </div>
-          ) : (
-            <div className='footer-nav_option'>
-              {isImport ? null : (
+        {isImport ? null : (
+          <nav className='footer-nav'>
+            {step > 1 ? (
+              <div className='footer-nav_status'>
+                <Health />
+              </div>
+            ) : (
+              <div className='footer-nav_option'>
                 <p>
                   {i18n.t(`${packageNS}:account.import.question`)}
                   <button
@@ -113,10 +113,10 @@ class CreateAccount extends Component {
                     {i18n.t(`${packageNS}:account.import.title`)}
                   </button>
                 </p>
-              )}
-            </div>
-          )}
-        </nav>
+              </div>
+            )}
+          </nav>
+        )}
       </React.Fragment>
     );
   }
