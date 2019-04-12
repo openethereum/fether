@@ -17,6 +17,7 @@ let resourceEnglishNS = {};
 let resourceGermanNS = {};
 resourceEnglishNS[name] = en;
 resourceGermanNS[name] = de;
+
 const packageNS = Object.keys(resourceEnglishNS)[0].toString();
 const moduleNS = 'i18n';
 const menuNS = `${packageNS}-${moduleNS}`;
