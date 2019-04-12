@@ -7,6 +7,8 @@ import React, { Component } from 'react';
 import BigNumber from 'bignumber.js';
 import { fromWei, toWei } from '@parity/api/lib/util/wei';
 
+import i18n, { packageNS } from '../../../i18n';
+
 class TxDetails extends Component {
   renderDetails = () => {
     const { estimatedTxFee, token, values } = this.props;
@@ -24,7 +26,7 @@ class TxDetails extends Component {
     ) {
       // Keep line break so message is centered
       return `
-Missing input fields...`;
+${i18n.t(`${packageNS}:tx.form.details.missing_fields`)}`;
     }
 
     return `${this.renderCalculation()}
@@ -46,7 +48,9 @@ ${this.renderTotalAmount()}`;
       .toFixed(0)
       .toString();
 
-    return `Gas Limit: ${gasLimitBn}`;
+    return i18n.t(`${packageNS}:tx.form.details.gas_limit`, {
+      gas_limit: gasLimitBn
+    });
   };
 
   renderFee = () => {
@@ -56,9 +60,11 @@ ${this.renderTotalAmount()}`;
       return;
     }
 
-    return `Fee: ${fromWei(estimatedTxFee, 'ether')
+    const fee = `${fromWei(estimatedTxFee, 'ether')
       .toFixed(9)
-      .toString()} ETH (gas limit * gas price)`;
+      .toString()}`;
+
+    return i18n.t(`${packageNS}:tx.form.details.fee`, { fee });
   };
 
   renderTotalAmount = () => {
@@ -68,12 +74,16 @@ ${this.renderTotalAmount()}`;
       return;
     }
 
-    return `Total Amount: ${fromWei(
+    const totalAmount = `${fromWei(
       estimatedTxFee.plus(
         token.address === 'ETH' ? toWei(values.amount.toString()) : 0
       ),
       'ether'
-    ).toString()} ETH`;
+    ).toString()}`;
+
+    return i18n.t(`${packageNS}:tx.form.details.total_amount`, {
+      total_amount: totalAmount
+    });
   };
 
   render () {
@@ -83,7 +93,9 @@ ${this.renderTotalAmount()}`;
       <div>
         <div className='form_field'>
           <div hidden={!showDetails}>
-            <label htmlFor='txDetails'>Transaction Details:</label>
+            <label htmlFor='txDetails'>
+              {i18n.t(`${packageNS}:tx.form.details.title`)}
+            </label>
             <textarea
               className='-sm-details'
               id='txDetails'

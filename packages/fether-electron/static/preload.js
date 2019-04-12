@@ -41,6 +41,12 @@ function init () {
    * Example 2: `require` should not be defined in Chrome Developer Tools Console.
    */
   window.bridge = {
+    currentWindowWebContentsAddListener: remote.getCurrentWindow().webContents
+      .addListener,
+    currentWindowWebContentsRemoveListener: remote.getCurrentWindow()
+      .webContents.removeListener,
+    currentWindowWebContentsReload: remote.getCurrentWindow().webContents
+      .reload,
     defaultWsInterface: remote.getGlobal('defaultWsInterface'),
     defaultWsPort: remote.getGlobal('defaultWsPort'),
     ipcRenderer,

@@ -1,0 +1,220 @@
+{
+  "account": {
+    "create": {
+      "change_icon": "Generate another icon",
+      "label_name_msg": "Please give this account a name:",
+      "label_name": "Name",
+      "title": "Create a new account",
+      "copy_phrase": {
+        "msg1": "Please write your secret phrase on a piece of paper:",
+        "msg2": "Keep it secure and secret.",
+        "msg3": "If you lose your secret phrase, your wallet cannot be recovered.",
+        "msg4": "If someone gets hold of your secret phrase, they will be able to drain your account."
+      }
+    },
+    "existing": {
+      "no_name": "(no name)"
+    },
+    "backup": {
+      "label_msg_password_unlock": "Unlock your account to encrypt the JSON keystore file:",
+      "label_password_unlock": "Password",
+      "button_confirm": "Confirm backup"
+    },
+    "import": {
+      "error_msg_existing_address": "Account {{address}} already listed",
+      "signer": {
+        "error_msg_signer_imported": "Invalid QR code.",
+        "label_msg_recover_signer": "Recover from Parity Signer",
+        "label_button_recover_signer_scan": "Scan QR code",
+        "label_msg_recover_signer_scan": "Scan Parity Signer account QR code"
+      },
+      "json": {
+        "error_msg_change_json_file": "Invalid file. Please check this is your actual Parity backup JSON keyfile and try again.",
+        "label_msg_recover_json": "Recover from JSON Keyfile",
+        "label_recover_json": "JSON Backup Keyfile"
+      },
+      "phrase": {
+        "error_msg_submit_phrase": "The passphrase was not recognized. Please verify that you entered your passphrase correctly.",
+        "label_msg_recover_phrase": "Recover from Seed Phrase",
+        "label_recover_phrase": "Recovery phrase"
+      },
+      "question": "Already have an account?",
+      "title": "Import account"
+    },
+    "password": {
+      "common": {
+        "label_password": "Password",
+        "label_password_confirm": "Confirm",
+        "error_msg_password_incorrect": "Please check your password and try again.",
+        "button_confirm": "Confirm account {{postfix}}",
+        "button_confirm_opt1": "import",
+        "button_confirm_opt2": "creation"
+      },
+      "create": {
+        "error_msg_password_confirmation_no_match": "Password confirmation does not match.",
+        "label_msg_password": "Secure your account with a password:"
+      },
+      "import": {
+        "label_msg_unlock_json": "Unlock your account to decrypt your JSON keystore file: "
+      }
+    },
+    "phrase_rewrite": {
+      "label_msg_rewrite_phrase": "Type your secret phrase to confirm that you wrote it down correctly:",
+      "label_rewrite_phrase": "Recovery phrase"
+    }
+  },
+  "accounts_list": {
+    "header": "Accounts",
+    "hint": {
+      "exist": "Click the + icon to add a new account.",
+      "none": "Nothing here yet!"
+    }
+  },
+  "feedback": {
+    "title": "Feedback"
+  },
+  "health": {
+    "status": {
+      "title": {
+        "launching": "Launching the node...",
+        "no_internet_no_node_connected": "No internet. No node connected",
+        "internet_no_node_connected": "Connecting to node...",
+        "no_internet_node_connected": "No internet. Connected to node",
+        "no_clock_sync": "Clock of host not in sync",
+        "no_peers": "Connecting to peers...",
+        "syncing": "Syncing...",
+        "synced": "Synced"
+      },
+      "description": {
+        "no_internet": "Please connect to the Internet",
+        "no_clock_sync": "Mac: System Preferences -> Date & Time -> Uncheck and recheck 'Set date and time automatically' Windows: Control Panel -> 'Clock, Language, and Region' -> 'Date and Time' -> Uncheck and recheck 'Set date and time automatically'",
+        "no_peers": "Searching for peers",
+        "syncing": "Syncing..."
+      }
+    },
+    "overlay": {
+      "error_status_invalid": "Status {{status}} must be one of 'node-internet|node|sync': "
+    }
+  },
+  "onboarding": {
+    "header": "Terms of Use",
+    "instructions": "Please read carefully",
+    "button_accept": "Accept"
+  },
+  "navigation": {
+    "back": "Back",
+    "go_back": "Go back",
+    "close": "Close",
+    "next": "Next",
+    "next_step": "Next step"
+  },
+  "releases": {
+    "new_release_title": "New version available",
+    "new_release_description": "{{release_name}} was released!"
+  },
+  "search_tokens": {
+    "add": "Add",
+    "clear": "Clear",
+    "placeholder": "Find token by name or symbol",
+    "remove": "Remove",
+    "title": "Search tokens"
+  },
+  "scanner": {
+    "error_security": "Access to the webcam was refused.",
+    "error_overcontrained": "No webcam found on the device.",
+    "error_not_readable": "Webcam hardware error. Try restarting your computer",
+    "error_unknown": "Unknown error."
+  },
+  "tx": {
+    "header_send_prefix": "Send {{token}}",
+    "header_sending": "Sending your transaction...",
+    "blockscout": "See it on BlockScout",
+    "form": {
+      "button_checking": "Checking...",
+      "button_scan": "Scan",
+      "button_send": "Send",
+      "button_max": "Max",
+      "button_confirm_tx": "Confirm transaction",
+      "label_unlock": "Unlock account:",
+      "field": {
+        "to": "To",
+        "amount": "Amount",
+        "tx_speed": "Transaction Speed",
+        "high": "High",
+        "low": "Low",
+        "password": "Password"
+      },
+      "details": {
+        "details": "Details",
+        "hide": "Hide",
+        "missing_fields": "Missing input fields...",
+        "gas_limit": "Gas Limit: {{gas_limit}}",
+        "fee": "Fee: {{fee}} ETH (gas limit * gas price)",
+        "total_amount": "Total Amount: {{total_amount}} ETH",
+        "title": "Transaction Details:"
+      },
+      "warning": {
+        "title_same_sender_receiver": "WARNING:",
+        "body_same_sender_receiver": "The sender and receiver addresses are the same."
+      },
+      "validation": {
+        "amount_invalid": "Please enter a valid amount",
+        "eth_balance_too_low_for_gas": "ETH balance too low to pay for gas.",
+        "eth_balance_too_low": "You don't have enough ETH balance",
+        "fetching_chain_id": "Fetching chain ID",
+        "fetching_eth_balance": "Fetching Ether balance",
+        "fetching_tx_count": "Fetching transaction count for nonce",
+        "non_zero_amount": "Please enter a non-zero amount",
+        "positive_amount": "Please enter a positive amount",
+        "min_wei": "Please enter at least 1 Wei",
+        "min_decimals": "Please enter a {{token_name}} value of less than {{token_decimals}} decimal places",
+        "token_balance_too_low": "You don't have enough {{token_symbol}} balance",
+        "invalid_eth_address": "Please enter a valid Ethereum address",
+        "prevent_send_zero_account": "You are not permitted to send {{token_name}} to the zero account (0x0)",
+        "unable_estimate_gas": "Unable to estimate gas...",
+        "estimating_gas": "Estimating gas...",
+        "error_estimating_balance": "Failed estimating balance, please try again",
+        "valid_tx": "Transaction seems valid"
+      }
+    },
+    "scan": {
+      "msg_qr_scan": "Please scan the QR code of the transaction on Parity Signer"
+    },
+    "scan_signed": {
+      "error_qr_tx_invalid": "The QR code doesn't seem to be a valid transaction.",
+      "label_msg_qr_tx": "Show the signed transaction QR code"
+    },
+    "sent": {
+      "waiting_confirmations_receiving": "Waiting {{progress}} confirmations: ",
+      "waiting_confirmed": "Waiting for confirmations...",
+      "confirmed": "Transaction confirmed",
+      "submitted": "Submitted",
+      "error": "Error"
+    }
+  },
+  "tokens": {
+    "tokens": {
+      "menu_items": {
+        "backup_account": "Backup Account",
+        "add_tokens": "Add Tokens"
+      }
+    }
+  },
+  "ui": {
+    "click_to_copy": {
+      "card": {
+        "label": "Click to copy address"
+      },
+      "header": {
+        "label": "Copy address"
+      },
+      "copied": "Copied"
+    },
+    "form_input_file": {
+      "select_file": "Select File"
+    }
+  },
+  "utils": {
+    "blockscout_chain": "Chain name not yet supported. Please open a Github issue at https://github.com/paritytech/fether/issues/new"
+  }
+}

@@ -48,6 +48,8 @@
     "electron-positioner": "^4.1.0",
     "electron-settings": "^3.2.0",
     "fether-react": "^0.4.0",
+    "i18next": "^15.0.4",
+    "i18next-node-fs-backend": "^2.0.0",
     "pino": "^4.16.1",
     "pino-multi-stream": "^3.1.2",
     "source-map-support": "^0.5.10",

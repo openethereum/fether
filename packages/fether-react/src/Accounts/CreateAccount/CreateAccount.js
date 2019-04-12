@@ -14,6 +14,7 @@ import AccountRewritePhrase from './AccountRewritePhrase';
 import AccountName from './AccountName';
 import AccountPassword from './AccountPassword';
 import Health from '../../Health';
+import i18n, { packageNS } from '../../i18n';
 import withAccountsInfo from '../../utils/withAccountsInfo';
 
 @inject('createAccountStore')
@@ -75,7 +76,11 @@ class CreateAccount extends Component {
             )
           }
           title={
-            <h1>{isImport ? 'Import account' : 'Create a new account'}</h1>
+            <h1>
+              {isImport
+                ? i18n.t(`${packageNS}:account.import.title`)
+                : i18n.t(`${packageNS}:account.create.title`)}
+            </h1>
           }
         />
 
@@ -100,12 +105,12 @@ class CreateAccount extends Component {
             <div className='footer-nav_option'>
               {isImport ? null : (
                 <p>
-                  Already have an account?
+                  {i18n.t(`${packageNS}:account.import.question`)}
                   <button
                     className='button -footer'
                     onClick={this.handleToggleCreateImport}
                   >
-                    Import account
+                    {i18n.t(`${packageNS}:account.import.title`)}
                   </button>
                 </p>
               )}
