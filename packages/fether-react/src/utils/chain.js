@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 const isEtcChainId = currentChainIdBN => {
-  return currentChainIdBN.valueOf() === '61';
+  return currentChainIdBN.eq(61);
 };
 
 const chainIdToString = currentChainIdBN => {

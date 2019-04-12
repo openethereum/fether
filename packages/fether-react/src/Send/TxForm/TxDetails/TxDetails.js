@@ -53,7 +53,7 @@ ${this.renderTotalAmount()}`;
 
   renderFee = () => {
     const { estimatedTxFee, values } = this.props;
-    const currentChainIdBN = values.chainId.valueOf();
+    const currentChainIdBN = values.chainId;
 
     if (!estimatedTxFee) {
       return;
@@ -68,7 +68,7 @@ ${this.renderTotalAmount()}`;
 
   renderTotalAmount = () => {
     const { estimatedTxFee, token, values } = this.props;
-    const currentChainIdBN = values.chainId.valueOf();
+    const currentChainIdBN = values.chainId;
 
     if (!estimatedTxFee || !values.amount || !token.address) {
       return;
