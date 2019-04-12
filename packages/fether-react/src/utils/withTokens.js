@@ -14,7 +14,7 @@ import classicIcon from '../assets/img/tokens/classic.svg';
 import localForage$ from './localForage';
 import LS_PREFIX from '../stores/utils/lsPrefix';
 import withAccount from './withAccount';
-import { isNotErc20TokenAddress } from './chain';
+import { isErc20TokenAddress } from './chain';
 
 const LS_KEY = `${LS_PREFIX}::tokens`;
 
@@ -75,7 +75,7 @@ const withTokens = compose(
       tokensArray,
       tokensArrayWithoutEth: tokensArray.filter(
         // Ethereum and Ethereum Classic are the only tokens without address, has 'ETH' or 'ETC' instead
-        ({ address }) => !isNotErc20TokenAddress(address)
+        ({ address }) => isErc20TokenAddress(address)
       )
     };
   }),

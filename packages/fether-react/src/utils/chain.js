@@ -15,4 +15,13 @@ const isNotErc20TokenAddress = tokenAddress => {
   return tokenAddress === 'ETH' || tokenAddress === 'ETC';
 };
 
-export { chainIdToString, isNotErc20TokenAddress, isEtcChainId };
+const isErc20TokenAddress = tokenAddress => {
+  return !isNotErc20TokenAddress(tokenAddress);
+};
+
+export {
+  chainIdToString,
+  isErc20TokenAddress,
+  isNotErc20TokenAddress,
+  isEtcChainId
+};
