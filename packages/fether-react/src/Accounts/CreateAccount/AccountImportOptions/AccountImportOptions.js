@@ -4,7 +4,6 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import BigNumber from 'bignumber.js';
 import { chainId$, chainName$ } from '@parity/light.js';
 import light from '@parity/light.js-react';
 import { inject, observer } from 'mobx-react';
@@ -115,24 +114,22 @@ class AccountImportOptions extends Component {
    * to prevent replay attacks between `foundation` and `classic` chains, which both have
    * `networkID` of `1`.
    */
-  handleSignerImported = async ({ address, chainId: chainIdString }) => {
+  handleSignerImported = async ({ address, chainId: signerChainId }) => {
     const {
       chainId: currentChainIdBN,
       chainName,
       createAccountStore: { importFromSigner }
     } = this.props;
 
-    if (!address || !chainIdString) {
+    if (!address || !signerChainId) {
       this.setState({ error: 'Invalid QR code.' });
 
       return;
     }
 
-    const signerChainId = parseInt(chainIdString);
-
-    if (!BigNumber(signerChainId).eq(currentChainIdBN)) {
+    if (!currentChainIdBN.eq(signerChainId)) {
       console.error(
-        `Parity Signer account chainId ${chainIdString} must match current chainId ${currentChainIdBN.valueOf()} (${chainName}).`
+        `Parity Signer account chainId ${signerChainId} must match current chainId ${currentChainIdBN.valueOf()} (${chainName}).`
       );
 
       this.setState({
