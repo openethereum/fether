@@ -1,0 +1,55 @@
+{
+  "menu": {
+    "file": {
+      "submenu_name": "Datei",
+      "about": "Über",
+      "preferences": {
+        "submenu_name": "Einstellungen",
+        "languages": {
+          "submenu_name": "Sprachen",
+          "language": "Sprache",
+          "english": "Englisch",
+          "german": "Deutsch"
+        }
+      },
+      "services": "Dienstleistungen",
+      "hide": "Verbergen",
+      "hide_others": "Andere Ausblenden",
+      "unhide": "Einblenden",
+      "quit": "Verlassen"
+    },
+    "edit": {
+      "submenu_name": "Bearbeiten",
+      "undo": "Rückgängig Machen",
+      "redo": "Wiederholen",
+      "cut": "Ausschneiden",
+      "copy": "Kopieren",
+      "paste": "Einfügen",
+      "delete": "Löschen",
+      "select_all": "Alle Auswählen",
+      "speech": {
+        "submenu_name": "Reden",
+        "start_speaking": "Beginnen Sie zu Sprechen",
+        "stop_speaking": "Hör auf zu Sprechen"
+      }
+    },
+    "view": {
+      "submenu_name": "Ansicht",
+      "reload": "Neu Laden",
+      "toggle_developer_tools": "Entwicklerwerkzeuge"
+    },
+    "window": {
+      "submenu_name": "Fenster",
+      "close": "Schließen",
+      "minimize": "Minimieren",
+      "zoom": "Zoomen",
+      "bring_all_to_front": "Alle Nach Vorne Bringen"
+    },
+    "help": {
+      "submenu_name": "Hilfe",
+      "search": "Suchen",
+      "learn_more": "Weitere Informationen"
+    },
+    "show_hide_fether": "Fether Anzeigen/Ausblenden"
+  }
+}
