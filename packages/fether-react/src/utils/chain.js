@@ -3,21 +3,16 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-const isEtcChainId = currentChainIdBN => {
-  return currentChainIdBN.eq(61);
-};
+const isEtcChainId = currentChainIdBN => currentChainIdBN.eq(61);
 
-const chainIdToString = currentChainIdBN => {
-  return isEtcChainId(currentChainIdBN) ? 'ETC' : 'ETH';
-};
+const chainIdToString = currentChainIdBN =>
+  isEtcChainId(currentChainIdBN) ? 'ETC' : 'ETH';
 
-const isNotErc20TokenAddress = tokenAddress => {
-  return tokenAddress === 'ETH' || tokenAddress === 'ETC';
-};
+const isNotErc20TokenAddress = tokenAddress =>
+  tokenAddress === 'ETH' || tokenAddress === 'ETC';
 
-const isErc20TokenAddress = tokenAddress => {
-  return !isNotErc20TokenAddress(tokenAddress);
-};
+const isErc20TokenAddress = tokenAddress =>
+  !isNotErc20TokenAddress(tokenAddress);
 
 export {
   chainIdToString,
