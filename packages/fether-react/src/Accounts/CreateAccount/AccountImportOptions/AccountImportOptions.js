@@ -13,6 +13,7 @@ import RequireHealthOverlay from '../../../RequireHealthOverlay';
 import Scanner from '../../../Scanner';
 import withAccountsInfo from '../../../utils/withAccountsInfo';
 import withHealth from '../../../utils/withHealth';
+import i18n, { packageNS } from '../../../i18n';
 
 @withAccountsInfo
 @withHealth
@@ -71,8 +72,9 @@ class AccountImportOptions extends Component {
     } catch (error) {
       this.setState({
         isLoading: false,
-        error:
-          'The passphrase was not recognized. Please verify that you entered your passphrase correctly.'
+        error: i18n.t(
+          `${packageNS}:account.import.phrase.error_msg_submit_phrase`
+        )
       });
       console.error(error);
     }
@@ -100,8 +102,7 @@ class AccountImportOptions extends Component {
     } catch (error) {
       this.setState({
         isLoading: false,
-        error:
-          'Invalid file. Please check this is your actual Parity backup JSON keyfile and try again.'
+        error: i18n.t(`${packageNS}:account.import.error_msg_change_json_file`)
       });
       console.error(error);
     }
@@ -122,8 +123,11 @@ class AccountImportOptions extends Component {
     } = this.props;
 
     if (!address || !signerChainId) {
-      this.setState({ error: 'Invalid QR code.' });
-
+      this.setState({
+        error: i18n.t(
+          `${packageNS}:account.import.signer.error_msg_signer_imported`
+        )
+      });
       return;
     }
 
@@ -133,7 +137,10 @@ class AccountImportOptions extends Component {
       );
 
       this.setState({
-        error: `Network mismatch. Please import a Parity Signer account for the current ${chainName} network.`
+        error: i18n.t(
+          `${packageNS}:account.import.signer.error_msg_signer_imported_network_mismatch`,
+          { chain_name: chainName }
+        )
       });
 
       return;
@@ -168,7 +175,12 @@ class AccountImportOptions extends Component {
     if (isExistingAddress) {
       this.setState({
         isLoading: false,
-        error: `Account ${addressShort(addressForImport)} already listed`
+        error: i18n.t(
+          `${packageNS}:account.import.error_msg_existing_address`,
+          {
+            address: addressShort(addressForImport)
+          }
+        )
       });
     }
 
@@ -187,11 +199,19 @@ class AccountImportOptions extends Component {
       <Card>
         <div key='createAccount'>
           <div className='text -centered'>
-            <p>Recover from JSON Keyfile</p>
+            <p>
+              {i18n.t(
+                `${packageNS}:account.import.json.label_msg_recover_json`
+              )}
+            </p>
 
             <FetherForm.InputFile
-              label='JSON Backup Keyfile'
+              i18n={i18n}
+              label={i18n.t(
+                `${packageNS}:account.import.json.label_recover_json`
+              )}
               onChangeFile={this.handleChangeFile}
+              packageNS={packageNS}
               required
             />
           </div>
@@ -203,19 +223,27 @@ class AccountImportOptions extends Component {
       <Card>
         <div key='createAccount'>
           <div className='text -centered'>
-            <p>Recover from Parity Signer</p>
+            <p>
+              {i18n.t(
+                `${packageNS}:account.import.signer.label_msg_recover_signer`
+              )}
+            </p>
 
             {importingFromSigner ? (
               <Scanner
                 onScan={this.handleSignerImported}
-                label='Scan Parity Signer account QR code'
+                label={i18n.t(
+                  `${packageNS}:account.import.signer.label_msg_recover_signer_scan`
+                )}
               />
             ) : (
               <button
                 className='button -footer'
                 onClick={this.handleSignerImport}
               >
-                Scan QR code
+                {i18n.t(
+                  `${packageNS}:account.import.signer.label_button_recover_signer_scan`
+                )}
               </button>
             )}
           </div>
@@ -227,11 +255,16 @@ class AccountImportOptions extends Component {
       <Card>
         <div key='importBackup'>
           <div className='text -centered'>
-            <p>Recover from Seed Phrase</p>
-
+            <p>
+              {i18n.t(
+                `${packageNS}:account.import.phrase.label_msg_recover_phrase`
+              )}
+            </p>
             <FetherForm.Field
               as='textarea'
-              label='Recovery phrase'
+              label={i18n.t(
+                `${packageNS}:account.import.phrase.label_recover_phrase`
+              )}
               onChange={this.handlePhraseChange}
               required
               phrase={phrase}
@@ -253,14 +286,14 @@ class AccountImportOptions extends Component {
           {signerCard}
           {spacer}
           {!importingFromSigner && phraseCard}
-          <p>{error}</p>
-          <nav className='form-nav -space-around'>
-            {currentStep > 1 && (
+          <p className='error-import-account'>{error}</p>
+          {currentStep > 1 && (
+            <nav className='form-nav -space-around'>
               <button className='button -back' onClick={history.goBack}>
-                Back
+                {i18n.t(`${packageNS}:navigation.back`)}
               </button>
-            )}
-          </nav>
+            </nav>
+          )}
         </div>
       </RequireHealthOverlay>
     );
@@ -276,7 +309,7 @@ class AccountImportOptions extends Component {
         disabled={(!json && !phrase) || isLoading}
         onClick={this.handleSubmitPhrase}
       >
-        Next
+        {i18n.t(`${packageNS}:navigation.next`)}
       </button>
     );
   };

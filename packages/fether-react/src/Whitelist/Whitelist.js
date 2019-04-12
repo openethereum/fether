@@ -10,10 +10,11 @@ import { Header } from 'fether-ui';
 import light from '@parity/light.js-react';
 import { Link } from 'react-router-dom';
 
+import i18n, { packageNS } from '../i18n';
 import Health from '../Health';
-import NewTokenItem from './NewTokenItem';
 import RequireHealthOverlay from '../RequireHealthOverlay';
 import withTokens from '../utils/withTokens';
+import NewTokenItem from './NewTokenItem';
 
 @withTokens
 @light({
@@ -104,10 +105,10 @@ class Whitelist extends Component {
         <Header
           left={
             <Link to='/tokens' className='icon -back' onClick={history.goBack}>
-              Close
+              {i18n.t(`${packageNS}:navigation.close`)}
             </Link>
           }
-          title={<h1>Search tokens</h1>}
+          title={<h1>{i18n.t(`${packageNS}:search_tokens.title`)}</h1>}
         />
         <RequireHealthOverlay require='sync'>
           <div className='window_content'>
@@ -116,7 +117,9 @@ class Whitelist extends Component {
                 <div className='search-form'>
                   <input
                     onChange={this.handleSearch}
-                    placeholder='Find token by name or symbol'
+                    placeholder={i18n.t(
+                      `${packageNS}:search_tokens.placeholder`
+                    )}
                     value={search}
                     type='text'
                   />
@@ -125,7 +128,7 @@ class Whitelist extends Component {
                     className='button -icon -clear'
                     disabled={!search.length}
                   >
-                    Clear
+                    {i18n.t(`${packageNS}:search_tokens.clear`)}
                   </button>
                 </div>
               </div>

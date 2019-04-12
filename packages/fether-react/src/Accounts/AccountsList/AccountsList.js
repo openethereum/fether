@@ -9,10 +9,11 @@ import { chainId$ } from '@parity/light.js';
 import { inject, observer } from 'mobx-react';
 import light from '@parity/light.js-react';
 
+import i18n, { packageNS } from '../../i18n';
 import RequireHealthOverlay from '../../RequireHealthOverlay';
 import Health from '../../Health';
-import Feedback from './Feedback';
 import withAccountsInfo from '../../utils/withAccountsInfo';
+import Feedback from './Feedback';
 
 @withAccountsInfo
 @inject('createAccountStore', 'parityStore')
@@ -56,7 +57,7 @@ class AccountsList extends Component {
                 onClick={this.handleCreateAccount}
               />
             }
-            title={<h1>Accounts</h1>}
+            title={<h1>{i18n.t(`${packageNS}:accounts_list.header`)}</h1>}
           />
 
           <div className='window_content'>
@@ -72,20 +73,25 @@ class AccountsList extends Component {
                       <AccountCard
                         address={address}
                         className='-clickable'
-                        type={accountsInfo[address].type}
-                        name={accountsInfo[address].name || '(no name)'}
+                        i18n={i18n}
+                        name={
+                          accountsInfo[address].name ||
+                          i18n.t(`${packageNS}:account.existing.no_name`)
+                        }
+                        packageNS={packageNS}
                         screen='accounts'
                         shortAddress
+                        type={accountsInfo[address].type}
                       />
                     </li>
                   ))}
                 </ul>
               ) : (
                 <p className='create-hint'>
-                  Nothing here yet!
+                  {i18n.t(`${packageNS}:accounts_list.hint.none`)}
                   <br />
                   <br />
-                  Click the + icon to add a new account.
+                  {i18n.t(`${packageNS}:accounts_list.hint.exist`)}
                 </p>
               )}
             </div>

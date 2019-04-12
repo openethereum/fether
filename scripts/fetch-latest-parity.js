@@ -144,6 +144,7 @@ function downloadParity () {
 
           // Write to file and set a+x permissions
           const destinationPath = path.join(STATIC_DIRECTORY, name);
+
           return fsWriteFile(destinationPath, data)
             .then(() => fsChmod(destinationPath, 0o755)) // https://nodejs.org/api/fs.html#fs_fs_chmod_path_mode_callback
             .then(() => destinationPath);

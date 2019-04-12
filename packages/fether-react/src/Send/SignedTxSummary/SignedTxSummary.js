@@ -10,6 +10,7 @@ import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import { withProps } from 'recompose';
 
+import i18n, { packageNS } from '../../i18n';
 import RequireHealthOverlay from '../../RequireHealthOverlay';
 import TokenAddress from '../../Tokens/TokensList/TokenAddress';
 import withAccount from '../../utils/withAccount';
@@ -54,10 +55,18 @@ class SignedTxSummary extends Component {
         <Header
           left={
             <Link to={`/tokens/${address}`} className='icon -back'>
-              Close
+              {i18n.t(`${packageNS}:navigation.close`)}
             </Link>
           }
-          title={token && <h1>Send {token.name}</h1>}
+          title={
+            token && (
+              <h1>
+                {i18n.t(`${packageNS}:tx.header_send_prefix`, {
+                  token: token.name
+                })}
+              </h1>
+            )
+          }
         />
 
         <RequireHealthOverlay require='sync'>
@@ -82,7 +91,7 @@ class SignedTxSummary extends Component {
                             as='textarea'
                             className='form_field_value'
                             disabled
-                            label='To'
+                            label={i18n.t(`${packageNS}:tx.form.field.to`)}
                             name='to'
                             render={FetherForm.Field}
                           />
@@ -90,22 +99,30 @@ class SignedTxSummary extends Component {
                           <Field
                             className='form_field_value'
                             disabled
-                            label='Amount'
+                            label={i18n.t(`${packageNS}:tx.form.field.amount`)}
                             name='amount'
                             render={FetherForm.Field}
                           />
 
                           {values.to === values.from && (
                             <span>
-                              <h3>WARNING:</h3>
+                              <h3>
+                                {i18n.t(
+                                  `${packageNS}:tx.form.warning.title_same_sender_receiver`
+                                )}
+                              </h3>
                               <p>
-                                The sender and receiver addresses are the same.
+                                {i18n.t(
+                                  `${packageNS}:tx.form.warning.body_same_sender_receiver`
+                                )}
                               </p>
                             </span>
                           )}
                         </fieldset>
                         <nav className='form-nav'>
-                          <button className='button'>Send</button>
+                          <button className='button'>
+                            {i18n.t(`${packageNS}:tx.form.button_send`)}
+                          </button>
                         </nav>
                       </form>
                     )}

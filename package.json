@@ -47,7 +47,7 @@
     "preelectron": "yarn build",
     "electron": "cd packages/fether-electron && yarn electron",
     "fetch-parity": "cd scripts && node ./fetch-latest-parity.js",
-    "lint-files": "./scripts/lint-files.sh '**/*.js'",
+    "lint-files": "FILES='**/*.js' ./scripts/lint-files.sh $FILES",
     "lint": "yarn lint-files",
     "prepackage": "yarn build",
     "package": "cd packages/fether-electron && yarn package",
@@ -61,7 +61,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "FILES=`git diff --staged --name-only --diff-filter=d HEAD | grep -E '.js$|.ts$'`; [ -z \"$FILES\" ] && exit 0; yarn lint-files $FILES; git add $FILES"
+      "pre-commit": "FILES=`git diff --staged --name-only --diff-filter=d HEAD | grep -E '.js$'`; [ -z \"$FILES\" ] && exit 0; yarn lint-files $FILES; git add $FILES"
     }
   },
   "devDependencies": {
