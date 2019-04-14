@@ -15,5 +15,6 @@ export * from './Header';
 export * from './Modal';
 export * from './Placeholder';
 export * from './MenuPopup';
+export * from './QrDisplay';
 export * from './TokenCard';
 export * from './utils';

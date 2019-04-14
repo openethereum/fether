@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { PureComponent } from 'react';
-import { AccountHeader, Clickable, MenuPopup } from 'fether-ui';
+import { AccountHeader, Clickable, MenuPopup, QrDisplay } from 'fether-ui';
 import { Link, withRouter } from 'react-router-dom';
 
 import i18n, { packageNS } from '../i18n';
@@ -16,7 +16,8 @@ import withAccount from '../utils/withAccount';
 @withAccount
 class Tokens extends PureComponent {
   state = {
-    isMenuOpen: false
+    isMenuOpen: false,
+    isAccountQrCodeOpen: false
   };
 
   handleMenuClose = () => {
@@ -25,6 +26,13 @@ class Tokens extends PureComponent {
 
   handleMenuOpen = () => {
     this.setState({ isMenuOpen: true });
+  };
+
+  handleCloseQrDisplay = () => {
+    this.setState({
+      isAccountQrCodeOpen: false,
+      isMenuOpen: false
+    });
   };
 
   isParitySignerAccount = () => {
@@ -46,6 +54,13 @@ class Tokens extends PureComponent {
       onClick: () => history.push(`/backup/${address}`)
     };
 
+    const accountQrCodeItem = {
+      name: i18n.t(`${packageNS}:tokens.tokens.menu_items.account_qr_code`),
+      onClick: () => {
+        this.setState({ isAccountQrCodeOpen: true });
+      }
+    };
+
     const menuItems = [
       {
         name: i18n.t(`${packageNS}:tokens.tokens.menu_items.add_tokens`),
@@ -57,6 +72,8 @@ class Tokens extends PureComponent {
       menuItems.unshift(backupAccountItem);
     }
 
+    menuItems.unshift(accountQrCodeItem);
+
     return menuItems;
   };
 
@@ -64,12 +81,16 @@ class Tokens extends PureComponent {
     const {
       account: { address, name, type }
     } = this.props;
-    const { isMenuOpen } = this.state;
+    const { isAccountQrCodeOpen, isMenuOpen } = this.state;
 
     return (
       <React.Fragment>
         <div className='tokens'>
-          <div className={isMenuOpen ? 'popup-underlay' : ''} />
+          <div
+            className={
+              isMenuOpen && !isAccountQrCodeOpen ? 'popup-underlay' : ''
+            }
+          />
           <AccountHeader
             address={address}
             copyAddress
@@ -83,19 +104,26 @@ class Tokens extends PureComponent {
               </Link>
             }
             right={
-              <MenuPopup
-                className='popup-menu-account'
-                horizontalOffset={1}
-                menuItems={this.menuItems()}
-                onClose={this.handleMenuClose}
-                onOpen={this.handleMenuOpen}
-                size='small'
-                trigger={<Clickable className='icon -menu' />}
-              />
+              isAccountQrCodeOpen ? null : (
+                <MenuPopup
+                  className='popup-menu-account'
+                  horizontalOffset={1}
+                  menuItems={this.menuItems()}
+                  onClose={this.handleMenuClose}
+                  onOpen={this.handleMenuOpen}
+                  size='small'
+                  trigger={<Clickable className='icon -menu' />}
+                />
+              )
             }
           />
 
           <TokensList />
+          <QrDisplay
+            handleClose={this.handleCloseQrDisplay}
+            value={address}
+            visible={isAccountQrCodeOpen}
+          />
         </div>
         <nav className='footer-nav'>
           <div className='footer-nav_status'>

@@ -1,0 +1,45 @@
+.qr-wrapper {
+  position: relative;
+}
+
+.qr-screen-wrapper {
+  background: $chrome;
+  top: 3rem;
+  left: 0;
+  right: 0;
+  bottom: 3rem;
+  height: auto;
+  overflow: hidden;
+  position: absolute;
+  z-index: 4000; /* Above menu popup */
+}
+
+.qr-screen {
+  margin-top: 3.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qr-screen-content {
+  width: 80%;
+
+  .qr-screen_image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      display: block;
+      width: 19rem;
+      height: auto;
+    }
+  }
+
+  .qr-screen_address {
+    margin-top: 1rem;
+    p {
+      color: $grey;
+      text-align: center;
+    }
+  }
+}
