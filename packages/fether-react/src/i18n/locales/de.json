@@ -87,7 +87,7 @@
       },
       "description": {
         "no_internet": "Bitte verbinden Sie sich mit dem Internet",
-        "no_clock_sync": "Mac: Systemeinstellungen -> Datum und Uhrzeit -> Deaktivieren Sie das Kontrollkästchen 'Datum und Uhrzeit automatisch festlegen'. Windows: Systemsteuerung -> 'Uhrzeit, Sprache und Region' -> 'Datum und Uhrzeit' -> Deaktivieren Sie das Kontrollkästchen 'Datum einstellen' und Zeit automatisch",
+        "no_clock_sync": "Mac: Systemeinstellungen -> Datum und Uhrzeit -> Deaktivieren Sie das Kontrollkästchen 'Datum und Uhrzeit automatisch festlegen' und aktivieren Sie das Kontrollkästchen erneut\n\n Linux: Einstellungen> System -> Datum und Uhrzeit -> Deaktivieren Sie das Kontrollkästchen 'Automatisches Datum und Uhrzeit' und aktivieren Sie das Kontrollkästchen erneut\n\n Windows: Systemsteuerung -> 'Uhrzeit, Sprache und Region' -> 'Datum und Uhrzeit' -> Deaktivieren Sie das Kontrollkästchen 'Datum und Uhrzeit automatisch einstellen' und aktivieren Sie das Kontrollkästchen erneut",
         "no_peers": "Verbindung zu Netzwerkkollegen...",
         "syncing": "Synchronisieren..."
       }
