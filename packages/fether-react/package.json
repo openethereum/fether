@@ -33,7 +33,7 @@
     "start": "npm-run-all -p start-*",
     "start-css": "npm run build-css -- --watch --recursive",
     "start-js": "cross-env SKIP_PREFLIGHT_CHECK=true BROWSER=none craco start",
-    "test": "cross-env SKIP_PREFLIGHT_CHECK=true craco test"
+    "test": "cross-env SKIP_PREFLIGHT_CHECK=true craco test --color"
   },
   "dependencies": {
     "@craco/craco": "^4.0.0",

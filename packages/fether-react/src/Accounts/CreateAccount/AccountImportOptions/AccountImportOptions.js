@@ -4,16 +4,32 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import React, { Component } from 'react';
-import { addressShort, Card, Form as FetherForm } from 'fether-ui';
+import { chainId$, chainName$ } from '@parity/light.js';
+import light from '@parity/light.js-react';
 import { inject, observer } from 'mobx-react';
+import { addressShort, Card, Form as FetherForm } from 'fether-ui';
 
 import RequireHealthOverlay from '../../../RequireHealthOverlay';
 import Scanner from '../../../Scanner';
 import withAccountsInfo from '../../../utils/withAccountsInfo';
+import withHealth from '../../../utils/withHealth';
 import i18n, { packageNS } from '../../../i18n';
 
 @withAccountsInfo
+@withHealth
 @inject('createAccountStore')
+@light({
+  chainId: () => chainId$(),
+  /**
+   * It is not necessary to check the health status here before
+   * calling chainId RPC using light.js like we do in Health.js since
+   * the AccountImportOptions.js page may only be accessed through
+   * navigation inside the API, after the API is set.
+   *
+   * Reference: https://github.com/paritytech/fether/pull/483#discussion_r271303462
+   */
+  chainName: () => chainName$()
+})
 @observer
 class AccountImportOptions extends Component {
   state = {
@@ -48,7 +64,7 @@ class AccountImportOptions extends Component {
     try {
       await setPhrase(phrase);
 
-      if (this.hasExistingAddressForImport(createAccountStore.address)) {
+      if (this.accountAlreadyExists(createAccountStore.address)) {
         return;
       }
 
@@ -70,12 +86,15 @@ class AccountImportOptions extends Component {
       createAccountStore: { setJsonString }
     } = this.props;
 
-    this.setState({ isLoading: true });
+    this.setState({
+      error: '',
+      isLoading: true
+    });
 
     try {
       await setJsonString(jsonString);
 
-      if (this.hasExistingAddressForImport(createAccountStore.address)) {
+      if (this.accountAlreadyExists(createAccountStore.address)) {
         return;
       }
 
@@ -89,12 +108,21 @@ class AccountImportOptions extends Component {
     }
   };
 
-  handleSignerImported = async ({ address, chainId: chainIdString }) => {
+  /**
+   * The `chainId$` and `chainName$` from light.js corresponds to `chainID` in the
+   * Genesis configs contained in: paritytech/parity-ethereum/ethcore/res/ethereum
+   * and was introduced in EIP-155 https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md
+   * to prevent replay attacks between `foundation` and `classic` chains, which both have
+   * `networkID` of `1`.
+   */
+  handleSignerImported = async ({ address, chainId: signerChainId }) => {
     const {
+      chainId: currentChainIdBN,
+      chainName,
       createAccountStore: { importFromSigner }
     } = this.props;
 
-    if (!address || !chainIdString) {
+    if (!address || !signerChainId) {
       this.setState({
         error: i18n.t(
           `${packageNS}:account.import.signer.error_msg_signer_imported`
@@ -103,31 +131,45 @@ class AccountImportOptions extends Component {
       return;
     }
 
-    const chainId = parseInt(chainIdString);
+    if (!currentChainIdBN.eq(signerChainId)) {
+      console.error(
+        `Parity Signer account chainId ${signerChainId} must match current chainId ${currentChainIdBN.valueOf()} (${chainName}).`
+      );
 
-    if (this.hasExistingAddressForImport(address, chainId)) {
+      this.setState({
+        error: i18n.t(
+          `${packageNS}:account.import.signer.error_msg_signer_imported_network_mismatch`,
+          { chain_name: chainName }
+        )
+      });
+
       return;
     }
 
-    await importFromSigner({ address, chainId });
+    if (this.accountAlreadyExists(address, signerChainId)) {
+      return;
+    }
+
+    await importFromSigner({ address, signerChainId });
 
     this.handleNextStep();
   };
 
   handleSignerImport = () => {
     this.setState({
+      error: '',
       importingFromSigner: true
     });
   };
 
-  hasExistingAddressForImport = (addressForImport, chainId) => {
+  accountAlreadyExists = (addressForImport, signerChainId) => {
     const { accountsInfo } = this.props;
     const isExistingAddress = Object.keys(accountsInfo).some(
       key =>
         key.toLowerCase() === addressForImport.toLowerCase() &&
         (!accountsInfo[key].chainId ||
-          !chainId ||
-          accountsInfo[key].chainId === chainId)
+          !signerChainId ||
+          accountsInfo[key].chainId === signerChainId)
     );
 
     if (isExistingAddress) {
