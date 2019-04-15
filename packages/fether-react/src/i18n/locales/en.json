@@ -24,6 +24,7 @@
       "error_msg_existing_address": "Account {{address}} already listed",
       "signer": {
         "error_msg_signer_imported": "Invalid QR code.",
+        "error_msg_signer_imported_network_mismatch": "Network mismatch. Please import a Parity Signer account for the current {{chain_name}} network.",
         "label_msg_recover_signer": "Recover from Parity Signer",
         "label_button_recover_signer_scan": "Scan QR code",
         "label_msg_recover_signer_scan": "Scan Parity Signer account QR code"
@@ -149,8 +150,8 @@
         "hide": "Hide",
         "missing_fields": "Missing input fields...",
         "gas_limit": "Gas Limit: {{gas_limit}}",
-        "fee": "Fee: {{fee}} ETH (gas limit * gas price)",
-        "total_amount": "Total Amount: {{total_amount}} ETH",
+        "fee": "Fee: {{fee}} {{chain_id}} (gas limit * gas price)",
+        "total_amount": "Total Amount: {{total_amount}} {{chain_id}}",
         "title": "Transaction Details:"
       },
       "warning": {
@@ -159,8 +160,8 @@
       },
       "validation": {
         "amount_invalid": "Please enter a valid amount",
-        "eth_balance_too_low_for_gas": "ETH balance too low to pay for gas.",
-        "eth_balance_too_low": "You don't have enough ETH balance",
+        "eth_balance_too_low_for_gas": "{{chain_id}} balance too low to pay for gas.",
+        "eth_balance_too_low": "You don't have enough {{chain_id}} balance",
         "fetching_chain_id": "Fetching chain ID",
         "fetching_eth_balance": "Fetching Ether balance",
         "fetching_tx_count": "Fetching transaction count for nonce",
@@ -170,6 +171,7 @@
         "min_decimals": "Please enter a {{token_name}} value of less than {{token_decimals}} decimal places",
         "token_balance_too_low": "You don't have enough {{token_symbol}} balance",
         "invalid_eth_address": "Please enter a valid Ethereum address",
+        "invalid_etc_address": "Please enter a valid Ethereum Classic address",
         "prevent_send_zero_account": "You are not permitted to send {{token_name}} to the zero account (0x0)",
         "unable_estimate_gas": "Unable to estimate gas...",
         "estimating_gas": "Estimating gas...",

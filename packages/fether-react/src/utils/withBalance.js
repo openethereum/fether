@@ -12,6 +12,8 @@ import light from '@parity/light.js-react';
 import { map, startWith } from 'rxjs/operators';
 import withProps from 'recompose/withProps';
 
+import { isErc20TokenAddress } from './chain';
+
 export const withErc20Balance = light({
   erc20Balance: ({ token, account: { address } }) =>
     makeContract(token.address, abi)
@@ -22,6 +24,8 @@ export const withErc20Balance = light({
       )
 });
 
+// `withEthBalance` is either the ETH or the ETC balance, as it depends
+// on what chain they are currently connected to.
 export const withEthBalance = light({
   ethBalance: ({ account: { address } }) =>
     balanceOf$(address).pipe(
@@ -45,7 +49,7 @@ export const withEthBalance = light({
  */
 export default compose(
   branch(
-    ({ token }) => token && token.address && token.address !== 'ETH',
+    ({ token }) => token && token.address && isErc20TokenAddress(token.address),
     withErc20Balance,
     withEthBalance
   ),

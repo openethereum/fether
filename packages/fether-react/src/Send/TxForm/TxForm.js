@@ -25,6 +25,11 @@ import { estimateGas } from '../../utils/transaction';
 import RequireHealthOverlay from '../../RequireHealthOverlay';
 import TokenBalance from '../../Tokens/TokensList/TokenBalance';
 import TxDetails from './TxDetails';
+import {
+  chainIdToString,
+  isEtcChainId,
+  isNotErc20TokenAddress
+} from '../../utils/chain';
 import withAccount from '../../utils/withAccount';
 import withBalance, { withEthBalance } from '../../utils/withBalance';
 import withTokens from '../../utils/withTokens';
@@ -44,7 +49,9 @@ const debug = Debug('TxForm');
 @withAccount
 @light({
   // We need to wait for 3 values that might take time:
-  // - ethBalance: to check that we have enough to send amount+fees
+  // - ethBalance: to check that we have enough balance to send amount+fees
+  // It may be ETH or ETC corresponding to whether we are connected to the
+  // 'foundation' or 'classic' chain.
   // - chainId & transactionCount: needed to construct the tx
   // For the three of them, we add the `startWith()` operator so that the UI is
   // not blocked while waiting for their first response.
@@ -52,8 +59,8 @@ const debug = Debug('TxForm');
   transactionCount: ({ account: { address } }) =>
     transactionCountOf$(address).pipe(startWith(undefined))
 })
-@withBalance // Balance of current token (can be ETH)
-@withEthBalance // ETH balance
+@withBalance // Balance of current token (can be ETH or ETC)
+@withEthBalance // ETH or ETC balance
 @observer
 class TxForm extends Component {
   state = {
@@ -105,7 +112,7 @@ class TxForm extends Component {
     const gasPriceBn = new BigNumber(gasPrice);
     let output;
 
-    if (token.address === 'ETH') {
+    if (isNotErc20TokenAddress(token.address)) {
       output = fromWei(
         toWei(balance).minus(gasBn.multipliedBy(toWei(gasPriceBn, 'shannon')))
       );
@@ -405,7 +412,7 @@ class TxForm extends Component {
    * Prevalidate form on user's input. These validations are sync.
    */
   preValidate = values => {
-    const { balance, token } = this.props;
+    const { balance, chainId: currentChainIdBN, token } = this.props;
 
     if (!values) {
       return;
@@ -427,7 +434,8 @@ class TxForm extends Component {
       if (this.state.maxSelected) {
         return {
           amount: i18n.t(
-            `${packageNS}:tx.form.validation.eth_balance_too_low_for_gas`
+            `${packageNS}:tx.form.validation.eth_balance_too_low_for_gas`,
+            { chain_id: chainIdToString(currentChainIdBN) }
           )
         };
       }
@@ -438,7 +446,10 @@ class TxForm extends Component {
       return {
         amount: i18n.t(`${packageNS}:tx.form.validation.positive_amount`)
       };
-    } else if (token.address === 'ETH' && toWei(values.amount).lt(1)) {
+    } else if (
+      isNotErc20TokenAddress(token.address) &&
+      toWei(values.amount).lt(1)
+    ) {
       return {
         amount: i18n.t(`${packageNS}:tx.form.validation.min_wei`)
       };
@@ -460,7 +471,9 @@ class TxForm extends Component {
       };
     } else if (!values.to || !isAddress(values.to)) {
       return {
-        to: i18n.t(`${packageNS}:tx.form.validation.invalid_eth_address`)
+        to: isEtcChainId(currentChainIdBN)
+          ? i18n.t(`${packageNS}:tx.form.validation.invalid_etc_address`)
+          : i18n.t(`${packageNS}:tx.form.validation.invalid_eth_address`)
       };
     } else if (values.to === '0x0000000000000000000000000000000000000000') {
       return {
@@ -485,7 +498,7 @@ class TxForm extends Component {
     }
 
     try {
-      const { token } = this.props;
+      const { chainId: currentChainIdBN, token } = this.props;
 
       const preValidation = this.preValidate(values);
 
@@ -541,18 +554,22 @@ class TxForm extends Component {
       // Verify that `gas + (eth amount if sending eth) <= ethBalance`
       if (
         this.estimatedTxFee(values)
-          .plus(token.address === 'ETH' ? toWei(values.amount) : 0)
+          .plus(
+            isNotErc20TokenAddress(token.address) ? toWei(values.amount) : 0
+          )
           .gt(toWei(values.ethBalance))
       ) {
-        return token.address !== 'ETH'
+        return isNotErc20TokenAddress(token.address)
           ? {
             amount: i18n.t(
-              `${packageNS}:tx.form.validation.eth_balance_too_low_for_gas`
+              `${packageNS}:tx.form.validation.eth_balance_too_low_for_gas`,
+              { chain_id: chainIdToString(currentChainIdBN) }
             )
           }
           : {
             amount: i18n.t(
-              `${packageNS}:tx.form.validation.eth_balance_too_low`
+              `${packageNS}:tx.form.validation.eth_balance_too_low`,
+              { chain_id: chainIdToString(currentChainIdBN) }
             )
           };
       }

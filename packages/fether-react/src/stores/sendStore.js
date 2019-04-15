@@ -6,6 +6,7 @@
 import { action, computed, observable } from 'mobx';
 import { blockNumber$, post$, postRaw$ } from '@parity/light.js';
 
+import { isNotErc20TokenAddress } from '../utils/chain';
 import {
   contractForToken,
   txForErc20,
@@ -55,15 +56,15 @@ export class SendStore {
   send = password => {
     const { token } = this.tx;
 
-    const tx =
-      token.address === 'ETH' ? txForEth(this.tx) : txForErc20(this.tx, token);
-    const send$ =
-      token.address === 'ETH'
-        ? post$(tx, { passphrase: password })
-        : contractForToken(token.address).transfer$(...tx.args, {
-          ...tx.options,
-          passphrase: password
-        });
+    const tx = isNotErc20TokenAddress(token.address)
+      ? txForEth(this.tx)
+      : txForErc20(this.tx, token);
+    const send$ = isNotErc20TokenAddress(token.address)
+      ? post$(tx, { passphrase: password })
+      : contractForToken(token.address).transfer$(...tx.args, {
+        ...tx.options,
+        passphrase: password
+      });
 
     debug('Sending tx.', tx);
 

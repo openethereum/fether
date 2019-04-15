@@ -41,6 +41,10 @@ export const eth = {
   address: 'ETH'
 };
 
+export const etc = {
+  address: 'ETC'
+};
+
 export const makeContract = {
   contractObject: {
     instance: {
@@ -66,6 +70,14 @@ export const txEth = {
   gasPrice: GAS_PRICE,
   to: ADDRESS_TO,
   token: eth
+};
+
+export const txEtc = {
+  amount: AMOUNT, // In Ether
+  from: ADDRESS_FROM,
+  gasPrice: GAS_PRICE,
+  to: ADDRESS_TO,
+  token: etc
 };
 
 const txErc20Base = {

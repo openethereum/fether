@@ -8,6 +8,7 @@ import BigNumber from 'bignumber.js';
 import { fromWei, toWei } from '@parity/api/lib/util/wei';
 
 import i18n, { packageNS } from '../../../i18n';
+import { chainIdToString, isNotErc20TokenAddress } from '../../../utils/chain';
 
 class TxDetails extends Component {
   renderDetails = () => {
@@ -54,7 +55,8 @@ ${this.renderTotalAmount()}`;
   };
 
   renderFee = () => {
-    const { estimatedTxFee } = this.props;
+    const { estimatedTxFee, values } = this.props;
+    const currentChainIdBN = values.chainId;
 
     if (!estimatedTxFee) {
       return;
@@ -64,11 +66,15 @@ ${this.renderTotalAmount()}`;
       .toFixed(9)
       .toString()}`;
 
-    return i18n.t(`${packageNS}:tx.form.details.fee`, { fee });
+    return i18n.t(`${packageNS}:tx.form.details.fee`, {
+      chain_id: chainIdToString(currentChainIdBN),
+      fee
+    });
   };
 
   renderTotalAmount = () => {
     const { estimatedTxFee, token, values } = this.props;
+    const currentChainIdBN = values.chainId;
 
     if (!estimatedTxFee || !values.amount || !token.address) {
       return;
@@ -76,12 +82,15 @@ ${this.renderTotalAmount()}`;
 
     const totalAmount = `${fromWei(
       estimatedTxFee.plus(
-        token.address === 'ETH' ? toWei(values.amount.toString()) : 0
+        isNotErc20TokenAddress(token.address)
+          ? toWei(values.amount.toString())
+          : 0
       ),
       'ether'
     ).toString()}`;
 
     return i18n.t(`${packageNS}:tx.form.details.total_amount`, {
+      chain_id: chainIdToString(currentChainIdBN),
       total_amount: totalAmount
     });
   };
