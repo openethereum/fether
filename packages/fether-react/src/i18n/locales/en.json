@@ -88,7 +88,7 @@
       },
       "description": {
         "no_internet": "Please connect to the Internet",
-        "no_clock_sync": "Mac: System Preferences -> Date & Time -> Uncheck and recheck 'Set date and time automatically' Windows: Control Panel -> 'Clock, Language, and Region' -> 'Date and Time' -> Uncheck and recheck 'Set date and time automatically'",
+        "no_clock_sync": "Mac: System Preferences -> Date & Time -> Uncheck and recheck 'Set date and time automatically'\n\n Linux: Settings > System -> Date & Time -> Uncheck and recheck 'Automatic Date & Time'\n\n Windows: Control Panel -> 'Clock, Language, and Region' -> 'Date and Time' -> Uncheck and recheck 'Set date and time automatically'",
         "no_peers": "Searching for peers",
         "syncing": "Syncing..."
       }
