@@ -9,9 +9,20 @@ import settings from 'electron-settings';
 
 import { IS_PROD } from '../../constants';
 import i18n from '../i18n';
+// https://www.npmjs.com/package/auto-launch
+import AutoLaunch from 'auto-launch';
+import Pino from '../../utils/pino';
 
+// Only use 'auto-launch' library on Linux since Electron API's
+// `setLoginItemSettings` is only supported on macOS and Windows
+// https://electronjs.org/docs/api/app#appsetloginitemsettingssettings-macos-windows
+const fetherAutoLauncher = new AutoLaunch({
+  name: 'Fether',
+  path: '/usr/local/bin/fether'
+});
 const { shell } = electron;
 
+const pino = Pino();
 // Preferences menu
 const getPreferences = fetherApp => {
   return {
