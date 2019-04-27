@@ -8,6 +8,7 @@ import { AccountCard, Card, Form as FetherForm } from 'fether-ui';
 import Blockies from 'react-blockies';
 import { inject, observer } from 'mobx-react';
 
+import i18n, { packageNS } from '../../../i18n';
 import RequireHealthOverlay from '../../../RequireHealthOverlay';
 import loading from '../../../assets/img/icons/loading.svg';
 
@@ -16,6 +17,7 @@ import loading from '../../../assets/img/icons/loading.svg';
 class AccountName extends Component {
   componentDidMount () {
     const { createAccountStore } = this.props;
+
     // Generate a new public address if there's none yet
     if (!createAccountStore.address) {
       createAccountStore.generateNewAccount();
@@ -77,7 +79,9 @@ class AccountName extends Component {
         address={address}
         type={noPrivateKey ? 'signer' : 'node'}
         drawers={[this.renderDrawer()]}
-        name={name || '(no name)'}
+        name={name || i18n.t(`${packageNS}:account.existing.no_name`)}
+        i18n={i18n}
+        packageNS={packageNS}
       />
     );
   };
@@ -103,7 +107,7 @@ class AccountName extends Component {
           </div>
           <div className='account_change_blockies'>
             <button className='button -back' onClick={generateNewAccount}>
-              Generate another icon
+              {i18n.t(`${packageNS}:account.create.change_icon`)}
             </button>
           </div>
         </div>
@@ -121,13 +125,13 @@ class AccountName extends Component {
     const currentStep = pathname.slice(-1);
 
     return (
-      <form key='createAccount' onSubmit={this.handleSubmit}>
+      <form key='createAccount' noValidate onSubmit={this.handleSubmit}>
         <div className='text'>
-          <p>Please give this account a name:</p>
+          <p>{i18n.t(`${packageNS}:account.create.label_name_msg`)}</p>
         </div>
         <FetherForm.Field
           autoFocus
-          label='Name'
+          label={i18n.t(`${packageNS}:account.create.label_name`)}
           onChange={this.handleChangeName}
           required
           type='text'
@@ -141,14 +145,16 @@ class AccountName extends Component {
               onClick={history.goBack}
               type='button'
             >
-              Back
+              {i18n.t(`${packageNS}:navigation.back`)}
             </button>
           )}
           {name && address ? (
-            <button className='button'>Next</button>
+            <button className='button'>
+              {i18n.t(`${packageNS}:navigation.next`)}
+            </button>
           ) : (
             <button className='button' disabled>
-              Next
+              {i18n.t(`${packageNS}:navigation.next`)}
             </button>
           )}
         </nav>

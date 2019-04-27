@@ -18,19 +18,28 @@ const exec = promisify(require('child_process').exec);
 const fsChmod = promisify(chmod);
 const fsWriteFile = promisify(writeFile);
 
-let os;
-switch (process.platform) {
-  case 'win32':
-    os = 'windows';
-    break;
-  case 'darwin':
-    os = 'darwin';
-    break;
-  default:
-    os = 'linux';
+function getOs () {
+  if (process.argv.includes('--win')) {
+    return 'windows';
+  }
+  if (process.argv.includes('--mac')) {
+    return 'darwin';
+  }
+  if (process.argv.includes('--linux')) {
+    return 'linux';
+  }
+
+  switch (process.platform) {
+    case 'win32':
+      return 'windows';
+    case 'darwin':
+      return 'darwin';
+    default:
+      return 'linux';
+  }
 }
 
-const ENDPOINT = `https://vanity-service.parity.io/parity-binaries?os=${os}&architecture=x86_64`;
+const ENDPOINT = `https://vanity-service.parity.io/parity-binaries?os=${getOs()}&architecture=x86_64`;
 
 const STATIC_DIRECTORY = path.join(
   '..',
@@ -48,6 +57,11 @@ if (foundPath) {
   // Bundled Parity was found, we check if the version matches the minimum requirements
   getBinaryVersion(foundPath)
     .then(version => {
+      if (!version) {
+        console.log("Couldn't get bundled Parity Ethereum version.");
+        return downloadParity();
+      }
+
       if (!semver.satisfies(version, versionRequirement)) {
         console.log(
           'Bundled Parity Ethereum %s is older than required version %s',
@@ -130,6 +144,7 @@ function downloadParity () {
 
           // Write to file and set a+x permissions
           const destinationPath = path.join(STATIC_DIRECTORY, name);
+
           return fsWriteFile(destinationPath, data)
             .then(() => fsChmod(destinationPath, 0o755)) // https://nodejs.org/api/fs.html#fs_fs_chmod_path_mode_callback
             .then(() => destinationPath);
@@ -137,14 +152,19 @@ function downloadParity () {
       })
       .then(getBinaryVersion)
       .then(bundledVersion =>
-        console.log(`Success: bundled Parity Ethereum ${bundledVersion}`)
+        console.log(
+          `Success: bundled Parity Ethereum ${bundledVersion ||
+            "(couldn't get version)"}`
+        )
       )
   );
 }
 
 function getBinaryVersion (binaryPath) {
-  return exec(`${binaryPath} --version`).then(({ stdout, stderr }) => {
-    if (stderr) throw new Error(stderr);
-    return stdout.match(/v\d+\.\d+\.\d+/)[0];
-  });
+  return exec(`${binaryPath} --version`)
+    .then(({ stdout, stderr }) => {
+      if (stderr) throw new Error(stderr);
+      return stdout.match(/v\d+\.\d+\.\d+/)[0];
+    })
+    .catch(error => console.warn(error.message));
 }

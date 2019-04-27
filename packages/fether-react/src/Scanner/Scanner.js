@@ -7,6 +7,7 @@ import React from 'react';
 import QrSigner from '@parity/qr-signer';
 import { ExternalLink } from 'fether-ui';
 
+import i18n, { packageNS } from '../i18n';
 import loading from '../assets/img/icons/loading.svg';
 
 export default class Scanner extends React.PureComponent {
@@ -47,17 +48,17 @@ export default class Scanner extends React.PureComponent {
         switch (e.name) {
           case 'NotAllowedError':
           case 'SecurityError':
-            errorMessage = 'Webcam access was refused.';
+            errorMessage = i18n.t(`${packageNS}:scanner.error_security`);
             break;
           case 'NotFoundError':
           case 'OverconstrainedError':
-            errorMessage = 'Webcam not found on the device.';
+            errorMessage = i18n.t(`${packageNS}:scanner.error_overconstrained`);
             break;
           case 'NotReadableError':
-            errorMessage = 'Webcam permissions or hardware error.';
+            errorMessage = i18n.t(`${packageNS}:scanner.error_not_readable`);
             break;
           default:
-            errorMessage = 'Webcam unknown error.';
+            errorMessage = i18n.t(`${packageNS}:scanner.error_unknown`);
         }
         this.setState({
           webcamError: errorMessage,

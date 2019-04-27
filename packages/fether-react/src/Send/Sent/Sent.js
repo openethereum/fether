@@ -11,6 +11,7 @@ import light from '@parity/light.js-react';
 import { withProps } from 'recompose';
 import { Modal } from 'fether-ui';
 
+import i18n, { packageNS } from '../../i18n';
 import RequireHealthOverlay from '../../RequireHealthOverlay';
 import check from '../../assets/img/icons/check.svg';
 import loading from '../../assets/img/icons/loading.svg';
@@ -81,11 +82,13 @@ class Sent extends Component {
     }
 
     if (confirmations > 0) {
-      return `Waiting ${confirmations}/${MIN_CONFIRMATIONS} confirmations`;
+      return i18n.t(`${packageNS}:tx.sent.waiting_confirmations_receiving`, {
+        progress: `${confirmations}/${MIN_CONFIRMATIONS}`
+      });
     }
 
     if (txStatus.confirmed) {
-      return 'Waiting for confirmations...';
+      return i18n.t(`${packageNS}:tx.sent.waiting_confirmed`);
     }
 
     if (txStatus.failed) {
@@ -120,17 +123,17 @@ class Sent extends Component {
       return (
         <span>
           {confirmations >= MIN_CONFIRMATIONS
-            ? 'Transaction confirmed'
-            : 'Submitted'}
+            ? i18n.t(`${packageNS}:tx.sent.confirmed`)
+            : i18n.t(`${packageNS}:tx.sent.submitted`)}
         </span>
       );
     }
 
     if (txStatus.failed) {
-      return 'Error';
+      return i18n.t(`${packageNS}:tx.sent.error`);
     }
 
-    return 'Sending your transaction...';
+    return i18n.t(`${packageNS}:tx.header_sending`);
   };
 
   renderGoHomepage = () => {
@@ -149,7 +152,7 @@ class Sent extends Component {
           disabled={confirmations < MIN_CONFIRMATIONS}
           onClick={this.handleGoToHomepage}
         >
-          Go back
+          {i18n.t(`${packageNS}:navigation.go_back`)}
         </button>
       </nav>
     );
@@ -167,13 +170,15 @@ class Sent extends Component {
         <a
           href={blockscoutTxUrl(
             chainName,
-            txStatus.confirmed.transactionHash,
+            txStatus.confirmed.hash,
             token.address
           )}
           target='_blank'
           rel='noopener noreferrer'
         >
-          <button className='button -tiny'>See it on BlockScout</button>
+          <button className='button -tiny'>
+            {i18n.t(`${packageNS}:tx.blockscout`)}
+          </button>
         </a>
       );
     }

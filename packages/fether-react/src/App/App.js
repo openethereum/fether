@@ -12,11 +12,12 @@ import {
   Switch
 } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
-import isElectron from 'is-electron';
+import store from 'store';
 import { Modal } from 'fether-ui';
 import semver from 'semver';
 import { version } from '../../package.json';
 
+import i18n, { packageNS } from '../i18n';
 import Accounts from '../Accounts';
 import BackupAccount from '../BackupAccount';
 import Onboarding from '../Onboarding';
@@ -26,14 +27,21 @@ import Send from '../Send';
 import Tokens from '../Tokens';
 import Whitelist from '../Whitelist';
 
+const LANG_LS_KEY = 'fether-language';
 const currentVersion = version;
+
+// The preload scripts injects `ipcRenderer` into `window.bridge`
+const {
+  currentWindowWebContentsAddListener,
+  currentWindowWebContentsReload,
+  currentWindowWebContentsRemoveListener,
+  ipcRenderer,
+  IS_PROD
+} = window.bridge;
 
 // Use MemoryRouter for production viewing in file:// protocol
 // https://github.com/facebook/create-react-app/issues/3591
-const Router =
-  process.env.NODE_ENV === 'production' ? MemoryRouter : BrowserRouter;
-
-const electron = isElectron() ? window.require('electron') : null;
+const Router = IS_PROD ? MemoryRouter : BrowserRouter;
 
 @inject('onboardingStore', 'parityStore')
 @observer
@@ -43,6 +51,16 @@ class App extends Component {
   };
 
   componentDidMount () {
+    if (store.get(LANG_LS_KEY) && i18n.language !== store.get(LANG_LS_KEY)) {
+      i18n.changeLanguage(store.get(LANG_LS_KEY));
+    }
+
+    currentWindowWebContentsAddListener('set-language', newLanguage => {
+      i18n.changeLanguage(newLanguage);
+      store.set(LANG_LS_KEY, newLanguage);
+      currentWindowWebContentsReload();
+    });
+
     window.addEventListener('contextmenu', this.handleRightClick);
 
     window
@@ -67,6 +85,7 @@ class App extends Component {
 
   componentWillUnmount () {
     window.removeEventListener('contextmenu', this.handleRightClick);
+    currentWindowWebContentsRemoveListener('set-language');
   }
 
   renderModalLinks = () => {
@@ -94,10 +113,10 @@ class App extends Component {
   };
 
   handleRightClick = () => {
-    if (!electron) {
+    if (!ipcRenderer) {
       return;
     }
-    electron.ipcRenderer.send('asynchronous-message', 'app-right-click');
+    ipcRenderer.send('asynchronous-message', 'app-right-click');
   };
 
   /**
@@ -140,8 +159,14 @@ class App extends Component {
         <div className='window'>
           <RequireParityVersion>
             <Modal
-              title='New version available'
-              description={newRelease ? `${newRelease.name} was released!` : ''}
+              title={i18n.t(`${packageNS}:releases.new_release_title`)}
+              description={
+                newRelease
+                  ? i18n.t(`${packageNS}:releases.new_release_description`, {
+                    release_name: newRelease.name
+                  })
+                  : ''
+              }
               visible={newRelease && !newRelease.ignore}
               buttons={this.renderModalLinks()}
             >

@@ -8,6 +8,7 @@ import { AccountHeader, Card, Form as FetherForm } from 'fether-ui';
 import { observer } from 'mobx-react';
 import { Link, withRouter } from 'react-router-dom';
 
+import i18n, { packageNS } from '../i18n';
 import RequireHealthOverlay from '../RequireHealthOverlay';
 import backupAccount from '../utils/backupAccount';
 import withAccount from '../utils/withAccount';
@@ -68,11 +69,13 @@ class BackupAccount extends Component {
           <AccountHeader
             address={address}
             copyAddress
+            i18n={i18n}
             name={name}
+            packageNS={packageNS}
             type={type}
             left={
               <Link to='/accounts' className='icon -back'>
-                Back
+                {i18n.t(`${packageNS}:navigation.back`)}
               </Link>
             }
           />
@@ -80,11 +83,17 @@ class BackupAccount extends Component {
           <Card className='-space-around'>
             <form key='backupAccount' onSubmit={this.handleSubmit}>
               <div className='text'>
-                <p>Unlock your account to encrypt the JSON keystore file:</p>
+                <p>
+                  {i18n.t(
+                    `${packageNS}:account.backup.label_msg_password_unlock`
+                  )}
+                </p>
               </div>
 
               <FetherForm.Field
-                label='Password'
+                label={i18n.t(
+                  `${packageNS}:account.backup.label_password_unlock`
+                )}
                 onChange={this.handlePasswordChange}
                 autoFocus
                 required
@@ -100,14 +109,14 @@ class BackupAccount extends Component {
                   onClick={history.goBack}
                   type='button'
                 >
-                  Back
+                  {i18n.t(`${packageNS}:navigation.back`)}
                 </button>
                 <button
                   className='button'
                   disabled={!password || isLoading}
                   autoFocus
                 >
-                  Confirm backup
+                  {i18n.t(`${packageNS}:account.backup.button_confirm`)}
                 </button>
               </nav>
             </form>

@@ -1,0 +1,55 @@
+{
+  "menu": {
+    "file": {
+      "submenu_name": "File",
+      "about": "About",
+      "preferences": {
+        "submenu_name": "Preferences",
+        "languages": {
+          "submenu_name": "Languages",
+          "language": "Language",
+          "english": "English",
+          "german": "German"
+        }
+      },
+      "services": "Services",
+      "hide": "Hide",
+      "hide_others": "Hide Others",
+      "unhide": "Unhide",
+      "quit": "Quit"
+    },
+    "edit": {
+      "submenu_name": "Edit",
+      "undo": "Undo",
+      "redo": "Redo",
+      "cut": "Cut",
+      "copy": "Copy",
+      "paste": "Paste",
+      "delete": "Delete",
+      "select_all": "Select All",
+      "speech": {
+        "submenu_name": "Speech",
+        "start_speaking": "Start Speaking",
+        "stop_speaking": "Stop Speaking"
+      }
+    },
+    "view": {
+      "submenu_name": "View",
+      "reload": "Reload",
+      "toggle_developer_tools": "Toggle Developer Tools"
+    },
+    "window": {
+      "submenu_name": "Window",
+      "close": "Close",
+      "minimize": "Minimize",
+      "zoom": "Zoom",
+      "bring_all_to_front": "Bring All to Front"
+    },
+    "help": {
+      "submenu_name": "Help",
+      "search": "Search",
+      "learn_more": "Learn More"
+    },
+    "show_hide_fether": "Show/Hide Fether"
+  }
+}

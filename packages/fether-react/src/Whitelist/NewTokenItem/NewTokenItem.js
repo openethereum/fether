@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import { TokenCard } from 'fether-ui';
 import { withRouter } from 'react-router-dom';
 
+import i18n, { packageNS } from '../../i18n';
 import defaultTokenImage from '../../assets/img/tokens/default-token-128x128.jpg';
 import withTokens from '../../utils/withTokens';
 
@@ -43,14 +44,14 @@ class NewTokenItem extends Component {
                 className='button -utility -bad'
                 onClick={this.handleRemoveToken}
               >
-                Remove
+                {i18n.t(`${packageNS}:search_tokens.remove`)}
               </button>
             ) : (
               <button
                 className='button -utility -good'
                 onClick={this.handleAddToken}
               >
-                Add
+                {i18n.t(`${packageNS}:search_tokens.add`)}
               </button>
             )}
           </div>

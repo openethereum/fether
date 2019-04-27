@@ -43,7 +43,7 @@ describe('method clear', () => {
     createAccountStore.bip39Phrase = 'phrase';
     createAccountStore.address = '0x123';
     createAccountStore.name = 'account name';
-    await createAccountStore.clear();
+    createAccountStore.clear();
     expect(createAccountStore.jsonString).toBe(null);
     expect(createAccountStore.parityPhrase).toBe(null);
     expect(createAccountStore.bip39Phrase).toBe(null);

@@ -6,8 +6,8 @@
 import React, { Component } from 'react';
 
 import RequireHealthOverlay from '../../RequireHealthOverlay';
-import TokenBalance from './TokenBalance';
 import withTokens from '../../utils/withTokens';
+import TokenBalance from './TokenBalance';
 
 @withTokens
 class TokensList extends Component {

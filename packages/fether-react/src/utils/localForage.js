@@ -6,6 +6,8 @@ import 'localforage-observable';
 
 import Debug from '../utils/debug';
 
+const { IS_PROD } = window.bridge;
+
 const debug = Debug('localForage');
 
 // Use RxJS as Observable in localforage-observable
@@ -16,7 +18,7 @@ localForage.newObservable.factory = subscribeFn =>
 /**
  * Make localForage available in browser console for easier debug.
  */
-if (process.env.NODE_ENV !== 'production') {
+if (!IS_PROD) {
   window.localForage = localForage;
 }
 
