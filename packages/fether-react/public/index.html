@@ -5,24 +5,24 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="theme-color" content="#000000">
-    <!-- These CSP are for prod. For dev, CSP are set inside @electron-app -->
-    <meta http-equiv="Content-Security-Policy" content="
-        block-all-mixed-content;
-        child-src 'none';
-        connect-src http: ws:;
-        default-src 'none';
-        font-src 'none';
-        form-action 'none';
-        frame-src 'none';
-        img-src 'self' data:;
-        manifest-src 'none';
-        media-src 'none';
-        object-src 'none';
-        prefetch-src 'none';
-        script-src 'self' 'unsafe-inline';
-        style-src 'self' 'unsafe-inline' https:;
-        worker-src 'self' https:;
-      ">
+  <!-- These CSP are for prod. For dev, CSP are set inside @electron-app -->
+  <meta http-equiv="Content-Security-Policy" content="
+      block-all-mixed-content;
+      child-src 'none';
+      connect-src https: ws:;
+      default-src 'none';
+      font-src 'none';
+      form-action 'none';
+      frame-src 'none';
+      img-src 'self' 'unsafe-inline' file: data: blob: https:;
+      manifest-src 'none';
+      media-src 'none';
+      object-src 'none';
+      prefetch-src 'none';
+      script-src 'self' 'unsafe-inline';
+      style-src 'self' 'unsafe-inline' http:;
+      worker-src blob:;
+    ">
   <!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
