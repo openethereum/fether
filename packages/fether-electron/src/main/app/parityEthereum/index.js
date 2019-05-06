@@ -16,7 +16,7 @@ const pino = Pino();
 let hasCalledInitParityEthereum = false;
 
 class ParityEthereum {
-  constructor (fetherAppWindow) {
+  constructor () {
     if (hasCalledInitParityEthereum) {
       throw new Error('Unable to initialise Parity Ethereum more than once');
     }
@@ -50,16 +50,7 @@ class ParityEthereum {
       await this.run();
       pino.info('Running Parity Ethereum');
       resolve(true);
-    })
-      .then(isRunning => {
-        // Notify the renderers
-        fetherAppWindow.webContents.send(
-          'IS_PARITY_RUNNING_RESPONSE',
-          isRunning
-        );
-        global.isParityRunning = isRunning; // Send this variable to renderers via IPC
-      })
-      .catch(handleError);
+    }).catch(handleError);
   }
 
   isRunning = async () => {

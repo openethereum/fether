@@ -12,7 +12,6 @@ import {
   Switch
 } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
-import store from 'store';
 import { Modal } from 'fether-ui';
 import semver from 'semver';
 import { version } from '../../package.json';
@@ -21,6 +20,7 @@ import i18n, { packageNS } from '../i18n';
 import Accounts from '../Accounts';
 import BackupAccount from '../BackupAccount';
 import Onboarding from '../Onboarding';
+import * as postMessage from '../utils/postMessage';
 import RequireParityVersion from '../RequireParityVersion';
 import RequireHealthOverlay from '../RequireHealthOverlay';
 import Send from '../Send';
@@ -104,7 +104,7 @@ class App extends Component {
   };
 
   handleRightClick = () => {
-    window.postMessage('APP_RIGHT_CLICK_REQUEST');
+    postMessage.send('APP_RIGHT_CLICK_REQUEST');
   };
 
   /**

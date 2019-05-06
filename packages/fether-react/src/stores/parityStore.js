@@ -7,8 +7,8 @@ import { action, observable } from 'mobx';
 import Api from '@parity/api';
 import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import light from '@parity/light.js';
-import localForage from 'localforage';
 import { of, timer, zip } from 'rxjs';
+import store from 'store';
 
 import Debug from '../utils/debug';
 import LS_PREFIX from './utils/lsPrefix';
@@ -32,29 +32,22 @@ export class ParityStore {
   api = undefined;
 
   constructor () {
+    // Request WS port and interface from electron
     postMessage.send('WS_INTERFACE_REQUEST');
     postMessage.send('WS_PORT_REQUEST');
 
-    // Use localForage.getItem instead of localForage$ here because localForage$
-    // doesn't fire initial value if key is inexistant in local storage.
-    localForage
-      .getItem(LS_KEY)
-      .then(lsToken => {
-        const token$ = lsToken
-          ? of(lsToken).pipe(tap(() => debug('Got token from localStorage.')))
-          : this.requestNewToken$();
+    const lsToken = store.get(LS_KEY);
+    const token$ = lsToken
+      ? of(lsToken).pipe(tap(() => debug('Got token from localStorage.')))
+      : this.requestNewToken$();
 
-        zip(
-          token$,
-          postMessage.listen$('WS_INTERFACE_RESPONSE'),
-          postMessage.listen$('WS_PORT_RESPONSE')
-        ).subscribe(([token, wsInterface, wsPort]) =>
-          this.connectToApi(token, wsInterface, wsPort)
-        );
-      })
-      .catch(err =>
-        console.error("Can't fetch localStorage with localForage.getItem,", err)
-      );
+    zip(
+      token$,
+      postMessage.listen$('WS_INTERFACE_RESPONSE'),
+      postMessage.listen$('WS_PORT_RESPONSE')
+    ).subscribe(([token, wsInterface, wsPort]) =>
+      this.connectToApi(token, wsInterface, wsPort)
+    );
   }
 
   connectToApi (token, wsInterface, wsPort) {
@@ -89,7 +82,7 @@ export class ParityStore {
 
   @action
   updateLS = token => {
-    localForage.setItem(LS_KEY, token);
+    store.set(LS_KEY, token);
   };
 }
 

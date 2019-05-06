@@ -17,7 +17,6 @@ const pino = Pino();
  */
 export default async (fetherApp, event, data) => {
   try {
-    console.log('data.action', data.action);
     pino.debug(
       `Received IPC message from ${data.from}, with data ${JSON.stringify(
         data

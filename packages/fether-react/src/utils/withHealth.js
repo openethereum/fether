@@ -3,14 +3,7 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import {
-  combineLatest,
-  interval,
-  Observable,
-  fromEvent,
-  merge,
-  of
-} from 'rxjs';
+import { combineLatest, interval, fromEvent, merge } from 'rxjs';
 import { compose, mapPropsStream } from 'recompose';
 import {
   audit,
@@ -30,11 +23,6 @@ import * as postMessage from '../utils/postMessage';
 
 const isApiConnected$ = parityStore.isApiConnected$;
 
-// const isParityRunning$ = of(false);
-const isParityRunning$ = postMessage
-  .listen$('IS_PARITY_RUNNING_RESPONSE')
-  .pipe(startWith(false));
-
 postMessage.send('CHECK_CLOCK_SYNC_REQUEST');
 // const isClockSync$ = of(false);
 const isClockSync$ = postMessage
@@ -46,12 +34,9 @@ const online$ = merge(
   fromEvent(window, 'offline').pipe(map(() => false))
 ).pipe(startWith(navigator.onLine));
 
-const combined$ = combineLatest(
-  isParityRunning$,
-  isApiConnected$,
-  online$,
-  isClockSync$
-).pipe(publishReplay(1));
+const combined$ = combineLatest(isApiConnected$, online$, isClockSync$).pipe(
+  publishReplay(1)
+);
 combined$.connect();
 
 // Subscribe to the RPCs only once we set a provider
@@ -103,7 +88,7 @@ export default compose(
       map(
         ([
           props,
-          [isParityRunning, isApiConnected, online, isClockSync],
+          [isApiConnected, online, isClockSync],
           [{ isSync, syncPayload }, peerCount]
         ]) => {
           const isNoPeers =
