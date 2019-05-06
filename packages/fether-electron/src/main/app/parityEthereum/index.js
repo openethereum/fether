@@ -53,7 +53,10 @@ class ParityEthereum {
     })
       .then(isRunning => {
         // Notify the renderers
-        fetherAppWindow.webContents.send('parity-running', isRunning);
+        fetherAppWindow.webContents.send(
+          'IS_PARITY_RUNNING_RESPONSE',
+          isRunning
+        );
         global.isParityRunning = isRunning; // Send this variable to renderers via IPC
       })
       .catch(handleError);

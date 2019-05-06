@@ -17,7 +17,6 @@ import onWindowClose from './onWindowClose';
 import processSaveWinPosition from './processSaveWinPosition';
 import setupAppListeners from './setupAppListeners';
 import setupDebug from './setupDebug';
-import setupGlobals from './setupGlobals';
 import setupLogger from './setupLogger';
 import setupMenu from './setupMenu';
 import setupParityEthereum from './setupParityEthereum';
@@ -45,7 +44,6 @@ export {
   processSaveWinPosition,
   setupAppListeners,
   setupDebug,
-  setupGlobals,
   setupLogger,
   setupMenu,
   setupRequestListeners,

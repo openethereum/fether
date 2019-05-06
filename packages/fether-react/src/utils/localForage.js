@@ -1,3 +1,8 @@
+// Copyright 2015-2019 Parity Technologies (UK) Ltd.
+// This file is part of Parity.
+//
+// SPDX-License-Identifier: BSD-3-Clause
+
 import { from, Observable } from 'rxjs';
 import localForage from 'localforage';
 import memoize from 'lodash/memoize';
@@ -6,21 +11,12 @@ import 'localforage-observable';
 
 import Debug from '../utils/debug';
 
-const { IS_PROD } = window.bridge;
-
 const debug = Debug('localForage');
 
 // Use RxJS as Observable in localforage-observable
 // https://github.com/localForage/localForage-observable#using-a-different-observable-library
 localForage.newObservable.factory = subscribeFn =>
   Observable.create(subscribeFn);
-
-/**
- * Make localForage available in browser console for easier debug.
- */
-if (!IS_PROD) {
-  window.localForage = localForage;
-}
 
 /**
  * Use localStorage.

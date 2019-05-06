@@ -28,12 +28,6 @@ pino.info(
  * fether-electron/src/main/index.js, which is where we only
  * permit requests from trusted paths.
  *
- * WARNING: DO NOT add the custom CLI interface `cli.wsInterface` as a
- * trusted host. This may avoid Fether being launched with a
- * malicious remote `cli.wsInterface` and sending sensitive user information
- * (i.e. account password) over RPC.
- * See https://github.com/paritytech/fether/pull/451#discussion_r268732256
- *
  * Note: We also disallows users from using Fether
  * with a remote node.
  * WARNING: SSH tunnels from an attacker are still possible.
@@ -164,7 +158,7 @@ const SECURITY_OPTIONS = {
      * https://stackoverflow.com/questions/55164360/with-contextisolation-true-is-it-possible-to-use-ipcrenderer
      * Currently experimental and may change or be removed in future Electron releases.
      */
-    contextIsolation: false, // Should be enabled
+    contextIsolation: true,
     /**
      * Isolate access to Electron/Node.js from the Fether web app, by creating
      * a bridge which plays the role of an API between main and renderer

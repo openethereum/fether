@@ -19,28 +19,18 @@ import isEqual from 'lodash/isEqual';
 import { peerCount$, syncStatus$ } from '@parity/light.js';
 
 import parityStore from '../stores/parityStore';
-
-// The preload scripts injects `ipcRenderer` into `window.bridge`
-const { ipcRenderer, isParityRunningStatus } = window.bridge;
+import * as postMessage from '../utils/postMessage';
 
 const isApiConnected$ = parityStore.isApiConnected$;
 
-const isParityRunning$ = Observable.create(observer => {
-  if (ipcRenderer) {
-    ipcRenderer.on('parity-running', (_, isParityRunning) => {
-      observer.next(isParityRunning);
-    });
-  }
-}).pipe(startWith(!!isParityRunningStatus));
+const isParityRunning$ = postMessage
+  .listen$('IS_PARITY_RUNNING_RESPONSE')
+  .pipe(startWith(false));
 
-const isClockSync$ = Observable.create(observer => {
-  if (ipcRenderer) {
-    ipcRenderer.send('asynchronous-message', 'check-clock-sync');
-    ipcRenderer.once('check-clock-sync-reply', (_, clockSync) => {
-      observer.next(clockSync.isClockSync);
-    });
-  }
-}).pipe(startWith(true));
+postMessage.send('CHECK_CLOCK_SYNC_REQUEST');
+const isClockSync$ = postMessage
+  .listen$('CHECK_CLOCK_SYNC_RESPONSE')
+  .pipe(startWith(true));
 
 const online$ = merge(
   fromEvent(window, 'online').pipe(map(() => true)),

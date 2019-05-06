@@ -27,21 +27,12 @@ import Send from '../Send';
 import Tokens from '../Tokens';
 import Whitelist from '../Whitelist';
 
-const LANG_LS_KEY = 'fether-language';
 const currentVersion = version;
-
-// The preload scripts injects `ipcRenderer` into `window.bridge`
-const {
-  currentWindowWebContentsAddListener,
-  currentWindowWebContentsReload,
-  currentWindowWebContentsRemoveListener,
-  ipcRenderer,
-  IS_PROD
-} = window.bridge;
 
 // Use MemoryRouter for production viewing in file:// protocol
 // https://github.com/facebook/create-react-app/issues/3591
-const Router = IS_PROD ? MemoryRouter : BrowserRouter;
+const Router =
+  process.env.NODE_ENV === 'production' ? MemoryRouter : BrowserRouter;
 
 @inject('onboardingStore', 'parityStore')
 @observer
@@ -51,15 +42,15 @@ class App extends Component {
   };
 
   componentDidMount () {
-    if (store.get(LANG_LS_KEY) && i18n.language !== store.get(LANG_LS_KEY)) {
-      i18n.changeLanguage(store.get(LANG_LS_KEY));
-    }
+    // if (store.get(LANG_LS_KEY) && i18n.language !== store.get(LANG_LS_KEY)) {
+    //   i18n.changeLanguage(store.get(LANG_LS_KEY));
+    // }
 
-    currentWindowWebContentsAddListener('set-language', newLanguage => {
-      i18n.changeLanguage(newLanguage);
-      store.set(LANG_LS_KEY, newLanguage);
-      currentWindowWebContentsReload();
-    });
+    // currentWindowWebContentsAddListener('set-language', newLanguage => {
+    //   i18n.changeLanguage(newLanguage);
+    //   store.set(LANG_LS_KEY, newLanguage);
+    //   window.reload();
+    // });
 
     window.addEventListener('contextmenu', this.handleRightClick);
 
@@ -83,10 +74,10 @@ class App extends Component {
       });
   }
 
-  componentWillUnmount () {
-    window.removeEventListener('contextmenu', this.handleRightClick);
-    currentWindowWebContentsRemoveListener('set-language');
-  }
+  // componentWillUnmount() {
+  //   window.removeEventListener('contextmenu', this.handleRightClick);
+  //   currentWindowWebContentsRemoveListener('set-language');
+  // }
 
   renderModalLinks = () => {
     return (
@@ -113,10 +104,7 @@ class App extends Component {
   };
 
   handleRightClick = () => {
-    if (!ipcRenderer) {
-      return;
-    }
-    ipcRenderer.send('asynchronous-message', 'app-right-click');
+    window.postMessage('APP_RIGHT_CLICK_REQUEST');
   };
 
   /**
