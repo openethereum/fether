@@ -37,7 +37,7 @@ export default async (fetherApp, event, data) => {
       }
       case 'CHECK_CLOCK_SYNC_REQUEST': {
         const payload = await checkClockSync();
-        event.sender.send('asynchronous-reply', {
+        event.sender.send('send-to-renderer', {
           action: 'CHECK_CLOCK_SYNC_RESPONSE',
           from: 'fether:electron',
           payload
@@ -46,7 +46,7 @@ export default async (fetherApp, event, data) => {
         break;
       }
       case 'SET_LANGUAGE_REQUEST': {
-        event.sender.send('asynchronous-reply', {
+        event.sender.send('send-to-renderer', {
           action: 'SET_LANGUAGE_RESPONSE',
           from: 'fether:electron',
           payload: settings.get('fether-language')
@@ -56,7 +56,7 @@ export default async (fetherApp, event, data) => {
       case 'SIGNER_NEW_TOKEN_REQUEST': {
         const token = await signerNewToken({ parityPath: bundledParityPath });
         // Send back the token to the renderer process
-        event.sender.send('asynchronous-reply', {
+        event.sender.send('send-to-renderer', {
           action: 'SIGNER_NEW_TOKEN_RESPONSE',
           from: 'fether:electron',
           payload: token
@@ -64,7 +64,7 @@ export default async (fetherApp, event, data) => {
         break;
       }
       case 'WS_INTERFACE_REQUEST': {
-        event.sender.send('asynchronous-reply', {
+        event.sender.send('send-to-renderer', {
           action: 'WS_INTERFACE_RESPONSE',
           from: 'fether:electron',
           payload: TRUSTED_LOOPBACK
@@ -73,7 +73,7 @@ export default async (fetherApp, event, data) => {
         break;
       }
       case 'WS_PORT_REQUEST': {
-        event.sender.send('asynchronous-reply', {
+        event.sender.send('send-to-renderer', {
           action: 'WS_PORT_RESPONSE',
           from: 'fether:electron',
           payload: cli.wsPort

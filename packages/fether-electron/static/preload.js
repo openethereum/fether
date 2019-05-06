@@ -59,8 +59,8 @@ function receivePostMessage (event) {
     return;
   }
 
-  ipcRenderer.send('asynchronous-message', data);
+  ipcRenderer.send('send-to-main', data);
 }
 
-ipcRenderer.on('asynchronous-reply', receiveIpcMessage);
+ipcRenderer.on('send-to-renderer', receiveIpcMessage);
 window.addEventListener('message', receivePostMessage);

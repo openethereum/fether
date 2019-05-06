@@ -15,7 +15,7 @@ const { ipcMain, session } = electron;
 
 function setupRequestListeners (fetherApp) {
   // Listen to messages from renderer process
-  ipcMain.on('asynchronous-message', (...args) => {
+  ipcMain.on('send-to-main', (...args) => {
     return messages(fetherApp, ...args);
   });
 
