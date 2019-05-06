@@ -5,7 +5,7 @@
 
 import { action, observable } from 'mobx';
 import Api from '@parity/api';
-import { distinctUntilChanged, map, tap } from 'rxjs/operators';
+import { distinctUntilChanged, map, take, tap } from 'rxjs/operators';
 import light from '@parity/light.js';
 import { of, timer, zip } from 'rxjs';
 import store from 'store';
@@ -45,9 +45,11 @@ export class ParityStore {
       token$,
       postMessage.listen$('WS_INTERFACE_RESPONSE'),
       postMessage.listen$('WS_PORT_RESPONSE')
-    ).subscribe(([token, wsInterface, wsPort]) =>
-      this.connectToApi(token, wsInterface, wsPort)
-    );
+    )
+      .pipe(take(1))
+      .subscribe(([token, wsInterface, wsPort]) =>
+        this.connectToApi(token, wsInterface, wsPort)
+      );
   }
 
   connectToApi (token, wsInterface, wsPort) {
