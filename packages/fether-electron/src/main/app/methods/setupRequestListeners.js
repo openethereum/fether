@@ -5,12 +5,8 @@
 
 import electron from 'electron';
 
-import { IS_PROD } from '../constants';
-import { CSP } from '../utils/csp';
 import messages from '../messages';
-import Pino from '../utils/pino';
 
-const pino = Pino();
 const { ipcMain, session } = electron;
 
 function setupRequestListeners (fetherApp) {
