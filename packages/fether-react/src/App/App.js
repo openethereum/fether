@@ -38,19 +38,25 @@ const Router =
 @observer
 class App extends Component {
   state = {
+    currentLanguage: undefined,
     newRelease: false // false | {name, url, ignore}
   };
 
   componentDidMount () {
-    // if (store.get(LANG_LS_KEY) && i18n.language !== store.get(LANG_LS_KEY)) {
-    //   i18n.changeLanguage(store.get(LANG_LS_KEY));
-    // }
+    postMessage.send('SET_LANGUAGE_REQUEST');
+    postMessage.listen$('SET_LANGUAGE_RESPONSE').subscribe(newLanguage => {
+      i18n.changeLanguage(newLanguage);
 
-    // currentWindowWebContentsAddListener('set-language', newLanguage => {
-    //   i18n.changeLanguage(newLanguage);
-    //   store.set(LANG_LS_KEY, newLanguage);
-    //   window.reload();
-    // });
+      // Reload whole app when we change language
+      if (
+        this.state.currentLanguage &&
+        this.state.currentLanguage !== newLanguage
+      ) {
+        window.location.reload();
+      } else {
+        this.setState({ currentLanguage: newLanguage });
+      }
+    });
 
     window.addEventListener('contextmenu', this.handleRightClick);
 
@@ -74,10 +80,9 @@ class App extends Component {
       });
   }
 
-  // componentWillUnmount() {
-  //   window.removeEventListener('contextmenu', this.handleRightClick);
-  //   currentWindowWebContentsRemoveListener('set-language');
-  // }
+  componentWillUnmount () {
+    window.removeEventListener('contextmenu', this.handleRightClick);
+  }
 
   renderModalLinks = () => {
     return (

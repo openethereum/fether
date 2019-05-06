@@ -26,7 +26,11 @@ const getPreferences = fetherApp => {
           settings.set('fether-language', 'en');
           fetherApp.setupMenu(fetherApp);
           // Frontend change language
-          fetherApp.win.webContents.emit('set-language', 'en');
+          fetherApp.win.webContents.send('asynchronous-reply', {
+            action: 'SET_LANGUAGE_RESPONSE',
+            from: 'fether:electron',
+            payload: 'en'
+          });
         }
       },
       {
@@ -39,7 +43,11 @@ const getPreferences = fetherApp => {
           settings.set('fether-language', 'de');
           fetherApp.setupMenu(fetherApp);
           // Frontend change language
-          fetherApp.win.webContents.emit('set-language', 'de');
+          fetherApp.win.webContents.send('asynchronous-reply', {
+            action: 'SET_LANGUAGE_RESPONSE',
+            from: 'fether:electron',
+            payload: 'de'
+          });
         }
       }
     ]

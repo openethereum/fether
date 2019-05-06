@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import { checkClockSync, signerNewToken } from '@parity/electron';
+import settings from 'electron-settings';
 
 import cli from '../cli';
 import { TRUSTED_LOOPBACK } from '../constants';
@@ -42,6 +43,14 @@ export default async (fetherApp, event, data) => {
           payload
         });
 
+        break;
+      }
+      case 'SET_LANGUAGE_REQUEST': {
+        event.sender.send('asynchronous-reply', {
+          action: 'SET_LANGUAGE_RESPONSE',
+          from: 'fether:electron',
+          payload: settings.get('fether-language')
+        });
         break;
       }
       case 'SIGNER_NEW_TOKEN_REQUEST': {
