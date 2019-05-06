@@ -9,7 +9,9 @@ import { Observable } from 'rxjs';
 import Debug from '../utils/debug';
 
 const debug = Debug('postMessage');
-const RENDERER_ORIGIN = 'http://localhost:3000';
+
+const RENDERER_ORIGIN =
+  process.env.NODE_ENV === 'production' ? 'file://' : 'http://localhost:3000';
 
 const messages$ = Observable.create(observer => {
   const handler = event => {

@@ -20,6 +20,7 @@ import {
   processSaveWinPosition,
   setupAppListeners,
   setupDebug,
+  setupGlobals,
   setupLogger,
   setupMenu,
   setupParityEthereum,
@@ -57,7 +58,7 @@ class FetherApp extends EventEmitter {
      * to restore create fetherApp.win again and associated listeners. However we
      * do not need to run all the fetherApp methods again like we did on the
      * when fetherApp.win was first created (i.e. createTray, loadTray,
-     * setupDebug, setupSecurity, setupLogger, setupParityEthereum)
+     * setupDebug, setupSecurity, setupLogger, setupParityEthereum, setupGlobals)
      */
     this.app = electronApp;
     this.options = options;
@@ -73,6 +74,7 @@ class FetherApp extends EventEmitter {
     this.setupSecurity();
     this.setupLogger();
     this.setupParityEthereum();
+    this.setupGlobals();
 
     this.updateProgress(0.8, undefined);
     this.showWindow(undefined);
@@ -94,6 +96,7 @@ class FetherApp extends EventEmitter {
   processSaveWinPosition = () => processSaveWinPosition(this);
   setupAppListeners = () => setupAppListeners(this);
   setupDebug = () => setupDebug(this);
+  setupGlobals = () => setupGlobals();
   setupLogger = () => setupLogger();
   setupMenu = () => setupMenu(this);
   setupParityEthereum = () => setupParityEthereum(this);

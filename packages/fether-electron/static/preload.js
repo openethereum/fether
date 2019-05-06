@@ -17,7 +17,10 @@
  * https://github.com/electron/electron/issues/13130
  */
 
-const { ipcRenderer } = require('electron');
+const { ipcRenderer, remote } = require('electron');
+
+const RENDERER_ORIGIN =
+  remote.getGlobal('IS_PROD') === true ? 'file://' : 'http://localhost:3000';
 
 /**
  * Handler that receives an IPC message from the main process, and passes it
@@ -27,7 +30,7 @@ const { ipcRenderer } = require('electron');
  * @param {*} data The data of the IPC message.
  */
 function receiveIpcMessage (_event, data) {
-  window.postMessage(data, '*');
+  window.postMessage(data, RENDERER_ORIGIN);
 }
 
 /**
@@ -38,6 +41,10 @@ function receiveIpcMessage (_event, data) {
  */
 function receivePostMessage (event) {
   const { data, origin } = event;
+
+  if (origin !== RENDERER_ORIGIN) {
+    return;
+  }
 
   if (!data) {
     return;
