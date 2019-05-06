@@ -6,10 +6,10 @@
 import { checkClockSync, signerNewToken } from '@parity/electron';
 import settings from 'electron-settings';
 
-import cli from '../cli';
-import { TRUSTED_LOOPBACK } from '../constants';
-import Pino from '../utils/pino';
 import { bundledParityPath } from '../utils/paths';
+import cli from '../cli';
+import Pino from '../utils/pino';
+import { TRUSTED_LOOPBACK } from '../constants';
 
 const pino = Pino();
 

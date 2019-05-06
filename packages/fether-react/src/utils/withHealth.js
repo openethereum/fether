@@ -24,7 +24,6 @@ import * as postMessage from '../utils/postMessage';
 const isApiConnected$ = parityStore.isApiConnected$;
 
 postMessage.send('CHECK_CLOCK_SYNC_REQUEST');
-// const isClockSync$ = of(false);
 const isClockSync$ = postMessage
   .listen$('CHECK_CLOCK_SYNC_RESPONSE')
   .pipe(startWith(true));
