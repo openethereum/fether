@@ -5,19 +5,12 @@
 
 import { action, observable } from 'mobx';
 import Api from '@parity/api';
-import {
-  distinctUntilChanged,
-  filter,
-  map,
-  switchMap,
-  tap
-} from 'rxjs/operators';
+import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import light from '@parity/light.js';
 import localForage from 'localforage';
 import { of, timer, zip } from 'rxjs';
 
 import Debug from '../utils/debug';
-import localForage$ from '../utils/localForage';
 import LS_PREFIX from './utils/lsPrefix';
 import * as postMessage from '../utils/postMessage';
 
@@ -51,21 +44,20 @@ export class ParityStore {
           ? of(lsToken).pipe(tap(() => debug('Got token from localStorage.')))
           : this.requestNewToken$();
 
-        zip([
+        zip(
           token$,
           postMessage.listen$('WS_INTERFACE_RESPONSE'),
           postMessage.listen$('WS_PORT_RESPONSE')
-        ]).subscribe(([token, wsInterface, wsPort]) =>
+        ).subscribe(([token, wsInterface, wsPort]) =>
           this.connectToApi(token, wsInterface, wsPort)
         );
       })
-      .catch(() =>
-        console.error("Can't fetch localStorage with localForage.getItem")
+      .catch(err =>
+        console.error("Can't fetch localStorage with localForage.getItem,", err)
       );
   }
 
   connectToApi (token, wsInterface, wsPort) {
-    console.log('AAA', token, wsInterface, wsPort);
     // Get the provider, optionally from --ws-interface and --ws-port flags
     let provider = `ws://${wsInterface}:${wsPort}`;
 
@@ -97,8 +89,7 @@ export class ParityStore {
 
   @action
   updateLS = token => {
-    console.log('updateLS');
-    localForage.set(LS_KEY, token);
+    localForage.setItem(LS_KEY, token);
   };
 }
 

@@ -3,7 +3,14 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { combineLatest, interval, Observable, fromEvent, merge } from 'rxjs';
+import {
+  combineLatest,
+  interval,
+  Observable,
+  fromEvent,
+  merge,
+  of
+} from 'rxjs';
 import { compose, mapPropsStream } from 'recompose';
 import {
   audit,
@@ -23,11 +30,13 @@ import * as postMessage from '../utils/postMessage';
 
 const isApiConnected$ = parityStore.isApiConnected$;
 
+// const isParityRunning$ = of(false);
 const isParityRunning$ = postMessage
   .listen$('IS_PARITY_RUNNING_RESPONSE')
   .pipe(startWith(false));
 
 postMessage.send('CHECK_CLOCK_SYNC_REQUEST');
+// const isClockSync$ = of(false);
 const isClockSync$ = postMessage
   .listen$('CHECK_CLOCK_SYNC_RESPONSE')
   .pipe(startWith(true));

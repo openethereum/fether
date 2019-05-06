@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { filter } from 'rxjs/operators';
+import { filter, map, publish } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 import Debug from '../utils/debug';
@@ -11,23 +11,15 @@ import Debug from '../utils/debug';
 const debug = Debug('postMessage');
 const RENDERER_ORIGIN = 'http://localhost:3000';
 
-console.log('BBB');
 const messages$ = Observable.create(observer => {
-  console.log('AAA');
   const handler = event => {
     const { data, origin } = event;
 
     if (origin !== RENDERER_ORIGIN) {
-      console.warn(
-        `Received postMessage from unknown origin '${origin}'. Ignoring.`
-      );
       return;
     }
 
     if (!data) {
-      console.warn(
-        `Received postMessage with empty data from ${origin}. Ignoring.`
-      );
       return;
     }
 
@@ -51,11 +43,15 @@ const messages$ = Observable.create(observer => {
   return () => {
     window.removeEventListener('message', handler);
   };
-});
+}).pipe(publish());
+// Create hot observable
+messages$.connect();
 
 export function listen$ (action) {
-  console.log('listen$', action);
-  return messages$.pipe(filter(data => data.action === action));
+  return messages$.pipe(
+    filter(data => data.action === action),
+    map(({ payload }) => payload)
+  );
 }
 
 export function send (action, payload) {

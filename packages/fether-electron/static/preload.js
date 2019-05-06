@@ -27,8 +27,6 @@ const { ipcRenderer } = require('electron');
  * @param {*} data The data of the IPC message.
  */
 function receiveIpcMessage (_event, data) {
-  console.log('IPC, PRELOAD', 'DATA', data);
-
   window.postMessage(data, '*');
 }
 
@@ -53,8 +51,6 @@ function receivePostMessage (event) {
     // message has been sent by `electron`, we ignore.
     return;
   }
-
-  console.log('ORIGIN, PRELOAD', origin, 'DATA', data);
 
   ipcRenderer.send('asynchronous-message', data);
 }
