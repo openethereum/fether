@@ -37,6 +37,9 @@ function setupRequestListeners (fetherApp) {
   );
 
   // Content Security Policy (CSP)
+  // Note: `onHeadersReceived` will not be called in prod, because we use the
+  // file:// protocol: https://electronjs.org/docs/tutorial/security#csp-meta-tag
+  // Instead, the CSP are the ones in the meta tag inside index.html
   session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
     pino.debug(
       `Configuring Content-Security-Policy for environment ${
