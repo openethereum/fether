@@ -12,7 +12,6 @@ import {
   Switch
 } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
-import store from 'store';
 import { Modal } from 'fether-ui';
 import semver from 'semver';
 import { version } from '../../package.json';
@@ -21,44 +20,42 @@ import i18n, { packageNS } from '../i18n';
 import Accounts from '../Accounts';
 import BackupAccount from '../BackupAccount';
 import Onboarding from '../Onboarding';
+import * as postMessage from '../utils/postMessage';
 import RequireParityVersion from '../RequireParityVersion';
 import RequireHealthOverlay from '../RequireHealthOverlay';
 import Send from '../Send';
 import Tokens from '../Tokens';
 import Whitelist from '../Whitelist';
 
-const LANG_LS_KEY = 'fether-language';
 const currentVersion = version;
-
-// The preload scripts injects `ipcRenderer` into `window.bridge`
-const {
-  currentWindowWebContentsAddListener,
-  currentWindowWebContentsReload,
-  currentWindowWebContentsRemoveListener,
-  ipcRenderer,
-  IS_PROD
-} = window.bridge;
 
 // Use MemoryRouter for production viewing in file:// protocol
 // https://github.com/facebook/create-react-app/issues/3591
-const Router = IS_PROD ? MemoryRouter : BrowserRouter;
+const Router =
+  process.env.NODE_ENV === 'production' ? MemoryRouter : BrowserRouter;
 
 @inject('onboardingStore', 'parityStore')
 @observer
 class App extends Component {
   state = {
+    currentLanguage: undefined,
     newRelease: false // false | {name, url, ignore}
   };
 
   componentDidMount () {
-    if (store.get(LANG_LS_KEY) && i18n.language !== store.get(LANG_LS_KEY)) {
-      i18n.changeLanguage(store.get(LANG_LS_KEY));
-    }
-
-    currentWindowWebContentsAddListener('set-language', newLanguage => {
+    postMessage.send('SET_LANGUAGE_REQUEST');
+    postMessage.listen$('SET_LANGUAGE_RESPONSE').subscribe(newLanguage => {
       i18n.changeLanguage(newLanguage);
-      store.set(LANG_LS_KEY, newLanguage);
-      currentWindowWebContentsReload();
+
+      // Reload whole app when we change language
+      if (
+        this.state.currentLanguage &&
+        this.state.currentLanguage !== newLanguage
+      ) {
+        window.location.reload();
+      } else {
+        this.setState({ currentLanguage: newLanguage });
+      }
     });
 
     window.addEventListener('contextmenu', this.handleRightClick);
@@ -85,7 +82,6 @@ class App extends Component {
 
   componentWillUnmount () {
     window.removeEventListener('contextmenu', this.handleRightClick);
-    currentWindowWebContentsRemoveListener('set-language');
   }
 
   renderModalLinks = () => {
@@ -113,10 +109,7 @@ class App extends Component {
   };
 
   handleRightClick = () => {
-    if (!ipcRenderer) {
-      return;
-    }
-    ipcRenderer.send('asynchronous-message', 'app-right-click');
+    postMessage.send('APP_RIGHT_CLICK_REQUEST');
   };
 
   /**

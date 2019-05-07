@@ -5,24 +5,16 @@
 
 import { action, observable } from 'mobx';
 import Api from '@parity/api';
+import { distinctUntilChanged, map, take, tap } from 'rxjs/operators';
 import light from '@parity/light.js';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { of, timer, zip } from 'rxjs';
 import store from 'store';
-import { timer } from 'rxjs';
 
 import Debug from '../utils/debug';
 import LS_PREFIX from './utils/lsPrefix';
+import * as postMessage from '../utils/postMessage';
 
 const debug = Debug('parityStore');
-
-// The preload scripts injects `ipcRenderer` into `window.bridge`
-const {
-  defaultWsInterface,
-  defaultWsPort,
-  ipcRenderer,
-  isParityRunningStatus,
-  wsPort
-} = window.bridge;
 
 const LS_KEY = `${LS_PREFIX}::secureToken`;
 
@@ -37,56 +29,39 @@ export class ParityStore {
   );
 
   @observable
-  isParityRunning = false;
-
-  @observable
-  token = null;
-
-  @observable
   api = undefined;
 
   constructor () {
-    // Retrieve token from localStorage
-    const token = store.get(LS_KEY);
-    if (token) {
-      debug('Got token from localStorage.');
-      this.setToken(token);
-    }
+    // Request WS port and interface from electron
+    postMessage.send('WS_INTERFACE_REQUEST');
+    postMessage.send('WS_PORT_REQUEST');
 
-    // FIXME - consider moving to start of this constructor block since
-    // if `setToken` method is called then `connectToApi` is called, which
-    // requires `ipcRenderer` to be defined
-    if (!ipcRenderer) {
-      debug(
-        'Not in Electron, ParityStore will only have limited capabilities.'
+    const lsToken = store.get(LS_KEY);
+    const token$ = lsToken
+      ? of(lsToken).pipe(tap(() => debug('Got token from localStorage.')))
+      : this.requestNewToken$();
+
+    zip(
+      token$,
+      postMessage.listen$('WS_INTERFACE_RESPONSE'),
+      postMessage.listen$('WS_PORT_RESPONSE')
+    )
+      .pipe(take(1))
+      .subscribe(([token, wsInterface, wsPort]) =>
+        this.connectToApi(token, wsInterface, wsPort)
       );
-      return;
-    }
-
-    // Check if isParityRunning
-    this.setIsParityRunning(!!isParityRunningStatus);
-
-    // We also listen to future changes
-    ipcRenderer.on('parity-running', (_, isParityRunning) => {
-      // FIXME - Unable to console.log anything here when running a separate
-      // Parity Ethereum node and then stop it and start it again.
-      this.setIsParityRunning(isParityRunning);
-    });
   }
 
-  connectToApi = () => {
+  connectToApi (token, wsInterface, wsPort) {
     // Get the provider, optionally from --ws-interface and --ws-port flags
-    let provider = `ws://${defaultWsInterface}:${defaultWsPort}`;
-    if (ipcRenderer) {
-      provider = `ws://${defaultWsInterface}:${wsPort || defaultWsPort}`;
-    }
+    let provider = `ws://${wsInterface}:${wsPort}`;
 
     debug(`Connecting to ${provider}.`);
     const api = new Api(
       // FIXME - change to WsSecure when implement `wss` and security certificates
       new Api.Provider.Ws(
         provider,
-        this.token.replace(/[^a-zA-Z0-9]/g, '') // Sanitize token
+        token.replace(/[^a-zA-Z0-9]/g, '') // Sanitize token
       )
     );
 
@@ -95,53 +70,22 @@ export class ParityStore {
 
     // Also set api as member for React Components to use it if needed
     this.api = api;
-  };
+  }
 
-  requestNewToken = () => {
+  requestNewToken$ () {
     // Request new token from Electron
     debug('Requesting new token.');
-    ipcRenderer.send('asynchronous-message', 'signer-new-token');
-    ipcRenderer.once('signer-new-token-reply', (_, token) => {
-      if (!token) {
-        return;
-      }
-      // If `parity signer new-token` has successfully given us a token back,
-      // then we submit it
-      debug('Successfully received new token.');
-      this.setToken(token);
-    });
-  };
+    postMessage.send('SIGNER_NEW_TOKEN_REQUEST');
+    return postMessage.listen$('SIGNER_NEW_TOKEN_RESPONSE').pipe(
+      tap(() => debug('Successfully received new token.')),
+      tap(this.updateLS)
+    );
+  }
 
   @action
-  setIsParityRunning = isParityRunning => {
-    if (isParityRunning === this.isParityRunning) {
-      return;
-    }
-
-    this.isParityRunning = isParityRunning;
-
-    // Request new token if parity's running but we still don't have a token
-    if (isParityRunning && !this.token) {
-      this.requestNewToken();
-    }
+  updateLS = token => {
+    store.set(LS_KEY, token);
   };
-
-  @action
-  setToken = token => {
-    if (token === this.token) {
-      return;
-    }
-
-    this.token = token;
-
-    // If we receive a new token, then we try to connect to the Api with this
-    // new token
-    this.connectToApi();
-
-    this.updateLS();
-  };
-
-  updateLS = () => store.set(LS_KEY, this.token);
 }
 
 export default new ParityStore();

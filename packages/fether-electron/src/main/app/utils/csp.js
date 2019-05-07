@@ -38,8 +38,6 @@ const CSP_CONFIG = {
   mediaSrc: "media-src 'none';",
   // Disallow fonts and `<webview>` objects
   objectSrc: "object-src 'none';",
-  // Disallow prefetching.
-  prefetchSrc: "prefetch-src 'none';",
   scriptSrc: !IS_PROD
     ? // Only allow `http:` and `unsafe-eval` in dev mode (required by create-react-app)
       "script-src 'self' file: http: blob: 'unsafe-inline' 'unsafe-eval';"

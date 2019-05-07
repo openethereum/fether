@@ -12,48 +12,55 @@
  * network stack).
  *
  * Reference: https://slack.engineering/interops-labyrinth-sharing-code-between-web-electron-apps-f9474d62eccc
+ *
+ * This preload script handles communication between main and renderer processes.
+ * https://github.com/electron/electron/issues/13130
  */
 
 const { ipcRenderer, remote } = require('electron');
 
-const IS_PROD = remote.getGlobal('IS_PROD');
+const RENDERER_ORIGIN =
+  remote.getGlobal('IS_PROD') === true ? 'file://' : 'http://localhost:3000';
 
-function init () {
-  console.log(
-    `Initialising Electron Preload Script in environment: ${
-      IS_PROD ? 'production' : 'development'
-    }`
-  );
-
-  /**
-   * Expose only a bridging API to the Fether web app.
-   * Set methods on global `window`. Additional methods added later by web app
-   *
-   * Do not expose functionality or APIs that could compromise the computer
-   * such as core Electron (i.e. `electron`, `remote`), IPC (`ipcRenderer`)
-   * or Node.js modules like `require`.
-   *
-   * Note however that we require `ipcRenderer` to be exposed for communication
-   * between the main process and the renderer process. Hence why
-   * we have had no other choice but to set `contextIsolation: false`
-   *
-   * Example 1: Do not expose as `window.bridge.electron` or `window.bridge.remote`.
-   * Example 2: `require` should not be defined in Chrome Developer Tools Console.
-   */
-  window.bridge = {
-    currentWindowWebContentsAddListener: remote.getCurrentWindow().webContents
-      .addListener,
-    currentWindowWebContentsRemoveListener: remote.getCurrentWindow()
-      .webContents.removeListener,
-    currentWindowWebContentsReload: remote.getCurrentWindow().webContents
-      .reload,
-    defaultWsInterface: remote.getGlobal('defaultWsInterface'),
-    defaultWsPort: remote.getGlobal('defaultWsPort'),
-    ipcRenderer,
-    isParityRunningStatus: remote.getGlobal('isParityRunning'),
-    IS_PROD,
-    wsPort: remote.getGlobal('wsPort')
-  };
+/**
+ * Handler that receives an IPC message from the main process, and passes it
+ * down to the renderer process.
+ *
+ * @param {*} _event The IPC event we receive from the main process.
+ * @param {*} data The data of the IPC message.
+ */
+function receiveIpcMessage (_event, data) {
+  window.postMessage(data, RENDERER_ORIGIN);
 }
 
-init();
+/**
+ * Handler that receives a post message from the renderer process, and passes
+ * it down to the main process.
+ *
+ * @param {*} _event The post message event we receive from the renderer process.
+ */
+function receivePostMessage (event) {
+  const { data, origin } = event;
+
+  if (origin !== RENDERER_ORIGIN) {
+    return;
+  }
+
+  if (!data) {
+    return;
+  }
+
+  const { from } = data;
+
+  if (from === 'fether:electron') {
+    // Since `payload` and `frontend` have the same origin, we use the `from`
+    // field to differentiate who's sending the postMessage to whom. If the
+    // message has been sent by `electron`, we ignore.
+    return;
+  }
+
+  ipcRenderer.send('send-to-main', data);
+}
+
+ipcRenderer.on('send-to-renderer', receiveIpcMessage);
+window.addEventListener('message', receivePostMessage);

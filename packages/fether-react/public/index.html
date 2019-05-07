@@ -1,35 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="theme-color" content="#000000">
-  <!-- These CSP are for prod. For dev, CSP are set inside @electron-app -->
-  <meta http-equiv="Content-Security-Policy" content="
-      block-all-mixed-content;
-      child-src 'none';
-      connect-src https: ws:;
-      default-src 'none';
-      font-src 'none';
-      form-action 'none';
-      frame-src 'none';
-      img-src 'self' 'unsafe-inline' file: data: blob: https:;
-      manifest-src 'none';
-      media-src 'none';
-      object-src 'none';
-      prefetch-src 'none';
-      script-src 'self' 'unsafe-inline';
-      style-src 'self' 'unsafe-inline' http:;
-      worker-src blob:;
-    ">
-  <!--
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="theme-color" content="#000000" />
+    <!-- These CSP are for prod. For dev, CSP are set inside @electron-app -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+        block-all-mixed-content;
+        child-src 'none';
+        connect-src 'self' https: ws:;
+        default-src 'none';
+        font-src 'none';
+        form-action 'none';
+        frame-src 'none';
+        img-src 'self' 'unsafe-inline' data: https:;
+        manifest-src 'none';
+        media-src 'none';
+        object-src 'none';
+        script-src 'self' 'unsafe-inline';
+        style-src 'self' 'unsafe-inline';
+        worker-src blob:;
+      "
+    />
+    <!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
-  <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-  <!--
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
@@ -38,15 +42,15 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-  <title>Fether</title>
-</head>
+    <title>Fether</title>
+  </head>
 
-<body>
-  <noscript>
-    You need to enable JavaScript to run this app.
-  </noscript>
-  <div id="root"></div>
-  <!--
+  <body>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="root"></div>
+    <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
@@ -56,6 +60,5 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-</body>
-
+  </body>
 </html>

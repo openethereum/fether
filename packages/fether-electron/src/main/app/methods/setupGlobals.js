@@ -3,15 +3,11 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { DEFAULT_WS_PORT, IS_PROD, TRUSTED_LOOPBACK } from '../constants';
-import cli from '../cli';
+import { IS_PROD } from '../constants';
 
 function setupGlobals () {
-  // Globals for fether-react parityStore
+  // Globals for preload script
   global.IS_PROD = IS_PROD;
-  global.defaultWsInterface = TRUSTED_LOOPBACK;
-  global.defaultWsPort = DEFAULT_WS_PORT;
-  global.wsPort = cli.wsPort;
 }
 
 export default setupGlobals;
