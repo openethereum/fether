@@ -23,8 +23,8 @@ import withTokens from '../../utils/withTokens';
   token: tokens[tokenAddress]
 }))
 @withAccount
-@withBalance // Balance of current token (can be ETH)
-@withEthBalance // ETH balance
+@withBalance // Balance of current token (can be ETH or ETC)
+@withEthBalance // ETH or ETC balance
 @observer
 class SignedTxSummary extends Component {
   handleSubmit = values => {

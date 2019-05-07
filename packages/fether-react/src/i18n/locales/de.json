@@ -24,6 +24,7 @@
       "error_msg_existing_address": "Konto {{address}} bereits aufgeführt",
       "signer": {
         "error_msg_signer_imported": "Ungültiger QR-Code",
+        "error_msg_signer_imported_network_mismatch": "Netzwerk stimmt nicht überein. Importieren Sie ein Parity Signer-Konto für das aktuelle {{chain_name}} -Netzwerk.",
         "label_msg_recover_signer": "Erholen Sie sich von Parity Signer",
         "label_button_recover_signer_scan": "QR-Code scannen",
         "label_msg_recover_signer_scan": "QR-Code des Parity Signer-Kontos scannen"
@@ -87,7 +88,7 @@
       },
       "description": {
         "no_internet": "Bitte verbinden Sie sich mit dem Internet",
-        "no_clock_sync": "Mac: Systemeinstellungen -> Datum und Uhrzeit -> Deaktivieren Sie das Kontrollkästchen 'Datum und Uhrzeit automatisch festlegen'. Windows: Systemsteuerung -> 'Uhrzeit, Sprache und Region' -> 'Datum und Uhrzeit' -> Deaktivieren Sie das Kontrollkästchen 'Datum einstellen' und Zeit automatisch",
+        "no_clock_sync": "Mac: Systemeinstellungen -> Datum und Uhrzeit -> Deaktivieren Sie das Kontrollkästchen 'Datum und Uhrzeit automatisch festlegen' und aktivieren Sie das Kontrollkästchen erneut\n\n Linux: Einstellungen> System -> Datum und Uhrzeit -> Deaktivieren Sie das Kontrollkästchen 'Automatisches Datum und Uhrzeit' und aktivieren Sie das Kontrollkästchen erneut\n\n Windows: Systemsteuerung -> 'Uhrzeit, Sprache und Region' -> 'Datum und Uhrzeit' -> Deaktivieren Sie das Kontrollkästchen 'Datum und Uhrzeit automatisch einstellen' und aktivieren Sie das Kontrollkästchen erneut",
         "no_peers": "Verbindung zu Netzwerkkollegen...",
         "syncing": "Synchronisieren..."
       }
@@ -140,6 +141,8 @@
         "to": "Zu",
         "amount": "Menge",
         "tx_speed": "Transaktionsgeschwindigkeit",
+        "high": "Hoch",
+        "low": "Niedrig",
         "password": "Passwort"
       },
       "details": {
@@ -147,8 +150,8 @@
         "hide": "Verbergen",
         "missing_fields": "Fehlende Eingabefelder...",
         "gas_limit": "Gaslimit: {{gas_limit}}",
-        "fee": "Gebühr: {{fee}} ETH (Gaslimit * Gaspreis)",
-        "total_amount": "Gesamtmenge: {{total_amount}} ETH",
+        "fee": "Gebühr: {{fee}} {{chain_id}} (gaslimit * gaspreis)",
+        "total_amount": "Gesamtmenge: {{total_amount}} {{chain_id}}",
         "title": "Transaktionsdetails:"
       },
       "warning": {
@@ -157,8 +160,8 @@
       },
       "validation": {
         "amount_invalid": "Bitte geben Sie einen gültigen Betrag ein",
-        "eth_balance_too_low_for_gas": "ETH-Bilanz zu niedrig, um für Gas zu zahlen.",
-        "eth_balance_too_low": "Sie haben nicht genug ETH-Balance",
+        "eth_balance_too_low_for_gas": "{{chain_id}}-Bilanz zu niedrig, um für Gas zu zahlen.",
+        "eth_balance_too_low": "Sie haben nicht genug {{chain_id}}-Balance",
         "fetching_chain_id": "Abrufen der Ketten-ID",
         "fetching_eth_balance": "Ether-Balance abrufen",
         "fetching_tx_count": "Transaktionsanzahl für Nonce abrufen",
@@ -168,6 +171,7 @@
         "min_decimals": "Bitte geben Sie einen {{token_name}} Wert mit weniger als {{token_decimals}} Dezimalstellen",
         "token_balance_too_low": "Sie haben nicht genug {{token_symbol}} Gleichgewicht",
         "invalid_eth_address": "Bitte geben Sie eine gültige Ethereum-Adresse ein",
+        "invalid_etc_address": "Bitte geben Sie eine gültige Ethereum Classic-Adresse ein",
         "prevent_send_zero_account": "Sie dürfen nicht mit Token {{token_name}} an das Nullkonto (0x0)",
         "unable_estimate_gas": "Gas kann nicht geschätzt werden...",
         "estimating_gas": "Gas schätzen...",

@@ -17,14 +17,20 @@ import getParityWordlist from './utils/getParityWordlist';
 
 const debug = Debug('createAccountStore');
 
-export const SIGNER_ACCOUNTS_LS_KEY = `${LS_PREFIX}::paritySignerAccounts`;
 const DERIVATION_PATH = "m/44'/60'/0'/0/0";
-const MIN_PARITY_SIGNER_RECOVERY_WORDS = 11;
-const MAX_PARITY_SIGNER_RECOVERY_WORDS = 24;
 const ETHEREUM_ADDRESS_LENGTH = 40;
 const JSON_VERSION = 3;
+const MIN_PARITY_SIGNER_RECOVERY_WORDS = 11;
+const MAX_PARITY_SIGNER_RECOVERY_WORDS = 24;
+export const SIGNER_ACCOUNTS_LS_KEY = `${LS_PREFIX}::paritySignerAccounts`;
 
 export class CreateAccountStore {
+  @observable
+  address = null;
+
+  @observable
+  bip39Phrase = null; // 12 to 24-word seed phrase
+
   @observable
   isImport = false; // Are we creating a new account, or importing via phrase?
 
@@ -32,17 +38,12 @@ export class CreateAccountStore {
   jsonString = null;
 
   @observable
-  parityPhrase = null; // 11 or 12-words seed phrase (Parity Signer used to generate a 11 words recovery phrase)
-
-  @observable
-  bip39Phrase = null; // 12 to 24-words seed phrase
-
-  @observable
-  address = null;
-
-  @observable
   name = ''; // Account name
 
+  @observable
+  parityPhrase = null; // 11 or 12-word seed phrase (Parity Signer is used to generate an 11-word recovery phrase)
+
+  @observable
   signerChainId = null;
 
   @action
@@ -51,15 +52,16 @@ export class CreateAccountStore {
   };
 
   /**
-   * Reinitialize everything
+   * Reinitialize account information
    */
   @action
-  clear = async () => {
-    this.jsonString = null;
-    this.parityPhrase = null;
-    this.bip39Phrase = null;
+  clear = () => {
     this.address = null;
+    this.bip39Phrase = null;
+    this.jsonString = null;
     this.name = '';
+    this.parityPhrase = null;
+    this.signerChainId = null;
   };
 
   /**
@@ -85,6 +87,7 @@ export class CreateAccountStore {
       // If the address of the account to add doesn't already exist, add it
       const accounts =
         (await localForage.getItem(SIGNER_ACCOUNTS_LS_KEY)) || [];
+
       if (
         !accounts.some(
           ({ address: existingAddress }) =>
@@ -152,8 +155,8 @@ export class CreateAccountStore {
     const hdwallet = hdkey.fromMasterSeed(bip39.mnemonicToSeed(phrase));
     const wallet = hdwallet.derivePath(DERIVATION_PATH).getWallet();
 
-    this.bip39Phrase = phrase;
     this.address = `0x${wallet.getAddress().toString('hex')}`;
+    this.bip39Phrase = phrase;
   };
 
   setParityPhrase = async phrase => {
@@ -161,6 +164,7 @@ export class CreateAccountStore {
 
     const words = phrase.split(' ');
     const PARITY_WORDLIST = getParityWordlist();
+
     if (
       words.length < MIN_PARITY_SIGNER_RECOVERY_WORDS ||
       words.length > MAX_PARITY_SIGNER_RECOVERY_WORDS ||
@@ -171,8 +175,8 @@ export class CreateAccountStore {
 
     return parityStore.api.parity.phraseToAddress(phrase).then(
       action(address => {
-        this.parityPhrase = phrase;
         this.address = address;
+        this.parityPhrase = phrase;
       })
     );
   };
@@ -197,6 +201,7 @@ export class CreateAccountStore {
 
     this.jsonString = jsonString;
     this.address = `0x${json.address}`;
+
     if (json.name) {
       this.setName(json.name);
     }
@@ -208,10 +213,11 @@ export class CreateAccountStore {
   };
 
   @action
-  importFromSigner = async ({ address, chainId }) => {
-    await this.clear();
+  importFromSigner = async ({ address, signerChainId }) => {
+    this.clear();
+
     this.address = address;
-    this.signerChainId = chainId;
+    this.signerChainId = signerChainId;
   };
 
   // Returns true for Signer account imports

@@ -99,11 +99,36 @@ describe('method send', () => {
     );
   });
 
-  test('should update txStatus', () => {
+  test('should call post$ if the token is ETC', () => {
+    sendStore.setTx(mock.txEtc);
+    sendStore.send('passphrase');
+    expect(mock.txEtc.token.address).toEqual('ETC');
+    expect(lightJs.post$).toHaveBeenCalledWith(
+      {
+        from: '0x456',
+        gasPrice: new BigNumber('4000000000'),
+        to: '0x123',
+        value: new BigNumber('10000000000000000')
+      },
+      {
+        passphrase: 'passphrase'
+      }
+    );
+  });
+
+  test('should update txStatus if the token is ETH', () => {
     sendStore.setTxStatus = jest.fn();
     sendStore.setTx(mock.txEth);
     sendStore.send('passphrase');
     expect(mock.txEth.token.address).toEqual('ETH');
+    expect(sendStore.setTxStatus).toHaveBeenCalledWith({ estimating: true });
+  });
+
+  test('should update txStatus if the token is ETC', () => {
+    sendStore.setTxStatus = jest.fn();
+    sendStore.setTx(mock.txEtc);
+    sendStore.send('passphrase');
+    expect(mock.txEtc.token.address).toEqual('ETC');
     expect(sendStore.setTxStatus).toHaveBeenCalledWith({ estimating: true });
   });
 });
