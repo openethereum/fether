@@ -15,28 +15,30 @@
 }
 
 .qr-screen {
-  margin-top: 3.4rem;
-  display: flex;
   align-items: center;
+  display: flex;
   justify-content: center;
+  margin-top: 3.4rem;
 }
 
 .qr-screen-content {
   width: 80%;
 
   .qr-screen_image {
-    display: flex;
     align-items: center;
+    display: flex;
     justify-content: center;
+
     img {
       display: block;
-      width: 19rem;
       height: auto;
+      width: 19rem;
     }
   }
 
   .qr-screen_address {
     margin-top: 1rem;
+
     p {
       color: $grey;
       text-align: center;

@@ -16,8 +16,8 @@ import withAccount from '../utils/withAccount';
 @withAccount
 class Tokens extends PureComponent {
   state = {
-    isMenuOpen: false,
-    isAccountQrCodeOpen: false
+    isAccountQrCodeOpen: false,
+    isMenuOpen: false
   };
 
   handleMenuClose = () => {

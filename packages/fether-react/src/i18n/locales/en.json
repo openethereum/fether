@@ -197,9 +197,9 @@
   "tokens": {
     "tokens": {
       "menu_items": {
-        "backup_account": "Backup Account",
+        "account_qr_code": "Account QR Code",
         "add_tokens": "Add Tokens",
-        "account_qr_code": "Account QR Code"
+        "backup_account": "Backup Account"
       }
     }
   },

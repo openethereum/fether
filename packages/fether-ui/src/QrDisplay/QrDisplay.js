@@ -22,8 +22,8 @@ function getDataUrl (value) {
 
 export class QrDisplay extends React.PureComponent {
   state = {
-    image: null,
-    address: null
+    address: null,
+    image: null
   };
 
   static getDerivedStateFromProps ({ value }, prevState) {
@@ -50,8 +50,8 @@ export class QrDisplay extends React.PureComponent {
     return (
       <QrModal
         address={address}
-        icon={image}
         handleClose={handleClose}
+        icon={image}
         visible={visible}
       />
     );
@@ -59,8 +59,8 @@ export class QrDisplay extends React.PureComponent {
 }
 
 QrDisplay.propTypes = {
-  icon: PropTypes.string,
   handleClose: PropTypes.func,
+  icon: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   visible: PropTypes.bool
 };
