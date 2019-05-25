@@ -111,6 +111,15 @@ cd ./fether
 yarn install
 ```
 
+### Configure Sandboxing
+
+#### Linux
+
+```bash
+sudo chown root /path/to/fether/node_modules/electron/dist/chrome-sandbox
+sudo chmod 4755 /path/to/fether/node_modules/electron/dist/chrome-sandbox
+```
+
 ### Build and run
 
 #### Build this repo and run
