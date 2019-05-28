@@ -9,6 +9,7 @@ import { fromWei, toWei } from '@parity/api/lib/util/wei';
 
 import i18n, { packageNS } from '../../../i18n';
 import { chainIdToString, isNotErc20TokenAddress } from '../../../utils/chain';
+import { GAS_LIMIT_DATA } from '../../../utils/transaction';
 
 class TxDetails extends Component {
   renderDetails = () => {
@@ -51,7 +52,7 @@ ${this.renderTotalAmount()}`;
     // higher Gas Limit. On
     if (values.data) {
       return i18n.t(`${packageNS}:tx.form.details.gas_limit`, {
-        gas_limit: new BigNumber(200000)
+        gas_limit: GAS_LIMIT_DATA
       });
     }
 

@@ -18,6 +18,7 @@ import EthereumTx from 'ethereumjs-tx';
 
 const debug = Debug('transaction');
 const GAS_MULT_FACTOR = 1.25; // Since estimateGas is not always accurate, we add a 25% factor for buffer.
+export const GAS_LIMIT_DATA = new BigNumber(150000);
 
 export const contractForToken = memoize(tokenAddress =>
   makeContract(tokenAddress, abi)
@@ -100,7 +101,7 @@ export const txForErc20 = (tx, token) => {
   };
 
   if (tx.gas) {
-    output.options.gas = tx.gas;
+    output.options.gas = tx.data ? GAS_LIMIT_DATA : tx.gas;
   }
 
   return output;
@@ -120,7 +121,7 @@ export const txForEth = tx => {
   };
   // gas field should not be present when the function is called for gas estimation.
   if (tx.gas) {
-    output.gas = tx.gas;
+    output.gas = tx.data ? GAS_LIMIT_DATA : tx.gas;
   }
   return output;
 };
@@ -141,9 +142,12 @@ const getEthereumTx = tx => {
     transactionCount
   } = tx;
 
+  // Temporary solution
+  const gasLimit = data ? GAS_LIMIT_DATA : gas;
+
   const txParams = {
     nonce: '0x' + transactionCount.toNumber().toString(16),
-    gasLimit: '0x' + gas.toNumber().toString(16),
+    gasLimit: '0x' + gasLimit.toNumber().toString(16),
     gasPrice: toWei(gasPrice, 'shannon').toNumber(),
     chainId
   };
