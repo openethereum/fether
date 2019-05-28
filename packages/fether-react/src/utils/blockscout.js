@@ -20,6 +20,7 @@ const baseUrlForChain = chainName => {
       chainNameBlockscout = 'mainnet';
       baseUrl = `https://blockscout.com/etc/${chainNameBlockscout}`;
       break;
+    case 'goerli':
     case 'kovan':
     case 'ropsten':
       chainNameBlockscout = chainName;

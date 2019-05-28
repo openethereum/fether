@@ -17,7 +17,8 @@ class TxDetails extends Component {
     if (
       !estimatedTxFee ||
       !values.gasPrice ||
-      !values.amount ||
+      // Allow estimating tx fee when the amount is zero
+      // !values.amount ||
       !values.chainId ||
       !values.ethBalance ||
       !values.gas ||
@@ -43,6 +44,17 @@ ${this.renderTotalAmount()}`;
     }
 
     const gasPriceBn = new BigNumber(values.gasPrice.toString());
+
+    // Temporarily solution since Fether has to have the simplest UI
+    // a Gas Price form field may be too overwhelming for beginner users
+    // but advanced users may want to send data that may require a
+    // higher Gas Limit. On
+    if (values.data) {
+      return i18n.t(`${packageNS}:tx.form.details.gas_limit`, {
+        gas_limit: new BigNumber(200000)
+      });
+    }
+
     const gasLimitBn = estimatedTxFee
       .div(gasPriceBn)
       .div(10 ** 9)
@@ -76,14 +88,14 @@ ${this.renderTotalAmount()}`;
     const { estimatedTxFee, token, values } = this.props;
     const currentChainIdBN = values.chainId;
 
-    if (!estimatedTxFee || !values.amount || !token.address) {
+    if (!estimatedTxFee || !token.address) {
       return;
     }
 
     const totalAmount = `${fromWei(
       estimatedTxFee.plus(
         isNotErc20TokenAddress(token.address)
-          ? toWei(values.amount.toString())
+          ? values.amount && toWei(values.amount.toString())
           : 0
       ),
       'ether'

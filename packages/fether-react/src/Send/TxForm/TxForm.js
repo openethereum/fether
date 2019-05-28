@@ -5,6 +5,7 @@
 
 import React, { Component } from 'react';
 import BigNumber from 'bignumber.js';
+// import { isHexString } from 'ethereumjs-util';
 import { chainId$, transactionCountOf$ } from '@parity/light.js';
 import { Clickable, Form as FetherForm, Header } from 'fether-ui';
 import createDecorator from 'final-form-calculate';
@@ -38,8 +39,49 @@ const DEFAULT_AMOUNT_MAX_CHARS = 9;
 const MEDIUM_AMOUNT_MAX_CHARS = 14;
 const MAX_GAS_PRICE = 40; // In Gwei
 const MIN_GAS_PRICE = 3; // Safelow gas price from GasStation, in Gwei
+// Reference: https://ethereum.stackexchange.com/questions/1106/is-there-a-limit-for-transaction-size
+const ESTIMATED_MAX_TOTAL_FEE = 0.002; // In ETH
 
 const debug = Debug('TxForm');
+
+// Luke's custom `isHexString`.
+// See https://github.com/MyCryptoHQ/MyCrypto/issues/2592#issuecomment-496432227
+function isHexString (value, length) {
+  if (typeof value !== 'string') {
+    return false;
+  }
+
+  // Check for hex prefix
+  if (value.substring(0, 2) !== '0x') {
+    return false;
+  }
+
+  // Extract hex value without the 0x prefix
+  // TODO - possible replace with `stripHexPrefix(value).
+  // See https://github.com/ethjs/ethjs-util/blob/master/dist/ethjs-util.js#L2120
+  const postfixValue = value.slice(2);
+  if (!postfixValue.length) {
+    console.log('No characters found after 0x prefix');
+    return false;
+  }
+
+  // Check if non-hex character exists after 0x prefix
+  const match = /[^0-9A-Fa-f]/.exec(postfixValue);
+  if (match) {
+    console.log('Non-hex character match found at ' + match.index);
+    return false;
+  }
+
+  // Check if the hex string is the expected length
+  if (length && postfixValue.length !== length) {
+    console.log(
+      `Hex value length is ${postfixValue.length} but should be ${length}`
+    );
+    return false;
+  }
+
+  return true;
+}
 
 @inject('parityStore', 'sendStore')
 @withTokens
@@ -69,6 +111,20 @@ class TxForm extends Component {
   };
 
   decorator = createDecorator({
+    // FIXME - Why can't we estimate gas when we update the next line to
+    // include the `data` (i.e. `field: /data|to|amount/,`).
+    // If we do then it gives error in console:
+    // ```
+    // eth_estimateGas([{"data":"0x0000000aaaaaaaaaaaaaaaaaaaaaaaaaaaaaffffffffffff",
+    // ... "value":"0x0"}]): -32015: Transaction execution error.
+    // ```
+    //
+    // And in the UI's "Transaction Details" section it displays:
+    // ```
+    // Gas Limit: -1
+    // Fee: -0.000000004 ETH (gas limit * gas price)
+    // Total Amount: -4e-9 ETH
+    // ```
     field: /to|amount/, // when the value of these fields change...
     updates: {
       // ...set field "gas"
@@ -125,7 +181,8 @@ class TxForm extends Component {
 
   isEstimatedTxFee = values => {
     if (
-      values.amount &&
+      // Allow estimating tx fee when the amount is zero
+      // values.amount &&
       values.gas &&
       values.gasPrice &&
       !isNaN(values.amount) &&
@@ -242,6 +299,7 @@ class TxForm extends Component {
                   <Form
                     decorators={[this.decorator]}
                     initialValues={{
+                      amount: 0,
                       chainId,
                       ethBalance,
                       from: address,
@@ -303,7 +361,6 @@ class TxForm extends Component {
                             name='amount'
                             placeholder='0.00'
                             render={FetherForm.Field}
-                            required
                             type='number'
                           >
                             <button
@@ -321,6 +378,15 @@ class TxForm extends Component {
                               {i18n.t(`${packageNS}:tx.form.button_max`)}
                             </button>
                           </Field>
+
+                          <Field
+                            as='textarea'
+                            className='-sm'
+                            label={i18n.t(`${packageNS}:tx.form.field.data`)}
+                            name='data'
+                            placeholder='0x...'
+                            render={FetherForm.Field}
+                          />
 
                           <Field
                             centerText={`${values.gasPrice} GWEI`}
@@ -349,6 +415,14 @@ class TxForm extends Component {
                           />
 
                           <OnChange name='gasPrice'>
+                            {(value, previous) => {
+                              if (this.state.maxSelected) {
+                                mutators.recalculateMax();
+                              }
+                            }}
+                          </OnChange>
+
+                          <OnChange name='data'>
                             {(value, previous) => {
                               if (this.state.maxSelected) {
                                 mutators.recalculateMax();
@@ -418,41 +492,27 @@ class TxForm extends Component {
       return;
     }
 
-    if (!values.amount) {
-      return {
-        amount: i18n.t(`${packageNS}:tx.form.validation.amount_invalid`)
-      };
-    }
-
     const amountBn = new BigNumber(values.amount.toString());
 
     if (amountBn.isNaN()) {
       return {
         amount: i18n.t(`${packageNS}:tx.form.validation.amount_invalid`)
       };
-    } else if (amountBn.isZero()) {
-      if (this.state.maxSelected) {
-        return {
-          amount: i18n.t(
-            `${packageNS}:tx.form.validation.eth_balance_too_low_for_gas`,
-            { chain_id: chainIdToString(currentChainIdBN) }
-          )
-        };
-      }
-      return {
-        amount: i18n.t(`${packageNS}:tx.form.validation.non_zero_amount`)
-      };
     } else if (amountBn.isNegative()) {
       return {
         amount: i18n.t(`${packageNS}:tx.form.validation.positive_amount`)
       };
-    } else if (
-      isNotErc20TokenAddress(token.address) &&
-      toWei(values.amount).lt(1)
-    ) {
-      return {
-        amount: i18n.t(`${packageNS}:tx.form.validation.min_wei`)
-      };
+      // Question: Why do we require a minimum value in wei when users may often
+      // send transactions with a value of say 0 ETH and a "data" value instead.
+      // For example: https://github.com/chainx-org/ChainX/issues/66
+
+      // } else if (
+      //   isNotErc20TokenAddress(token.address) &&
+      //   toWei(values.amount).lt(1)
+      // ) {
+      //   return {
+      //     amount: i18n.t(`${packageNS}:tx.form.validation.min_wei`)
+      //   };
     } else if (amountBn.dp() > token.decimals) {
       return {
         amount: i18n.t(`${packageNS}:tx.form.validation.min_decimals`, {
@@ -460,7 +520,19 @@ class TxForm extends Component {
           token_decimals: token.decimals
         })
       };
-    } else if (balance && balance.lt(amountBn)) {
+      // Transaction without any "data"
+    } else if (!values.data && balance && balance.lt(amountBn)) {
+      return {
+        amount: i18n.t(
+          `${packageNS}:tx.form.validation.token_balance_too_low`,
+          {
+            token_symbol: token.symbol
+          }
+        )
+      };
+      // Transaction size may be large when user provides "data"
+      // so we need to ensure they have sufficient balance to cover worst-case fee
+    } else if (values.data && balance && balance.lt(ESTIMATED_MAX_TOTAL_FEE)) {
       return {
         amount: i18n.t(
           `${packageNS}:tx.form.validation.token_balance_too_low`,
@@ -483,6 +555,12 @@ class TxForm extends Component {
             token_name: token.name
           }
         )
+      };
+      // "data" field should be a hex string (not a hash).
+      // See https://github.com/chainx-org/ChainX/issues/66#issuecomment-496446585
+    } else if (values.data && !isHexString(values.data)) {
+      return {
+        amount: i18n.t(`${packageNS}:tx.form.validation.data_invalid`)
       };
     }
     return true;

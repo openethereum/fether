@@ -139,6 +139,7 @@
       "label_unlock": "Konto entsperren:",
       "field": {
         "to": "Zu",
+        "data": "Daten",
         "amount": "Menge",
         "tx_speed": "Transaktionsgeschwindigkeit",
         "high": "Hoch",
@@ -160,6 +161,7 @@
       },
       "validation": {
         "amount_invalid": "Bitte geben Sie einen gültigen Betrag ein",
+        "data_invalid": "Bitte geben Sie eine gültige hex Eingabedatenfolge ein",
         "eth_balance_too_low_for_gas": "{{chain_id}}-Bilanz zu niedrig, um für Gas zu zahlen.",
         "eth_balance_too_low": "Sie haben nicht genug {{chain_id}}-Balance",
         "fetching_chain_id": "Abrufen der Ketten-ID",

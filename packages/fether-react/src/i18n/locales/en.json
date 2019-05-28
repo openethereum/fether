@@ -139,6 +139,7 @@
       "label_unlock": "Unlock account:",
       "field": {
         "to": "To",
+        "data": "Data",
         "amount": "Amount",
         "tx_speed": "Transaction Speed",
         "high": "High",
@@ -160,6 +161,7 @@
       },
       "validation": {
         "amount_invalid": "Please enter a valid amount",
+        "data_invalid": "Please enter a valid input data hex string",
         "eth_balance_too_low_for_gas": "{{chain_id}} balance too low to pay for gas.",
         "eth_balance_too_low": "You don't have enough {{chain_id}} balance",
         "fetching_chain_id": "Fetching chain ID",

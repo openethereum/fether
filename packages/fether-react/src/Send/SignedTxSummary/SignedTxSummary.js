@@ -78,6 +78,7 @@ class SignedTxSummary extends Component {
                   <Form
                     key='txForm'
                     initialValues={{
+                      data: tx.data,
                       from: address,
                       to: tx.to,
                       amount: `${tx.amount} ${token.symbol}`,
@@ -101,6 +102,14 @@ class SignedTxSummary extends Component {
                             disabled
                             label={i18n.t(`${packageNS}:tx.form.field.amount`)}
                             name='amount'
+                            render={FetherForm.Field}
+                          />
+
+                          <Field
+                            className='form_field_value'
+                            disabled
+                            label={i18n.t(`${packageNS}:tx.form.field.data`)}
+                            name='data'
                             render={FetherForm.Field}
                           />
 

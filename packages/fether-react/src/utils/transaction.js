@@ -93,6 +93,7 @@ export const txForErc20 = (tx, token) => {
       )
     ],
     options: {
+      data: tx.data,
       from: tx.from,
       gasPrice: toWei(tx.gasPrice, 'shannon') // shannon == gwei
     }
@@ -111,6 +112,7 @@ export const txForErc20 = (tx, token) => {
  */
 export const txForEth = tx => {
   const output = {
+    data: tx.data,
     from: tx.from,
     gasPrice: toWei(tx.gasPrice, 'shannon'), // shannon == gwei
     to: tx.to,
@@ -128,7 +130,16 @@ export const txForEth = tx => {
  * EthereumTx object.
  */
 const getEthereumTx = tx => {
-  const { amount, chainId, gas, gasPrice, to, token, transactionCount } = tx;
+  const {
+    amount,
+    chainId,
+    data,
+    gas,
+    gasPrice,
+    to,
+    token,
+    transactionCount
+  } = tx;
 
   const txParams = {
     nonce: '0x' + transactionCount.toNumber().toString(16),
@@ -138,25 +149,27 @@ const getEthereumTx = tx => {
   };
 
   if (isNotErc20TokenAddress(token.address)) {
+    txParams.data = data;
     txParams.to = to;
     txParams.value = parseFloat(amount) * Math.pow(10, 18);
   } else {
     txParams.to = token.address;
-    txParams.data =
-      '0x' +
-      new Abi(eip20).functions
-        .find(f => f._name === 'transfer')
-        .encodeCall([
-          new Token('address', to),
-          new Token(
-            'uint',
-            '0x' +
-              new BigNumber(amount)
-                .multipliedBy(new BigNumber(10).pow(token.decimals))
-                .toNumber()
-                .toString(16)
-          )
-        ]);
+    txParams.data = txParams.data
+      ? data
+      : '0x' +
+        new Abi(eip20).functions
+          .find(f => f._name === 'transfer')
+          .encodeCall([
+            new Token('address', to),
+            new Token(
+              'uint',
+              '0x' +
+                new BigNumber(amount)
+                  .multipliedBy(new BigNumber(10).pow(token.decimals))
+                  .toNumber()
+                  .toString(16)
+            )
+          ]);
   }
 
   return new EthereumTx(txParams);

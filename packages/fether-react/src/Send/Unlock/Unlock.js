@@ -95,6 +95,14 @@ class Unlock extends Component {
                       defaultValue={`${tx.amount} ${token.symbol}`}
                       label={i18n.t(`${packageNS}:tx.form.field.amount`)}
                     />
+
+                    <FetherForm.Field
+                      as='textarea'
+                      className='form_field_value'
+                      disabled
+                      defaultValue={`${tx.data}`}
+                      label={i18n.t(`${packageNS}:tx.form.field.data`)}
+                    />
                   </div>,
                   <Form
                     key='signerForm'
