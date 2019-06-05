@@ -198,7 +198,8 @@
     "tokens": {
       "menu_items": {
         "backup_account": "Sicherungskonto",
-        "add_tokens": "Token hinzufügen"
+        "add_tokens": "Token hinzufügen",
+        "delete_account": "Konto löschen"
       }
     }
   },

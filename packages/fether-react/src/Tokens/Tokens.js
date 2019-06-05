@@ -50,6 +50,10 @@ class Tokens extends PureComponent {
       {
         name: i18n.t(`${packageNS}:tokens.tokens.menu_items.add_tokens`),
         onClick: () => history.push(`/whitelist/${address}`)
+      },
+      {
+        name: i18n.t(`${packageNS}:tokens.tokens.menu_items.delete_account`),
+        onClick: () => history.push(`/delete/${address}`)
       }
     ];
 
