@@ -12,6 +12,13 @@
         "msg4": "Wenn jemand Ihren geheimen Satz ergreift, kann er Ihr Konto belasten."
       }
     },
+    "delete": {
+      "label_msg_password_unlock": "Entsperren Sie Ihr Konto, um es zu löschen:",
+      "label_password_unlock": "Passwort",
+      "button_confirm": "Löschen",
+      "warning_parity_account": "Beachten Sie, dass Ihr Konto und Ihr Cryptowährungen definitiv verloren gehen, wenn Sie kein Backup (über JSON oder über die Wiederherstellungssatz) erstellt haben!",
+      "warning_signer_account": "Das Konto wird aus Fether entfernt. Sie können es jedoch jederzeit wieder hinzufügen, indem Sie es erneut aus Parity Signer importieren."
+    },
     "existing": {
       "no_name": "(kein Name}"
     },
@@ -198,7 +205,8 @@
     "tokens": {
       "menu_items": {
         "backup_account": "Sicherungskonto",
-        "add_tokens": "Token hinzufügen"
+        "add_tokens": "Token hinzufügen",
+        "delete_account": "Konto löschen"
       }
     }
   },

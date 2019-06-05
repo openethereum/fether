@@ -19,6 +19,7 @@ import { version } from '../../package.json';
 import i18n, { packageNS } from '../i18n';
 import Accounts from '../Accounts';
 import BackupAccount from '../BackupAccount';
+import DeleteAccount from '../DeleteAccount';
 import Onboarding from '../Onboarding';
 import * as postMessage from '../utils/postMessage';
 import RequireParityVersion from '../RequireParityVersion';
@@ -177,6 +178,10 @@ class App extends Component {
                   <Route
                     path='/backup/:accountAddress'
                     component={BackupAccount}
+                  />
+                  <Route
+                    path='/delete/:accountAddress'
+                    component={DeleteAccount}
                   />
                   <Route
                     path='/send/:tokenAddress/from/:accountAddress'
