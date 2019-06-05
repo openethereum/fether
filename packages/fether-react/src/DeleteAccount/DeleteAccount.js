@@ -5,11 +5,14 @@
 
 import React, { Component } from 'react';
 import { AccountHeader, Card, Form as FetherForm } from 'fether-ui';
+import localForage from 'localforage';
 import { observer, inject } from 'mobx-react';
 import { Link, withRouter } from 'react-router-dom';
 
 import i18n, { packageNS } from '../i18n';
+import localForage$ from '../utils/localForage';
 import RequireHealthOverlay from '../RequireHealthOverlay';
+import { SIGNER_ACCOUNTS_LS_KEY } from '../stores/createAccountStore';
 import withAccount from '../utils/withAccount';
 
 @withRouter
@@ -49,9 +52,20 @@ class DeleteAccount extends Component {
   };
 
   deleteSignerAccount = () => {
-    const { history } = this.props;
+    const {
+      account: { address: currentAddress },
+      history
+    } = this.props;
 
-    history.push(`/accounts`);
+    localForage$(SIGNER_ACCOUNTS_LS_KEY).subscribe(async accounts => {
+      const removed = accounts.filter(
+        ({ address }) => address !== currentAddress
+      );
+
+      await localForage.setItem(SIGNER_ACCOUNTS_LS_KEY, removed);
+
+      history.push(`/accounts`);
+    });
   };
 
   handlePasswordChange = ({ target: { value } }) => {
@@ -140,7 +154,6 @@ class DeleteAccount extends Component {
 
   renderSignerAccount () {
     const { history } = this.props;
-    const { message } = this.state;
 
     return (
       <React.Fragment>
@@ -148,7 +161,7 @@ class DeleteAccount extends Component {
           <p>{i18n.t(`${packageNS}:account.delete.warning_signer_account`)}</p>
         </div>
 
-        <p className='error'> {message} </p>
+        <br />
 
         <nav className='form-nav -space-around'>
           <button
