@@ -20,6 +20,13 @@
       "label_password_unlock": "Password",
       "button_confirm": "Confirm backup"
     },
+    "delete": {
+      "label_msg_password_unlock": "Unlock your account to delete it:",
+      "label_password_unlock": "Password",
+      "button_confirm": "Confirm delete",
+      "warning_parity_account": "Please note that if you haven't made any backup (via JSON or via recovery phrase), your account and its funds will be definitely lost!",
+      "warning_signer_account": "The account will be removed from Fether, but you can add it back anytime by importing it again from Parity Signer."
+    },
     "import": {
       "error_msg_existing_address": "Account {{address}} already listed",
       "signer": {
