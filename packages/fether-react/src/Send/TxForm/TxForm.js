@@ -16,7 +16,6 @@ import { isAddress } from '@parity/api/lib/util/address';
 import light from '@parity/light.js-react';
 import { Link } from 'react-router-dom';
 import { OnChange } from 'react-final-form-listeners';
-import IdleTimer from 'react-idle-timer';
 import { withProps } from 'recompose';
 import { startWith } from 'rxjs/operators';
 
@@ -218,7 +217,6 @@ class TxForm extends Component {
 
     return (
       <div>
-        <IdleTimer onIdle={() => history.goBack()} timeout={1000 * 60} />
         <Header
           left={
             <Link to={`/tokens/${address}`} className='icon -back'>
