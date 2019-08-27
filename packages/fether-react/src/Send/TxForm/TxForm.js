@@ -16,8 +16,9 @@ import { isAddress } from '@parity/api/lib/util/address';
 import light from '@parity/light.js-react';
 import { Link } from 'react-router-dom';
 import { OnChange } from 'react-final-form-listeners';
-import { startWith } from 'rxjs/operators';
+import IdleTimer from 'react-idle-timer';
 import { withProps } from 'recompose';
+import { startWith } from 'rxjs/operators';
 
 import i18n, { packageNS } from '../../i18n';
 import Debug from '../../utils/debug';
@@ -207,6 +208,7 @@ class TxForm extends Component {
       account: { address, type },
       chainId,
       ethBalance,
+      history,
       sendStore: { tx },
       token,
       transactionCount
@@ -216,6 +218,7 @@ class TxForm extends Component {
 
     return (
       <div>
+        <IdleTimer onIdle={() => history.goBack()} timeout={1000 * 60} />
         <Header
           left={
             <Link to={`/tokens/${address}`} className='icon -back'>

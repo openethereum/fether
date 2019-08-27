@@ -66,6 +66,7 @@
     "react-final-form": "^3.6.4",
     "react-final-form-listeners": "^1.0.1",
     "react-i18next": "^10.2.0",
+    "react-idle-timer": "^4.2.9",
     "react-markdown": "^3.3.4",
     "react-resize-detector": "^3.0.1",
     "react-router-dom": "^4.2.2",
