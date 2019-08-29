@@ -15,6 +15,22 @@ function setupRequestListeners (fetherApp) {
     return messages(fetherApp, ...args);
   });
 
+  // Electron security guideline
+  // Handle Session Permission Requests From Remote Content
+  // https://electronjs.org/docs/tutorial/security#4-handle-session-permission-requests-from-remote-content
+  session.defaultSession.setPermissionRequestHandler(
+    (_webContents, permission, callback) => {
+      // Only allow camera
+      if (permission === 'media') {
+        callback(true);
+
+        return;
+      }
+
+      callback(false);
+    }
+  );
+
   // WS calls have Origin `file://` by default, which is not trusted.
   // We override Origin header on all WS connections with an authorized one.
   session.defaultSession.webRequest.onBeforeSendHeaders(
