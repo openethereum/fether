@@ -207,7 +207,6 @@ class TxForm extends Component {
       account: { address, type },
       chainId,
       ethBalance,
-      history,
       sendStore: { tx },
       token,
       transactionCount
