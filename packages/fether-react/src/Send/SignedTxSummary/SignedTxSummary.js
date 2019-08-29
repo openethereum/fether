@@ -28,6 +28,8 @@ import withTokens from '../../utils/withTokens';
 @withEthBalance // ETH or ETC balance
 @observer
 class SignedTxSummary extends Component {
+  handleGoToTxForm = () => history.go(-3);
+
   handleSubmit = values => {
     const {
       account: { address },
@@ -54,7 +56,7 @@ class SignedTxSummary extends Component {
 
     return (
       <div>
-        <IdleTimer onIdle={() => history.go(-3)} timeout={1000 * 60} />
+        <IdleTimer onIdle={this.handleGoToTxForm} timeout={1000 * 60} />
 
         <Header
           left={
