@@ -19,15 +19,15 @@ function setupRequestListeners (fetherApp) {
   // Handle Session Permission Requests From Remote Content
   // https://electronjs.org/docs/tutorial/security#4-handle-session-permission-requests-from-remote-content
   session.defaultSession.setPermissionRequestHandler(
-    (_webContents, permission, callback) => {
+    (_webContents, permission, reqCallback) => {
       // Only allow camera
       if (permission === 'media') {
-        callback(true);
+        reqCallback(true);
 
         return;
       }
 
-      callback(false);
+      reqCallback(false);
     }
   );
 
