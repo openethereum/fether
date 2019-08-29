@@ -28,7 +28,9 @@ import withTokens from '../../utils/withTokens';
 @withEthBalance // ETH or ETC balance
 @observer
 class SignedTxSummary extends Component {
-  handleGoToTxForm = () => history.go(-3);
+  handleGoToTxForm = () => {
+    this.props.history.go(-3);
+  };
 
   handleSubmit = values => {
     const {
@@ -49,7 +51,6 @@ class SignedTxSummary extends Component {
   render () {
     const {
       account: { address },
-      history,
       sendStore: { tx },
       token
     } = this.props;
