@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import { Field, Form } from 'react-final-form';
 import { Form as FetherForm, Header } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
+import IdleTimer from 'react-idle-timer';
 import { Link } from 'react-router-dom';
 import { withProps } from 'recompose';
 
@@ -46,12 +47,15 @@ class SignedTxSummary extends Component {
   render () {
     const {
       account: { address },
+      history,
       sendStore: { tx },
       token
     } = this.props;
 
     return (
       <div>
+        <IdleTimer onIdle={() => history.go(-3)} timeout={1000 * 60} />
+
         <Header
           left={
             <Link to={`/tokens/${address}`} className='icon -back'>

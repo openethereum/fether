@@ -58,7 +58,7 @@ class Unlock extends Component {
 
     return (
       <div>
-        <IdleTimer onIdle={() => history.goBack()} timeout={1000 * 10} />
+        <IdleTimer onIdle={() => history.goBack()} timeout={1000 * 60} />
 
         <Header
           left={
