@@ -13,14 +13,8 @@ import Pino from '../utils/pino';
 
 const pino = Pino();
 
-let hasCalledInitParityEthereum = false;
-
 class ParityEthereum {
   constructor () {
-    if (hasCalledInitParityEthereum) {
-      throw new Error('Unable to initialise Parity Ethereum more than once');
-    }
-
     /*
      * - If an instance of Parity Ethereum is already running, we connect to it
      *   and then check in fether-react if the parity_versionInfo RPC returns
