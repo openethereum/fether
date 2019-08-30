@@ -152,14 +152,15 @@ const getMenubarMenuTemplate = fetherApp => {
 
   const viewTab = {
     label: i18n.t('menu.view.submenu_name'),
-    submenu: [
-      { role: 'reload', label: i18n.t('menu.view.reload') },
-      {
-        role: 'toggledevtools',
-        label: i18n.t('menu.view.toggle_developer_tools')
-      }
-    ]
+    submenu: [{ role: 'reload', label: i18n.t('menu.view.reload') }]
   };
+
+  if (!IS_PROD) {
+    viewTab.submenu.push({
+      role: 'toggledevtools',
+      label: i18n.t('menu.view.toggle_developer_tools')
+    });
+  }
 
   /**
    * On win32 we need to use `webContents` to make some of the menu items

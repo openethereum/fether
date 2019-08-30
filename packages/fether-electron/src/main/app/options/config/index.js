@@ -142,7 +142,7 @@ const SECURITY_OPTIONS = {
      * Potential security risk options set explicitly even when default is favourable.
      * Reference: https://electronjs.org/docs/tutorial/security
      */
-    devTools: true,
+    devTools: !IS_PROD,
     /**
      * `nodeIntegration` when enabled allows the software to use Electron's APIs
      * and gain access to Node.js. It must be disabled to restricting access to
