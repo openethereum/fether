@@ -54,8 +54,7 @@ class HealthModal extends Component {
       this.restartNodeTimeout = undefined;
     }
 
-    // If we have internet, but node is not connected, then we wait for 15s, and
-    //
+    // If the node is not connected, then we wait for 15s, and try to launch it
     if (!status.nodeConnected) {
       this.restartNodeTimeout = setTimeout(() => {
         postMessage.send('RESTART_NODE_REQUEST');
