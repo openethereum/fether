@@ -9,6 +9,7 @@ import settings from 'electron-settings';
 import { bundledParityPath } from '../utils/paths';
 import cli from '../cli';
 import Pino from '../utils/pino';
+import setupParityEthereum from '../methods/setupParityEthereum';
 import { TRUSTED_LOOPBACK } from '../constants';
 
 const pino = Pino();
@@ -42,6 +43,11 @@ export default async (fetherApp, event, data) => {
           from: 'fether:electron',
           payload
         });
+
+        break;
+      }
+      case 'RESTART_NODE_REQUEST': {
+        setupParityEthereum({});
 
         break;
       }

@@ -9,7 +9,6 @@ import Blockies from 'react-blockies';
 import { inject, observer } from 'mobx-react';
 
 import i18n, { packageNS } from '../../../i18n';
-import RequireHealthOverlay from '../../../RequireHealthOverlay';
 import loading from '../../../assets/img/icons/loading.svg';
 
 @inject('createAccountStore')
@@ -62,11 +61,7 @@ class AccountName extends Component {
       createAccountStore: { isImport }
     } = this.props;
 
-    return (
-      <RequireHealthOverlay require='node'>
-        {isImport ? this.renderCardWhenImported() : this.renderCardWhenNew()}
-      </RequireHealthOverlay>
-    );
+    return isImport ? this.renderCardWhenImported() : this.renderCardWhenNew();
   }
 
   renderCardWhenImported = () => {

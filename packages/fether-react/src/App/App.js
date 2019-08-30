@@ -149,51 +149,53 @@ class App extends Component {
     }
 
     return (
-      <div className='content'>
-        <div className='window'>
-          <RequireParityVersion>
-            <Modal
-              title={i18n.t(`${packageNS}:releases.new_release_title`)}
-              description={
-                newRelease
-                  ? i18n.t(`${packageNS}:releases.new_release_description`, {
-                    release_name: newRelease.name
-                  })
-                  : ''
-              }
-              visible={newRelease && !newRelease.ignore}
-              buttons={this.renderModalLinks()}
-            >
-              <Router>
-                <Switch>
-                  {/* The next line is the homepage */}
-                  <Redirect exact from='/' to='/accounts' />
-                  <Route path='/accounts' component={Accounts} />
-                  <Route path='/onboarding' component={Onboarding} />
-                  <Route path='/tokens/:accountAddress' component={Tokens} />
-                  <Route
-                    path='/whitelist/:accountAddress'
-                    component={Whitelist}
-                  />
-                  <Route
-                    path='/backup/:accountAddress'
-                    component={BackupAccount}
-                  />
-                  <Route
-                    path='/delete/:accountAddress'
-                    component={DeleteAccount}
-                  />
-                  <Route
-                    path='/send/:tokenAddress/from/:accountAddress'
-                    component={Send}
-                  />
-                  <Redirect from='*' to='/' />
-                </Switch>
-              </Router>
-            </Modal>
-          </RequireParityVersion>
+      <RequireHealthOverlay fullscreen require='node'>
+        <div className='content'>
+          <div className='window'>
+            <RequireParityVersion>
+              <Modal
+                title={i18n.t(`${packageNS}:releases.new_release_title`)}
+                description={
+                  newRelease
+                    ? i18n.t(`${packageNS}:releases.new_release_description`, {
+                      release_name: newRelease.name
+                    })
+                    : ''
+                }
+                visible={newRelease && !newRelease.ignore}
+                buttons={this.renderModalLinks()}
+              >
+                <Router>
+                  <Switch>
+                    {/* The next line is the homepage */}
+                    <Redirect exact from='/' to='/accounts' />
+                    <Route path='/accounts' component={Accounts} />
+                    <Route path='/onboarding' component={Onboarding} />
+                    <Route path='/tokens/:accountAddress' component={Tokens} />
+                    <Route
+                      path='/whitelist/:accountAddress'
+                      component={Whitelist}
+                    />
+                    <Route
+                      path='/backup/:accountAddress'
+                      component={BackupAccount}
+                    />
+                    <Route
+                      path='/delete/:accountAddress'
+                      component={DeleteAccount}
+                    />
+                    <Route
+                      path='/send/:tokenAddress/from/:accountAddress'
+                      component={Send}
+                    />
+                    <Redirect from='*' to='/' />
+                  </Switch>
+                </Router>
+              </Modal>
+            </RequireParityVersion>
+          </div>
         </div>
-      </div>
+      </RequireHealthOverlay>
     );
   }
 }

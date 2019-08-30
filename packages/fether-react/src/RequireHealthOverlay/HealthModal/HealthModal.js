@@ -11,12 +11,13 @@ import light from '@parity/light.js-react';
 import { Modal } from 'fether-ui';
 
 import i18n, { packageNS } from '../../i18n';
-import withHealth from '../../utils/withHealth';
 import loading from '../../assets/img/icons/loading.svg';
+import * as postMessage from '../../utils/postMessage';
+import withHealth from '../../utils/withHealth';
 
 // Timeout to wait to restart parity-ethereum light client, if the node is not
 // reachable
-const RESTART_NODE_TIMEOUT = 5 * 1000;
+const RESTART_NODE_TIMEOUT = 15 * 1000;
 
 @withHealth
 @branch(
@@ -43,14 +44,12 @@ class HealthModal extends Component {
   restartNodeTimeout = undefined;
 
   componentDidUpdate () {
-    console.log('componentDidUpdate', this.restartNodeTimeout);
     const {
       health: { status }
     } = this.props;
 
     // Clear timeout each time we have a new health status
     if (this.restartNodeTimeout) {
-      console.log('CLEARNING', this.restartNodeTimeout);
       clearTimeout(this.restartNodeTimeout);
       this.restartNodeTimeout = undefined;
     }
@@ -59,9 +58,9 @@ class HealthModal extends Component {
     //
     if (!status.nodeConnected) {
       this.restartNodeTimeout = setTimeout(() => {
+        postMessage.send('RESTART_NODE_REQUEST');
         console.log('RESTARTING!!!');
       }, RESTART_NODE_TIMEOUT);
-      console.log('SETTING', this.restartNodeTimeout);
     }
   }
 
