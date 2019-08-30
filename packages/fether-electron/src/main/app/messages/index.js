@@ -47,7 +47,7 @@ export default async (fetherApp, event, data) => {
         break;
       }
       case 'RESTART_NODE_REQUEST': {
-        setupParityEthereum({});
+        setupParityEthereum();
 
         break;
       }
