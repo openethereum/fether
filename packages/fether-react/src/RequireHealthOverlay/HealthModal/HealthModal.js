@@ -59,7 +59,6 @@ class HealthModal extends Component {
     if (!status.nodeConnected) {
       this.restartNodeTimeout = setTimeout(() => {
         postMessage.send('RESTART_NODE_REQUEST');
-        console.log('RESTARTING!!!');
       }, RESTART_NODE_TIMEOUT);
     }
   }
