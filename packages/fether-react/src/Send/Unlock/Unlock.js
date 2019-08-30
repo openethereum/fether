@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import { Field, Form } from 'react-final-form';
 import { Form as FetherForm, Header } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
+import IdleTimer from 'react-idle-timer';
 import { Link, Redirect } from 'react-router-dom';
 import { withProps } from 'recompose';
 
@@ -57,6 +58,8 @@ class Unlock extends Component {
 
     return (
       <div>
+        <IdleTimer onIdle={history.goBack} timeout={1000 * 60} />
+
         <Header
           left={
             <Link to={`/tokens/${address}`} className='icon -back'>
@@ -73,7 +76,6 @@ class Unlock extends Component {
             )
           }
         />
-
         <RequireHealthOverlay require='sync'>
           <div className='window_content'>
             <div className='box -padded'>
