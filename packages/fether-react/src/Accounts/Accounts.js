@@ -8,15 +8,18 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 import AccountsList from './AccountsList';
 import CreateAccount from './CreateAccount';
+import RequireHealthOverlay from '../RequireHealthOverlay';
 
 class Accounts extends PureComponent {
   render () {
     return (
-      <Switch>
-        <Route exact path='/accounts' component={AccountsList} />
-        <Route path='/accounts/new/:step' component={CreateAccount} />
-        <Redirect from='/accounts/new' to='/accounts/new/1' />
-      </Switch>
+      <RequireHealthOverlay require='node'>
+        <Switch>
+          <Route exact path='/accounts' component={AccountsList} />
+          <Route path='/accounts/new/:step' component={CreateAccount} />
+          <Redirect from='/accounts/new' to='/accounts/new/1' />
+        </Switch>
+      </RequireHealthOverlay>
     );
   }
 }

@@ -84,7 +84,6 @@
   "health": {
     "status": {
       "title": {
-        "launching": "Knoten starten...",
         "no_internet_no_node_connected": "Kein Internet. Kein Knoten verbunden",
         "internet_no_node_connected": "Verbindung zum Knoten...",
         "no_internet_node_connected": "Kein Internet. Verbindung zum Knoten",

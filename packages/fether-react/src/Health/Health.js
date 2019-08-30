@@ -51,7 +51,7 @@ class Health extends Component {
     } = this.props;
     if (status.good) {
       return '-good';
-    } else if (status.launching || status.syncing) {
+    } else if (status.syncing) {
       return '-syncing';
     } else {
       return '-bad';
@@ -64,9 +64,7 @@ class Health extends Component {
       chainName
     } = this.props;
 
-    if (status.launching) {
-      return i18n.t(`${packageNS}:health.status.title.launching`);
-    } else if (!status.nodeConnected && !status.internet) {
+    if (!status.nodeConnected && !status.internet) {
       return i18n.t(
         `${packageNS}:health.status.title.no_internet_no_node_connected`
       );

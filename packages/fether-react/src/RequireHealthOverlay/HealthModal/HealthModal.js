@@ -14,6 +14,10 @@ import i18n, { packageNS } from '../../i18n';
 import withHealth from '../../utils/withHealth';
 import loading from '../../assets/img/icons/loading.svg';
 
+// Timeout to wait to restart parity-ethereum light client, if the node is not
+// reachable
+const RESTART_NODE_TIMEOUT = 5 * 1000;
+
 @withHealth
 @branch(
   ({
@@ -34,6 +38,32 @@ class HealthModal extends Component {
     health: PropTypes.object,
     visible: PropTypes.bool
   };
+
+  // Timeout to restart parity node
+  restartNodeTimeout = undefined;
+
+  componentDidUpdate () {
+    console.log('componentDidUpdate', this.restartNodeTimeout);
+    const {
+      health: { status }
+    } = this.props;
+
+    // Clear timeout each time we have a new health status
+    if (this.restartNodeTimeout) {
+      console.log('CLEARNING', this.restartNodeTimeout);
+      clearTimeout(this.restartNodeTimeout);
+      this.restartNodeTimeout = undefined;
+    }
+
+    // If we have internet, but node is not connected, then we wait for 15s, and
+    //
+    if (!status.nodeConnected) {
+      this.restartNodeTimeout = setTimeout(() => {
+        console.log('RESTARTING!!!');
+      }, RESTART_NODE_TIMEOUT);
+      console.log('SETTING', this.restartNodeTimeout);
+    }
+  }
 
   render () {
     const { children, fullscreen, visible } = this.props;
@@ -56,9 +86,7 @@ class HealthModal extends Component {
       health: { status }
     } = this.props;
 
-    if (status.launching) {
-      return i18n.t(`${packageNS}:health.status.title.launching`);
-    } else if (!status.nodeConnected && !status.internet) {
+    if (!status.nodeConnected && !status.internet) {
       return i18n.t(
         `${packageNS}:health.status.title.no_internet_no_node_connected`
       );
