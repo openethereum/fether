@@ -10,14 +10,14 @@
     "symbol": "DCN",
     "decimals": 0,
     "name": "Dentacoin",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/dcn%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/dcn%402x.png"
   },
   {
     "address": "0x48f775EFBE4F5EcE6e0DF2f7b5932dF56823B990",
     "symbol": "R",
     "decimals": 0,
     "name": "Revain",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/r%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/r%402x.png"
   },
   {
     "address": "0x1D4cCC31dAB6EA20f461d329a0562C1c58412515",
@@ -54,7 +54,7 @@
     "symbol": "MKR",
     "decimals": 18,
     "name": "MakerDAO",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/mkr%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/mkr%402x.png"
   },
   {
     "address": "0x28B94F58B11aC945341329dBf2e5EF7F8Bd44225",
@@ -67,7 +67,7 @@
     "symbol": "IOTX",
     "decimals": 18,
     "name": "IoTeX Network",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/iotx%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/iotx%402x.png"
   },
   {
     "address": "0xfec0cF7fE078a500abf15F1284958F22049c2C7e",
@@ -92,7 +92,7 @@
     "symbol": "CMT",
     "decimals": 18,
     "name": "CyberMiles Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/cmt%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/cmt%402x.png"
   },
   {
     "address": "0x3dC9a42fa7Afe57BE03c58fD7F4411b1E466C508",
@@ -111,14 +111,14 @@
     "symbol": "TEL (Telcoin)",
     "decimals": 2,
     "name": "Telcoin",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/tel%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/tel%402x.png"
   },
   {
     "address": "0xEc32A9725C59855d841ba7d8D9c99c84ff754688",
     "symbol": "TEL (Meditel)",
     "decimals": 18,
     "name": "Meditel",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/tel%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/tel%402x.png"
   },
   {
     "address": "0xFFE02ee4C69eDf1b340fCaD64fbd6b37a7b9e265",
@@ -203,14 +203,14 @@
     "symbol": "TRX",
     "decimals": 6,
     "name": "Tron Lab Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/trx%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/trx%402x.png"
   },
   {
     "address": "0xfa05A73FfE78ef8f1a739473e462c54bae6567D9",
     "symbol": "LUN",
     "decimals": 18,
     "name": "Lunyr",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/lun%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/lun%402x.png"
   },
   {
     "address": "0x4c382F8E09615AC86E08CE58266CC227e7d4D913",
@@ -241,21 +241,21 @@
     "symbol": "NIO",
     "decimals": 0,
     "name": "Autonio",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/nio%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/nio%402x.png"
   },
   {
     "address": "0x7367A68039d4704f30BfBF6d948020C3B07DFC59",
     "symbol": "BCBC",
     "decimals": 18,
     "name": "Beercoin",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/bcbc%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/bcbc%402x.png"
   },
   {
     "address": "0xa5F8fC0921880Cb7342368BD128eb8050442B1a1",
     "symbol": "ARY",
     "decimals": 18,
     "name": "Block Array",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/ary%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/ary%402x.png"
   },
   {
     "address": "0xbf52F2ab39e26E0951d2a02b49B7702aBe30406a",
@@ -280,7 +280,7 @@
     "symbol": "AST",
     "decimals": 4,
     "name": "Airswap",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/ast%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/ast%402x.png"
   },
   {
     "address": "0xf14922001A2FB8541a433905437ae954419C2439",
@@ -311,7 +311,7 @@
     "symbol": "FSN",
     "decimals": 18,
     "name": "Fusion",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/fsn%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/fsn%402x.png"
   },
   {
     "address": "0xe81D72D14B1516e68ac3190a46C93302Cc8eD60f",
@@ -348,7 +348,7 @@
     "symbol": "ICX",
     "decimals": 18,
     "name": "ICON",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/icx%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/icx%402x.png"
   },
   {
     "address": "0xa8006C4ca56F24d6836727D106349320dB7fEF82",
@@ -379,7 +379,7 @@
     "symbol": "SMART",
     "decimals": 0,
     "name": "Smart Billions",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/smart%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/smart%402x.png"
   },
   {
     "address": "0x27Dce1eC4d3f72C3E457Cc50354f1F975dDEf488",
@@ -440,7 +440,7 @@
     "symbol": "PPT",
     "decimals": 8,
     "name": "Populous",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/ppt%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/ppt%402x.png"
   },
   {
     "address": "0x05C7065d644096a4E4C3FE24AF86e36dE021074b",
@@ -513,7 +513,7 @@
     "symbol": "POLY",
     "decimals": 18,
     "name": "Polymath Network",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/poly%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/poly%402x.png"
   },
   {
     "address": "0x882448f83d90B2bf477Af2eA79327fDEA1335D93",
@@ -556,7 +556,7 @@
     "symbol": "CDT",
     "decimals": 18,
     "name": "CoinDash",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/cdt%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/cdt%402x.png"
   },
   {
     "address": "0x46492473755e8dF960F8034877F61732D718CE96",
@@ -575,7 +575,7 @@
     "symbol": "PRE",
     "decimals": 18,
     "name": "Presearch",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/pre%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/pre%402x.png"
   },
   {
     "address": "0xba9d4199faB4f26eFE3551D490E3821486f135Ba",
@@ -600,7 +600,7 @@
     "symbol": "LOOM",
     "decimals": 18,
     "name": "Loom Network",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/loom%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/loom%402x.png"
   },
   {
     "address": "0xFACCD5Fc83c3E4C3c1AC1EF35D15adf06bCF209C",
@@ -655,7 +655,7 @@
     "symbol": "THETA",
     "decimals": 18,
     "name": "Theta Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/theta%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/theta%402x.png"
   },
   {
     "address": "0xCDB7eCFd3403Eef3882c65B761ef9B5054890a47",
@@ -794,28 +794,28 @@
     "symbol": "REP (1)",
     "decimals": 18,
     "name": "Augur",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/rep%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/rep%402x.png"
   },
   {
     "address": "0x1985365e9f78359a9B6AD760e32412f4a445E862",
     "symbol": "REP (2)",
     "decimals": 18,
     "name": "Augur",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/rep%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/rep%402x.png"
   },
   {
     "address": "0x9B11EFcAAA1890f6eE52C6bB7CF8153aC5d74139",
     "symbol": "ATM",
     "decimals": 8,
     "name": "ATMChain",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/atm%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/atm%402x.png"
   },
   {
     "address": "0x818Fc6C2Ec5986bc6E2CBf00939d90556aB12ce5",
     "symbol": "KIN",
     "decimals": 18,
     "name": "Kin Foundation",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/kin%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/kin%402x.png"
   },
   {
     "address": "0x22F0AF8D78851b72EE799e05F54A77001586B18A",
@@ -870,7 +870,7 @@
     "symbol": "DROP",
     "decimals": 0,
     "name": "Droplex",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/drop%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/drop%402x.png"
   },
   {
     "address": "0x8c39afDf7B17F12c553208555E51ab86E69C35aA",
@@ -907,7 +907,7 @@
     "symbol": "OST",
     "decimals": 18,
     "name": "Simple Token 'OST'",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/ost%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/ost%402x.png"
   },
   {
     "address": "0xE2492F8D2A2618d8709Ca99b1d8d75713Bd84089",
@@ -974,7 +974,7 @@
     "symbol": "TAU",
     "decimals": 18,
     "name": "Lamden Tau",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/tau%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/tau%402x.png"
   },
   {
     "address": "0x2cb101d7dA0ebaA57D3F2fEf46D7FFB7BB64592B",
@@ -1035,7 +1035,7 @@
     "symbol": "ADX",
     "decimals": 4,
     "name": "AdEx Network",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/adx%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/adx%402x.png"
   },
   {
     "address": "0x1543d0F83489e82A1344DF6827B23d541F235A50",
@@ -1090,7 +1090,7 @@
     "symbol": "QRL",
     "decimals": 8,
     "name": "QRL",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/qrl%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/qrl%402x.png"
   },
   {
     "address": "0x77761e63C05aeE6648FDaeaa9B94248351AF9bCd",
@@ -1115,7 +1115,7 @@
     "symbol": "BIX",
     "decimals": 18,
     "name": "Bibox Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/bix%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/bix%402x.png"
   },
   {
     "address": "0xEbeD4fF9fe34413db8fC8294556BBD1528a4DAca",
@@ -1146,7 +1146,7 @@
     "symbol": "ONG",
     "decimals": 18,
     "name": "SoMee.Social",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/ong%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/ong%402x.png"
   },
   {
     "address": "0xEd7fEA78C393cF7B17B152A8c2D0CD97aC31790B",
@@ -1171,7 +1171,7 @@
     "symbol": "QTUM",
     "decimals": 18,
     "name": "Qtum",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/qtum%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/qtum%402x.png"
   },
   {
     "address": "0xA017ac5faC5941f95010b12570B812C974469c2C",
@@ -1214,7 +1214,7 @@
     "symbol": "ENG",
     "decimals": 8,
     "name": "Enigma",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/eng%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/eng%402x.png"
   },
   {
     "address": "0xE6DfBF1FAcA95036B8E76e1Fb28933D025B76Cc0",
@@ -1233,7 +1233,7 @@
     "symbol": "TIX",
     "decimals": 18,
     "name": "Blocktix",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/tix%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/tix%402x.png"
   },
   {
     "address": "0x4F4f0Db4de903B88f2B1a2847971E231D54F8fd3",
@@ -1336,7 +1336,7 @@
     "symbol": "IOST",
     "decimals": 18,
     "name": "IOSToken",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/iost%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/iost%402x.png"
   },
   {
     "address": "0x3A1237D38D0Fb94513f85D61679cAd7F38507242",
@@ -1373,14 +1373,14 @@
     "symbol": "ARN",
     "decimals": 8,
     "name": "Aeron",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/arn%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/arn%402x.png"
   },
   {
     "address": "0x42d6622deCe394b54999Fbd73D108123806f6a18",
     "symbol": "SPANK",
     "decimals": 18,
     "name": "SpankChain",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/spank%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/spank%402x.png"
   },
   {
     "address": "0x9972A0F24194447E73a7e8b6CD26a52e02DDfAD5",
@@ -1393,7 +1393,7 @@
     "symbol": "SNT",
     "decimals": 18,
     "name": "Status Network Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/snt%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/snt%402x.png"
   },
   {
     "address": "0x9E7D29bd499B6c7da2a5B2EaFCF4A39d3BD845D1",
@@ -1436,7 +1436,7 @@
     "symbol": "CVC",
     "decimals": 8,
     "name": "Civic",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/cvc%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/cvc%402x.png"
   },
   {
     "address": "0xe25bCec5D3801cE3a794079BF94adF1B8cCD802D",
@@ -1671,7 +1671,7 @@
     "symbol": "TBX",
     "decimals": 18,
     "name": "Tokenbox",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/tbx%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/tbx%402x.png"
   },
   {
     "address": "0xBb1f24C0c1554b9990222f036b0AaD6Ee4CAec29",
@@ -1702,7 +1702,7 @@
     "symbol": "OMG",
     "decimals": 18,
     "name": "OmiseGO",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/omg%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/omg%402x.png"
   },
   {
     "address": "0x499A6B77bc25C26bCf8265E2102B1B3dd1617024",
@@ -1769,7 +1769,7 @@
     "symbol": "REQ",
     "decimals": 18,
     "name": "Request Network",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/req%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/req%402x.png"
   },
   {
     "address": "0xA13f0743951B4f6E3e3AA039f682E17279f52bc3",
@@ -1896,7 +1896,7 @@
     "symbol": "ENJ",
     "decimals": 18,
     "name": "ENJIN",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/enj%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/enj%402x.png"
   },
   {
     "address": "0x24DCc881E7Dd730546834452F21872D5cb4b5293",
@@ -1987,7 +1987,7 @@
     "symbol": "GUP",
     "decimals": 3,
     "name": "Matchpool",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/gup%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/gup%402x.png"
   },
   {
     "address": "0xB70835D7822eBB9426B56543E391846C107bd32C",
@@ -2024,7 +2024,7 @@
     "symbol": "DAI",
     "decimals": 18,
     "name": "Dai Stablecoin v1.0",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/dai%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/dai%402x.png"
   },
   {
     "address": "0x1183F92A5624D68e85FFB9170F16BF0443B4c242",
@@ -2043,7 +2043,7 @@
     "symbol": "BNTY",
     "decimals": 18,
     "name": "Bounty0x Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/bnty%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/bnty%402x.png"
   },
   {
     "address": "0x10B123FdDde003243199aaD03522065dC05827A0",
@@ -2068,7 +2068,7 @@
     "symbol": "EOS",
     "decimals": 18,
     "name": "EOS",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/eos%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/eos%402x.png"
   },
   {
     "address": "0x6863bE0e7CF7ce860A574760e9020D519a8bDC47",
@@ -2093,7 +2093,7 @@
     "symbol": "SOC",
     "decimals": 18,
     "name": "All Sports",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/soc%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/soc%402x.png"
   },
   {
     "address": "0x3a26746Ddb79B1B8e4450e3F4FFE3285A307387E",
@@ -2148,7 +2148,7 @@
     "symbol": "MDS",
     "decimals": 18,
     "name": "MediShares",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/mds%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/mds%402x.png"
   },
   {
     "address": "0x1C3BB10dE15C31D5DBE48fbB7B87735d1B7d8c32",
@@ -2191,7 +2191,7 @@
     "symbol": "ITC",
     "decimals": 18,
     "name": "IoT Chain",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/itc%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/itc%402x.png"
   },
   {
     "address": "0xD9A12Cde03a86E800496469858De8581D3A5353d",
@@ -2216,7 +2216,7 @@
     "symbol": "STORM",
     "decimals": 18,
     "name": "Storm Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/storm%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/storm%402x.png"
   },
   {
     "address": "0x74C1E4b8caE59269ec1D85D3D4F324396048F4ac",
@@ -2318,7 +2318,7 @@
     "address": "0xA52383B665b91DCe42dD4b6d1E0Fb37d3EFFe489",
     "symbol": "MUSD",
     "decimals": 18,
-    "name": "25376220e0a5cda085b6b25a7a6d528531246b89 USD"
+    "name": "9867bdb19da14e63ffbe63805298fa60bf255cdd USD"
   },
   {
     "address": "0x899338b84D25aC505a332aDCE7402d697D947494",
@@ -2409,7 +2409,7 @@
     "symbol": "EDO",
     "decimals": 18,
     "name": "Eidoo",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/edo%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/edo%402x.png"
   },
   {
     "address": "0x0Ebb614204E47c09B6C3FeB9AAeCad8EE060E23E",
@@ -2560,7 +2560,7 @@
     "symbol": "DATA",
     "decimals": 18,
     "name": "Streamr DATAcoin",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/data%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/data%402x.png"
   },
   {
     "address": "0x68e14bb5A45B9681327E16E528084B9d962C1a39",
@@ -2585,7 +2585,7 @@
     "symbol": "AMB",
     "decimals": 18,
     "name": "Amber Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/amb%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/amb%402x.png"
   },
   {
     "address": "0x17F93475d2A978f527c3f7c44aBf44AdfBa60D5C",
@@ -2604,7 +2604,7 @@
     "symbol": "NCASH",
     "decimals": 18,
     "name": "Nucleus Vision",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/ncash%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/ncash%402x.png"
   },
   {
     "address": "0xC011A72400E58ecD99Ee497CF89E3775d4bd732F",
@@ -2641,7 +2641,7 @@
     "symbol": "DLT",
     "decimals": 18,
     "name": "Agrello",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/dlt%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/dlt%402x.png"
   },
   {
     "address": "0x9a005c9a89BD72a4Bd27721E7a09A3c11D2b03C4",
@@ -2660,14 +2660,14 @@
     "symbol": "VIB",
     "decimals": 18,
     "name": "Viberate",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/vib%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/vib%402x.png"
   },
   {
     "address": "0xc42209aCcC14029c1012fB5680D95fBd6036E2a0",
     "symbol": "PPP",
     "decimals": 18,
     "name": "PayPie",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/ppp%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/ppp%402x.png"
   },
   {
     "address": "0xF722B01910F93B84EDa9CA128b9F05821A41EAe1",
@@ -2698,7 +2698,7 @@
     "symbol": "CTXC",
     "decimals": 18,
     "name": "Cortex",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/ctxc%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/ctxc%402x.png"
   },
   {
     "address": "0x190e569bE071F40c704e15825F285481CB74B6cC",
@@ -2711,14 +2711,14 @@
     "symbol": "HT",
     "decimals": 18,
     "name": "Huobi Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/ht%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/ht%402x.png"
   },
   {
     "address": "0x075c60EE2cD308ff47873b38Bd9A0Fa5853382c4",
     "symbol": "DEEZ",
     "decimals": 18,
     "name": "DeezNuts",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/deez%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/deez%402x.png"
   },
   {
     "address": "0xe530441f4f73bDB6DC2fA5aF7c3fC5fD551Ec838",
@@ -2899,7 +2899,7 @@
     "symbol": "VIBE",
     "decimals": 18,
     "name": "VIBE Coin",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/vibe%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/vibe%402x.png"
   },
   {
     "address": "0xCA29db4221c111888a7e80b12eAc8a266Da3Ee0d",
@@ -2948,14 +2948,14 @@
     "symbol": "CRED",
     "decimals": 18,
     "name": "Verify",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/cred%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/cred%402x.png"
   },
   {
     "address": "0xaAAf91D9b90dF800Df4F55c205fd6989c977E73a",
     "symbol": "TKN",
     "decimals": 8,
     "name": "TokenCard",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/tkn%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/tkn%402x.png"
   },
   {
     "address": "0x336F646F87D9f6bC6Ed42Dd46E8b3fD9DbD15C22",
@@ -2974,7 +2974,7 @@
     "symbol": "USDC",
     "decimals": 6,
     "name": "USD//Coin",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/usdc%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/usdc%402x.png"
   },
   {
     "address": "0xE9fF07809CCff05daE74990e25831d0Bc5cbe575",
@@ -3017,7 +3017,7 @@
     "symbol": "HODL",
     "decimals": 18,
     "name": "HODLCoin",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/hodl%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/hodl%402x.png"
   },
   {
     "address": "0xF26ef5E0545384b7Dcc0f297F2674189586830DF",
@@ -3042,7 +3042,7 @@
     "symbol": "CRPT",
     "decimals": 18,
     "name": "CrypteriumToken",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/crpt%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/crpt%402x.png"
   },
   {
     "address": "0x4a57E687b9126435a9B19E4A802113e266AdeBde",
@@ -3061,21 +3061,21 @@
     "symbol": "RHOC",
     "decimals": 8,
     "name": "RChain",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/rhoc%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/rhoc%402x.png"
   },
   {
     "address": "0xB8c77482e45F1F44dE1745F52C74426C631bDD52",
     "symbol": "BNB",
     "decimals": 18,
     "name": "Binance Coin",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/bnb%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/bnb%402x.png"
   },
   {
     "address": "0x70a72833d6bF7F508C8224CE59ea1Ef3d0Ea3A38",
     "symbol": "UTK",
     "decimals": 18,
     "name": "UTRUST",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/utk%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/utk%402x.png"
   },
   {
     "address": "0x44197A4c44D6A059297cAf6be4F7e172BD56Caaf",
@@ -3148,14 +3148,14 @@
     "symbol": "CND",
     "decimals": 18,
     "name": "Cindicator",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/cnd%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/cnd%402x.png"
   },
   {
     "address": "0xa5Fd1A791C4dfcaacC963D4F73c6Ae5824149eA7",
     "symbol": "JNT",
     "decimals": 18,
     "name": "Jibrel Network",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/jnt%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/jnt%402x.png"
   },
   {
     "address": "0x9af2c6B1A28D3d6BC084bd267F70e90d49741D5B",
@@ -3198,7 +3198,7 @@
     "symbol": "ICN",
     "decimals": 18,
     "name": "ICONOMI",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/icn%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/icn%402x.png"
   },
   {
     "address": "0xfF5c25D2F40B47C4a37f989DE933E26562Ef0Ac0",
@@ -3265,14 +3265,14 @@
     "symbol": "QASH",
     "decimals": 6,
     "name": "QASH",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/qash%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/qash%402x.png"
   },
   {
     "address": "0x0D8775F648430679A709E98d2b0Cb6250d2887EF",
     "symbol": "BAT",
     "decimals": 18,
     "name": "Basic Attention Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/bat%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/bat%402x.png"
   },
   {
     "address": "0x6531f133e6DeeBe7F2dcE5A0441aA7ef330B4e53",
@@ -3291,14 +3291,14 @@
     "symbol": "ZIL",
     "decimals": 12,
     "name": "Zilliqa",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/zil%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/zil%402x.png"
   },
   {
     "address": "0x80fB784B7eD66730e8b1DBd9820aFD29931aab03",
     "symbol": "LEND",
     "decimals": 18,
     "name": "EHTLend",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/lend%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/lend%402x.png"
   },
   {
     "address": "0xE3F4b4A5d91e5cB9435B947F090A319737036312",
@@ -3329,7 +3329,7 @@
     "symbol": "GNO",
     "decimals": 18,
     "name": "Gnosis",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/gno%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/gno%402x.png"
   },
   {
     "address": "0xdD41fBd1Ae95C5D9B198174A28e04Be6b3d1aa27",
@@ -3354,14 +3354,14 @@
     "symbol": "EVX",
     "decimals": 4,
     "name": "EVX Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/evx%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/evx%402x.png"
   },
   {
     "address": "0x47dD62D4D075DeAd71d0e00299fc56a2d747beBb",
     "symbol": "EQL",
     "decimals": 18,
     "name": "Equal",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/eql%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/eql%402x.png"
   },
   {
     "address": "0xc96DF921009B790dfFcA412375251ed1A2b75c60",
@@ -3464,14 +3464,14 @@
     "symbol": "DTH",
     "decimals": 18,
     "name": "dether",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/dth%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/dth%402x.png"
   },
   {
     "address": "0xe3818504c1B32bF1557b16C238B2E01Fd3149C17",
     "symbol": "PLR",
     "decimals": 18,
     "name": "Pillar Project",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/plr%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/plr%402x.png"
   },
   {
     "address": "0xfFe8196bc259E8dEDc544d935786Aa4709eC3E64",
@@ -3484,7 +3484,7 @@
     "symbol": "ABT",
     "decimals": 18,
     "name": "ArcBlock Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/abt%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/abt%402x.png"
   },
   {
     "address": "0x386Faa4703a34a7Fdb19Bec2e14Fd427C9638416",
@@ -3545,7 +3545,7 @@
     "symbol": "EDG",
     "decimals": 0,
     "name": "Edgeless",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/edg%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/edg%402x.png"
   },
   {
     "address": "0x21f0F0fD3141Ee9E11B3d7f13a1028CD515f459c",
@@ -3570,7 +3570,7 @@
     "symbol": "POE",
     "decimals": 8,
     "name": "Po.et Tokens",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/poe%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/poe%402x.png"
   },
   {
     "address": "0xF03f8D65BaFA598611C3495124093c56e8F638f0",
@@ -3721,7 +3721,7 @@
     "symbol": "AGI",
     "decimals": 8,
     "name": "SingularityNET",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/agi%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/agi%402x.png"
   },
   {
     "address": "0x41AB1b6fcbB2fA9DCEd81aCbdeC13Ea6315F2Bf2",
@@ -3758,7 +3758,7 @@
     "symbol": "WPR",
     "decimals": 18,
     "name": "WePower Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/wpr%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/wpr%402x.png"
   },
   {
     "address": "0x0235fE624e044A05eeD7A43E16E3083bc8A4287A",
@@ -3777,7 +3777,7 @@
     "symbol": "DAT",
     "decimals": 18,
     "name": "Datum Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/dat%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/dat%402x.png"
   },
   {
     "address": "0x497bAEF294c11a5f0f5Bea3f2AdB3073DB448B56",
@@ -3832,14 +3832,14 @@
     "symbol": "BRD",
     "decimals": 18,
     "name": "Bread",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/brd%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/brd%402x.png"
   },
   {
     "address": "0xcbeAEc699431857FDB4d37aDDBBdc20E132D4903",
     "symbol": "YOYOW",
     "decimals": 18,
     "name": "YOYOW",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/yoyow%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/yoyow%402x.png"
   },
   {
     "address": "0xeDBaF3c5100302dCddA53269322f3730b1F0416d",
@@ -3882,7 +3882,7 @@
     "symbol": "RDN",
     "decimals": 18,
     "name": "Raiden Network",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/rdn%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/rdn%402x.png"
   },
   {
     "address": "0xe469c4473af82217B30CF17b10BcDb6C8c796e75",
@@ -3937,7 +3937,7 @@
     "symbol": "MCAP",
     "decimals": 8,
     "name": "MCAP",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/mcap%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/mcap%402x.png"
   },
   {
     "address": "0x57C75ECCc8557136D32619a191fBCDc88560d711",
@@ -4124,7 +4124,7 @@
     "symbol": "XPA",
     "decimals": 18,
     "name": "XPA",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/xpa%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/xpa%402x.png"
   },
   {
     "address": "0x2C82c73d5B34AA015989462b2948cd616a37641F",
@@ -4179,7 +4179,7 @@
     "symbol": "DENT",
     "decimals": 8,
     "name": "DENT",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/dent%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/dent%402x.png"
   },
   {
     "address": "0xCb5ea3c190d8f82DEADF7ce5Af855dDbf33e3962",
@@ -4246,7 +4246,7 @@
     "symbol": "APPC",
     "decimals": 18,
     "name": "AppCoins",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/appc%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/appc%402x.png"
   },
   {
     "address": "0x779B7b713C86e3E6774f5040D9cCC2D43ad375F8",
@@ -4259,7 +4259,7 @@
     "symbol": "QSP",
     "decimals": 18,
     "name": "Quantstamp Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/qsp%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/qsp%402x.png"
   },
   {
     "address": "0x039F5050dE4908f9b5ddF40A4F3Aa3f329086387",
@@ -4284,14 +4284,14 @@
     "symbol": "DNT",
     "decimals": 18,
     "name": "District0x Network Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/dnt%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/dnt%402x.png"
   },
   {
     "address": "0xB64ef51C888972c908CFacf59B47C1AfBC0Ab8aC",
     "symbol": "STORJ",
     "decimals": 8,
     "name": "STORJ",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/storj%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/storj%402x.png"
   },
   {
     "address": "0x5e888B83B7287EED4fB7DA7b7d0A0D4c735d94b3",
@@ -4358,7 +4358,7 @@
     "symbol": "MOD",
     "decimals": 0,
     "name": "Modum",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/mod%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/mod%402x.png"
   },
   {
     "address": "0x1e49fF77c355A3e38D6651ce8404AF0E48c5395f",
@@ -4395,7 +4395,7 @@
     "symbol": "FUEL",
     "decimals": 18,
     "name": "Etherparty FUEL",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/fuel%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/fuel%402x.png"
   },
   {
     "address": "0xE8F9fa977ea585591d9F394681318C16552577fB",
@@ -4414,7 +4414,7 @@
     "symbol": "NEXO",
     "decimals": 18,
     "name": "Nexo",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/nexo%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/nexo%402x.png"
   },
   {
     "address": "0x4AaC461C86aBfA71e9d00d9a2cde8d74E4E1aeEa",
@@ -4493,7 +4493,7 @@
     "symbol": "GZR",
     "decimals": 6,
     "name": "Gizer",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/gzr%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/gzr%402x.png"
   },
   {
     "address": "0xA849EaaE994fb86Afa73382e9Bd88c2B6b18Dc71",
@@ -4542,7 +4542,7 @@
     "symbol": "MDA",
     "decimals": 18,
     "name": "Moeda Loyalty Points",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/mda%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/mda%402x.png"
   },
   {
     "address": "0xBC86727E770de68B1060C91f6BB6945c73e10388",
@@ -4579,7 +4579,7 @@
     "symbol": "RLC",
     "decimals": 9,
     "name": "IEx.ec",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/rlc%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/rlc%402x.png"
   },
   {
     "address": "0xBFbe5332f172d77811bC6c272844f3e54A7B23bB",
@@ -4628,7 +4628,7 @@
     "symbol": "TOMO",
     "decimals": 18,
     "name": "Tomocoin",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/tomo%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/tomo%402x.png"
   },
   {
     "address": "0xBEB9eF514a379B997e0798FDcC901Ee474B6D9A1",
@@ -4659,7 +4659,7 @@
     "symbol": "TaaS",
     "decimals": 6,
     "name": "Token-as-a-Service",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/taas%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/taas%402x.png"
   },
   {
     "address": "0x9aeFBE0b3C3ba9Eab262CB9856E8157AB7648e09",
@@ -4714,14 +4714,14 @@
     "symbol": "COB",
     "decimals": 18,
     "name": "Cobinhood Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/cob%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/cob%402x.png"
   },
   {
     "address": "0x8E870D67F660D95d5be530380D0eC0bd388289E1",
     "symbol": "PAX",
     "decimals": 18,
     "name": "Paxos Standard (PAX)",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/pax%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/pax%402x.png"
   },
   {
     "address": "0x5A567e28dbFa2bBD3ef13C0a01be114745349657",
@@ -4920,7 +4920,7 @@
     "symbol": "ENTRP",
     "decimals": 18,
     "name": "Hut34 Entropy Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/entrp%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/entrp%402x.png"
   },
   {
     "address": "0x54b293226000ccBFC04DF902eEC567CB4C35a903",
@@ -5005,7 +5005,7 @@
     "symbol": "TNT",
     "decimals": 8,
     "name": "Tierion Network Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/tnt%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/tnt%402x.png"
   },
   {
     "address": "0x5121E348e897dAEf1Eef23959Ab290e5557CF274",
@@ -5072,7 +5072,7 @@
     "symbol": "BPT",
     "decimals": 18,
     "name": "Blockport Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/bpt%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/bpt%402x.png"
   },
   {
     "address": "0x8a854288a5976036A725879164Ca3e91d30c6A1B",
@@ -5151,14 +5151,14 @@
     "symbol": "SUB",
     "decimals": 18,
     "name": "Substratum",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/sub%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/sub%402x.png"
   },
   {
     "address": "0xe6f74dcfa0E20883008d8C16b6d9a329189D0C30",
     "symbol": "FTC",
     "decimals": 2,
     "name": "FTC",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/ftc%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/ftc%402x.png"
   },
   {
     "address": "0x6888a16eA9792c15A4DCF2f6C623D055c8eDe792",
@@ -5207,7 +5207,7 @@
     "symbol": "MCO",
     "decimals": 8,
     "name": "Crypto.com",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/mco%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/mco%402x.png"
   },
   {
     "address": "0x3543638eD4a9006E4840B105944271Bcea15605D",
@@ -5232,7 +5232,7 @@
     "symbol": "MTH",
     "decimals": 5,
     "name": "Monetha",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/mth%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/mth%402x.png"
   },
   {
     "address": "0xC66eA802717bFb9833400264Dd12c2bCeAa34a6d",
@@ -5275,7 +5275,7 @@
     "symbol": "USDT",
     "decimals": 6,
     "name": "USD Tether (erc20)",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/usdt%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/usdt%402x.png"
   },
   {
     "address": "0x4cE6B362Bc77A24966Dda9078f9cEF81b3B886a7",
@@ -5360,7 +5360,7 @@
     "symbol": "LPT",
     "decimals": 18,
     "name": "Livepeer Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/lpt%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/lpt%402x.png"
   },
   {
     "address": "0x399A0e6FbEb3d74c85357439f4c8AeD9678a5cbF",
@@ -5463,7 +5463,7 @@
     "symbol": "NAS",
     "decimals": 18,
     "name": "Nebula",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/nas%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/nas%402x.png"
   },
   {
     "address": "0x4c383bDCae52a6e1cb810C76C70d6f31A249eC9B",
@@ -5476,7 +5476,7 @@
     "symbol": "ZRX",
     "decimals": 18,
     "name": "0x Project",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/zrx%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/zrx%402x.png"
   },
   {
     "address": "0x4a6058666cf1057eaC3CD3A5a614620547559fc9",
@@ -5525,7 +5525,7 @@
     "symbol": "CS",
     "decimals": 6,
     "name": "Credits",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/cs%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/cs%402x.png"
   },
   {
     "address": "0x14F37B574242D366558dB61f3335289a5035c506",
@@ -5622,7 +5622,7 @@
     "symbol": "GUSD",
     "decimals": 2,
     "name": "Gemini dollar",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/gusd%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/gusd%402x.png"
   },
   {
     "address": "0xf04a8ac553FceDB5BA99A64799155826C136b0Be",
@@ -5659,7 +5659,7 @@
     "symbol": "LRC",
     "decimals": 18,
     "name": "Loopring",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/lrc%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/lrc%402x.png"
   },
   {
     "address": "0x6927C69fb4daf2043fbB1Cb7b86c5661416bea29",
@@ -5708,7 +5708,7 @@
     "symbol": "AION",
     "decimals": 8,
     "name": "Aion",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/aion%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/aion%402x.png"
   },
   {
     "address": "0xAc709FcB44a43c35F0DA4e3163b117A17F3770f5",
@@ -5751,7 +5751,7 @@
     "symbol": "MANA",
     "decimals": 18,
     "name": "Decentraland MANA",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/mana%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/mana%402x.png"
   },
   {
     "address": "0x5DBAC24e98E2a4f43ADC0DC82Af403fca063Ce2c",
@@ -5764,7 +5764,7 @@
     "symbol": "NEU",
     "decimals": 18,
     "name": "NEU Fund",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/neu%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/neu%402x.png"
   },
   {
     "address": "0x64CdF819d3E75Ac8eC217B3496d7cE167Be42e80",
@@ -5777,7 +5777,7 @@
     "symbol": "ELF",
     "decimals": 18,
     "name": "ELF Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/elf%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/elf%402x.png"
   },
   {
     "address": "0xd8950fDeaa10304B7A7Fd03a2FC66BC39f3c711a",
@@ -5796,7 +5796,7 @@
     "symbol": "AUTO",
     "decimals": 18,
     "name": "Cube",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/auto%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/auto%402x.png"
   },
   {
     "address": "0xEcE83617Db208Ad255Ad4f45Daf81E25137535bb",
@@ -5809,7 +5809,7 @@
     "symbol": "OAX",
     "decimals": 18,
     "name": "OAX",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/oax%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/oax%402x.png"
   },
   {
     "address": "0x02F2D4a04E6E01aCE88bD2Cd632875543b2eF577",
@@ -5882,7 +5882,7 @@
     "symbol": "NPXS",
     "decimals": 18,
     "name": "Pundi X Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/npxs%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/npxs%402x.png"
   },
   {
     "address": "0xbc1234552EBea32B5121190356bBa6D3Bb225bb5",
@@ -5913,14 +5913,14 @@
     "symbol": "RCN",
     "decimals": 18,
     "name": "Ripio Credit Network",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/rcn%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/rcn%402x.png"
   },
   {
     "address": "0x1844b21593262668B7248d0f57a220CaaBA46ab9",
     "symbol": "PRL",
     "decimals": 18,
     "name": "Oyster Pearl",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/prl%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/prl%402x.png"
   },
   {
     "address": "0x9389434852b94bbaD4c8AfEd5B7BDBc5Ff0c2275",
@@ -5951,7 +5951,7 @@
     "symbol": "WTC",
     "decimals": 18,
     "name": "Waltonchain",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/wtc%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/wtc%402x.png"
   },
   {
     "address": "0xD717B75404022fb1C8582ADf1c66B9A553811754",
@@ -6078,7 +6078,7 @@
     "symbol": "NULS",
     "decimals": 18,
     "name": "NULS",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/nuls%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/nuls%402x.png"
   },
   {
     "address": "0xBB9bc244D798123fDe783fCc1C72d3Bb8C189413",
@@ -6103,7 +6103,7 @@
     "symbol": "HPB",
     "decimals": 18,
     "name": "HPBCoin",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/hpb%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/hpb%402x.png"
   },
   {
     "address": "0xB9bb08AB7E9Fa0A1356bd4A39eC0ca267E03b0b3",
@@ -6170,7 +6170,7 @@
     "symbol": "BTM",
     "decimals": 8,
     "name": "Bytom",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/btm%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/btm%402x.png"
   },
   {
     "address": "0x5136C98A80811C3f46bDda8B5c4555CFd9f812F0",
@@ -6213,7 +6213,7 @@
     "symbol": "POWR",
     "decimals": 6,
     "name": "PowerLedger",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/powr%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/powr%402x.png"
   },
   {
     "address": "0x2a093BcF0C98Ef744Bb6F69D74f2F85605324290",
@@ -6244,7 +6244,7 @@
     "symbol": "TEN",
     "decimals": 18,
     "name": "Tokenomy",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/ten%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/ten%402x.png"
   },
   {
     "address": "0x58a4884182d9E835597f405e5F258290E46ae7C2",
@@ -6281,7 +6281,7 @@
     "symbol": "AEUR",
     "decimals": 2,
     "name": "Augmint Euro",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/aeur%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/aeur%402x.png"
   },
   {
     "address": "0x106Aa49295B525fcf959aA75eC3f7dCbF5352f1C",
@@ -6306,7 +6306,7 @@
     "symbol": "CTR",
     "decimals": 18,
     "name": "Centra",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/ctr%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/ctr%402x.png"
   },
   {
     "address": "0x1122B6a0E00DCe0563082b6e2953f3A943855c1F",
@@ -6331,7 +6331,7 @@
     "symbol": "BLZ",
     "decimals": 18,
     "name": "Bluzelle",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/blz%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/blz%402x.png"
   },
   {
     "address": "0xdb8646F5b487B5Dd979FAC618350e85018F557d4",
@@ -6422,21 +6422,21 @@
     "symbol": "DOCK",
     "decimals": 18,
     "name": "Dock",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/dock%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/dock%402x.png"
   },
   {
     "address": "0xF433089366899D83a9f26A773D59ec7eCF30355e",
     "symbol": "MTL",
     "decimals": 8,
     "name": "Metal",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/mtl%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/mtl%402x.png"
   },
   {
     "address": "0xd234BF2410a0009dF9c3C63b610c09738f18ccD7",
     "symbol": "DTR",
     "decimals": 8,
     "name": "Dynamic Trading Rights",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/dtr%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/dtr%402x.png"
   },
   {
     "address": "0x7e667525521cF61352e2E01b50FaaaE7Df39749a",
@@ -6479,7 +6479,7 @@
     "symbol": "TUSD",
     "decimals": 18,
     "name": "TrueUSD",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/tusd%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/tusd%402x.png"
   },
   {
     "address": "0x4DF47B4969B2911C966506E3592c41389493953b",
@@ -6540,7 +6540,7 @@
     "symbol": "WINGS",
     "decimals": 18,
     "name": "WINGS",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/wings%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/wings%402x.png"
   },
   {
     "address": "0x2008e3057BD734e10AD13c9EAe45Ff132aBc1722",
@@ -6565,14 +6565,14 @@
     "symbol": "WAX",
     "decimals": 8,
     "name": "WAX",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/wax%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/wax%402x.png"
   },
   {
     "address": "0x419D0d8BdD9aF5e606Ae2232ed285Aff190E711b",
     "symbol": "FUN",
     "decimals": 8,
     "name": "Funfair",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/fun%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/fun%402x.png"
   },
   {
     "address": "0x422866a8F0b032c5cf1DfBDEf31A20F4509562b0",
@@ -6585,7 +6585,7 @@
     "symbol": "VERI",
     "decimals": 18,
     "name": "Veritaseum",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/veri%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/veri%402x.png"
   },
   {
     "address": "0x24A77c1F17C547105E14813e517be06b0040aa76",
@@ -6598,7 +6598,7 @@
     "symbol": "SNM",
     "decimals": 18,
     "name": "SONM",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/snm%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/snm%402x.png"
   },
   {
     "address": "0x1063ce524265d5a3A624f4914acd573dD89ce988",
@@ -6611,7 +6611,7 @@
     "symbol": "ANT",
     "decimals": 18,
     "name": "Aragon",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/ant%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/ant%402x.png"
   },
   {
     "address": "0x6aEB95F06CDA84cA345c2dE0F3B7f96923a44f4c",
@@ -6672,7 +6672,7 @@
     "symbol": "DGD",
     "decimals": 9,
     "name": "Digix DAO",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/dgd%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/dgd%402x.png"
   },
   {
     "address": "0x49b127Bc33ce7E1586EC28CEC6a65b112596C822",
@@ -6757,7 +6757,7 @@
     "symbol": "SPHTX",
     "decimals": 18,
     "name": "SPHTX",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/sphtx%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/sphtx%402x.png"
   },
   {
     "address": "0xD65960FAcb8E4a2dFcb2C2212cb2e44a02e2a57E",
@@ -6776,7 +6776,7 @@
     "symbol": "GBX",
     "decimals": 18,
     "name": "Globitex",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/gbx%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/gbx%402x.png"
   },
   {
     "address": "0x95dAaaB98046846bF4B2853e23cba236fa394A31",
@@ -6801,7 +6801,7 @@
     "symbol": "INS",
     "decimals": 10,
     "name": "Insolar",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/ins%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/ins%402x.png"
   },
   {
     "address": "0x523630976eB6147621B5c31c781eBe2Ec2a806E0",
@@ -6820,7 +6820,7 @@
     "symbol": "BCPT",
     "decimals": 18,
     "name": "BlockMason Credit Protocol Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/bcpt%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/bcpt%402x.png"
   },
   {
     "address": "0x554C20B7c486beeE439277b4540A434566dC4C02",
@@ -6875,7 +6875,7 @@
     "symbol": "GTO",
     "decimals": 5,
     "name": "Gifto",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/gto%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/gto%402x.png"
   },
   {
     "address": "0x8810C63470d38639954c6B41AaC545848C46484a",
@@ -6918,7 +6918,7 @@
     "symbol": "WABI",
     "decimals": 18,
     "name": "Tael",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/wabi%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/wabi%402x.png"
   },
   {
     "address": "0x14C926F2290044B647e1Bf2072e67B495eff1905",
@@ -6931,14 +6931,14 @@
     "symbol": "SRN",
     "decimals": 18,
     "name": "Sirin Labs",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/srn%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/srn%402x.png"
   },
   {
     "address": "0xdd974D5C2e2928deA5F71b9825b8b646686BD200",
     "symbol": "KNC",
     "decimals": 18,
     "name": "Kyber Network",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/knc%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/knc%402x.png"
   },
   {
     "address": "0xc12d099be31567add4e4e4d0D45691C3F58f5663",
@@ -6963,7 +6963,7 @@
     "symbol": "PAY",
     "decimals": 18,
     "name": "TenX",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/pay%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/pay%402x.png"
   },
   {
     "address": "0xe8A1Df958bE379045E2B46a31A98B93A2eCDfDeD",
@@ -6988,7 +6988,7 @@
     "symbol": "SNGLS",
     "decimals": 0,
     "name": "SingularDTV",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/sngls%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/sngls%402x.png"
   },
   {
     "address": "0x4A89cD486fA996ad50c0a63C35c78702f5422a50",
@@ -7001,7 +7001,7 @@
     "symbol": "NGC",
     "decimals": 18,
     "name": "NAGA Coin",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/ngc%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/ngc%402x.png"
   },
   {
     "address": "0x887834D3b8D450B6bAB109c252Df3DA286d73CE4",
@@ -7044,7 +7044,7 @@
     "symbol": "GVT",
     "decimals": 18,
     "name": "Genesis Vision",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/gvt%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/gvt%402x.png"
   },
   {
     "address": "0x4946583c5b86E01cCD30c71a05617D06E3E73060",
@@ -7057,7 +7057,7 @@
     "symbol": "ELIX",
     "decimals": 18,
     "name": "Elixir Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/elix%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/elix%402x.png"
   },
   {
     "address": "0xAd8DD4c725dE1D31b9E8F8D146089e9DC6882093",
@@ -7196,7 +7196,7 @@
     "symbol": "BNT",
     "decimals": 18,
     "name": "Bancor",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/bnt%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/bnt%402x.png"
   },
   {
     "address": "0x9f6513ED2b0DE89218E97DB4A5115ba04Be449f1",
@@ -7209,7 +7209,7 @@
     "symbol": "BTT",
     "decimals": 0,
     "name": "Bitether",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/btt%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/btt%402x.png"
   },
   {
     "address": "0x5D858bcd53E085920620549214a8b27CE2f04670",
@@ -7228,7 +7228,7 @@
     "symbol": "GNT",
     "decimals": 18,
     "name": "Golem",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/gnt%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/gnt%402x.png"
   },
   {
     "address": "0x3839d8ba312751Aa0248fEd6a8bACB84308E20Ed",
@@ -7307,7 +7307,7 @@
     "symbol": "SAN",
     "decimals": 18,
     "name": "Santiment",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/san%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/san%402x.png"
   },
   {
     "address": "0x82fdedfB7635441aA5A92791D001fA7388da8025",
@@ -7332,7 +7332,7 @@
     "symbol": "DEW",
     "decimals": 18,
     "name": "DEW",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/dew%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/dew%402x.png"
   },
   {
     "address": "0x247551F2EB3362E222c742E9c788B8957D9BC87e",
@@ -7369,7 +7369,7 @@
     "symbol": "SALT",
     "decimals": 8,
     "name": "Salt Lending Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/salt%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/salt%402x.png"
   },
   {
     "address": "0x4289c043A12392F1027307fB58272D8EBd853912",
@@ -7436,7 +7436,7 @@
     "symbol": "DRGN",
     "decimals": 18,
     "name": "Dragon",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/drgn%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/drgn%402x.png"
   },
   {
     "address": "0xE2FB6529EF566a080e6d23dE0bd351311087D567",
@@ -7449,7 +7449,7 @@
     "symbol": "AE",
     "decimals": 18,
     "name": "aeternity",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/ae%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/ae%402x.png"
   },
   {
     "address": "0x773450335eD4ec3DB45aF74f34F2c85348645D39",
@@ -7552,7 +7552,7 @@
     "symbol": "GSC",
     "decimals": 18,
     "name": "Global Social Chain",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/gsc%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/gsc%402x.png"
   },
   {
     "address": "0xE69a353b3152Dd7b706ff7dD40fe1d18b7802d31",
@@ -7565,7 +7565,7 @@
     "symbol": "STQ",
     "decimals": 18,
     "name": "Storiqa",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/25376220e0a5cda085b6b25a7a6d528531246b89/32%402x/color/stq%402x.png"
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/stq%402x.png"
   },
   {
     "address": "0x3618516F45CD3c913F81F9987AF41077932Bc40d",
