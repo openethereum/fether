@@ -177,7 +177,6 @@ const SECURITY_OPTIONS = {
      * Reference: https://doyensec.com/resources/us-17-Carettoni-Electronegativity-A-Study-Of-Electron-Security-wp.pdf
      */
     sandbox: true, // Do not set to false. Run electron with `electron --enable-sandbox` to sandbox all BrowserWindow instances
-    enableRemoteModule: true, // Remote is required in fether-react parityStore.js
     // Enables same origin policy to prevent execution of insecure code. Do not set to false
     webSecurity: true,
     allowRunningInsecureContent: false, // Do not set to true
