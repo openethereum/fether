@@ -46,7 +46,7 @@ describe('trust url pattern', () => {
 
     test('should trust token icons from Github atomiclabs', () => {
       url =
-        'https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/tree/master/32/black/arg.png';
+        'https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32/black/arg.png';
 
       expect(isTrustedUrlPattern(url)).toBe(true);
     });

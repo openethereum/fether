@@ -171,7 +171,7 @@ async function addLogo(
   token: NormalizedTokenJSON
 ): Promise<NormalizedTokenJSON> {
   const { symbol } = token;
-  const fetchUrl = `https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/master/32%402x/color/${encodeURIComponent(
+  const fetchUrl = `https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/${encodeURIComponent(
     symbol.toLowerCase()
   )}%402x.png`;
 
