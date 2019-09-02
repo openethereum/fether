@@ -17,10 +17,10 @@
  * https://github.com/electron/electron/issues/13130
  */
 
-const { ipcRenderer, remote } = require('electron');
+const { ipcRenderer } = require('electron');
 
 const RENDERER_ORIGIN =
-  remote.getGlobal('IS_PROD') === true ? 'file://' : 'http://localhost:3000';
+  process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'file://';
 
 /**
  * Handler that receives an IPC message from the main process, and passes it

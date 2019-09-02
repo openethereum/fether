@@ -144,6 +144,10 @@ const SECURITY_OPTIONS = {
      */
     devTools: !IS_PROD,
     /**
+     * Disable Electron's remote module.
+     */
+    enableRemoteModule: false,
+    /**
      * `nodeIntegration` when enabled allows the software to use Electron's APIs
      * and gain access to Node.js. It must be disabled to restricting access to
      * Node.js global symbols like `require` from global scope and requires the
