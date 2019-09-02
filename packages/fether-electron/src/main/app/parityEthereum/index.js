@@ -4,7 +4,6 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import { isParityRunning, runParity } from '@parity/electron';
-import getRemainingArgs from 'commander-remaining-args';
 
 import { bundledParityPath } from '../utils/paths';
 import handleError from '../utils/handleError';
@@ -63,14 +62,7 @@ class ParityEthereum {
   run = async () => {
     return runParity({
       parityPath: bundledParityPath,
-      flags: [
-        ...getRemainingArgs(cli),
-        '--light',
-        '--chain',
-        cli.chain,
-        '--ws-port',
-        cli.wsPort
-      ],
+      flags: ['--light', '--chain', cli.chain],
       onParityError: err =>
         handleError(err, 'An error occured with Parity Ethereum.')
     });

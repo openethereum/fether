@@ -4093,11 +4093,6 @@ command-exists@^1.2.8:
   resolved "https://registry.yarnpkg.com/command-exists/-/command-exists-1.2.8.tgz#715acefdd1223b9c9b37110a149c6392c2852291"
   integrity sha512-PM54PkseWbiiD/mMsbvW351/u+dafwTJ0ye2qB60G1aGQP9j3xK2gmMDc+R34L3nDtx4qMCitXT75mkbkGJDLw==
 
-commander-remaining-args@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/commander-remaining-args/-/commander-remaining-args-1.2.0.tgz#6fab4cce4a59db1698121f59105364adcb0b4c68"
-  integrity sha512-yH0yRUtHhJ/389HWgQlEMAwqKXMZr/JJH4xqDIzXCisNy2mS6YSAe3WncgjxZvhLJqZPxJn8MivRK+B0lSNXPw==
-
 commander@2.17.x:
   version "2.17.1"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.17.1.tgz#bd77ab7de6de94205ceacc72f1716d29f20a77bf"
