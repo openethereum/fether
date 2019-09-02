@@ -7,9 +7,8 @@ import { checkClockSync, signerNewToken } from '@parity/electron';
 import settings from 'electron-settings';
 
 import { bundledParityPath } from '../utils/paths';
-import cli from '../cli';
 import Pino from '../utils/pino';
-import { TRUSTED_LOOPBACK } from '../constants';
+import { DEFAULT_WS_PORT, TRUSTED_LOOPBACK } from '../constants';
 
 const pino = Pino();
 
@@ -76,7 +75,7 @@ export default async (fetherApp, event, data) => {
         event.sender.send('send-to-renderer', {
           action: 'WS_PORT_RESPONSE',
           from: 'fether:electron',
-          payload: cli.wsPort
+          payload: DEFAULT_WS_PORT
         });
 
         break;

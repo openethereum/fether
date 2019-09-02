@@ -53,9 +53,7 @@ class ParityEthereum {
   }
 
   isRunning = async () => {
-    return isParityRunning({
-      wsPort: cli.wsPort
-    });
+    return isParityRunning();
   };
 
   // Run the bundled Parity Ethereum binary
