@@ -9,7 +9,6 @@ import light from '@parity/light.js-react';
 import { inject, observer } from 'mobx-react';
 import { addressShort, Card, Form as FetherForm } from 'fether-ui';
 
-import RequireHealthOverlay from '../../../RequireHealthOverlay';
 import Scanner from '../../../Scanner';
 import withAccountsInfo from '../../../utils/withAccountsInfo';
 import withHealth from '../../../utils/withHealth';
@@ -279,23 +278,21 @@ class AccountImportOptions extends Component {
     const spacer = <div style={{ height: '0.5rem' }} />;
 
     return (
-      <RequireHealthOverlay require='node'>
-        <div className='center-md'>
-          {!importingFromSigner && jsonCard}
-          {spacer}
-          {signerCard}
-          {spacer}
-          {!importingFromSigner && phraseCard}
-          <p className='error-import-account'>{error}</p>
-          {currentStep > 1 && (
-            <nav className='form-nav -space-around'>
-              <button className='button -back' onClick={history.goBack}>
-                {i18n.t(`${packageNS}:navigation.back`)}
-              </button>
-            </nav>
-          )}
-        </div>
-      </RequireHealthOverlay>
+      <div className='center-md'>
+        {!importingFromSigner && jsonCard}
+        {spacer}
+        {signerCard}
+        {spacer}
+        {!importingFromSigner && phraseCard}
+        <p className='error-import-account'>{error}</p>
+        {currentStep > 1 && (
+          <nav className='form-nav -space-around'>
+            <button className='button -back' onClick={history.goBack}>
+              {i18n.t(`${packageNS}:navigation.back`)}
+            </button>
+          </nav>
+        )}
+      </div>
     );
   }
 

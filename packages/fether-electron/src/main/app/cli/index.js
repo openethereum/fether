@@ -4,7 +4,9 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 import cli from 'commander';
+
 import { DEFAULT_CHAIN, DEFAULT_WS_PORT } from '../constants';
+
 const { productName } = require('../../../../electron-builder.json');
 const { version } = require('../../../../package.json');
 

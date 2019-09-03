@@ -8,7 +8,6 @@ import { AccountCard, Form as FetherForm } from 'fether-ui';
 import { inject, observer } from 'mobx-react';
 
 import i18n, { packageNS } from '../../../i18n';
-import RequireHealthOverlay from '../../../RequireHealthOverlay';
 
 @inject('createAccountStore')
 @observer
@@ -72,96 +71,91 @@ class AccountPassword extends Component {
     const currentStep = pathname.slice(-1);
 
     return (
-      <RequireHealthOverlay require='node'>
-        <AccountCard
-          address={address}
-          name={name}
-          drawers={[
-            <form key='createAccount' noValidate onSubmit={this.handleSubmit}>
-              <div className='text'>
-                <p>
-                  {' '}
-                  {jsonString
-                    ? i18n.t(
-                      `${packageNS}:account.password.import.label_msg_unlock_json`
-                    )
-                    : i18n.t(
-                      `${packageNS}:account.password.create.label_msg_password`
-                    )}
-                </p>
-              </div>
+      <AccountCard
+        address={address}
+        name={name}
+        drawers={[
+          <form key='createAccount' noValidate onSubmit={this.handleSubmit}>
+            <div className='text'>
+              <p>
+                {' '}
+                {jsonString
+                  ? i18n.t(
+                    `${packageNS}:account.password.import.label_msg_unlock_json`
+                  )
+                  : i18n.t(
+                    `${packageNS}:account.password.create.label_msg_password`
+                  )}
+              </p>
+            </div>
 
+            <FetherForm.Field
+              autoFocus
+              label={i18n.t(
+                `${packageNS}:account.password.common.label_password`
+              )}
+              onChange={this.handlePasswordChange}
+              required
+              type='password'
+              value={password}
+            />
+
+            {!jsonString && (
               <FetherForm.Field
-                autoFocus
                 label={i18n.t(
-                  `${packageNS}:account.password.common.label_password`
+                  `${packageNS}:account.password.common.label_password_confirm`
                 )}
-                onChange={this.handlePasswordChange}
+                onChange={this.handleConfirmChange}
                 required
                 type='password'
-                value={password}
+                value={confirm}
               />
+            )}
 
-              {!jsonString && (
-                <FetherForm.Field
-                  label={i18n.t(
-                    `${packageNS}:account.password.common.label_password_confirm`
+            <p>
+              {error &&
+                error +
+                  ' ' +
+                  i18n.t(
+                    `${packageNS}:account.password.common.error_msg_password_incorrect`
                   )}
-                  onChange={this.handleConfirmChange}
-                  required
-                  type='password'
-                  value={confirm}
-                />
-              )}
+            </p>
 
-              <p>
-                {error &&
-                  error +
-                    ' ' +
-                    i18n.t(
-                      `${packageNS}:account.password.common.error_msg_password_incorrect`
-                    )}
-              </p>
-
-              <nav className='form-nav -space-around'>
-                {currentStep > 1 && (
-                  <button
-                    className='button -back'
-                    onClick={history.goBack}
-                    type='button'
-                  >
-                    {i18n.t(`${packageNS}:navigation.back`)}
-                  </button>
-                )}
+            <nav className='form-nav -space-around'>
+              {currentStep > 1 && (
                 <button
-                  autoFocus
-                  className='button'
-                  disabled={
-                    !password ||
-                    (!jsonString && confirm !== password) ||
-                    isLoading
-                  }
+                  className='button -back'
+                  onClick={history.goBack}
+                  type='button'
                 >
-                  {i18n.t(
-                    `${packageNS}:account.password.common.button_confirm`,
-                    {
-                      postfix: isImport
-                        ? i18n.t(
-                          `${packageNS}:account.password.common.button_confirm_opt1`
-                        )
-                        : i18n.t(
-                          `${packageNS}:account.password.common.button_confirm_opt2`
-                        )
-                    }
-                  )}
+                  {i18n.t(`${packageNS}:navigation.back`)}
                 </button>
-              </nav>
-            </form>
-          ]}
-          i18n={i18n}
-          packageNS={packageNS}
-        />
-      </RequireHealthOverlay>
+              )}
+              <button
+                autoFocus
+                className='button'
+                disabled={
+                  !password ||
+                  (!jsonString && confirm !== password) ||
+                  isLoading
+                }
+              >
+                {i18n.t(`${packageNS}:account.password.common.button_confirm`, {
+                  postfix: isImport
+                    ? i18n.t(
+                      `${packageNS}:account.password.common.button_confirm_opt1`
+                    )
+                    : i18n.t(
+                      `${packageNS}:account.password.common.button_confirm_opt2`
+                    )
+                })}
+              </button>
+            </nav>
+          </form>
+        ]}
+        i18n={i18n}
+        packageNS={packageNS}
+      />
     );
   }
 }
