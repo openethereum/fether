@@ -8,7 +8,6 @@ import url from 'url';
 
 import Pino from '../../utils/pino';
 import { staticPath } from '../../utils/paths';
-import cli from '../../cli';
 import {
   DEFAULT_CHAIN,
   DEFAULT_WS_PORT,
@@ -23,27 +22,20 @@ pino.info(
 );
 
 /**
- * Note: If the user provides a custom CLI port to `cli.wsPort` then
- * we 'dynamically' trust it in addition to the `DEFAULT_WS_PORT` in
- * fether-electron/src/main/index.js, which is where we only
- * permit requests from trusted paths.
- *
- * Note: We also disallows users from using Fether
+ * Note: We disallow users from using Fether
  * with a remote node.
  * WARNING: SSH tunnels from an attacker are still possible.
  */
 const DEFAULT_HTTP_PORT = '3000';
-const CUSTOM_WS_PORT = cli.wsPort;
 const TRUSTED_HOSTS = {
   github: ['api.github.com', 'github.com', 'raw.githubusercontent.com'],
   blockscout: ['blockscout.com']
 };
-const TRUSTED_WS_PORTS = [DEFAULT_WS_PORT, CUSTOM_WS_PORT];
+const TRUSTED_WS_PORTS = [DEFAULT_WS_PORT];
 const DEFAULT_HTTP_TRUSTED_LOOPBACK = `http://${TRUSTED_LOOPBACK}:${DEFAULT_HTTP_PORT}`;
 const TRUSTED_URLS = [
   DEFAULT_HTTP_TRUSTED_LOOPBACK,
   `ws://${TRUSTED_LOOPBACK}:${DEFAULT_WS_PORT}`,
-  `ws://${TRUSTED_LOOPBACK}:${CUSTOM_WS_PORT}`,
   'https://parity.io',
   'https://wiki.parity.io/Fether-FAQ',
   'https://github.com/paritytech/fether/issues/new',
