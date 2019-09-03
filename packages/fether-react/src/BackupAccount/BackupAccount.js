@@ -9,7 +9,6 @@ import { observer } from 'mobx-react';
 import { Link, withRouter } from 'react-router-dom';
 
 import i18n, { packageNS } from '../i18n';
-import RequireHealthOverlay from '../RequireHealthOverlay';
 import backupAccount from '../utils/backupAccount';
 import withAccount from '../utils/withAccount';
 
@@ -64,65 +63,63 @@ class BackupAccount extends Component {
     const { isLoading, message, password } = this.state;
 
     return (
-      <RequireHealthOverlay require='node'>
-        <div>
-          <AccountHeader
-            address={address}
-            copyAddress
-            i18n={i18n}
-            name={name}
-            packageNS={packageNS}
-            type={type}
-            left={
-              <Link to='/accounts' className='icon -back'>
-                {i18n.t(`${packageNS}:navigation.back`)}
-              </Link>
-            }
-          />
-          <br />
-          <Card className='-space-around'>
-            <form key='backupAccount' onSubmit={this.handleSubmit}>
-              <div className='text'>
-                <p>
-                  {i18n.t(
-                    `${packageNS}:account.backup.label_msg_password_unlock`
-                  )}
-                </p>
-              </div>
-
-              <FetherForm.Field
-                label={i18n.t(
-                  `${packageNS}:account.backup.label_password_unlock`
+      <div>
+        <AccountHeader
+          address={address}
+          copyAddress
+          i18n={i18n}
+          name={name}
+          packageNS={packageNS}
+          type={type}
+          left={
+            <Link to='/accounts' className='icon -back'>
+              {i18n.t(`${packageNS}:navigation.back`)}
+            </Link>
+          }
+        />
+        <br />
+        <Card className='-space-around'>
+          <form key='backupAccount' onSubmit={this.handleSubmit}>
+            <div className='text'>
+              <p>
+                {i18n.t(
+                  `${packageNS}:account.backup.label_msg_password_unlock`
                 )}
-                onChange={this.handlePasswordChange}
+              </p>
+            </div>
+
+            <FetherForm.Field
+              label={i18n.t(
+                `${packageNS}:account.backup.label_password_unlock`
+              )}
+              onChange={this.handlePasswordChange}
+              autoFocus
+              required
+              type='password'
+              value={password}
+            />
+
+            <p className='error'> {message} </p>
+
+            <nav className='form-nav -space-around'>
+              <button
+                className='button -back'
+                onClick={history.goBack}
+                type='button'
+              >
+                {i18n.t(`${packageNS}:navigation.back`)}
+              </button>
+              <button
+                className='button'
+                disabled={!password || isLoading}
                 autoFocus
-                required
-                type='password'
-                value={password}
-              />
-
-              <p className='error'> {message} </p>
-
-              <nav className='form-nav -space-around'>
-                <button
-                  className='button -back'
-                  onClick={history.goBack}
-                  type='button'
-                >
-                  {i18n.t(`${packageNS}:navigation.back`)}
-                </button>
-                <button
-                  className='button'
-                  disabled={!password || isLoading}
-                  autoFocus
-                >
-                  {i18n.t(`${packageNS}:account.backup.button_confirm`)}
-                </button>
-              </nav>
-            </form>
-          </Card>
-        </div>
-      </RequireHealthOverlay>
+              >
+                {i18n.t(`${packageNS}:account.backup.button_confirm`)}
+              </button>
+            </nav>
+          </form>
+        </Card>
+      </div>
     );
   }
 }

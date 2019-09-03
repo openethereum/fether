@@ -47,7 +47,7 @@ const rpcs$ = isApiConnected$.pipe(
       syncStatus$()
         .pipe(
           map(syncStatus => {
-            if (!syncStatus) {
+            if (!syncStatus || !Object.keys(syncStatus).length) {
               return {
                 isSync: true
               };
@@ -100,7 +100,6 @@ export default compose(
             internet: online, // Internet connection
             nodeConnected: isApiConnected, // Connected to local Parity Ethereum node
             clockSync: isClockSync, // Local clock is not synchronised
-            launching: !isApiConnected, // Launching Parity Ethereum only upon startup
             peers: !isNoPeers, // Connecion to peer nodes
             syncing: isApiConnected && !isSync, // Synchronising blocks
             good: isGood // Synchronised and no issues

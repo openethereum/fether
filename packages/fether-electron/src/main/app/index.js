@@ -99,7 +99,7 @@ class FetherApp extends EventEmitter {
   setupGlobals = () => setupGlobals();
   setupLogger = () => setupLogger();
   setupMenu = () => setupMenu(this);
-  setupParityEthereum = () => setupParityEthereum(this);
+  setupParityEthereum = () => setupParityEthereum();
   setupRequestListeners = () => setupRequestListeners(this);
   setupSecurity = () => setupSecurity(this);
   setupWinListeners = () => setupWinListeners(this);

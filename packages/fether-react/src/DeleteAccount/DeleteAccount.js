@@ -11,7 +11,6 @@ import { Link, withRouter } from 'react-router-dom';
 
 import i18n, { packageNS } from '../i18n';
 import localForage$ from '../utils/localForage';
-import RequireHealthOverlay from '../RequireHealthOverlay';
 import { SIGNER_ACCOUNTS_LS_KEY } from '../stores/createAccountStore';
 import withAccount from '../utils/withAccount';
 
@@ -78,29 +77,27 @@ class DeleteAccount extends Component {
     } = this.props;
 
     return (
-      <RequireHealthOverlay require='node'>
-        <div>
-          <AccountHeader
-            address={address}
-            copyAddress
-            i18n={i18n}
-            name={name}
-            packageNS={packageNS}
-            type={type}
-            left={
-              <Link to='/accounts' className='icon -back'>
-                {i18n.t(`${packageNS}:navigation.back`)}
-              </Link>
-            }
-          />
-          <br />
-          <Card className='-space-around'>
-            {type === 'signer'
-              ? this.renderSignerAccount()
-              : this.renderParityAccount()}
-          </Card>
-        </div>
-      </RequireHealthOverlay>
+      <div>
+        <AccountHeader
+          address={address}
+          copyAddress
+          i18n={i18n}
+          name={name}
+          packageNS={packageNS}
+          type={type}
+          left={
+            <Link to='/accounts' className='icon -back'>
+              {i18n.t(`${packageNS}:navigation.back`)}
+            </Link>
+          }
+        />
+        <br />
+        <Card className='-space-around'>
+          {type === 'signer'
+            ? this.renderSignerAccount()
+            : this.renderParityAccount()}
+        </Card>
+      </div>
     );
   }
 

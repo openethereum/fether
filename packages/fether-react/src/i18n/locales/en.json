@@ -84,7 +84,6 @@
   "health": {
     "status": {
       "title": {
-        "launching": "Launching the node...",
         "no_internet_no_node_connected": "No internet. No node connected",
         "internet_no_node_connected": "Connecting to node...",
         "no_internet_node_connected": "No internet. Connected to node",

@@ -11,8 +11,13 @@ import light from '@parity/light.js-react';
 import { Modal } from 'fether-ui';
 
 import i18n, { packageNS } from '../../i18n';
-import withHealth from '../../utils/withHealth';
 import loading from '../../assets/img/icons/loading.svg';
+import * as postMessage from '../../utils/postMessage';
+import withHealth from '../../utils/withHealth';
+
+// Timeout to wait to restart parity-ethereum light client, if the node is not
+// reachable
+const RESTART_NODE_TIMEOUT = 15 * 1000;
 
 @withHealth
 @branch(
@@ -35,6 +40,28 @@ class HealthModal extends Component {
     visible: PropTypes.bool
   };
 
+  // Timeout to restart parity node
+  restartNodeTimeout = undefined;
+
+  componentDidUpdate () {
+    const {
+      health: { status }
+    } = this.props;
+
+    // Clear timeout each time we have a new health status
+    if (this.restartNodeTimeout) {
+      clearTimeout(this.restartNodeTimeout);
+      this.restartNodeTimeout = undefined;
+    }
+
+    // If the node is not connected, then we wait for 15s, and try to launch it
+    if (!status.nodeConnected) {
+      this.restartNodeTimeout = setTimeout(() => {
+        postMessage.send('RESTART_NODE_REQUEST');
+      }, RESTART_NODE_TIMEOUT);
+    }
+  }
+
   render () {
     const { children, fullscreen, visible } = this.props;
 
@@ -56,9 +83,7 @@ class HealthModal extends Component {
       health: { status }
     } = this.props;
 
-    if (status.launching) {
-      return i18n.t(`${packageNS}:health.status.title.launching`);
-    } else if (!status.nodeConnected && !status.internet) {
+    if (!status.nodeConnected && !status.internet) {
       return i18n.t(
         `${packageNS}:health.status.title.no_internet_no_node_connected`
       );
