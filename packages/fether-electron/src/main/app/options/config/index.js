@@ -136,6 +136,10 @@ const SECURITY_OPTIONS = {
      */
     devTools: !IS_PROD,
     /**
+     * Disable Electron's remote module.
+     */
+    enableRemoteModule: false,
+    /**
      * `nodeIntegration` when enabled allows the software to use Electron's APIs
      * and gain access to Node.js. It must be disabled to restricting access to
      * Node.js global symbols like `require` from global scope and requires the
@@ -165,7 +169,6 @@ const SECURITY_OPTIONS = {
      * Reference: https://doyensec.com/resources/us-17-Carettoni-Electronegativity-A-Study-Of-Electron-Security-wp.pdf
      */
     sandbox: true, // Do not set to false. Run electron with `electron --enable-sandbox` to sandbox all BrowserWindow instances
-    enableRemoteModule: true, // Remote is required in fether-react parityStore.js
     // Enables same origin policy to prevent execution of insecure code. Do not set to false
     webSecurity: true,
     allowRunningInsecureContent: false, // Do not set to true
