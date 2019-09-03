@@ -32,6 +32,9 @@ cli
     '--no-run-parity',
     `${productName} will not attempt to run the locally installed parity.`
   )
-  .parse(process.argv);
+  // We want to ignore some flags that are sometimes passed to Fether, but not
+  // officially recognized by Fether:
+  // - -psn_*: https://github.com/paritytech/fether/issues/188
+  .parse(process.argv.filter(arg => !arg.startsWith('-psn_')));
 
 export default cli;
