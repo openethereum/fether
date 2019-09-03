@@ -10,7 +10,6 @@ import { inject, observer } from 'mobx-react';
 import light from '@parity/light.js-react';
 
 import i18n, { packageNS } from '../../i18n';
-import RequireHealthOverlay from '../../RequireHealthOverlay';
 import Health from '../../Health';
 import withAccountsInfo from '../../utils/withAccountsInfo';
 import Feedback from './Feedback';
@@ -48,7 +47,7 @@ class AccountsList extends Component {
     const accountsListLength = accountsList && accountsList.length;
 
     return (
-      <RequireHealthOverlay require='node'>
+      <div>
         <div className='accounts-list'>
           <Header
             right={
@@ -105,7 +104,7 @@ class AccountsList extends Component {
             </div>
           </nav>
         </div>
-      </RequireHealthOverlay>
+      </div>
     );
   }
 }

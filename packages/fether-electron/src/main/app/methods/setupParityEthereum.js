@@ -5,9 +5,9 @@
 
 import ParityEthereum from '../parityEthereum';
 
-function setupParityEthereum (fetherApp) {
+function setupParityEthereum () {
   // Run Parity Ethereum if not running and requested
-  return new ParityEthereum(fetherApp.win);
+  return new ParityEthereum();
 }
 
 export default setupParityEthereum;
