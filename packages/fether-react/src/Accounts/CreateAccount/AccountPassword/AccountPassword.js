@@ -112,24 +112,26 @@ class AccountPassword extends Component {
               value={password}
             />
 
-            {!passwordMatchCriteria && (
-              <p>
-                {i18n.t(
-                  `${packageNS}:account.password.common.error_msg_password_insecure`
-                )}
-              </p>
-            )}
-
             {!jsonString && (
-              <FetherForm.Field
-                label={i18n.t(
-                  `${packageNS}:account.password.common.label_password_confirm`
+              <>
+                {!passwordMatchCriteria && (
+                  <p>
+                    {i18n.t(
+                      `${packageNS}:account.password.common.error_msg_password_insecure`
+                    )}
+                  </p>
                 )}
-                onChange={this.handleConfirmChange}
-                required
-                type='password'
-                value={confirm}
-              />
+
+                <FetherForm.Field
+                  label={i18n.t(
+                    `${packageNS}:account.password.common.label_password_confirm`
+                  )}
+                  onChange={this.handleConfirmChange}
+                  required
+                  type='password'
+                  value={confirm}
+                />
+              </>
             )}
 
             <p>
