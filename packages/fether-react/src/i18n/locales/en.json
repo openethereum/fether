@@ -54,6 +54,7 @@
         "label_password": "Password",
         "label_password_confirm": "Confirm",
         "error_msg_password_incorrect": "Please check your password and try again.",
+        "error_msg_password_insecure": "Password must contain at least 8 characters and a number.",
         "button_confirm": "Confirm account {{postfix}}",
         "button_confirm_opt1": "import",
         "button_confirm_opt2": "creation"

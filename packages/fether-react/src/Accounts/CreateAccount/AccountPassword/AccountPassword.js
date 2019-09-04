@@ -14,9 +14,10 @@ import i18n, { packageNS } from '../../../i18n';
 class AccountPassword extends Component {
   state = {
     confirm: '',
+    error: '',
+    passwordMatchCriteria: true,
     isLoading: false,
-    password: '',
-    error: ''
+    password: ''
   };
 
   handleConfirmChange = ({ target: { value } }) => {
@@ -24,7 +25,12 @@ class AccountPassword extends Component {
   };
 
   handlePasswordChange = ({ target: { value } }) => {
-    this.setState({ password: value });
+    // at leat 8 characters, at least one of them being a number
+    const PASSWORD_CRITERIA = /^(?=.*\d).{8,}$/;
+    const regex = new RegExp(PASSWORD_CRITERIA);
+    const passwordMatchCriteria = regex.test(value);
+
+    this.setState({ password: value, passwordMatchCriteria });
   };
 
   handleSubmit = event => {
@@ -67,7 +73,13 @@ class AccountPassword extends Component {
       history,
       location: { pathname }
     } = this.props;
-    const { confirm, error, isLoading, password } = this.state;
+    const {
+      confirm,
+      error,
+      isLoading,
+      password,
+      passwordMatchCriteria
+    } = this.state;
     const currentStep = pathname.slice(-1);
 
     return (
@@ -101,15 +113,25 @@ class AccountPassword extends Component {
             />
 
             {!jsonString && (
-              <FetherForm.Field
-                label={i18n.t(
-                  `${packageNS}:account.password.common.label_password_confirm`
+              <>
+                {!passwordMatchCriteria && (
+                  <p>
+                    {i18n.t(
+                      `${packageNS}:account.password.common.error_msg_password_insecure`
+                    )}
+                  </p>
                 )}
-                onChange={this.handleConfirmChange}
-                required
-                type='password'
-                value={confirm}
-              />
+
+                <FetherForm.Field
+                  label={i18n.t(
+                    `${packageNS}:account.password.common.label_password_confirm`
+                  )}
+                  onChange={this.handleConfirmChange}
+                  required
+                  type='password'
+                  value={confirm}
+                />
+              </>
             )}
 
             <p>
@@ -137,7 +159,8 @@ class AccountPassword extends Component {
                 disabled={
                   !password ||
                   (!jsonString && confirm !== password) ||
-                  isLoading
+                  isLoading ||
+                  !passwordMatchCriteria
                 }
               >
                 {i18n.t(`${packageNS}:account.password.common.button_confirm`, {

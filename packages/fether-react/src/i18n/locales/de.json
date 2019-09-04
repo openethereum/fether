@@ -54,6 +54,7 @@
         "label_password": "Passwort",
         "label_password_confirm": "Bestätigen",
         "error_msg_password_incorrect": "Bitte überprüfen Sie Ihr Passwort und versuchen Sie es erneut.",
+        "error_msg_password_insecure": "Passwort muss mindestens 8 Zeichen lang sein und mindestens eine Zahl enthalten.",
         "button_confirm": "Konto bestätigen {{postfix}}",
         "button_confirm_opt1": "einführen",
         "button_confirm_opt2": "Schaffung"
