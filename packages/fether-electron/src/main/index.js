@@ -104,6 +104,8 @@ app.on('quit', () => {
 
 // Security
 app.on('web-contents-created', (eventOuter, win) => {
+  // TODO: will-navigate is not fired for sandboxed BrowserWindow;
+  // waiting on a fix: https://github.com/electron/electron/issues/8841
   win.on('will-navigate', (event, url) => {
     // FIXME - check that parser is memory-safe
     //
@@ -124,6 +126,8 @@ app.on('web-contents-created', (eventOuter, win) => {
         'Unable to navigate to untrusted content url due to will-navigate listener: ',
         parsedUrl.href
       );
+
+      event.preventDefault();
     }
   });
 
