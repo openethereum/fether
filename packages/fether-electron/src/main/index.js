@@ -8,14 +8,12 @@ import { URL } from 'url';
 import { killParity } from '@parity/electron';
 
 import Pino from './app/utils/pino';
-import isTrustedUrlPattern from './app/utils/isTrustedUrlPattern';
+import isTrustedNavigationUrl from './app/utils/isTrustedNavigationUrl';
 import FetherApp from './app';
-import { SECURITY_OPTIONS } from './app/options/config';
 import fetherAppOptions from './app/options';
 
 const pino = Pino();
 const { app, shell } = electron;
-const { TRUSTED_URLS } = SECURITY_OPTIONS.fetherNetwork;
 
 let withTaskbar = process.env.TASKBAR !== 'false';
 
@@ -32,7 +30,7 @@ if (!['darwin', 'win32'].includes(process.platform)) {
 }
 
 let fetherApp;
-const options = fetherAppOptions(withTaskbar, {});
+const options = fetherAppOptions(withTaskbar);
 
 const gotTheLock = app.requestSingleInstanceLock();
 pino.info(
@@ -118,10 +116,7 @@ app.on('web-contents-created', (eventOuter, win) => {
       parsedUrl.href
     );
 
-    if (
-      !TRUSTED_URLS.includes(parsedUrl.href) &&
-      !isTrustedUrlPattern(parsedUrl.href)
-    ) {
+    if (!isTrustedNavigationUrl(parsedUrl.href)) {
       pino.info(
         'Unable to navigate to untrusted content url due to will-navigate listener: ',
         parsedUrl.href
@@ -154,7 +149,7 @@ app.on('web-contents-created', (eventOuter, win) => {
         parsedUrl.href
       );
 
-      if (!TRUSTED_URLS.includes(parsedUrl.href) && !isTrustedUrlPattern(url)) {
+      if (!isTrustedNavigationUrl(parsedUrl.href)) {
         pino.info(
           'Unable to open new window with untrusted content url due to new-window listener: ',
           parsedUrl.href
@@ -163,10 +158,7 @@ app.on('web-contents-created', (eventOuter, win) => {
         return;
       }
 
-      // FIXME - Note that we need to check for a valid certificate in 'certificate-error' event handler
-      // so we only allow trusted content.
-      // See https://electronjs.org/docs/tutorial/security#14-do-not-use-openexternal-with-untrusted-content
-      shell.openExternal(url);
+      shell.openExternal(parsedUrl.href);
     }
   );
 

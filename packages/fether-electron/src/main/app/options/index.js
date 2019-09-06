@@ -5,13 +5,7 @@
 
 import { DEFAULT_OPTIONS, SECURITY_OPTIONS, TASKBAR_OPTIONS } from './config';
 
-export default (withTaskbar, customOptions) =>
+export default withTaskbar =>
   withTaskbar
-    ? Object.assign(
-      {},
-      DEFAULT_OPTIONS,
-      TASKBAR_OPTIONS,
-      customOptions || {},
-      SECURITY_OPTIONS
-    )
-    : Object.assign({}, DEFAULT_OPTIONS, customOptions || {}, SECURITY_OPTIONS);
+    ? Object.assign({}, DEFAULT_OPTIONS, TASKBAR_OPTIONS, SECURITY_OPTIONS)
+    : Object.assign({}, DEFAULT_OPTIONS, SECURITY_OPTIONS);
