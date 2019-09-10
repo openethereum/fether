@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 const BLOCKSCOUT_URL_REGEXP = new RegExp(
-  '^https://blockscout.com/(eth|etc|poa)/(mainnet|classic|ropsten|kovan|goerli|core|dai|sokol|rinkeby)/(tx|address)/0x[a-fA-F0-9]+/(internal_transacations|token_transfers)$'
+  '^https://blockscout.com/(eth|etc|poa)/(mainnet|classic|ropsten|kovan|goerli|core|dai|sokol|rinkeby)/(tx|address)/0x[a-fA-F0-9]+/(internal_transactions|token_transfers)$'
 );
 
 const ALLOWED_URLS = [
