@@ -3,15 +3,16 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { checkClockSync, signerNewToken } from '@parity/electron';
+import { checkClockSync } from '@parity/electron';
 import settings from 'electron-settings';
 
-import { bundledParityPath } from '../utils/paths';
 import Pino from '../utils/pino';
 import setupParityEthereum from '../methods/setupParityEthereum';
-import { DEFAULT_WS_PORT, TRUSTED_LOOPBACK } from '../constants';
+import ipcChannel from '../ipcChannel';
 
 const pino = Pino();
+
+var rpcResponsesSetUp = false;
 
 /**
  * Handle all asynchronous messages from renderer to main.
@@ -58,31 +59,20 @@ export default async (fetherApp, event, data) => {
         });
         break;
       }
-      case 'SIGNER_NEW_TOKEN_REQUEST': {
-        const token = await signerNewToken({ parityPath: bundledParityPath });
-        // Send back the token to the renderer process
-        event.sender.send('send-to-renderer', {
-          action: 'SIGNER_NEW_TOKEN_RESPONSE',
-          from: 'fether:electron',
-          payload: token
-        });
-        break;
-      }
-      case 'WS_INTERFACE_REQUEST': {
-        event.sender.send('send-to-renderer', {
-          action: 'WS_INTERFACE_RESPONSE',
-          from: 'fether:electron',
-          payload: TRUSTED_LOOPBACK
-        });
+      case 'RPC_REQUEST': {
+        if (!rpcResponsesSetUp) {
+          ipcChannel.on('message', data => {
+            event.sender.send('send-to-renderer', {
+              action: 'RPC_RESPONSE',
+              from: 'fether:electron',
+              payload: data
+            });
+          });
 
-        break;
-      }
-      case 'WS_PORT_REQUEST': {
-        event.sender.send('send-to-renderer', {
-          action: 'WS_PORT_RESPONSE',
-          from: 'fether:electron',
-          payload: DEFAULT_WS_PORT
-        });
+          rpcResponsesSetUp = true;
+        }
+
+        ipcChannel.send(data.payload);
 
         break;
       }

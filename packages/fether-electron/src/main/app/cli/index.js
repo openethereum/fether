@@ -7,7 +7,6 @@ import cli from 'commander';
 
 import { DEFAULT_CHAIN } from '../constants';
 
-const { productName } = require('../../../../electron-builder.json');
 const { version } = require('../../../../package.json');
 
 /**
@@ -27,10 +26,6 @@ cli
     '--chain <chain>',
     `The network to connect to, can be one of "foundation", "kovan" or "ropsten". (default: "${DEFAULT_CHAIN}")`,
     DEFAULT_CHAIN
-  )
-  .option(
-    '--no-run-parity',
-    `${productName} will not attempt to run the locally installed parity.`
   )
   // We want to ignore some flags that are sometimes passed to Fether, but not
   // officially recognized by Fether:
