@@ -43,7 +43,7 @@ class ParityEthereum {
   run = async () => {
     return runParity({
       parityPath: bundledParityPath,
-      flags: ['--light', '--ipc-path', IPC_PATH, '--chain', cli.chain], // TODO windows; // TODO ipc path
+      flags: ['--light', '--ipc-path', IPC_PATH, '--chain', cli.chain],
       onParityError: err =>
         handleError(err, 'An error occured with Parity Ethereum.')
     });
