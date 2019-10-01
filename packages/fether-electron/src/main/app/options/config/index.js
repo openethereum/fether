@@ -21,27 +21,6 @@ pino.info(
   `Running Fether in ${IS_PROD ? 'production' : 'development'} environment`
 );
 
-/**
- * Note: We disallow users from using Fether
- * with a remote node.
- * WARNING: SSH tunnels from an attacker are still possible.
- */
-const DEFAULT_HTTP_PORT = '3000';
-const TRUSTED_HOSTS = {
-  github: ['api.github.com', 'github.com', 'raw.githubusercontent.com'],
-  blockscout: ['blockscout.com']
-};
-const TRUSTED_WS_PORTS = [DEFAULT_WS_PORT];
-const DEFAULT_HTTP_TRUSTED_LOOPBACK = `http://${TRUSTED_LOOPBACK}:${DEFAULT_HTTP_PORT}`;
-const TRUSTED_URLS = [
-  DEFAULT_HTTP_TRUSTED_LOOPBACK,
-  `ws://${TRUSTED_LOOPBACK}:${DEFAULT_WS_PORT}`,
-  'https://parity.io',
-  'https://wiki.parity.io/Fether-FAQ',
-  'https://github.com/paritytech/fether/issues/new',
-  'https://api.github.com/repos/paritytech/fether/releases/latest'
-];
-
 // https://electronjs.org/docs/tutorial/security#electron-security-warnings
 process.env.ELECTRON_ENABLE_SECURITY_WARNINGS = true;
 
@@ -124,10 +103,7 @@ const SECURITY_OPTIONS = {
   fetherNetwork: {
     DEFAULT_CHAIN,
     DEFAULT_WS_PORT,
-    TRUSTED_HOSTS,
-    TRUSTED_LOOPBACK,
-    TRUSTED_URLS,
-    TRUSTED_WS_PORTS
+    TRUSTED_LOOPBACK
   },
   webPreferences: {
     /**

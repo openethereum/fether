@@ -5,70 +5,12 @@
 
 import debounce from 'lodash/debounce';
 
-import { SECURITY_OPTIONS } from '../options/config';
 import Pino from '../utils/pino';
 
-const { TRUSTED_HOSTS } = SECURITY_OPTIONS.fetherNetwork;
-const trustedHostsAll = Object.values(TRUSTED_HOSTS).flat();
 const pino = Pino();
 
 function setupWinListeners (fetherApp) {
   const { onWindowClose, processSaveWinPosition, win } = fetherApp;
-
-  /**
-   * Insecure TLS Validation - verify the application does not explicitly opt-out of TLS validation
-   *
-   * References:
-   * - https://doyensec.com/resources/us-17-Carettoni-Electronegativity-A-Study-Of-Electron-Security-wp.pdf
-   * - https://electronjs.org/docs/api/session#sessetcertificateverifyprocproc
-   */
-  win.webContents.session.setCertificateVerifyProc((request, callback) => {
-    const { hostname, certificate, verificationResult, errorCode } = request; // eslint-disable-line
-
-    pino.debug(
-      'Processing server certificate verification request for the session in setCertificateVerifyProc with hostname: ',
-      hostname
-    );
-
-    if (errorCode) {
-      pino.error(
-        'Error processing server certificate verification request for the session in setCertificateVerifyProc: ',
-        errorCode
-      );
-
-      // Failure accepting certificate due to errorCode
-      callback(-2); // eslint-disable-line
-    } else if (!trustedHostsAll.includes(hostname)) {
-      pino.info(
-        'Failure accepting server certification due to its hostname being an untrusted host in setCertificateVerifyProc: ',
-        hostname
-      );
-
-      // Failure accepting server certificate due to its source hostname being untrusted
-      callback(-2); // eslint-disable-line
-    } else if (!verificationResult === 'net::OK') {
-      pino.info(
-        'Failure accepting server certificate due to it failing Chromium verification: ',
-        hostname,
-        verificationResult
-      );
-
-      // Failure accepting server certificate due to it failing Chromium verification
-      callback(-2); // eslint-disable-line
-    } else {
-      pino.info(
-        'Fallback to using the verification result from Chromium: ',
-        hostname,
-        verificationResult
-      );
-
-      // Fallback to using the verification result from Chromium
-      callback(-3); // eslint-disable-line
-
-      // // Success and accept the certifcate, disable Certificate Transparency verification
-      // callback(0); // eslint-disable-line
-    }
-  });
 
   // Windows and Linux (unchecked on others)
   win.on('move', () => {
