@@ -3,22 +3,15 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import path from 'path';
-
 import { runParity } from '@parity/electron';
 
-import { bundledParityPath, staticPath } from '../utils/paths';
+import { bundledParityPath, IPC_PATH } from '../utils/paths';
 import handleError from '../utils/handleError';
 import cli from '../cli';
 import ipcChannel from '../ipcChannel';
 import Pino from '../utils/pino';
 
 const pino = Pino();
-
-const IPC_PATH =
-  process.platform === 'win32'
-    ? path.join('\\\\?\\pipe', staticPath, 'parity-ipc.ipc')
-    : path.join(staticPath, 'parity-ipc.ipc');
 
 class ParityEthereum {
   constructor () {
