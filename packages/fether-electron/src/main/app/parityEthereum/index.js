@@ -42,6 +42,8 @@ class ParityEthereum {
         '--no-ws',
         '--ipc-path',
         IPC_PATH,
+        '--ipc-apis',
+        'all', // we need to enable personal to use personal_signTransaction
         '--chain',
         cli.chain
       ],
