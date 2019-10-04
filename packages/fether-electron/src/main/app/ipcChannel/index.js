@@ -3,8 +3,12 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-const EventEmitter = require('eventemitter3');
-const net = require('net');
+import EventEmitter from 'eventemitter3';
+import net from 'net';
+
+import Pino from '../utils/pino';
+
+const pino = Pino();
 
 /*
  * IpcChannel to send messages to and receive messages from the node via ipc.
@@ -22,7 +26,7 @@ class IpcChannel extends EventEmitter {
     return new Promise((resolve, reject) => {
       const socket = net.createConnection(path);
       socket.on('connect', () => {
-        console.log('Connected to IPC socket.');
+        pino.info('Connected to IPC socket.');
         this._socket = socket;
         this._sendQueued();
         resolve(true);
@@ -36,7 +40,7 @@ class IpcChannel extends EventEmitter {
         });
       });
       socket.on('error', err => {
-        console.log('Error connecting to IPC socket.', err);
+        pino.error('Error connecting to IPC socket.', err);
         reject(new Error(err));
       });
     });
