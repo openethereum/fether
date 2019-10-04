@@ -10,7 +10,7 @@ const { app } = electron;
 const IS_TEST = !app;
 const IS_PACKAGED = !IS_TEST && app.isPackaged;
 
-const IPC_PATH =
+const BUNDLED_IPC_PATH =
   process.platform === 'win32'
     ? path.join(
       '\\\\?\\pipe',
@@ -36,4 +36,4 @@ const bundledParityPath =
     ? path.join(staticPath, 'parity.exe')
     : path.join(staticPath, 'parity');
 
-export { IS_PACKAGED, IPC_PATH, bundledParityPath, staticPath };
+export { IS_PACKAGED, BUNDLED_IPC_PATH, bundledParityPath, staticPath };

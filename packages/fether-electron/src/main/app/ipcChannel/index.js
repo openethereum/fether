@@ -41,7 +41,7 @@ class IpcChannel extends EventEmitter {
       });
       socket.on('error', err => {
         pino.error('Error connecting to IPC socket.', err);
-        reject(new Error(err));
+        reject(err);
       });
     });
   }

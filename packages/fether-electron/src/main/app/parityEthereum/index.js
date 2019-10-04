@@ -5,7 +5,7 @@
 
 import { runParity } from '@parity/electron';
 
-import { bundledParityPath, IPC_PATH } from '../utils/paths';
+import { bundledParityPath, BUNDLED_IPC_PATH } from '../utils/paths';
 import handleError from '../utils/handleError';
 import cli from '../cli';
 import ipcChannel from '../ipcChannel';
@@ -15,6 +15,12 @@ const pino = Pino();
 
 class ParityEthereum {
   constructor () {
+    if (cli.ipcPath) {
+      pino.info('--ipc-path provided; connecting to', cli.ipcPath);
+
+      return ipcChannel.init(cli.ipcPath).catch(handleError);
+    }
+
     pino.info('Running Parity Ethereum');
 
     // Run the bundled Parity Ethereum
@@ -22,13 +28,10 @@ class ParityEthereum {
       .then(
         _ =>
           new Promise((resolve, reject) => {
-            // delay is needed to give time for the ipc file to be set up
-            setTimeout(() => {
-              ipcChannel.init(IPC_PATH);
-              resolve(true);
-            }, 1000);
+            setTimeout(resolve, 1000); // delay is needed to give time for the ipc file to be set up
           })
       )
+      .then(() => ipcChannel.init(BUNDLED_IPC_PATH))
       .catch(handleError);
   }
 
@@ -41,7 +44,7 @@ class ParityEthereum {
         '--no-jsonrpc',
         '--no-ws',
         '--ipc-path',
-        IPC_PATH,
+        BUNDLED_IPC_PATH,
         '--ipc-apis',
         'all', // we need to enable personal to use personal_signTransaction
         '--chain',
