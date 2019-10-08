@@ -6,10 +6,6 @@
 import { filter, map, publish } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-import Debug from '../utils/debug';
-
-const debug = Debug('postMessage');
-
 const RENDERER_ORIGIN =
   process.env.NODE_ENV === 'production' ? 'file://' : 'http://localhost:3000';
 
@@ -33,8 +29,6 @@ const messages$ = Observable.create(observer => {
       // message has been sent by `frontend`, we ignore.
       return;
     }
-
-    debug(`Received post message from ${from ? `${from}` : ''}`, data);
 
     observer.next(data);
   };

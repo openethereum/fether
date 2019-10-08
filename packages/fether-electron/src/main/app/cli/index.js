@@ -29,8 +29,8 @@ cli
     DEFAULT_CHAIN
   )
   .option(
-    '--no-run-parity',
-    `${productName} will not attempt to run the locally installed parity.`
+    '--ipc-path <path>',
+    `${productName} will not attempt to run the bundled Parity Ethereum, and will connect to the specified IPC socket instead. All IPC APIs must be enabled.`
   )
   // We want to ignore some flags that are sometimes passed to Fether, but not
   // officially recognized by Fether:

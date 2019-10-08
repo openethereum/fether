@@ -10,6 +10,15 @@ const { app } = electron;
 const IS_TEST = !app;
 const IS_PACKAGED = !IS_TEST && app.isPackaged;
 
+const BUNDLED_IPC_PATH =
+  process.platform === 'win32'
+    ? path.join(
+      '\\\\?\\pipe',
+      electron.app.getPath('userData'),
+      'fether-parity-ipc.ipc'
+    )
+    : path.join(electron.app.getPath('userData'), 'fether-parity-ipc.ipc');
+
 /**
  * Get the path to the `static` folder.
  *
@@ -27,4 +36,4 @@ const bundledParityPath =
     ? path.join(staticPath, 'parity.exe')
     : path.join(staticPath, 'parity');
 
-export { IS_PACKAGED, bundledParityPath, staticPath };
+export { IS_PACKAGED, BUNDLED_IPC_PATH, bundledParityPath, staticPath };

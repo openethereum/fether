@@ -3,58 +3,53 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
-import { isParityRunning, runParity } from '@parity/electron';
+import { runParity } from '@parity/electron';
 
-import { bundledParityPath } from '../utils/paths';
+import { bundledParityPath, BUNDLED_IPC_PATH } from '../utils/paths';
 import handleError from '../utils/handleError';
 import cli from '../cli';
+import ipcChannel from '../ipcChannel';
 import Pino from '../utils/pino';
 
 const pino = Pino();
 
 class ParityEthereum {
   constructor () {
-    /*
-     * - If an instance of Parity Ethereum is already running, we connect to it
-     *   and then check in fether-react if the parity_versionInfo RPC returns
-     *   a compatible version; otherwise, we error out.
-     * - If no instance of Parity Ethereum is running, we run the bundled Parity
-     *   Ethereum binary.
-     *
-     * `parity signer new-token` is run on the bundled binary in any case. We
-     * don't use the $PATH anymore.
-     */
+    if (cli.ipcPath) {
+      pino.info('--ipc-path provided; connecting to', cli.ipcPath);
 
-    // Run the bundled Parity Ethereum if needed and wanted
-    return new Promise(async (resolve, reject) => {
-      // Parity Ethereum is already running: don't run the bundled binary
-      if (await this.isRunning()) {
-        resolve(true);
-        return;
-      }
+      return ipcChannel.init(cli.ipcPath).catch(handleError);
+    }
 
-      // User ran Fether with --no-run-parity: don't run the bundled binary
-      if (!cli.runParity) {
-        resolve(false);
-        return;
-      }
+    pino.info('Running Parity Ethereum');
 
-      // Parity Ethereum isn't running: run the bundled binary
-      await this.run();
-      pino.info('Running Parity Ethereum');
-      resolve(true);
-    }).catch(handleError);
+    // Run the bundled Parity Ethereum
+    return this.run()
+      .then(
+        _ =>
+          new Promise((resolve, reject) => {
+            setTimeout(resolve, 1000); // delay is needed to give time for the ipc file to be set up
+          })
+      )
+      .then(() => ipcChannel.init(BUNDLED_IPC_PATH))
+      .catch(handleError);
   }
-
-  isRunning = async () => {
-    return isParityRunning();
-  };
 
   // Run the bundled Parity Ethereum binary
   run = async () => {
     return runParity({
       parityPath: bundledParityPath,
-      flags: ['--light', '--chain', cli.chain],
+      flags: [
+        '--light',
+        '--no-jsonrpc',
+        '--no-ws',
+        '--ipc-path',
+        BUNDLED_IPC_PATH,
+        '--ipc-apis',
+        'all', // we need to enable personal to use personal_signTransaction
+        '--chain',
+        cli.chain
+      ],
       onParityError: err =>
         handleError(err, 'An error occured with Parity Ethereum.')
     });
