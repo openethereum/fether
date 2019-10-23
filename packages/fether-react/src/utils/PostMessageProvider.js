@@ -18,7 +18,7 @@ import * as postMessage from './postMessage';
 import EventEmitter from 'eventemitter3';
 
 export default class PostMessageProvider extends EventEmitter {
-  constructor (destination, source) {
+  constructor (destination) {
     super();
 
     this._destination = destination || window.parent;
@@ -136,7 +136,17 @@ export default class PostMessageProvider extends EventEmitter {
   }
 
   _receiveMessage (raw) {
-    const parsed = JSON.parse(raw);
+    // FIXME I'm not sure how to fix this
+    // I had some occasions where it cannot parse
+    let parsed;
+    try {
+      parsed = JSON.parse(raw);
+    } catch (err) {
+      console.warn(`Cannot parse ${raw}. Ignoring message.`);
+
+      return;
+    }
+
     const { id, error } = parsed;
     const subscription = parsed.params && parsed.params.subscription;
 
@@ -144,12 +154,25 @@ export default class PostMessageProvider extends EventEmitter {
       // subscription notification
       const result = parsed.params.result;
       let messageId = this._subscriptionsToId[subscription];
-      this._messages[messageId].callback(error && new Error(error), result);
+
+      // FIXME I'm not sure how to fix this
+      // Sometimes we receive results for a subscription that we have never
+      // seen before. Ignore.
+      if (!this._messages[messageId]) {
+        console.warn(`Got result for unknown subscription ${subscription}`);
+
+        return;
+      }
+
+      this._messages[messageId].callback(
+        error && new Error(error.message),
+        result
+      );
     } else {
       // request response
       const result = parsed.result;
       if (error) {
-        this._messages[id].reject(new Error(error));
+        this._messages[id].reject(new Error(error.message));
       } else {
         this._messages[id].resolve(result);
 
