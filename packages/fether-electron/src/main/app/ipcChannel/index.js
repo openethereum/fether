@@ -33,6 +33,8 @@ class IpcChannel extends EventEmitter {
       });
       socket.on('data', data_ => {
         const data = data_.toString();
+
+        console.log('GOT IPC DATA', data);
         // Sometimes we receive multiple messages at once
         const messages = data.split(/\r?\n/).filter(Boolean);
         messages.forEach(data => {

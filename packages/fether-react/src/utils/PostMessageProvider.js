@@ -169,6 +169,15 @@ export default class PostMessageProvider extends EventEmitter {
         result
       );
     } else {
+      // FIXME I'm not sure how to fix this
+      // Sometimes we receive results for an id that we have never seen before.
+      // Ignore.
+      if (!this._messages[id]) {
+        console.warn(`Got result for unknown id ${id}`);
+
+        return;
+      }
+
       // request response
       const result = parsed.result;
       if (error) {
