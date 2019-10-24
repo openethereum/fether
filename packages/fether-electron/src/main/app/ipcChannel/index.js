@@ -31,10 +31,25 @@ class IpcChannel extends EventEmitter {
         this._sendQueued();
         resolve(true);
       });
+
+      // We get data from the socket by chunks, and 1 chunk !== 1 Rpc message
+      // Sometimes 1 chunk is multiple messages, sometimes we get partial
+      // messages.
+      // https://github.com/paritytech/fether/issues/562
+
+      // The last element in a '\n'-separate chunk. Will be `""` if the
+      // last element was a correctly-formed message, or will hold the
+      // ill-formed message otherwise.
+      let lastData = '';
       socket.on('data', data_ => {
-        const data = data_.toString();
-        // Sometimes we receive multiple messages at once
-        const messages = data.split(/\r?\n/).filter(Boolean);
+        // If the last data was truncated, then we concatenate to the new data
+        // we just received
+        const data = `${lastData}${data_.toString()}`;
+
+        // All messages are separated by a '\n'
+        const messages = data.split(/\n/);
+        lastData = messages.pop(); // Will hold "" or an ill-formed JSONRPC message
+
         messages.forEach(data => {
           this.emit('message', data);
         });

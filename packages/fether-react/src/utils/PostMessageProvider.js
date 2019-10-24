@@ -14,11 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
-import * as postMessage from './postMessage';
 import EventEmitter from 'eventemitter3';
 
+import Debug from './debug';
+import * as postMessage from './postMessage';
+
+const debug = Debug('PostMessageProvider');
+
 export default class PostMessageProvider extends EventEmitter {
-  constructor (destination, source) {
+  constructor (destination) {
     super();
 
     this._destination = destination || window.parent;
@@ -136,7 +140,17 @@ export default class PostMessageProvider extends EventEmitter {
   }
 
   _receiveMessage (raw) {
-    const parsed = JSON.parse(raw);
+    let parsed;
+    try {
+      parsed = JSON.parse(raw);
+    } catch (err) {
+      // Should not happen anymore, since the following issue is fixed
+      // https://github.com/paritytech/fether/issues/562
+      debug(`Cannot parse ${raw}. Ignoring message.`);
+
+      return;
+    }
+
     const { id, error } = parsed;
     const subscription = parsed.params && parsed.params.subscription;
 
@@ -144,12 +158,32 @@ export default class PostMessageProvider extends EventEmitter {
       // subscription notification
       const result = parsed.params.result;
       let messageId = this._subscriptionsToId[subscription];
-      this._messages[messageId].callback(error && new Error(error), result);
+
+      // Sometimes we receive results for a subscription that we have never
+      // seen before. Should not happen.
+      if (!this._messages[messageId]) {
+        debug(`Got result for unknown subscription ${subscription}`);
+
+        return;
+      }
+
+      this._messages[messageId].callback(
+        error && new Error(error.message),
+        result
+      );
     } else {
+      // Sometimes we receive results for an id that we have never seen before.
+      // Should not happen.
+      if (!this._messages[id]) {
+        debug(`Got result for unknown id ${id}`);
+
+        return;
+      }
+
       // request response
       const result = parsed.result;
       if (error) {
-        this._messages[id].reject(new Error(error));
+        this._messages[id].reject(new Error(error.message));
       } else {
         this._messages[id].resolve(result);
 
