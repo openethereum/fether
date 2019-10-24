@@ -14,8 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
-import * as postMessage from './postMessage';
 import EventEmitter from 'eventemitter3';
+
+import Debug from './debug';
+import * as postMessage from './postMessage';
+
+const debug = Debug('PostMessageProvider');
 
 export default class PostMessageProvider extends EventEmitter {
   constructor (destination) {
@@ -136,13 +140,13 @@ export default class PostMessageProvider extends EventEmitter {
   }
 
   _receiveMessage (raw) {
-    // FIXME I'm not sure how to fix this
-    // I had some occasions where it cannot parse
     let parsed;
     try {
       parsed = JSON.parse(raw);
     } catch (err) {
-      console.warn(`Cannot parse ${raw}. Ignoring message.`);
+      // Should not happen anymore, since the following issue is fixed
+      // https://github.com/paritytech/fether/issues/562
+      debug(`Cannot parse ${raw}. Ignoring message.`);
 
       return;
     }
@@ -155,11 +159,10 @@ export default class PostMessageProvider extends EventEmitter {
       const result = parsed.params.result;
       let messageId = this._subscriptionsToId[subscription];
 
-      // FIXME I'm not sure how to fix this
       // Sometimes we receive results for a subscription that we have never
-      // seen before. Ignore.
+      // seen before. Should not happen.
       if (!this._messages[messageId]) {
-        console.warn(`Got result for unknown subscription ${subscription}`);
+        debug(`Got result for unknown subscription ${subscription}`);
 
         return;
       }
@@ -169,11 +172,10 @@ export default class PostMessageProvider extends EventEmitter {
         result
       );
     } else {
-      // FIXME I'm not sure how to fix this
       // Sometimes we receive results for an id that we have never seen before.
-      // Ignore.
+      // Should not happen.
       if (!this._messages[id]) {
-        console.warn(`Got result for unknown id ${id}`);
+        debug(`Got result for unknown id ${id}`);
 
         return;
       }
