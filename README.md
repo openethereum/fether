@@ -63,6 +63,12 @@ Official website: https://parity.io | Be sure to check out [our Wiki](https://wi
   - Double click on the file to install Fether.
   - Fether will be added to the program menu.
 
+## Security warning
+
+- ### Don't run Fether as root
+- ### Beware of suspicious symlinks called fether-x.y.z-x86_64.AppImage.home
+This attack vector is applicable to any `AppImage` application. It consists in crafting a `.home` file/folder to be used as home folder by an AppImage application. The danger resides in the fact that this `.home` file could be a symlink somewhere on the user's computer. The AppImage would be using this new location as a home folder, in a non-transparent way. Running the application as root might damage a system, for example, by overflowing the /boot partition.
+
 ## Build from sources
 
 ### Install dependencies
