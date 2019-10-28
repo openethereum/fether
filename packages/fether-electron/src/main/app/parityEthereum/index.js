@@ -3,6 +3,8 @@
 //
 // SPDX-License-Identifier: BSD-3-Clause
 
+import fs from 'fs';
+
 import { runParity } from '@parity/electron';
 
 import { bundledParityPath, BUNDLED_IPC_PATH } from '../utils/paths';
@@ -12,6 +14,10 @@ import ipcChannel from '../ipcChannel';
 import Pino from '../utils/pino';
 
 const pino = Pino();
+
+function wait (milliseconds) {
+  return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
 
 class ParityEthereum {
   constructor () {
@@ -25,12 +31,12 @@ class ParityEthereum {
 
     // Run the bundled Parity Ethereum
     return this.run()
-      .then(
-        _ =>
-          new Promise((resolve, reject) => {
-            setTimeout(resolve, 1000); // delay is needed to give time for the ipc file to be set up
-          })
-      )
+      .then(async _ => {
+        // wait for the ipc socket file to be set up
+        do {
+          await wait(200);
+        } while (!fs.existsSync(BUNDLED_IPC_PATH));
+      })
       .then(() => ipcChannel.init(BUNDLED_IPC_PATH))
       .catch(handleError);
   }

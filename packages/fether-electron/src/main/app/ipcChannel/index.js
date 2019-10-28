@@ -24,6 +24,8 @@ class IpcChannel extends EventEmitter {
 
   init (path) {
     return new Promise((resolve, reject) => {
+      pino.info('Connecting to IPC socket...');
+
       const socket = net.createConnection(path);
       socket.on('connect', () => {
         pino.info('Connected to IPC socket.');
