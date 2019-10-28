@@ -15,6 +15,7 @@
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
 import EventEmitter from 'eventemitter3';
+import TransportError from '@parity/api/src/transport/error';
 
 import Debug from './debug';
 import * as postMessage from './postMessage';
@@ -62,24 +63,20 @@ export default class PostMessageProvider extends EventEmitter {
   }
 
   send (method, params, callback) {
-    return new Promise((resolve, reject) => {
-      this._send(
-        {
-          method,
-          params
+    this._send(
+      {
+        method,
+        params
+      },
+      {
+        resolve: (...argz) => {
+          callback(null, ...argz);
         },
-        {
-          resolve: (...argz) => {
-            resolve(...argz);
-            callback(null, ...argz);
-          },
-          reject: err => {
-            reject(err);
-            callback(err);
-          }
+        reject: err => {
+          callback(err);
         }
-      );
-    });
+      }
+    );
   }
 
   _methodsFromApi (api) {
@@ -183,7 +180,13 @@ export default class PostMessageProvider extends EventEmitter {
       // request response
       const result = parsed.result;
       if (error) {
-        this._messages[id].reject(new Error(error.message));
+        this._messages[id].reject(
+          new TransportError(
+            this._messages[id].method,
+            error.code,
+            error.message
+          )
+        );
       } else {
         this._messages[id].resolve(result);
 
