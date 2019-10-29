@@ -120,14 +120,16 @@ export default class PostMessageProvider extends EventEmitter {
 
   unsubscribe (subId) {
     return new Promise((resolve, reject) => {
+      const subscriptionRequestId = this._subscriptionsToId[subId];
+
       this._send(
         {
-          method: this._messages[subId].uMethod,
+          method: this._messages[subscriptionRequestId].uMethod,
           params: [subId]
         },
         {
           resolve: v => {
-            delete this._messages[subId];
+            delete this._messages[subscriptionRequestId];
             resolve(v);
           },
           reject
