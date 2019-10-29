@@ -40,7 +40,6 @@ function loadTray (fetherApp) {
       fetherApp.win.focus();
     });
     tray.setToolTip(options.tooltip);
-    tray.setHighlightMode('never');
   }
 }
 
