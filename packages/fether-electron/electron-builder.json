@@ -10,6 +10,9 @@
   },
   "productName": "Parity Fether",
   "publish": ["github"],
+  "snap": {
+    "publish": ["github"]
+  },
   "win": {
     "icon": "icons/icon.ico",
     "publisherName": "Parity Technologies (UK) Ltd.",
