@@ -160,7 +160,7 @@ You agree that Parity Technologies may place such advertising on products and se
 
 **Other content**
 
-Parity Technologies&#39; services provided may include hyperlinks to other web sites, smart contracts or content or resources. Parity Technologies may have no control over any web sites or resources which are provided by companies or persons other than Parity Technologies.
+Parity Technologies&#39; as offered may include hyperlinks to other web sites, smart contracts or content or resources. Parity Technologies has no control over any web sites or resources which are provided by companies or persons other than Parity Technologies, including any data personal or otherwise that they might collect from you through your use of those sites or services. In choosing to follow such hyperlinks to third party services you should consider familiarising yourself with the terms of use and privacy policies of such third party services.  
 
 You acknowledge and agree that Parity Technologies is not responsible for the availability of any such external sites or resources, and does not endorse any advertising, products or other materials on or available from such web sites or resources.
 
