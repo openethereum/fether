@@ -10,7 +10,7 @@
   },
   "productName": "Parity Fether",
   "publish": ["github"],
-  "snap" {
+  "snap": {
     "publish": ["github"]
   },
   "win": {
