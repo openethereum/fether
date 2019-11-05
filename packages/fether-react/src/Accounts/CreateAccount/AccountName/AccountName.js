@@ -10,7 +10,9 @@ import { inject, observer } from 'mobx-react';
 
 import i18n, { packageNS } from '../../../i18n';
 import loading from '../../../assets/img/icons/loading.svg';
+import withAccountsInfo from '../../../utils/withAccountsInfo';
 
+@withAccountsInfo
 @inject('createAccountStore')
 @observer
 class AccountName extends Component {
@@ -118,6 +120,14 @@ class AccountName extends Component {
       location: { pathname }
     } = this.props;
     const currentStep = pathname.slice(-1);
+    const { accountsInfo } = this.props;
+
+    let accountNameExists = false;
+    Object.keys(accountsInfo).forEach(account => {
+      if (accountsInfo[account].name === name) {
+        accountNameExists = true;
+      }
+    });
 
     return (
       <form key='createAccount' noValidate onSubmit={this.handleSubmit}>
@@ -143,7 +153,7 @@ class AccountName extends Component {
               {i18n.t(`${packageNS}:navigation.back`)}
             </button>
           )}
-          {name && address ? (
+          {name && address && !accountNameExists ? (
             <button className='button'>
               {i18n.t(`${packageNS}:navigation.next`)}
             </button>
