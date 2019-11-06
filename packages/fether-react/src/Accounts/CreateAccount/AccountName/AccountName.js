@@ -117,17 +117,14 @@ class AccountName extends Component {
       createAccountStore: { address, name },
       error,
       history,
-      location: { pathname }
+      location: { pathname },
+      accountsInfo
     } = this.props;
-    const currentStep = pathname.slice(-1);
-    const { accountsInfo } = this.props;
 
-    let accountNameExists = false;
-    Object.keys(accountsInfo).forEach(account => {
-      if (accountsInfo[account].name === name) {
-        accountNameExists = true;
-      }
-    });
+    const currentStep = pathname.slice(-1);
+    const accountNameExists = !!Object.values(accountsInfo).find(
+      info => info.name === name
+    );
 
     return (
       <form key='createAccount' noValidate onSubmit={this.handleSubmit}>
@@ -143,6 +140,11 @@ class AccountName extends Component {
           value={name}
         />
         {error && <p>{error}</p>}
+        {accountNameExists && (
+          <p>
+            {i18n.t(`${packageNS}:account.create.error_msg_duplicate_name`)}
+          </p>
+        )}
         <nav className='form-nav -space-around'>
           {currentStep > 1 && (
             <button

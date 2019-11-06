@@ -5,6 +5,7 @@
       "label_name_msg": "Please give this account a name:",
       "label_name": "Name",
       "title": "Create a new account",
+      "error_msg_duplicate_name": "An account already exists with this name.",
       "copy_phrase": {
         "msg1": "Please write your secret phrase on a piece of paper:",
         "msg2": "Keep it secure and secret.",
