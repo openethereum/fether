@@ -27,7 +27,9 @@ test-node-12:
   stage: test
   image: electronuserland/builder:wine
   script:
-    - apt -y install nodejs
+    # https://askubuntu.com/questions/426750/how-can-i-update-my-nodejs-to-the-latest-version
+    - npm install -g n
+    - n stable
     - node -v
   tags:
     - linux-docker
