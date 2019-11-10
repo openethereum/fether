@@ -23,6 +23,13 @@ cache:
     - triggers
     - master
 
+test-node-12:
+  stage: test
+  image: electronuserland/builder:wine
+  script:
+    - apt -y install nodejs
+    - node -v
+
 linux-test:
   stage: test
   image: node:12
