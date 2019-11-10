@@ -23,27 +23,16 @@ cache:
     - triggers
     - master
 
-test-node-12:
+linux-test:
   stage: test
-  image: electronuserland/builder:wine
+  image: node:12
   script:
-    # https://askubuntu.com/questions/426750/how-can-i-update-my-nodejs-to-the-latest-version
-    - npm install -g n
-    - n stable
-    - node -v
+    - curl -o- -L https://yarnpkg.com/install.sh | bash
+    - export PATH=$HOME/.yarn/bin:$PATH
+    - yarn install
+    - yarn test
   tags:
     - linux-docker
-
-# linux-test:
-#   stage: test
-#   image: node:12
-#   script:
-#     - curl -o- -L https://yarnpkg.com/install.sh | bash
-#     - export PATH=$HOME/.yarn/bin:$PATH
-#     - yarn install
-#     - yarn test
-#   tags:
-#     - linux-docker
 
 linux-build:
   stage: build
@@ -87,6 +76,10 @@ win-build:
   image: electronuserland/builder:wine
   <<: *branches
   script:
+    # Remove the two next lines once the Docker image gets updated to node 12
+    # https://github.com/electron-userland/electron-builder/issues/4377
+    - npm install -g n
+    - n stable
     - yarn install
     - yarn build
     # `win-build` is a linux machine, so it downloaded a linux parity-ethereum.
