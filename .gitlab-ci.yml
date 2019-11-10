@@ -29,17 +29,19 @@ test-node-12:
   script:
     - apt -y install nodejs
     - node -v
-
-linux-test:
-  stage: test
-  image: node:12
-  script:
-    - curl -o- -L https://yarnpkg.com/install.sh | bash
-    - export PATH=$HOME/.yarn/bin:$PATH
-    - yarn install
-    - yarn test
   tags:
     - linux-docker
+
+# linux-test:
+#   stage: test
+#   image: node:12
+#   script:
+#     - curl -o- -L https://yarnpkg.com/install.sh | bash
+#     - export PATH=$HOME/.yarn/bin:$PATH
+#     - yarn install
+#     - yarn test
+#   tags:
+#     - linux-docker
 
 linux-build:
   stage: build
