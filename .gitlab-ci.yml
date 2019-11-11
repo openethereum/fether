@@ -76,6 +76,10 @@ win-build:
   image: electronuserland/builder:wine
   <<: *branches
   script:
+    # Remove the two next lines once the Docker image gets updated to node 12
+    # https://github.com/electron-userland/electron-builder/issues/4377
+    - npm install -g n
+    - n stable
     - yarn install
     - yarn build
     # `win-build` is a linux machine, so it downloaded a linux parity-ethereum.
