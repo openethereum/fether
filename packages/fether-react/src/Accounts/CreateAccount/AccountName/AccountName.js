@@ -123,7 +123,7 @@ class AccountName extends Component {
 
     const currentStep = pathname.slice(-1);
     const accountNameExists = !!Object.values(accountsInfo).find(
-      info => info.name === name
+      info => info.name.toLowerCase() === name.toLowerCase()
     );
 
     return (
