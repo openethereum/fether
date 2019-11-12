@@ -10,7 +10,9 @@ import { inject, observer } from 'mobx-react';
 
 import i18n, { packageNS } from '../../../i18n';
 import loading from '../../../assets/img/icons/loading.svg';
+import withAccountsInfo from '../../../utils/withAccountsInfo';
 
+@withAccountsInfo
 @inject('createAccountStore')
 @observer
 class AccountName extends Component {
@@ -115,9 +117,14 @@ class AccountName extends Component {
       createAccountStore: { address, name },
       error,
       history,
-      location: { pathname }
+      location: { pathname },
+      accountsInfo
     } = this.props;
+
     const currentStep = pathname.slice(-1);
+    const accountNameExists = !!Object.values(accountsInfo).find(
+      info => info.name.toLowerCase() === name.toLowerCase()
+    );
 
     return (
       <form key='createAccount' noValidate onSubmit={this.handleSubmit}>
@@ -133,6 +140,11 @@ class AccountName extends Component {
           value={name}
         />
         {error && <p>{error}</p>}
+        {accountNameExists && (
+          <p>
+            {i18n.t(`${packageNS}:account.create.error_msg_duplicate_name`)}
+          </p>
+        )}
         <nav className='form-nav -space-around'>
           {currentStep > 1 && (
             <button
@@ -143,7 +155,7 @@ class AccountName extends Component {
               {i18n.t(`${packageNS}:navigation.back`)}
             </button>
           )}
-          {name && address ? (
+          {name && address && !accountNameExists ? (
             <button className='button'>
               {i18n.t(`${packageNS}:navigation.next`)}
             </button>

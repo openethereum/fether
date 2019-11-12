@@ -5,6 +5,7 @@
       "label_name_msg": "Bitte geben Sie diesem Konto einen Namen:",
       "label_name": "Name",
       "title": "Ein neues Konto erstellen",
+      "error_msg_duplicate_name": "Ein Konto mit diesem Namen existiert.",
       "copy_phrase": {
         "msg1": "Bitte schreibe deinen geheimen Satz auf ein Blatt Papier:",
         "msg2": "Behalte es sicher und geheim.",
