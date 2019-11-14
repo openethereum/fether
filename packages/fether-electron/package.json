@@ -1,7 +1,7 @@
 {
   "name": "fether",
   "description": "Fether Wallet",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "private": true,
   "author": "Parity Team <admin@parity.io>",
   "maintainers": [
@@ -46,7 +46,7 @@
     "commander": "^2.15.1",
     "electron-positioner": "^4.1.0",
     "electron-settings": "^3.2.0",
-    "fether-react": "^0.4.0",
+    "fether-react": "^0.4.1",
     "i18next": "^15.0.4",
     "i18next-node-fs-backend": "^2.0.0",
     "pino": "^4.16.1",
