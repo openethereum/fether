@@ -1,16 +1,23 @@
 [
   {
-    "address": "0x1Dad4783cf3fe3085C1426157aB175A6119A04bA",
-    "symbol": "MKR",
-    "decimals": 18,
-    "name": "RadarRelay test MakerDAO",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/mkr%402x.png"
+    "address": "0xc57538846Ec405Ea25Deb00e0f9B29a432D53507",
+    "symbol": "RLC",
+    "decimals": 9,
+    "name": "iExec RLC",
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/rlc%402x.png"
   },
   {
-    "address": "0x4A6e6C3868A279e1D9047B42C3fB356FF4680003",
-    "symbol": "TIB",
+    "address": "0x323B5d4C32345ced77393B3530b1EeD0f346429D",
+    "symbol": "MLN",
     "decimals": 18,
-    "name": "ThibCoin"
+    "name": "RadarRelay test Melon Tokens",
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/mln%402x.png"
+  },
+  {
+    "address": "0x8667559254241ddeD4d11392f868d72092765367",
+    "symbol": "Aeternity",
+    "decimals": 18,
+    "name": "Aeternity"
   },
   {
     "address": "0xC4375B7De8af5a38a93548eb8453a498222C4fF2",
@@ -27,24 +34,10 @@
     "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/gnt%402x.png"
   },
   {
-    "address": "0xB18845c260F680d5B9D84649638813E342E4F8C9",
-    "symbol": "REP",
-    "decimals": 18,
-    "name": "RadarRelay test Augur Reputation Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/rep%402x.png"
-  },
-  {
-    "address": "0x8667559254241ddeD4d11392f868d72092765367",
-    "symbol": "Aeternity",
-    "decimals": 18,
-    "name": "Aeternity"
-  },
-  {
-    "address": "0xc57538846Ec405Ea25Deb00e0f9B29a432D53507",
-    "symbol": "RLC",
-    "decimals": 9,
-    "name": "iExec RLC",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/rlc%402x.png"
+    "address": "0x4733659a5cB7896A65c918Add6f59C5148FB5ffa",
+    "symbol": "GAV",
+    "decimals": 6,
+    "name": "GavCoin"
   },
   {
     "address": "0xeeE3870657E4716670f185dF08652dd848fe8f7e",
@@ -54,6 +47,33 @@
     "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/dgd%402x.png"
   },
   {
+    "address": "0x6Ff6C0Ff1d68b964901F986d4C9FA3ac68346570",
+    "symbol": "ZRX",
+    "decimals": 18,
+    "name": "RadarRelay test 0x Protocol Token",
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/zrx%402x.png"
+  },
+  {
+    "address": "0x4A6e6C3868A279e1D9047B42C3fB356FF4680003",
+    "symbol": "TIB",
+    "decimals": 18,
+    "name": "ThibCoin"
+  },
+  {
+    "address": "0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD",
+    "symbol": "MKR (MakerDAO)",
+    "decimals": 18,
+    "name": "MakerDAO",
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/mkr%402x.png"
+  },
+  {
+    "address": "0x1Dad4783cf3fe3085C1426157aB175A6119A04bA",
+    "symbol": "MKR (RadarRelay test MakerDAO)",
+    "decimals": 18,
+    "name": "RadarRelay test MakerDAO",
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/mkr%402x.png"
+  },
+  {
     "address": "0x3C67f7D4decF7795225f51b54134F81137385f83",
     "symbol": "GUP",
     "decimals": 3,
@@ -61,23 +81,10 @@
     "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/gup%402x.png"
   },
   {
-    "address": "0x4733659a5cB7896A65c918Add6f59C5148FB5ffa",
-    "symbol": "GAV",
-    "decimals": 6,
-    "name": "GavCoin"
-  },
-  {
-    "address": "0x323B5d4C32345ced77393B3530b1EeD0f346429D",
-    "symbol": "MLN",
+    "address": "0xB18845c260F680d5B9D84649638813E342E4F8C9",
+    "symbol": "REP",
     "decimals": 18,
-    "name": "RadarRelay test Melon Tokens",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/mln%402x.png"
-  },
-  {
-    "address": "0x6Ff6C0Ff1d68b964901F986d4C9FA3ac68346570",
-    "symbol": "ZRX",
-    "decimals": 18,
-    "name": "RadarRelay test 0x Protocol Token",
-    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/zrx%402x.png"
+    "name": "RadarRelay test Augur Reputation Token",
+    "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/rep%402x.png"
   }
 ]

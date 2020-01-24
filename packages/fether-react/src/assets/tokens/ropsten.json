@@ -7,18 +7,6 @@
     "logo": "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/9867bdb19da14e63ffbe63805298fa60bf255cdd/32%402x/color/rlc%402x.png"
   },
   {
-    "address": "0x6f95a3B682F8e9aacC86D057A6DF88A0E68145A8",
-    "symbol": "ILSC",
-    "decimals": 2,
-    "name": "IsraCoin"
-  },
-  {
-    "address": "0xa1bAccA0e12D4091Ec1f92e7CaE3394CC9854D3D",
-    "symbol": "dqr30",
-    "decimals": 18,
-    "name": "DQR"
-  },
-  {
     "address": "0x4C572Fbc03D4A2B683cF4f10ffdcaFD00885E108",
     "symbol": "MEWV5",
     "decimals": 9,
@@ -35,5 +23,17 @@
     "symbol": "NONE",
     "decimals": 0,
     "name": "None"
+  },
+  {
+    "address": "0x6f95a3B682F8e9aacC86D057A6DF88A0E68145A8",
+    "symbol": "ILSC",
+    "decimals": 2,
+    "name": "IsraCoin"
+  },
+  {
+    "address": "0xa1bAccA0e12D4091Ec1f92e7CaE3394CC9854D3D",
+    "symbol": "dqr30",
+    "decimals": 18,
+    "name": "DQR"
   }
 ]
