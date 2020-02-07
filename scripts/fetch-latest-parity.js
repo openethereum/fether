@@ -53,6 +53,7 @@ const foundPath = [
   path.join(STATIC_DIRECTORY, 'parity.exe')
 ].find(existsSync);
 
+console.log('-----------> found pat', foundPath);
 if (foundPath) {
   // Bundled Parity was found, we check if the version matches the minimum requirements
   getBinaryVersion(foundPath)
