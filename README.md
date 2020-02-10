@@ -1,8 +1,10 @@
+# ⚠️ This application is not actively maintained any more.
+Fether was originally developed on top of Parity Ethereum which transitions to Open Ethereum, [more info here]( https://www.parity.io/parity-ethereum-openethereum-dao/). As a result, Parity Technologies will not maintain actively Fether anymore.
+
 ![Parity Fether](https://wiki.parity.io/images/logo-parity-fether.jpg)
 
-# Parity Fether - a decentralised, light client-based wallet
-
-## [» Download the latest release «](https://github.com/paritytech/fether/releases)
+## Parity Fether - a decentralised, light client-based wallet
+[» Download the latest release «](https://github.com/paritytech/fether/releases)
 
 
 ---
