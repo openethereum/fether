@@ -77,5 +77,8 @@
     "semver": "^5.6.0",
     "ts-node": "^8.0.3",
     "typescript": "^3.3.4000"
+  },
+  "resolutions": {
+    "kind-of": ">=6.0.3"
   }
 }
