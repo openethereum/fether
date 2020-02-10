@@ -1,8 +1,9 @@
+# ⚠️ This application is not actively maintained any more.
+
 ![Parity Fether](https://wiki.parity.io/images/logo-parity-fether.jpg)
 
-# Parity Fether - a decentralised, light client-based wallet
-
-## [» Download the latest release «](https://github.com/paritytech/fether/releases)
+## Parity Fether - a decentralised, light client-based wallet
+[» Download the latest release «](https://github.com/paritytech/fether/releases)
 
 
 ---
