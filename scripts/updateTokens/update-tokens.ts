@@ -9,13 +9,13 @@ import * as path from "path";
 
 const hardcoded_ipfs_files = {
   eth:
-    "https://ipfs.2read.net/ipfs/QmZ1G21pgSEN9Z8ovhpUxcx6fvamNtqgRJa4twm2WjagZz",
+    "https://cloudflare-ipfs.com/ipfs/QmUJJpSQXWiKh6Jex6wLSZ1RWND8CxJu6XQMb7v2ByQhTR",
   gor:
-    "https://ipfs.2read.net/ipfs/QmYznKJJK52BaLkQVJnzeaJNf8U4QAFkFXd2PGVaT29otW",
+    "https://cloudflare-ipfs.com/ipfs/QmYznKJJK52BaLkQVJnzeaJNf8U4QAFkFXd2PGVaT29otW",
   kov:
-    "https://ipfs.2read.net/ipfs/Qmepjz2dRNmDZ1U8LnmdUcQqagi3RSuysCnwPptMeNWwXW",
+    "https://cloudflare-ipfs.com/ipfs/QmZUXkAH69BpjJWcpND5HnQVsro6CXVxKiSX9vK49KsyZn",
   rop:
-    "https://ipfs.2read.net/ipfs/QmeEFZ6ddJshR8VrfvqaYb61BcQkQsnG66gJxCA8GfdGih"
+    "https://cloudflare-ipfs.com/ipfs/QmRAzyMEFNFFRqKTMcpk5qDdTpctgTDQU2PN8RPXSt5guj"
 };
 
 function httpsGet(opts: any): Promise<string> {
